@@ -1,0 +1,113 @@
+<resources>
+    <string name="app_name">GymWen</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Gymnasium Wendelstein</string>
+    <string name="nav_header_subtitle">Inoffizielle App (Testphase)</string>
+    <string name="nav_header_desc">Gymnasium Wendelstein</string>
+
+    <!-- Navigation Drawer -->
+    <string name="menu_today">Heute</string>
+    <string name="menu_tomorrow">Morgen</string>
+    <string name="menu_all_classes_Today">Heute (gesamt)</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_website">Startseite</string>
+    <string name="menu_mebis">Mebis</string>
+    <string name="menu_mensa">Mensa (kitafino)</string>
+    <string name="menu_all_classes_tomorrow">Morgen (gesamt)</string>
+    <string name="menu_category">Diverses</string>
+    <string name="menu_both">Auf einen Blick!</string>
+    <string name="menu_impressum">Impressum</string>
+
+    <string name="title_activity_settings">Einstellungen</string>
+
+    <!-- Preference Titles -->
+    <string name="set_vertretung_title">Vertretungsplan</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_vertretung">Vertretungsplan</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+
+    <!-- Settings -->
+    <string name="set_oberstufe">Oberstufenschüler</string>
+    <string name="set_courses_title">Kurse/Klasse</string>
+    <string name="set_courses_summary">Einzelne Kurse mit einem # zwischen den Kursen trennen, z.B. 1ph3#1d4#1bio2</string>
+    <string name="set_courses_defaulValue">1ph3#1d4#1bio2</string>
+    <string name="set_vertretung_signin">Anmeldedaten</string>
+    <string name="set_vertretung_username">Benutzername:</string>
+    <string name="set_vertretung_password">Passwort:</string>
+    <string name="set_username_default"></string>
+    <string name="set_password_default"></string>
+
+    <!-- Vertretungsplan Strings -->
+    <string name="nothing">Es entfällt nichts für dich.</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="back_button">Erneut drücken zum Beenden</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_plan">PlanActivity</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="title_activity_main2">Log in</string>
+    <string name="title_activity_login">Anmeldung</string>
+    <string name="prompt_email">Benutzername</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Anmelden</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">""</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Anmeldung fehlgeschlagen"</string>
+    <string name="login_success">Anmeldung erfolgreich</string>
+    <string name="title_activity_log">Sign in</string>
+
+    <string name="login_name">Anmelden</string>
+
+
+    <string name="title_activity_choice">Kurs-/Klassenwahl</string>
+
+    <!--    choice Activity-->
+    <string name="choice_oberstufe">Oberstufe (Q11/Q12)</string>
+    <string name="choice_5">5. Klasse</string>
+    <string name="choice_6">6. Klasse</string>
+    <string name="choice_7">7. Klasse</string>
+    <string name="choice_8">8. Klasse</string>
+    <string name="choice_9">9. Klasse</string>
+    <string name="choice_10">10. Klasse</string>
+    <string name="choice_parents">Elternteil</string>
+    <string name="choice_more_classes">Andere Klasse</string>
+    <string name="choice_more_letters">Anderer Buchstabe</string>
+    <string name="choice_more_cours_digits">Anderer Jahrgang</string>
+    <string name="choice_title_4">Kurs der Pflichtfächer (Deutsch, Mathe, Geschichte, Sozialkunde)\n(z.B. bei 1d4, die 4)</string>
+    <string name="choice_main_courses">Kurs der Pflichtfächer</string>
+    <string name="choice_final">Bitte vervollständige deine Kurswahl:</string>
+
+    <!-- Impressum -->
+    <string name="impressum_headline">Impressum</string>
+    <string name="imressum_datenschutz_headline">Datenschutzerklärung:</string>
+    <string name="AboutLibs_Title">Open-Source Bibliotheken</string>
+
+    <!-- Website -->
+    <string name="website_title">Startseite</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="title_activity_website">Startseite</string>
+    <string name="action_open_in_browser">Im Browser öffnen</string>
+
+    <!-- Main Actions-->
+    <string name="action_share">Teilen</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_refresh">Aktualisieren</string>
+
+</resources>
