@@ -16,8 +16,18 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebView;
 import android.widget.Toast;
+
+import com.asdoi.gymwen.NotificationService;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.main.Fragments.VertretungFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -31,18 +41,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import com.asdoi.gymwen.NotificationService;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
-import com.asdoi.gymwen.main.login.LoginActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-
-import java.io.File;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
@@ -52,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private FloatingActionButton fab;
-    private static WebView myWebView;
     VertretungFragment lastLoadedFragment = null;
 
     // Unique request code.
@@ -61,13 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setSettings();
-
-        if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("signed", false)) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-        }
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -93,51 +83,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         fab = findViewById(R.id.main_fab);
-
-        proofeNotification();
 //        VertretungsPlan.reloadDocs();
 //        VertretungsPlan.refresh();
 
         if (!VertretungsPlan.isUninit())
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
         toggle.syncState();
-
-        myWebView = new WebView(this);
-
         registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
+        if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("signed", false)) {
+            Intent i = new Intent(this, SignInActivity.class);
+            startActivity(i);
+            finish();
+        } else {
+            setSettings();
+            proofeNotification();
+        }
     }
 
     public static boolean homepageFragment = false;
     private static boolean pressedBack = false;
-    //Credits: https://stackoverflow.com/qusestions/54836448/android-opening-a-word-document-using-intents-and-fileprovider
-    long downloadID;
-    //File Management
-    //https://developer.android.com/training/data-storage/files/external
-    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //Fetching the download id received with the broadcast
-            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-            //Checking if the received broadcast is for our enqueued download by matching download id
-            if (downloadID == id) {
-                Toast.makeText(MainActivity.this, "Download Completed", Toast.LENGTH_SHORT).show();
-                System.out.println("downloaded");
-            }
-        }
-    };
-    private BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            //check if the broadcast message is for our enqueued download
-            long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-
-            if (/*referenceId == 1*/true) {
-                System.out.println("completed");
-            }
-        }
-    };
 
     @Override
     public void onPostCreate(Bundle b) {
@@ -195,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_settings:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
+                finish();
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_website:
@@ -403,8 +370,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             CustomTabsHelper.openCustomTab(this, customTabsIntent,
                     Uri.parse(url),
                     new WebViewFallback());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -451,4 +417,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public String getFilePath() {
         return PreferenceManager.getDefaultSharedPreferences(this).getString("filePath", "");
     }
+
+    //Credits: https://stackoverflow.com/qusestions/54836448/android-opening-a-word-document-using-intents-and-fileprovider
+    long downloadID;
+    //File Management
+    //https://developer.android.com/training/data-storage/files/external
+    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Fetching the download id received with the broadcast
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            //Checking if the received broadcast is for our enqueued download by matching download id
+            if (downloadID == id) {
+                Toast.makeText(MainActivity.this, "Download Completed", Toast.LENGTH_SHORT).show();
+                System.out.println("downloaded");
+            }
+        }
+    };
+    private BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            //check if the broadcast message is for our enqueued download
+            long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+
+            if (/*referenceId == 1*/true) {
+                System.out.println("completed");
+            }
+        }
+    };
 }

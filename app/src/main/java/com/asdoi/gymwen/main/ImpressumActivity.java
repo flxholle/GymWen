@@ -6,13 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.browser.customtabs.CustomTabsIntent;
-
 import com.asdoi.gymwen.R;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.browser.customtabs.CustomTabsIntent;
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
@@ -57,7 +56,9 @@ public class ImpressumActivity extends AppCompatActivity implements View.OnClick
                         .withFields(R.string.class.getFields())
                         .withAutoDetect(true)
                         .withAboutIconShown(true)
-                        .withAboutVersionShown(true)
+                        .withLicenseShown(true)
+                        .withAboutDescription(getString(R.string.subtitle))
+                        .withAboutAppName(getString(R.string.app_name))
                         .intent(this);
 
                 startActivity(intent);

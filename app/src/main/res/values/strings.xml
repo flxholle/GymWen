@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">GymWen</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Gymnasium Wendelstein</string>
-    <string name="nav_header_subtitle">Inoffizielle App (Testphase)</string>
-    <string name="nav_header_desc">Gymnasium Wendelstein</string>
+    <string name="title">Gymnasium Wendelstein</string>
+    <string name="subtitle">Offizielle App © 2019 Felix Hollederer</string>
+    <string name="copyright">© 2019 Felix Hollederer</string>
 
     <!-- Navigation Drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="menu_today">Heute</string>
     <string name="menu_tomorrow">Morgen</string>
     <string name="menu_all_classes_Today">Heute (gesamt)</string>
@@ -19,22 +19,10 @@
     <string name="menu_both">Auf einen Blick!</string>
     <string name="menu_impressum">Impressum</string>
 
-    <string name="title_activity_settings">Einstellungen</string>
-
     <!-- Preference Titles -->
+    <string name="title_activity_settings">Einstellungen</string>
     <string name="set_vertretung_title">Vertretungsplan</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="title_activity_vertretung">Vertretungsplan</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
@@ -55,24 +43,11 @@
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="back_button">Erneut drücken zum Beenden</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_plan">PlanActivity</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="title_activity_main2">Log in</string>
-    <string name="title_activity_login">Anmeldung</string>
-    <string name="prompt_email">Benutzername</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Anmelden</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">""</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <!--    Sign In Activity-->
+    <string name="title_activity_sign_in">Anmeldung</string>
     <string name="login_failed">"Anmeldung fehlgeschlagen"</string>
     <string name="login_success">Anmeldung erfolgreich</string>
-    <string name="title_activity_log">Sign in</string>
-
-    <string name="login_name">Anmelden</string>
+    <string name="login_sign_in">Anmelden</string>
 
 
     <string name="title_activity_choice">Kurs-/Klassenwahl</string>

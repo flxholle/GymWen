@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main;
+package com.asdoi.gymwen.main.Fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.WebsiteActivity;
 
 import java.io.InputStream;
 
