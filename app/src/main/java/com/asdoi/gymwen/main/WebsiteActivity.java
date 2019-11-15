@@ -126,8 +126,8 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
     @Override
     public boolean onSupportNavigateUp() {
         VertretungsPlan.historySaveInstance = null;
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+//        Intent i = new Intent(this, MainActivity.class);
+//        startActivity(i);
         finish();
         super.onSupportNavigateUp();
         return true;

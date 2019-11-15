@@ -49,6 +49,7 @@
             android:layout_marginTop="50dp"
 
             android:layout_marginEnd="24dp"
+            android:hint="Benutzername"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true" />
 
@@ -61,6 +62,7 @@
 
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
+            android:hint="Passwort"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:selectAllOnFocus="true" />
