@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/impressumFragment"
-        android:name="com.asdoi.gymwen.main.ImpressumFragment"
+        android:name="com.asdoi.gymwen.main.Fragments.ImpressumFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

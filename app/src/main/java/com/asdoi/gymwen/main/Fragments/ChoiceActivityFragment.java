@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main;
+package com.asdoi.gymwen.main.Fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.main.ChoiceActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -209,6 +210,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     private class MyTextWatcher implements TextWatcher {
+
 
         private EditText mEditText;
 

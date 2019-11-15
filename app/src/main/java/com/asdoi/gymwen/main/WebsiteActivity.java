@@ -9,14 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.text.HtmlCompat;
-import androidx.fragment.app.FragmentManager;
-
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.main.Fragments.WebsiteActivityFragment;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,6 +23,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.text.HtmlCompat;
+import androidx.fragment.app.FragmentManager;
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 

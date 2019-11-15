@@ -3,9 +3,8 @@
     package="com.asdoi.gymwen">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
-<!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
@@ -16,7 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".main.SignInActivity"
+            android:label="@string/title_activity_sign_in"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".main.ImpressumActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -43,10 +46,6 @@
             android:label="@string/title_activity_choice"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".main.login.LoginActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/title_activity_login" />
-        <activity
             android:name=".main.SettingsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_settings" />
@@ -71,11 +70,10 @@
                 <action android:name="android.intent.action.DATE_CHANGED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".WebsiteReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <service
             android:name=".NotificationService"
