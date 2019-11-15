@@ -1,8 +1,11 @@
 package com.asdoi.gymwen.main;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -59,6 +62,15 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void checkData(final String username, final String password) {
+        if (!isNetworkAvailable()) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "Keine Internetverbindung", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
         (new Thread(new Runnable() {
             boolean signedIn;
             Document doc = null;
@@ -84,10 +96,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     void signIn(boolean successful) {
         progDialog.dismiss();
-//        if(successful)
-        signInSuccess();
-//        else
-//            signInFailure();
+        if (successful)
+            signInSuccess();
+        else
+            signInFailure();
     }
 
     void signInSuccess() {
@@ -128,6 +140,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     boolean signedInBefore() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         return sharedPref.getBoolean("signed", false);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override
