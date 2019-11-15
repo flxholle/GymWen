@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,6 +18,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.asdoi.gymwen.NotificationService;
 import com.asdoi.gymwen.R;
@@ -29,17 +43,8 @@ import java.io.File;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import saschpe.android.customtabs.CustomTabsHelper;
+import saschpe.android.customtabs.WebViewFallback;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -199,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_mebis:
-                ViewActions.tabIntent("https://lernplattform.mebis.bayern.de/my/", this);
+                tabIntent("https://lernplattform.mebis.bayern.de/my/");
                 break;
             case R.id.nav_mensa:
                 String packageName = "de.eezzy.admin.apnr40";
@@ -207,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (intent == null) {
 //                    ProgressDialog progDailog = ProgressDialog.show(this, "Laden","Bitte warten...", true);
 //                    progDailog.setCancelable(false);
-                    ViewActions.tabIntent("https://www.kitafino.de/sys_k2/index.php?action=bestellen", this);
+                    tabIntent("https://www.kitafino.de/sys_k2/index.php?action=bestellen");
 //                    progDailog.dismiss();
                 } else {
                     startActivity(intent);
@@ -379,6 +384,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             pressedBack = true;
         }
         VertretungsPlan.saveDocs();
+    }
+
+    private void tabIntent(String url) {
+        try {
+            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                    .addDefaultShareMenuItem()
+                    .setToolbarColor(getResources()
+                            .getColor(R.color.colorPrimary))
+                    .setShowTitle(true)
+                    .setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back_white_24dp))
+                    .build();
+
+            // This is optional but recommended
+            CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
+
+            // This is where the magic happens...
+            CustomTabsHelper.openCustomTab(this, customTabsIntent,
+                    Uri.parse(url),
+                    new WebViewFallback());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /* Checks if external storage is available for read and write */

@@ -9,6 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.text.HtmlCompat;
+import androidx.fragment.app.FragmentManager;
+
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 
@@ -21,13 +27,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.text.HtmlCompat;
-import androidx.fragment.app.FragmentManager;
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
@@ -171,7 +171,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
             startActivity(intent);*/
-            try{ViewActions.tabIntent(history.get(history.size() - 1),this);}
+            try{tabIntent(history.get(history.size() - 1));}
             catch (Exception e){}
         } else if (item.getItemId() == R.id.action_share || item.getItemId() == R.id.action_share2 ) {
             Intent i = new Intent();
@@ -495,6 +495,29 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
         loadFragment(3);
     }
 
+    private void tabIntent(String url, Context context) {
+        try {
+            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                    .addDefaultShareMenuItem()
+                    .setToolbarColor(context.getResources()
+                            .getColor(R.color.colorPrimary))
+                    .setShowTitle(true)
+                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
+                    .build();
+
+            // This is optional but recommended
+            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
+
+            // This is where the magic happens...
+            CustomTabsHelper.openCustomTab(context, customTabsIntent,
+                    Uri.parse(url),
+                    new WebViewFallback());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private String getLink(Element e) {
         String link = "";
         Elements linkElements = e.select("a");
@@ -605,26 +628,31 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
                     }
                 })).start();
             } else {
-                ViewActions.tabIntent(urlFinal, this);
+                tabIntent(urlFinal);
             }
         }
     }
 
-    private void tabIntent(String url, Context context) {
-        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                .addDefaultShareMenuItem()
-                .setToolbarColor(context.getResources()
-                        .getColor(R.color.colorPrimary))
-                .setShowTitle(true)
-                .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
-                .build();
+    private void tabIntent(String url) {
+        try {
+            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                    .addDefaultShareMenuItem()
+                    .setToolbarColor(getResources()
+                            .getColor(R.color.colorPrimary))
+                    .setShowTitle(true)
+                    .setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back_white_24dp))
+                    .build();
 
-        // This is optional but recommended
-        CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
+            // This is optional but recommended
+            CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
 
-        // This is where the magic happens...
-        CustomTabsHelper.openCustomTab(context, customTabsIntent,
-                Uri.parse(url),
-                new WebViewFallback());
+            // This is where the magic happens...
+            CustomTabsHelper.openCustomTab(this, customTabsIntent,
+                    Uri.parse(url),
+                    new WebViewFallback());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
