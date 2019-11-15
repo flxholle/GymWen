@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.main.Fragments.ChoiceActivityFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,9 +82,9 @@ public class ChoiceActivity extends AppCompatActivity {
         } else {
             //Finish
             setSettings();
+            finish();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            finish();
         }
 
 
@@ -105,6 +106,12 @@ public class ChoiceActivity extends AppCompatActivity {
         editor.commit();
 
         System.out.println("settings: " + sharedPref.getBoolean("oberstufe", oberstufe) + sharedPref.getString("courses",""));
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 
 }

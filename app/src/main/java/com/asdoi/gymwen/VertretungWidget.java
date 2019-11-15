@@ -16,8 +16,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.main.Fragments.VertretungFragment;
 import com.asdoi.gymwen.main.MainActivity;
-import com.asdoi.gymwen.main.VertretungFragment;
 
 import org.jsoup.nodes.Document;
 

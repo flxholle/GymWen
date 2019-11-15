@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main;
+package com.asdoi.gymwen.main.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
