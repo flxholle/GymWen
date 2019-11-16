@@ -134,13 +134,13 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     private void createColumnStep5(String courseName, String courseShort) {
         LinearLayout basic = root.findViewById(R.id.choice_step5_linear);
         LinearLayout column = new LinearLayout(getContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         column.setLayoutParams(params);
         column.setOrientation(LinearLayout.HORIZONTAL);
 //            column.setId(i);
 
         CheckBox box = new CheckBox(getContext());
-        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         box.setLayoutParams(params);
         box.setGravity(Gravity.CENTER);
         box.setText(courseName);
@@ -153,13 +153,13 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         inputLayout.setLayoutParams(params);
 
         EditText inputText = new EditText(getContext());
-        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         inputText.setLayoutParams(params);
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
         inputText.setId(quantitiyCourses + 1300);
         inputText.setOnEditorActionListener(this);
         inputText.setTextColor(Color.BLACK);
-        inputText.setPadding(0, 0, 0, 0);
+//        inputText.setPadding(0, 0, 0, 0);
         inputText.setText(((ChoiceActivity) getActivity()).getCourseFirstDigit() + courseShort + ((ChoiceActivity) getActivity()).getCourseMainDigit());
 //        inputText.setHint(((ChoiceActivity) getActivity()).getCourseFirstDigit() + courseShort + ((ChoiceActivity) getActivity()).getCourseMainDigit());
         inputText.addTextChangedListener(new MyTextWatcher(inputText));
@@ -304,9 +304,9 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                         if (!((CheckBox) root.findViewById(id)).isChecked()) {
                             ((EditText) root.findViewById(id+(1300-130))).setText("");
 
-                        } /*else {
-                            ((EditText) root.findViewById(-1 * id)).setText("tes " + ((EditText) root.findViewById(-1 * id)).getHint().toString());
-                        }*/
+                        } else {
+                            ((EditText) root.findViewById(id+(1300-130))).setText(((ChoiceActivity) getActivity()).getCourseFirstDigit() + getString(R.string.anyShort) + ((ChoiceActivity) getActivity()).getCourseMainDigit());
+                        }
                     }
                     break;
             }
