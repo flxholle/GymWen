@@ -55,7 +55,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             e.printStackTrace();
         }
         signInButton.setEnabled(false);
-        progDialog = ProgressDialog.show(this, "Bitte Warten", "Anmeldedaten werden geprüft", true);
+        progDialog = ProgressDialog.show(this, getString(R.string.please_wait), getString(R.string.proofing), true);
         progDialog.setCancelable(false);
         checkData(username, password);
     }
@@ -66,7 +66,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), "Keine Internetverbindung", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.noInternetConnection), Toast.LENGTH_SHORT).show();
                 }
             });
             return;

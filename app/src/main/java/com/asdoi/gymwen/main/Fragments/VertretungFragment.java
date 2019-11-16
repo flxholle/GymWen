@@ -108,7 +108,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textView.setGravity(Gravity.CENTER);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        textView.setText("Lädt herunter...");
+        textView.setText(getString(R.string.downloading));
 
         panel.addView(bar);
         panel.addView(textView);
@@ -258,13 +258,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     private void share() {
         String message = shareMessage();
-        String footprint = "Diese Nachricht wurde mit der GymWen App erzeugt.";
+        String footprint = getString(R.string.footprint);
         message += footprint;
 
         if (VertretungsPlan.getTodayTitle().equals("Keine Internetverbindung!")) {
             //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
             Snackbar snackbar = Snackbar
-                    .make(root.findViewById(R.id.vertretung_constraint), "Du bist nicht mit dem Internet verbunden!", Snackbar.LENGTH_LONG);
+                    .make(root.findViewById(R.id.vertretung_constraint), getString(R.string.noInternet), Snackbar.LENGTH_LONG);
             snackbar.show();
 
             return;
@@ -273,8 +273,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         Intent i = new Intent();
         i.setAction(Intent.ACTION_SEND);
         i.putExtra(Intent.EXTRA_TEXT, message);
-        i.setType("text/plan");
-        startActivity(Intent.createChooser(i, "Vertretung senden an..."));
+        i.setType("text/plain");
+        startActivity(Intent.createChooser(i, getString(R.string.share_vertretung)));
     }
 
     private void generateTable() {
@@ -538,7 +538,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     tv.setText(inhalt[i][0]);
                     tv.setTextSize(12);
                     tv.setTypeface(Typeface.DEFAULT);
-                    tv.setGravity(Gravity.RIGHT);
+                    tv.setGravity(Gravity.END);
                     row.addView(tv);
                 } else {
                     //Kurs
@@ -591,7 +591,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     tv.setText(inhalt[i][2]);
                     tv.setTextSize(12);
                     tv.setTypeface(Typeface.DEFAULT);
-                    tv.setGravity(Gravity.RIGHT);
+                    tv.setGravity(Gravity.END);
                     row.addView(tv);
                 }
 
@@ -659,7 +659,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     tv.setText(inhalt[i][0]);
                     tv.setTextSize(12);
                     tv.setTypeface(Typeface.DEFAULT);
-                    tv.setGravity(Gravity.RIGHT);
+                    tv.setGravity(Gravity.END);
                     row.addView(tv);
 
                 } else {
@@ -713,7 +713,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     tv.setText(inhalt[i][0]);
                     tv.setTextSize(12);
                     tv.setTypeface(Typeface.DEFAULT);
-                    tv.setGravity(Gravity.RIGHT);
+                    tv.setGravity(Gravity.END);
                     row.addView(tv);
                 }
 
@@ -737,7 +737,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             }
             TextView tv = new TextView(context
             );
-            tv.setText("Es entfällt nichts");
+            tv.setText(context.getString(R.string.nothing));
             tv.setTextSize(20);
             tv.setTypeface(Typeface.DEFAULT_BOLD);
             tv.setGravity(Gravity.CENTER);
@@ -761,17 +761,17 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
             for (int i = 0; i < inhalt.length; i++) {
                 if (!inhalt[i][5].trim().isEmpty()) {
-                    sonstiges = "Sonstiges";
+                    sonstiges = context.getString(R.string.other);
                     break;
                 }
             }
 
             if (all) {
-                headline = new String[]{"Klasse", "Stunde", "Fach", "Lehrer", "Raum", "Sonstiges"};
+                headline = new String[]{context.getString(R.string.classes), context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), context.getString(R.string.other)};
             } else if (oberstufe) {
-                headline = new String[]{"Stunde", "Kurs", "Lehrer", "Raum", sonstiges, "Fach"};
+                headline = new String[]{context.getString(R.string.hours), context.getString(R.string.courses), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.subject)};
             } else {
-                headline = new String[]{"Stunde", "Fach", "Lehrer", "Raum", sonstiges, "Klasse"};
+                headline = new String[]{context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.classes)};
             }
 
 
@@ -799,7 +799,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             tv.setText(headline[5]);
             tv.setTextSize(12);
             tv.setTypeface(Typeface.DEFAULT_BOLD);
-            tv.setGravity(Gravity.RIGHT);
+            tv.setGravity(Gravity.END);
             row.addView(tv);
             table.addView(row);
         }
@@ -811,17 +811,17 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
             for (int i = 0; i < inhalt.length; i++) {
                 if (!inhalt[i][5].trim().isEmpty()) {
-                    sonstiges = "Sonstiges";
+                    sonstiges = context.getString(R.string.other);
                     break;
                 }
             }
 
             if (all) {
-                headline = new String[]{"Klasse", "Stunde", "Fach", "Lehrer", "Raum", "Sonstiges"};
+                headline = new String[]{context.getString(R.string.classes), context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), context.getString(R.string.other)};
             } else if (oberstufe) {
-                headline = new String[]{"Stunde", "Kurs", "Lehrer", "Raum", sonstiges, "Fach"};
+                headline = new String[]{context.getString(R.string.hours), context.getString(R.string.courses), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.subject)};
             } else {
-                headline = new String[]{"Stunde", "Fach", "Lehrer", "Raum", sonstiges, "Klasse"};
+                headline = new String[]{context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.classes)};
             }
 
 

@@ -19,11 +19,7 @@ import androidx.fragment.app.Fragment;
  */
 public class ImpressumFragment extends Fragment {
     private static View root;
-    private static String datenschutz ="<h1>Datenschutzerklärung</h1>\n" +
-            "Die offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.\n" +
-            "D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.\n" +
-            "Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.\n" +
-            "Außerdem werden ausschließlich schon bereits genutzte Datenbanken der Schule verwendet.";
+    private static String datenschutz;
 
 //
 //            "<h1>Datenschutzerklärung</h1>\n" +
@@ -63,6 +59,8 @@ public class ImpressumFragment extends Fragment {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_impressum, container, false);
         TextView textView = root.findViewById(R.id.impressum_datenschutzerklärung);
+
+        datenschutz = getString(R.string.privacy);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.setText(Html.fromHtml(datenschutz, Html.FROM_HTML_MODE_COMPACT));

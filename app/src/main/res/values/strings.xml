@@ -19,15 +19,14 @@
     <string name="menu_both">Auf einen Blick!</string>
     <string name="menu_impressum">Impressum</string>
 
-    <!-- Preference Titles -->
-    <string name="title_activity_settings">Einstellungen</string>
-    <string name="set_vertretung_title">Vertretungsplan</string>
-
-    <string name="title_activity_vertretung">Vertretungsplan</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <!-- Main -->
+    <string name="action_share">Teilen</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_refresh">Aktualisieren</string>
 
     <!-- Settings -->
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="set_vertretung_title">Vertretungsplan</string>
     <string name="set_oberstufe">Oberstufenschüler</string>
     <string name="set_courses_title">Kurse/Klasse</string>
     <string name="set_courses_summary">Einzelne Kurse mit einem # zwischen den Kursen trennen, z.B. 1ph3#1d4#1bio2</string>
@@ -38,21 +37,36 @@
     <string name="set_username_default"></string>
     <string name="set_password_default"></string>
 
-    <!-- Vertretungsplan Strings -->
+    <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="back_button">Erneut drücken zum Beenden</string>
+    <string name="downloading">Lädt...</string>
+    <string name="footprint">Diese Nachricht wurde mit der GymWen App erzeugt.</string>
+    <string name="noInternet">Du bist nicht mit dem Internet verbunden!</string>
+    <string name="noInternetConnection">Keine Internetverbindung!</string>
+    <string name="share_vertretung">Vertretung senden an...</string>
+    <!--    Table-->
+    <string name="classes">Klasse</string>
+    <string name="courses">Kurs</string>
+    <string name="hours">Stunde</string>
+    <string name="subject">Fach</string>
+    <string name="teacher">Lehrer</string>
+    <string name="room">Raum</string>
+    <string name="other">Sonstiges</string>
 
-    <!--    Sign In Activity-->
+    <!-- Sign In -->
     <string name="title_activity_sign_in">Anmeldung</string>
     <string name="login_failed">"Anmeldung fehlgeschlagen"</string>
     <string name="login_success">Anmeldung erfolgreich</string>
     <string name="login_sign_in">Anmelden</string>
+    <string name="please_wait">Bitte warten</string>
+    <string name="proofing">Anmeldedaten werden geprüft</string>
+    <string name="username_hint">Benutzername</string>
+    <string name="password_hint">Passwort</string>
 
-
+    <!-- Choice -->
     <string name="title_activity_choice">Kurs-/Klassenwahl</string>
-
-    <!--    choice Activity-->
     <string name="choice_oberstufe">Oberstufe (Q11/Q12)</string>
     <string name="choice_5">5. Klasse</string>
     <string name="choice_6">6. Klasse</string>
@@ -63,26 +77,78 @@
     <string name="choice_parents">Elternteil</string>
     <string name="choice_more_classes">Andere Klasse</string>
     <string name="choice_more_letters">Anderer Buchstabe</string>
+    <string name="choice_oberstufe_one">Jahrgang 1 (11. Klasse, bei 1d4 die 1)</string>
+    <string name="choice_oberstufe_two">Jahrgang 2 (12. Klasse, bei 2d4 die 2)</string>
     <string name="choice_more_cours_digits">Anderer Jahrgang</string>
     <string name="choice_title_4">Kurs der Pflichtfächer (Deutsch, Mathe, Geschichte, Sozialkunde)\n(z.B. bei 1d4, die 4)</string>
     <string name="choice_main_courses">Kurs der Pflichtfächer</string>
-    <string name="choice_final">Bitte vervollständige deine Kurswahl:</string>
+    <string name="choice_complete">Bitte vervollständige deine Kurswahl:</string>
+    <string name="choice_add_course">Weiteren Kurs hinzufügen</string>
+    <string name="oberstufe_empty">Bitte Kurse einfügen</string>
+    <string name="parent_mode_not_useable">Dieser Modus ist noch nicht benutzbar</string>
+    <string name="additional_course">Zusätzlicher Kurs</string>
+    <string name="please_insert_digit">Bitte eine Zahl eingeben</string>
+    <string name="please_insert_letter">Bitte einen Buchstaben eingeben</string>
+    <!-- Subjects -->
+    <string name="math">Mathe</string>
+    <string name="german">Deutsch</string>
+    <string name="history">Geschichte</string>
+    <string name="social_education">Sozialkunde</string>
+    <string name="PE">Sport</string>
+    <string name="Religious_education">Religion</string>
+    <string name="english">Englisch</string>
+    <string name="france">Französisch</string>
+    <string name="latin">Latein</string>
+    <string name="spanish">Spanisch</string>
+    <string name="biology">Biologie</string>
+    <string name="chemistry">Chemie</string>
+    <string name="physics">Physik</string>
+    <string name="programming">Informatik</string>
+    <string name="geography">Geographie</string>
+    <string name="finance">Wirtschaft und Recht</string>
+    <string name="art">Kunst</string>
+    <string name="music">Musik</string>
+    <string name="W_Seminar">W-Seminar</string>
+    <string name="P_Seminar">P-Seminar</string>
+    <string name="profile_subject">Profilfach</string>
+    <!-- ShortNames Of Subjects -->
+    <string name="mathShort">m</string>
+    <string name="germanShort">d</string>
+    <string name="historyShort">g</string>
+    <string name="social_educationShort">sk</string>
+    <string name="PEShort">spo</string>
+    <string name="Religious_educationShort"></string>
+    <string name="englishShort">e</string>
+    <string name="franceShort">f</string>
+    <string name="latinShort">l</string>
+    <string name="spanishShort">sp</string>
+    <string name="biologyShort">b</string>
+    <string name="chemistryShort">c</string>
+    <string name="physicsShort">ph</string>
+    <string name="programmingShort">inf</string>
+    <string name="geographyShort">geo</string>
+    <string name="financeShort">wr</string>
+    <string name="artShort">ku</string>
+    <string name="musicShort">mu</string>
+    <string name="W_SeminarShort">W_</string>
+    <string name="P_SeminarShort">P_</string>
+    <string name="profile_subjectShort"></string>
+    <string name="anyShort">X</string>
 
     <!-- Impressum -->
     <string name="impressum_headline">Impressum</string>
-    <string name="imressum_datenschutz_headline">Datenschutzerklärung:</string>
     <string name="AboutLibs_Title">Open-Source Bibliotheken</string>
+    <string name="privacy"><h1>Datenschutzerklärung</h1>\nDie offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.\n
+        D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.\n
+        Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.\n
+        Außerdem werden ausschließlich schon bereits genutzte Datenbanken der Schule verwendet.</string>
+    <string name="online_impressum">GymWen Impressum (extern)</string>
 
     <!-- Website -->
-    <string name="website_title">Startseite</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-    <string name="title_activity_website">Startseite</string>
     <string name="action_open_in_browser">Im Browser öffnen</string>
+    <string name="share_link">Link teilen mit...</string>
 
-    <!-- Main Actions-->
-    <string name="action_share">Teilen</string>
-    <string name="action_settings">Einstellungen</string>
-    <string name="action_refresh">Aktualisieren</string>
+    <!-- Widget -->
+    <string name="appwidget_text">EXAMPLE</string>
 
 </resources>
