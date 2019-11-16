@@ -12,6 +12,7 @@ import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
@@ -73,8 +74,7 @@ public class ImpressumActivity extends AppCompatActivity implements View.OnClick
         try {
             CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
                     .addDefaultShareMenuItem()
-                    .setToolbarColor(getResources()
-                            .getColor(R.color.colorPrimary))
+                    .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
                     .setShowTitle(true)
                     .setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back_white_24dp))
                     .build();

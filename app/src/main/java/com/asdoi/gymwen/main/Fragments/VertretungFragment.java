@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
@@ -498,7 +499,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 TextView tv = new TextView(context);
                 tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
                 tv.setLayoutParams(params);
-                tv.setBackgroundColor(context.getColor(R.color.colorAccent));
+                tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
                 tv.setTextColor(Color.WHITE);
                 tv.setText(inhalt[i][1]);
                 tv.setTextSize(36);
@@ -519,7 +520,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     tv.setTextSize(24);
                     tv.setTypeface(Typeface.DEFAULT_BOLD);
                     tv.setGravity(Gravity.CENTER);
-                    tv.setTextColor(context.getColor(R.color.colorAccent));
+                    tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                     row.addView(tv);
 
                     for (int j = 2; j < columnNumber - 1; j++) {
@@ -571,7 +572,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     tv.setTextSize(24);
                     tv.setTypeface(Typeface.DEFAULT_BOLD);
                     tv.setGravity(Gravity.CENTER);
-                    tv.setTextColor(context.getColor(R.color.colorAccent));
+                    tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                     row.addView(tv);
 
                     //Sonstiges
@@ -619,7 +620,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 );
                 tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
                 tv.setLayoutParams(params);
-                tv.setBackgroundColor(context.getColor(R.color.colorAccent));
+                tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
                 tv.setTextColor(Color.WHITE);
                 tv.setText(inhalt[i][1]);
                 tv.setTextSize(36);
@@ -640,7 +641,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     tv.setTextSize(24);
                     tv.setTypeface(Typeface.DEFAULT_BOLD);
                     tv.setGravity(Gravity.CENTER);
-                    tv.setTextColor(context.getColor(R.color.colorAccent));
+                    tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                     row.addView(tv);
 
                     for (int j = 2; j < columnNumber; j++) {
@@ -693,7 +694,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     tv.setTextSize(24);
                     tv.setTypeface(Typeface.DEFAULT_BOLD);
                     tv.setGravity(Gravity.CENTER);
-                    tv.setTextColor(context.getColor(R.color.colorAccent));
+                    tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                     row.addView(tv);
 
                     //Sonstiges

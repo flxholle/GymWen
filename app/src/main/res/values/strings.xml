@@ -138,10 +138,10 @@
     <!-- Impressum -->
     <string name="impressum_headline">Impressum</string>
     <string name="AboutLibs_Title">Open-Source Bibliotheken</string>
-    <string name="privacy"><h1>Datenschutzerklärung</h1>\nDie offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.\n
+    <string name="privacy"><![CDATA[<h1>Datenschutzerklärung</h1>\nDie offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.\n
         D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.\n
         Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.\n
-        Außerdem werden ausschließlich schon bereits genutzte Datenbanken der Schule verwendet.</string>
+        Außerdem werden ausschließlich schon bereits genutzte Datenbanken der Schule verwendet.]]></string>
     <string name="online_impressum">GymWen Impressum (extern)</string>
 
     <!-- Website -->

@@ -26,6 +26,7 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 import saschpe.android.customtabs.CustomTabsHelper;
@@ -495,29 +496,6 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
         loadFragment(3);
     }
 
-    private void tabIntent(String url, Context context) {
-        try {
-            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                    .addDefaultShareMenuItem()
-                    .setToolbarColor(context.getResources()
-                            .getColor(R.color.colorPrimary))
-                    .setShowTitle(true)
-                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
-                    .build();
-
-            // This is optional but recommended
-            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
-
-            // This is where the magic happens...
-            CustomTabsHelper.openCustomTab(context, customTabsIntent,
-                    Uri.parse(url),
-                    new WebViewFallback());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     private String getLink(Element e) {
         String link = "";
         Elements linkElements = e.select("a");
@@ -637,8 +615,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
         try {
             CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
                     .addDefaultShareMenuItem()
-                    .setToolbarColor(getResources()
-                            .getColor(R.color.colorPrimary))
+                    .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
                     .setShowTitle(true)
                     .setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back_white_24dp))
                     .build();
@@ -652,6 +629,27 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
                     new WebViewFallback());
         }
         catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void tabIntent(String url, Context context) {
+        try {
+            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                    .addDefaultShareMenuItem()
+                    .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                    .setShowTitle(true)
+                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
+                    .build();
+
+            // This is optional but recommended
+            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
+
+            // This is where the magic happens...
+            CustomTabsHelper.openCustomTab(context, customTabsIntent,
+                    Uri.parse(url),
+                    new WebViewFallback());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

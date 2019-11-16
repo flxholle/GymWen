@@ -58,9 +58,8 @@ public class ImpressumFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_impressum, container, false);
-        TextView textView = root.findViewById(R.id.impressum_datenschutzerklärung);
-
         datenschutz = getString(R.string.privacy);
+        TextView textView = root.findViewById(R.id.impressum_datenschutzerklärung);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.setText(Html.fromHtml(datenschutz, Html.FROM_HTML_MODE_COMPACT));
