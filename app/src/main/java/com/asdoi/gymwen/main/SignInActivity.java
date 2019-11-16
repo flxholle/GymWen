@@ -1,6 +1,5 @@
 package com.asdoi.gymwen.main;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,7 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
-    ProgressDialog progDialog;
+    ViewGroup loading;
     Button signInButton;
     String username;
     String password;
@@ -38,6 +38,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         signInButton = findViewById(R.id.signin_login);
         signInButton.setOnClickListener(this);
         signInButton.setEnabled(true);
+        loading = findViewById(R.id.signIn_loading);
+        loading.setVisibility(View.INVISIBLE);
 
         if (signedInBefore()) {
             Intent intent = new Intent(this, ChoiceActivity.class);
@@ -55,8 +57,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             e.printStackTrace();
         }
         signInButton.setEnabled(false);
-        progDialog = ProgressDialog.show(this, getString(R.string.please_wait), getString(R.string.proofing), true);
-        progDialog.setCancelable(false);
+        loading.setVisibility(View.VISIBLE);
         checkData(username, password);
     }
 
@@ -95,7 +96,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     void signIn(boolean successful) {
-        progDialog.dismiss();
+        loading.setVisibility(View.INVISIBLE);
         if (successful)
             signInSuccess();
         else
