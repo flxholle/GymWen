@@ -39,7 +39,7 @@
             android:id="@+id/OnlinePrivacy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GymWen Impressum (extern)" />
+            android:text="@string/online_impressum" />
 
         <Button
             android:id="@+id/AboutLibs"
@@ -50,7 +50,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1">
 
             <TextView

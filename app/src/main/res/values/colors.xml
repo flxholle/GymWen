@@ -7,4 +7,10 @@
     <!--<color name="colorPrimaryDark">#1cbf5f</color>
     <color name="colorPrimary">#1cbf5f</color>
     <color name="colorAccent">#be1b0f</color>-->
+
+    <!--    Website Activity-->
+    <color name="web_background_homepages">#80f2f2f2</color>
+    <color name="web_background_content"></color>
+
+    <color name="background_light">#FFFFFFFF</color>
 </resources>

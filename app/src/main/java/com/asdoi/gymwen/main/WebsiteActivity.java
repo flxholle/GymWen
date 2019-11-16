@@ -178,7 +178,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
             i.setAction(Intent.ACTION_SEND);
             i.putExtra(Intent.EXTRA_TEXT, history.get(history.size() - 1));
             i.setType("text/plan");
-            startActivity(Intent.createChooser(i, "Link teilen mit..."));
+            startActivity(Intent.createChooser(i, getString(R.string.share_link)));
         }
         return super.onOptionsItemSelected(item);
     }
