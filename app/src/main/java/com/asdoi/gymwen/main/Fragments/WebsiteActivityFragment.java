@@ -88,7 +88,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        String backgroundColor = "#80f2f2f2";
+        int backgroundColor = context.getColor(R.color.web_background_homepages);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
         int titleColor = Color.BLACK;
@@ -104,7 +104,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             column.setOnClickListener(buttonCall);
             column.setLayoutParams(columnViewParams);
             column.setOrientation(LinearLayout.HORIZONTAL);
-            column.setBackgroundColor(Color.parseColor(backgroundColor));
+            column.setBackgroundColor(backgroundColor);
             column.setId(i);
 
             LinearLayout.LayoutParams rightViewParams = new LinearLayout.LayoutParams(
@@ -201,131 +201,12 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    public void loadContentPages() {
-        basic.removeAllViewsInLayout();
-
-        float columnBottomDp = 10f;
-        float columnLeftRightDp = 5f;
-        String backgroundColor = "#80FFFFFF";
-        float imageMarginDp = 10f;
-        float rightMarginDp = 5f;
-        int titleColor = Color.BLACK;
-        int descriptionColor = Color.BLACK;
-
-        for (int i = 0; i < content.length; i++) {
-            //Create Views
-            LinearLayout.LayoutParams columnViewParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            columnViewParams.setMargins((int) convertDpToPx(context, columnLeftRightDp), 0, (int) convertDpToPx(context, columnLeftRightDp), (int) convertDpToPx(context, columnBottomDp));
-            LinearLayout column = new LinearLayout(context);
-//            column.setOnClickListener(buttonCall);
-            column.setLayoutParams(columnViewParams);
-            column.setOrientation(LinearLayout.HORIZONTAL);
-            column.setBackgroundColor(Color.parseColor(backgroundColor));
-            column.setId(i);
-
-            LinearLayout.LayoutParams rightViewParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            rightViewParams.setMargins((int) convertDpToPx(context, imageMarginDp), (int) convertDpToPx(context, rightMarginDp), (int) convertDpToPx(context, rightMarginDp), (int) convertDpToPx(context, rightMarginDp));
-            LinearLayout rightSide = new LinearLayout(context);
-            rightSide.setLayoutParams(rightViewParams);
-            rightSide.setOrientation(LinearLayout.VERTICAL);
-
-            ViewGroup.LayoutParams restViewParams = new ViewGroup.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            LinearLayout rest = new LinearLayout(context);
-            rest.setLayoutParams(restViewParams);
-            rest.setOrientation(LinearLayout.HORIZONTAL);
-
-            LinearLayout.LayoutParams textViewparams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    0.5f
-            );
-            TextView titleView = new TextView(context);
-            titleView.setLayoutParams(textViewparams);
-
-            TextView descriptionView = new TextView(context);
-            descriptionView.setLayoutParams(textViewparams);
-
-            TextView linkView = new TextView(context);
-            linkView.setLayoutParams(textViewparams);
-
-            String imageUrl = content[i][0];
-//                                System.out.println(url);
-//                            WebView webView = findViewById(R.id.web_image);
-//                            webView.setWebViewClient(new WebViewClient());
-//                            webView.getSettings().setLoadsImagesAutomatically(true);
-//                            webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//                            webView.loadData(loadData, "text/html", "UTF-8");
-
-
-            ImageView imageView = new ImageView(context);
-            LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            imageViewParams.setMargins((int) convertDpToPx(context, imageMarginDp), (int) convertDpToPx(context, imageMarginDp), 0, (int) convertDpToPx(context, imageMarginDp));
-            imageView.setLayoutParams(imageViewParams);
-            imageView.setOnClickListener(this);
-
-
-            //Set Views to values
-
-            new DownloadImageTask(imageView)
-                    .execute(imageUrl);
-
-
-            String title = content[i][1];
-            titleView.setText(title);
-            titleView.setTextSize(22);
-            titleView.setTextColor(titleColor);
-            titleView.setTypeface(Typeface.DEFAULT_BOLD);
-            titleView.setGravity(Gravity.CENTER);
-
-            if (title.isEmpty()) {
-                titleView.setVisibility(View.GONE);
-            }
-
-
-            String description = content[i][2];
-            descriptionView.setText(description);
-            descriptionView.setTextSize(14);
-            descriptionView.setTextColor(descriptionColor);
-            descriptionView.setTypeface(Typeface.DEFAULT);
-            descriptionView.setGravity(Gravity.LEFT);
-
-            if (description.isEmpty()) {
-                descriptionView.setVisibility(View.GONE);
-            }
-
-            String link = content[i][3];
-//                            linkView.setText(link);
-            linkView.setTextSize(8);
-            linkView.setTextColor(Color.BLUE);
-            linkView.setTypeface(Typeface.DEFAULT);
-            linkView.setGravity(Gravity.CENTER);
-
-
-            //Add Values to basic
-            rest.addView(descriptionView, 0);
-            rest.addView(linkView, 1);
-            rightSide.addView(titleView, 0);
-            rightSide.addView(rest, 1);
-            column.addView(imageView, 0);
-            column.addView(rightSide, 1);
-            basic.addView(column);
-        }
-    }
-
     public void loadContentPagesMixed() {
         basic.removeAllViewsInLayout();
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        String backgroundColor = "#80FFFFFF";
+        int backgroundColor = context.getColor(R.color.web_background_content);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
         int titleColor = Color.BLACK;
@@ -341,7 +222,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             column.setOnClickListener(buttonCall);
             column.setLayoutParams(columnViewParams);
             column.setOrientation(LinearLayout.HORIZONTAL);
-            column.setBackgroundColor(Color.parseColor(backgroundColor));
+            column.setBackgroundColor(backgroundColor);
             column.setId(i);
 
             LinearLayout.LayoutParams rightViewParams = new LinearLayout.LayoutParams(

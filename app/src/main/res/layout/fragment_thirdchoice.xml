@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/choice_difference"
                 android:background="@android:color/white"
-                android:text="Jahrgang 1 (11. Klasse, bei 1d4 die 1)" />
+                android:text="@string/choice_oberstufe_one" />
 
             <Button
                 android:id="@+id/choice_button_2"
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/choice_difference"
                 android:background="@android:color/white"
-                android:text="Jahrgang 2 (12. Klasse, bei 2d4 die 2)" />
+                android:text="@string/choice_oberstufe_two" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

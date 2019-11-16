@@ -19,18 +19,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/choice_final"
+                android:text="@string/choice_complete"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="22sp" />
 
             <Button
                 android:id="@+id/choice_button_add_more_courses"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/choice_difference"
                 android:layout_weight="1"
                 android:background="@color/colorAccent"
-                android:text="Weiteren Kurs hinzufügen"
+                android:text="@string/choice_add_course"
                 android:textColor="@android:color/white" />
 
 

@@ -47,9 +47,8 @@
             android:layout_gravity="center"
             android:layout_marginStart="24dp"
             android:layout_marginTop="50dp"
-
             android:layout_marginEnd="24dp"
-            android:hint="Benutzername"
+            android:hint="@string/username_hint"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true" />
 
@@ -59,10 +58,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="24dp"
-
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
-            android:hint="Passwort"
+            android:hint="@string/password_hint"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:selectAllOnFocus="true" />

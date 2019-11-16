@@ -123,8 +123,8 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
     private void generateStep5() {
         for (int i = 0; i < VertretungsPlan.choiceCourseNames.length; i++) {
-            if (VertretungsPlan.choiceCourseNames[i].length < 2) {
-                createColumnStep5(VertretungsPlan.choiceCourseNames[i][0], "X");
+            if (VertretungsPlan.choiceCourseNames[i].length < 2 || VertretungsPlan.choiceCourseNames[i][1] == null || VertretungsPlan.choiceCourseNames[i][2].trim().isEmpty()) {
+                createColumnStep5(VertretungsPlan.choiceCourseNames[i][0], getString(R.string.anyShort));
             } else {
                 createColumnStep5(VertretungsPlan.choiceCourseNames[i][0], VertretungsPlan.choiceCourseNames[i][1]);
             }
@@ -191,7 +191,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     private void finishOberstufe() {
         if (checkIfEmpty()) {
             Snackbar snackbar = Snackbar
-                    .make(root, "Bitte Kurse einfügen", Snackbar.LENGTH_LONG);
+                    .make(root, getString(R.string.oberstufe_empty), Snackbar.LENGTH_LONG);
             snackbar.show();
         } else {
             String oberstufe = "";
@@ -284,7 +284,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 //                    nextStep = 6;
 //                    ((ChoiceActivity) getActivity()).setParents(true);
                     Snackbar snackbar = Snackbar
-                            .make(root, "Dieser Modus ist noch nicht benutzbar", Snackbar.LENGTH_LONG);
+                            .make(root, getString(R.string.parent_mode_not_useable), Snackbar.LENGTH_LONG);
                     snackbar.show();
                     break;
             }
@@ -333,7 +333,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
             switch (id) {
                 //Step 5:
                 case R.id.choice_button_add_more_courses:
-                    createColumnStep5("zusätzlicher Kurs", "X");
+                    createColumnStep5(getString(R.string.additional_course), "X");
                     break;
                 default:
                     if (id >= 130 && id <= quantitiyCourses + 130) {
@@ -422,7 +422,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     nextStep = 2;
                 } else {
                     Snackbar snackbar = Snackbar
-                            .make(root, "Bitte eine Zahl eingeben", Snackbar.LENGTH_LONG);
+                            .make(root, getString(R.string.please_insert_digit), Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
@@ -442,7 +442,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     nextStep = 10;
                 } else {
                     Snackbar snackbar = Snackbar
-                            .make(root, "Bitte einen Buchstaben eingeben", Snackbar.LENGTH_LONG);
+                            .make(root, getString(R.string.please_insert_letter), Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
@@ -463,7 +463,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     nextStep = 4;
                 } else {
                     Snackbar snackbar = Snackbar
-                            .make(root, "Bitte eine Zahl eingeben", Snackbar.LENGTH_LONG);
+                            .make(root, getString(R.string.please_insert_digit), Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
@@ -483,7 +483,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     nextStep = 5;
                 } else {
                     Snackbar snackbar = Snackbar
-                            .make(root, "Bitte eine Zahl eingeben", Snackbar.LENGTH_LONG);
+                            .make(root, getString(R.string.please_insert_digit), Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }

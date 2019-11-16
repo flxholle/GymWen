@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/gymlogo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:name=".DummyApplication">
+
         <activity
             android:name=".main.SignInActivity"
             android:label="@string/title_activity_sign_in"
