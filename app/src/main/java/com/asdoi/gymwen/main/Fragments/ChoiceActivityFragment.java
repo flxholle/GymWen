@@ -209,42 +209,6 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         }
     }
 
-    private class MyTextWatcher implements TextWatcher {
-
-
-        private EditText mEditText;
-
-        public MyTextWatcher(EditText editText) {
-            mEditText = editText;
-        }
-
-        public void afterTextChanged(Editable s) {
-        }
-
-        public void beforeTextChanged(CharSequence s, int start,
-                                      int count, int after) {
-        }
-
-        public void onTextChanged(CharSequence s, int start,
-                                  int before, int count) {
-            if (s.length() != 0) {
-                if (step != 5) {
-                    activateFab();
-                } else if (step == 5) {
-                    ((CheckBox) root.findViewById(-mEditText.getId())).setChecked(true);
-                    checkIfEmpty();
-                }
-            } else {
-                if (step != 5) {
-                    deactivateFab();
-                } else if (step == 5) {
-                    ((CheckBox) root.findViewById(-mEditText.getId())).setChecked(false);
-                    checkIfEmpty();
-                }
-            }
-        }
-    }
-
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -338,7 +302,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 default:
                     if (id >= 130 && id <= quantitiyCourses + 130) {
                         if (!((CheckBox) root.findViewById(id)).isChecked()) {
-                            ((EditText) root.findViewById(-1 * id)).setText("");
+                            ((EditText) root.findViewById(id+(1300-130))).setText("");
 
                         } /*else {
                             ((EditText) root.findViewById(-1 * id)).setText("tes " + ((EditText) root.findViewById(-1 * id)).getHint().toString());
@@ -353,6 +317,42 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
             ((ChoiceActivity) getActivity()).setFragment(nextStep);
         }
 
+    }
+
+    private class MyTextWatcher implements TextWatcher {
+
+
+        private EditText mEditText;
+
+        public MyTextWatcher(EditText editText) {
+            mEditText = editText;
+        }
+
+        public void afterTextChanged(Editable s) {
+        }
+
+        public void beforeTextChanged(CharSequence s, int start,
+                                      int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start,
+                                  int before, int count) {
+            if (s.length() != 0) {
+                if (step != 5) {
+                    activateFab();
+                } else if (step == 5) {
+                    ((CheckBox) root.findViewById(mEditText.getId()-(1300-130))).setChecked(true);
+                    checkIfEmpty();
+                }
+            } else {
+                if (step != 5) {
+                    deactivateFab();
+                } else if (step == 5) {
+                    ((CheckBox) root.findViewById(mEditText.getId()-(1300-130))).setChecked(false);
+                    checkIfEmpty();
+                }
+            }
+        }
     }
 
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
