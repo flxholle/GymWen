@@ -123,7 +123,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
     private void generateStep5() {
         for (int i = 0; i < VertretungsPlan.choiceCourseNames.length; i++) {
-            if (VertretungsPlan.choiceCourseNames[i].length < 2 || VertretungsPlan.choiceCourseNames[i][1] == null || VertretungsPlan.choiceCourseNames[i][2].trim().isEmpty()) {
+            if (VertretungsPlan.choiceCourseNames[i].length < 2 || VertretungsPlan.choiceCourseNames[i][1] == null || VertretungsPlan.choiceCourseNames[i][1].trim().isEmpty()) {
                 createColumnStep5(VertretungsPlan.choiceCourseNames[i][0], getString(R.string.anyShort));
             } else {
                 createColumnStep5(VertretungsPlan.choiceCourseNames[i][0], VertretungsPlan.choiceCourseNames[i][1]);
@@ -161,7 +161,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         inputText.setTextColor(Color.BLACK);
         inputText.setPadding(0, 0, 0, 0);
         inputText.setText(((ChoiceActivity) getActivity()).getCourseFirstDigit() + courseShort + ((ChoiceActivity) getActivity()).getCourseMainDigit());
-        inputText.setHint(((ChoiceActivity) getActivity()).getCourseFirstDigit() + courseShort + ((ChoiceActivity) getActivity()).getCourseMainDigit());
+//        inputText.setHint(((ChoiceActivity) getActivity()).getCourseFirstDigit() + courseShort + ((ChoiceActivity) getActivity()).getCourseMainDigit());
         inputText.addTextChangedListener(new MyTextWatcher(inputText));
 
         inputLayout.addView(inputText);
