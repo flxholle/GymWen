@@ -18,13 +18,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
-import androidx.fragment.app.Fragment;
 
 public class ChoiceActivityFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -156,7 +156,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         inputText.setLayoutParams(params);
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
-        inputText.setId(-quantitiyCourses - 130);
+        inputText.setId(quantitiyCourses + 1300);
         inputText.setOnEditorActionListener(this);
         inputText.setTextColor(Color.BLACK);
         inputText.setPadding(0, 0, 0, 0);
@@ -174,7 +174,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     private boolean checkIfEmpty() {
         boolean empty = true;
         for (int i = 0; i < quantitiyCourses; i++) {
-            if (!((EditText) root.findViewById(-i - 130)).getText().toString().replaceAll(" ", "").isEmpty()) {
+            if (!((EditText) root.findViewById(i+1300)).getText().toString().replaceAll(" ", "").isEmpty()) {
                 empty = false;
                 break;
             }
@@ -196,7 +196,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         } else {
             String oberstufe = "";
             for (int i = 0; i < quantitiyCourses; i++) {
-                String course = ((EditText) root.findViewById(-i - 130)).getText().toString();
+                String course = ((EditText) root.findViewById(i+1300)).getText().toString();
                 if (!course.replaceAll(" ", "").isEmpty()) {
                     if (!oberstufe.contains(course)) {
                         oberstufe += course + "#";

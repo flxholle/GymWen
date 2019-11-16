@@ -13,15 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
     ViewGroup loading;
@@ -68,6 +68,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void run() {
                     Toast.makeText(getApplicationContext(), getString(R.string.noInternetConnection), Toast.LENGTH_SHORT).show();
+                    loading.setVisibility(View.INVISIBLE);
+                    signInButton.setEnabled(true);
                 }
             });
             return;
@@ -96,7 +98,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     void signIn(boolean successful) {
-        loading.setVisibility(View.INVISIBLE);
         if (successful)
             signInSuccess();
         else
@@ -107,6 +108,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                loading.setVisibility(View.INVISIBLE);
                 Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
                 setSettings(username, password);
             }
@@ -121,6 +123,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void run() {
                 Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
+                loading.setVisibility(View.INVISIBLE);
                 signInButton.setEnabled(true);
 //                ((EditText) findViewById(R.id.signin_username)).setText("");
                 ((EditText) findViewById(R.id.signin_password)).setText("");
