@@ -15,12 +15,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.WebsiteActivity;
 
 import java.io.InputStream;
-
-import androidx.fragment.app.Fragment;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -88,7 +89,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        int backgroundColor = context.getColor(R.color.web_background_homepages);
+        int backgroundColor = ContextCompat.getColor(context, R.color.web_background_homepages);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
         int titleColor = Color.BLACK;
@@ -206,7 +207,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        int backgroundColor = context.getColor(R.color.web_background_content);
+        int backgroundColor = ContextCompat.getColor(context, R.color.web_background_content);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
         int titleColor = Color.BLACK;
