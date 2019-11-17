@@ -15,6 +15,8 @@ import android.widget.RemoteViews;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.Fragments.VertretungFragment;
 import com.asdoi.gymwen.main.MainActivity;
@@ -189,7 +191,7 @@ public class VertretungWidget extends AppWidgetProvider {
         tv.setTextSize(24);
         tv.setTypeface(Typeface.DEFAULT_BOLD);
         tv.setGravity(Gravity.CENTER);
-        tv.setTextColor(context.getColor(R.color.colorAccent));
+        tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
         return tv;
     }
 

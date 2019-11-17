@@ -18,6 +18,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 
 
@@ -167,7 +169,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
             TextView tv = new TextView(context);
             tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
             tv.setLayoutParams(params);
-            tv.setBackgroundColor(context.getColor(R.color.colorAccent));
+            tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
             tv.setTextColor(Color.WHITE);
             tv.setText(inhalt[i][1]);
             tv.setTextSize(36);
@@ -188,7 +190,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
                 tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(context.getColor(R.color.colorAccent));
+                tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 row.addView(tv);
 
                 for (int j = 2; j < columnNumber - 1; j++) {
@@ -240,7 +242,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
                 tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(context.getColor(R.color.colorAccent));
+                tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 row.addView(tv);
 
                 //Sonstiges
@@ -288,7 +290,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
             );
             tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
             tv.setLayoutParams(params);
-            tv.setBackgroundColor(context.getColor(R.color.colorAccent));
+            tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
             tv.setTextColor(Color.WHITE);
             tv.setText(inhalt[i][1]);
             tv.setTextSize(36);
@@ -309,7 +311,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
                 tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(context.getColor(R.color.colorAccent));
+                tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 row.addView(tv);
 
                 for (int j = 2; j < columnNumber; j++) {
@@ -362,7 +364,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
                 tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(context.getColor(R.color.colorAccent));
+                tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 row.addView(tv);
 
                 //Sonstiges
