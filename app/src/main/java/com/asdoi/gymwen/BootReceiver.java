@@ -3,7 +3,6 @@ package com.asdoi.gymwen;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 
 public class BootReceiver extends BroadcastReceiver {
@@ -12,11 +11,12 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent arg1) {
         Intent service = new Intent(context, NotificationService.class);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(service);
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            context.startForegroundService(service);
+//        } else {
+        context.stopService(service);
             context.startService(service);
-        }
+//        }
         Log.i("Autostart", "started");
     }
 }
