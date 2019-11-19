@@ -23,6 +23,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,10 +38,6 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private static View root;
@@ -148,7 +148,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
 
                     } catch (IOException e) {
-//                    e.printStackTrace();
+                        e.printStackTrace();
                         VertretungsPlan.lastAuthString = authString + "f";
                         return null;
                     }
