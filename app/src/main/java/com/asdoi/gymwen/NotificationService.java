@@ -40,10 +40,10 @@ public class NotificationService extends Service {
         return Service.START_NOT_STICKY;
     }
 
-    public static class createNotificationOld extends VertretungFragment.downloadDoc {
+    public static class createNotification extends VertretungFragment.downloadDoc {
         private Context mA;
 
-        public createNotificationOld(Context a) {
+        public createNotification(Context a) {
             mA = a;
         }
 
@@ -144,7 +144,7 @@ public class NotificationService extends Service {
         }
     }
 
-    public static class createNotification extends AsyncTask<String, Void, Document[]> {
+    public static class createNotificationOld extends AsyncTask<String, Void, Document[]> {
         private Context mA;
 
         @Override
@@ -184,7 +184,7 @@ public class NotificationService extends Service {
             return doc;
         }
 
-        public createNotification(Context a) {
+        public createNotificationOld(Context a) {
             mA = a;
         }
 
