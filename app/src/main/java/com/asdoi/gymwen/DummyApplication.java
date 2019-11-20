@@ -5,6 +5,7 @@ import android.content.Context;
 
 public class DummyApplication extends Application {
     private static Context mContext;
+    public static boolean checkedAtNetworkChange = false;
 
     @Override
     public void onCreate() {

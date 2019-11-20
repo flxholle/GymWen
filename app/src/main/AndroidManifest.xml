@@ -8,14 +8,14 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:name=".DummyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/gymlogo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/gymlogo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        android:name=".DummyApplication">
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".main.MainActivity"
@@ -28,12 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".main.SignInActivity"
-            android:label="@string/title_activity_sign_in"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_sign_in"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.ImpressumActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -74,9 +73,13 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".WebsiteReceiver"
+            android:name=".NetworkReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".NotificationService"
