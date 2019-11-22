@@ -18,7 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.asdoi.gymwen.NotificationService;
+import com.asdoi.gymwen.DummyApplication;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.Fragments.VertretungFragment;
@@ -92,14 +92,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
-        if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("signed", false)) {
-            Intent i = new Intent(this, SignInActivity.class);
-            startActivity(i);
+        if (!DummyApplication.setSettings()) {
             finish();
-        } else {
-            setSettings();
-            proofeNotification();
         }
+
     }
 
     public static boolean homepageFragment = false;
@@ -226,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
         }
 
-        proofeNotification();
+        DummyApplication.proofeNotification();
 
         return true;
     }
@@ -312,32 +308,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         downloadID = downloadManager.enqueue(request);// enqueue puts the download request in the queue.
         return downloadID;
-    }
-
-    public void setSettings() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean oberstufe = sharedPref.getBoolean("oberstufe", true);
-        String courses = sharedPref.getString("courses", "");
-        if (courses.trim().isEmpty()) {
-            Intent i = new Intent(this, ChoiceActivity.class);
-            startActivity(i);
-            return;
-        }
-        VertretungsPlan.setup(oberstufe, courses.split("#"), courses);
-
-        System.out.println("settings: " + oberstufe + courses);
-
-        String username = sharedPref.getString("username", "");
-        String password = sharedPref.getString("password", "");
-
-        VertretungsPlan.signin(username, password);
-    }
-
-    private void proofeNotification() {
-//        new VertretungFragment.createNotification(this).execute(new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL});
-        Intent intent = new Intent(MainActivity.this, NotificationService.class);
-        stopService(intent);
-        startService(intent);
     }
 
     @Override
