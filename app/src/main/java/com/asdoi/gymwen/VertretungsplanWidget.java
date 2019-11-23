@@ -48,7 +48,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
 
-        DummyApplication.proofeNotification();
+//        DummyApplication.proofeNotification();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
 
                 //DownloadDocs
                 if (!VertretungsPlan.areDocsDownloaded() && DummyApplication.isNetworkAvailable()) {
-                    if (!DummyApplication.setSettings()) {
+                    if (!DummyApplication.setSettings(true)) {
                         return;
                     }
                     String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};
@@ -105,7 +105,6 @@ public class VertretungsplanWidget extends AppWidgetProvider {
                                     .header("Authorization", "Basic " + encodedString)
                                     .get();
 
-                            System.out.println("Logged in using basic authentication");
                             VertretungsPlan.lastAuthString = authString + "t";
 
 
