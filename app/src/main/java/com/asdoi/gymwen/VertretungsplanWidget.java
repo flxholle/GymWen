@@ -1,10 +1,10 @@
 package com.asdoi.gymwen;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.Intent;
 import android.os.Handler;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.main.MainActivity;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
@@ -19,31 +20,26 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
+import androidx.core.content.ContextCompat;
+
 /**
  * Implementation of App Widget functionality.
  */
 public class VertretungsplanWidget extends AppWidgetProvider {
-    private static Context context;
-    private RemoteViews rootView;
-    private AppWidgetManager awm;
-    private int awID;
+    private static Context context = DummyApplication.getContext();
     private Handler handler;
 
-    void updateAppWidget(Context context2, AppWidgetManager appWidgetManager, int appWidgetId) {
-        context = context2;
-        // Construct the RemoteViews object
-        rootView = new RemoteViews(context.getPackageName(), R.layout.vertretungsplan_widget);
-        awm = appWidgetManager;
-        awID = appWidgetId;
+    public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
 
-        // Get a handler that can be used to post to the main thread
-        handler = new Handler(context.getMainLooper());
-
-        init();
-//        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_textview);
-//        rootView.addView(R.id.widget1_basic, rv);
-//        awm.updateAppWidget(awID, rootView);
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.hasExtra(WIDGET_ID_KEY)) {
+            int[] ids = intent.getExtras().getIntArray(WIDGET_ID_KEY);
+            this.onUpdate(context, AppWidgetManager.getInstance(context), ids);
+        } else
+            super.onReceive(context, intent);
     }
+
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -51,6 +47,8 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
+
+        DummyApplication.proofeNotification();
     }
 
     @Override
@@ -63,13 +61,26 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private void init() {
+    void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+        // Construct the RemoteViews object
+        RemoteViews rootView = new RemoteViews(context.getPackageName(), R.layout.vertretungsplan_widget);
+        rootView.removeAllViews(R.id.widget1_basic);
+
+
+        // Get a handler that can be used to post to the main thread
+        handler = new Handler(context.getMainLooper());
+
+        init(rootView, appWidgetManager, appWidgetId);
+
+    }
+
+    private void init(final RemoteViews rootView, final AppWidgetManager awm, final int awID) {
         new Thread(new Runnable() {
             @Override
             public void run() {
 
                 //DownloadDocs
-                if (!VertretungsPlan.areDocsDownloaded() && isNetworkAvailable()) {
+                if (!VertretungsPlan.areDocsDownloaded() && DummyApplication.isNetworkAvailable()) {
                     if (!DummyApplication.setSettings()) {
                         return;
                     }
@@ -107,6 +118,9 @@ public class VertretungsplanWidget extends AppWidgetProvider {
                     VertretungsPlan.setDocs(doc[0], doc[1]);
                 }
                 generateTable(rootView);
+                Intent intent = new Intent(context, MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+                rootView.setOnClickPendingIntent(R.id.widget1_basic, pendingIntent);
                 Runnable myRunnable = new Runnable() {
                     @Override
                     public void run() {
@@ -135,6 +149,8 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         } else {
             headline = new String[]{context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.classes)};
         }
+        if (inhalt == null)
+            headline = null;
         addHead(title, headline, day, sonstig);
 
         if (inhalt == null) {
@@ -151,19 +167,28 @@ public class VertretungsplanWidget extends AppWidgetProvider {
     private void addHead(String title, String[] headline, RemoteViews widget_day, boolean sonstiges) {
         widget_day.setTextViewText(R.id.widgetDay_title, title);
 
-        //Set Headline Strings
-        widget_day.setTextViewText(R.id.widgetDay_text1, headline[0]);
-        widget_day.setTextViewText(R.id.widgetDay_text2, headline[1]);
-        widget_day.setTextViewText(R.id.widgetDay_text3, headline[2]);
-        widget_day.setTextViewText(R.id.widgetDay_text4, headline[3]);
-
-        if (!sonstiges) {
+        if (headline == null) {
+            widget_day.setViewVisibility(R.id.widgetDay_text1, View.GONE);
+            widget_day.setViewVisibility(R.id.widgetDay_text2, View.GONE);
+            widget_day.setViewVisibility(R.id.widgetDay_text3, View.GONE);
+            widget_day.setViewVisibility(R.id.widgetDay_text4, View.GONE);
             widget_day.setViewVisibility(R.id.widgetDay_text5, View.GONE);
+            widget_day.setViewVisibility(R.id.widgetDay_text6, View.GONE);
         } else {
-            widget_day.setTextViewText(R.id.widgetDay_text5, headline[4]);
-        }
+            //Set Headline Strings
+            widget_day.setTextViewText(R.id.widgetDay_text1, headline[0]);
+            widget_day.setTextViewText(R.id.widgetDay_text2, headline[1]);
+            widget_day.setTextViewText(R.id.widgetDay_text3, headline[2]);
+            widget_day.setTextViewText(R.id.widgetDay_text4, headline[3]);
 
-        widget_day.setTextViewText(R.id.widgetDay_text6, headline[5]);
+            if (!sonstiges) {
+                widget_day.setViewVisibility(R.id.widgetDay_text5, View.GONE);
+            } else {
+                widget_day.setTextViewText(R.id.widgetDay_text5, headline[4]);
+            }
+
+            widget_day.setTextViewText(R.id.widgetDay_text6, headline[5]);
+        }
     }
 
     private RemoteViews generateBodyRow(String[] inhalt, boolean oberstufe, boolean sonstiges) {
@@ -172,10 +197,9 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         row.setTextViewText(R.id.widgetBody_text1, inhalt[1]);
         if (inhalt[3].equals("entfällt")) {
             row.setTextViewText(R.id.widgetBody_text2, inhalt[3]);
-            row.setTextColor(R.id.widgetBody_text2, context.getResources().getColor(R.color.colorAccent));
-            row.setTextViewTextSize(R.id.widgetBody_text2, 24, 0);
+            row.setTextColor(R.id.widgetBody_text2, ContextCompat.getColor(context, R.color.colorAccent));
 
-            row.setTextViewText(R.id.widgetHead_text6, inhalt[0]);
+            row.setTextViewText(R.id.widgetBody_text6, inhalt[0]);
 
             row.setViewVisibility(R.id.widgetBody_text3, View.GONE);
             row.setViewVisibility(R.id.widgetBody_text4, View.GONE);
@@ -188,7 +212,6 @@ public class VertretungsplanWidget extends AppWidgetProvider {
             SpannableString content = new SpannableString(inhalt[4]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             row.setTextViewText(R.id.widgetBody_text4, content);
-            row.setTextViewTextSize(R.id.widgetBody_text4, 24, 0);
             if (!sonstiges)
                 row.setViewVisibility(R.id.widgetBody_text5, View.GONE);
             else
@@ -200,7 +223,6 @@ public class VertretungsplanWidget extends AppWidgetProvider {
             SpannableString content = new SpannableString(inhalt[4]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             row.setTextViewText(R.id.widgetBody_text4, content);
-            row.setTextViewTextSize(R.id.widgetBody_text4, 24, 0);
             if (!sonstiges)
                 row.setViewVisibility(R.id.widgetBody_text5, View.GONE);
             else
@@ -222,7 +244,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         return row;
     }
 
-    private String sonstigesString(String[][] inhalt) {
+    private static String sonstigesString(String[][] inhalt) {
         String sonstiges = "";
 
         if (inhalt == null)
@@ -237,7 +259,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         return sonstiges;
     }
 
-    private boolean isSonstiges(String[][] inhalt) {
+    private static boolean isSonstiges(String[][] inhalt) {
         boolean sonstiges = false;
 
         if (inhalt == null)
@@ -252,11 +274,5 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         return sonstiges;
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 }
 
