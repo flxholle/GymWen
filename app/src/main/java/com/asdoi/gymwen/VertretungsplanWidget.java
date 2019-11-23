@@ -81,7 +81,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
 
                 //DownloadDocs
                 if (!VertretungsPlan.areDocsDownloaded() && DummyApplication.isNetworkAvailable()) {
-                    if (!DummyApplication.setSettings(true)) {
+                    if (!DummyApplication.initSettings(true)) {
                         return;
                     }
                     String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};

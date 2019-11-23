@@ -1,11 +1,8 @@
 package com.asdoi.gymwen.main.Fragments;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,13 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
+import com.asdoi.gymwen.DummyApplication;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.WebsiteActivity;
 
-import java.io.InputStream;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -156,7 +152,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new DownloadImageTask(imageView)
+            new DummyApplication.downloadImageTask(imageView)
                     .execute(imageUrl);
 
 
@@ -276,7 +272,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new DownloadImageTask(imageView)
+            new DummyApplication.downloadImageTask(imageView)
                     .execute(imageUrl);
 
 
@@ -340,33 +336,5 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             buttonCall.onClick(view);
         }
         //TODO: Expand images
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            if (!urldisplay.trim().isEmpty()) {
-                Bitmap mIcon11 = null;
-                try {
-                    InputStream in = new java.net.URL(urldisplay).openStream();
-                    mIcon11 = BitmapFactory.decodeStream(in);
-                } catch (Exception e) {
-//                Log.e("Error", e.getMessage());
-                    e.printStackTrace();
-                }
-                return mIcon11;
-            }
-            return null;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 }

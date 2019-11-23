@@ -387,7 +387,7 @@ public abstract class Parse {
 //
 //    public static Document getDocument() {
 //        Document doc = null;
-//        new DownloadImageTask((Document) doc)
+//        new downloadImageTask((Document) doc)
 //                .execute("st");
 //    }
 //
@@ -396,13 +396,13 @@ public abstract class Parse {
 //
 //        void start() {
 //
-//            new DownloadImageTask((Document) doc).execute("");
+//            new downloadImageTask((Document) doc).execute("");
 //        }
 //    }
 
-//    private class DownloadImageTask extends AsyncTask<String, Void, Document> {
+//    private class downloadImageTask extends AsyncTask<String, Void, Document> {
 //
-//        public DownloadImageTask() {
+//        public downloadImageTask() {
 //        }
 //
 //        public interface AsyncResponse {

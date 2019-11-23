@@ -42,6 +42,7 @@ public abstract class VertretungsPlan {
             {DummyApplication.getContext().getString(R.string.P_Seminar), DummyApplication.getContext().getString(R.string.P_SeminarShort)},
             {DummyApplication.getContext().getString(R.string.profile_subject), DummyApplication.getContext().getString(R.string.profile_subjectShort)}
     };
+    public static boolean checkedAtNetworkChange = false;
 
     private static UserInput ui = new UserInput();
 
@@ -52,7 +53,7 @@ public abstract class VertretungsPlan {
         else{
             ui.reCreate(oberstufe, courseNames, className);
         }
-        System.out.println("HI " + className);
+//        System.out.println("HI " + className);
     }
 
     public static void signin(String username, String password) {
