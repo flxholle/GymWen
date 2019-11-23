@@ -3,6 +3,7 @@ package com.asdoi.gymwen;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -11,10 +12,10 @@ import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import androidx.core.content.ContextCompat;
+
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.MainActivity;
-
-import androidx.core.content.ContextCompat;
 
 /**
  * Implementation of App Widget functionality.
@@ -72,11 +73,20 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DummyApplication.downloadDocs();
+                DummyApplication.downloadDocs(true);
                 generateTable(rootView);
                 Intent intent = new Intent(context, MainActivity.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
                 rootView.setOnClickPendingIntent(R.id.widget1_basic, pendingIntent);
+
+                AppWidgetManager man = AppWidgetManager.getInstance(context);
+                int[] ids = man.getAppWidgetIds(new ComponentName(context, VertretungsplanWidget.class));
+                intent = new Intent();
+                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                intent.putExtra(VertretungsplanWidget.WIDGET_ID_KEY, ids);
+                pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+                rootView.setOnClickPendingIntent(R.id.widget1_refresh_button, pendingIntent);
+
                 Runnable myRunnable = new Runnable() {
                     @Override
                     public void run() {

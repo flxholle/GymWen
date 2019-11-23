@@ -15,6 +15,9 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
+
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.SignInActivity;
@@ -26,8 +29,6 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.io.InputStream;
 
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.ContextCompat;
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
@@ -96,7 +97,7 @@ public class DummyApplication extends Application {
             VertretungsPlan.signin(username, password);
             if (!isWidget) {
                 proofeNotification();
-                updateMyWidgets(context);
+                updateMyWidgets();
             }
         } else {
             Intent i = new Intent(context, SignInActivity.class);
@@ -118,7 +119,8 @@ public class DummyApplication extends Application {
 //        }
     }
 
-    public static void updateMyWidgets(Context context) {
+    public static void updateMyWidgets() {
+        Context context = getContext();
         AppWidgetManager man = AppWidgetManager.getInstance(context);
         int[] ids = man.getAppWidgetIds(new ComponentName(context, VertretungsplanWidget.class));
         Intent updateIntent = new Intent();
@@ -127,16 +129,16 @@ public class DummyApplication extends Application {
         context.sendBroadcast(updateIntent);
     }
 
-    public static Runnable downloadRunnable() {
+    public static Runnable downloadRunnable(final boolean isWidget) {
         return new Runnable() {
             @Override
             public void run() {
-                downloadDocs();
+                downloadDocs(isWidget);
             }
         };
     }
 
-    public static void downloadDocs() {
+    public static void downloadDocs(boolean isWidget) {
 
         //DownloadDocs
         if (!VertretungsPlan.areDocsDownloaded() && DummyApplication.isNetworkAvailable()) {
@@ -174,13 +176,20 @@ public class DummyApplication extends Application {
                 }
             }
             VertretungsPlan.setDocs(doc[0], doc[1]);
+            if (!isWidget) {
+                proofeNotification();
+                updateMyWidgets();
+            }
         }
     }
 
-    public static class downloadDocsTask extends AsyncTask<Void, Void, Void> {
+    public static class downloadDocsTask extends AsyncTask<Boolean, Void, Void> {
         @Override
-        protected Void doInBackground(Void... params) {
-            downloadDocs();
+        protected Void doInBackground(Boolean... params) {
+            if (params == null || params.length < 1) {
+                params = new Boolean[]{true};
+            }
+            downloadDocs(params[0]);
             return null;
         }
     }
