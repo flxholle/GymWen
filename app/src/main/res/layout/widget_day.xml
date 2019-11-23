@@ -12,7 +12,7 @@
         android:gravity="center"
         android:text="Title"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <RelativeLayout
@@ -31,8 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center|center_vertical"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/widgetDay_text2"
@@ -40,8 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center|center_vertical"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/widgetDay_text3"
@@ -49,8 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center|center_vertical"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/widgetDay_text4"
@@ -58,8 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center|center_vertical"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/widgetDay_text5"
@@ -67,8 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center|center_vertical"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/widgetDay_text6"
@@ -76,8 +71,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|end"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
         </LinearLayout>
     </RelativeLayout>

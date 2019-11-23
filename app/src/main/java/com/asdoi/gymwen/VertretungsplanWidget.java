@@ -14,12 +14,6 @@ import android.widget.RemoteViews;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.MainActivity;
 
-import org.apache.commons.codec.binary.Base64;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
-
 import androidx.core.content.ContextCompat;
 
 /**
@@ -78,44 +72,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                //DownloadDocs
-                if (!VertretungsPlan.areDocsDownloaded() && DummyApplication.isNetworkAvailable()) {
-                    if (!DummyApplication.initSettings(true)) {
-                        return;
-                    }
-                    String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};
-                    Document[] doc = new Document[strURL.length];
-                    for (int i = 0; i < 2; i++) {
-
-                        String authString = VertretungsPlan.strUserId + ":" + VertretungsPlan.strPasword;
-
-                        String lastAuthString = VertretungsPlan.lastAuthString;
-                        //Check if already tried logging in with this authentication and if it failed before, return null
-                        if (lastAuthString.length() > 1 && lastAuthString.substring(0, lastAuthString.length() - 1).equals(authString) && lastAuthString.charAt(lastAuthString.length() - 1) == 'f') {
-                            System.out.println("failed before with same authString");
-                            //return doc;
-                        }
-
-                        String encodedString =
-                                new String(Base64.encodeBase64(authString.getBytes()));
-
-                        try {
-                            doc[i] = Jsoup.connect(strURL[i])
-                                    .header("Authorization", "Basic " + encodedString)
-                                    .get();
-
-                            VertretungsPlan.lastAuthString = authString + "t";
-
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            VertretungsPlan.lastAuthString = authString + "f";
-                            return;
-                        }
-                    }
-                    VertretungsPlan.setDocs(doc[0], doc[1]);
-                }
+                DummyApplication.downloadDocs();
                 generateTable(rootView);
                 Intent intent = new Intent(context, MainActivity.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
@@ -200,9 +157,9 @@ public class VertretungsplanWidget extends AppWidgetProvider {
 
             row.setTextViewText(R.id.widgetBody_text6, inhalt[0]);
 
-            row.setViewVisibility(R.id.widgetBody_text3, View.GONE);
+            /*row.setViewVisibility(R.id.widgetBody_text3, View.GONE);
             row.setViewVisibility(R.id.widgetBody_text4, View.GONE);
-            row.setViewVisibility(R.id.widgetBody_text5, View.GONE);
+            row.setViewVisibility(R.id.widgetBody_text5, View.GONE);*/
             return row;
         }
         if (oberstufe) {
