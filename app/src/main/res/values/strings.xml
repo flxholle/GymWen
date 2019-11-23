@@ -148,8 +148,9 @@
     <string name="action_open_in_browser">Im Browser öffnen</string>
     <string name="share_link">Link teilen mit...</string>
 
-    <!-- Widget -->
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <!-- Notification-->
+    <string name="notification_channel_title">Vertretungsplan</string>
+    <string name="notification_channel_description">Vertretungsplan</string>
+    <string name="notif_content_title">Vertretung:</string>
 
 </resources>
