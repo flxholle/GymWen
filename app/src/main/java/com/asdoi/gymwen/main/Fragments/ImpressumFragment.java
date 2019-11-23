@@ -1,7 +1,6 @@
 package com.asdoi.gymwen.main.Fragments;
 
 
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -61,11 +60,7 @@ public class ImpressumFragment extends Fragment {
         datenschutz = getString(R.string.privacy);
         TextView textView = root.findViewById(R.id.impressum_datenschutzerklärung);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            textView.setText(Html.fromHtml(datenschutz, Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            textView.setText(Html.fromHtml(datenschutz));
-        }
+        textView.setText(Html.fromHtml(datenschutz, Html.FROM_HTML_MODE_COMPACT));
 
         return root;
     }

@@ -127,112 +127,61 @@ public class DummyApplication extends Application {
         context.sendBroadcast(updateIntent);
     }
 
-    public Runnable downloadRunnable = new Runnable() {
-        @Override
-        public void run() {
-            downloadDocs();
-        }
-
-        private void downloadDocs() {
-
-            //DownloadDocs
-            if (!VertretungsPlan.areDocsDownloaded() && DummyApplication.isNetworkAvailable()) {
-                if (!DummyApplication.initSettings(true)) {
-                    return;
-                }
-                String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};
-                Document[] doc = new Document[strURL.length];
-                for (int i = 0; i < 2; i++) {
-
-                    String authString = VertretungsPlan.strUserId + ":" + VertretungsPlan.strPasword;
-
-                    String lastAuthString = VertretungsPlan.lastAuthString;
-                    //Check if already tried logging in with this authentication and if it failed before, return null
-                    if (lastAuthString.length() > 1 && lastAuthString.substring(0, lastAuthString.length() - 1).equals(authString) && lastAuthString.charAt(lastAuthString.length() - 1) == 'f') {
-                        System.out.println("failed before with same authString");
-                        //return doc;
-                    }
-
-                    String encodedString =
-                            new String(Base64.encodeBase64(authString.getBytes()));
-
-                    try {
-                        doc[i] = Jsoup.connect(strURL[i])
-                                .header("Authorization", "Basic " + encodedString)
-                                .get();
-
-                        VertretungsPlan.lastAuthString = authString + "t";
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        VertretungsPlan.lastAuthString = authString + "f";
-                        return;
-                    }
-                }
-                VertretungsPlan.setDocs(doc[0], doc[1]);
+    public static Runnable downloadRunnable() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                downloadDocs();
             }
-        }
-    };
+        };
+    }
 
-    public static class downloadDocsTask extends AsyncTask<String, Void, Document[]> {
-        @Override
-        protected Document[] doInBackground(String... strURL) {
+    public static void downloadDocs() {
+
+        //DownloadDocs
+        if (!VertretungsPlan.areDocsDownloaded() && DummyApplication.isNetworkAvailable()) {
+            if (!DummyApplication.initSettings(true)) {
+                return;
+            }
+            String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};
             Document[] doc = new Document[strURL.length];
-            if (!VertretungsPlan.areDocsDownloaded()) {
-                for (int i = 0; i < strURL.length; i++) {
+            for (int i = 0; i < 2; i++) {
 
-                    String authString = VertretungsPlan.strUserId + ":" + VertretungsPlan.strPasword;
+                String authString = VertretungsPlan.strUserId + ":" + VertretungsPlan.strPasword;
 
-                    String lastAuthString = VertretungsPlan.lastAuthString;
-                    //Check if already tried logging in with this authentication and if it failed before, return null
-                    if (lastAuthString.length() > 1 && lastAuthString.substring(0, lastAuthString.length() - 1).equals(authString) && lastAuthString.charAt(lastAuthString.length() - 1) == 'f') {
-                        System.out.println("failed before with same authString");
-                        //return doc;
-                    }
-
-                    String encodedString =
-                            new String(Base64.encodeBase64(authString.getBytes()));
-
-                    try {
-                        doc[i] = Jsoup.connect(strURL[i])
-                                .header("Authorization", "Basic " + encodedString)
-                                .get();
-
-                        System.out.println("Logged in using basic authentication");
-                        VertretungsPlan.lastAuthString = authString + "t";
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        VertretungsPlan.lastAuthString = authString + "f";
-                        return null;
-                    }
+                String lastAuthString = VertretungsPlan.lastAuthString;
+                //Check if already tried logging in with this authentication and if it failed before, return null
+                if (lastAuthString.length() > 1 && lastAuthString.substring(0, lastAuthString.length() - 1).equals(authString) && lastAuthString.charAt(lastAuthString.length() - 1) == 'f') {
+                    System.out.println("failed before with same authString");
+                    //return doc;
                 }
-            }
-            return doc;
-        }
 
-        @Override
-        protected void onPostExecute(Document[] result) {
-//            new createTable().execute(result);
+                String encodedString =
+                        new String(Base64.encodeBase64(authString.getBytes()));
 
-            //Set Document
-            setDocs(result);
-        }
+                try {
+                    doc[i] = Jsoup.connect(strURL[i])
+                            .header("Authorization", "Basic " + encodedString)
+                            .get();
 
-        public void setDocs(Document[] values) {
-            if (!VertretungsPlan.areDocsDownloaded()) {
-                if (values == null) {
-                    VertretungsPlan.setDocs(null, null);
+                    VertretungsPlan.lastAuthString = authString + "t";
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    VertretungsPlan.lastAuthString = authString + "f";
                     return;
                 }
-                if (values.length == 2) {
-                    VertretungsPlan.setDocs(values[0], values[1]);
-                } else if (values.length == 1) {
-                    VertretungsPlan.setTodayDoc(values[0]);
-                }
             }
+            VertretungsPlan.setDocs(doc[0], doc[1]);
+        }
+    }
+
+    public static class downloadDocsTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            downloadDocs();
+            return null;
         }
     }
 

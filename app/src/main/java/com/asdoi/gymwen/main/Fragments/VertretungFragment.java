@@ -178,7 +178,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     }
 
     private void refresh() {
-        new DummyApplication.downloadDocsTask().execute(VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL);
+        new DummyApplication.downloadDocsTask().execute();
     }
 
     private void share() {
