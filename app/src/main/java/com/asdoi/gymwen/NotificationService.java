@@ -12,11 +12,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
-
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
-import com.asdoi.gymwen.main.Fragments.VertretungFragment;
 import com.asdoi.gymwen.main.MainActivity;
 
 import org.apache.commons.codec.binary.Base64;
@@ -24,6 +20,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 
 public class NotificationService extends Service {
     public NotificationService() {
@@ -40,7 +39,7 @@ public class NotificationService extends Service {
         return Service.START_NOT_STICKY;
     }
 
-    public static class createNotification extends VertretungFragment.downloadDoc {
+    public static class createNotification extends DummyApplication.downloadDocsTask {
         private Context mA;
 
         public createNotification(Context a) {

@@ -1,14 +1,13 @@
 package com.asdoi.gymwen.main;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.asdoi.gymwen.DummyApplication;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.Fragments.WebsiteActivityFragment;
@@ -25,12 +24,8 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
-import saschpe.android.customtabs.CustomTabsHelper;
-import saschpe.android.customtabs.WebViewFallback;
 
 public class    WebsiteActivity extends AppCompatActivity implements View.OnClickListener {
     public ArrayList<String> history = new ArrayList<>();
@@ -172,7 +167,9 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
             startActivity(intent);*/
-            try{tabIntent(history.get(history.size() - 1));}
+            try {
+                DummyApplication.tabIntent(history.get(history.size() - 1));
+            }
             catch (Exception e){}
         } else if (item.getItemId() == R.id.action_share || item.getItemId() == R.id.action_share2 ) {
             Intent i = new Intent();
@@ -598,7 +595,8 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
                             }
                         } else {
                             try{
-                            tabIntent(urlFinal, getApplicationContext());}
+                                DummyApplication.tabIntent(urlFinal);
+                            }
                             catch (Exception e){
                                 e.printStackTrace();
                             }
@@ -606,51 +604,8 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
                     }
                 })).start();
             } else {
-                tabIntent(urlFinal);
+                DummyApplication.tabIntent(urlFinal);
             }
-        }
-    }
-
-    private void tabIntent(String url) {
-        try {
-            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                    .addDefaultShareMenuItem()
-                    .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                    .setShowTitle(true)
-                    .setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back_white_24dp))
-                    .build();
-
-            // This is optional but recommended
-            CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
-
-            // This is where the magic happens...
-            CustomTabsHelper.openCustomTab(this, customTabsIntent,
-                    Uri.parse(url),
-                    new WebViewFallback());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void tabIntent(String url, Context context) {
-        try {
-            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                    .addDefaultShareMenuItem()
-                    .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                    .setShowTitle(true)
-                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
-                    .build();
-
-            // This is optional but recommended
-            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
-
-            // This is where the magic happens...
-            CustomTabsHelper.openCustomTab(context, customTabsIntent,
-                    Uri.parse(url),
-                    new WebViewFallback());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

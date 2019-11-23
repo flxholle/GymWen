@@ -57,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v){
 //        if(v.getId() == R.id.settings_choice){
-//            setSettings();
+//            initSettings();
 //            Intent i = new Intent(this, ChoiceActivity.class);
 //            startActivity(i);
 //            return;

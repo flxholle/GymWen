@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -23,21 +21,17 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
+import com.asdoi.gymwen.DummyApplication;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.commons.codec.binary.Base64;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private static View root;
@@ -81,7 +75,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         createLoadingPanel();
 
 
-        if (isNetworkAvailable())
+        if (DummyApplication.isNetworkAvailable())
             refreshAndTable();
         else
             generateTable();
@@ -115,76 +109,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         panel.addView(textView);
 
         ((ViewGroup) root.findViewById(R.id.vertretung_constraint)).addView(panel);
-    }
-
-    //TODO: Is Network Avaiable Check!
-
-    public static class downloadDoc extends AsyncTask<String, Void, Document[]> {
-        @Override
-        protected Document[] doInBackground(String... strURL) {
-            Document[] doc = new Document[strURL.length];
-            if (!VertretungsPlan.areDocsDownloaded()) {
-                for (int i = 0; i < strURL.length; i++) {
-
-                    String authString = VertretungsPlan.strUserId + ":" + VertretungsPlan.strPasword;
-
-                    String lastAuthString = VertretungsPlan.lastAuthString;
-                    //Check if already tried logging in with this authentication and if it failed before, return null
-                    if (lastAuthString.length() > 1 && lastAuthString.substring(0, lastAuthString.length() - 1).equals(authString) && lastAuthString.charAt(lastAuthString.length() - 1) == 'f') {
-                        System.out.println("failed before with same authString");
-                        //return doc;
-                    }
-
-                    String encodedString =
-                            new String(Base64.encodeBase64(authString.getBytes()));
-
-                    try {
-                        doc[i] = Jsoup.connect(strURL[i])
-                                .header("Authorization", "Basic " + encodedString)
-                                .get();
-
-                        System.out.println("Logged in using basic authentication");
-                        VertretungsPlan.lastAuthString = authString + "t";
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        VertretungsPlan.lastAuthString = authString + "f";
-                        return null;
-                    }
-                }
-            }
-            return doc;
-        }
-
-        @Override
-        protected void onPostExecute(Document[] result) {
-//            new createTable().execute(result);
-
-            //Set Document
-            setDocs(result);
-        }
-
-        public void setDocs(Document[] values) {
-            if (!VertretungsPlan.areDocsDownloaded()) {
-                if (values == null) {
-                    VertretungsPlan.setDocs(null, null);
-                    return;
-                }
-                if (values.length == 2) {
-                    VertretungsPlan.setDocs(values[0], values[1]);
-                } else if (values.length == 1) {
-                    VertretungsPlan.setTodayDoc(values[0]);
-                }
-            }
-        }
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private String shareMessage() {
@@ -254,7 +178,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     }
 
     private void refresh() {
-        new downloadDoc().execute(VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL);
+        new DummyApplication.downloadDocsTask().execute(VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL);
     }
 
     private void share() {
