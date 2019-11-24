@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.SignInActivity;
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.github.javiersantos.appupdater.enums.UpdateFrom;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
@@ -234,5 +237,24 @@ public class DummyApplication extends Application {
         drawable.setBounds(0, 0, c.getWidth(), c.getHeight());
         drawable.draw(c);
         return b;
+    }
+
+    public static void checkUpdates() {
+        String url = "https://gitlab.com/asdoi/gymwenreleases/raw/master/UpdaterFile.json";
+        AppUpdater appUpdater = new AppUpdater(getContext())
+                .setDisplay(Display.NOTIFICATION)
+//                .setDisplay(Display.DIALOG)
+//                .setDisplay(Display.SNACKBAR)
+                .setUpdateFrom(UpdateFrom.JSON)
+                .setUpdateJSON(url)
+                .setTitleOnUpdateAvailable(R.string.update_available_title)
+                .setContentOnUpdateAvailable(R.string.update_available_content)
+                .setTitleOnUpdateNotAvailable(R.string.update_not_available_title)
+                .setContentOnUpdateNotAvailable(R.string.update_not_available_content)
+                .setButtonUpdate(R.string.update_now)
+                .setButtonDismiss(R.string.update_later)
+                .setButtonDoNotShowAgain(null)
+                .setIcon(R.drawable.ic_system_update_black_24dp);
+        appUpdater.start();
     }
 }

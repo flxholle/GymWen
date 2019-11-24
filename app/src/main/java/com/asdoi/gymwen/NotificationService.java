@@ -78,7 +78,7 @@ public class NotificationService extends Service {
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_HIGH);
+                NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_LOW);
 
                 // Configure the notification channel.
                 notificationChannel.setDescription(context.getString(R.string.notification_channel_description));
@@ -91,7 +91,7 @@ public class NotificationService extends Service {
 
                 notificationManager.createNotificationChannel(notificationChannel);
             } else {
-                notificationBuilder.setPriority(Notification.PRIORITY_MAX);
+                notificationBuilder.setPriority(Notification.PRIORITY_LOW);
             }
 
             notificationManager.notify(/*notification id*/1, notificationBuilder.build());

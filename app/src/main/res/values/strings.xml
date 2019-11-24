@@ -18,6 +18,7 @@
     <string name="menu_category">Diverses</string>
     <string name="menu_both">Auf einen Blick!</string>
     <string name="menu_impressum">Impressum</string>
+    <string name="menu_update">Updates</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
@@ -152,5 +153,14 @@
     <string name="notification_channel_title">Vertretungsplan</string>
     <string name="notification_channel_description">Vertretungsplan</string>
     <string name="notif_content_title">Vertretung:</string>
+
+    <!-- AppUpdater -->
+    <string name="update_available_title">Update verfügbar!</string>
+    <string name="update_available_content">Lade dir die neueste Version herunter mit den neuesten Features, Verbesserungen und Fehlerbehebungen.</string>
+    <string name="update_not_available_title">Bereits aktuell!</string>
+    <string name="update_not_available_content">Du hast bereits die neueste Version installiert.</string>
+    <string name="update_now">Jetzt herunterladen</string>
+    <string name="update_later">Später</string>
+    <string name="update_never">Nicht erneut anzeigen</string>
 
 </resources>
