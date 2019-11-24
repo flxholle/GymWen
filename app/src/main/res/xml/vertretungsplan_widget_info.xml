@@ -4,7 +4,7 @@
     android:initialLayout="@layout/vertretungsplan_widget"
     android:minWidth="160dp"
     android:minHeight="40dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:previewImage="@drawable/widget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="7200000"
     android:widgetCategory="home_screen"></appwidget-provider>

@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Unique request code.
     private static final int WRITE_REQUEST_CODE = 43;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,12 +91,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (!DummyApplication.initSettings(false)) {
             finish();
         }
-
+        DummyApplication.checkUpdates();
     }
 
     public static boolean homepageFragment = false;
     private static boolean pressedBack = false;
-
 
     @Override
     public void onPostCreate(Bundle b) {
@@ -202,6 +202,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Snackbar snackbar = Snackbar.make(findViewById(R.id.nav_host_fragment), "Dieses Feature ist noch nicht benutzbar", Snackbar.LENGTH_SHORT);
                 snackbar.show();
                 break;*/
+            case R.id.action_update:
+                DummyApplication.checkUpdates();
+                break;
             default:
 //                fragment = new All_Classes_today();
                 break;
@@ -260,6 +263,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (pressedBack) {
+            finish();
+            System.exit(1);
+            android.os.Process.killProcess(android.os.Process.myPid());
+
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.back_button, Toast.LENGTH_LONG).show();
+            pressedBack = true;
+        }
+        VertretungsPlan.saveDocs();
+    }
+
+    //File Management for coming soon GradesManagement
+
     public void openFile(Uri uri) {
         String mimeType = "text/plain";
         Intent intent = new Intent();
@@ -303,20 +322,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         downloadID = downloadManager.enqueue(request);// enqueue puts the download request in the queue.
         return downloadID;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (pressedBack) {
-            finish();
-            System.exit(1);
-            android.os.Process.killProcess(android.os.Process.myPid());
-
-        } else {
-            Toast.makeText(getApplicationContext(), R.string.back_button, Toast.LENGTH_LONG).show();
-            pressedBack = true;
-        }
-        VertretungsPlan.saveDocs();
     }
 
     /* Checks if external storage is available for read and write */
