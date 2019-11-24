@@ -13,11 +13,12 @@
 
     <ImageButton
         android:id="@+id/widget1_refresh_button"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/action_refresh"
+
         app:srcCompat="@drawable/ic_refresh_black_24dp" />
 
 </RelativeLayout>

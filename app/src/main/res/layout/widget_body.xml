@@ -18,8 +18,7 @@
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:visibility="visible"
-            android:padding="5sp" />
+            android:visibility="visible" />
 
 
         <TextView
