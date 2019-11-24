@@ -17,6 +17,11 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
+
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.SignInActivity;
@@ -31,10 +36,6 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.io.InputStream;
 
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.ContextCompat;
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
@@ -51,6 +52,7 @@ public class DummyApplication extends Application {
                     .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
                     .build();
 
+            customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             // This is optional but recommended
             CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
 
