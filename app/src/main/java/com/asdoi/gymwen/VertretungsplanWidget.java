@@ -9,13 +9,14 @@ import android.content.Intent;
 import android.os.Handler;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import androidx.core.content.ContextCompat;
-
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.MainActivity;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Implementation of App Widget functionality.
@@ -79,13 +80,14 @@ public class VertretungsplanWidget extends AppWidgetProvider {
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
                 rootView.setOnClickPendingIntent(R.id.widget1_basic, pendingIntent);
 
-                AppWidgetManager man = AppWidgetManager.getInstance(context);
-                int[] ids = man.getAppWidgetIds(new ComponentName(context, VertretungsplanWidget.class));
+                int[] ids = awm.getAppWidgetIds(new ComponentName(context, VertretungsplanWidget.class));
                 intent = new Intent();
                 intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
                 intent.putExtra(VertretungsplanWidget.WIDGET_ID_KEY, ids);
-                pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 rootView.setOnClickPendingIntent(R.id.widget1_refresh_button, pendingIntent);
+
+                rootView.setImageViewBitmap(R.id.widget1_refresh_button, DummyApplication.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
 
                 Runnable myRunnable = new Runnable() {
                     @Override
@@ -162,14 +164,17 @@ public class VertretungsplanWidget extends AppWidgetProvider {
 
         row.setTextViewText(R.id.widgetBody_text1, inhalt[1]);
         if (inhalt[3].equals("entfällt")) {
-            row.setTextViewText(R.id.widgetBody_text2, inhalt[3]);
+            SpannableString content = new SpannableString(inhalt[3]);
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            row.setTextViewText(R.id.widgetBody_text2, content);
             row.setTextColor(R.id.widgetBody_text2, ContextCompat.getColor(context, R.color.colorAccent));
+            row.setTextViewTextSize(R.id.widgetBody_text2, TypedValue.COMPLEX_UNIT_SP, 18f);
 
             row.setTextViewText(R.id.widgetBody_text6, inhalt[0]);
 
-            /*row.setViewVisibility(R.id.widgetBody_text3, View.GONE);
-            row.setViewVisibility(R.id.widgetBody_text4, View.GONE);
-            row.setViewVisibility(R.id.widgetBody_text5, View.GONE);*/
+            row.setViewVisibility(R.id.widgetBody_text3, View.GONE);
+//            row.setViewVisibility(R.id.widgetBody_text4, View.GONE);
+//            row.setViewVisibility(R.id.widgetBody_text5, View.GONE);
             return row;
         }
         if (oberstufe) {
