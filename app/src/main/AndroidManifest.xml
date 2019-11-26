@@ -8,14 +8,17 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".ApplicationFeatures"
+        android:name=".MainApplication"
         android:allowBackup="true"
+        android:excludeFromRecents="true"
+        android:finishOnTaskLaunch="true"
         android:icon="@mipmap/gymlogo"
         android:label="@string/app_name"
+        android:launchMode="singleInstance"
+        android:process=":acra"
         android:roundIcon="@mipmap/gymlogo_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/AppTheme">
 
         <activity
             android:name=".main.MainActivity"
@@ -64,13 +67,6 @@
             android:name=".main.SettingsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".EmptyActivity">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
 
         <receiver android:name=".VertretungsplanWidget">
             <intent-filter>
