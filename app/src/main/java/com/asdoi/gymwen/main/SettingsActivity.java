@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.preference.PreferenceFragmentCompat;
+
+import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceFragmentCompat;
-
-public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettingsActivity extends ActivityFeatures implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
