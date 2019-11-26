@@ -32,7 +32,7 @@ public class NotificationService extends Service {
         return Service.START_NOT_STICKY;
     }
 
-    public static class createNotification extends ApplicationFeatures.downloadDocsTask {
+    public static class createNotification extends MainApplication.downloadDocsTask {
 
         @Override
         protected void onPostExecute(Void v) {
@@ -50,10 +50,10 @@ public class NotificationService extends Service {
         }
 
         private void createNotification(String body) {
-            Context context = ApplicationFeatures.getContext();
+            Context context = MainApplication.getContext();
 
             // Create an Intent for the activity you want to start
-            Intent resultIntent = new Intent(ApplicationFeatures.getContext(), MainActivity.class);
+            Intent resultIntent = new Intent(MainApplication.getContext(), MainActivity.class);
             // Create the TaskStackBuilder and add the intent, which inflates the back stack
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             stackBuilder.addNextIntentWithParentStack(resultIntent);

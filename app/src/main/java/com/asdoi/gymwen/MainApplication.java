@@ -23,6 +23,11 @@ import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.SignInActivity;
 
+import org.acra.ACRA;
+import org.acra.annotation.AcraCore;
+import org.acra.annotation.AcraDialog;
+import org.acra.annotation.AcraMailSender;
+import org.acra.data.StringFormat;
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,13 +35,31 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ApplicationFeatures extends Application {
+
+@AcraCore(buildConfigClass = BuildConfig.class,
+        reportFormat = StringFormat.JSON)
+@AcraMailSender(mailTo = "GymWenApp@t-online.de")
+@AcraDialog(resText = R.string.acra_test,
+        resCommentPrompt = R.string.acra_test)
+public class MainApplication extends Application {
     private static Context mContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = this;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+//
+//        CoreConfigurationBuilder builder = new CoreConfigurationBuilder(this)
+//                .setBuildConfigClass(BuildConfig.class)
+//                .setReportFormat(StringFormat.JSON);
+//        builder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class).setEnabled(true);
+//        builder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setEnabled(true);
+        ACRA.init(this);
     }
 
     public static boolean isNetworkAvailable() {
@@ -117,8 +140,8 @@ public class ApplicationFeatures extends Application {
     public static void downloadDocs(boolean isWidget) {
 
         //DownloadDocs
-        if (!VertretungsPlan.areDocsDownloaded() && ApplicationFeatures.isNetworkAvailable()) {
-            if (!ApplicationFeatures.initSettings(true)) {
+        if (!VertretungsPlan.areDocsDownloaded() && MainApplication.isNetworkAvailable()) {
+            if (!MainApplication.initSettings(true)) {
                 return;
             }
             String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};

@@ -163,4 +163,7 @@
     <string name="update_later">Später</string>
     <string name="update_never">Nicht erneut anzeigen</string>
 
+    <!-- Acra -->
+    <string name="acra_test">Test</string>
+
 </resources>
