@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GymWen</string>
     <string name="title">Gymnasium Wendelstein</string>
-    <string name="subtitle">Offizielle App © 2019 Felix Hollederer</string>
+    <string name="subtitle">Offizielle App \n © 2019 Felix Hollederer</string>
     <string name="copyright">© 2019 Felix Hollederer</string>
 
     <!-- Navigation Drawer -->

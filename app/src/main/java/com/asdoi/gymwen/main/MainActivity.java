@@ -17,17 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.asdoi.gymwen.DummyApplication;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
-import com.asdoi.gymwen.main.Fragments.VertretungFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-
-import java.io.File;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +28,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.main.Fragments.VertretungFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,10 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
-        if (!DummyApplication.initSettings(false)) {
+        if (!ApplicationFeatures.initSettings(false)) {
             finish();
         }
-        DummyApplication.checkUpdates();
+        ApplicationFeatures.checkUpdates();
     }
 
     public static boolean homepageFragment = false;
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_mebis:
-                DummyApplication.tabIntent("https://lernplattform.mebis.bayern.de/my/");
+                ApplicationFeatures.tabIntent("https://lernplattform.mebis.bayern.de/my/");
                 break;
             case R.id.nav_mensa:
                 String packageName = "de.eezzy.admin.apnr40";
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (intent == null) {
 //                    ProgressDialog progDailog = ProgressDialog.show(this, "Laden","Bitte warten...", true);
 //                    progDailog.setCancelable(false);
-                    DummyApplication.tabIntent("https://www.kitafino.de/sys_k2/index.php?action=bestellen");
+                    ApplicationFeatures.tabIntent("https://www.kitafino.de/sys_k2/index.php?action=bestellen");
 //                    progDailog.dismiss();
                 } else {
                     startActivity(intent);
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 snackbar.show();
                 break;*/
             case R.id.action_update:
-                DummyApplication.checkUpdates();
+                ApplicationFeatures.checkUpdates();
                 break;
             default:
 //                fragment = new All_Classes_today();
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
         }
 
-        DummyApplication.proofeNotification();
+        ApplicationFeatures.proofeNotification();
 
         return true;
     }

@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.asdoi.gymwen.DummyApplication;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.WebsiteActivity;
-
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.WebsiteActivity;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -152,7 +152,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new DummyApplication.downloadImageTask(imageView)
+            new ApplicationFeatures.downloadImageTask(imageView)
                     .execute(imageUrl);
 
 
@@ -272,7 +272,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new DummyApplication.downloadImageTask(imageView)
+            new ApplicationFeatures.downloadImageTask(imageView)
                     .execute(imageUrl);
 
 

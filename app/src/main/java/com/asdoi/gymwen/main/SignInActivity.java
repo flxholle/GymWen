@@ -10,16 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.asdoi.gymwen.DummyApplication;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
     ViewGroup loading;
@@ -61,7 +61,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void checkData(final String username, final String password) {
-        if (!DummyApplication.isNetworkAvailable()) {
+        if (!ApplicationFeatures.isNetworkAvailable()) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

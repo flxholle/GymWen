@@ -10,12 +10,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
-import com.asdoi.gymwen.main.MainActivity;
-
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
+
+import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.main.MainActivity;
 
 public class NotificationService extends Service {
     public NotificationService() {
@@ -32,7 +32,7 @@ public class NotificationService extends Service {
         return Service.START_NOT_STICKY;
     }
 
-    public static class createNotification extends DummyApplication.downloadDocsTask {
+    public static class createNotification extends ApplicationFeatures.downloadDocsTask {
 
         @Override
         protected void onPostExecute(Void v) {
@@ -50,10 +50,10 @@ public class NotificationService extends Service {
         }
 
         private void createNotification(String body) {
-            Context context = DummyApplication.getContext();
+            Context context = ApplicationFeatures.getContext();
 
             // Create an Intent for the activity you want to start
-            Intent resultIntent = new Intent(DummyApplication.getContext(), MainActivity.class);
+            Intent resultIntent = new Intent(ApplicationFeatures.getContext(), MainActivity.class);
             // Create the TaskStackBuilder and add the intent, which inflates the back stack
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             stackBuilder.addNextIntentWithParentStack(resultIntent);

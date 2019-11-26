@@ -39,7 +39,7 @@ import java.io.InputStream;
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
-public class DummyApplication extends Application {
+public class ApplicationFeatures extends Application {
     private static Context mContext;
 
     public static void tabIntent(String url) {
@@ -149,8 +149,8 @@ public class DummyApplication extends Application {
     public static void downloadDocs(boolean isWidget) {
 
         //DownloadDocs
-        if (!VertretungsPlan.areDocsDownloaded() && DummyApplication.isNetworkAvailable()) {
-            if (!DummyApplication.initSettings(true)) {
+        if (!VertretungsPlan.areDocsDownloaded() && ApplicationFeatures.isNetworkAvailable()) {
+            if (!ApplicationFeatures.initSettings(true)) {
                 return;
             }
             String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};
@@ -244,8 +244,8 @@ public class DummyApplication extends Application {
     public static void checkUpdates() {
         String url = "https://gitlab.com/asdoi/gymwenreleases/raw/master/UpdaterFile.json";
         AppUpdater appUpdater = new AppUpdater(getContext())
-                .setDisplay(Display.NOTIFICATION)
-//                .setDisplay(Display.DIALOG)
+//                .setDisplay(Display.NOTIFICATION)
+                .setDisplay(Display.DIALOG)
 //                .setDisplay(Display.SNACKBAR)
                 .setUpdateFrom(UpdateFrom.JSON)
                 .setUpdateJSON(url)
@@ -256,7 +256,8 @@ public class DummyApplication extends Application {
                 .setButtonUpdate(R.string.update_now)
                 .setButtonDismiss(R.string.update_later)
                 .setButtonDoNotShowAgain(null)
-                .setIcon(R.drawable.ic_system_update_black_24dp);
+                .setIcon(R.drawable.ic_system_update_black_24dp)
+                .showAppUpdated(true);
         appUpdater.start();
     }
 }

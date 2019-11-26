@@ -7,7 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.asdoi.gymwen.DummyApplication;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.text.HtmlCompat;
+import androidx.fragment.app.FragmentManager;
+
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.Fragments.WebsiteActivityFragment;
@@ -21,11 +26,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.text.HtmlCompat;
-import androidx.fragment.app.FragmentManager;
 
 public class    WebsiteActivity extends AppCompatActivity implements View.OnClickListener {
     public ArrayList<String> history = new ArrayList<>();
@@ -168,7 +168,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
             intent.setData(Uri.parse(url));
             startActivity(intent);*/
             try {
-                DummyApplication.tabIntent(history.get(history.size() - 1));
+                ApplicationFeatures.tabIntent(history.get(history.size() - 1));
             }
             catch (Exception e){}
         } else if (item.getItemId() == R.id.action_share || item.getItemId() == R.id.action_share2 ) {
@@ -595,7 +595,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
                             }
                         } else {
                             try{
-                                DummyApplication.tabIntent(urlFinal);
+                                ApplicationFeatures.tabIntent(urlFinal);
                             }
                             catch (Exception e){
                                 e.printStackTrace();
@@ -604,7 +604,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
                     }
                 })).start();
             } else {
-                DummyApplication.tabIntent(urlFinal);
+                ApplicationFeatures.tabIntent(urlFinal);
             }
         }
     }
