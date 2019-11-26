@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".DummyApplication"
+        android:name=".ApplicationFeatures"
         android:allowBackup="true"
         android:icon="@mipmap/gymlogo"
         android:label="@string/app_name"

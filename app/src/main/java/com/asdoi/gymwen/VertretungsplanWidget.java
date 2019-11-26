@@ -13,16 +13,16 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import androidx.core.content.ContextCompat;
+
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.MainActivity;
-
-import androidx.core.content.ContextCompat;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class VertretungsplanWidget extends AppWidgetProvider {
-    private static Context context = DummyApplication.getContext();
+    private static Context context = ApplicationFeatures.getContext();
     private Handler handler;
 
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
@@ -44,7 +44,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
 
-//        DummyApplication.proofeNotification();
+//        ApplicationFeatures.proofeNotification();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DummyApplication.downloadDocs(true);
+                ApplicationFeatures.downloadDocs(true);
                 generateTable(rootView);
                 Intent intent = new Intent(context, MainActivity.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
@@ -87,7 +87,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
                 pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 rootView.setOnClickPendingIntent(R.id.widget1_refresh_button, pendingIntent);
 
-                rootView.setImageViewBitmap(R.id.widget1_refresh_button, DummyApplication.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
+                rootView.setImageViewBitmap(R.id.widget1_refresh_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
 
                 Runnable myRunnable = new Runnable() {
                     @Override
