@@ -1,5 +1,6 @@
 package com.asdoi.gymwen.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,12 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 
-import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.Fragments.WebsiteActivityFragment;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class    WebsiteActivity extends AppCompatActivity implements View.OnClickListener {
+public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     public ArrayList<String> history = new ArrayList<>();
 
     private static String[][] con;
@@ -168,7 +168,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
             intent.setData(Uri.parse(url));
             startActivity(intent);*/
             try {
-                ApplicationFeatures.tabIntent(history.get(history.size() - 1));
+                tabIntent(history.get(history.size() - 1));
             }
             catch (Exception e){}
         } else if (item.getItemId() == R.id.action_share || item.getItemId() == R.id.action_share2 ) {
@@ -569,7 +569,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
         if (!url.trim().isEmpty()) {
 
             final String urlFinal = urlToRightFormat(url);
-
+            final Context context = this;
             if (isURLValid(urlFinal) && urlFinal.contains("http://www.gym-wen.de/")) {
                 (new Thread(new Runnable() {
                     @Override
@@ -595,7 +595,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
                             }
                         } else {
                             try{
-                                ApplicationFeatures.tabIntent(urlFinal);
+                                tabIntent(urlFinal);
                             }
                             catch (Exception e){
                                 e.printStackTrace();
@@ -604,7 +604,7 @@ public class    WebsiteActivity extends AppCompatActivity implements View.OnClic
                     }
                 })).start();
             } else {
-                ApplicationFeatures.tabIntent(urlFinal);
+                tabIntent(urlFinal);
             }
         }
     }

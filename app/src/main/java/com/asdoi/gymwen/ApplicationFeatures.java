@@ -12,22 +12,16 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.ContextCompat;
 
 import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.SignInActivity;
-import com.github.javiersantos.appupdater.AppUpdater;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
@@ -36,34 +30,8 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.io.InputStream;
 
-import saschpe.android.customtabs.CustomTabsHelper;
-import saschpe.android.customtabs.WebViewFallback;
-
 public class ApplicationFeatures extends Application {
     private static Context mContext;
-
-    public static void tabIntent(String url) {
-        Context context = getContext();
-        try {
-            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                    .addDefaultShareMenuItem()
-                    .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                    .setShowTitle(true)
-                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
-                    .build();
-
-            customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            // This is optional but recommended
-            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
-
-            // This is where the magic happens...
-            CustomTabsHelper.openCustomTab(context, customTabsIntent,
-                    Uri.parse(url),
-                    new WebViewFallback());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onCreate() {
@@ -239,25 +207,5 @@ public class ApplicationFeatures extends Application {
         drawable.setBounds(0, 0, c.getWidth(), c.getHeight());
         drawable.draw(c);
         return b;
-    }
-
-    public static void checkUpdates() {
-        String url = "https://gitlab.com/asdoi/gymwenreleases/raw/master/UpdaterFile.json";
-        AppUpdater appUpdater = new AppUpdater(getContext())
-//                .setDisplay(Display.NOTIFICATION)
-                .setDisplay(Display.DIALOG)
-//                .setDisplay(Display.SNACKBAR)
-                .setUpdateFrom(UpdateFrom.JSON)
-                .setUpdateJSON(url)
-                .setTitleOnUpdateAvailable(R.string.update_available_title)
-                .setContentOnUpdateAvailable(R.string.update_available_content)
-                .setTitleOnUpdateNotAvailable(R.string.update_not_available_title)
-                .setContentOnUpdateNotAvailable(R.string.update_not_available_content)
-                .setButtonUpdate(R.string.update_now)
-                .setButtonDismiss(R.string.update_later)
-                .setButtonDoNotShowAgain(null)
-                .setIcon(R.drawable.ic_system_update_black_24dp)
-                .showAppUpdated(true);
-        appUpdater.start();
     }
 }

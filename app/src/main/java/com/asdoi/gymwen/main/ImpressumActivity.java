@@ -1,22 +1,15 @@
 package com.asdoi.gymwen.main;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.ContextCompat;
-import saschpe.android.customtabs.CustomTabsHelper;
-import saschpe.android.customtabs.WebViewFallback;
-
-public class ImpressumActivity extends AppCompatActivity implements View.OnClickListener {
+public class ImpressumActivity extends ActivityFeatures implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,28 +60,6 @@ public class ImpressumActivity extends AppCompatActivity implements View.OnClick
             case R.id.OnlinePrivacy:
                 tabIntent("http://www.gym-wen.de/startseite/impressum/");
                 break;
-        }
-    }
-
-    private void tabIntent(String url) {
-        try {
-            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                    .addDefaultShareMenuItem()
-                    .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                    .setShowTitle(true)
-                    .setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back_white_24dp))
-                    .build();
-
-            // This is optional but recommended
-            CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
-
-            // This is where the magic happens...
-            CustomTabsHelper.openCustomTab(this, customTabsIntent,
-                    Uri.parse(url),
-                    new WebViewFallback());
-        }
-        catch (Exception e){
-            e.printStackTrace();
         }
     }
 }
