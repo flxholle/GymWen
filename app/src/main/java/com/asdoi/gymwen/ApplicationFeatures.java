@@ -15,6 +15,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -25,6 +26,12 @@ import com.asdoi.gymwen.services.NotificationService;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
 
+import org.acra.ACRA;
+import org.acra.annotation.AcraCore;
+import org.acra.annotation.AcraDialog;
+import org.acra.annotation.AcraMailSender;
+import org.acra.annotation.AcraToast;
+import org.acra.data.StringFormat;
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,6 +39,13 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.io.InputStream;
 
+@AcraCore(buildConfigClass = BuildConfig.class,
+        reportFormat = StringFormat.JSON)
+@AcraMailSender(mailTo = "GymWenApp@t-online.de")
+@AcraDialog(resText = R.string.acra_dialog_title,
+        resCommentPrompt = R.string.acra_dialog_content)
+@AcraToast(resText = R.string.acra_toast,
+        length = Toast.LENGTH_LONG)
 
 public class ApplicationFeatures extends Application {
     private static Context mContext;
@@ -40,6 +54,7 @@ public class ApplicationFeatures extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
+        ACRA.init(this);
     }
 
     public static boolean isNetworkAvailable() {

@@ -35,10 +35,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private FloatingActionButton fab;
     VertretungFragment lastLoadedFragment = null;
 
-    // Unique request code.
-    private static final int WRITE_REQUEST_CODE = 43;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +75,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         checkUpdates(Display.DIALOG, false);
     }
-
-    public static boolean homepageFragment = false;
-    private static boolean pressedBack = false;
 
     @Override
     public void onPostCreate(Bundle b) {
@@ -216,6 +209,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         onNavigationItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
+
+    private static boolean pressedBack = false;
 
     @Override
     public void onBackPressed() {
