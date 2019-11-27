@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
+
         <activity
             android:name=".main.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -85,6 +86,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
+                <!--Only Working on Foreground because it's deprecated-->
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
