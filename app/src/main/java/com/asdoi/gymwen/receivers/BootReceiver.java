@@ -1,10 +1,12 @@
-package com.asdoi.gymwen;
+package com.asdoi.gymwen.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import com.asdoi.gymwen.services.NotificationService;
 
 public class BootReceiver extends BroadcastReceiver {
 

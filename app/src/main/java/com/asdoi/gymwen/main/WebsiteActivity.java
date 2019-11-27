@@ -14,8 +14,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.Fragments.WebsiteActivityFragment;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

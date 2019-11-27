@@ -25,9 +25,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.asdoi.gymwen.MainApplication;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -75,7 +75,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         createLoadingPanel();
 
 
-        if (MainApplication.isNetworkAvailable())
+        if (ApplicationFeatures.isNetworkAvailable())
             refreshAndTable();
         else
             generateTable();
@@ -178,7 +178,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     }
 
     private void refresh() {
-        new MainApplication.downloadDocsTask().execute(false);
+        new ApplicationFeatures.downloadDocsTask().execute(false);
     }
 
     private void share() {

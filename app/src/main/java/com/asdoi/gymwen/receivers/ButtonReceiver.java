@@ -1,4 +1,4 @@
-package com.asdoi.gymwen;
+package com.asdoi.gymwen.receivers;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;

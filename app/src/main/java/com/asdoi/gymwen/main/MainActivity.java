@@ -29,10 +29,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.MainApplication;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.Fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -89,7 +89,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         toggle.syncState();
         registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
-        if (!MainApplication.initSettings(false)) {
+        if (!ApplicationFeatures.initSettings(false)) {
             finish();
         }
         checkUpdates(Display.DIALOG, false);
@@ -221,7 +221,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
         }
 
-        MainApplication.proofeNotification();
+        ApplicationFeatures.proofeNotification();
 
         return true;
     }

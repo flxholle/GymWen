@@ -11,7 +11,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 
 public class SettingsActivity extends ActivityFeatures implements View.OnClickListener {
 

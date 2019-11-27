@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.VertretungsplanInternal;
+package com.asdoi.gymwen.vertretungsplanInternal;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
