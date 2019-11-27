@@ -98,10 +98,6 @@
             android:name=".services.NotificationService"
             android:enabled="true"
             android:exported="true" />
-        <service
-            android:name=".services.GradesManagementService"
-            android:enabled="true"
-            android:exported="true" />
     </application>
 
 </manifest>

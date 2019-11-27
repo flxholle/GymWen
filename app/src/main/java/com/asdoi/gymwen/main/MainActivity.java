@@ -1,18 +1,8 @@
 package com.asdoi.gymwen.main;
 
-import android.app.Activity;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -36,10 +26,6 @@ import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
-import java.io.File;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -87,7 +73,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         if (!VertretungsPlan.isUninit())
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
         toggle.syncState();
-        registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         if (!ApplicationFeatures.initSettings(false)) {
             finish();
@@ -228,40 +213,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       /* //Open Settings
-        int id = item.getItemId();
-        // ... Handle other options menu items.
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            drawer.closeDrawer(GravityCompat.START);
-            return true;
-        }*/
         onNavigationItemSelected(item);
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        super.onActivityResult(requestCode, resultCode, resultData);
-        if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Uri uri = null;
-            if (resultData != null) {
-                uri = resultData.getData();
-                String filePath = uri.toString();
-                try {
-                    OutputStream stream = getContentResolver().openOutputStream(uri);
-                    PrintWriter writer = new PrintWriter(stream);
-                    writer.write("test");
-                    writer.flush();
-                    stream.close();
-                    openFile(uri);
-                } catch (java.io.IOException e) {
-                    Log.e(getLocalClassName(), "caught IOException", e);
-                }
-            }
-        }
-
     }
 
     @Override
@@ -277,124 +230,4 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         VertretungsPlan.saveDocs();
     }
-
-    //File Management for coming soon GradesManagement
-
-    public void openFile(Uri uri) {
-        String mimeType = "text/plain";
-        Intent intent = new Intent();
-        intent.setType(mimeType);
-        intent.setAction(Intent.ACTION_VIEW); //Change if needed
-        intent.setDataAndType(Uri.parse(uri.toString()), mimeType);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivity(intent/* Intent.createChooser(intent,"Notenverwaltung öffnen mit...")*/);
-    }
-
-    public long downloadFile(String url) {
-        /*DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setDescription("Some descrition");
-        request.setTitle("Some title");
-        // in order for this if to run, you must use the android 3.2 to compile your app
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            request.allowScanningByMediaScanner();
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        }
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "name-of-the-file.ext");
-
-        // get download service and enqueue file
-        DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        registerReceiver(downloadReceiver, filter);
-        return manager.enqueue(request);*/
-
-        File file = new File(getExternalFilesDir(null), "Dummy");
-
-         /*
-       Create a DownloadManager.Request with all the information necessary to start the download
-        */
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url))
-                .setTitle("Dummy File")// Title of the Download Notification
-                .setDescription("Downloading")// Description of the Download Notification
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)// Visibility of the download Notification
-                .setDestinationUri(Uri.fromFile(file))// Uri of the destination file
-                .setAllowedOverMetered(true)// Set if download is allowed on Mobile network
-                .setAllowedOverRoaming(true);// Set if download is allowed on roaming network
-
-        DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        downloadID = downloadManager.enqueue(request);// enqueue puts the download request in the queue.
-        return downloadID;
-    }
-
-    /* Checks if external storage is available for read and write */
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
-    }
-
-    /* Checks if external storage is available to at least read */
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
-    }
-
-    private void createFile(String mimeType, String fileName) {
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-
-        // Filter to only show results that can be "opened", such as
-        // a file (as opposed to a list of contacts or timezones).
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        // Create a file with the requested MIME type.
-        intent.setType(mimeType);
-        intent.putExtra(Intent.EXTRA_TITLE, fileName);
-        startActivityForResult(intent, WRITE_REQUEST_CODE);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(onDownloadComplete);
-    }
-
-    public void saveFilePath(String path) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("filePath", path);
-        editor.commit();
-    }
-
-    public String getFilePath() {
-        return PreferenceManager.getDefaultSharedPreferences(this).getString("filePath", "");
-    }
-
-    //Credits: https://stackoverflow.com/qusestions/54836448/android-opening-a-word-document-using-intents-and-fileprovider
-    long downloadID;
-    //File Management
-    //https://developer.android.com/training/data-storage/files/external
-    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //Fetching the download id received with the broadcast
-            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-            //Checking if the received broadcast is for our enqueued download by matching download id
-            if (downloadID == id) {
-                Toast.makeText(MainActivity.this, "Download Completed", Toast.LENGTH_SHORT).show();
-                System.out.println("downloaded");
-            }
-        }
-    };
-    private BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            //check if the broadcast message is for our enqueued download
-            long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-
-            if (/*referenceId == 1*/true) {
-                System.out.println("completed");
-            }
-        }
-    };
 }
