@@ -10,12 +10,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 
+import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.main.MainActivity;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
-
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
-import com.asdoi.gymwen.main.MainActivity;
 
 public class NotificationService extends Service {
     public NotificationService() {
@@ -61,6 +61,15 @@ public class NotificationService extends Service {
             PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
+            int NOTIFICATION_ID = 1;
+
+            //Create an Intent for the BroadcastReceiver
+            Intent buttonIntent = new Intent(context, ButtonReceiver.class);
+            buttonIntent.putExtra("notificationId", NOTIFICATION_ID);
+//            PendingIntent btPendingIntent = PendingIntent.getActivity(context,  0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, 0);
+
+
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             String NOTIFICATION_CHANNEL_ID = "my_channel_id_01";
 
@@ -76,6 +85,8 @@ public class NotificationService extends Service {
                     .setOngoing(true);
             notificationBuilder.setContentIntent(resultPendingIntent);
 
+            notificationBuilder.addAction(R.drawable.ic_close_black_24dp, MainApplication.getContext().getString(R.string.notif_dismiss), btPendingIntent);
+            notificationBuilder.setAutoCancel(true);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_LOW);
@@ -93,6 +104,7 @@ public class NotificationService extends Service {
             } else {
                 notificationBuilder.setPriority(Notification.PRIORITY_LOW);
             }
+
 
             notificationManager.notify(/*notification id*/1, notificationBuilder.build());
         }
