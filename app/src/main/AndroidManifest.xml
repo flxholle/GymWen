@@ -3,8 +3,7 @@
     package="com.asdoi.gymwen">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
-    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
@@ -16,10 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <receiver
-            android:name=".receivers.ButtonReceiver"
-            android:enabled="true"
-            android:exported="true"></receiver>
 
         <activity
             android:name=".main.MainActivity"
@@ -93,6 +88,10 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".receivers.ButtonReceiver"
+            android:enabled="true"
+            android:exported="true" />
 
         <service
             android:name=".services.NotificationService"
