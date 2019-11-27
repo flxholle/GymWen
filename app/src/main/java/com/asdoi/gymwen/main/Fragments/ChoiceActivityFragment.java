@@ -21,8 +21,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.main.ChoiceActivity;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -86,7 +86,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 root.findViewById(R.id.choice_button_10).setOnClickListener(this);
                 root.findViewById(R.id.choice_button_parents).setOnClickListener(this);
                 ((EditText) root.findViewById(R.id.choice_more_classes)).setOnEditorActionListener(this);
-                ((EditText) root.findViewById(R.id.choice_more_classes)).addTextChangedListener(new MyTextWatcher((EditText) root.findViewById(R.id.choice_more_classes)));
+                ((EditText) root.findViewById(R.id.choice_more_classes)).addTextChangedListener(new MyTextWatcher(root.findViewById(R.id.choice_more_classes)));
                 break;
             case 2:
                 root.findViewById(R.id.choice_button_A).setOnClickListener(this);
@@ -96,17 +96,17 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 root.findViewById(R.id.choice_button_E).setOnClickListener(this);
                 root.findViewById(R.id.choice_button_F).setOnClickListener(this);
                 ((EditText) root.findViewById(R.id.choice_more_letters)).setOnEditorActionListener(this);
-                ((EditText) root.findViewById(R.id.choice_more_letters)).addTextChangedListener(new MyTextWatcher((EditText) root.findViewById(R.id.choice_more_letters)));
+                ((EditText) root.findViewById(R.id.choice_more_letters)).addTextChangedListener(new MyTextWatcher(root.findViewById(R.id.choice_more_letters)));
                 break;
             case 3:
                 root.findViewById(R.id.choice_button_1).setOnClickListener(this);
                 root.findViewById(R.id.choice_button_2).setOnClickListener(this);
                 ((EditText) root.findViewById(R.id.choice_more_course_digits)).setOnEditorActionListener(this);
-                ((EditText) root.findViewById(R.id.choice_more_course_digits)).addTextChangedListener(new MyTextWatcher((EditText) root.findViewById(R.id.choice_more_course_digits)));
+                ((EditText) root.findViewById(R.id.choice_more_course_digits)).addTextChangedListener(new MyTextWatcher(root.findViewById(R.id.choice_more_course_digits)));
                 break;
             case 4:
                 ((EditText) root.findViewById(R.id.choice_digit_main_courses)).setOnEditorActionListener(this);
-                ((EditText) root.findViewById(R.id.choice_digit_main_courses)).addTextChangedListener(new MyTextWatcher((EditText) root.findViewById(R.id.choice_digit_main_courses)));
+                ((EditText) root.findViewById(R.id.choice_digit_main_courses)).addTextChangedListener(new MyTextWatcher(root.findViewById(R.id.choice_digit_main_courses)));
                 break;
             case 5:
                 generateStep5();

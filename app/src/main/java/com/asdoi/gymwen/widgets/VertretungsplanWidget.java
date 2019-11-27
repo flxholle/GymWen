@@ -1,4 +1,4 @@
-package com.asdoi.gymwen;
+package com.asdoi.gymwen.widgets;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -15,14 +15,16 @@ import android.widget.RemoteViews;
 
 import androidx.core.content.ContextCompat;
 
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.MainActivity;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class VertretungsplanWidget extends AppWidgetProvider {
-    private static Context context = MainApplication.getContext();
+    private static Context context = ApplicationFeatures.getContext();
     private Handler handler;
 
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
@@ -44,7 +46,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
 
-//        MainApplication.proofeNotification();
+//        ApplicationFeatures.proofeNotification();
     }
 
     @Override
@@ -74,7 +76,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MainApplication.downloadDocs(true);
+                ApplicationFeatures.downloadDocs(true);
                 generateTable(rootView);
                 Intent intent = new Intent(context, MainActivity.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
@@ -87,7 +89,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
                 pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 rootView.setOnClickPendingIntent(R.id.widget1_refresh_button, pendingIntent);
 
-                rootView.setImageViewBitmap(R.id.widget1_refresh_button, MainApplication.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
+                rootView.setImageViewBitmap(R.id.widget1_refresh_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
 
                 Runnable myRunnable = new Runnable() {
                     @Override

@@ -1,9 +1,10 @@
-package com.asdoi.gymwen;
+package com.asdoi.gymwen.receivers;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.services.NotificationService;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 
 public class NetworkReceiver extends BootReceiver {
 

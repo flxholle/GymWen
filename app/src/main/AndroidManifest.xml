@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".MainApplication"
+        android:name=".ApplicationFeatures"
         android:allowBackup="true"
         android:icon="@mipmap/gymlogo"
         android:label="@string/app_name"
@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <receiver
-            android:name=".ButtonReceiver"
+            android:name=".receivers.ButtonReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
 
@@ -67,7 +67,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_settings" />
 
-        <receiver android:name=".VertretungsplanWidget">
+        <receiver android:name=".widgets.VertretungsplanWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -77,7 +77,7 @@
                 android:resource="@xml/vertretungsplan_widget_info" />
         </receiver>
         <receiver
-            android:name=".BootReceiver"
+            android:name=".receivers.BootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -86,7 +86,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".NetworkReceiver"
+            android:name=".receivers.NetworkReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -95,11 +95,11 @@
         </receiver>
 
         <service
-            android:name=".NotificationService"
+            android:name=".services.NotificationService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".GradesManagementService"
+            android:name=".services.GradesManagementService"
             android:enabled="true"
             android:exported="true" />
     </application>

@@ -4,6 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.asdoi.gymwen"
+        /*Android v4.1 alias "Jelly Bean"*/
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 101
@@ -22,7 +23,6 @@ android {
         targetCompatibility = 1.8
     }
     buildToolsVersion = '29.0.2'
-
 }
 
 allprojects {

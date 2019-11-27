@@ -1,4 +1,4 @@
-package com.asdoi.gymwen;
+package com.asdoi.gymwen.services;
 
 import android.app.Service;
 import android.content.Intent;

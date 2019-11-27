@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.asdoi.gymwen.MainApplication;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.WebsiteActivity;
 
@@ -152,7 +152,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new MainApplication.downloadImageTask(imageView)
+            new ApplicationFeatures.downloadImageTask(imageView)
                     .execute(imageUrl);
 
 
@@ -272,7 +272,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new MainApplication.downloadImageTask(imageView)
+            new ApplicationFeatures.downloadImageTask(imageView)
                     .execute(imageUrl);
 
 

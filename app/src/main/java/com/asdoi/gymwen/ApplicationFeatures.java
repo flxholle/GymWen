@@ -16,9 +16,14 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
+
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.SignInActivity;
+import com.asdoi.gymwen.services.NotificationService;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.widgets.VertretungsplanWidget;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
@@ -27,11 +32,8 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.io.InputStream;
 
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.content.res.AppCompatResources;
 
-
-public class MainApplication extends Application {
+public class ApplicationFeatures extends Application {
     private static Context mContext;
 
     @Override
@@ -118,8 +120,8 @@ public class MainApplication extends Application {
     public static void downloadDocs(boolean isWidget) {
 
         //DownloadDocs
-        if (!VertretungsPlan.areDocsDownloaded() && MainApplication.isNetworkAvailable()) {
-            if (!MainApplication.initSettings(true)) {
+        if (!VertretungsPlan.areDocsDownloaded() && ApplicationFeatures.isNetworkAvailable()) {
+            if (!ApplicationFeatures.initSettings(true)) {
                 return;
             }
             String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};

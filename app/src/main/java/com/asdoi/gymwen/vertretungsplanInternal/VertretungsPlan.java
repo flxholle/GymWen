@@ -1,6 +1,6 @@
-package com.asdoi.gymwen.VertretungsplanInternal;
+package com.asdoi.gymwen.vertretungsplanInternal;
 
-import com.asdoi.gymwen.MainApplication;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 
 import org.jsoup.nodes.Document;
@@ -21,26 +21,26 @@ public abstract class VertretungsPlan {
     //ChoiceActivity -> Step 5
 //    public static String[][] choiceCourseNames = new String[][]{{"Mathe", "m"}, {"Deutsch", "d"}, {"Geschichte", "g"}, {"Sozialkunde", "sk"}, {"Sport", "spo"}, {"Religionslehre"}, {"Englisch", "e"},{"Französisch", "f"}, {"Latein", "l"}, {"Spanisch", "sp"}, {"Biologie", "b"}, {"Chemie", "c"}, {"Physik", "ph"}, {"Informatik", "inf"}, {"Geographie", "geo"}, {"Wirtschaft und Recht", "wr"}, {"Kunst", "ku"}, {"Musik", "mu"}, {"W-Seminar","W_"}, {"P-Seminar","P_"}, {"Profilfach"}};
 
-    public static String[][] choiceCourseNames = new String[][]{{MainApplication.getContext().getString(R.string.math), MainApplication.getContext().getString(R.string.mathShort)},
-            {MainApplication.getContext().getString(R.string.german), MainApplication.getContext().getString(R.string.germanShort)},
-            {MainApplication.getContext().getString(R.string.social_education), MainApplication.getContext().getString(R.string.social_educationShort)},
-            {MainApplication.getContext().getString(R.string.PE), MainApplication.getContext().getString(R.string.PEShort)},
-            {MainApplication.getContext().getString(R.string.Religious_education), MainApplication.getContext().getString(R.string.Religious_educationShort)},
-            {MainApplication.getContext().getString(R.string.english), MainApplication.getContext().getString(R.string.englishShort)},
-            {MainApplication.getContext().getString(R.string.france), MainApplication.getContext().getString(R.string.franceShort)},
-            {MainApplication.getContext().getString(R.string.latin), MainApplication.getContext().getString(R.string.latinShort)},
-            {MainApplication.getContext().getString(R.string.spanish), MainApplication.getContext().getString(R.string.spanishShort)},
-            {MainApplication.getContext().getString(R.string.biology), MainApplication.getContext().getString(R.string.biologyShort)},
-            {MainApplication.getContext().getString(R.string.chemistry), MainApplication.getContext().getString(R.string.chemistryShort)},
-            {MainApplication.getContext().getString(R.string.physics), MainApplication.getContext().getString(R.string.physicsShort)},
-            {MainApplication.getContext().getString(R.string.programming), MainApplication.getContext().getString(R.string.programmingShort)},
-            {MainApplication.getContext().getString(R.string.geography), MainApplication.getContext().getString(R.string.geographyShort)},
-            {MainApplication.getContext().getString(R.string.finance), MainApplication.getContext().getString(R.string.financeShort)},
-            {MainApplication.getContext().getString(R.string.art), MainApplication.getContext().getString(R.string.artShort)},
-            {MainApplication.getContext().getString(R.string.music), MainApplication.getContext().getString(R.string.musicShort)},
-            {MainApplication.getContext().getString(R.string.W_Seminar), MainApplication.getContext().getString(R.string.W_SeminarShort)},
-            {MainApplication.getContext().getString(R.string.P_Seminar), MainApplication.getContext().getString(R.string.P_SeminarShort)},
-            {MainApplication.getContext().getString(R.string.profile_subject), MainApplication.getContext().getString(R.string.profile_subjectShort)}
+    public static String[][] choiceCourseNames = new String[][]{{ApplicationFeatures.getContext().getString(R.string.math), ApplicationFeatures.getContext().getString(R.string.mathShort)},
+            {ApplicationFeatures.getContext().getString(R.string.german), ApplicationFeatures.getContext().getString(R.string.germanShort)},
+            {ApplicationFeatures.getContext().getString(R.string.social_education), ApplicationFeatures.getContext().getString(R.string.social_educationShort)},
+            {ApplicationFeatures.getContext().getString(R.string.PE), ApplicationFeatures.getContext().getString(R.string.PEShort)},
+            {ApplicationFeatures.getContext().getString(R.string.Religious_education), ApplicationFeatures.getContext().getString(R.string.Religious_educationShort)},
+            {ApplicationFeatures.getContext().getString(R.string.english), ApplicationFeatures.getContext().getString(R.string.englishShort)},
+            {ApplicationFeatures.getContext().getString(R.string.france), ApplicationFeatures.getContext().getString(R.string.franceShort)},
+            {ApplicationFeatures.getContext().getString(R.string.latin), ApplicationFeatures.getContext().getString(R.string.latinShort)},
+            {ApplicationFeatures.getContext().getString(R.string.spanish), ApplicationFeatures.getContext().getString(R.string.spanishShort)},
+            {ApplicationFeatures.getContext().getString(R.string.biology), ApplicationFeatures.getContext().getString(R.string.biologyShort)},
+            {ApplicationFeatures.getContext().getString(R.string.chemistry), ApplicationFeatures.getContext().getString(R.string.chemistryShort)},
+            {ApplicationFeatures.getContext().getString(R.string.physics), ApplicationFeatures.getContext().getString(R.string.physicsShort)},
+            {ApplicationFeatures.getContext().getString(R.string.programming), ApplicationFeatures.getContext().getString(R.string.programmingShort)},
+            {ApplicationFeatures.getContext().getString(R.string.geography), ApplicationFeatures.getContext().getString(R.string.geographyShort)},
+            {ApplicationFeatures.getContext().getString(R.string.finance), ApplicationFeatures.getContext().getString(R.string.financeShort)},
+            {ApplicationFeatures.getContext().getString(R.string.art), ApplicationFeatures.getContext().getString(R.string.artShort)},
+            {ApplicationFeatures.getContext().getString(R.string.music), ApplicationFeatures.getContext().getString(R.string.musicShort)},
+            {ApplicationFeatures.getContext().getString(R.string.W_Seminar), ApplicationFeatures.getContext().getString(R.string.W_SeminarShort)},
+            {ApplicationFeatures.getContext().getString(R.string.P_Seminar), ApplicationFeatures.getContext().getString(R.string.P_SeminarShort)},
+            {ApplicationFeatures.getContext().getString(R.string.profile_subject), ApplicationFeatures.getContext().getString(R.string.profile_subjectShort)}
     };
     public static boolean checkedAtNetworkChange = false;
 
@@ -84,26 +84,26 @@ public abstract class VertretungsPlan {
     public static String getTodayTitle() {
         String returnValue = "";
         if (ui.getTitle(true) == null || ui.getTitle(true).equals("")) {
-            return MainApplication.getContext().getString(R.string.noInternetConnection);
+            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
         }
         for (String s : ui.getTitle(true)) {
             returnValue += s + " ";
         }
         if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
-            return MainApplication.getContext().getString(R.string.noInternetConnection);
+            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
         return returnValue.substring(0, returnValue.length() - 1);
     }
 
     public static String getTomorrowTitle() {
         String returnValue = "";
         if (ui.getTitle(false) == null || ui.getTitle(false).equals("")) {
-            return MainApplication.getContext().getString(R.string.noInternetConnection);
+            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
         }
         for (String s : ui.getTitle(false)) {
             returnValue += s + " ";
         }
         if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
-            return MainApplication.getContext().getString(R.string.noInternetConnection);
+            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
         return returnValue.substring(0, returnValue.length() - 1);
     }
 

@@ -13,9 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.MainApplication;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.VertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
@@ -61,7 +61,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
 
 
     private void checkData(final String username, final String password) {
-        if (!MainApplication.isNetworkAvailable()) {
+        if (!ApplicationFeatures.isNetworkAvailable()) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
