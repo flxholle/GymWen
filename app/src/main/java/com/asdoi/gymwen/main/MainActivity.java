@@ -70,7 +70,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
         toggle.syncState();
 
-        if (!ApplicationFeatures.initSettings(false)) {
+        if (!ApplicationFeatures.initSettings(false, true)) {
             finish();
         }
         checkUpdates(Display.DIALOG, false);

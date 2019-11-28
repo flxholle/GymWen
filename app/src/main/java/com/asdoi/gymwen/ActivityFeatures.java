@@ -37,6 +37,7 @@ public class ActivityFeatures extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void checkUpdates(Display display, boolean showUpdated) {

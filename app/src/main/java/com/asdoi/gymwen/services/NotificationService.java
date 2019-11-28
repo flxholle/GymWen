@@ -32,8 +32,8 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
-            new createNotification().execute();
+        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", true)) {
+            new createNotification().execute(true, false);
         }
         return Service.START_NOT_STICKY;
     }
@@ -92,7 +92,7 @@ public class NotificationService extends Service {
 
             notificationBuilder.setAutoCancel(true);
 
-            if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("alwaysNotification", false)) {
+            if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("alwaysNotification", true)) {
                 notificationBuilder.setOngoing(true);
                 notificationBuilder.addAction(R.drawable.ic_close_black_24dp, ApplicationFeatures.getContext().getString(R.string.notif_dismiss), btPendingIntent);
             }
