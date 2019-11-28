@@ -23,6 +23,7 @@ public abstract class VertretungsPlan {
 
     public static String[][] choiceCourseNames = new String[][]{{ApplicationFeatures.getContext().getString(R.string.math), ApplicationFeatures.getContext().getString(R.string.mathShort)},
             {ApplicationFeatures.getContext().getString(R.string.german), ApplicationFeatures.getContext().getString(R.string.germanShort)},
+            {ApplicationFeatures.getContext().getString(R.string.history), ApplicationFeatures.getContext().getString(R.string.historyShort)},
             {ApplicationFeatures.getContext().getString(R.string.social_education), ApplicationFeatures.getContext().getString(R.string.social_educationShort)},
             {ApplicationFeatures.getContext().getString(R.string.PE), ApplicationFeatures.getContext().getString(R.string.PEShort)},
             {ApplicationFeatures.getContext().getString(R.string.Religious_education), ApplicationFeatures.getContext().getString(R.string.Religious_educationShort)},
@@ -49,8 +50,7 @@ public abstract class VertretungsPlan {
     public static void setup(boolean oberstufe, String[] courseNames, String className) {
         if (ui == null) {
             ui = new UserInput(oberstufe, courseNames, className);
-        }
-        else{
+        } else {
             ui.reCreate(oberstufe, courseNames, className);
         }
 //        System.out.println("HI " + className);
@@ -61,7 +61,7 @@ public abstract class VertretungsPlan {
         strPasword = password;
     }
 
-    public static boolean isUninit(){
+    public static boolean isUninit() {
         return ui == null;
     }
 
@@ -123,19 +123,19 @@ public abstract class VertretungsPlan {
 //        ui.refresh();
     }
 
-    public static void setTodayDoc(Document value){
+    public static void setTodayDoc(Document value) {
         ui.setTodayDoc(value);
     }
 
-    public static void setTomorrowDoc(Document value){
+    public static void setTomorrowDoc(Document value) {
         ui.setTomorrowDoc(value);
     }
 
-    public static void setDocs(Document today,Document tomorrow){
-        ui.setDocs(today,tomorrow);
+    public static void setDocs(Document today, Document tomorrow) {
+        ui.setDocs(today, tomorrow);
     }
 
-    public static boolean areDocsDownloaded(){
+    public static boolean areDocsDownloaded() {
         return ui.getDoc(true) != null && ui.getDoc(false) != null;
     }
 
@@ -147,7 +147,7 @@ public abstract class VertretungsPlan {
 //        ui.getDocumentsFromSettings();
     }
 
-    public static ArrayList getNames(){
+    public static ArrayList getNames() {
         return ui.getNames();
     }
 
