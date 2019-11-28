@@ -76,7 +76,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ApplicationFeatures.downloadDocs(true);
+                ApplicationFeatures.downloadDocs(true, true);
                 generateTable(rootView);
                 Intent intent = new Intent(context, MainActivity.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);

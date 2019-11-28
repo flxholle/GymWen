@@ -68,7 +68,7 @@ public class ApplicationFeatures extends Application {
         return mContext;
     }
 
-    public static boolean initSettings(boolean isWidget) {
+    public static boolean initSettings(boolean isWidget, boolean signIn) {
         Context context = getContext();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean signedIn = sharedPref.getBoolean("signed", false);
@@ -78,6 +78,7 @@ public class ApplicationFeatures extends Application {
             String courses = sharedPref.getString("courses", "");
             if (courses.trim().isEmpty()) {
                 Intent i = new Intent(context, ChoiceActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
                 return signedIn;
             }
@@ -93,7 +94,7 @@ public class ApplicationFeatures extends Application {
                 proofeNotification();
                 updateMyWidgets();
             }
-        } else {
+        } else if (signIn) {
             Intent i = new Intent(context, SignInActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
@@ -123,20 +124,20 @@ public class ApplicationFeatures extends Application {
         context.sendBroadcast(updateIntent);
     }
 
-    public static Runnable downloadRunnable(final boolean isWidget) {
+    public static Runnable downloadRunnable(final boolean isWidget, final boolean signIn) {
         return new Runnable() {
             @Override
             public void run() {
-                downloadDocs(isWidget);
+                downloadDocs(isWidget, signIn);
             }
         };
     }
 
-    public static void downloadDocs(boolean isWidget) {
+    public static void downloadDocs(boolean isWidget, boolean signIn) {
 
         //DownloadDocs
         if (!VertretungsPlan.areDocsDownloaded() && ApplicationFeatures.isNetworkAvailable()) {
-            if (!ApplicationFeatures.initSettings(true)) {
+            if (!ApplicationFeatures.initSettings(true, signIn)) {
                 return;
             }
             String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};
@@ -180,10 +181,11 @@ public class ApplicationFeatures extends Application {
     public static class downloadDocsTask extends AsyncTask<Boolean, Void, Void> {
         @Override
         protected Void doInBackground(Boolean... params) {
-            if (params == null || params.length < 1) {
-                params = new Boolean[]{true};
+            if (params == null || params.length < 2) {
+                if (params.length == 1)
+                    params = new Boolean[]{params[0], true};
             }
-            downloadDocs(params[0]);
+            downloadDocs(params[0], params[1]);
             return null;
         }
     }
