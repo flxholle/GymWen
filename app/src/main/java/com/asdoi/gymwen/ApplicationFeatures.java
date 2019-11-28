@@ -15,7 +15,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -42,10 +41,11 @@ import java.io.InputStream;
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
 @AcraMailSender(mailTo = "GymWenApp@t-online.de")
-@AcraDialog(resText = R.string.acra_dialog_title,
-        resCommentPrompt = R.string.acra_dialog_content)
-@AcraToast(resText = R.string.acra_toast,
-        length = Toast.LENGTH_LONG)
+@AcraDialog(resText = R.string.acra_dialog_text,
+        resCommentPrompt = R.string.acra_dialog_content,
+        resTheme = R.style.AppTheme,
+        resTitle = R.string.acra_dialog_title)
+@AcraToast(resText = R.string.acra_toast)
 
 public class ApplicationFeatures extends Application {
     private static Context mContext;

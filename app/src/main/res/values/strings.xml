@@ -168,8 +168,11 @@
     <string name="update_never">Nicht erneut anzeigen</string>
 
     <!-- Acra -->
-    <string name="acra_dialog_title">Tut mir leid! Das hätte nicht passieren sollen. Die App ist abgestürzt.</string>
+    <string name="acra_dialog_text">Tut mir leid! Das hätte nicht passieren sollen. Die App ist abgestürzt.
+    \nBitte sende mir den Fehlerbericht, damit ich den Fehler so schnell wie möglich beheben kann.
+    \nVielen Dank!</string>
     <string name="acra_dialog_content">Bitte füge hier einen Kommentar über das ein was du gemacht hast:</string>
+    <string name="acra_dialog_title">Das hätte nicht passieren sollen</string>
     <string name="acra_toast">Tut mir leid! Das hätte nicht passieren sollen.</string>
 
 </resources>
