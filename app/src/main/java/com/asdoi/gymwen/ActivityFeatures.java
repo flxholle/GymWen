@@ -1,36 +1,42 @@
 package com.asdoi.gymwen;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
 
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 
+import saschpe.android.customtabs.CustomTabsHelper;
+import saschpe.android.customtabs.WebViewFallback;
+
 public class ActivityFeatures extends AppCompatActivity {
     public void tabIntent(String url) {
-        throw new NullPointerException();
-//        Context context = this;
-//        try {
-//            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-//                    .addDefaultShareMenuItem()
-//                    .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-//                    .setShowTitle(true)
-//                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
-//                    .build();
-//
-////            customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            // This is optional but recommended
-//            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
-//
-//            // This is where the magic happens...
-//            CustomTabsHelper.openCustomTab(context, customTabsIntent,
-//                    Uri.parse(url),
-//                    new WebViewFallback());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        Context context = this;
+        try {
+            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                    .addDefaultShareMenuItem()
+                    .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                    .setShowTitle(true)
+                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
+                    .build();
+
+//            customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            // This is optional but recommended
+            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
+
+            // This is where the magic happens...
+            CustomTabsHelper.openCustomTab(context, customTabsIntent,
+                    Uri.parse(url),
+                    new WebViewFallback());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void checkUpdates(Display display, boolean showUpdated) {
