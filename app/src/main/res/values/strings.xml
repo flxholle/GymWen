@@ -37,6 +37,9 @@
     <string name="set_vertretung_password">Passwort:</string>
     <string name="set_username_default"></string>
     <string name="set_password_default"></string>
+    <string name="set_notification_title">Benachrichtigung</string>
+    <string name="set_notifiaction_isOn">Benachrichtigung anzeigen</string>
+    <string name="set_notification_showAlways">Dauerhaft anzeigen</string>
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>

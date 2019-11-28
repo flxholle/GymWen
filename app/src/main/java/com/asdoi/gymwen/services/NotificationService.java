@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
@@ -31,7 +32,9 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        new createNotification().execute();
+        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
+            new createNotification().execute();
+        }
         return Service.START_NOT_STICKY;
     }
 
@@ -84,12 +87,15 @@ public class NotificationService extends Service {
                     .setWhen(System.currentTimeMillis())
                     .setSmallIcon(R.drawable.ic_stat_name)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
-                    .setContentTitle(context.getString(R.string.notif_content_title))
-                    .setOngoing(true);
+                    .setContentTitle(context.getString(R.string.notif_content_title));
             notificationBuilder.setContentIntent(resultPendingIntent);
 
-            notificationBuilder.addAction(R.drawable.ic_close_black_24dp, ApplicationFeatures.getContext().getString(R.string.notif_dismiss), btPendingIntent);
             notificationBuilder.setAutoCancel(true);
+
+            if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("alwaysNotification", false)) {
+                notificationBuilder.setOngoing(true);
+                notificationBuilder.addAction(R.drawable.ic_close_black_24dp, ApplicationFeatures.getContext().getString(R.string.notif_dismiss), btPendingIntent);
+            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_LOW);

@@ -18,39 +18,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="@string/set_vertretung_title">
-       <!-- <SwitchPreference
-
-            android:key="oberstufe"
-            android:title="@string/set_oberstufe" /> -->
         <EditTextPreference
-
             android:key="courses"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="@string/set_courses_summary"
             android:title="@string/set_courses_title" />
+    </PreferenceCategory>
 
-<!--        <CheckBoxPreference-->
-<!--            android:defaultValue="false"-->
-<!--            android:key="settings_choice"-->
-<!--            android:title="Menü zur Kurswahl aktivieren" />-->
+    <PreferenceCategory android:title="@string/set_notification_title">
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="showNotification"
+            android:title="@string/set_notifiaction_isOn" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="alwaysNotification"
+            android:title="@string/set_notification_showAlways" />
+    </PreferenceCategory>
 
-        <PreferenceCategory android:title="@string/set_vertretung_signin">
+    <PreferenceCategory android:title="@string/set_vertretung_signin">
 
-            <EditTextPreference
-
-                android:key="username"
-                android:selectAllOnFocus="true"
-                android:singleLine="true"
-                android:title="@string/set_vertretung_username" />
-            <EditTextPreference
-
-                android:key="password"
-                android:selectAllOnFocus="true"
-                android:singleLine="true"
-                android:title="@string/set_vertretung_password" />
-        </PreferenceCategory>
+        <EditTextPreference
+            android:key="username"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/set_vertretung_username" />
+        <EditTextPreference
+            android:key="password"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/set_vertretung_password" />
     </PreferenceCategory>
 
 </PreferenceScreen>
