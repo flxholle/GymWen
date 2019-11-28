@@ -68,6 +68,7 @@
     <string name="proofing">Anmeldedaten werden geprüft</string>
     <string name="username_hint">Benutzername</string>
     <string name="password_hint">Passwort</string>
+    <string name="login_description">Bitte geben Sie hier die Anmeldedaten des Online-Vertretungsplans ein.</string>
 
     <!-- Choice -->
     <string name="title_activity_choice">Kurs-/Klassenwahl</string>
