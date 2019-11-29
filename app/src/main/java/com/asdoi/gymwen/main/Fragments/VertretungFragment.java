@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -21,10 +22,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
@@ -32,6 +29,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import ru.github.igla.ferriswheel.FerrisWheelView;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private static View root;
@@ -74,7 +76,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         createLoadingPanel();
 
-
         if (ApplicationFeatures.isNetworkAvailable())
             refreshAndTable();
         else
@@ -85,17 +86,32 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     }
 
     void createLoadingPanel() {
+        FrameLayout base = new FrameLayout(context);
+        base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
         LinearLayout panel = new LinearLayout(context);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.setMargins(0, 0, 0, 30);
         panel.setLayoutParams(params);
-        panel.setGravity(Gravity.CENTER);
+        panel.setGravity(Gravity.BOTTOM);
         panel.setOrientation(LinearLayout.VERTICAL);
         panel.setTag("vertretung_loading");
 
-        ProgressBar bar = new ProgressBar(context);
+        FerrisWheelView ferrisWheelView = new FerrisWheelView(context);
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ferrisWheelView.setLayoutParams(params2);
+        ferrisWheelView.setNumberOfCabins(8);
+        ferrisWheelView.setRotateDegreeSpeedInSec(35);
+//        ferrisWheelView.setWheelColor(R.color.wheel_wheel);
+        ferrisWheelView.startAnimation();
+
+
+        ProgressBar bar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
         bar.setIndeterminate(true);
-        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(20, 5, 20, 0);
         bar.setLayoutParams(params);
+
 
         TextView textView = new TextView(context);
         textView.setTextColor(Color.BLACK);
@@ -105,10 +121,15 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         textView.setText(getString(R.string.downloading));
 
+        base.addView(ferrisWheelView);
+
         panel.addView(bar);
         panel.addView(textView);
 
-        ((ViewGroup) root.findViewById(R.id.vertretung_constraint)).addView(panel);
+        base.addView(panel);
+
+
+        ((ViewGroup) root.findViewById(R.id.vertretung_constraint)).addView(base);
     }
 
     private String shareMessage() {
