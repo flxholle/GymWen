@@ -17,4 +17,6 @@
     <color name="web_background_content">#FFFFFFFF</color>
 
     <color name="background_light">#FFFFFFFF</color>
+
+    <color name="wheel_wheel">#03B8F4</color>
 </resources>
