@@ -61,7 +61,7 @@ dependencies {
     implementation "ch.acra:acra-dialog:$acraVersion"
     implementation "ch.acra:acra-notification:$acraVersion"
     implementation "ch.acra:acra-toast:$acraVersion"
-
+    implementation 'io.github.tonnyl:whatsnew:0.1.2'
+    implementation 'de.cketti.library.changelog:ckchangelog:1.2.2'
+    implementation 'com.github.Commit451:ModalBottomSheetDialogFragment:1.1.0'
 }
-
-

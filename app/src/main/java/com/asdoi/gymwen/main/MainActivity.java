@@ -7,6 +7,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.Fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -17,15 +26,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.Fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -74,7 +74,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             finish();
         }
         checkUpdates(Display.DIALOG, false);
+        showChangelogCK(true);
+//        showChanglogTonny();
     }
+
 
     @Override
     public void onPostCreate(Bundle b) {
@@ -92,7 +95,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -157,7 +160,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
                 break;
             case R.id.action_impressum: // Fallthrough
-//            case R.id.nav_impressum:
                 intent = new Intent(this, ImpressumActivity.class);
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
@@ -173,7 +175,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     else
                         fragment = new VertretungFragment(VertretungFragment.today, VertretungFragment.all);
                 }
-                item.setTitle("");
                 break;
             /*case R.id.nav_gradesManagement:
 //                createFile("text/plain","test.txt");
@@ -183,6 +184,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;*/
             case R.id.action_update:
                 checkUpdates(Display.SNACKBAR, true);
+                break;
+            case R.id.action_changelog:
+                showChangelogCK(false);
                 break;
             default:
 //                fragment = new All_Classes_today();

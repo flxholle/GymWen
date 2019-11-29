@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog>
+    <release
+        version="1.0.1"
+        versioncode="101">
+        <change>Home-Screen Widget</change>
+        <change>Benachrichtigung ausschalten, verbergen oder nicht dauerhaft anzeigen</change>
+        <change>Klare Anweisung über die einzugebenden Anmeldedaten</change>
+    </release>
+    <release
+        version="1.0.0"
+        versioncode="100">
+        <change>Erstes Release</change>
+    </release>
+</changelog>
