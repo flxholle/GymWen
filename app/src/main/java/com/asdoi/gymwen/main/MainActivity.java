@@ -2,9 +2,14 @@ package com.asdoi.gymwen.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.ActionProvider;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
 import android.widget.Toast;
 
 import com.asdoi.gymwen.ActivityFeatures;
@@ -12,8 +17,9 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.Fragments.VertretungFragment;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
+import com.commit451.modalbottomsheetdialogfragment.Option;
 import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -27,12 +33,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener, ModalBottomSheetDialogFragment.Listener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-    private FloatingActionButton fab;
     VertretungFragment lastLoadedFragment = null;
 
     @Override
@@ -62,7 +67,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        fab = findViewById(R.id.main_fab);
 //        VertretungsPlan.reloadDocs();
 //        VertretungsPlan.refresh();
 
@@ -95,8 +99,223 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        /*ModalBottomSheetDialogFragment.Builder mb = new ModalBottomSheetDialogFragment.Builder();
+        mb.add(R.menu.menu_main).show(getSupportFragmentManager(), "options");
+        mb.show(getSupportFragmentManager(),"s");*/
         return true;
+    }
+
+    @Override
+    public void onModalOptionSelected(String s, Option o) {
+//        onOptionsItemSelected();
+        onOptionsItemSelected(new MenuItem() {
+            @Override
+            public int getItemId() {
+                return o.getId();
+            }
+
+            @Override
+            public int getGroupId() {
+                return 0;
+            }
+
+            @Override
+            public int getOrder() {
+                return 0;
+            }
+
+            @Override
+            public MenuItem setTitle(CharSequence charSequence) {
+                return null;
+            }
+
+            @Override
+            public MenuItem setTitle(int i) {
+                return null;
+            }
+
+            @Override
+            public CharSequence getTitle() {
+                return null;
+            }
+
+            @Override
+            public MenuItem setTitleCondensed(CharSequence charSequence) {
+                return null;
+            }
+
+            @Override
+            public CharSequence getTitleCondensed() {
+                return null;
+            }
+
+            @Override
+            public MenuItem setIcon(Drawable drawable) {
+                return null;
+            }
+
+            @Override
+            public MenuItem setIcon(int i) {
+                return null;
+            }
+
+            @Override
+            public Drawable getIcon() {
+                return null;
+            }
+
+            @Override
+            public MenuItem setIntent(Intent intent) {
+                return null;
+            }
+
+            @Override
+            public Intent getIntent() {
+                return null;
+            }
+
+            @Override
+            public MenuItem setShortcut(char c, char c1) {
+                return null;
+            }
+
+            @Override
+            public MenuItem setNumericShortcut(char c) {
+                return null;
+            }
+
+            @Override
+            public char getNumericShortcut() {
+                return 0;
+            }
+
+            @Override
+            public MenuItem setAlphabeticShortcut(char c) {
+                return null;
+            }
+
+            @Override
+            public char getAlphabeticShortcut() {
+                return 0;
+            }
+
+            @Override
+            public MenuItem setCheckable(boolean b) {
+                return null;
+            }
+
+            @Override
+            public boolean isCheckable() {
+                return false;
+            }
+
+            @Override
+            public MenuItem setChecked(boolean b) {
+                return null;
+            }
+
+            @Override
+            public boolean isChecked() {
+                return false;
+            }
+
+            @Override
+            public MenuItem setVisible(boolean b) {
+                return null;
+            }
+
+            @Override
+            public boolean isVisible() {
+                return false;
+            }
+
+            @Override
+            public MenuItem setEnabled(boolean b) {
+                return null;
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return false;
+            }
+
+            @Override
+            public boolean hasSubMenu() {
+                return false;
+            }
+
+            @Override
+            public SubMenu getSubMenu() {
+                return null;
+            }
+
+            @Override
+            public MenuItem setOnMenuItemClickListener(OnMenuItemClickListener onMenuItemClickListener) {
+                return null;
+            }
+
+            @Override
+            public ContextMenu.ContextMenuInfo getMenuInfo() {
+                return null;
+            }
+
+            @Override
+            public void setShowAsAction(int i) {
+
+            }
+
+            @Override
+            public MenuItem setShowAsActionFlags(int i) {
+                return null;
+            }
+
+            @Override
+            public MenuItem setActionView(View view) {
+                return null;
+            }
+
+            @Override
+            public MenuItem setActionView(int i) {
+                return null;
+            }
+
+            @Override
+            public View getActionView() {
+                return null;
+            }
+
+            @Override
+            public MenuItem setActionProvider(ActionProvider actionProvider) {
+                return null;
+            }
+
+            @Override
+            public ActionProvider getActionProvider() {
+                return null;
+            }
+
+            @Override
+            public boolean expandActionView() {
+                return false;
+            }
+
+            @Override
+            public boolean collapseActionView() {
+                return false;
+            }
+
+            @Override
+            public boolean isActionViewExpanded() {
+                return false;
+            }
+
+            @Override
+            public MenuItem setOnActionExpandListener(OnActionExpandListener onActionExpandListener) {
+                return null;
+            }
+        });
     }
 
     @Override
