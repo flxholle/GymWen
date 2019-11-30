@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.akaita.android.easylauncher'
 
 android {
     compileSdkVersion 28
