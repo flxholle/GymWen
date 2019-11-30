@@ -333,6 +333,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         int id = item.getItemId();
         VertretungFragment fragment = null;
         Intent intent = null;
+        String itemTitle = "" + item.getTitle();
 
         switch (id) {
             case R.id.nav_both:
@@ -422,6 +423,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
         }
+
+        item.setTitle(itemTitle);
 
         ApplicationFeatures.proofeNotification();
 
