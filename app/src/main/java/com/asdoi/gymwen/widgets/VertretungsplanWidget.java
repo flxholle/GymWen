@@ -13,12 +13,12 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import androidx.core.content.ContextCompat;
-
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.MainActivity;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Implementation of App Widget functionality.
@@ -119,11 +119,15 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         } else {
             headline = new String[]{context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.classes)};
         }
-        if (inhalt == null)
+        if (inhalt == null || inhalt.length == 0)
             headline = null;
         addHead(title, headline, day, sonstig);
 
         if (inhalt == null) {
+            return day;
+        }
+
+        if (inhalt.length == 0) {
             day.addView(R.id.widget_day_basic, generateEmptyRow());
         } else {
             for (String[] s : inhalt) {

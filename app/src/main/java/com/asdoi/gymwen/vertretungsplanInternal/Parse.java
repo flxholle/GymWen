@@ -139,7 +139,7 @@ public abstract class Parse {
         }
 
         if (j == 0) {
-            return null;
+            return new String[0][columNr];
         }
 
         String[][] trimmedInhalt = new String[j][columNr];

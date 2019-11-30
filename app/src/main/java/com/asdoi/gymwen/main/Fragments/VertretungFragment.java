@@ -175,6 +175,9 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
 
         if (inhalt == null) {
+            return "";
+        }
+        if (inhalt.length == 0) {
             message += "Am " + title + " haben wir (" + classes + ") keine Vertretung.\n";
             return message;
         }
@@ -259,7 +262,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         @Override
         protected void onProgressUpdate(Void... item) {
             setTableParams();
-            oberstufe = VertretungsPlan.getOberstufe();
+//            oberstufe = VertretungsPlan.getOberstufe();
         }
 
         @Override
@@ -278,8 +281,9 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         void setTableParams() {
             clear();
 
-            if (both)
-                generateScrollView();
+//            if (both)
+//                generateScrollView();
+
             TextView titleView = createTitleLayout();
             TableLayout table = createTableLayout();
 
@@ -290,14 +294,16 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 setTitle(titleView);
                 generateTableSpecific(table);
 
-                titleView = createTitleLayout();
-                table = createTableLayout();
+                if (inhalt != null) {
+                    titleView = createTitleLayout();
+                    table = createTableLayout();
 
 
-                inhalt = VertretungsPlan.getTomorrowArray();
-                title = VertretungsPlan.getTomorrowTitle();
-                setTitle(titleView);
-                generateTableSpecific(table);
+                    inhalt = VertretungsPlan.getTomorrowArray();
+                    title = VertretungsPlan.getTomorrowTitle();
+                    setTitle(titleView);
+                    generateTableSpecific(table);
+                }
             } else if (all) {
                 if (today) {
                     inhalt = VertretungsPlan.getTodayArrayAll();
@@ -336,12 +342,14 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
             LinearLayout base = root.findViewById(R.id.vertretung_linear_layout_layer1);
 
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             ScrollView s1 = new ScrollView(context);
             s1.setLayoutParams(params);
 
             HorizontalScrollView hs2 = new HorizontalScrollView(context);
             hs2.setLayoutParams(params);
+
+            table.setLayoutParams(params);
 
             base.addView(s1);
             s1.addView(hs2);
@@ -372,6 +380,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 //            }
 
             if (inhalt == null) {
+                return;
+            }
+
+            if (inhalt.length == 0) {
                 generateTableNothing(table);
                 return;
             }
@@ -417,8 +429,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     System.out.println("removed row " + i);
                 }
             }
-
             if (inhalt == null) {
+                return;
+            }
+            if (inhalt.length == 0) {
                 generateTableNothing(table);
                 return;
             }
@@ -675,8 +689,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             );
             row.setId(new Integer(130));
             for (int j = 0; j < 2; j++) {
-                TextView tv = new TextView(context
-                );
+                TextView tv = new TextView(context);
                 tv.setText("");
                 tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
@@ -690,16 +703,15 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             tv.setTypeface(Typeface.DEFAULT_BOLD);
             tv.setGravity(Gravity.CENTER);
             row.addView(tv);
-            table.addView(row);
-            for (int j = 0; j < 3; j++) {
-                tv = new TextView(context
-                );
+            for (int j = 0; j < 2; j++) {
+                tv = new TextView(context);
                 tv.setText("");
-                tv.setTextSize(18);
+                tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
                 row.addView(tv);
             }
+            table.addView(row);
         }
 
         void generateFirstRow(TableLayout table) {
