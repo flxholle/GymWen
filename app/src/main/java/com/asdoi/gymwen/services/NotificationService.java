@@ -11,15 +11,15 @@ import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.ContextCompat;
-
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.MainActivity;
 import com.asdoi.gymwen.receivers.ButtonReceiver;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
 
 public class NotificationService extends Service {
     public NotificationService() {
@@ -136,6 +136,9 @@ public class NotificationService extends Service {
         private String notifMessageContent(String[][] inhalt, String day) {
             String message = "";
             if (inhalt == null) {
+                return "";
+            }
+            if (inhalt.length == 0) {
                 message += day + ": keine Vertretung\n";
             } else {
                 message = day + ":\n";
