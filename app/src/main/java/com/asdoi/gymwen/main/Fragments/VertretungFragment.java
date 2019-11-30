@@ -68,8 +68,11 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         FloatingActionButton fab = getActivity().findViewById(R.id.main_fab);
         if (all) {
             fab.setEnabled(false);
+            fab.setVisibility(View.GONE);
         } else {
             fab.setEnabled(true);
+            fab.bringToFront();
+            fab.setVisibility(View.VISIBLE);
         }
         fab.setOnClickListener(this);
 
@@ -133,75 +136,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         ((ViewGroup) root.findViewById(R.id.vertretung_constraint)).addView(base);
     }
 
-    private String shareMessage() {
-        String message = "";
-        String[][] inhalt = null;
-        String title = "";
-
-        if (both) {
-            both = false;
-            today = true;
-            message += shareMessage();
-            today = false;
-            message += shareMessage();
-            return message;
-        } else if (today) {
-            inhalt = VertretungsPlan.getTodayArray();
-            title = VertretungsPlan.getTodayTitle();
-        } else {
-            inhalt = VertretungsPlan.getTomorrowArray();
-            title = VertretungsPlan.getTomorrowTitle();
-        }
-        String classes = "";
-
-        if (VertretungsPlan.getOberstufe()) {
-            ArrayList<String> courses = new ArrayList<>();
-            if (inhalt != null) {
-                for (String[] line : inhalt) {
-                    if (!courses.contains(line[0])) {
-                        courses.add(line[0]);
-                    }
-                }
-                for (int i = 0; i < courses.size() - 1; i++) {
-                    classes += courses.get(i) + ", ";
-                }
-                classes += courses.get(courses.size() - 1);
-            }
-        } else {
-            ArrayList<String> names = VertretungsPlan.getNames();
-            for (int i = 0; i < names.size(); i++) {
-                classes += names.get(i) + "";
-            }
-        }
-
-        if (inhalt == null) {
-            return "";
-        }
-        if (inhalt.length == 0) {
-            message += "Am " + title + " haben wir (" + classes + ") keine Vertretung.\n";
-            return message;
-        }
-        if (VertretungsPlan.getOberstufe()) {
-            message = "Am " + title + " haben wir (" + classes + ") folgende Vertretung:\n";
-            for (String[] line : inhalt) {
-                if (line[3].equals("entfällt")) {
-                    message += line[1] + ". Stunde entfällt für Kurs " + line[0] + "\n";
-                } else {
-                    message += line[1] + ". Stunde für Kurs " + line[0] + " in Raum " + line[4] + " bei " + line[3] + " " + line[5] + "\n";
-                }
-            }
-        } else {
-            for (String[] line : inhalt) {
-                if (line[3].equals("entfällt")) {
-                    message += line[1] + ". Stunde entfällt\n";
-                } else {
-                    message += line[1] + ". Stunde " + line[2] + " bei " + line[3] + " in Raum " + line[4] + " " + line[5] + "\n";
-                }
-            }
-        }
-        return message;
-    }
-
     private void refresh() {
         new ApplicationFeatures.downloadDocsTask().execute(false);
     }
@@ -225,6 +159,76 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         i.putExtra(Intent.EXTRA_TEXT, message);
         i.setType("text/plain");
         startActivity(Intent.createChooser(i, getString(R.string.share_vertretung)));
+    }
+
+    private String shareMessage() {
+        String message = "";
+        String[][] inhalt = null;
+        String title = "";
+
+        if (both) {
+            both = false;
+            today = true;
+            message += shareMessage();
+            today = false;
+            message += shareMessage();
+            return message;
+        } else if (today) {
+            inhalt = VertretungsPlan.getTodayArray();
+            title = VertretungsPlan.getTodayTitle();
+        } else {
+            inhalt = VertretungsPlan.getTomorrowArray();
+            title = VertretungsPlan.getTomorrowTitle();
+        }
+        String classes = "";
+
+        if (inhalt == null) {
+            return "";
+        }
+
+        if (VertretungsPlan.getOberstufe()) {
+            ArrayList<String> courses = new ArrayList<>();
+            if (inhalt.length != 0) {
+                for (String[] line : inhalt) {
+                    if (!courses.contains(line[0])) {
+                        courses.add(line[0]);
+                    }
+                }
+                for (int i = 0; i < courses.size() - 1; i++) {
+                    classes += courses.get(i) + ", ";
+                }
+                classes += courses.get(courses.size() - 1);
+            }
+        } else {
+            ArrayList<String> names = VertretungsPlan.getNames();
+            for (int i = 0; i < names.size(); i++) {
+                classes += names.get(i) + "";
+            }
+        }
+
+        if (inhalt.length == 0) {
+            message += "Am " + title + " haben wir (" + classes + ") keine Vertretung.\n";
+            return message;
+        }
+        message = "Am " + title + " haben wir (" + classes + ") folgende Vertretung:\n";
+        if (VertretungsPlan.getOberstufe()) {
+            for (String[] line : inhalt) {
+                if (line[3].equals("entfällt")) {
+                    message += line[1] + ". Stunde entfällt für Kurs " + line[0] + "\n";
+                } else {
+                    message += line[1] + ". Stunde für Kurs " + line[0] + " in Raum " + line[4] + " bei " + line[3] + " " + line[5] + "\n";
+                }
+            }
+        } else {
+            for (String[] line : inhalt) {
+                if (line[3].equals("entfällt")) {
+                    message += line[1] + ". Stunde entfällt\n";
+                } else {
+                    message += line[1] + ". Stunde " + line[2] + " bei " + line[3] + " in Raum " + line[4] + " " + line[5] + "\n";
+                }
+            }
+        }
+        return message;
     }
 
     private void generateTable() {
