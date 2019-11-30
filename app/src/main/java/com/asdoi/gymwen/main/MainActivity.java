@@ -50,7 +50,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
 //        supportActionBar?drawer.setDisplayHomeAsUpEnabled(true);

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
-        version="1.0.1"
-        versioncode="101">
-        <change>Home-Screen Widget</change>
+        version="1.0.2"
+        versioncode="102">
         <change>Benachrichtigung ausschalten, verbergen oder nicht dauerhaft anzeigen</change>
         <change>Uhrzeiten statt Stunden anzeigen</change>
         <change>Absturzverarbeitung</change>
         <change>Fehlende Internetverbindung zeigt nicht mehr an, dass nichts entfällt</change>
         <change>Klare Anweisung über die einzugebenden Anmeldedaten</change>
+    </release>
+    <release
+        version="1.0.1"
+        versioncode="101">
+        <change>Home-Screen Widget</change>
     </release>
     <release
         version="1.0.0"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
@@ -36,6 +37,8 @@ public class ChoiceActivity extends ActivityFeatures {
 
         fab = findViewById(R.id.choice_fab);
         fab.setEnabled(false);
+        fab.bringToFront();
+        fab.setVisibility(View.VISIBLE);
 
         setFragment(1);
     }

@@ -18,13 +18,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.fragment.app.Fragment;
 
 public class ChoiceActivityFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -396,11 +396,13 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
 //        fab.startAnimation(fade);
         fab.setEnabled(true);
+        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(this);
     }
 
     private void deactivateFab() {
         fab.setEnabled(false);
+        fab.setVisibility(View.GONE);
         fab.setOnClickListener(this);
     }
 
