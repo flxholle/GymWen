@@ -19,7 +19,7 @@
     <string name="menu_both">Auf einen Blick!</string>
     <string name="menu_impressum">Impressum</string>
     <string name="menu_update">Updates</string>
-    <string name="menu_changelog">Changelog</string>
+    <string name="menu_changelog">Änderungen</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
@@ -41,17 +41,17 @@
     <string name="set_notification_title">Benachrichtigung</string>
     <string name="set_notifiaction_isOn">Benachrichtigung anzeigen</string>
     <string name="set_notification_showAlways">Dauerhaft anzeigen</string>
-    <string name="set_hours">Uhrzeit statt Stunde anzeigen</string>
+    <string name="set_hours">Uhrzeiten statt Stunden anzeigen</string>
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="back_button">Erneut drücken zum Beenden</string>
-    <string name="downloading">Lädt...</string>
+    <string name="downloading">Lädt\u2026</string>
     <string name="footprint">Diese Nachricht wurde mit der GymWen App erzeugt.</string>
     <string name="noInternet">Du bist nicht mit dem Internet verbunden!</string>
     <string name="noInternetConnection">Keine Internetverbindung!</string>
-    <string name="share_vertretung">Vertretung senden an...</string>
+    <string name="share_vertretung">Vertretung senden an\u2026</string>
     <!--    Table-->
     <string name="classes">Klasse</string>
     <string name="courses">Kurs</string>
@@ -153,7 +153,7 @@
 
     <!-- Website -->
     <string name="action_open_in_browser">Im Browser öffnen</string>
-    <string name="share_link">Link teilen mit...</string>
+    <string name="share_link">Link teilen mit\u2026</string>
 
     <!-- Notification-->
     <string name="notification_channel_title">Vertretungsplan</string>
@@ -179,9 +179,9 @@
     <string name="acra_toast">Tut mir leid! Das hätte nicht passieren sollen.</string>
 
     <!-- ckChangeLog -->
-    <string name="changelog_full_title">Change Log</string>
-    <string name="changelog_title">What\'s New</string>
-    <string name="changelog_ok_button">OK</string>
-    <string name="changelog_show_full">More…</string>
+    <string name="changelog_full_title">Änderungen \u0026 Verbesserungen</string>
+    <string name="changelog_title">Was ist neu</string>
+    <string name="changelog_ok_button">Alles Klar!</string>
+    <string name="changelog_show_full">Mehr\u2026</string>
 
 </resources>

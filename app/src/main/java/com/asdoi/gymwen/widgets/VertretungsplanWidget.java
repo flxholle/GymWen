@@ -104,7 +104,8 @@ public class VertretungsplanWidget extends AppWidgetProvider {
 
     private void generateTable(RemoteViews basic) {
         basic.addView(R.id.widget1_basic, generateTableDay(VertretungsPlan.getTodayTitle(), VertretungsPlan.getTodayArray(), VertretungsPlan.getOberstufe()));
-        basic.addView(R.id.widget1_basic, generateTableDay(VertretungsPlan.getTomorrowTitle(), VertretungsPlan.getTomorrowArray(), VertretungsPlan.getOberstufe()));
+        if (VertretungsPlan.getTodayArray() != null)
+            basic.addView(R.id.widget1_basic, generateTableDay(VertretungsPlan.getTomorrowTitle(), VertretungsPlan.getTomorrowArray(), VertretungsPlan.getOberstufe()));
     }
 
     private RemoteViews generateTableDay(String title, String[][] inhalt, boolean oberstufe) {
