@@ -5,6 +5,9 @@
         versioncode="101">
         <change>Home-Screen Widget</change>
         <change>Benachrichtigung ausschalten, verbergen oder nicht dauerhaft anzeigen</change>
+        <change>Uhrzeiten statt Stunden anzeigen</change>
+        <change>Absturzverarbeitung</change>
+        <change>Fehlende Internetverbindung zeigt nicht mehr an, dass nichts entfällt</change>
         <change>Klare Anweisung über die einzugebenden Anmeldedaten</change>
     </release>
     <release

@@ -77,7 +77,7 @@ public class ActivityFeatures extends AppCompatActivity {
             if (cl.isFirstRun())
                 cl.getLogDialog().show();
         } else {
-            cl.getLogDialog().show();
+            cl.getFullLogDialog().show();
         }
     }
 
