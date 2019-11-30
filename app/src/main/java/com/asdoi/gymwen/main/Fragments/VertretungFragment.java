@@ -73,7 +73,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
         fab.setOnClickListener(this);
 
-
         createLoadingPanel();
 
         if (ApplicationFeatures.isNetworkAvailable())
@@ -87,6 +86,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     void createLoadingPanel() {
         FrameLayout base = new FrameLayout(context);
+        base.setTag("vertretung_loading");
         base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         LinearLayout panel = new LinearLayout(context);
@@ -95,7 +95,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         panel.setLayoutParams(params);
         panel.setGravity(Gravity.BOTTOM);
         panel.setOrientation(LinearLayout.VERTICAL);
-        panel.setTag("vertretung_loading");
 
         FerrisWheelView ferrisWheelView = new FerrisWheelView(context);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -103,6 +102,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         ferrisWheelView.setNumberOfCabins(8);
         ferrisWheelView.setRotateDegreeSpeedInSec(35);
 //        ferrisWheelView.setWheelColor(R.color.wheel_wheel);
+//        ferrisWheelView.setClockwise(false);
+        ferrisWheelView.setAutoRotate(true);
         ferrisWheelView.startAnimation();
 
 
@@ -276,6 +277,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         void setTableParams() {
             clear();
+
             if (both)
                 generateScrollView();
             TextView titleView = createTitleLayout();

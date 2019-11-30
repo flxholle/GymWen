@@ -4,15 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
-
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 public class SettingsActivity extends ActivityFeatures {
 
@@ -60,7 +60,9 @@ public class SettingsActivity extends ActivityFeatures {
         editor.putBoolean("oberstufe", oberstufe);
         editor.commit();
 
-        VertretungsPlan.setup(oberstufe, courses.split("#"), courses);
+        boolean hours = sharedPref.getBoolean("hours", false);
+
+        VertretungsPlan.setup(oberstufe, courses.split("#"), courses, hours);
 
         String username = sharedPref.getString("username", "");
         String password = sharedPref.getString("password", "");

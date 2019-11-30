@@ -385,6 +385,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;
             case R.id.action_refresh2:
             case R.id.action_refresh:
+                item.setTitle(getSupportActionBar().getTitle());
                 VertretungsPlan.setDocs(null, null);
                 if (lastLoadedFragment == null)
                     fragment = new VertretungFragment(true);
