@@ -43,15 +43,16 @@ public abstract class VertretungsPlan {
             {ApplicationFeatures.getContext().getString(R.string.P_Seminar), ApplicationFeatures.getContext().getString(R.string.P_SeminarShort)},
             {ApplicationFeatures.getContext().getString(R.string.profile_subject), ApplicationFeatures.getContext().getString(R.string.profile_subjectShort)}
     };
+
     public static boolean checkedAtNetworkChange = false;
 
     private static UserInput ui = new UserInput();
 
-    public static void setup(boolean oberstufe, String[] courseNames, String className) {
+    public static void setup(boolean oberstufe, String[] courseNames, String className, boolean hours) {
         if (ui == null) {
-            ui = new UserInput(oberstufe, courseNames, className);
+            ui = new UserInput(oberstufe, courseNames, className, hours);
         } else {
-            ui.reCreate(oberstufe, courseNames, className);
+            ui.reCreate(oberstufe, courseNames, className, hours);
         }
 //        System.out.println("HI " + className);
     }
@@ -150,5 +151,4 @@ public abstract class VertretungsPlan {
     public static ArrayList getNames() {
         return ui.getNames();
     }
-
 }

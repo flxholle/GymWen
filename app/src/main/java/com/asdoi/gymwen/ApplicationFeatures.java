@@ -16,9 +16,6 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.content.res.AppCompatResources;
-
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.SignInActivity;
 import com.asdoi.gymwen.services.NotificationService;
@@ -37,6 +34,9 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
@@ -82,7 +82,10 @@ public class ApplicationFeatures extends Application {
                 context.startActivity(i);
                 return signedIn;
             }
-            VertretungsPlan.setup(oberstufe, courses.split("#"), courses);
+
+            boolean hours = sharedPref.getBoolean("hours", false);
+
+            VertretungsPlan.setup(oberstufe, courses.split("#"), courses, hours);
 
 //            System.out.println("settings: " + oberstufe + courses);
 
@@ -90,6 +93,8 @@ public class ApplicationFeatures extends Application {
             String password = sharedPref.getString("password", "");
 
             VertretungsPlan.signin(username, password);
+
+
             if (!isWidget) {
                 proofeNotification();
                 updateMyWidgets();

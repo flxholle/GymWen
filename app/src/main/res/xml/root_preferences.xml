@@ -24,6 +24,10 @@
             android:singleLine="true"
             android:summary="@string/set_courses_summary"
             android:title="@string/set_courses_title" />
+        <SwitchPreference
+            android:key="hours"
+            android:defaultValue="false"
+            android:title="@string/set_hours" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/set_notification_title">

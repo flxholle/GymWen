@@ -5,15 +5,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.Fragments.ChoiceActivityFragment;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class ChoiceActivity extends ActivityFeatures {
 
@@ -97,7 +97,7 @@ public class ChoiceActivity extends ActivityFeatures {
 
     private void setSettings(){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        VertretungsPlan.setup(oberstufe, courses.split("#"), courses);
+        VertretungsPlan.setup(oberstufe, courses.split("#"), courses, false);
 
         SharedPreferences.Editor editor = sharedPref.edit();
 
