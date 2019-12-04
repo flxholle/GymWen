@@ -6,20 +6,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.asdoi.gymwen.services.NotificationService;
+import com.asdoi.gymwen.ApplicationFeatures;
 
 public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent arg1) {
-        Intent service = new Intent(context, NotificationService.class);
-
-        if (isNetworkAvailable(context)) {
-            context.stopService(service);
-            context.startService(service);
-        }
-
-
+        ApplicationFeatures.proofeNotification();
     }
 
     public boolean isNetworkAvailable(Context context) {
