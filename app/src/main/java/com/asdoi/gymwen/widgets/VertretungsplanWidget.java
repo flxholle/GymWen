@@ -13,12 +13,12 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import androidx.core.content.ContextCompat;
+
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.MainActivity;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
-
-import androidx.core.content.ContextCompat;
 
 /**
  * Implementation of App Widget functionality.
