@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".ApplicationFeatures"
@@ -80,18 +79,18 @@
                 <action android:name="android.intent.action.DATE_CHANGED" />
             </intent-filter>
         </receiver>
-        <receiver
+        <!--<receiver
             android:name=".receivers.NetworkReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
 
-                <!-- Only Working on Foreground because it's deprecated -->
+                &lt;!&ndash; Only Working on Foreground because it's deprecated &ndash;&gt;
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
         <receiver
-            android:name=".receivers.ButtonReceiver"
+            android:name=".receivers.NotificationDismissButtonReceiver"
             android:enabled="true"
             android:exported="true" />
     </application>

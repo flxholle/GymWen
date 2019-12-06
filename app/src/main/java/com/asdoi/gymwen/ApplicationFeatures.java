@@ -21,16 +21,10 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.ContextCompat;
-
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.MainActivity;
 import com.asdoi.gymwen.main.SignInActivity;
-import com.asdoi.gymwen.receivers.ButtonReceiver;
+import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
 
@@ -46,6 +40,11 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
@@ -258,6 +257,9 @@ public class ApplicationFeatures extends Application {
 
         }
 
+        final private int NOTIFICATION_ID = 1;
+        final private String NOTIFICATION_CHANNEL_ID = "vertretungsplan_01";
+
         private void createNotification(String body) {
             Context context = getContext();
 
@@ -271,17 +273,15 @@ public class ApplicationFeatures extends Application {
                 PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-                int NOTIFICATION_ID = 1;
+
 
                 //Create an Intent for the BroadcastReceiver
-                Intent buttonIntent = new Intent(context, ButtonReceiver.class);
+                Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
                 buttonIntent.putExtra("notificationId", NOTIFICATION_ID);
-//            PendingIntent btPendingIntent = PendingIntent.getActivity(context,  0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
+//              PendingIntent btPendingIntent = PendingIntent.getActivity(context,  0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
                 PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, 0);
 
-
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                String NOTIFICATION_CHANNEL_ID = "my_channel_id_01";
 
                 //Build notification
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
@@ -290,12 +290,8 @@ public class ApplicationFeatures extends Application {
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setWhen(System.currentTimeMillis())
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
-                        .setContentTitle(context.getString(R.string.notif_content_title));
-
-
-                notificationBuilder.setContentIntent(resultPendingIntent);
-
-                notificationBuilder.setAutoCancel(true);
+                        .setContentTitle(context.getString(R.string.notif_content_title))
+                        .setContentIntent(resultPendingIntent);
 
                 if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("alwaysNotification", true)) {
                     notificationBuilder.setOngoing(true);
@@ -307,9 +303,9 @@ public class ApplicationFeatures extends Application {
 
                     // Configure the notification channel.
                     notificationChannel.setDescription(context.getString(R.string.notification_channel_description));
-                    notificationChannel.enableLights(true);
-                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
-//                notificationChannel.enableVibration(true);
+                    notificationChannel.enableLights(false);
+//                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    notificationChannel.enableVibration(false);
                     notificationManager.createNotificationChannel(notificationChannel);
                     notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
@@ -322,10 +318,8 @@ public class ApplicationFeatures extends Application {
                     notificationBuilder.setSmallIcon(R.drawable.ic_stat_assignment_late);
                 }
 
-                try {
-                    notificationManager.notify(/*notification id*/1, notificationBuilder.build());
-                } catch (Exception e) {
-                }
+                notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
+
             } catch (Exception e) {
                 //Known Icon Error
             }
