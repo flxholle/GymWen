@@ -12,6 +12,16 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.Fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
+import com.commit451.modalbottomsheetdialogfragment.Option;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.navigation.NavigationView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -22,16 +32,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.Fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
-import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
-import com.commit451.modalbottomsheetdialogfragment.Option;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener, ModalBottomSheetDialogFragment.Listener {
 
@@ -370,13 +370,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 String packageName = "de.eezzy.admin.apnr40";
                 intent = getPackageManager().getLaunchIntentForPackage(packageName);
                 if (intent == null) {
-//                    ProgressDialog progDailog = ProgressDialog.show(this, "Laden","Bitte warten...", true);
-//                    progDailog.setCancelable(false);
                     tabIntent("https://www.kitafino.de/sys_k2/index.php?action=bestellen");
-//                    progDailog.dismiss();
                 } else {
                     startActivity(intent);
                 }
+                break;
+            case R.id.nav_shop:
+//                tabIntent("http://shop.apromote-werbemittel.de/");
+                startDownload("https://f-droid.org/repo/com.google.android.diskusage_3080.apk", "downlaodDema", "asd", "GymWen.apk", onComplete);
+
                 break;
             case R.id.action_impressum: // Fallthrough
                 intent = new Intent(this, ImpressumActivity.class);

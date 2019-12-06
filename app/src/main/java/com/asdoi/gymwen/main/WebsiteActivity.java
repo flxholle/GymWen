@@ -8,11 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.text.HtmlCompat;
-import androidx.fragment.app.FragmentManager;
-
 import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.Fragments.WebsiteActivityFragment;
 import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
@@ -22,10 +19,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.text.HtmlCompat;
+import androidx.fragment.app.FragmentManager;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     public ArrayList<String> history = new ArrayList<>();
@@ -71,33 +71,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         // Preload custom tabs service for improved performance
         // This is optional but recommended
 //        getApplication().registerActivityLifecycleCallbacks(new CustomTabsActivityLifecycleCallbacks());
-    }
-
-    private static boolean isURLValid(String url) {
-        boolean isValid = true;
-        try {
-            URL u = new URL(url); // this would check for the protocol
-            u.toURI(); // does the extra checking required for validation of URI
-        } catch (Exception e) {
-            isValid = false;
-        }
-        return isValid;
-    }
-
-    private static String urlToRightFormat(String url) {
-        //Set URL to right format
-        if (!url.substring(0, 3).equals("www") && !url.substring(0, 4).equals("http")) {
-            url = "http://www." + url;
-        }
-        if (url.substring(0, 3).equals("www")) {
-            url = "http://" + url;
-        }
-        if (!url.contains("http://www.")) {
-            url = "http://www." + url.substring("http://".length());
-        }
-        if (url.charAt(url.length() - 1) != '/')
-            url += "/";
-        return url;
     }
 
     @Override
@@ -568,9 +541,9 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     public void loadPage(String url) {
         if (!url.trim().isEmpty()) {
 
-            final String urlFinal = urlToRightFormat(url);
+            final String urlFinal = ApplicationFeatures.urlToRightFormat(url);
             final Context context = this;
-            if (isURLValid(urlFinal) && urlFinal.contains("http://www.gym-wen.de/")) {
+            if (ApplicationFeatures.isURLValid(urlFinal) && urlFinal.contains("http://www.gym-wen.de/")) {
                 (new Thread(new Runnable() {
                     @Override
                     public void run() {
