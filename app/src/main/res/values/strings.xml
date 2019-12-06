@@ -20,6 +20,7 @@
     <string name="menu_impressum">Impressum</string>
     <string name="menu_update">Updates</string>
     <string name="menu_changelog">Änderungen</string>
+    <string name="menu_shop">Online Shop</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
@@ -183,5 +184,15 @@
     <string name="changelog_title">Was ist neu</string>
     <string name="changelog_ok_button">Alles Klar!</string>
     <string name="changelog_show_full">Mehr\u2026</string>
+
+    <!-- Sheriff Permissions -->
+    <string name="sheriff_permission_rational">Es werden ein paar Berechtigungen für diese Funktion benötigt. Um eine umfassende Funktionalität zu gewährleisten gewähren Sie diese bitte.</string>
+    <string name="permission_required">Berechtigung wird benötigt!</string>
+    <string name="permission_required_description">Diese Berechtigung/en werden benötigt um eine umfassende Funktionalität zu gewährleisten</string>
+    <string name="permission_ok_button">Gewähren\u2026</string>
+    <string name="permission_cancel_button">Abbrechen</string>
+
+    <!-- Downloader -->
+    <string name="down_permission_denied">Berechtigung verweigert</string>
 
 </resources>

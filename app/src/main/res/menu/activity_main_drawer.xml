@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_both"
-            android:icon="@drawable/ic_today_black_24dp"
+            android:icon="@drawable/ic_today_tomorrow_black_24dp"
             android:title="@string/menu_both" />
         <item
             android:id="@+id/nav_today"
@@ -18,7 +18,7 @@
             android:title="@string/menu_tomorrow"/>
         <item
             android:id="@+id/nav_all_classes_today"
-            android:icon="@drawable/ic_tomorrow_black_24dp"
+            android:icon="@drawable/ic_today_black_24dp"
             android:title="@string/menu_all_classes_Today" />
         <item
             android:id="@+id/nav_all_classes_tomorrow"
@@ -41,6 +41,10 @@
                     android:id="@+id/nav_mensa"
                     android:icon="@drawable/ic_link_black_24dp"
                     android:title="@string/menu_mensa" />
+                <item
+                    android:id="@+id/nav_shop"
+                    android:icon="@drawable/ic_link_black_24dp"
+                    android:title="@string/menu_shop" />
                 <!--<item
                     android:id="@+id/nav_impressum"
                     android:icon="@drawable/ic_settings_system_daydream_black_24dp"

@@ -40,6 +40,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -63,7 +64,10 @@ public class ApplicationFeatures extends Application {
         super.onCreate();
         mContext = this;
         ACRA.init(this);
+
+
     }
+
 
     public static Context getContext() {
         return mContext;
@@ -233,6 +237,36 @@ public class ApplicationFeatures extends Application {
         return b;
     }
 
+
+    //Website
+    public static boolean isURLValid(String url) {
+        boolean isValid = true;
+        try {
+            URL u = new URL(url); // this would check for the protocol
+            u.toURI(); // does the extra checking required for validation of URI
+        } catch (Exception e) {
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    public static String urlToRightFormat(String url) {
+        //Set URL to right format
+        if (!url.substring(0, 3).equals("www") && !url.substring(0, 4).equals("http")) {
+            url = "http://www." + url;
+        }
+        if (url.substring(0, 3).equals("www")) {
+            url = "http://" + url;
+        }
+        if (!url.contains("http://www.")) {
+            url = "http://www." + url.substring("http://".length());
+        }
+        if (url.charAt(url.length() - 1) != '/')
+            url += "/";
+        return url;
+    }
+
+
     //Notification
     public static void proofeNotification() {
         if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
@@ -271,8 +305,6 @@ public class ApplicationFeatures extends Application {
                 stackBuilder.addNextIntentWithParentStack(resultIntent);
                 // Get the PendingIntent containing the entire back stack
                 PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
 
 
                 //Create an Intent for the BroadcastReceiver
