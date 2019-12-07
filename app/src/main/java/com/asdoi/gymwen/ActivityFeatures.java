@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
@@ -36,9 +35,6 @@ import de.cketti.library.changelog.ChangeLog;
 import info.isuru.sheriff.enums.SheriffPermission;
 import info.isuru.sheriff.helper.Sheriff;
 import info.isuru.sheriff.interfaces.PermissionListener;
-import io.github.tonnyl.whatsnew.WhatsNew;
-import io.github.tonnyl.whatsnew.item.WhatsNewItem;
-import io.github.tonnyl.whatsnew.util.PresentationOption;
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
@@ -58,36 +54,6 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
             cl.getFullLogDialog().show();
         }
     }
-
-    public void showChanglogTonny() {
-      /*  WhatsNew.newInstance(
-//                        new WhatsNewItem("Nice Icons", "Completely customize colors, texts and icons.", R.drawable.ic_heart),
-//                        new WhatsNewItem("Such Easy", "Setting this up only takes 2 lines of code, impressive you say?", R.drawable.ic_thumb_up),
-                new WhatsNewItem("Very Sleep", "It helps you get more sleep by writing less code.", R.drawable.ic_refresh_black_24dp),
-                new WhatsNewItem("Text Only", "No icons? Just go with plain text.", WhatsNewItem.NO_IMAGE_RES_ID)
-        ).presentAutomatically(this);*/
-
-        WhatsNew whatsNew = WhatsNew.newInstance(
-                new WhatsNewItem("Nice Icons", "Completely customize colors, texts and icons.", R.drawable.ic_close_black_24dp),
-                new WhatsNewItem("Such Easy", "Setting this up only takes 2 lines of code, impressive you say?", R.drawable.ic_menu_share_white_24dp),
-                new WhatsNewItem("Very Sleep", "It helps you get more sleep by writing less code.", R.drawable.ic_refresh_black_24dp),
-                new WhatsNewItem("Text Only", "No icons? Just go with plain text.", WhatsNewItem.NO_IMAGE_RES_ID));
-
-        whatsNew.setPresentationOption(PresentationOption.ALWAYS);
-
-        whatsNew.setTitleColor(ContextCompat.getColor(this, R.color.colorAccent));
-        whatsNew.setTitleText("What's Up");
-
-        whatsNew.setButtonText("Got it!");
-        whatsNew.setButtonBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        whatsNew.setButtonTextColor(ContextCompat.getColor(this, R.color.colorAccent));
-
-        whatsNew.setItemTitleColor(ContextCompat.getColor(this, R.color.colorAccent));
-        whatsNew.setItemContentColor(Color.parseColor("#808080"));
-
-        whatsNew.presentAutomatically(this);
-    }
-
 
     //TabIntent and UpdateCheck
     public void tabIntent(String url) {
@@ -250,17 +216,8 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-            /*if (baseView != null) {
-                Snackbar.make(baseView, R.string.down_permission_denied, Snackbar.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(), R.string.down_permission_denied, Toast.LENGTH_LONG).show();
-            }*/
-
-            requestPermission(new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            startDownload(url, title, description, subPath, onComplete);
-                        }
+            requestPermission(new Thread(() -> {
+                        startDownload(url, title, description, subPath, onComplete);
                     }),
                     SheriffPermission.STORAGE);
             return;

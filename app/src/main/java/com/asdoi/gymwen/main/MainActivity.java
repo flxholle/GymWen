@@ -408,6 +408,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_changelog:
                 showChangelogCK(false);
                 break;
+            case R.id.nav_about_author:
+                Intent i = new Intent(this, AboutAuthorActivity.class);
+                startActivity(i);
+                drawer.closeDrawer(GravityCompat.START);
             default:
 //                fragment = new All_Classes_today();
                 break;
