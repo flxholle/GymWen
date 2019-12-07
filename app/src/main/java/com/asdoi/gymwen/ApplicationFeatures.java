@@ -1,6 +1,5 @@
 package com.asdoi.gymwen;
 
-import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -47,6 +46,7 @@ import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
+import androidx.multidex.MultiDexApplication;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
@@ -57,7 +57,8 @@ import androidx.core.app.TaskStackBuilder;
         resTitle = R.string.acra_dialog_title)
 @AcraToast(resText = R.string.acra_toast)
 
-public class ApplicationFeatures extends Application {
+
+public class ApplicationFeatures extends MultiDexApplication {
     private static Context mContext;
     public static ArrayList<String> websiteHistorySaveInstance;
 

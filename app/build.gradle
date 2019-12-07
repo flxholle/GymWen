@@ -12,12 +12,14 @@ android {
         versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-//        multiDexEnabled true
+        multiDexEnabled true
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            multiDexKeepProguard file('multidex-config.pro')
         }
     }
     compileOptions {
@@ -68,4 +70,7 @@ dependencies {
     implementation 'com.github.Commit451:ModalBottomSheetDialogFragment:1.1.0'
     implementation 'ru.github.igla:ferriswheel:1.2'
     implementation 'com.github.IamIsPra:Sheriff:1.0.0'
+    implementation 'com.github.marcoscgdev:EasyAbout:1.0.6'
+    implementation 'com.github.marcoscgdev:Licenser:1.0.5'
+    implementation 'com.android.support:multidex:1.0.3'
 }
