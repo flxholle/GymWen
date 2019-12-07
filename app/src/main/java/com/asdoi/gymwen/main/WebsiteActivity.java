@@ -12,7 +12,6 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.Fragments.WebsiteActivityFragment;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -76,13 +75,13 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        VertretungsPlan.historySaveInstance = history;
+        ApplicationFeatures.websiteHistorySaveInstance = history;
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        history = VertretungsPlan.historySaveInstance;
+        history = ApplicationFeatures.websiteHistorySaveInstance;
     }
 
     @Override
@@ -94,7 +93,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     @Override
     public boolean onSupportNavigateUp() {
-        VertretungsPlan.historySaveInstance = null;
+        ApplicationFeatures.websiteHistorySaveInstance = null;
 //        Intent i = new Intent(this, MainActivity.class);
 //        startActivity(i);
         finish();
@@ -121,10 +120,10 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
         }
 
-        if (VertretungsPlan.historySaveInstance == null) {
+        if (ApplicationFeatures.websiteHistorySaveInstance == null) {
             HomepageLoad();
         } else {
-            history = VertretungsPlan.historySaveInstance;
+            history = ApplicationFeatures.websiteHistorySaveInstance;
             if (history.size() > 0)
                 loadPage(history.get(history.size() - 1));
             else

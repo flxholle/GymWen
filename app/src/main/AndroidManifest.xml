@@ -82,16 +82,6 @@
                 <action android:name="android.intent.action.DATE_CHANGED" />
             </intent-filter>
         </receiver>
-        <!--<receiver
-            android:name=".receivers.NetworkReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-
-                &lt;!&ndash; Only Working on Foreground because it's deprecated &ndash;&gt;
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>-->
         <receiver
             android:name=".receivers.NotificationDismissButtonReceiver"
             android:enabled="true"

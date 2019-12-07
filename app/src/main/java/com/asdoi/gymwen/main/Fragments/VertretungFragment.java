@@ -22,18 +22,17 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import ru.github.igla.ferriswheel.FerrisWheelView;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
@@ -146,7 +145,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         String footprint = getString(R.string.footprint);
         message += footprint;
 
-        if (VertretungsPlan.getTodayTitle().equals("Keine Internetverbindung!")) {
+        if (VertretungsPlanFeatures.getTodayTitle().equals("Keine Internetverbindung!")) {
             //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
             Snackbar snackbar = Snackbar
                     .make(root.findViewById(R.id.vertretung_constraint), getString(R.string.noInternet), Snackbar.LENGTH_LONG);
@@ -175,11 +174,11 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             message += shareMessage();
             return message;
         } else if (today) {
-            inhalt = VertretungsPlan.getTodayArray();
-            title = VertretungsPlan.getTodayTitle();
+            inhalt = VertretungsPlanFeatures.getTodayArray();
+            title = VertretungsPlanFeatures.getTodayTitle();
         } else {
-            inhalt = VertretungsPlan.getTomorrowArray();
-            title = VertretungsPlan.getTomorrowTitle();
+            inhalt = VertretungsPlanFeatures.getTomorrowArray();
+            title = VertretungsPlanFeatures.getTomorrowTitle();
         }
         String classes = "";
 
@@ -187,7 +186,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             return "";
         }
 
-        if (VertretungsPlan.getOberstufe()) {
+        if (VertretungsPlanFeatures.getOberstufe()) {
             ArrayList<String> courses = new ArrayList<>();
             if (inhalt.length != 0) {
                 for (String[] line : inhalt) {
@@ -201,7 +200,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 classes += courses.get(courses.size() - 1);
             }
         } else {
-            ArrayList<String> names = VertretungsPlan.getNames();
+            ArrayList<String> names = VertretungsPlanFeatures.getNames();
             for (int i = 0; i < names.size(); i++) {
                 classes += names.get(i) + "";
             }
@@ -212,7 +211,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             return message;
         }
         message = "Am " + title + " haben wir (" + classes + ") folgende Vertretung:\n";
-        if (VertretungsPlan.getOberstufe()) {
+        if (VertretungsPlanFeatures.getOberstufe()) {
             for (String[] line : inhalt) {
                 if (line[3].equals("entfällt")) {
                     message += line[1] + ". Stunde entfällt für Kurs " + line[0] + "\n";
@@ -267,7 +266,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         @Override
         protected void onProgressUpdate(Void... item) {
             setTableParams();
-//            oberstufe = VertretungsPlan.getOberstufe();
+//            oberstufe = VertretungsPlanFeatures.getOberstufe();
         }
 
         @Override
@@ -292,10 +291,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             TextView titleView = createTitleLayout();
             TableLayout table = createTableLayout();
 
-            oberstufe = VertretungsPlan.getOberstufe();
+            oberstufe = VertretungsPlanFeatures.getOberstufe();
             if (both) {
-                inhalt = VertretungsPlan.getTodayArray();
-                title = VertretungsPlan.getTodayTitle();
+                inhalt = VertretungsPlanFeatures.getTodayArray();
+                title = VertretungsPlanFeatures.getTodayTitle();
                 setTitle(titleView);
                 generateTableSpecific(table);
 
@@ -304,28 +303,28 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     table = createTableLayout();
 
 
-                    inhalt = VertretungsPlan.getTomorrowArray();
-                    title = VertretungsPlan.getTomorrowTitle();
+                    inhalt = VertretungsPlanFeatures.getTomorrowArray();
+                    title = VertretungsPlanFeatures.getTomorrowTitle();
                     setTitle(titleView);
                     generateTableSpecific(table);
                 }
             } else if (all) {
                 if (today) {
-                    inhalt = VertretungsPlan.getTodayArrayAll();
-                    title = VertretungsPlan.getTodayTitle();
+                    inhalt = VertretungsPlanFeatures.getTodayArrayAll();
+                    title = VertretungsPlanFeatures.getTodayTitle();
                 } else {
-                    inhalt = VertretungsPlan.getTomorrowArrayAll();
-                    title = VertretungsPlan.getTomorrowTitle();
+                    inhalt = VertretungsPlanFeatures.getTomorrowArrayAll();
+                    title = VertretungsPlanFeatures.getTomorrowTitle();
                 }
                 generateTableNormal(table);
                 setTitle(titleView);
             } else {
                 if (today) {
-                    inhalt = VertretungsPlan.getTodayArray();
-                    title = VertretungsPlan.getTodayTitle();
+                    inhalt = VertretungsPlanFeatures.getTodayArray();
+                    title = VertretungsPlanFeatures.getTodayTitle();
                 } else {
-                    inhalt = VertretungsPlan.getTomorrowArray();
-                    title = VertretungsPlan.getTomorrowTitle();
+                    inhalt = VertretungsPlanFeatures.getTomorrowArray();
+                    title = VertretungsPlanFeatures.getTomorrowTitle();
                 }
                 generateTableSpecific(table);
                 setTitle(titleView);
