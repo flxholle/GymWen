@@ -376,9 +376,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
                 break;
             case R.id.nav_shop:
-//                tabIntent("http://shop.apromote-werbemittel.de/");
-                startDownload("https://f-droid.org/repo/com.google.android.diskusage_3080.apk", "downlaodDema", "asd", "GymWen.apk", onComplete);
-
+                tabIntent("http://shop.apromote-werbemittel.de/");
                 break;
             case R.id.action_impressum: // Fallthrough
                 intent = new Intent(this, ImpressumActivity.class);
@@ -405,7 +403,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 snackbar.show();
                 break;*/
             case R.id.action_update:
-                checkUpdates(Display.SNACKBAR, true);
+                checkUpdates(Display.DIALOG, true);
                 break;
             case R.id.action_changelog:
                 showChangelogCK(false);

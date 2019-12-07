@@ -14,11 +14,15 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
+import android.widget.Toast;
 
 import com.asdoi.gymwen.main.MainActivity;
 import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.AppUpdaterUtils;
+import com.github.javiersantos.appupdater.enums.AppUpdaterError;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
+import com.github.javiersantos.appupdater.objects.Update;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -85,6 +89,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     }
 
 
+    //TabIntent and UpdateCheck
     public void tabIntent(String url) {
         Context context = this;
         try {
@@ -111,8 +116,9 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
     public void checkUpdates(Display display, boolean showUpdated) {
         Context context = this;
+        String url = "https://gitlab.com/asdoi/gymwenreleases/raw/master/UpdaterFile.json";
+
         try {
-            String url = "https://gitlab.com/asdoi/gymwenreleases/raw/master/UpdaterFile.json";
             AppUpdater appUpdater = new AppUpdater(context)
                     .setDisplay(display)
                     .setUpdateFrom(UpdateFrom.JSON)
@@ -122,20 +128,55 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
                     .setTitleOnUpdateNotAvailable(R.string.update_not_available_title)
                     .setContentOnUpdateNotAvailable(R.string.update_not_available_content)
                     .setButtonUpdate(R.string.update_now)
+                    .setButtonUpdateClickListener(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            try {
+                                String apkUrl = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
+                                startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", installApk);
+                            } catch (Exception e) {
+                                tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
+                            }
+                        }
+                    })
                     .setButtonDismiss(R.string.update_later)
-                    .setButtonDoNotShowAgain(null)
+                    .setButtonDoNotShowAgain(/*R.string.update_website*/ null)
+                    /*.setButtonDismissClickListener(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
+                        }
+                    })*/
                     .setIcon(R.drawable.ic_system_update_black_24dp)
                     .showAppUpdated(showUpdated);
             appUpdater.start();
         } catch (Exception e) {
-            //Create new Updater
+            AppUpdaterUtils appUpdaterUtils = new AppUpdaterUtils(this)
+                    .setUpdateFrom(UpdateFrom.JSON)
+                    .setUpdateJSON(url)
+                    .withListener(new AppUpdaterUtils.UpdateListener() {
+                        @Override
+                        public void onSuccess(Update update, Boolean isUpdateAvailable) {
+                            if (isUpdateAvailable) {
+                                Toast.makeText(getContext(), getContext().getString(R.string.update_available_title), Toast.LENGTH_LONG).show();
+                                tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
+                            }
+                        }
+
+                        @Override
+                        public void onFailed(AppUpdaterError error) {
+
+                        }
+                    });
+            appUpdaterUtils.start();
         }
     }
 
 
     //Permissions
     private Sheriff sheriffPermission;
-    private AlertDialog dialog;
+    private static final int REQUEST_MULTIPLE_PERMISSION = 101;
+    private Thread permissionRunAfter;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -145,7 +186,12 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
     @Override
     public void onPermissionsGranted(int requestCode, ArrayList<String> acceptedPermissionList) {
-
+        if (permissionRunAfter == null)
+            return;
+        try {
+            permissionRunAfter.run();
+        } catch (Exception e) {
+        }
     }
 
     @Override
@@ -165,18 +211,16 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         builder.setNegativeButton(getContext().getString(R.string.permission_cancel_button), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialog.cancel();
+                dialogInterface.cancel();
             }
         });
 
         // create and show the alert dialog
-        dialog = builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
     }
 
-    private static final int REQUEST_MULTIPLE_PERMISSION = 101;
-
-    private void requestPermission(SheriffPermission... permissions) {
+    private void requestPermission(Thread runAfter, SheriffPermission... permissions) {
         sheriffPermission = Sheriff.Builder()
                 .with(this)
                 .requestCode(REQUEST_MULTIPLE_PERMISSION)
@@ -184,6 +228,8 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
                 .askFor(permissions)
                 .rationalMessage(getContext().getString(R.string.sheriff_permission_rational))
                 .build();
+
+        permissionRunAfter = runAfter;
 
         sheriffPermission.requestPermissions();
     }
@@ -203,14 +249,22 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     public void startDownload(String url, String title, String description, String subPath, BroadcastReceiver onComplete) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermission(SheriffPermission.STORAGE);
 
             /*if (baseView != null) {
                 Snackbar.make(baseView, R.string.down_permission_denied, Snackbar.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getApplicationContext(), R.string.down_permission_denied, Toast.LENGTH_LONG).show();
             }*/
+
+            requestPermission(new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            startDownload(url, title, description, subPath, onComplete);
+                        }
+                    }),
+                    SheriffPermission.STORAGE);
             return;
+
         }
 
         registerReceiver(onComplete,
@@ -240,7 +294,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
     }
 
-    public BroadcastReceiver onComplete = new BroadcastReceiver() {
+    public BroadcastReceiver installApk = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
             installApk(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + subPath);
         }

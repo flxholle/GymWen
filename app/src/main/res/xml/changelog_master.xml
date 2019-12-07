@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
+        version="1.0.3"
+        versioncode="103">
+        <change>Automatisches Herunterladen und installieren von Updates</change>
+        <change>GymWen Online Shop hinzugefügt</change>
+    </release>
+    <release
         version="1.0.2"
         versioncode="102">
         <change>Benachrichtigung ausschalten, verbergen oder nicht dauerhaft anzeigen</change>

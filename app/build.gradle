@@ -67,6 +67,5 @@ dependencies {
     implementation 'de.cketti.library.changelog:ckchangelog:1.2.2'
     implementation 'com.github.Commit451:ModalBottomSheetDialogFragment:1.1.0'
     implementation 'ru.github.igla:ferriswheel:1.2'
-//    implementation 'com.karumi:dexter:6.0.1'
     implementation 'com.github.IamIsPra:Sheriff:1.0.0'
 }
