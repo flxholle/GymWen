@@ -170,6 +170,8 @@
     <string name="update_now">Jetzt herunterladen</string>
     <string name="update_later">Später</string>
     <string name="update_never">Nicht erneut anzeigen</string>
+    <string name="update_website">Website anzeigen</string>
+    <string name="update_down_title">Lädt Update herunter\u2026</string>
 
     <!-- Acra -->
     <string name="acra_dialog_text">Tut mir leid! Das hätte nicht passieren sollen. Die App ist abgestürzt.
