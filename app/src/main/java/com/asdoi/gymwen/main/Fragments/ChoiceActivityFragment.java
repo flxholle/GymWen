@@ -18,13 +18,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.ChoiceActivity;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.fragment.app.Fragment;
 
 public class ChoiceActivityFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -122,11 +122,11 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     int quantitiyCourses = 0;
 
     private void generateStep5() {
-        for (int i = 0; i < VertretungsPlan.choiceCourseNames.length; i++) {
-            if (VertretungsPlan.choiceCourseNames[i].length < 2 || VertretungsPlan.choiceCourseNames[i][1] == null || VertretungsPlan.choiceCourseNames[i][1].trim().isEmpty()) {
-                createColumnStep5(VertretungsPlan.choiceCourseNames[i][0], getString(R.string.anyShort));
+        for (int i = 0; i < VertretungsPlanFeatures.choiceCourseNames.length; i++) {
+            if (VertretungsPlanFeatures.choiceCourseNames[i].length < 2 || VertretungsPlanFeatures.choiceCourseNames[i][1] == null || VertretungsPlanFeatures.choiceCourseNames[i][1].trim().isEmpty()) {
+                createColumnStep5(VertretungsPlanFeatures.choiceCourseNames[i][0], getString(R.string.anyShort));
             } else {
-                createColumnStep5(VertretungsPlan.choiceCourseNames[i][0], VertretungsPlan.choiceCourseNames[i][1]);
+                createColumnStep5(VertretungsPlanFeatures.choiceCourseNames[i][0], VertretungsPlanFeatures.choiceCourseNames[i][1]);
             }
         }
     }
@@ -217,7 +217,6 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         } else if (step == 1) {
             switch (id) {
                 case R.id.choice_button_oberstufe:
-                    ((ChoiceActivity) getActivity()).setOberstufe(true);
                     nextStep = 3;
                     break;
                 case R.id.choice_button_5:

@@ -1,49 +1,15 @@
 package com.asdoi.gymwen.vertretungsplanInternal;
 
-import org.apache.commons.codec.binary.Base64;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public abstract class Parse {
 
-    public static ArrayList<String> generateOberstufeCodes(String[] courseNames) {
-        ArrayList<String> returnValue = new ArrayList<>();
-        for (String s : courseNames) {
-            returnValue.add(s);
-        }
-
-        return returnValue;
-    }
-
-    public static ArrayList<String> generateClassCodes(String className) {
-//        if (className.length() > 3 || className.length() <= 1) {
-        if (className.length() <= 1) {
-            System.out.println("Wrong class format");
-            return null;
-        }
-
-        ArrayList<String> returnValue = new ArrayList<String>();
-
-        if (className.length() > 2) {
-            returnValue.add("" + className.charAt(0) + className.charAt(1));
-            returnValue.add("" + className.charAt(2));
-        } else {
-            returnValue.add("" + className.charAt(0));
-            returnValue.add("" + className.charAt(1));
-        }
-
-
-        return returnValue;
-    }
-
     //specific
-    public static String[][] analyzeHTMLCode(ArrayList<String> classNames, boolean oberstufe, Document doc) {
+    public static String[][] getList(Document doc, boolean oberstufe, ArrayList<String> classNames) {
 
         if (doc == null) {
             System.out.println("Authentication failed! at getting Classes");
@@ -152,30 +118,7 @@ public abstract class Parse {
 
     }
 
-    public static String[] putInArray(String value, int postion, String[] array) {
-        if (postion > array.length) {
-            System.out.println("position größer als Array+1");
-            return null;
-        }
-        String[] returnValue = new String[array.length + 1];
-        for (int i = 0; i < postion; i++) {
-            returnValue[i] = array[i];
-        }
-        returnValue[postion] = value;
-        for (int i = postion + 1; i < array.length; i++) {
-            returnValue[i] = array[i];
-        }
-
-        return returnValue;
-    }
-
-    public static String[] clearArray(String value, String[] array) {
-        ArrayList<String> list = new ArrayList<String>(Arrays.asList(array));
-        list.remove(value);
-        return list.toArray(new String[0]);
-    }
-
-    public static String[] removeValues(String[] array, int length) {
+    private static String[] removeValues(String[] array, int length) {
         int multplier = 2;
         String[] returnValue = new String[length];
         int j = 0;
@@ -193,7 +136,7 @@ public abstract class Parse {
     }
 
     //Title
-    public static String[] analyzeHTMLCodeTitle(Document doc) {
+    public static String[] getTitle(Document doc) {
 
         if (doc == null) {
             System.out.println("Authentication failed! at getting Title");
@@ -223,7 +166,7 @@ public abstract class Parse {
     }
 
     //All
-    public static String[][] analyzeHTMLCodeAll(Document doc) {
+    public static String[][] getList(Document doc) {
 
         if (doc == null) {
             System.out.println("Authentication failed! at getting all");
@@ -277,180 +220,6 @@ public abstract class Parse {
 
         return inhalt;
     }
-
-    static Document dc = null;
-
-    public static String lastAuthString = "";
-
-    //Credits to:
-    //https://www.javacodeexamples.com/jsoup-basic-authentication-example/808
-    public static Document getDocument(final String strURL) throws Exception {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Document doc;
-                /*
-                 * User id, password string needs to be in
-                 * userid:password format with no space
-                 * in between them
-                 */
-                String authString = VertretungsPlan.strUserId + ":" + VertretungsPlan.strPasword;
-
-//                System.out.println("auth: " + authString);
-
-                //Check if already tried logging in with this authentication and if it failed before, return null
-                if (lastAuthString.length() > 1 && lastAuthString.substring(0, lastAuthString.length() - 1).equals(authString) && lastAuthString.charAt(lastAuthString.length() - 1) == 'f') {
-                    System.out.println("failed before with same authString");
-                    return;
-                }
-
-                //encode the authString using base64
-                String encodedString =
-                        new String(Base64.encodeBase64(authString.getBytes()));
-
-                /*
-                 * connect to the website using Jsoup
-                 * and provide above value in Authorization header
-                 */
-
-                try {
-                    doc = Jsoup.connect(strURL)
-                            .header("Authorization", "Basic " + encodedString)
-                            .get();
-
-                    System.out.println("Logged in using basic authentication");
-                    lastAuthString = authString + "t";
-                    dc = doc;
-
-
-                } catch (IOException e) {
-//                    e.printStackTrace();
-                    lastAuthString = authString + "f";
-                    dc = null;
-                }
-
-
-            }
-        }).start();
-
-        if (lastAuthString.charAt(lastAuthString.length() - 1) == 'f') {
-            return null;
-        }
-
-        //Sleep is very important, otherwise doc will be the value it had before
-        try {
-            Thread.sleep(100);
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-
-
-        return dc;
-    }
-
-    static Document dcCheck = null;
-
-    public static boolean checkConnection(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Document doc = null;
-
-                try {
-                    doc = Jsoup.connect("http://gym-wen.de/startseite").get();
-
-                    System.out.println("Logged in using basic authentication");
-                    dcCheck = doc;
-
-
-                } catch (IOException e) {
-//                    e.printStackTrace();
-                    dcCheck = null;
-                }
-
-            }
-        }).start();
-
-        //Sleep is very important, otherwise doc will be the value it had before
-        try {
-            Thread.sleep(100);
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-
-        return dcCheck != null;
-
-
-    }
-
-//
-//    public static Document getDocument() {
-//        Document doc = null;
-//        new downloadImageTask((Document) doc)
-//                .execute("st");
-//    }
-//
-//    private class Test {
-//        Document doc = null;
-//
-//        void start() {
-//
-//            new downloadImageTask((Document) doc).execute("");
-//        }
-//    }
-
-//    private class downloadImageTask extends AsyncTask<String, Void, Document> {
-//
-//        public downloadImageTask() {
-//        }
-//
-//        public interface AsyncResponse {
-//            void processFinish(String output);
-//        }
-//
-//        protected Document doInBackground(String... strURL) {
-//            Document doc = null;
-//
-//            String authString = VertretungsPlan.strUserId + ":" + VertretungsPlan.strPasword;
-//
-////                System.out.println("auth: " + authString);
-//
-//            //Check if already tried logging in with this authentication and if it failed before, return null
-//            if (lastAuthString.length() > 1 && lastAuthString.substring(0, lastAuthString.length() - 1).equals(authString) && lastAuthString.charAt(lastAuthString.length() - 1) == 'f') {
-//                System.out.println("failed before with same authString");
-//                return null;
-//            }
-//
-//            //encode the authString using base64
-//            String encodedString =
-//                    new String(Base64.encodeBase64(authString.getBytes()));
-//
-//
-//            try {
-//                doc = Jsoup.connect(strURL[0])
-//                        .header("Authorization", "Basic " + encodedString)
-//                        .get();
-//
-//                System.out.println("Logged in using basic authentication");
-//                lastAuthString = authString + "t";
-//                dc = doc;
-//
-//
-//            } catch (IOException e) {
-////                    e.printStackTrace();
-//                lastAuthString = authString + "f";
-//                dc = null;
-//            }
-//            return doc;
-//        }
-//
-//        protected void onPostExecute(Document result) {
-//            doc.setImageBitmap(result);
-//        }
-//    }
-
-
 }
 
 

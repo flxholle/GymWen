@@ -16,7 +16,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.Fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
 import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
 import com.commit451.modalbottomsheetdialogfragment.Option;
 import com.github.javiersantos.appupdater.enums.Display;
@@ -66,10 +66,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         navigationView.setNavigationItemSelectedListener(this);
 
-//        VertretungsPlan.reloadDocs();
-//        VertretungsPlan.refresh();
+//        VertretungsPlanFeatures.reloadDocs();
+//        VertretungsPlanFeatures.refresh();
 
-        if (!VertretungsPlan.isUninit())
+        if (!VertretungsPlanFeatures.isUninit())
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
         toggle.syncState();
 
@@ -386,7 +386,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_refresh2:
             case R.id.action_refresh:
                 item.setTitle(getSupportActionBar().getTitle());
-                VertretungsPlan.setDocs(null, null);
+                VertretungsPlanFeatures.setDocs(null, null);
                 if (lastLoadedFragment == null)
                     fragment = new VertretungFragment(true);
                 else {
@@ -449,6 +449,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             Toast.makeText(getApplicationContext(), R.string.back_button, Toast.LENGTH_LONG).show();
             pressedBack = true;
         }
-        VertretungsPlan.saveDocs();
+        VertretungsPlanFeatures.saveDocs();
     }
 }

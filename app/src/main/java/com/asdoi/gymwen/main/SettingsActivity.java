@@ -4,15 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
 
 public class SettingsActivity extends ActivityFeatures {
 
@@ -55,21 +55,16 @@ public class SettingsActivity extends ActivityFeatures {
             startActivity(i);
             return;
         }
-        boolean oberstufe = courses.split("#").length > 1;
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("oberstufe", oberstufe);
         editor.commit();
 
         boolean hours = sharedPref.getBoolean("hours", false);
 
-        VertretungsPlan.setup(oberstufe, courses.split("#"), courses, hours);
+        VertretungsPlanFeatures.setup(hours, courses.split("#"));
 
         String username = sharedPref.getString("username", "");
         String password = sharedPref.getString("password", "");
-        VertretungsPlan.signin(username, password);
-
-        System.out.println("settings: " + oberstufe + courses);
-//        System.out.println("login " + username + password + "real " + VertretungsPlan.strUserId + VertretungsPlan.strPasword);
+        VertretungsPlanFeatures.signin(username, password);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

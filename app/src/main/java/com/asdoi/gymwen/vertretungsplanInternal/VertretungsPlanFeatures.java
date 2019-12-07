@@ -7,20 +7,14 @@ import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
 
-public abstract class VertretungsPlan {
+public abstract class VertretungsPlanFeatures {
     public static String strUserId = "";
     public static String strPasword = "";
 
     public static String todayURL = "http://gym-wen.de/vp/heute.htm";
     public static String tomorrowURL = "http://gym-wen.de/vp/morgen.htm";
 
-    public static String lastAuthString = "";
-
-    public static ArrayList<String> historySaveInstance;
-
     //ChoiceActivity -> Step 5
-//    public static String[][] choiceCourseNames = new String[][]{{"Mathe", "m"}, {"Deutsch", "d"}, {"Geschichte", "g"}, {"Sozialkunde", "sk"}, {"Sport", "spo"}, {"Religionslehre"}, {"Englisch", "e"},{"Französisch", "f"}, {"Latein", "l"}, {"Spanisch", "sp"}, {"Biologie", "b"}, {"Chemie", "c"}, {"Physik", "ph"}, {"Informatik", "inf"}, {"Geographie", "geo"}, {"Wirtschaft und Recht", "wr"}, {"Kunst", "ku"}, {"Musik", "mu"}, {"W-Seminar","W_"}, {"P-Seminar","P_"}, {"Profilfach"}};
-
     public static String[][] choiceCourseNames = new String[][]{{ApplicationFeatures.getContext().getString(R.string.math), ApplicationFeatures.getContext().getString(R.string.mathShort)},
             {ApplicationFeatures.getContext().getString(R.string.german), ApplicationFeatures.getContext().getString(R.string.germanShort)},
             {ApplicationFeatures.getContext().getString(R.string.history), ApplicationFeatures.getContext().getString(R.string.historyShort)},
@@ -46,15 +40,14 @@ public abstract class VertretungsPlan {
 
     public static boolean checkedAtNetworkChange = false;
 
-    private static UserInput ui = new UserInput();
+    private static Vertretungsplan vertretungsplan = new Vertretungsplan();
 
-    public static void setup(boolean oberstufe, String[] courseNames, String className, boolean hours) {
-        if (ui == null) {
-            ui = new UserInput(oberstufe, courseNames, className, hours);
+    public static void setup(boolean hours, String... courses) {
+        if (vertretungsplan == null) {
+            vertretungsplan = new Vertretungsplan(hours, courses);
         } else {
-            ui.reCreate(oberstufe, courseNames, className, hours);
+            vertretungsplan.reCreate(hours, courses);
         }
-//        System.out.println("HI " + className);
     }
 
     public static void signin(String username, String password) {
@@ -63,92 +56,70 @@ public abstract class VertretungsPlan {
     }
 
     public static boolean isUninit() {
-        return ui == null;
+        return vertretungsplan == null;
     }
 
     public static String[][] getTomorrowArray() {
-        return ui.generateDayArray(false);
+        return vertretungsplan.getDay(false);
     }
 
     public static String[][] getTodayArray() {
-        return ui.generateDayArray(true);
+        return vertretungsplan.getDay(true);
     }
 
     public static String[][] getTodayArrayAll() {
-        return ui.generateDayAllArray(true);
+        return vertretungsplan.getAll(true);
     }
 
     public static String[][] getTomorrowArrayAll() {
-        return ui.generateDayAllArray(false);
+        return vertretungsplan.getAll(false);
     }
 
     public static String getTodayTitle() {
-        String returnValue = "";
-        if (ui.getTitle(true) == null || ui.getTitle(true).equals("")) {
-            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
-        }
-        for (String s : ui.getTitle(true)) {
-            returnValue += s + " ";
-        }
-        if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
-            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
-        return returnValue.substring(0, returnValue.length() - 1);
+        return vertretungsplan.getTitleString(true);
     }
 
     public static String getTomorrowTitle() {
-        String returnValue = "";
-        if (ui.getTitle(false) == null || ui.getTitle(false).equals("")) {
-            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
-        }
-        for (String s : ui.getTitle(false)) {
-            returnValue += s + " ";
-        }
-        if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
-            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
-        return returnValue.substring(0, returnValue.length() - 1);
+        return vertretungsplan.getTitleString(false);
     }
 
     public static String[] getTodayTitleArray() {
-        return ui.getTitle(true);
+        return vertretungsplan.getTitle(true);
     }
 
     public static String[] getTomorrowTitleArray() {
-        return ui.getTitle(false);
+        return vertretungsplan.getTitle(false);
     }
 
     public static boolean getOberstufe() {
-        return ui.getOberstufe();
-    }
-
-    public static void refresh() {
-//        ui.refresh();
+        return vertretungsplan.getOberstufe();
     }
 
     public static void setTodayDoc(Document value) {
-        ui.setTodayDoc(value);
+        vertretungsplan.setTodayDoc(value);
     }
 
     public static void setTomorrowDoc(Document value) {
-        ui.setTomorrowDoc(value);
+        vertretungsplan.setTomorrowDoc(value);
     }
 
     public static void setDocs(Document today, Document tomorrow) {
-        ui.setDocs(today, tomorrow);
+        vertretungsplan.setDocs(today, tomorrow);
     }
 
     public static boolean areDocsDownloaded() {
-        return ui.getDoc(true) != null && ui.getDoc(false) != null;
+        return vertretungsplan.areDocsDownloaded();
     }
 
     public static void saveDocs() {
-//        ui.setDocumentsToSettings();
+//        vertretungsplan.setDocumentsToSettings();
     }
 
     public static void reloadDocs() {
-//        ui.getDocumentsFromSettings();
+//        vertretungsplan.getDocumentsFromSettings();
     }
 
     public static ArrayList getNames() {
-        return ui.getNames();
+        return vertretungsplan.getCourses();
     }
 }

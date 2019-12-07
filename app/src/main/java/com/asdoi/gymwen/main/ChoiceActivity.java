@@ -6,19 +6,18 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.Fragments.ChoiceActivityFragment;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.Fragments.ChoiceActivityFragment;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 public class ChoiceActivity extends ActivityFeatures {
 
-    public static boolean oberstufe = false;
     public static String courses = "";
     public static boolean parents = false;
     public static  String courseFirstDigit = "";
@@ -41,11 +40,6 @@ public class ChoiceActivity extends ActivityFeatures {
         fab.setVisibility(View.VISIBLE);
 
         setFragment(1);
-    }
-
-
-    public void setOberstufe(boolean value) {
-        oberstufe = value;
     }
 
     public void setCourses(String value) {
@@ -100,15 +94,12 @@ public class ChoiceActivity extends ActivityFeatures {
 
     private void setSettings(){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        VertretungsPlan.setup(oberstufe, courses.split("#"), courses, false);
+        VertretungsPlanFeatures.setup(false, courses.split("#"));
 
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        editor.putBoolean("oberstufe", oberstufe);
         editor.putString("courses", courses);
         editor.commit();
-
-        System.out.println("settings: " + sharedPref.getBoolean("oberstufe", oberstufe) + sharedPref.getString("courses",""));
     }
 
     @Override

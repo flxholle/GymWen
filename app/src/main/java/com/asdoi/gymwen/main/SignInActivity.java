@@ -10,16 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
-
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import androidx.appcompat.widget.Toolbar;
 
 public class SignInActivity extends ActivityFeatures implements View.OnClickListener {
     ViewGroup loading;
@@ -82,7 +82,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
                 String encodedString =
                         new String(Base64.encodeBase64(authString.getBytes()));
                 try {
-                    doc = Jsoup.connect(VertretungsPlan.todayURL)
+                    doc = Jsoup.connect(VertretungsPlanFeatures.todayURL)
                             .header("Authorization", "Basic " + encodedString)
                             .get();
                     signedIn = true;

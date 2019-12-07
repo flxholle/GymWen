@@ -13,12 +13,12 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import androidx.core.content.ContextCompat;
-
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.MainActivity;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Implementation of App Widget functionality.
@@ -103,9 +103,9 @@ public class VertretungsplanWidget extends AppWidgetProvider {
     }
 
     private void generateTable(RemoteViews basic) {
-        basic.addView(R.id.widget1_basic, generateTableDay(VertretungsPlan.getTodayTitle(), VertretungsPlan.getTodayArray(), VertretungsPlan.getOberstufe()));
-        if (VertretungsPlan.getTodayArray() != null)
-            basic.addView(R.id.widget1_basic, generateTableDay(VertretungsPlan.getTomorrowTitle(), VertretungsPlan.getTomorrowArray(), VertretungsPlan.getOberstufe()));
+        basic.addView(R.id.widget1_basic, generateTableDay(VertretungsPlanFeatures.getTodayTitle(), VertretungsPlanFeatures.getTodayArray(), VertretungsPlanFeatures.getOberstufe()));
+        if (VertretungsPlanFeatures.getTodayArray() != null)
+            basic.addView(R.id.widget1_basic, generateTableDay(VertretungsPlanFeatures.getTomorrowTitle(), VertretungsPlanFeatures.getTomorrowArray(), VertretungsPlanFeatures.getOberstufe()));
     }
 
     private RemoteViews generateTableDay(String title, String[][] inhalt, boolean oberstufe) {

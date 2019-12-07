@@ -25,7 +25,7 @@ import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.MainActivity;
 import com.asdoi.gymwen.main.SignInActivity;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlan;
+import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
 
 import org.acra.ACRA;
@@ -41,6 +41,7 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -58,6 +59,7 @@ import androidx.core.app.TaskStackBuilder;
 
 public class ApplicationFeatures extends Application {
     private static Context mContext;
+    public static ArrayList<String> websiteHistorySaveInstance;
 
     @Override
     public void onCreate() {
@@ -86,22 +88,15 @@ public class ApplicationFeatures extends Application {
     public static void downloadDocs(boolean isWidget, boolean signIn) {
 
         //DownloadDocs
-        if (!VertretungsPlan.areDocsDownloaded() && ApplicationFeatures.isNetworkAvailable()) {
+        if (!VertretungsPlanFeatures.areDocsDownloaded() && ApplicationFeatures.isNetworkAvailable()) {
             if (!ApplicationFeatures.initSettings(true, signIn)) {
                 return;
             }
-            String[] strURL = new String[]{VertretungsPlan.todayURL, VertretungsPlan.tomorrowURL};
+            String[] strURL = new String[]{VertretungsPlanFeatures.todayURL, VertretungsPlanFeatures.tomorrowURL};
             Document[] doc = new Document[strURL.length];
             for (int i = 0; i < 2; i++) {
 
-                String authString = VertretungsPlan.strUserId + ":" + VertretungsPlan.strPasword;
-
-                String lastAuthString = VertretungsPlan.lastAuthString;
-                //Check if already tried logging in with this authentication and if it failed before, return null
-                if (lastAuthString.length() > 1 && lastAuthString.substring(0, lastAuthString.length() - 1).equals(authString) && lastAuthString.charAt(lastAuthString.length() - 1) == 'f') {
-                    System.out.println("failed before with same authString");
-                    //return doc;
-                }
+                String authString = VertretungsPlanFeatures.strUserId + ":" + VertretungsPlanFeatures.strPasword;
 
                 String encodedString =
                         new String(Base64.encodeBase64(authString.getBytes()));
@@ -111,16 +106,12 @@ public class ApplicationFeatures extends Application {
                             .header("Authorization", "Basic " + encodedString)
                             .get();
 
-                    VertretungsPlan.lastAuthString = authString + "t";
-
-
                 } catch (IOException e) {
                     e.printStackTrace();
-                    VertretungsPlan.lastAuthString = authString + "f";
                     return;
                 }
             }
-            VertretungsPlan.setDocs(doc[0], doc[1]);
+            VertretungsPlanFeatures.setDocs(doc[0], doc[1]);
             if (!isWidget) {
                 proofeNotification();
                 updateMyWidgets();
@@ -194,14 +185,14 @@ public class ApplicationFeatures extends Application {
 
             boolean hours = sharedPref.getBoolean("hours", false);
 
-            VertretungsPlan.setup(oberstufe, courses.split("#"), courses, hours);
+            VertretungsPlanFeatures.setup(hours, courses.split("#"));
 
 //            System.out.println("settings: " + oberstufe + courses);
 
             String username = sharedPref.getString("username", "");
             String password = sharedPref.getString("password", "");
 
-            VertretungsPlan.signin(username, password);
+            VertretungsPlanFeatures.signin(username, password);
 
 
             if (!isWidget) {
@@ -278,7 +269,7 @@ public class ApplicationFeatures extends Application {
 
         @Override
         protected void onPostExecute(Void v) {
-            if (VertretungsPlan.getTodayTitle().equals("Keine Internetverbindung!")) {
+            if (VertretungsPlanFeatures.getTodayTitle().equals("Keine Internetverbindung!")) {
                 return;
             }
             proofeNotification();
@@ -359,13 +350,13 @@ public class ApplicationFeatures extends Application {
 
         private String notificationMessage() {
             String message = "";
-            String day = VertretungsPlan.getTodayTitle();
-            String[][] inhalt = VertretungsPlan.getTodayArray();
+            String day = VertretungsPlanFeatures.getTodayTitle();
+            String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
 
             message += notifMessageContent(inhalt, day);
 
-            day = VertretungsPlan.getTomorrowTitle();
-            inhalt = VertretungsPlan.getTomorrowArray();
+            day = VertretungsPlanFeatures.getTomorrowTitle();
+            inhalt = VertretungsPlanFeatures.getTomorrowArray();
 
             message += notifMessageContent(inhalt, day);
             message = message.substring(0, message.length() - 1);
@@ -381,7 +372,7 @@ public class ApplicationFeatures extends Application {
                 message += day + ": keine Vertretung\n";
             } else {
                 message = day + ":\n";
-                if (VertretungsPlan.getOberstufe()) {
+                if (VertretungsPlanFeatures.getOberstufe()) {
                     for (String[] line : inhalt) {
                         if (line[3].equals("entfällt")) {
                             message += line[1] + ". Stunde entfällt\n";
