@@ -198,15 +198,4 @@
     <!-- Downloader -->
     <string name="down_permission_denied">Berechtigung verweigert</string>
 
-    <!-- AboutAuthor -->
-    <string name="about_author_sub">by @asdoi</string>
-    <string name="about_licenses">Lizenzen</string>
-    <string name="about_author_title">Entwickler</string>
-    <string name="about_author_name">Felix Hollederer</string>
-    <string name="about_gitlab_fork">Fork auf GitLab</string>
-    <string name="about_website">Besuche meine Website</string>
-    <string name="about_email">Sende mir eine E-Mail</string>
-    <string name="about_support_title">Support</string>
-    <string name="about_report">Fehler melden</string>
-
 </resources>
