@@ -5,6 +5,7 @@
         versioncode="103">
         <change>Automatisches Herunterladen und installieren von Updates</change>
         <change>GymWen Online Shop hinzugefügt</change>
+        <change>Code Optimierungen</change>
     </release>
     <release
         version="1.0.2"
