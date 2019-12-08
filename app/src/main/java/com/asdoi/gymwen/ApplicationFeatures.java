@@ -21,11 +21,12 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
+import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.main.ChoiceActivity;
 import com.asdoi.gymwen.main.MainActivity;
 import com.asdoi.gymwen.main.SignInActivity;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
 
 import org.acra.ACRA;
@@ -77,16 +78,21 @@ public class ApplicationFeatures extends Application {
     }
 
     //Download Doc
-    public static Runnable downloadRunnable(final boolean isWidget, final boolean signIn) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                downloadDocs(isWidget, signIn);
-            }
-        };
+    public static Document downloadDoc(String url) {
+        try {
+            return Jsoup.connect(url).get();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public static void downloadDocs(boolean isWidget, boolean signIn) {
+    public static void downloadLehrerDoc() {
+        Lehrerliste.setDoc(downloadDoc(Lehrerliste.listUrl));
+    }
+
+    public static void downloadVertretungsplanDocs(boolean isWidget, boolean signIn) {
 
         //DownloadDocs
         if (!VertretungsPlanFeatures.areDocsDownloaded() && ApplicationFeatures.isNetworkAvailable()) {
@@ -120,14 +126,14 @@ public class ApplicationFeatures extends Application {
         }
     }
 
-    public static class downloadDocsTask extends AsyncTask<Boolean, Void, Void> {
+    public static class downloadVertretungsplanDocsTask extends AsyncTask<Boolean, Void, Void> {
         @Override
         protected Void doInBackground(Boolean... params) {
             if (params == null || params.length < 2) {
                 if (params.length == 1)
                     params = new Boolean[]{params[0], true};
             }
-            downloadDocs(params[0], params[1]);
+            downloadVertretungsplanDocs(params[0], params[1]);
             return null;
         }
     }
@@ -266,7 +272,7 @@ public class ApplicationFeatures extends Application {
         }
     }
 
-    public static class createNotification extends downloadDocsTask {
+    public static class createNotification extends downloadVertretungsplanDocsTask {
 
         @Override
         protected void onPostExecute(Void v) {

@@ -34,6 +34,10 @@
                     android:icon="@drawable/ic_home_black_24dp"
                     android:title="@string/menu_website" />
                 <item
+                    android:id="@+id/nav_teacherlist"
+                    android:icon="@drawable/ic_person_pin_black_24dp"
+                    android:title="@string/menu_teacher_list" />
+                <item
                     android:id="@+id/nav_mebis"
                     android:icon="@drawable/ic_open_in_new_white_24dp"
                     android:title="@string/menu_mebis" />

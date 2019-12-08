@@ -13,18 +13,17 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import ru.github.igla.ferriswheel.FerrisWheelView;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private static View root;
@@ -76,7 +74,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
         fab.setOnClickListener(this);
 
-        createLoadingPanel();
+        ActivityFeatures.createLoadingPanel(root.findViewById(R.id.vertretung_constraint));
 
         if (ApplicationFeatures.isNetworkAvailable())
             refreshAndTable();
@@ -87,57 +85,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return root;
     }
 
-    void createLoadingPanel() {
-        FrameLayout base = new FrameLayout(context);
-        base.setTag("vertretung_loading");
-        base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        LinearLayout panel = new LinearLayout(context);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        params.setMargins(0, 0, 0, 30);
-        panel.setLayoutParams(params);
-        panel.setGravity(Gravity.BOTTOM);
-        panel.setOrientation(LinearLayout.VERTICAL);
-
-        FerrisWheelView ferrisWheelView = new FerrisWheelView(context);
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        ferrisWheelView.setLayoutParams(params2);
-        ferrisWheelView.setNumberOfCabins(8);
-        ferrisWheelView.setRotateDegreeSpeedInSec(35);
-//        ferrisWheelView.setWheelColor(R.color.wheel_wheel);
-//        ferrisWheelView.setClockwise(false);
-        ferrisWheelView.setAutoRotate(true);
-        ferrisWheelView.startAnimation();
-
-
-        ProgressBar bar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-        bar.setIndeterminate(true);
-        params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(20, 5, 20, 0);
-        bar.setLayoutParams(params);
-
-
-        TextView textView = new TextView(context);
-        textView.setTextColor(Color.BLACK);
-        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-        textView.setGravity(Gravity.CENTER);
-        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        textView.setText(getString(R.string.downloading));
-
-        base.addView(ferrisWheelView);
-
-        panel.addView(bar);
-        panel.addView(textView);
-
-        base.addView(panel);
-
-
-        ((ViewGroup) root.findViewById(R.id.vertretung_constraint)).addView(base);
-    }
 
     private void refresh() {
-        new ApplicationFeatures.downloadDocsTask().execute(false);
+        new ApplicationFeatures.downloadVertretungsplanDocsTask().execute(false);
     }
 
     private void share() {

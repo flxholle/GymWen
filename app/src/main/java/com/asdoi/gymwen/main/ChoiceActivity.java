@@ -9,7 +9,7 @@ import android.view.View;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.Fragments.ChoiceActivityFragment;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.widget.Toolbar;

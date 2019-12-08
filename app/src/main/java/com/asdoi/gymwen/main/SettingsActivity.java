@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.preference.Preference;

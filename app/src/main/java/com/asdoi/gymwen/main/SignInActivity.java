@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;

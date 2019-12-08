@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.vertretungsplanInternal;
+package com.asdoi.gymwen.vertretungsplan;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -6,10 +6,96 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
-public abstract class Parse {
+abstract class Parse {
+
+    //Title
+    protected static String[] getTitle(Document doc) {
+
+        if (doc == null) {
+            System.out.println("Authentication failed! at getting Title");
+            return new String[]{""};
+        }
+
+        Elements values = doc.select("h2");
+        String[] matches = new String[values.size()];
+
+        for (int i = 0; i < values.size(); i++) {
+            Element elem = values.get(i);
+//            System.out.println(elem.text());
+            matches[i] = elem.text();
+        }
+
+        String title;
+        if (matches.length > 1) {
+            return new String[]{""};
+        } else {
+            title = matches[0];
+        }
+
+        //Analyze String
+        title = title.replaceAll("Vertretungsplan für ", "");
+
+        return title.split(",");
+    }
+
+    //All
+    protected static String[][] getList(Document doc) {
+
+        if (doc == null) {
+            System.out.println("Document is null");
+            return null;
+        }
+
+        Elements values = doc.select("tr");
+        int columNr = 6;
+
+        String[] docInhalt = new String[values.size()];
+        for (int i = 0; i < values.size(); i++) {
+            docInhalt[i] = "" + values.get(i);
+        }
+
+        String[][] line = new String[docInhalt.length - 2][20];
+        for (int i = 2; i < line.length + 2; i++) {
+//            Element elem = values.get(i);
+//            System.out.println(elem.text());
+            int indexBegin = 0;
+            int indexEnd = 2;
+            for (int j = 0; 0 == 0; j++) {
+                line[i - 2][j] = "";
+
+//                System.out.println(docInhalt[i].indexOf(">", indexBegin) + 1);
+//                System.out.println(docInhalt[i].indexOf("<", indexEnd));
+                indexBegin = docInhalt[i].indexOf(">", indexBegin + 1);
+                indexEnd = docInhalt[i].indexOf("<", indexEnd + 1);
+                if (indexBegin > indexEnd) {
+                    break;
+                }
+                line[i - 2][j] = docInhalt[i].substring(indexBegin + 1, indexEnd);
+//                System.out.println(line[i - 2][j]);
+
+            }
+            line[i - 2] = removeValues(line[i - 2], columNr);
+        }
+
+
+        //Analyze String
+        String[][] inhalt = new String[line.length][columNr];
+
+        for (int i = 0; i < inhalt.length; i++) {
+            for (int j = 0; j < inhalt[0].length; j++) {
+                if (line[i][j] == null) {
+                    inhalt[i][j] = "";
+                } else {
+                    inhalt[i][j] = line[i][j];
+                }
+            }
+        }
+
+        return inhalt;
+    }
 
     //specific
-    public static String[][] getList(Document doc, boolean oberstufe, ArrayList<String> classNames) {
+    protected static String[][] getList(Document doc, boolean oberstufe, ArrayList<String> classNames) {
 
         if (doc == null) {
             System.out.println("Authentication failed! at getting Classes");
@@ -133,92 +219,6 @@ public abstract class Parse {
         }
 
         return returnValue;
-    }
-
-    //Title
-    public static String[] getTitle(Document doc) {
-
-        if (doc == null) {
-            System.out.println("Authentication failed! at getting Title");
-            return new String[]{""};
-        }
-
-        Elements values = doc.select("h2");
-        String[] matches = new String[values.size()];
-
-        for (int i = 0; i < values.size(); i++) {
-            Element elem = values.get(i);
-//            System.out.println(elem.text());
-            matches[i] = elem.text();
-        }
-
-        String title;
-        if (matches.length > 1) {
-            return new String[]{""};
-        } else {
-            title = matches[0];
-        }
-
-        //Analyze String
-        title = title.replaceAll("Vertretungsplan für ", "");
-
-        return title.split(",");
-    }
-
-    //All
-    public static String[][] getList(Document doc) {
-
-        if (doc == null) {
-            System.out.println("Authentication failed! at getting all");
-            return null;
-        }
-
-        Elements values = doc.select("tr");
-        int columNr = 6;
-
-        String[] docInhalt = new String[values.size()];
-        for (int i = 0; i < values.size(); i++) {
-            docInhalt[i] = "" + values.get(i);
-        }
-
-        String[][] line = new String[docInhalt.length - 2][20];
-        for (int i = 2; i < line.length + 2; i++) {
-//            Element elem = values.get(i);
-//            System.out.println(elem.text());
-            int indexBegin = 0;
-            int indexEnd = 2;
-            for (int j = 0; 0 == 0; j++) {
-                line[i - 2][j] = "";
-
-//                System.out.println(docInhalt[i].indexOf(">", indexBegin) + 1);
-//                System.out.println(docInhalt[i].indexOf("<", indexEnd));
-                indexBegin = docInhalt[i].indexOf(">", indexBegin + 1);
-                indexEnd = docInhalt[i].indexOf("<", indexEnd + 1);
-                if (indexBegin > indexEnd) {
-                    break;
-                }
-                line[i - 2][j] = docInhalt[i].substring(indexBegin + 1, indexEnd);
-//                System.out.println(line[i - 2][j]);
-
-            }
-            line[i - 2] = removeValues(line[i - 2], columNr);
-        }
-
-
-        //Analyze String
-        String[][] inhalt = new String[line.length][columNr];
-
-        for (int i = 0; i < inhalt.length; i++) {
-            for (int j = 0; j < inhalt[0].length; j++) {
-                if (line[i][j] == null) {
-                    inhalt[i][j] = "";
-                } else {
-                    inhalt[i][j] = line[i][j];
-                }
-            }
-        }
-
-        return inhalt;
     }
 }
 

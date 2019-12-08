@@ -16,7 +16,7 @@ import android.widget.RemoteViews;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.MainActivity;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 
 import androidx.core.content.ContextCompat;
 
@@ -76,7 +76,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ApplicationFeatures.downloadDocs(true, true);
+                ApplicationFeatures.downloadVertretungsplanDocs(true, true);
                 generateTable(rootView);
                 Intent intent = new Intent(context, MainActivity.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);

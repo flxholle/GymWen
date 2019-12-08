@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.vertretungsplanInternal;
+package com.asdoi.gymwen.vertretungsplan;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -11,11 +11,11 @@ public abstract class VertretungsPlanFeatures {
     public static String strUserId = "";
     public static String strPasword = "";
 
-    public static String todayURL = "http://gym-wen.de/vp/heute.htm";
-    public static String tomorrowURL = "http://gym-wen.de/vp/morgen.htm";
+    public static final String todayURL = "http://gym-wen.de/vp/heute.htm";
+    public static final String tomorrowURL = "http://gym-wen.de/vp/morgen.htm";
 
     //ChoiceActivity -> Step 5
-    public static String[][] choiceCourseNames = new String[][]{{ApplicationFeatures.getContext().getString(R.string.math), ApplicationFeatures.getContext().getString(R.string.mathShort)},
+    public static final String[][] choiceCourseNames = new String[][]{{ApplicationFeatures.getContext().getString(R.string.math), ApplicationFeatures.getContext().getString(R.string.mathShort)},
             {ApplicationFeatures.getContext().getString(R.string.german), ApplicationFeatures.getContext().getString(R.string.germanShort)},
             {ApplicationFeatures.getContext().getString(R.string.history), ApplicationFeatures.getContext().getString(R.string.historyShort)},
             {ApplicationFeatures.getContext().getString(R.string.social_education), ApplicationFeatures.getContext().getString(R.string.social_educationShort)},
@@ -37,8 +37,6 @@ public abstract class VertretungsPlanFeatures {
             {ApplicationFeatures.getContext().getString(R.string.P_Seminar), ApplicationFeatures.getContext().getString(R.string.P_SeminarShort)},
             {ApplicationFeatures.getContext().getString(R.string.profile_subject), ApplicationFeatures.getContext().getString(R.string.profile_subjectShort)}
     };
-
-    public static boolean checkedAtNetworkChange = false;
 
     private static Vertretungsplan vertretungsplan = new Vertretungsplan();
 

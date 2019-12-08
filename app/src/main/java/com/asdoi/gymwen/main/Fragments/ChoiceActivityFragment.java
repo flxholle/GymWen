@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.ChoiceActivity;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

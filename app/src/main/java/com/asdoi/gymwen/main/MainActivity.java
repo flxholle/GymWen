@@ -16,7 +16,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.Fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplanInternal.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
 import com.commit451.modalbottomsheetdialogfragment.Option;
 import com.github.javiersantos.appupdater.enums.Display;
@@ -407,6 +407,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;
             case R.id.action_changelog:
                 showChangelogCK(false);
+                break;
+            case R.id.nav_teacherlist:
+                Intent i = new Intent(this, LehrerlisteActivity.class);
+                startActivity(i);
+                drawer.closeDrawer(GravityCompat.START);
                 break;
             default:
 //                fragment = new All_Classes_today();

@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.vertretungsplanInternal;
+package com.asdoi.gymwen.vertretungsplan;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -8,7 +8,7 @@ import org.jsoup.nodes.Document;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Vertretungsplan {
+class Vertretungsplan {
 
     boolean oberstufe;
     ArrayList<String> courses;
