@@ -22,6 +22,7 @@
     <string name="menu_changelog">Änderungen</string>
     <string name="menu_shop">Online Shop</string>
     <string name="menu_about_author">Support</string>
+    <string name="menu_teacher_list">Lehrerliste</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
@@ -197,5 +198,9 @@
 
     <!-- Downloader -->
     <string name="down_permission_denied">Berechtigung verweigert</string>
+
+    <!-- Lehrerliste -->
+    <string name="title_activity_leherliste">Lehrerliste</string>
+    <string name="no_email_app">Du hast keine E-Mail App installiert</string>
 
 </resources>

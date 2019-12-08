@@ -10,9 +10,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asdoi.gymwen.main.MainActivity;
@@ -35,6 +44,7 @@ import de.cketti.library.changelog.ChangeLog;
 import info.isuru.sheriff.enums.SheriffPermission;
 import info.isuru.sheriff.helper.Sheriff;
 import info.isuru.sheriff.interfaces.PermissionListener;
+import ru.github.igla.ferriswheel.FerrisWheelView;
 import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
@@ -138,6 +148,55 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         }
     }
 
+    public static void createLoadingPanel(ViewGroup view) {
+        Context context = ApplicationFeatures.getContext();
+        FrameLayout base = new FrameLayout(context);
+        base.setTag("vertretung_loading");
+        base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        LinearLayout panel = new LinearLayout(context);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.setMargins(0, 0, 0, 30);
+        panel.setLayoutParams(params);
+        panel.setGravity(Gravity.BOTTOM);
+        panel.setOrientation(LinearLayout.VERTICAL);
+
+        FerrisWheelView ferrisWheelView = new FerrisWheelView(context);
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ferrisWheelView.setLayoutParams(params2);
+        ferrisWheelView.setNumberOfCabins(8);
+        ferrisWheelView.setRotateDegreeSpeedInSec(35);
+//        ferrisWheelView.setWheelColor(R.color.wheel_wheel);
+//        ferrisWheelView.setClockwise(false);
+        ferrisWheelView.setAutoRotate(true);
+        ferrisWheelView.startAnimation();
+
+
+        ProgressBar bar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
+        bar.setIndeterminate(true);
+        params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(20, 5, 20, 0);
+        bar.setLayoutParams(params);
+
+
+        TextView textView = new TextView(context);
+        textView.setTextColor(Color.BLACK);
+        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+        textView.setGravity(Gravity.CENTER);
+        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        textView.setText(ApplicationFeatures.getContext().getString(R.string.downloading));
+
+        base.addView(ferrisWheelView);
+
+        panel.addView(bar);
+        panel.addView(textView);
+
+        base.addView(panel);
+
+
+        view.addView(base);
+    }
 
     //Permissions
     private Sheriff sheriffPermission;
