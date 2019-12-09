@@ -12,6 +12,7 @@ import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -61,8 +62,8 @@ public class VertretungsplanWidget extends AppWidgetProvider {
 
     void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         // Construct the RemoteViews object
-        RemoteViews rootView = new RemoteViews(context.getPackageName(), R.layout.vertretungsplan_widget);
-        rootView.removeAllViews(R.id.widget1_basic);
+        RemoteViews rootView = new RemoteViews(context.getPackageName(), R.layout.widget_vertretungsplan);
+//        rootView.removeAllViews(R.id.widget1_basic);
 
 
         // Get a handler that can be used to post to the main thread
@@ -73,33 +74,102 @@ public class VertretungsplanWidget extends AppWidgetProvider {
     }
 
     private void init(final RemoteViews rootView, final AppWidgetManager awm, final int awID) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ApplicationFeatures.downloadVertretungsplanDocs(true, true);
-                generateTable(rootView);
-                Intent intent = new Intent(context, MainActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-                rootView.setOnClickPendingIntent(R.id.widget1_basic, pendingIntent);
+        new Thread(() -> {
+            ApplicationFeatures.downloadVertretungsplanDocs(true, true);
 
-                int[] ids = awm.getAppWidgetIds(new ComponentName(context, VertretungsplanWidget.class));
-                intent = new Intent();
-                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                intent.putExtra(VertretungsplanWidget.WIDGET_ID_KEY, ids);
-                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                rootView.setOnClickPendingIntent(R.id.widget1_refresh_button, pendingIntent);
+           /* Intent intent = new Intent(context, StackWidgetService.class);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, awID);
+            // When intents are compared, the extras are ignored, so we need to embed the extras
+            // into the data so that the extras will not be ignored.
+            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+//            rootView.setRemoteAdapter(R.id.widget_list, intent);
+*/
 
-                rootView.setImageViewBitmap(R.id.widget1_refresh_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
+            generateTable(rootView);
+            Intent intent = new Intent(context, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            rootView.setOnClickPendingIntent(R.id.widget1_basic, pendingIntent);
 
-                Runnable myRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        awm.updateAppWidget(awID, rootView);
-                    } // This is your code
-                };
-                handler.post(myRunnable);
-            }
+            int[] ids = awm.getAppWidgetIds(new ComponentName(context, VertretungsplanWidget.class));
+            intent = new Intent();
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            intent.putExtra(VertretungsplanWidget.WIDGET_ID_KEY, ids);
+            pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            rootView.setOnClickPendingIntent(R.id.widget1_refresh_button, pendingIntent);
+
+            rootView.setImageViewBitmap(R.id.widget1_refresh_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
+
+            Runnable myRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    awm.updateAppWidget(awID, rootView);
+                } // This is your code
+            };
+            handler.post(myRunnable);
         }).start();
+    }
+
+    public class StackWidgetService extends RemoteViewsService {
+        @Override
+        public RemoteViewsFactory onGetViewFactory(Intent intent) {
+            return new StackRemoteViewsFactory(this.getApplicationContext(), intent);
+        }
+    }
+
+    class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
+        private Context mContext;
+        private int mAppWidgetId;
+
+        public StackRemoteViewsFactory(Context context, Intent intent) {
+            mContext = context;
+            mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
+
+        public void onCreate() {
+        }
+
+
+        @Override
+        public RemoteViews getViewAt(int position) {
+            RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.widget_entry);
+            generateTable(rv);
+            return rv;
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        public void onDataSetChanged() {
+        }
+
+        public void onDestroy() {
+            // In onDestroy() you should tear down anything that was setup for your data source,
+            // eg. cursors, connections, etc.
+
+        }
+
+        public RemoteViews getLoadingView() {
+            // You can create a custom loading view (for instance when getViewAt() is slow.) If you
+            // return null here, you will get the default loading view.
+            return null;
+        }
+
+        public int getViewTypeCount() {
+            return 1;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public boolean hasStableIds() {
+            return true;
+        }
+
+
     }
 
     private void generateTable(RemoteViews basic) {
@@ -251,6 +321,5 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         }
         return sonstiges;
     }
-
 }
 

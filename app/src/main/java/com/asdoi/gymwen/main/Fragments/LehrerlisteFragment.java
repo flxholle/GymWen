@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main;
+package com.asdoi.gymwen.main.Fragments;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -24,59 +25,66 @@ import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
-public class LehrerlisteActivity extends ActivityFeatures {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class LehrerlisteFragment extends Fragment {
     private static ListView teacherListView;
     private static String[][] teacherList;
     private static ViewGroup root;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leherliste);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener((View view) -> {
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        });
-
-        root = findViewById(R.id.teacher_basic);
-        createLoadingPanel(findViewById(R.id.teacher_basic));
-
-        createLayout();
+    public LehrerlisteFragment() {
+        // Required empty public constructor
     }
 
-    private void createLayout() {
-        new Thread(() -> {
-            if (ApplicationFeatures.isNetworkAvailable()) {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_lehrerliste, container, false);
+
+        ActivityFeatures.createLoadingPanel(root.findViewById(R.id.teacher_frame));
+
+        FloatingActionButton fab = getActivity().findViewById(R.id.main_fab);
+        fab.setVisibility(View.GONE);
+
+        LehrerlisteFragment.root = (ViewGroup) root;
+
+        if (ApplicationFeatures.isNetworkAvailable()) {
+            new Thread(() -> {
                 ApplicationFeatures.downloadLehrerDoc();
-            }
-            runOnUiThread(() -> {
-                clear();
-                teacherList = Lehrerliste.liste();
+                createLayout();
+            }).start();
+        } else {
+            createLayout();
+        }
 
+        return root;
+    }
+
+
+    private void createLayout() {
+        getActivity().runOnUiThread(() -> {
+            clear();
+            teacherList = Lehrerliste.liste();
+
+            if (teacherList == null) {
                 TextView title = createTitleLayout();
-                if (teacherList == null) {
-                    title.setText(getContext().getString(R.string.noInternetConnection));
-                    root.addView(title);
-                    return;
-                } else {
-                    //Create Title Layout
-                }
+                title.setText(getContext().getString(R.string.noInternetConnection));
+                return;
+            }
 
-                teacherListView = new ListView(getContext());
-                teacherListView.setAdapter(new TeacherListAdapter(getContext(), 0));
-                root.addView(teacherListView);
-            });
-        }).start();
+            teacherListView = new ListView(getContext());
+            teacherListView.setAdapter(new TeacherListAdapter(getContext(), 0));
+            root.addView(teacherListView);
+        });
     }
 
     private void clear() {
-//        ((ViewGroup) root.findViewById(R.id.teacher_basic)).removeView(root.findViewWithTag("vertretung_loading"));
         root.removeAllViews();
     }
 
@@ -85,7 +93,6 @@ public class LehrerlisteActivity extends ActivityFeatures {
         textView.setTextColor(Color.BLACK);
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-//            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,(int) root.getResources().getDimension(R.dimen.headline_size));
         textView.setGravity(Gravity.CENTER);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         root.addView(textView);
@@ -101,14 +108,22 @@ public class LehrerlisteActivity extends ActivityFeatures {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.lehrerliste_entry, null);
+                convertView = getLayoutInflater().inflate(R.layout.list_lehrerliste_entry, null);
             }
 
             TextView kürzel = convertView.findViewById(R.id.teacher_kürzel);
             kürzel.setText(teacherList[position][0]);
 
-            TextView nname = convertView.findViewById(R.id.teacher_name);
+            TextView nname = convertView.findViewById(R.id.teacher_nname);
             nname.setText(teacherList[position][1]);
+
+            TextView vname = convertView.findViewById(R.id.teacher_vname);
+            vname.setText(" " + teacherList[position][2]);
+
+            TextView hour = convertView.findViewById(R.id.teacher_hour);
+            hour.setText(teacherList[position][3]);
+            hour.setVisibility(View.GONE);
+
 
             Button mailButton = convertView.findViewById(R.id.teacher_mail);
             mailButton.setOnClickListener((View v) -> {
@@ -123,7 +138,7 @@ public class LehrerlisteActivity extends ActivityFeatures {
 
             FrameLayout root = convertView.findViewById(R.id.teacher_rootLayout);
             root.setOnClickListener((View v) -> {
-                //TODO: Expand View
+                hour.setVisibility(View.VISIBLE);
             });
 
             return convertView;

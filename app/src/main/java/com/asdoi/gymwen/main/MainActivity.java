@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.Fragments.LehrerlisteFragment;
 import com.asdoi.gymwen.main.Fragments.VertretungFragment;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
@@ -27,6 +28,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -38,7 +40,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-    VertretungFragment lastLoadedFragment = null;
+    Fragment lastLoadedFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -330,7 +332,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        VertretungFragment fragment = null;
+        Fragment fragment = null;
         Intent intent = null;
         String itemTitle = "" + item.getTitle();
 
@@ -390,10 +392,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 if (lastLoadedFragment == null)
                     fragment = new VertretungFragment(true);
                 else {
-                    if (VertretungFragment.both)
-                        fragment = new VertretungFragment(true);
-                    else
-                        fragment = new VertretungFragment(VertretungFragment.today, VertretungFragment.all);
+                    if (lastLoadedFragment instanceof VertretungFragment) {
+                        if (VertretungFragment.both)
+                            fragment = new VertretungFragment(true);
+                        else
+                            fragment = new VertretungFragment(VertretungFragment.today, VertretungFragment.all);
+                    } else {
+                        fragment = new LehrerlisteFragment();
+                    }
                 }
                 break;
             /*case R.id.nav_gradesManagement:
@@ -409,12 +415,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 showChangelogCK(false);
                 break;
             case R.id.nav_teacherlist:
-                Intent i = new Intent(this, LehrerlisteActivity.class);
-                startActivity(i);
-                drawer.closeDrawer(GravityCompat.START);
+                fragment = new LehrerlisteFragment();
                 break;
             default:
-//                fragment = new All_Classes_today();
                 break;
 
         }
