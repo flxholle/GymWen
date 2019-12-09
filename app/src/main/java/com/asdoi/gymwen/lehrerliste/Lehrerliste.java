@@ -1,7 +1,5 @@
 package com.asdoi.gymwen.lehrerliste;
 
-import com.asdoi.gymwen.ApplicationFeatures;
-
 import org.jsoup.nodes.Document;
 
 public abstract class Lehrerliste {
@@ -10,7 +8,6 @@ public abstract class Lehrerliste {
 
     public static String[][] liste() {
         if (list == null) {
-            ApplicationFeatures.downloadLehrerDoc();
             return null;
         }
 

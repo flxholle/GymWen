@@ -50,7 +50,7 @@ import saschpe.android.customtabs.WebViewFallback;
 
 
 public class ActivityFeatures extends AppCompatActivity implements PermissionListener {
-    public Context getContext() {
+    public static Context getContext() {
         return ApplicationFeatures.getContext();
     }
 
@@ -177,6 +177,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(20, 5, 20, 0);
         bar.setLayoutParams(params);
+        bar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
 
 
         TextView textView = new TextView(context);

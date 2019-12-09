@@ -19,10 +19,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".main.LehrerlisteActivity"
-            android:label="@string/title_activity_leherliste"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".main.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"

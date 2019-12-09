@@ -203,4 +203,7 @@
     <string name="title_activity_leherliste">Lehrerliste</string>
     <string name="no_email_app">Du hast keine E-Mail App installiert</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -89,7 +89,9 @@ public class ApplicationFeatures extends Application {
     }
 
     public static void downloadLehrerDoc() {
+//        new Thread(() -> {
         Lehrerliste.setDoc(downloadDoc(Lehrerliste.listUrl));
+//        });
     }
 
     public static void downloadVertretungsplanDocs(boolean isWidget, boolean signIn) {
