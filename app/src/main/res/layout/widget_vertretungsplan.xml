@@ -5,11 +5,11 @@
     android:background="#6DFFFFFF"
     android:padding="@dimen/widget_margin">
 
-    <!--    <ListView-->
-    <!--        android:id="@+id/widget_list"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent" /> -->
-
+    <!--  <ListView
+          android:id="@+id/widget_list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
+-->
     <LinearLayout
         android:id="@+id/widget1_basic"
         android:layout_width="match_parent"

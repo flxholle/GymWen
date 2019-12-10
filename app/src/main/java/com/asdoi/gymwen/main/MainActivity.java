@@ -3,6 +3,7 @@ package com.asdoi.gymwen.main;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ActionProvider;
 import android.view.ContextMenu;
@@ -80,7 +81,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         checkUpdates(Display.DIALOG, false);
         showChangelogCK(true);
-//        showChanglogTonny();
     }
 
 
@@ -417,6 +417,17 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_teacherlist:
                 fragment = new LehrerlisteFragment();
                 break;
+            case R.id.nav_notes:
+                packageName = "com.simplemobiletools.notes";
+                String packageNamePro = "com.simplemobiletools.notes.pro";
+                intent = getPackageManager().getLaunchIntentForPackage(packageName) == null ? getPackageManager().getLaunchIntentForPackage(packageNamePro) : getPackageManager().getLaunchIntentForPackage(packageName);
+                if (intent == null) {
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.simplemobiletools.notes")));
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://f-droid.org/de/packages/com.simplemobiletools.notes.pro/")));
+                    }
+                }
             default:
                 break;
 
