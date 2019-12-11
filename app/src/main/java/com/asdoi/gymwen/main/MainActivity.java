@@ -438,6 +438,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 } else {
                     startActivity(intent);
                 }
+                break;
             case R.id.nav_timetable:
                 packageName = "juliushenke.smarttt";
                 intent = getPackageManager().getLaunchIntentForPackage(packageName);
@@ -452,6 +453,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 } else {
                     startActivity(intent);
                 }
+                break;
             case R.id.nav_grades:
                 packageName = "com.example.user.notendings";
                 intent = getPackageManager().getLaunchIntentForPackage(packageName);
@@ -462,6 +464,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 } else {
                     startActivity(intent);
                 }
+                break;
             default:
                 break;
 
