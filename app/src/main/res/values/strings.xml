@@ -24,6 +24,8 @@
     <string name="menu_about_author">Support</string>
     <string name="menu_teacher_list">Lehrerliste</string>
     <string name="menu_notes">Notizen</string>
+    <string name="menu_timetable">Stundenplan</string>
+    <string name="menu_grades">Notenverwaltung (Achtung optimale App wird noch gesucht!)</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
