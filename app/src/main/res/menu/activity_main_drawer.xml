@@ -42,6 +42,14 @@
                     android:icon="@drawable/ic_event_note_black_24dp"
                     android:title="@string/menu_notes" />
                 <item
+                    android:id="@+id/nav_timetable"
+                    android:icon="@drawable/ic_access_time_black_24dp"
+                    android:title="@string/menu_timetable" />
+                <item
+                    android:id="@+id/nav_grades"
+                    android:icon="@drawable/ic_looks_one_black_24dp"
+                    android:title="@string/menu_grades" />
+                <item
                     android:id="@+id/nav_mebis"
                     android:icon="@drawable/ic_open_in_new_white_24dp"
                     android:title="@string/menu_mebis" />

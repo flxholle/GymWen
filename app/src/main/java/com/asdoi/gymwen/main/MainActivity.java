@@ -13,17 +13,6 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.Fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.main.Fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
-import com.commit451.modalbottomsheetdialogfragment.Option;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -35,6 +24,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.Fragments.LehrerlisteFragment;
+import com.asdoi.gymwen.main.Fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
+import com.commit451.modalbottomsheetdialogfragment.Option;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener, ModalBottomSheetDialogFragment.Listener {
 
@@ -421,12 +421,46 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 packageName = "com.simplemobiletools.notes";
                 String packageNamePro = "com.simplemobiletools.notes.pro";
                 intent = getPackageManager().getLaunchIntentForPackage(packageName) == null ? getPackageManager().getLaunchIntentForPackage(packageNamePro) : getPackageManager().getLaunchIntentForPackage(packageName);
+                //If app is not installed
                 if (intent == null) {
                     try {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.simplemobiletools.notes")));
+                        //Open Free Version
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
                     } catch (android.content.ActivityNotFoundException anfe) {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://f-droid.org/de/packages/com.simplemobiletools.notes.pro/")));
+                        try {
+                            //Open Pro Version
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNamePro)));
+                        } catch (android.content.ActivityNotFoundException a) {
+                            //Open Browser to Download
+                            tabIntent("https://f-droid.org/de/packages/com.simplemobiletools.notes.pro/");
+                        }
                     }
+                } else {
+                    startActivity(intent);
+                }
+            case R.id.nav_timetable:
+                packageName = "juliushenke.smarttt";
+                intent = getPackageManager().getLaunchIntentForPackage(packageName);
+                //If app is not installed
+                if (intent == null) {
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+                    } catch (android.content.ActivityNotFoundException a) {
+                        //Open Browser to Download
+                        tabIntent("https://apt.izzysoft.de/fdroid/index/apk/juliushenke.smarttt");
+                    }
+                } else {
+                    startActivity(intent);
+                }
+            case R.id.nav_grades:
+                packageName = "com.example.user.notendings";
+                intent = getPackageManager().getLaunchIntentForPackage(packageName);
+                //If app is not installed
+                if (intent == null) {
+                    //Open Browser to Download
+                    tabIntent("https://github.com/Tebra/Android-Grades/blob/master/app/app-release.apk");
+                } else {
+                    startActivity(intent);
                 }
             default:
                 break;
