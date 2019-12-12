@@ -28,6 +28,10 @@
             android:key="hours"
             android:defaultValue="false"
             android:title="@string/set_hours" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_borders"
+            android:title="@string/set_show_boders" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/set_notification_title">

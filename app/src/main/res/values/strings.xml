@@ -48,6 +48,7 @@
     <string name="set_notifiaction_isOn">Benachrichtigung anzeigen</string>
     <string name="set_notification_showAlways">Dauerhaft anzeigen</string>
     <string name="set_hours">Uhrzeiten statt Stunden anzeigen</string>
+    <string name="set_show_boders">Umranden der Lehrerkürzel</string>
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
@@ -205,8 +206,6 @@
     <!-- Lehrerliste -->
     <string name="title_activity_leherliste">Lehrerliste</string>
     <string name="no_email_app">Du hast keine E-Mail App installiert</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
 
 </resources>

@@ -1,11 +1,8 @@
 package com.asdoi.gymwen.main.Fragments;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -13,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,7 +18,6 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.fragment.app.Fragment;
 
@@ -54,14 +48,12 @@ public class LehrerlisteFragment extends Fragment {
 
         LehrerlisteFragment.root = (ViewGroup) root;
 
-        if (ApplicationFeatures.isNetworkAvailable()) {
-            new Thread(() -> {
-                ApplicationFeatures.downloadLehrerDoc();
-                createLayout();
-            }).start();
-        } else {
+
+        new Thread(() -> {
+            ApplicationFeatures.downloadLehrerDoc();
             createLayout();
-        }
+        }).start();
+
 
         return root;
     }
@@ -111,37 +103,7 @@ public class LehrerlisteFragment extends Fragment {
                 convertView = getLayoutInflater().inflate(R.layout.list_lehrerliste_entry, null);
             }
 
-            TextView kürzel = convertView.findViewById(R.id.teacher_kürzel);
-            kürzel.setText(teacherList[position][0]);
-
-            TextView nname = convertView.findViewById(R.id.teacher_nname);
-            nname.setText(teacherList[position][1]);
-
-            TextView vname = convertView.findViewById(R.id.teacher_vname);
-            vname.setText(" " + teacherList[position][2]);
-
-            TextView hour = convertView.findViewById(R.id.teacher_hour);
-            hour.setText(teacherList[position][3]);
-            hour.setVisibility(View.GONE);
-
-
-            Button mailButton = convertView.findViewById(R.id.teacher_mail);
-            mailButton.setOnClickListener((View v) -> {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                emailIntent.setData(Uri.parse("mailto:" + teacherList[position][0] + "@gym-wendelstein.de"));
-                try {
-                    startActivity(emailIntent);
-                } catch (ActivityNotFoundException e) {
-                    Snackbar.make(v, getContext().getString(R.string.no_email_app), Snackbar.LENGTH_LONG).show();
-                }
-            });
-
-            FrameLayout root = convertView.findViewById(R.id.teacher_rootLayout);
-            root.setOnClickListener((View v) -> {
-                hour.setVisibility(View.VISIBLE);
-            });
-
-            return convertView;
+            return ActivityFeatures.getTeacherView(convertView, teacherList[position]);
         }
 
         @Override

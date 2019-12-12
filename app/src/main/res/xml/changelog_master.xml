@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release>
+        version="1.0.4"
+        versionCode="104"
+        <change>Klickbare Lehrerkürzel</change>
+    </release>
     <release
         version="1.0.3"
         versioncode="103">

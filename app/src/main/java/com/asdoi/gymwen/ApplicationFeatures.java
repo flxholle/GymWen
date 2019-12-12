@@ -28,6 +28,7 @@ import com.asdoi.gymwen.main.SignInActivity;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
+import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 
 import org.acra.ACRA;
 import org.acra.annotation.AcraCore;
@@ -68,8 +69,7 @@ public class ApplicationFeatures extends Application {
         super.onCreate();
         mContext = this;
         ACRA.init(this);
-
-
+        SimpleChromeCustomTabs.initialize(this);
     }
 
 
@@ -89,9 +89,8 @@ public class ApplicationFeatures extends Application {
     }
 
     public static void downloadLehrerDoc() {
-//        new Thread(() -> {
-        Lehrerliste.setDoc(downloadDoc(Lehrerliste.listUrl));
-//        });
+        if (!Lehrerliste.isDownloaded() && ApplicationFeatures.isNetworkAvailable())
+            Lehrerliste.setDoc(downloadDoc(Lehrerliste.listUrl));
     }
 
     public static void downloadVertretungsplanDocs(boolean isWidget, boolean signIn) {
@@ -127,6 +126,7 @@ public class ApplicationFeatures extends Application {
             }
         }
     }
+
 
     public static class downloadVertretungsplanDocsTask extends AsyncTask<Boolean, Void, Void> {
         @Override

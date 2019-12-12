@@ -11,7 +11,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.Fragments.LehrerlisteFragment;
+import com.asdoi.gymwen.main.Fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
+import com.commit451.modalbottomsheetdialogfragment.Option;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -24,17 +36,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.Fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.main.Fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
-import com.commit451.modalbottomsheetdialogfragment.Option;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener, ModalBottomSheetDialogFragment.Listener {
 
@@ -420,7 +421,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_notes:
                 packageName = "com.simplemobiletools.notes";
                 String packageNamePro = "com.simplemobiletools.notes.pro";
+                String samsungNotes = "com.samsung.android.app.notes";
+                //Check the two notes versions
                 intent = getPackageManager().getLaunchIntentForPackage(packageName) == null ? getPackageManager().getLaunchIntentForPackage(packageNamePro) : getPackageManager().getLaunchIntentForPackage(packageName);
+                //Check Samsung notes
+                if (intent == null)
+                    intent = getPackageManager().getLaunchIntentForPackage(samsungNotes);
+
                 //If app is not installed
                 if (intent == null) {
                     try {
@@ -496,6 +503,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @Override
     public void onBackPressed() {
+        if (findViewById(1300) != null) {
+            try {
+                ((ViewGroup) findViewById(1300).getParent()).removeView(findViewById(1300));
+            } catch (NullPointerException e) {
+                findViewById(1300).setVisibility(View.GONE);
+            }
+            return;
+        }
         if (pressedBack) {
             finish();
             System.exit(1);

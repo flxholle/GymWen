@@ -3,6 +3,7 @@ package com.asdoi.gymwen;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,7 +18,9 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,6 +34,7 @@ import com.github.javiersantos.appupdater.enums.AppUpdaterError;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -52,6 +56,41 @@ import saschpe.android.customtabs.WebViewFallback;
 public class ActivityFeatures extends AppCompatActivity implements PermissionListener {
     public static Context getContext() {
         return ApplicationFeatures.getContext();
+    }
+
+    public static View getTeacherView(View view, String[] entry) {
+        TextView kürzel = view.findViewById(R.id.teacher_kürzel);
+        kürzel.setText(entry[0]);
+
+        TextView nname = view.findViewById(R.id.teacher_nname);
+        nname.setText(entry[1]);
+
+        TextView vname = view.findViewById(R.id.teacher_vname);
+        vname.setText(" " + entry[2]);
+
+        TextView hour = view.findViewById(R.id.teacher_hour);
+        hour.setText(entry[3]);
+        hour.setVisibility(View.GONE);
+
+
+        Button mailButton = view.findViewById(R.id.teacher_mail);
+        mailButton.setOnClickListener((View v) -> {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+            emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            emailIntent.setData(Uri.parse("mailto:" + entry[0] + "@gym-wendelstein.de"));
+            try {
+                ApplicationFeatures.getContext().startActivity(emailIntent);
+            } catch (ActivityNotFoundException e) {
+                Snackbar.make(v, ApplicationFeatures.getContext().getString(R.string.no_email_app), Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        FrameLayout root = view.findViewById(R.id.teacher_rootLayout);
+        root.setOnClickListener((View v) -> {
+            hour.setVisibility(View.VISIBLE);
+        });
+
+        return view;
     }
 
     //Changelog
@@ -87,7 +126,6 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void checkUpdates(Display display, boolean showUpdated) {
