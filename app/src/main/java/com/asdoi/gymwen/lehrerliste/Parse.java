@@ -35,10 +35,6 @@ abstract class Parse {
             }
         }
 
-        for (int i = 0; i < values.size(); i++) {
-            System.out.println(lines[i]);
-        }
-
         //Analyze String
         //Kürzel - Nachname - Vorname - Sprechstunde
 
