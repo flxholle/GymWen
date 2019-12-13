@@ -15,7 +15,7 @@
         <item
             android:id="@+id/nav_tomorrow"
             android:icon="@drawable/ic_tomorrow_black_24dp"
-            android:title="@string/menu_tomorrow"/>
+            android:title="@string/menu_tomorrow" />
         <item
             android:id="@+id/nav_all_classes_today"
             android:icon="@drawable/ic_today_black_24dp"
@@ -26,9 +26,9 @@
             android:title="@string/menu_all_classes_tomorrow" />
     </group>
 
-    <item android:title="@string/menu_category">
+    <item android:title="@string/menu_category_school">
         <menu>
-            <group >
+            <group>
                 <item
                     android:id="@+id/nav_website"
                     android:icon="@drawable/ic_home_black_24dp"
@@ -37,18 +37,6 @@
                     android:id="@+id/nav_teacherlist"
                     android:icon="@drawable/ic_person_pin_black_24dp"
                     android:title="@string/menu_teacher_list" />
-                <item
-                    android:id="@+id/nav_notes"
-                    android:icon="@drawable/ic_event_note_black_24dp"
-                    android:title="@string/menu_notes" />
-                <item
-                    android:id="@+id/nav_timetable"
-                    android:icon="@drawable/ic_access_time_black_24dp"
-                    android:title="@string/menu_timetable" />
-                <item
-                    android:id="@+id/nav_grades"
-                    android:icon="@drawable/ic_looks_one_black_24dp"
-                    android:title="@string/menu_grades" />
                 <item
                     android:id="@+id/nav_mebis"
                     android:icon="@drawable/ic_open_in_new_white_24dp"
@@ -61,14 +49,32 @@
                     android:id="@+id/nav_shop"
                     android:icon="@drawable/ic_open_in_new_white_24dp"
                     android:title="@string/menu_shop" />
-                <!--<item
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/menu_category_other">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/nav_notes"
+                    android:icon="@drawable/ic_event_note_black_24dp"
+                    android:title="@string/menu_notes" />
+                <item
+                    android:id="@+id/nav_timetable"
+                    android:icon="@drawable/ic_access_time_black_24dp"
+                    android:title="@string/menu_timetable" />
+                <item
+                    android:id="@+id/nav_grades"
+                    android:enabled="false"
+                    android:icon="@drawable/ic_looks_one_black_24dp"
+                    android:title="@string/menu_grades"
+                    android:visible="false" />
+                <item
                     android:id="@+id/nav_impressum"
-                    android:icon="@drawable/ic_settings_system_daydream_black_24dp"
-                    android:title="@string/menu_impressum" />-->
-                <!--<item
-                    android:id="@+id/nav_gradesManagement"
-                    android:icon="@drawable/ic_settings_system_daydream_black_24dp"
-                    android:title="Notenverwaltung" />-->
+                    android:enabled="false"
+                    android:icon="@drawable/ic_info_outline_black_24dp"
+                    android:title="@string/menu_impressum"
+                    android:visible="false" />
                 <item
                     android:id="@+id/nav_settings"
                     android:icon="@drawable/ic_settings_black_24dp"
@@ -76,5 +82,4 @@
             </group>
         </menu>
     </item>
-
 </menu>

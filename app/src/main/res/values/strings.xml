@@ -15,7 +15,8 @@
     <string name="menu_mebis">Mebis</string>
     <string name="menu_mensa">Mensa (kitafino)</string>
     <string name="menu_all_classes_tomorrow">Morgen (gesamt)</string>
-    <string name="menu_category">Diverses</string>
+    <string name="menu_category_other">Diverses</string>
+    <string name="menu_category_school">Gymnasium</string>
     <string name="menu_both">Auf einen Blick!</string>
     <string name="menu_impressum">Impressum</string>
     <string name="menu_update">Updates</string>
@@ -42,13 +43,16 @@
     <string name="set_vertretung_signin">Anmeldedaten</string>
     <string name="set_vertretung_username">Benutzername:</string>
     <string name="set_vertretung_password">Passwort:</string>
-    <string name="set_username_default"></string>
-    <string name="set_password_default"></string>
     <string name="set_notification_title">Benachrichtigung</string>
     <string name="set_notifiaction_isOn">Benachrichtigung anzeigen</string>
     <string name="set_notification_showAlways">Dauerhaft anzeigen</string>
     <string name="set_hours">Uhrzeiten statt Stunden anzeigen</string>
-    <string name="set_show_boders">Umranden der Lehrerkürzel</string>
+    <string name="set_show_borders">Umranden der Lehrerkürzel</string>
+    <string name="set_show_borders_specific">Nur beim gefilterten Plan</string>
+    <string name="set_other_title">Sonstiges</string>
+    <string name="set_beta_features">Beta-Features</string>
+    <string name="set_hide_days">Einzelne Tage verbergen</string>
+    <string name="set_hide_gesamt">Gesamte Tage verbergen</string>
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>

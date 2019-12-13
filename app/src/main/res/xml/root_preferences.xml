@@ -25,13 +25,25 @@
             android:summary="@string/set_courses_summary"
             android:title="@string/set_courses_title" />
         <SwitchPreference
-            android:key="hours"
             android:defaultValue="false"
+            android:key="hours"
             android:title="@string/set_hours" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="hide_days"
+            android:title="@string/set_hide_days" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="hide_gesamt"
+            android:title="@string/set_hide_gesamt" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="show_borders"
-            android:title="@string/set_show_boders" />
+            android:title="@string/set_show_borders" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="show_border_specific"
+            android:title="@string/set_show_borders_specific" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/set_notification_title">
@@ -58,6 +70,12 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/set_vertretung_password" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/set_other_title">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="beta_features"
+            android:title="@string/set_beta_features" />
     </PreferenceCategory>
 
 </PreferenceScreen>

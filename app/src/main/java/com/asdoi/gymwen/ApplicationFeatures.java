@@ -237,6 +237,24 @@ public class ApplicationFeatures extends Application {
         return b;
     }
 
+    public static boolean isBetaEnabled() {
+        return getBooleanSettings("beta_features", false);
+    }
+
+    public static boolean isDateOff() {
+        return getBooleanSettings("hide_days", false);
+    }
+
+    public static boolean isGesamtOff() {
+        return getBooleanSettings("hide_gesamt", false);
+    }
+
+    public static boolean getBooleanSettings(String key, boolean defaultValue) {
+        Context context = getContext();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getBoolean(key, defaultValue);
+    }
+
 
     //Website
     public static boolean isURLValid(String url) {

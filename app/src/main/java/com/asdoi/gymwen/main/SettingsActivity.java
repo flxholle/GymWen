@@ -73,17 +73,32 @@ public class SettingsActivity extends ActivityFeatures {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             setNotif();
             Preference myPref = findPreference("showNotification");
-            myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                    setNotif();
-                    return true;
-                }
+            myPref.setOnPreferenceClickListener((Preference preference) -> {
+                setNotif();
+                return true;
+            });
+
+            setBorder();
+            myPref = findPreference("show_borders");
+            myPref.setOnPreferenceClickListener((Preference preference) -> {
+                setBorder();
+                return true;
+            });
+            myPref = findPreference("hide_gesamt");
+            myPref.setOnPreferenceClickListener((Preference preference) -> {
+                setBorder();
+                return true;
             });
         }
 
         private void setNotif() {
             boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false);
             findPreference("alwaysNotification").setEnabled(showNotif);
+        }
+
+        private void setBorder() {
+            boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
+            findPreference("show_border_specific").setEnabled(showNotif);
         }
     }
 }
