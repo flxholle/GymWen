@@ -23,7 +23,7 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
     protected void onStart(){
         super.onStart();
 
-        findViewById(R.id.AboutLibs).setOnClickListener(this);
+        findViewById(R.id.OnlinePrivacy).setOnClickListener(this);
         findViewById(R.id.OnlinePrivacy).setOnClickListener(this);
     }
 
@@ -59,6 +59,12 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
                 break;
             case R.id.OnlinePrivacy:
                 tabIntent("http://www.gym-wen.de/startseite/impressum/");
+                break;
+            case R.id.SourceCode:
+                tabIntent("https://gitlab.com/asdoi/GymWen");
+                break;
+            case R.id.shareApp:
+                //Share app
                 break;
         }
     }
