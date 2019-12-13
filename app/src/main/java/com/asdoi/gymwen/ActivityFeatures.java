@@ -59,45 +59,6 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         return ApplicationFeatures.getContext();
     }
 
-    public View getTeacherView(View view, String[] entry) {
-        TextView kürzel = view.findViewById(R.id.teacher_kürzel);
-        kürzel.setText(entry[0]);
-
-        TextView nname = view.findViewById(R.id.teacher_nname);
-        nname.setText(entry[1]);
-
-        TextView vname = view.findViewById(R.id.teacher_vname);
-        vname.setText(" " + entry[2]);
-
-        TextView hour = view.findViewById(R.id.teacher_hour);
-        hour.setText(entry[3]);
-        hour.setVisibility(View.GONE);
-
-
-        Button mailButton = view.findViewById(R.id.teacher_mail);
-        mailButton.setOnClickListener((View v) -> {
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-            emailIntent.setData(Uri.parse("mailto:" + entry[0] + "@gym-wendelstein.de"));
-            try {
-                startActivity(emailIntent);
-            } catch (Exception e) {
-                try {
-                    emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getContext().startActivity(emailIntent);
-                } catch (ActivityNotFoundException e2) {
-                    Snackbar.make(v, ApplicationFeatures.getContext().getString(R.string.no_email_app), Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        FrameLayout root = view.findViewById(R.id.teacher_rootLayout);
-        root.setOnClickListener((View v) -> {
-            hour.setVisibility(View.VISIBLE);
-        });
-
-        return view;
-    }
-
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -244,6 +205,45 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
 
         view.addView(base);
+    }
+
+    public View getTeacherView(View view, String[] entry) {
+        TextView kürzel = view.findViewById(R.id.teacher_kürzel);
+        kürzel.setText(entry[0]);
+
+        TextView nname = view.findViewById(R.id.teacher_nname);
+        nname.setText(entry[1]);
+
+        TextView vname = view.findViewById(R.id.teacher_vname);
+        vname.setText(" " + entry[2]);
+
+        TextView hour = view.findViewById(R.id.teacher_hour);
+        hour.setText(entry[3]);
+        hour.setVisibility(View.GONE);
+
+
+        Button mailButton = view.findViewById(R.id.teacher_mail);
+        mailButton.setOnClickListener((View v) -> {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+            emailIntent.setData(Uri.parse("mailto:" + entry[0] + "@gym-wendelstein.de"));
+            try {
+                startActivity(emailIntent);
+            } catch (Exception e) {
+                try {
+                    emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(emailIntent);
+                } catch (ActivityNotFoundException e2) {
+                    Snackbar.make(v, ApplicationFeatures.getContext().getString(R.string.no_email_app), Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        FrameLayout root = view.findViewById(R.id.teacher_rootLayout);
+        root.setOnClickListener((View v) -> {
+            hour.setVisibility(View.VISIBLE);
+        });
+
+        return view;
     }
 
 

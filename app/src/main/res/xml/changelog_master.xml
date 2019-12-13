@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
-    <release>
+    <release
         version="1.0.4"
-        versionCode="104"
+        versionCode="104">
         <change>Klickbare Lehrerkürzel</change>
+        <change>Aktivierbare Beta-Features</change>
+        <change>Verbergen bestimmter Menü-Einträge</change>
+        <change>Neues Design im Impressum</change>
     </release>
     <release
         version="1.0.3"

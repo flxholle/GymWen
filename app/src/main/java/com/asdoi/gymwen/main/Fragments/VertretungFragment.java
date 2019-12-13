@@ -2,11 +2,9 @@ package com.asdoi.gymwen.main.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
@@ -209,9 +207,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         startActivity(Intent.createChooser(i, getString(R.string.share_vertretung)));
     }
 
-    void teacherClick(View view, String teacherQuery) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean showBorders = sharedPref.getBoolean("show_borders", true);
+    void teacherClick(View view, String teacherQuery, boolean showBorders) {
         if (showBorders)
             view.setBackground(ContextCompat.getDrawable(ApplicationFeatures.getContext(), R.drawable.background_shape));
         view.setOnClickListener((View v) -> {
@@ -405,8 +401,9 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 tv.setTextSize(18);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                if (j == 3)
-                    teacherClick(tv, inhalt[i][3]);
+                if (j == 3) {
+                    teacherClick(tv, inhalt[i][3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false));
+                }
                 row.addView(tv);
 
             }
@@ -513,7 +510,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 tv.setTextSize(18);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                teacherClick(tv, inhalt[i][3]);
+                teacherClick(tv, inhalt[i][3], ApplicationFeatures.getBooleanSettings("show_borders", true));
                 row.addView(tv);
 
                 //Raum
@@ -636,7 +633,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 tv.setTextSize(18);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                teacherClick(tv, inhalt[i][3]);
+                teacherClick(tv, inhalt[i][3], ApplicationFeatures.getBooleanSettings("show_borders", true));
                 row.addView(tv);
 
                 //Raum

@@ -65,13 +65,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 R.id.nav_all_classes_today, R.id.nav_all_classes_tomorrow)
                 .setDrawerLayout(drawer)
                 .build();
-//        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-//        NavigationUI.setupWithNavController(navigationView, navController)
 
         navigationView.setNavigationItemSelectedListener(this);
-
-//        VertretungsPlanFeatures.reloadDocs();
-//        VertretungsPlanFeatures.refresh();
 
         if (!VertretungsPlanFeatures.isUninit())
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
@@ -82,14 +77,52 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         checkUpdates(Display.DIALOG, false);
         showChangelogCK(true);
-    }
 
+        Menu menu = navigationView.getMenu();
+        if (ApplicationFeatures.isBetaEnabled()) {
+            try {
+                //Enable disabled Views
+                MenuItem[] items = new MenuItem[]{menu.findItem(R.id.nav_impressum), menu.findItem(R.id.nav_grades)};
+                for (MenuItem i : items) {
+                    i.setEnabled(true);
+                    i.setVisible(true);
+                }
+            } catch (Exception e) {
+
+            }
+        }
+
+        if (ApplicationFeatures.isDateOff()) {
+            try {
+                //Enable disabled Views
+                MenuItem[] items = new MenuItem[]{menu.findItem(R.id.nav_today), menu.findItem(R.id.nav_tomorrow)};
+                for (MenuItem i : items) {
+                    i.setEnabled(false);
+                    i.setVisible(false);
+                }
+            } catch (Exception e) {
+
+            }
+        }
+
+        if (ApplicationFeatures.isGesamtOff()) {
+            try {
+                //Enable disabled Views
+                MenuItem[] items = new MenuItem[]{menu.findItem(R.id.nav_all_classes_today), menu.findItem(R.id.nav_all_classes_tomorrow)};
+                for (MenuItem i : items) {
+                    i.setEnabled(false);
+                    i.setVisible(false);
+                }
+            } catch (Exception e) {
+
+            }
+        }
+    }
 
     @Override
     public void onPostCreate(Bundle b) {
         super.onPostCreate(b);
         toggle.syncState();
-
     }
 
     @Override
@@ -381,6 +414,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_shop:
                 tabIntent("http://shop.apromote-werbemittel.de/");
                 break;
+            case R.id.nav_impressum:
             case R.id.action_impressum: // Fallthrough
                 intent = new Intent(this, ImpressumActivity.class);
                 startActivity(intent);
