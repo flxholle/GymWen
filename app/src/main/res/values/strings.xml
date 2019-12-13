@@ -156,7 +156,20 @@
         D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.\n
         Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.\n
         Außerdem werden ausschließlich schon bereits genutzte Datenbanken der Schule verwendet.]]></string>
-    <string name="online_impressum">GymWen Impressum (extern)</string>
+    <string name="license"><![CDATA[<h1>Copyright © 2019 Felix Hollederer</h1>\n
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.\n
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.\n
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
+    <string name="online_impressum">GymWen Impressum</string>
+    <string name="source_code">Quellcode</string>
+    <string name="share_app">App teilen</string>
 
     <!-- Website -->
     <string name="action_open_in_browser">Im Browser öffnen</string>
@@ -207,5 +220,6 @@
     <string name="title_activity_leherliste">Lehrerliste</string>
     <string name="no_email_app">Du hast keine E-Mail App installiert</string>
     <string name="no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
+
 
 </resources>
