@@ -59,7 +59,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         return ApplicationFeatures.getContext();
     }
 
-    public static View getTeacherView(View view, String[] entry) {
+    public View getTeacherView(View view, String[] entry) {
         TextView kürzel = view.findViewById(R.id.teacher_kürzel);
         kürzel.setText(entry[0]);
 
@@ -77,12 +77,16 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         Button mailButton = view.findViewById(R.id.teacher_mail);
         mailButton.setOnClickListener((View v) -> {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-            emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             emailIntent.setData(Uri.parse("mailto:" + entry[0] + "@gym-wendelstein.de"));
             try {
-                ApplicationFeatures.getContext().startActivity(emailIntent);
-            } catch (ActivityNotFoundException e) {
-                Snackbar.make(v, ApplicationFeatures.getContext().getString(R.string.no_email_app), Snackbar.LENGTH_LONG).show();
+                startActivity(emailIntent);
+            } catch (Exception e) {
+                try {
+                    emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(emailIntent);
+                } catch (ActivityNotFoundException e2) {
+                    Snackbar.make(v, ApplicationFeatures.getContext().getString(R.string.no_email_app), Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -241,6 +245,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
         view.addView(base);
     }
+
 
     //Permissions
     private Sheriff sheriffPermission;

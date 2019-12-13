@@ -300,10 +300,10 @@ public class ApplicationFeatures extends Application {
             try {
                 // Create an Intent for the activity you want to start
                 Intent resultIntent = new Intent(getContext(), MainActivity.class);
-                // Create the TaskStackBuilder and add the intent, which inflates the back stack
+                // Create the TaskStackBuilder and add the intent, which inflates the backgroundShape stack
                 TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                 stackBuilder.addNextIntentWithParentStack(resultIntent);
-                // Get the PendingIntent containing the entire back stack
+                // Get the PendingIntent containing the entire backgroundShape stack
                 PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
 

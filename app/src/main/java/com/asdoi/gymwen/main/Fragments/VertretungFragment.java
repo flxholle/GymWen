@@ -93,27 +93,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         ApplicationFeatures.downloadVertretungsplanDocs(false, true);
     }
 
-    private void share() {
-        String message = shareMessage();
-        String footprint = getString(R.string.footprint);
-        message += footprint;
-
-        if (VertretungsPlanFeatures.getTodayTitle().equals("Keine Internetverbindung!")) {
-            //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
-            Snackbar snackbar = Snackbar
-                    .make(root.findViewById(R.id.vertretung_frame), getString(R.string.noInternet), Snackbar.LENGTH_LONG);
-            snackbar.show();
-
-            return;
-        }
-
-        Intent i = new Intent();
-        i.setAction(Intent.ACTION_SEND);
-        i.putExtra(Intent.EXTRA_TEXT, message);
-        i.setType("text/plain");
-        startActivity(Intent.createChooser(i, getString(R.string.share_vertretung)));
-    }
-
     private String shareMessage() {
         String message = "";
         String[][] inhalt = null;
@@ -200,39 +179,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         runner.start();
     }
 
-    private void createTeacherView(String[] teacher) {
-        LinearLayout base = new LinearLayout(context);
-        base.setOrientation(LinearLayout.VERTICAL);
-        base.setGravity(Gravity.CENTER);
-        base.setBackgroundColor(Color.parseColor("#99000000"));
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        base.setLayoutParams(params);
-        base.setId(1300);
-        base.setOnClickListener((View v) -> {
-            try {
-                ((ViewGroup) v.getParent()).removeView(v);
-            } catch (NullPointerException e) {
-                v.setVisibility(View.GONE);
-            }
-        });
-
-        ViewGroup teacherEntry = new LinearLayout(context);
-        ViewStub viewStub = new ViewStub(context);
-        viewStub.setLayoutResource(R.layout.list_lehrerliste_entry);
-        teacherEntry.addView(viewStub);
-        viewStub.inflate();
-        teacherEntry = (ViewGroup) ActivityFeatures.getTeacherView(teacherEntry, teacher);
-
-        LinearLayout background = new LinearLayout(context);
-        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        background.setLayoutParams(params);
-        background.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
-        background.addView(teacherEntry);
-        base.addView(background);
-        ((ViewGroup) root.findViewById(R.id.vertretung_frame)).addView(base);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -242,11 +188,32 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    private void share() {
+        String message = shareMessage();
+        String footprint = getString(R.string.footprint);
+        message += footprint;
+
+        if (VertretungsPlanFeatures.getTodayTitle().equals("Keine Internetverbindung!")) {
+            //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar
+                    .make(root.findViewById(R.id.vertretung_frame), getString(R.string.noInternet), Snackbar.LENGTH_LONG);
+            snackbar.show();
+
+            return;
+        }
+
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_SEND);
+        i.putExtra(Intent.EXTRA_TEXT, message);
+        i.setType("text/plain");
+        startActivity(Intent.createChooser(i, getString(R.string.share_vertretung)));
+    }
+
     void teacherClick(View view, String teacherQuery) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean showBorders = sharedPref.getBoolean("show_borders", true);
         if (showBorders)
-            view.setBackground(ContextCompat.getDrawable(ApplicationFeatures.getContext(), R.xml.back));
+            view.setBackground(ContextCompat.getDrawable(ApplicationFeatures.getContext(), R.drawable.background_shape));
         view.setOnClickListener((View v) -> {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 new Thread(() -> {
@@ -278,6 +245,38 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    private void createTeacherView(String[] teacher) {
+        LinearLayout base = new LinearLayout(context);
+        base.setOrientation(LinearLayout.VERTICAL);
+        base.setGravity(Gravity.CENTER);
+        base.setBackgroundColor(Color.parseColor("#99000000"));
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        base.setLayoutParams(params);
+        base.setId(1300);
+        base.setOnClickListener((View v) -> {
+            try {
+                ((ViewGroup) v.getParent()).removeView(v);
+            } catch (NullPointerException e) {
+                v.setVisibility(View.GONE);
+            }
+        });
+
+        ViewGroup teacherEntry = new LinearLayout(context);
+        ViewStub viewStub = new ViewStub(context);
+        viewStub.setLayoutResource(R.layout.list_lehrerliste_entry);
+        teacherEntry.addView(viewStub);
+        viewStub.inflate();
+        teacherEntry = (ViewGroup) ((ActivityFeatures) getActivity()).getTeacherView(teacherEntry, teacher);
+
+        LinearLayout background = new LinearLayout(context);
+        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        background.setLayoutParams(params);
+        background.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+        background.addView(teacherEntry);
+        base.addView(background);
+        ((ViewGroup) root.findViewById(R.id.vertretung_frame)).addView(base);
+    }
 
     void setTableParams() {
         clear();

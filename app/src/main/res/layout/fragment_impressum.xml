@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
-    tools:context=".main.Fragments.ImpressumFragment">
+    tools:context=".main.Fragments.ImpressumFragment"
+    android:id="@+id/impressum_base">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,24 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/impressum_headline"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/headline_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/subtitle"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -50,13 +33,16 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="onClick"
                     android:orientation="vertical">
 
                     <ImageButton
+                        android:id="@+id/OnlinePrivacyImageButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter"
+                        android:onClick="onClick"
                         app:srcCompat="@mipmap/gymlogo" />
 
                     <TextView
@@ -73,14 +59,17 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="onClick"
                     android:orientation="vertical">
 
                     <ImageButton
+                        android:id="@+id/AboutLibsImageButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/ic_book" />
+                        android:onClick="onClick"
+                        app:srcCompat="@drawable/ic_local_library_black_24dp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -96,13 +85,16 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="onClick"
                     android:orientation="vertical">
 
                     <ImageButton
+                        android:id="@+id/SourceCodeImageButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter"
+                        android:onClick="onClick"
                         app:srcCompat="@drawable/ic_gitlab" />
 
                     <TextView
@@ -123,6 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_menu_share"
+            android:onClick="onClick"
             android:contentDescription="@string/share_app" />
 
         <ScrollView

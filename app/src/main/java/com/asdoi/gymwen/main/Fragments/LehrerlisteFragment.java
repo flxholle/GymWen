@@ -103,7 +103,7 @@ public class LehrerlisteFragment extends Fragment {
                 convertView = getLayoutInflater().inflate(R.layout.list_lehrerliste_entry, null);
             }
 
-            return ActivityFeatures.getTeacherView(convertView, teacherList[position]);
+            return ((ActivityFeatures) getActivity()).getTeacherView(convertView, teacherList[position]);
         }
 
         @Override

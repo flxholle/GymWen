@@ -8,6 +8,8 @@
 
     <LinearLayout
         android:id="@+id/vertretung_linear_layout_layer1"
+        android:paddingStart="4sp"
+        android:paddingEnd="10sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
