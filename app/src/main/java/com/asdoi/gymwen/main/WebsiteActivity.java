@@ -65,7 +65,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show backgroundShape button
 
         // Preload custom tabs service for improved performance
         // This is optional but recommended

@@ -156,7 +156,8 @@
         D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.\n
         Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.\n
         Außerdem werden ausschließlich schon bereits genutzte Datenbanken der Schule verwendet.]]></string>
-    <string name="license"><![CDATA[<h1>Copyright © 2019 Felix Hollederer</h1>\n
+    <string name="license"><![CDATA[<h1>Lizenz</h1>\n
+    Copyright © 2019 Felix Hollederer\n
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -169,7 +170,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="online_impressum">GymWen Impressum</string>
     <string name="source_code">Quellcode</string>
-    <string name="share_app">App teilen</string>
+    <string name="share_app">App teilen mit\u2026</string>
+    <string name="share_app_message">Lade dir die offizielle GymWen App herunter, mit ihr wirst du automatisch über deine Vertretungen informiert, kannst Essen in der Mensa bestellen, die Lehrerliste durchsuchen und vieles mehr:</string>
 
     <!-- Website -->
     <string name="action_open_in_browser">Im Browser öffnen</string>

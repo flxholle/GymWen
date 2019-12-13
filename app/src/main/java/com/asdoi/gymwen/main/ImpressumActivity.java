@@ -16,11 +16,11 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_impressum);
         assert getSupportActionBar() != null;   //null check
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show backgroundShape button
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
 
         findViewById(R.id.OnlinePrivacy).setOnClickListener(this);
@@ -34,7 +34,7 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
@@ -42,8 +42,9 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.AboutLibs:
+            case R.id.AboutLibsImageButton:
                 Intent intent = new LibsBuilder()
                         .withActivityTitle(getString(R.string.AboutLibs_Title))
                         .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
@@ -58,14 +59,26 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.OnlinePrivacy:
+            case R.id.OnlinePrivacyImageButton:
                 tabIntent("http://www.gym-wen.de/startseite/impressum/");
                 break;
             case R.id.SourceCode:
+            case R.id.SourceCodeImageButton:
                 tabIntent("https://gitlab.com/asdoi/GymWen");
                 break;
             case R.id.shareApp:
-                //Share app
+                share();
                 break;
         }
+    }
+
+    private void share() {
+        String link = "https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk";
+        String message = getString(R.string.share_app_message) + " " + link;
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_SEND);
+        i.putExtra(Intent.EXTRA_TEXT, message);
+        i.setType("text/plain");
+        startActivity(Intent.createChooser(i, getString(R.string.share_app)));
     }
 }
