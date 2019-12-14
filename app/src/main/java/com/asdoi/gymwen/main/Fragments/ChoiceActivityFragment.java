@@ -159,7 +159,6 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         inputText.setId(quantitiyCourses + 1300);
         inputText.setOnEditorActionListener(this);
         inputText.setTextColor(Color.BLACK);
-//        inputText.setPadding(0, 0, 0, 0);
         inputText.setText(((ChoiceActivity) getActivity()).getCourseFirstDigit() + courseShort + ((ChoiceActivity) getActivity()).getCourseMainDigit());
 //        inputText.setHint(((ChoiceActivity) getActivity()).getCourseFirstDigit() + courseShort + ((ChoiceActivity) getActivity()).getCourseMainDigit());
         inputText.addTextChangedListener(new MyTextWatcher(inputText));
@@ -354,6 +353,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         }
     }
 
+    @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
         if (i == EditorInfo.IME_ACTION_DONE) {
             System.out.println("works");

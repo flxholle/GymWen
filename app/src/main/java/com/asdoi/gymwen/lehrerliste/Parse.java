@@ -3,6 +3,8 @@ package com.asdoi.gymwen.lehrerliste;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
+
 abstract class Parse {
     protected static String[][] getList(Document doc) {
         if (doc == null) {
@@ -72,6 +74,25 @@ abstract class Parse {
         }
 
         return null;
+    }
+
+    protected static String[][] getTeachers(String search, String[][] listString) {
+        ArrayList<String[]> list = new ArrayList<String[]>();
+        for (String[] s : listString) {
+            for (int i = 0; i < 3; i++) {
+                String s1 = s[i].toUpperCase();
+                if (s1.contains(search.toUpperCase())) {
+                    list.add(s);
+                    break;
+                }
+            }
+        }
+
+        String[][] returnValue = new String[list.size()][];
+        for (int i = 0; i < returnValue.length; i++) {
+            returnValue[i] = list.get(i);
+        }
+        return returnValue;
     }
 
     protected static String[] getTeacher(String search, Document doc) {

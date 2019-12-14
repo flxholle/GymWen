@@ -155,7 +155,7 @@
 
     <!-- Impressum -->
     <string name="impressum_headline">Impressum</string>
-    <string name="AboutLibs_Title">Open-Source Bibliotheken</string>
+    <string name="impressum_AboutLibs_Title">Open-Source Bibliotheken</string>
     <string name="privacy"><![CDATA[<h1>Datenschutzerklärung</h1>\nDie offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.\n
         D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.\n
         Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.\n
@@ -172,9 +172,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.\n
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
-    <string name="online_impressum">GymWen Impressum</string>
-    <string name="source_code">Quellcode</string>
-    <string name="attribution">Credits (Bildquellen)</string>
+    <string name="impressum_online_impressum">GymWen Impressum</string>
+    <string name="impressum_source_code">Quellcode</string>
+    <string name="impressum_attribution">Credits (Bildquellen)</string>
     <string name="share_app">App teilen mit\u2026</string>
     <string name="share_app_message">Lade dir die offizielle GymWen App herunter, mit ihr wirst du automatisch über deine Vertretungen informiert, kannst Essen in der Mensa bestellen, die Lehrerliste durchsuchen und vieles mehr:</string>
 
@@ -224,9 +224,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="down_permission_denied">Berechtigung verweigert</string>
 
     <!-- Lehrerliste -->
-    <string name="title_activity_leherliste">Lehrerliste</string>
+    <string name="teacher_title_activity_leherliste">Lehrerliste</string>
     <string name="no_email_app">Du hast keine E-Mail App installiert</string>
-    <string name="no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
+    <string name="teacher_no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
+    <string name="teacher_search_teacher_list">Durchsuchen\u2026</string>
 
     <!-- Credits -->
     <string name="credits">Image in Impressum (AboutLibs): https://pixabay.com/vectors/book-found-fun-icon-icons-reading-1294379/\n

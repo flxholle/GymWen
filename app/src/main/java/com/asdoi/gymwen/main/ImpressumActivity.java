@@ -62,7 +62,7 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
             case R.id.AboutLibs:
             case R.id.AboutLibsImageButton:
                 Intent intent = new LibsBuilder()
-                        .withActivityTitle(getString(R.string.AboutLibs_Title))
+                        .withActivityTitle(getString(R.string.impressum_AboutLibs_Title))
                         .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
                         .withFields(R.string.class.getFields())
                         .withAutoDetect(true)
@@ -89,7 +89,7 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
             case R.id.AttributionImageButton:
                 contribution = true;
                 try {
-                    getSupportActionBar().setTitle(getString(R.string.attribution));
+                    getSupportActionBar().setTitle(getString(R.string.impressum_attribution));
                 } catch (Exception e) {
                 }
                 FragmentManager fragmentManager = getSupportFragmentManager();

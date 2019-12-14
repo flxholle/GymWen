@@ -55,8 +55,8 @@ import saschpe.android.customtabs.WebViewFallback;
 
 
 public class ActivityFeatures extends AppCompatActivity implements PermissionListener {
-    public static Context getContext() {
-        return ApplicationFeatures.getContext();
+    public Context getContext() {
+        return this;
     }
 
     static {
@@ -185,7 +185,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(20, 5, 20, 0);
         bar.setLayoutParams(params);
-        bar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
+        bar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
 
 
         TextView textView = new TextView(context);
@@ -241,6 +241,8 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         FrameLayout root = view.findViewById(R.id.teacher_rootLayout);
         root.setOnClickListener((View v) -> {
             hour.setVisibility(View.VISIBLE);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+            view.findViewById(R.id.teacher_list_linear).setLayoutParams(params);
         });
 
         return view;
