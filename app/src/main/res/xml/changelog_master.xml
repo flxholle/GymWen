@@ -4,15 +4,17 @@
         version="1.0.4"
         versionCode="104">
         <change>Klickbare Lehrerkürzel</change>
+        <change>Durchsuchbare Lehrerliste</change>
         <change>Aktivierbare Beta-Features</change>
         <change>Verbergen bestimmter Menü-Einträge</change>
         <change>Neues Design im Impressum</change>
+        <change>Neue Icons</change>
     </release>
     <release
         version="1.0.3"
         versioncode="103">
         <change>Lehrerliste</change>
-        <change>Automatisches Herunterladen und installieren von Updates</change>
+        <change>Automatisches Herunterladen und Installieren von Updates</change>
         <change>GymWen Online Shop hinzugefügt</change>
         <change>Code und Widget Optimierungen</change>
     </release>

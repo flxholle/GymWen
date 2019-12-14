@@ -18,6 +18,10 @@ public abstract class Lehrerliste {
         return Parse.getTeacher(search, liste());
     }
 
+    public static String[][] getTeachers(String search) {
+        return Parse.getTeachers(search, liste());
+    }
+
     public static void setDoc(Document doc) {
         list = doc;
     }

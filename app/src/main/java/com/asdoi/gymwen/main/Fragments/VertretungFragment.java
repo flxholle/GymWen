@@ -235,7 +235,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 snackbar.show();
             } else {
                 Snackbar snackbar = Snackbar
-                        .make(root.findViewById(R.id.vertretung_frame), getString(R.string.no_teacher_found), Snackbar.LENGTH_LONG);
+                        .make(root.findViewById(R.id.vertretung_frame), getString(R.string.teacher_no_teacher_found), Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
         }
