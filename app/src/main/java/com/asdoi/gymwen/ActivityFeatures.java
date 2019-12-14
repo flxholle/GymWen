@@ -221,6 +221,10 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         hour.setText(entry[3]);
         hour.setVisibility(View.GONE);
 
+        LinearLayout hideLayout = view.findViewById(R.id.teacher_list_linear);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+        hideLayout.setLayoutParams(params);
+
 
         Button mailButton = view.findViewById(R.id.teacher_mail);
         mailButton.setOnClickListener((View v) -> {
@@ -241,8 +245,8 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         FrameLayout root = view.findViewById(R.id.teacher_rootLayout);
         root.setOnClickListener((View v) -> {
             hour.setVisibility(View.VISIBLE);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-            view.findViewById(R.id.teacher_list_linear).setLayoutParams(params);
+            LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+            hideLayout.setLayoutParams(params2);
         });
 
         return view;

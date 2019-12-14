@@ -93,7 +93,7 @@ public class LehrerlisteFragment extends Fragment {
         }
         ListView teacherListView = new ListView(getContext());
         teacherListView.setAdapter(new TeacherListAdapter(getContext(), 0));
-        teacherListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        teacherListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         teacherListView.setId(R.integer.teacher_list_id);
         base.addView(teacherListView);
     }
@@ -108,7 +108,7 @@ public class LehrerlisteFragment extends Fragment {
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         textView.setGravity(Gravity.CENTER);
-        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         base.addView(textView);
         return textView;
     }
@@ -125,6 +125,8 @@ public class LehrerlisteFragment extends Fragment {
         inputText.setTextColor(Color.BLACK);
         inputText.setHint(getString(R.string.teacher_search_teacher_list));
         inputText.addTextChangedListener(new TextWatcher() {
+            String before = "";
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -132,12 +134,15 @@ public class LehrerlisteFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 0) {
-                    teacherList = Lehrerliste.getTeachers("" + charSequence);
-                } else {
-                    teacherList = Lehrerliste.liste();
+                if (!charSequence.toString().equals(before)) {
+                    if (charSequence.length() > 0) {
+                        teacherList = Lehrerliste.getTeachers("" + charSequence);
+                    } else {
+                        teacherList = Lehrerliste.liste();
+                    }
+                    before = charSequence.toString();
+                    createList();
                 }
-                createList();
             }
 
             @Override
