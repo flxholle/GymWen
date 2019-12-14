@@ -81,6 +81,32 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/Attribution"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/AttributionImageButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:onClick="onClick"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_attribute" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/attribution"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/SourceCode"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -138,7 +164,8 @@
             <TextView
                 android:id="@+id/impressum_license"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:autoLink="web" />
         </ScrollView>
 
     </LinearLayout>

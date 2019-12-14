@@ -6,8 +6,12 @@ import android.view.View;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.Fragments.ContributionFragment;
+import com.asdoi.gymwen.main.Fragments.ImpressumFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
+
+import androidx.fragment.app.FragmentManager;
 
 public class ImpressumActivity extends ActivityFeatures implements View.OnClickListener {
 
@@ -27,8 +31,20 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
         findViewById(R.id.OnlinePrivacy).setOnClickListener(this);
     }
 
+    boolean contribution = false;
+
     @Override
     public void onBackPressed() {
+        if (contribution) {
+            contribution = false;
+            try {
+                getSupportActionBar().setTitle(getString(R.string.impressum_headline));
+            } catch (Exception e) {
+            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.impressumFragment, new ImpressumFragment()).commit();
+            return;
+        }
         finish();
         super.onBackPressed();
     }
@@ -68,6 +84,16 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
                 break;
             case R.id.shareApp:
                 share();
+                break;
+            case R.id.Attribution:
+            case R.id.AttributionImageButton:
+                contribution = true;
+                try {
+                    getSupportActionBar().setTitle(getString(R.string.attribution));
+                } catch (Exception e) {
+                }
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.impressumFragment, new ContributionFragment()).commit();
                 break;
         }
     }

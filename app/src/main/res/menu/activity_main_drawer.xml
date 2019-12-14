@@ -31,23 +31,23 @@
             <group>
                 <item
                     android:id="@+id/nav_website"
-                    android:icon="@drawable/ic_home_black_24dp"
+                    android:icon="@drawable/ic_compass"
                     android:title="@string/menu_website" />
                 <item
                     android:id="@+id/nav_teacherlist"
-                    android:icon="@drawable/ic_person_pin_black_24dp"
+                    android:icon="@drawable/ic_teacher_at_the_blackboard"
                     android:title="@string/menu_teacher_list" />
                 <item
                     android:id="@+id/nav_mebis"
-                    android:icon="@drawable/ic_open_in_new_white_24dp"
+                    android:icon="@drawable/ic_graduate_cap"
                     android:title="@string/menu_mebis" />
                 <item
                     android:id="@+id/nav_mensa"
-                    android:icon="@drawable/ic_open_in_new_white_24dp"
+                    android:icon="@drawable/ic_restaurant"
                     android:title="@string/menu_mensa" />
                 <item
                     android:id="@+id/nav_shop"
-                    android:icon="@drawable/ic_open_in_new_white_24dp"
+                    android:icon="@drawable/ic_t_shirt"
                     android:title="@string/menu_shop" />
             </group>
         </menu>
@@ -57,7 +57,7 @@
             <group>
                 <item
                     android:id="@+id/nav_notes"
-                    android:icon="@drawable/ic_event_note_black_24dp"
+                    android:icon="@drawable/ic_writing"
                     android:title="@string/menu_notes" />
                 <item
                     android:id="@+id/nav_timetable"
