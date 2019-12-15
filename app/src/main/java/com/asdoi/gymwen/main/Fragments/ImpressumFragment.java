@@ -6,7 +6,6 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.asdoi.gymwen.R;
@@ -38,12 +37,6 @@ public class ImpressumFragment extends Fragment {
         textView = root.findViewById(R.id.impressum_license);
         textView.setText(Html.fromHtml(license));
 
-        try {
-            ImageButton aButton = root.findViewById(R.id.AboutLibsImageButton);
-            aButton.setImageResource(R.drawable.ic_library);
-            aButton.setImageResource(R.drawable.ic_book);
-        } catch (Exception e) {
-        }
         return root;
     }
 

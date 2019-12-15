@@ -28,7 +28,7 @@
                     android:layout_weight="0"
                     android:gravity="center|start"
                     android:text="KÜRZEL"
-                    android:textColor="@color/black"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center|end"
                             android:text="Nachname"
-                            android:textColor="@color/black"
+                            android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -65,7 +65,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center|center_horizontal|start"
                             android:text=" Vorname"
-                            android:textColor="@color/black"
+                            android:textColor="@android:color/black"
                             android:textSize="14sp" />
                     </LinearLayout>
 

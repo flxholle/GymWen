@@ -8,8 +8,8 @@ android {
         /*Android v4.1 alias "Jelly Bean"*/
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 103
-        versionName "1.0.3"
+        versionCode 104
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -60,7 +60,6 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'apache-codec:commons-codec:1.2'
-    implementation 'com.balsikandar.android:crashreporter:1.1.0'
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-dialog:$acraVersion"
     implementation "ch.acra:acra-notification:$acraVersion"
