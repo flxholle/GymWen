@@ -61,7 +61,7 @@
                     android:title="@string/menu_notes" />
                 <item
                     android:id="@+id/nav_timetable"
-                    android:icon="@drawable/ic_access_time_black_24dp"
+                    android:icon="@drawable/ic_timetable"
                     android:title="@string/menu_timetable" />
                 <item
                     android:id="@+id/nav_grades"
