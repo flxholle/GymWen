@@ -152,7 +152,9 @@
             <TextView
                 android:id="@+id/impressum_datenschutz"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="@string/privacy" />
         </ScrollView>
 
         <ScrollView
@@ -165,7 +167,8 @@
                 android:id="@+id/impressum_license"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoLink="web" />
+                android:autoLink="web"
+                android:text="@string/license" />
         </ScrollView>
 
     </LinearLayout>
