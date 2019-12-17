@@ -20,6 +20,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -29,10 +33,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private static View root;
@@ -277,14 +277,15 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     void setTableParams() {
         clear();
 
-//            if (both)
-//                generateScrollView();
+        if (both)
+            generateScrollView();
 
         TextView titleView = createTitleLayout();
         TableLayout table = createTableLayout();
 
         oberstufe = VertretungsPlanFeatures.getOberstufe();
         if (both) {
+
             inhalt = VertretungsPlanFeatures.getTodayArray();
             title = VertretungsPlanFeatures.getTodayTitle();
             setTitle(titleView);
@@ -322,6 +323,16 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             setTitle(titleView);
         }
     }
+
+    void generateScrollView() {
+        ScrollView s = new ScrollView(context);
+        LinearLayout l = root.findViewById(R.id.vertretung_linear_layout_layer1);
+        ViewGroup parent = (ViewGroup) l.getParent();
+        parent.removeAllViews();
+        parent.addView(s);
+        s.addView(l);
+    }
+
 
     TableLayout createTableLayout() {
         TableLayout table = new TableLayout(context);
