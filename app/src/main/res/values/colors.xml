@@ -3,6 +3,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorPrimary">#008577</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorBackground">#FFFFFFFF</color>
+    <color name="colorFont">#000000</color>
 
     <!--<color name="colorPrimaryDark">#1cbf5f</color>
     <color name="colorPrimary">#1cbf5f</color>
@@ -15,8 +17,6 @@
     <!--    Website Activity-->
     <color name="web_background_homepages">#80f2f2f2</color>
     <color name="web_background_content">#FFFFFFFF</color>
-
-    <color name="background_light">#FFFFFFFF</color>
 
     <color name="wheel_wheel">#03B8F4</color>
 </resources>

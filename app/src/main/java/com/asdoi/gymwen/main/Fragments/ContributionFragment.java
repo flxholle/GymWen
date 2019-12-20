@@ -27,6 +27,10 @@ public class ContributionFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View root = inflater.inflate(R.layout.fragment_contribution, container, false);
+        try {
+            getContext().getTheme().applyStyle(getActivity().getPackageManager().getActivityInfo(getActivity().getComponentName(), 0).getThemeResource(), true);
+        } catch (Exception e) {
+        }
 //        TextView t2 = (TextView) root.findViewById(R.id.attribution_textView);
 //        t2.setMovementMethod(LinkMovementMethod.getInstance());
         return root;
