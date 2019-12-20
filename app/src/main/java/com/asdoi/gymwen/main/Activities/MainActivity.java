@@ -1,15 +1,11 @@
-package com.asdoi.gymwen.main;
+package com.asdoi.gymwen.main.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -20,8 +16,6 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.main.Fragments.LehrerlisteFragment;
 import com.asdoi.gymwen.main.Fragments.VertretungFragment;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment;
-import com.commit451.modalbottomsheetdialogfragment.Option;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.navigation.NavigationView;
 
@@ -37,7 +31,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener, ModalBottomSheetDialogFragment.Listener {
+public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -117,6 +111,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
             }
         }
+
     }
 
     @Override
@@ -140,217 +135,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         mb.add(R.menu.menu_main).show(getSupportFragmentManager(), "options");
         mb.show(getSupportFragmentManager(),"s");*/
         return true;
-    }
-
-    @Override
-    public void onModalOptionSelected(String s, Option o) {
-//        onOptionsItemSelected();
-        onOptionsItemSelected(new MenuItem() {
-            @Override
-            public int getItemId() {
-                return o.getId();
-            }
-
-            @Override
-            public int getGroupId() {
-                return 0;
-            }
-
-            @Override
-            public int getOrder() {
-                return 0;
-            }
-
-            @Override
-            public MenuItem setTitle(CharSequence charSequence) {
-                return null;
-            }
-
-            @Override
-            public MenuItem setTitle(int i) {
-                return null;
-            }
-
-            @Override
-            public CharSequence getTitle() {
-                return null;
-            }
-
-            @Override
-            public MenuItem setTitleCondensed(CharSequence charSequence) {
-                return null;
-            }
-
-            @Override
-            public CharSequence getTitleCondensed() {
-                return null;
-            }
-
-            @Override
-            public MenuItem setIcon(Drawable drawable) {
-                return null;
-            }
-
-            @Override
-            public MenuItem setIcon(int i) {
-                return null;
-            }
-
-            @Override
-            public Drawable getIcon() {
-                return null;
-            }
-
-            @Override
-            public MenuItem setIntent(Intent intent) {
-                return null;
-            }
-
-            @Override
-            public Intent getIntent() {
-                return null;
-            }
-
-            @Override
-            public MenuItem setShortcut(char c, char c1) {
-                return null;
-            }
-
-            @Override
-            public MenuItem setNumericShortcut(char c) {
-                return null;
-            }
-
-            @Override
-            public char getNumericShortcut() {
-                return 0;
-            }
-
-            @Override
-            public MenuItem setAlphabeticShortcut(char c) {
-                return null;
-            }
-
-            @Override
-            public char getAlphabeticShortcut() {
-                return 0;
-            }
-
-            @Override
-            public MenuItem setCheckable(boolean b) {
-                return null;
-            }
-
-            @Override
-            public boolean isCheckable() {
-                return false;
-            }
-
-            @Override
-            public MenuItem setChecked(boolean b) {
-                return null;
-            }
-
-            @Override
-            public boolean isChecked() {
-                return false;
-            }
-
-            @Override
-            public MenuItem setVisible(boolean b) {
-                return null;
-            }
-
-            @Override
-            public boolean isVisible() {
-                return false;
-            }
-
-            @Override
-            public MenuItem setEnabled(boolean b) {
-                return null;
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return false;
-            }
-
-            @Override
-            public boolean hasSubMenu() {
-                return false;
-            }
-
-            @Override
-            public SubMenu getSubMenu() {
-                return null;
-            }
-
-            @Override
-            public MenuItem setOnMenuItemClickListener(OnMenuItemClickListener onMenuItemClickListener) {
-                return null;
-            }
-
-            @Override
-            public ContextMenu.ContextMenuInfo getMenuInfo() {
-                return null;
-            }
-
-            @Override
-            public void setShowAsAction(int i) {
-
-            }
-
-            @Override
-            public MenuItem setShowAsActionFlags(int i) {
-                return null;
-            }
-
-            @Override
-            public MenuItem setActionView(View view) {
-                return null;
-            }
-
-            @Override
-            public MenuItem setActionView(int i) {
-                return null;
-            }
-
-            @Override
-            public View getActionView() {
-                return null;
-            }
-
-            @Override
-            public MenuItem setActionProvider(ActionProvider actionProvider) {
-                return null;
-            }
-
-            @Override
-            public ActionProvider getActionProvider() {
-                return null;
-            }
-
-            @Override
-            public boolean expandActionView() {
-                return false;
-            }
-
-            @Override
-            public boolean collapseActionView() {
-                return false;
-            }
-
-            @Override
-            public boolean isActionViewExpanded() {
-                return false;
-            }
-
-            @Override
-            public MenuItem setOnActionExpandListener(OnActionExpandListener onActionExpandListener) {
-                return null;
-            }
-        });
     }
 
     @Override
@@ -437,12 +221,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     }
                 }
                 break;
-            /*case R.id.nav_gradesManagement:
-//                createFile("text/plain","test.txt");
-//                downloadFile("https://gitlab.com/asdoi/colorrush/raw/master/VersionFile.txt");
-                Snackbar snackbar = Snackbar.make(findViewById(R.id.nav_host_fragment), "Dieses Feature ist noch nicht benutzbar", Snackbar.LENGTH_SHORT);
-                snackbar.show();
-                break;*/
             case R.id.action_update:
                 checkUpdates(Display.DIALOG, true);
                 break;
@@ -522,8 +300,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         item.setTitle(itemTitle);
 
-        ApplicationFeatures.proofeNotification();
-
         return true;
     }
 
@@ -537,11 +313,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @Override
     public void onBackPressed() {
-        if (findViewById(1300) != null) {
+        //If teacher is clicked
+        if (findViewById(R.integer.vertretung_teacher_view_id) != null) {
             try {
-                ((ViewGroup) findViewById(1300).getParent()).removeView(findViewById(1300));
+                ((ViewGroup) findViewById(R.integer.vertretung_teacher_view_id).getParent()).removeView(findViewById(R.integer.vertretung_teacher_view_id));
             } catch (NullPointerException e) {
-                findViewById(1300).setVisibility(View.GONE);
+                findViewById(R.integer.vertretung_teacher_view_id).setVisibility(View.GONE);
             }
             return;
         }

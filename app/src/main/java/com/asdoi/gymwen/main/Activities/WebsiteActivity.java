@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main;
+package com.asdoi.gymwen.main.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -116,7 +116,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                 intentActivationEnabled = false;
                 return;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -141,9 +141,9 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             startActivity(intent);*/
             try {
                 tabIntent(history.get(history.size() - 1));
+            } catch (Exception e) {
             }
-            catch (Exception e){}
-        } else if (item.getItemId() == R.id.action_share || item.getItemId() == R.id.action_share2 ) {
+        } else if (item.getItemId() == R.id.action_share || item.getItemId() == R.id.action_share2) {
             Intent i = new Intent();
             i.setAction(Intent.ACTION_SEND);
             i.putExtra(Intent.EXTRA_TEXT, history.get(history.size() - 1));
@@ -566,10 +566,9 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                                 ContentPagesMixed(urlFinal);
                             }
                         } else {
-                            try{
+                            try {
                                 tabIntent(urlFinal);
-                            }
-                            catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }

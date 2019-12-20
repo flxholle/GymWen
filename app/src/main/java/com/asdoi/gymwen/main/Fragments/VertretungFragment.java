@@ -20,10 +20,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -33,6 +29,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private static View root;
@@ -248,7 +248,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         base.setBackgroundColor(Color.parseColor("#99000000"));
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         base.setLayoutParams(params);
-        base.setId(1300);
+        base.setId(R.integer.vertretung_teacher_view_id);
         base.setOnClickListener((View v) -> {
             try {
                 ((ViewGroup) v.getParent()).removeView(v);
@@ -737,15 +737,14 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
 
 
-        if (root.findViewById(new Integer(129)) != null) {
-            table.removeView(root.findViewById(new Integer(129)));
-            System.out.println("removed row " + 129);
+        if (root.findViewById(R.integer.vertretung_id) != null) {
+            table.removeView(root.findViewById(R.integer.vertretung_id));
         }
 
 
         TableRow row = new TableRow(context
         );
-        row.setId(new Integer(129));
+        row.setId(R.integer.vertretung_id);
         for (int j = 0; j < 5; j++) {
             TextView tv = new TextView(context
             );
@@ -787,14 +786,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
 
 
-        if (root.findViewById(new Integer(129)) != null) {
-            table.removeView(root.findViewById(new Integer(129)));
-            System.out.println("removed row " + 129);
+        if (root.findViewById(R.integer.vertretung_id) != null) {
+            table.removeView(root.findViewById(R.integer.vertretung_id));
         }
 
 
         TableRow row = new TableRow(context);
-        row.setId(new Integer(129));
+        row.setId(R.integer.vertretung_id);
         for (int j = 0; j < headline.length; j++) {
             TextView tv = new TextView(context
             );
