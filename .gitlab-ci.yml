@@ -10,6 +10,7 @@ variables:
   ANDROID_SDK_TOOLS: "4333796"
 
 before_script:
+  - chmod +x get-updated-badge-info.sh
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
   - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
@@ -42,3 +43,6 @@ debugTests:
   stage: test
   script:
     - ./gradlew -Pci --console=plain :app:testDebug
+
+after_script:
+  - ./get-updated-badge-info.sh
