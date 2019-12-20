@@ -29,7 +29,7 @@
             android:key="hours"
             android:title="@string/set_hours" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="hide_days"
             android:title="@string/set_hide_days" />
         <CheckBoxPreference

@@ -28,7 +28,6 @@ import com.asdoi.gymwen.main.Activities.SignInActivity;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
-import com.novoda.simplechromecustomtabs.SimpleChromeCustomTabs;
 
 import org.acra.ACRA;
 import org.acra.annotation.AcraCore;
@@ -71,7 +70,6 @@ public class ApplicationFeatures extends Application {
         super.onCreate();
         mContext = this;
         ACRA.init(this);
-        SimpleChromeCustomTabs.initialize(this);
     }
 
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.Fragments.ContributionFragment"
-    android:background="@color/cardview_light_background">
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/attribution_textView"

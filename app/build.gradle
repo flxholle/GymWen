@@ -67,7 +67,6 @@ dependencies {
     implementation 'de.cketti.library.changelog:ckchangelog:1.2.2'
     implementation 'ru.github.igla:ferriswheel:1.2'
     implementation 'com.github.IamIsPra:Sheriff:1.0.0'
-    implementation 'com.novoda:simple-chrome-custom-tabs:0.1.6'
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
     implementation 'android.arch.work:work-runtime:1.0.1'
 }
