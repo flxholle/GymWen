@@ -1,5 +1,5 @@
 # GymWen
-<img src="https://img.shields.io/f-droid/v/com.asdoi.gymwen.svg">
+[![License](https://img.shields.io/badge/license-GPL-yellow.svg)](LICENSE)  [![Fdroid](https://img.shields.io/f-droid/v/com.asdoi.gymwen.svg)](F-Droid-Version)
 
 Offizielle App des Gymnasium Wendelstein
 
