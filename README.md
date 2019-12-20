@@ -1,6 +1,8 @@
 # GymWen
+<img src="https://img.shields.io/f-droid/v/com.asdoi.gymwen.svg">
 
 Offizielle App des Gymnasium Wendelstein
+
 
     Copyright (C) 2019 Felix Hollederer
 
