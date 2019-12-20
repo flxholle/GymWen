@@ -22,9 +22,9 @@ import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-import com.asdoi.gymwen.main.ChoiceActivity;
-import com.asdoi.gymwen.main.MainActivity;
-import com.asdoi.gymwen.main.SignInActivity;
+import com.asdoi.gymwen.main.Activities.ChoiceActivity;
+import com.asdoi.gymwen.main.Activities.MainActivity;
+import com.asdoi.gymwen.main.Activities.SignInActivity;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
@@ -49,6 +49,8 @@ import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
@@ -286,6 +288,9 @@ public class ApplicationFeatures extends Application {
 
 
     //Notification
+    final private static int NOTIFICATION_ID = 1;
+    final private static String NOTIFICATION_CHANNEL_ID = "vertretungsplan_01";
+
     public static void proofeNotification() {
         if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
             new ApplicationFeatures.createNotification().execute(true, false);
@@ -308,9 +313,6 @@ public class ApplicationFeatures extends Application {
             createNotification(body);
 
         }
-
-        final private int NOTIFICATION_ID = 1;
-        final private String NOTIFICATION_CHANNEL_ID = "vertretungsplan_01";
 
         private void createNotification(String body) {
             Context context = getContext();
@@ -336,12 +338,15 @@ public class ApplicationFeatures extends Application {
                 //Build notification
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
 
-                notificationBuilder.setAutoCancel(true)
+                notificationBuilder
+                        .setAutoCancel(true)
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setWhen(System.currentTimeMillis())
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                         .setContentTitle(context.getString(R.string.notif_content_title))
-                        .setContentIntent(resultPendingIntent);
+                        .setContentIntent(resultPendingIntent)
+                        .setLargeIcon(getBitmapFromVectorDrawable(R.drawable.ic_stat_assignment_late))
+                        .setSmallIcon(R.drawable.ic_stat_assignment_late);
 
                 if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("alwaysNotification", true)) {
                     notificationBuilder.setOngoing(true);
@@ -362,10 +367,6 @@ public class ApplicationFeatures extends Application {
                     notificationManager.createNotificationChannel(notificationChannel);
                 } else {
                     notificationBuilder.setPriority(Notification.PRIORITY_LOW);
-                }
-
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                    notificationBuilder.setSmallIcon(R.drawable.ic_stat_assignment_late);
                 }
 
                 notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
@@ -420,4 +421,22 @@ public class ApplicationFeatures extends Application {
             return message;
         }
     }
+
+    public static Bitmap getBitmapFromVectorDrawable(int drawableId) {
+        Context context = ApplicationFeatures.getContext();
+        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            drawable = (DrawableCompat.wrap(drawable)).mutate();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
+
 }
