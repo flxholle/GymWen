@@ -242,7 +242,7 @@ public class ApplicationFeatures extends Application {
     }
 
     public static boolean isDateOff() {
-        return getBooleanSettings("hide_days", false);
+        return getBooleanSettings("hide_days", true);
     }
 
     public static boolean isGesamtOff() {
@@ -343,7 +343,7 @@ public class ApplicationFeatures extends Application {
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                         .setContentTitle(context.getString(R.string.notif_content_title))
                         .setContentIntent(resultPendingIntent)
-                        .setLargeIcon(getBitmapFromVectorDrawable(R.drawable.ic_stat_assignment_late))
+//                        .setLargeIcon(getBitmapFromVectorDrawable(R.drawable.ic_stat_assignment_late))
                         .setSmallIcon(R.drawable.ic_stat_assignment_late);
 
                 if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("alwaysNotification", true)) {
