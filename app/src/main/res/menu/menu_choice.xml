@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.asdoi.gymwen.main.ChoiceActivity">
+    tools:context="com.asdoi.gymwen.main.Activities.ChoiceActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

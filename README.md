@@ -1,6 +1,12 @@
 # GymWen
+[![License](https://img.shields.io/badge/license-GPL-yellow.svg)](LICENSE)
+[![Pipeline](https://gitlab.com/asdoi/GymWen/badges/master/pipeline.svg)](Pipeline)
+
+[![Fdroid](https://img.shields.io/f-droid/v/com.asdoi.gymwen.svg)](F-Droid-Version)
+[![Release](https://img.shields.io/badge/dynamic/json.svg?label=Release&url=https://asdoi.gitlab.com/GymWen/raw/master/badge.json&query=commits&colorB=brightgreen)](Tag-Version)
 
 Offizielle App des Gymnasium Wendelstein
+
 
     Copyright (C) 2019 Felix Hollederer
 
