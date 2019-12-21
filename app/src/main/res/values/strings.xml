@@ -62,9 +62,12 @@
     <string name="classes">Klasse</string>
     <string name="courses">Kurs</string>
     <string name="hours">Stunde</string>
+    <string name="hours_short">h</string>
     <string name="subject">Fach</string>
     <string name="teacher">Lehrer</string>
+    <string name="teacher_short">L</string>
     <string name="room">Raum</string>
+    <string name="room_short">R</string>
     <string name="other">Sonstiges</string>
 
     <!-- Sign In -->
