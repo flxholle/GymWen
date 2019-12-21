@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -27,10 +31,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private static View root;
@@ -284,9 +284,12 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 inhalt = VertretungsPlanFeatures.getTomorrowArray();
                 title = VertretungsPlanFeatures.getTomorrowTitle();
             }
+            generateTableSpecific();
         }
     }
 
+    void generateHeadline() {
+    }
 
     void generateTableAll() {
         TextView title = createTitleLayout();
@@ -325,6 +328,48 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
             vertretungListView = new ListView(context);
             vertretungListView.setAdapter(new VertretungListAdapterAll(getContext(), 0, inhalt));
+            vertretungListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            base.addView(vertretungListView);
+        }
+    }
+
+    void generateTableSpecific() {
+        TextView title = createTitleLayout();
+        title.setText(getContext().getString(R.string.noInternetConnection));
+        ViewGroup base = root.findViewById(R.id.vertretung_linear_layout_layer1);
+        base.addView(title);
+
+        if (inhalt != null) {
+            if (inhalt.length == 0) {
+                TextView tv = new TextView(context
+                );
+                tv.setText(context.getString(R.string.nothing));
+                tv.setTextSize(20);
+                tv.setTypeface(Typeface.DEFAULT_BOLD);
+                tv.setGravity(Gravity.CENTER);
+                base.addView(tv);
+                return;
+            }
+
+            String[] headline;
+            if (all) {
+                headline = new String[]{context.getString(R.string.classes), context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), context.getString(R.string.other)};
+            } else if (oberstufe) {
+                headline = new String[]{context.getString(R.string.hours), context.getString(R.string.courses), context.getString(R.string.teacher), context.getString(R.string.room), context.getString(R.string.other), context.getString(R.string.subject)};
+            } else {
+                headline = new String[]{context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), context.getString(R.string.other), context.getString(R.string.classes)};
+            }
+
+            ViewGroup teacherEntry = new LinearLayout(context);
+            ViewStub viewStub = new ViewStub(context);
+            viewStub.setLayoutResource(R.layout.list_vertretung_all_entry);
+            teacherEntry.addView(viewStub);
+            viewStub.inflate();
+            teacherEntry = (ViewGroup) (getEntryAll(teacherEntry, headline));
+            base.addView(teacherEntry);
+
+            vertretungListView = new ListView(context);
+            vertretungListView.setAdapter(new VertretungListAdapterSpecific(getContext(), 0, inhalt));
             vertretungListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             base.addView(vertretungListView);
         }
@@ -424,19 +469,19 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView subject = view.findViewById(R.id.vertretung_specific_entry_textViewSubject);
         subject.setText(oberstufe ? entry[0] : entry[2]);
 
-        TextView teacher = view.findViewById(R.id.vertretung_all_entry_textViewTeacher);
+        TextView teacher = view.findViewById(R.id.vertretung_specific_entry_textViewTeacher);
         teacher.setText(entry[3]);
 
-        TextView room = view.findViewById(R.id.vertretung_all_entry_textViewRoom);
+        TextView room = view.findViewById(R.id.vertretung_specific_entry_textViewRoom);
         SpannableString content = new SpannableString(entry[4]);
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         room.setText(content);
         teacherClick(room, entry[4], !ApplicationFeatures.getBooleanSettings("show_borders", true));
 
-        TextView other = view.findViewById(R.id.vertretung_all_entry_textViewOther);
+        TextView other = view.findViewById(R.id.vertretung_specific_entry_textViewOther);
         other.setText(entry[5]);
 
-        TextView course = view.findViewById(R.id.vertretung_all_entry_textViewCourse);
+        TextView course = view.findViewById(R.id.vertretung_specific_entry_textViewClass);
         course.setText(oberstufe ? entry[2] : entry[0]);
 
         return view;

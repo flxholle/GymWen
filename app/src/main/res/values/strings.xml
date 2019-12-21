@@ -2,7 +2,6 @@
     <string name="app_name">GymWen</string>
     <string name="title">Gymnasium Wendelstein</string>
     <string name="subtitle">Offizielle App\n© 2019 Felix Hollederer</string>
-    <string name="copyright">© 2019 Felix Hollederer</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -22,7 +21,6 @@
     <string name="menu_update">Updates</string>
     <string name="menu_changelog">Änderungen</string>
     <string name="menu_shop">Online Shop</string>
-    <string name="menu_about_author">Support</string>
     <string name="menu_teacher_list">Lehrerliste</string>
     <string name="menu_notes">Notizen</string>
     <string name="menu_timetable">Stundenplan</string>
@@ -36,10 +34,8 @@
     <!-- Settings -->
     <string name="title_activity_settings">Einstellungen</string>
     <string name="set_vertretung_title">Vertretungsplan</string>
-    <string name="set_oberstufe">Oberstufenschüler</string>
     <string name="set_courses_title">Kurse/Klasse</string>
     <string name="set_courses_summary">Einzelne Kurse mit einem # zwischen den Kursen trennen, z.B. 1ph3#1d4#1bio2</string>
-    <string name="set_courses_defaulValue">1ph3#1d4#1bio2</string>
     <string name="set_vertretung_signin">Anmeldedaten</string>
     <string name="set_vertretung_username">Benutzername:</string>
     <string name="set_vertretung_password">Passwort:</string>
@@ -56,7 +52,6 @@
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
-    <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="back_button">Erneut drücken zum Beenden</string>
     <string name="downloading">Lädt\u2026</string>
     <string name="footprint">Diese Nachricht wurde mit der GymWen App erzeugt.</string>
@@ -201,8 +196,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="update_not_available_content">Du hast bereits die neueste Version installiert.</string>
     <string name="update_now">Jetzt herunterladen</string>
     <string name="update_later">Später</string>
-    <string name="update_never">Nicht erneut anzeigen</string>
-    <string name="update_website">Website anzeigen</string>
     <string name="update_down_title">Lädt Update herunter\u2026</string>
 
     <!-- Acra -->
@@ -228,10 +221,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="permission_cancel_button">Abbrechen</string>
 
     <!-- Downloader -->
-    <string name="down_permission_denied">Berechtigung verweigert</string>
 
     <!-- Lehrerliste -->
-    <string name="teacher_title_activity_leherliste">Lehrerliste</string>
     <string name="no_email_app">Du hast keine E-Mail App installiert</string>
     <string name="teacher_no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
     <string name="teacher_search_teacher_list">Durchsuchen\u2026</string>
