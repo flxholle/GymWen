@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".main.SignInActivity"
+    tools:context=".main.Activities.SignInActivity"
     tools:showIn="@layout/activity_sign_in">
 
     <LinearLayout
@@ -48,30 +48,41 @@
             android:gravity="center"
             android:text="@string/login_description" />
 
-        <EditText
-            android:id="@+id/signin_username"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="24dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="24dp"
-            android:hint="@string/username_hint"
-            android:inputType="textEmailAddress"
-            android:selectAllOnFocus="true" />
+            android:layout_marginEnd="24dp">
 
-        <EditText
-            android:id="@+id/signin_password"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signin_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username_hint"
+                android:inputType="textEmailAddress"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
-            android:hint="@string/password_hint"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:selectAllOnFocus="true" />
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signin_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/signin_login"
@@ -83,6 +94,7 @@
             android:layout_marginEnd="48dp"
             android:layout_marginBottom="16dp"
             android:enabled="false"
+            android:imeOptions="actionDone"
             android:text="@string/login_sign_in" />
 
         <LinearLayout

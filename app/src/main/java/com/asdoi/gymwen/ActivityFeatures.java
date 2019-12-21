@@ -9,12 +9,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -27,7 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.asdoi.gymwen.main.MainActivity;
+import com.asdoi.gymwen.main.Activities.MainActivity;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
 import com.github.javiersantos.appupdater.enums.AppUpdaterError;
@@ -35,9 +37,11 @@ import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
 import com.google.android.material.snackbar.Snackbar;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +49,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 import de.cketti.library.changelog.ChangeLog;
 import info.isuru.sheriff.enums.SheriffPermission;
 import info.isuru.sheriff.helper.Sheriff;
@@ -54,7 +63,7 @@ import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
 
-public class ActivityFeatures extends AppCompatActivity implements PermissionListener {
+public class ActivityFeatures extends AppCompatActivity implements PermissionListener, TimePickerDialog.OnTimeSetListener {
     public Context getContext() {
         return this;
     }
@@ -388,4 +397,74 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(intent);
     }
+
+
+    //Time picker
+    public class NotifyWork extends Worker {
+
+        public NotifyWork(@NonNull Context context, @NonNull WorkerParameters params) {
+            super(context, params);
+        }
+
+
+        @Override
+        public Result doWork() {
+            ApplicationFeatures.proofeNotification();
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            int time = sharedPref.getInt("notif_time", 0);
+            Calendar calendar = Calendar.getInstance();
+            System.out.println("Seconds in current minute = " + calendar.get(Calendar.SECOND));
+
+            int currentTime = time - getCurrentTimeInSeconds();
+            scheduleNotification(currentTime);
+            return Result.success();
+        }
+    }
+
+    @Override
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        int time = hourOfDay * 3600 + minute * 60 + second;
+        System.out.println("You picked the following time: " + hourOfDay + "h" + minute + "m" + second);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("notif_time", time);
+        editor.apply();
+
+        int currentTimeDelay = time - getCurrentTimeInSeconds();
+        scheduleNotification(currentTimeDelay);
+    }
+
+    public void createTimePicker() {
+        Calendar now = Calendar.getInstance();
+
+        TimePickerDialog tpd = TimePickerDialog.newInstance(
+                this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                true
+        );
+        tpd.setTitle("Pick a time");
+        tpd.show(getSupportFragmentManager(), "Timepickerdialog");
+    }
+
+    private static final String NOTIFICATION_WORK = "notif_work";
+
+    public void scheduleNotification(long timeInSeconds) {
+        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotifyWork.class)/*.setInitialDelay(timeInSeconds, TimeUnit.SECONDS)*/.build();
+        WorkManager.getInstance().beginUniqueWork(NOTIFICATION_WORK, ExistingWorkPolicy.REPLACE, notificationWork).enqueue();
+//        WorkManager.getInstance().enqueue(notificationWork);
+
+//        PeriodicWorkRequest notificationWork = new PeriodicWorkRequest.Builder(NotifyWork.class, timeInSeconds, TimeUnit.SECONDS).build();
+//        WorkManager.getInstance(this).enqueue(notificationWork);
+    }
+
+    public static int getCurrentTimeInSeconds() {
+        Calendar calendar = Calendar.getInstance();
+        int time = calendar.get(Calendar.SECOND);
+        time += calendar.get(Calendar.MINUTE) * 60;
+        time += calendar.get(Calendar.HOUR_OF_DAY) * 3600;
+        return time;
+    }
+
 }

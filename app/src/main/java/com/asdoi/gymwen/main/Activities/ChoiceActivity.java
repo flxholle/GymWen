@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main;
+package com.asdoi.gymwen.main.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +20,7 @@ public class ChoiceActivity extends ActivityFeatures {
 
     public static String courses = "";
     public static boolean parents = false;
-    public static  String courseFirstDigit = "";
+    public static String courseFirstDigit = "";
     public static String courseMainDigit = "";
 
     private FloatingActionButton fab;
@@ -54,19 +54,19 @@ public class ChoiceActivity extends ActivityFeatures {
         parents = value;
     }
 
-    public void setCourseFirstDigit(String value){
+    public void setCourseFirstDigit(String value) {
         courseFirstDigit = value;
     }
 
-    public String getCourseFirstDigit(){
+    public String getCourseFirstDigit() {
         return courseFirstDigit;
     }
 
-    public void setCourseMainDigit(String value){
+    public void setCourseMainDigit(String value) {
         courseMainDigit = value;
     }
 
-    public String getCourseMainDigit(){
+    public String getCourseMainDigit() {
         return courseMainDigit;
     }
 
@@ -92,7 +92,7 @@ public class ChoiceActivity extends ActivityFeatures {
     }
 
 
-    private void setSettings(){
+    private void setSettings() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         VertretungsPlanFeatures.setup(false, courses.split("#"));
 

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -32,6 +33,7 @@ import androidx.fragment.app.Fragment;
 public class LehrerlisteFragment extends Fragment {
     private static String[][] teacherList;
     private ViewGroup base;
+    private ListView teacherListView;
 
 
     public LehrerlisteFragment() {
@@ -79,23 +81,13 @@ public class LehrerlisteFragment extends Fragment {
 
             base2.addView(createSearchLayout(), 0);
             base.addView(base2);
-            createList();
+
+            teacherListView = new ListView(getContext());
+            teacherListView.setAdapter(new TeacherListAdapter(getContext(), 0));
+            teacherListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            base.addView(teacherListView);
 
         });
-    }
-
-    private void createList() {
-        try {
-            //Remove if already visible
-            ListView t = base.findViewById(R.integer.teacher_list_id);
-            base.removeView(t);
-        } catch (Exception e) {
-        }
-        ListView teacherListView = new ListView(getContext());
-        teacherListView.setAdapter(new TeacherListAdapter(getContext(), 0));
-        teacherListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        teacherListView.setId(R.integer.teacher_list_id);
-        base.addView(teacherListView);
     }
 
     private void clear() {
@@ -141,7 +133,7 @@ public class LehrerlisteFragment extends Fragment {
                         teacherList = Lehrerliste.liste();
                     }
                     before = charSequence.toString();
-                    createList();
+                    ((BaseAdapter) teacherListView.getAdapter()).notifyDataSetChanged();
                 }
             }
 

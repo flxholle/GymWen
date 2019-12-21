@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
+        version="1.0.5"
+        versioncode="105">
+        <change>Passwortverbergen beim Anmelden</change>
+        <change>Optimierungen</change>
+    </release>
+    <release
         version="1.0.4"
         versioncode="104">
         <change>Klickbare Lehrerkürzel</change>

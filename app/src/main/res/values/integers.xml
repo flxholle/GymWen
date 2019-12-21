@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="vertretung_id">2000</integer>
+    <integer name="vertretung_teacher_view_id">3000</integer>
     <integer name="teacher_list_id">2500</integer>
-    <integer name="vertertung_teacher_id">1500</integer>
+    <string name="loading_tag">loading</string>
 </resources>
