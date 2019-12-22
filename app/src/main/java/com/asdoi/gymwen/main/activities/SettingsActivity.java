@@ -1,18 +1,18 @@
-package com.asdoi.gymwen.main.Activities;
+package com.asdoi.gymwen.main.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 
 public class SettingsActivity extends ActivityFeatures {
 

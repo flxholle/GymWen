@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.asdoi.gymwen.main.Activities.WebsiteActivity">
+    tools:context="com.asdoi.gymwen.main.activities.WebsiteActivity">
     <item
         android:id="@+id/action_open_in_browser"
         android:orderInCategory="100"

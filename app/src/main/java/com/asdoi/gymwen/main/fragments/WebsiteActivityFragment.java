@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main.Fragments;
+package com.asdoi.gymwen.main.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.Activities.WebsiteActivity;
-
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.activities.WebsiteActivity;
 
 /**
  * A placeholder fragment containing a simple view.

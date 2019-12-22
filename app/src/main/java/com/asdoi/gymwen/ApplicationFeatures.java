@@ -19,12 +19,20 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-import com.asdoi.gymwen.main.Activities.ChoiceActivity;
-import com.asdoi.gymwen.main.Activities.MainActivity;
-import com.asdoi.gymwen.main.Activities.SignInActivity;
+import com.asdoi.gymwen.main.activities.ChoiceActivity;
+import com.asdoi.gymwen.main.activities.MainActivity;
+import com.asdoi.gymwen.main.activities.SignInActivity;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
@@ -44,13 +52,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
 @AcraMailSender(mailTo = "GymWenApp@t-online.de")
@@ -62,6 +63,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 
 public class ApplicationFeatures extends Application {
+    public static final int vertretung_teacher_view_id = View.generateViewId();
     private static Context mContext;
     public static ArrayList<String> websiteHistorySaveInstance;
 

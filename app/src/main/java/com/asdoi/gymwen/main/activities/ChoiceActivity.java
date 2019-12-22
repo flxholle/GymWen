@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main.Activities;
+package com.asdoi.gymwen.main.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,15 +6,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.Fragments.ChoiceActivityFragment;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.fragments.ChoiceActivityFragment;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ChoiceActivity extends ActivityFeatures {
 
