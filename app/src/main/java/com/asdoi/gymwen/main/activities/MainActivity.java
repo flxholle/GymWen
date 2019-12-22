@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main.Activities;
+package com.asdoi.gymwen.main.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -9,15 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.Fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.main.Fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -30,6 +21,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.fragments.LehrerlisteFragment;
+import com.asdoi.gymwen.main.fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -314,11 +314,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     public void onBackPressed() {
         //If teacher is clicked
-        if (findViewById(R.integer.vertretung_teacher_view_id) != null) {
+        if (findViewById(ApplicationFeatures.vertretung_teacher_view_id) != null) {
             try {
-                ((ViewGroup) findViewById(R.integer.vertretung_teacher_view_id).getParent()).removeView(findViewById(R.integer.vertretung_teacher_view_id));
+                ((ViewGroup) findViewById(ApplicationFeatures.vertretung_teacher_view_id).getParent()).removeView(findViewById(ApplicationFeatures.vertretung_teacher_view_id));
             } catch (NullPointerException e) {
-                findViewById(R.integer.vertretung_teacher_view_id).setVisibility(View.GONE);
+                findViewById(ApplicationFeatures.vertretung_teacher_view_id).setVisibility(View.GONE);
             }
             return;
         }

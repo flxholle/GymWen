@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".main.Activities.MainActivity"
+            android:name=".main.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
@@ -30,16 +30,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.Activities.SignInActivity"
+            android:name=".main.activities.SignInActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_sign_in"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".main.Activities.ImpressumActivity"
+            android:name=".main.activities.ImpressumActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/impressum_headline" />
         <activity
-            android:name=".main.Activities.WebsiteActivity"
+            android:name=".main.activities.WebsiteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
@@ -55,12 +55,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.Activities.ChoiceActivity"
+            android:name=".main.activities.ChoiceActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_choice"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".main.Activities.SettingsActivity"
+            android:name=".main.activities.SettingsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_settings" />
 

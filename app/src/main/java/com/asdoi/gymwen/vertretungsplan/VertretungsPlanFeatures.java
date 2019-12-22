@@ -117,7 +117,7 @@ public abstract class VertretungsPlanFeatures {
 //        vertretungsplan.getDocumentsFromSettings();
     }
 
-    public static ArrayList getNames() {
+    public static ArrayList<String> getNames() {
         return vertretungsplan.getCourses();
     }
 }

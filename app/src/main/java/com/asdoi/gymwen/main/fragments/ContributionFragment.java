@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main.Fragments;
+package com.asdoi.gymwen.main.fragments;
 
 
 import android.os.Bundle;
@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.asdoi.gymwen.R;
-
 import androidx.fragment.app.Fragment;
+
+import com.asdoi.gymwen.R;
 
 /**
  * A simple {@link Fragment} subclass.

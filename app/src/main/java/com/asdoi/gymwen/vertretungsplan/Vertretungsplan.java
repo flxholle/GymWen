@@ -250,7 +250,7 @@ class Vertretungsplan {
 
 
     //Courses
-    public ArrayList getCourses() {
+    public ArrayList<String> getCourses() {
         return courses;
     }
 

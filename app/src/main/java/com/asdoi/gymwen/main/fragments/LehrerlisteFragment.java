@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main.Fragments;
+package com.asdoi.gymwen.main.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,13 +19,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.

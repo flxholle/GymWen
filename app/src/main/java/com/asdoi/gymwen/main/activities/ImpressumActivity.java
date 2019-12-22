@@ -1,17 +1,17 @@
-package com.asdoi.gymwen.main.Activities;
+package com.asdoi.gymwen.main.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.Fragments.ContributionFragment;
-import com.asdoi.gymwen.main.Fragments.ImpressumFragment;
+import com.asdoi.gymwen.main.fragments.ContributionFragment;
+import com.asdoi.gymwen.main.fragments.ImpressumFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
-
-import androidx.fragment.app.FragmentManager;
 
 public class ImpressumActivity extends ActivityFeatures implements View.OnClickListener {
 

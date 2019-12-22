@@ -30,9 +30,9 @@ android {
 }
 
 allprojects {
-    /*tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:deprecation"
-    }*/
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked"
+    }
 }
 
 def acraVersion = '5.3.0'
