@@ -3,6 +3,9 @@
     <release
         version="1.0.5"
         versioncode="105">
+        <change>Neue Ansicht im Vertretungsplan (altes Design in den Einstellungen reaktivierbar)
+        </change>
+        <change>Aufnahme in F-Droid</change>
         <change>Passwortverbergen beim Anmelden</change>
         <change>Optimierungen</change>
     </release>

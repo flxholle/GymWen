@@ -44,6 +44,10 @@
             android:defaultValue="true"
             android:key="show_border_specific"
             android:title="@string/set_show_borders_specific" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="old_vertretung"
+            android:title="@string/set_old_vertretung" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/set_notification_title">

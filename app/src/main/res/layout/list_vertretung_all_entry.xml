@@ -11,9 +11,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:gravity="center"
-        android:text="Klasse"
+        android:text="10ceSm"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -25,7 +25,7 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Stunde"
+        android:text="9"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -35,9 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center"
-        android:text="Fach"
+        android:text="Aufs"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -47,9 +47,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center"
-        android:text="Lehrer"
+        android:text="SOM"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -59,9 +59,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center"
-        android:text="Raum"
+        android:text="E104"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -70,10 +70,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:gravity="center"
-        android:text="Sonstiges"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:text="Gottesdienst"
+        android:textSize="16sp" />
 
 </LinearLayout>
