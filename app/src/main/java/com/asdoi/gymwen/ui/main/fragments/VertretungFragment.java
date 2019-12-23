@@ -125,18 +125,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         context = getContext();
         root = inflater.inflate(R.layout.fragment_vertretung, container, false);
 
-        //Set Fab
-       /* FloatingActionButton fab = getActivity().findViewById(R.id.main_fab);
-        if (all) {
-            fab.setEnabled(false);
-            fab.setVisibility(View.GONE);
-        } else {
-            fab.setEnabled(true);
-            fab.bringToFront();
-            fab.setVisibility(View.VISIBLE);
-        }
-        fab.setOnClickListener(this);*/
-
         //Loading Pabel
         ActivityFeatures.createLoadingPanel(root.findViewById(R.id.vertretung_frame));
 
@@ -148,7 +136,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         new Thread(() -> {
             ApplicationFeatures.downloadVertretungsplanDocs(false, true);
             getActivity().runOnUiThread(() -> {
-                if (ApplicationFeatures.getBooleanSettings("old_vertretung", false))
+                if (ApplicationFeatures.isOld())
                     setTableParams();
                 else
                     generateTable();

@@ -49,10 +49,6 @@ public class LehrerlisteFragment extends Fragment {
         base = root.findViewById(R.id.teacher_list_base);
         ActivityFeatures.createLoadingPanel(base);
 
-        /*FloatingActionButton fab = getActivity().findViewById(R.id.main_fab);
-        fab.setVisibility(View.GONE);
-        fab.setEnabled(false);*/
-
         new Thread(() -> {
             ApplicationFeatures.downloadLehrerDoc();
             teacherList = Lehrerliste.liste();
