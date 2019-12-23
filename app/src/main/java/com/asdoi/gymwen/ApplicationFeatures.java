@@ -22,18 +22,11 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-import com.asdoi.gymwen.main.activities.ChoiceActivity;
-import com.asdoi.gymwen.main.activities.MainActivity;
-import com.asdoi.gymwen.main.activities.SignInActivity;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
+import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
+import com.asdoi.gymwen.ui.main.activities.MainActivity;
+import com.asdoi.gymwen.ui.main.activities.SignInActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
 
@@ -51,6 +44,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
