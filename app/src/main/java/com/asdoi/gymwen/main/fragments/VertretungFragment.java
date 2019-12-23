@@ -14,14 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ArrayAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -33,6 +32,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private View root;
@@ -84,7 +87,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         new Thread(() -> {
             ApplicationFeatures.downloadVertretungsplanDocs(false, true);
             getActivity().runOnUiThread(() -> {
-                generateTable();
+                if (ApplicationFeatures.getBooleanSettings("old_vertretung", false))
+                    setTableParams();
+                else
+                    generateTable();
             });
         }).start();
     }
@@ -271,6 +277,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         clear();
 
         oberstufe = VertretungsPlanFeatures.getOberstufe();
+
         if (both) {
             inhalt = VertretungsPlanFeatures.getTodayArray();
             title = VertretungsPlanFeatures.getTodayTitle();
@@ -279,11 +286,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             generateTop();
             generateTableSpecific();
 
-            inhalt = VertretungsPlanFeatures.getTomorrowArray();
-            title = VertretungsPlanFeatures.getTomorrowTitle();
-            sonstiges = isSonstiges();
-            generateTop();
-            generateTableSpecific();
+            if (inhalt != null) {
+                inhalt = VertretungsPlanFeatures.getTomorrowArray();
+                title = VertretungsPlanFeatures.getTomorrowTitle();
+                sonstiges = isSonstiges();
+                generateTop();
+                generateTableSpecific();
+            }
         } else if (all) {
             if (today) {
                 inhalt = VertretungsPlanFeatures.getTodayArrayAll();
@@ -378,6 +387,21 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
 
     //Body
+    void generateTableAll() {
+        ViewGroup base = root.findViewById(R.id.vertretung_linear_layout_layer1);
+
+        if (inhalt != null && inhalt.length > 0) {
+            //Overview
+            base.addView(generateOverviewAll());
+
+            //Content
+            vertretungListView = new ListView(context);
+            vertretungListView.setAdapter(new VertretungListAdapterAll(getContext(), 0, inhalt, sonstiges));
+            vertretungListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            base.addView(vertretungListView);
+        }
+    }
+
     View generateOverviewAll() {
         String[] headline = generateHeadline();
         LinearLayout base = new LinearLayout(context);
@@ -390,13 +414,16 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
             switch (i) {
                 case 0:
-                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2);
-                    break;
-                case 5:
                     params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
                     break;
-                default:
+                case 1:
                     params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+                    break;
+                case 5:
+                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 4);
+                    break;
+                default:
+                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2);
             }
 
             TextView hour = createBlankTextView();
@@ -409,16 +436,16 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return base;
     }
 
-    void generateTableAll() {
+    void generateTableSpecific() {
         ViewGroup base = root.findViewById(R.id.vertretung_linear_layout_layer1);
 
         if (inhalt != null && inhalt.length > 0) {
             //Overview
-            base.addView(generateOverviewAll());
+            base.addView(generateOverviewSpecific());
 
             //Content
             vertretungListView = new ListView(context);
-            vertretungListView.setAdapter(new VertretungListAdapterAll(getContext(), 0, inhalt));
+            vertretungListView.setAdapter(new VertretungListAdapterSpecific(getContext(), 0, inhalt, sonstiges));
             vertretungListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             base.addView(vertretungListView);
         }
@@ -438,19 +465,20 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         hour.setText(headline[0]);
         base.addView(hour);
 
-        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2);
         params.setMargins(3, 3, 3, 3);
         TextView subject = createBlankTextView();
         subject.setLayoutParams(params);
         subject.setText(headline[1]);
         base.addView(subject);
 
+        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2);
         TextView teacher = createBlankTextView();
         teacher.setLayoutParams(params);
         teacher.setText(headline[2]);
         base.addView(teacher);
 
-        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2);
+        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
         params.setMargins(3, 3, 3, 3);
         TextView room = createBlankTextView();
         room.setLayoutParams(params);
@@ -469,9 +497,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         params.setMargins(3, 3, 3, 3);
         TextView course = createBlankTextView();
-        course.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        course.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         course.setLayoutParams(params);
         course.setText(headline[5]);
+        course.setGravity(Gravity.CENTER_VERTICAL);
         base.addView(course);
 
         return base;
@@ -483,21 +512,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         hour.setGravity(Gravity.CENTER);
         return hour;
-    }
-
-    void generateTableSpecific() {
-        ViewGroup base = root.findViewById(R.id.vertretung_linear_layout_layer1);
-
-        if (inhalt != null && inhalt.length > 0) {
-            //Overview
-            base.addView(generateOverviewSpecific());
-
-            //Content
-            vertretungListView = new ListView(context);
-            vertretungListView.setAdapter(new VertretungListAdapterSpecific(getContext(), 0, inhalt));
-            vertretungListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            base.addView(vertretungListView);
-        }
     }
 
     void generateScrollView() {
@@ -518,10 +532,12 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     //All ListView
     private class VertretungListAdapterAll extends ArrayAdapter<String[]> {
         String[][] content;
+        boolean sons;
 
-        public VertretungListAdapterAll(Context con, int resource, String[][] content) {
+        public VertretungListAdapterAll(Context con, int resource, String[][] content, boolean sons) {
             super(con, resource);
             this.content = content;
+            this.sons = sons;
         }
 
         @Override
@@ -529,7 +545,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_vertretung_all_entry, null);
             }
-            return getEntryAll(convertView, content[position]);
+            return getEntryAll(convertView, content[position], sons);
         }
 
         @Override
@@ -538,7 +554,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    private View getEntryAll(View view, String[] entry) {
+    private View getEntryAll(View view, String[] entry, boolean sonstiges) {
         TextView course = view.findViewById(R.id.vertretung_all_entry_textViewCourse);
         course.setText(entry[0]);
 
@@ -569,10 +585,12 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     //Specific ListView
     private class VertretungListAdapterSpecific extends ArrayAdapter<String[]> {
         String[][] content;
+        boolean sons;
 
-        public VertretungListAdapterSpecific(Context con, int resource, String[][] content) {
+        public VertretungListAdapterSpecific(Context con, int resource, String[][] content, boolean sons) {
             super(con, resource);
             this.content = content;
+            this.sons = sons;
         }
 
         @Override
@@ -580,7 +598,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_vertretung_specific_entry, null);
             }
-            return getEntrySpecific(convertView, content[position], oberstufe);
+            return getEntrySpecific(convertView, content[position], oberstufe, sons);
         }
 
         @Override
@@ -590,7 +608,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     }
 
-    private View getEntrySpecific(View view, String[] entry, boolean oberstufe) {
+    private View getEntrySpecific(View view, String[] entry, boolean oberstufe, boolean sonstiges) {
         TextView hour = view.findViewById(R.id.vertretung_specific_entry_textViewHour);
         hour.setText(entry[1]);
 
@@ -619,19 +637,17 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     }
 
 
-
-
-
-
-
-
-    /*void setTableParams() {
+    //Old TableCreation
+    void setTableParams() {
         clear();
 
         if (both)
             generateScrollView();
 
+        LinearLayout base = root.findViewById(R.id.vertretung_linear_layout_layer1);
+
         TextView titleView = createTitleLayout();
+        base.addView(titleView);
         TableLayout table = createTableLayout();
 
         oberstufe = VertretungsPlanFeatures.getOberstufe();
@@ -644,8 +660,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
             if (inhalt != null) {
                 titleView = createTitleLayout();
+                base.addView(titleView);
                 table = createTableLayout();
-
 
                 inhalt = VertretungsPlanFeatures.getTomorrowArray();
                 title = VertretungsPlanFeatures.getTomorrowTitle();
@@ -673,10 +689,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             generateTableSpecific(table);
             setTitle(titleView);
         }
-    }*/
-
-    /*
-
+    }
 
     TableLayout createTableLayout() {
         TableLayout table = new TableLayout(context);
@@ -701,26 +714,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return table;
     }
 
-    TextView createTitleLayout() {
-        TextView textView = new TextView(context);
-        textView.setTextColor(Color.BLACK);
-        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-//            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,(int) root.getResources().getDimension(R.dimen.headline_size));
-        textView.setGravity(Gravity.CENTER);
-        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        ((LinearLayout) root.findViewById(R.id.vertretung_linear_layout_layer1)).addView(textView);
-        return textView;
-    }
-
     void generateTableNormal(TableLayout table) {
-//            for (int i = 0; i < table.getChildCount(); i++) {
-//                if (root.findViewById(i + 130) != null) {
-//                    table.removeView((TableRow) root.findViewById(i + 130));
-//                    System.out.println("removed row " + i);
-//                }
-//            }
-
         if (inhalt == null) {
             return;
         }
@@ -742,16 +736,11 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             TableRow row = new TableRow(context);
             row.setId(i + 130);
 
-                *//*Button bt = new Button(context
-                );
-                bt.setText(inhalt[i][0]);
-                bt.setTypeface(Typeface.DEFAULT_BOLD);
-                bt.setGravity(Gravity.CENTER);
-                row.addView(bt);*//*
-
-
             for (int j = 0; j < columnNumber; j++) {
                 TextView tv = new TextView(context);
+                TableRow.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(3, 0, 3, 0);
+                tv.setLayoutParams(params);
                 tv.setText(inhalt[i][j]);
                 tv.setTextSize(18);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
@@ -1081,14 +1070,14 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
 
 
-        if (root.findViewById(R.integer.vertretung_teacher_view_id) != null) {
-            table.removeView(root.findViewById(R.integer.vertretung_teacher_view_id));
+        if (root.findViewById(ApplicationFeatures.vertretung_teacher_view_id) != null) {
+            table.removeView(root.findViewById(ApplicationFeatures.vertretung_teacher_view_id));
         }
 
 
         TableRow row = new TableRow(context
         );
-        row.setId(R.integer.vertretung_teacher_view_id);
+        row.setId(ApplicationFeatures.vertretung_teacher_view_id);
         for (int j = 0; j < 5; j++) {
             TextView tv = new TextView(context
             );
@@ -1130,13 +1119,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
 
 
-        if (root.findViewById(R.integer.vertretung_teacher_view_id) != null) {
-            table.removeView(root.findViewById(R.integer.vertretung_teacher_view_id));
+        if (root.findViewById(ApplicationFeatures.vertretung_teacher_view_id) != null) {
+            table.removeView(root.findViewById(ApplicationFeatures.vertretung_teacher_view_id));
         }
 
 
         TableRow row = new TableRow(context);
-        row.setId(R.integer.vertretung_teacher_view_id);
+        row.setId(ApplicationFeatures.vertretung_teacher_view_id);
         for (int j = 0; j < headline.length; j++) {
             TextView tv = new TextView(context
             );
@@ -1152,10 +1141,4 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     void setTitle(TextView tV) {
         tV.setText(title);
     }
-
-    public void clear() {
-        ((ViewGroup) root.findViewById(R.id.vertretung_frame)).removeView(root.findViewWithTag("vertretung_loading"));
-        LinearLayout base = root.findViewById(R.id.vertretung_linear_layout_layer1);
-        base.removeAllViews();
-    }*/
 }

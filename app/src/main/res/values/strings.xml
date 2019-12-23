@@ -14,8 +14,9 @@
     <string name="menu_mebis">Mebis</string>
     <string name="menu_mensa">Mensa (kitafino)</string>
     <string name="menu_all_classes_tomorrow">Morgen (gesamt)</string>
-    <string name="menu_category_other">Diverses</string>
+    <string name="menu_category_other">Diverse Apps</string>
     <string name="menu_category_school">Gymnasium</string>
+    <string name="menu_category_settings">Einstellungen</string>
     <string name="menu_both">Auf einen Blick!</string>
     <string name="menu_impressum">Impressum</string>
     <string name="menu_update">Updates</string>
@@ -49,6 +50,7 @@
     <string name="set_beta_features">Beta-Features</string>
     <string name="set_hide_days">Einzelne Tage verbergen</string>
     <string name="set_hide_gesamt">Gesamte Tage verbergen</string>
+    <string name="set_old_vertretung">Altes Design</string>
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
@@ -154,26 +156,26 @@
     <!-- Impressum -->
     <string name="impressum_headline">Impressum</string>
     <string name="impressum_AboutLibs_Title">Open-Source Bibliotheken</string>
-    <string name="privacy"><![CDATA[<h1>Datenschutzerklärung</h1>\nDie offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.\n
-        D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.\n
-        Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.\n
+    <string name="privacy"><![CDATA[<h1>Datenschutzerklärung</h1><br>Die offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.<br>
+        D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.<br>
+        Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.<br>
         Außerdem werden ausschließlich schon bereits genutzte Datenbanken der Schule verwendet.
-        \nBei Absturzberichten muss jedoch beachtet werden, dass mir diverse Informationen übermittelt werden:
-        \n - Version der App
-        \n - Datum und Uhrzeit des Absturzes
-        \n - Geräteinformationen wie Modell, Hersteller usw. (keine Seriennummer / IMEI)
-        \n - Betriebssystem-Version
-        \n - Stack-Trace zu dem Absturz]]></string>
-    <string name="license"><![CDATA[<h1>Lizenz</h1>\n
-    Copyright © 2019 Felix Hollederer\n
+        <br>Bei Absturzberichten muss jedoch beachtet werden, dass mir diverse Informationen übermittelt werden:
+        <br> - Version der App
+        <br> - Datum und Uhrzeit des Absturzes
+        <br> - Geräteinformationen wie Modell, Hersteller usw. (keine Seriennummer / IMEI)
+        <br> - Betriebssystem-Version
+        <br> - Stack-Trace zu dem Absturz]]></string>
+    <string name="license"><![CDATA[<h1>Lizenz</h1><br>
+    Copyright © 2019 Felix Hollederer<br>
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.\n
+(at your option) any later version.<br>
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.\n
+GNU General Public License for more details.<br>
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="impressum_online_impressum">GymWen Impressum</string>
@@ -239,5 +241,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
         <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
         <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
         <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 
 </resources>

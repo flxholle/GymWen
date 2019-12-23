@@ -28,9 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center"
-        android:text="D"
+        android:text="Aufs"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -40,9 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center"
-        android:text="PET"
+        android:text="SOM"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:gravity="center"
         android:text="E104"
         android:textColor="@color/colorAccent"
@@ -65,10 +65,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:gravity="center"
         android:text="Gottesdienst"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
@@ -78,9 +78,8 @@
         android:layout_marginStart="3dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="5b"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        android:text="10ceSm"
+        android:textSize="12sp" />
 
 
 </LinearLayout>

@@ -10,6 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.main.fragments.LehrerlisteFragment;
+import com.asdoi.gymwen.main.fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.navigation.NavigationView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -21,15 +30,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.main.fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,7 +76,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         if (ApplicationFeatures.isBetaEnabled()) {
             try {
                 //Enable disabled Views
-                MenuItem[] items = new MenuItem[]{menu.findItem(R.id.nav_impressum), menu.findItem(R.id.nav_grades)};
+                MenuItem[] items = new MenuItem[]{menu.findItem(R.id.nav_grades)};
                 for (MenuItem i : items) {
                     i.setEnabled(true);
                     i.setVisible(true);
