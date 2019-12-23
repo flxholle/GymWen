@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main.activities;
+package com.asdoi.gymwen.ui.main.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,8 +13,8 @@ import android.widget.Toast;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.main.fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.main.fragments.VertretungFragment;
+import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
+import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.navigation.NavigationView;
@@ -37,6 +37,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     Fragment lastLoadedFragment = null;
+    public static int vertretungFragmentState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,19 +157,19 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         switch (id) {
             case R.id.nav_both:
-                fragment = new VertretungFragment(true);
+                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
                 break;
             case R.id.nav_today:
-                fragment = new VertretungFragment(true, false);
+                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Today);
                 break;
             case R.id.nav_all_classes_today:
-                fragment = new VertretungFragment(true, true);
+                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Today_All);
                 break;
             case R.id.nav_tomorrow:
-                fragment = new VertretungFragment(false, false);
+                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Tomorrow);
                 break;
             case R.id.nav_all_classes_tomorrow:
-                fragment = new VertretungFragment(false, true);
+                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Tomorrow_All);
                 break;
             case R.id.action_settings: //Fallthrough
             case R.id.nav_settings:
@@ -209,13 +210,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 item.setTitle(getSupportActionBar().getTitle());
                 VertretungsPlanFeatures.setDocs(null, null);
                 if (lastLoadedFragment == null)
-                    fragment = new VertretungFragment(true);
+                    fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
                 else {
                     if (lastLoadedFragment instanceof VertretungFragment) {
-                        if (VertretungFragment.both)
-                            fragment = new VertretungFragment(true);
-                        else
-                            fragment = new VertretungFragment(VertretungFragment.today, VertretungFragment.all);
+                        fragment = VertretungFragment.newInstance(vertretungFragmentState);
                     } else {
                         fragment = new LehrerlisteFragment();
                     }

@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main.fragments;
+package com.asdoi.gymwen.ui.main.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,9 +26,8 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-import com.asdoi.gymwen.main.activities.MainActivity;
+import com.asdoi.gymwen.ui.main.activities.MainActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -40,32 +39,94 @@ import androidx.fragment.app.Fragment;
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private View root;
     private Context context;
-    public static boolean today;
-    public static boolean all;
-    public static boolean both;
+    private boolean today;
+    private boolean all;
+    private boolean both;
 
-    public VertretungFragment() {
-        super();
+    public static final int Instance_Both = 0;
+    public static final int Instance_Today = 1;
+    public static final int Instance_Tomorrow = 2;
+    public static final int Instance_Today_All = 3;
+    public static final int Instance_Tomorrow_All = 4;
+
+    private static final String TODAY = "today";
+    private static final String ALL = "all";
+    private static final String BOTH = "both";
+
+    public static VertretungFragment newInstance(int state) {
+        VertretungFragment fragment = new VertretungFragment();
+        Bundle bundle = new Bundle();
+
+        boolean today = false;
+        boolean all = false;
+        boolean both = false;
+
+        switch (state) {
+            case 1:
+                //Today
+                today = true;
+                break;
+            case 3:
+                //Today All
+                today = true;
+                all = true;
+                break;
+            case 2:
+                //Tomorrow
+                break;
+            case 4:
+                //Tomorrow All
+                all = true;
+                break;
+            case 0:
+            default:
+                //Both
+                both = true;
+                break;
+
+        }
+        bundle.putBoolean(TODAY, today);
+        bundle.putBoolean(ALL, all);
+        bundle.putBoolean(BOTH, both);
+        MainActivity.vertretungFragmentState = state;
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
-    public VertretungFragment(boolean today, boolean all) {
-        super();
-        VertretungFragment.today = today;
-        VertretungFragment.all = all;
-        both = false;
+    public void update(boolean all) {
+        // this method will be called for every fragment in viewpager
+        // so check if update is for this fragment
+        if (all != this.all) {
+            this.all = all;
+
+            //Loading Pabel
+            ActivityFeatures.createLoadingPanel(root.findViewById(R.id.vertretung_frame));
+            refreshAndTable();
+        }
     }
 
-    public VertretungFragment(boolean both) {
-        all = false;
-        VertretungFragment.both = true;
-        today = false;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try {
+            today = getArguments().getBoolean(TODAY);
+            all = getArguments().getBoolean(ALL);
+            both = getArguments().getBoolean(BOTH);
+        } catch (Exception e) {
+            //No Arguments set
+            today = false;
+            all = false;
+            both = true;
+        }
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         context = getContext();
         root = inflater.inflate(R.layout.fragment_vertretung, container, false);
-        FloatingActionButton fab = getActivity().findViewById(R.id.main_fab);
+
+        //Set Fab
+       /* FloatingActionButton fab = getActivity().findViewById(R.id.main_fab);
         if (all) {
             fab.setEnabled(false);
             fab.setVisibility(View.GONE);
@@ -74,12 +135,12 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             fab.bringToFront();
             fab.setVisibility(View.VISIBLE);
         }
-        fab.setOnClickListener(this);
+        fab.setOnClickListener(this);*/
 
+        //Loading Pabel
         ActivityFeatures.createLoadingPanel(root.findViewById(R.id.vertretung_frame));
 
         refreshAndTable();
-
         return root;
     }
 

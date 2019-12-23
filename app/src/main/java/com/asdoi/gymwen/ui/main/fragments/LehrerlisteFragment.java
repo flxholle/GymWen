@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.main.fragments;
+package com.asdoi.gymwen.ui.main.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,13 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,9 +49,9 @@ public class LehrerlisteFragment extends Fragment {
         base = root.findViewById(R.id.teacher_list_base);
         ActivityFeatures.createLoadingPanel(base);
 
-        FloatingActionButton fab = getActivity().findViewById(R.id.main_fab);
+        /*FloatingActionButton fab = getActivity().findViewById(R.id.main_fab);
         fab.setVisibility(View.GONE);
-        fab.setEnabled(false);
+        fab.setEnabled(false);*/
 
         new Thread(() -> {
             ApplicationFeatures.downloadLehrerDoc();
