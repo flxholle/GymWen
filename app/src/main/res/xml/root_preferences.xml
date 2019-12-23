@@ -30,14 +30,6 @@
             android:title="@string/set_hours" />
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="hide_days"
-            android:title="@string/set_hide_days" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="hide_gesamt"
-            android:title="@string/set_hide_gesamt" />
-        <CheckBoxPreference
-            android:defaultValue="true"
             android:key="show_borders"
             android:title="@string/set_show_borders" />
         <SwitchPreference

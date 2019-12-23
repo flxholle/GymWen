@@ -26,6 +26,7 @@
     <string name="menu_notes">Notizen</string>
     <string name="menu_timetable">Stundenplan</string>
     <string name="menu_grades">Notenverwaltung (Achtung optimale App wird noch gesucht!)</string>
+    <string name="menu_days">Einzelne Tage</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
@@ -242,13 +243,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
         <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
         <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></string>
 
-
-    <string name="title_activity_tab">TabActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="title_activity_bottom_nav">BottomNavActivity</string>
-    <string name="title_home">Filter</string>
-    <string name="title_dashboard">Gesamt</string>
-    <string name="title_notifications">Lehrerliste</string>
+    <!-- Bottom Navigation Bar -->
+    <string name="nav_filter">Filter</string>
+    <string name="nav_all">Gesamt</string>
+    <string name="nav_list">Lehrerliste</string>
 
 </resources>

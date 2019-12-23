@@ -243,12 +243,8 @@ public class ApplicationFeatures extends Application {
         return getBooleanSettings("beta_features", false);
     }
 
-    public static boolean isDateOff() {
-        return getBooleanSettings("hide_days", true);
-    }
-
-    public static boolean isGesamtOff() {
-        return getBooleanSettings("hide_gesamt", false);
+    public static boolean isOld() {
+        return getBooleanSettings("old_vertretung", false);
     }
 
     public static boolean getBooleanSettings(String key, boolean defaultValue) {
