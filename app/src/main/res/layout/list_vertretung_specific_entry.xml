@@ -42,7 +42,7 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="2"
         android:gravity="center"
-        android:text="SOM"
+        android:text="entfällt"
         android:textSize="18sp"
         android:textStyle="bold" />
 

@@ -266,6 +266,12 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         });
     }
 
+    void removeTeacherClick(View view) {
+        view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackground));
+        view.setOnClickListener((View v) -> {
+        });
+    }
+
     void teacherSearch(String query) {
         try {
             createTeacherView(Lehrerliste.getTeacher(query));
@@ -350,6 +356,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 inhalt = VertretungsPlanFeatures.getTomorrowArrayAll();
                 title = VertretungsPlanFeatures.getTomorrowTitle();
             }
+            inhalt = replaceAll(inhalt, "entfällt", "entf");
             sonstiges = isSonstiges();
             generateTop();
             generateTableAll();
@@ -373,6 +380,15 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         base.removeAllViews();
     }
 
+    String[][] replaceAll(String[][] value, String regex, String replace) {
+        for (int i = 0; i < value.length; i++) {
+            for (int j = 0; j < value[i].length; j++) {
+                if (value[i][j].equals(regex))
+                    value[i][j] = replace;
+            }
+        }
+        return value;
+    }
 
     //Top (Date or noInternet, etc.)
     void generateTop() {
@@ -615,12 +631,15 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         TextView teacher = view.findViewById(R.id.vertretung_all_entry_textViewTeacher);
         teacher.setText(entry[3]);
-        teacherClick(teacher, entry[3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false));
+        removeTeacherClick(teacher);
+        if (!(entry[3].equals("entfällt") || entry[3].equals("entf")))
+            teacherClick(teacher, entry[3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false));
 
         TextView room = view.findViewById(R.id.vertretung_all_entry_textViewRoom);
         room.setText(entry[4]);
 
         TextView other = view.findViewById(R.id.vertretung_all_entry_textViewOther);
+        other.setVisibility(View.VISIBLE);
         if (sonstiges) {
             other.setText(entry[5]);
         } else {
@@ -665,15 +684,35 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         subject.setText(oberstufe ? entry[0] : entry[2]);
 
         TextView teacher = view.findViewById(R.id.vertretung_specific_entry_textViewTeacher);
-        teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", true));
-        teacher.setText(entry[3]);
+        removeTeacherClick(teacher);
+        teacher.setTextColor(subject.getTextColors());
+        teacher.setGravity(Gravity.CENTER);
 
         TextView room = view.findViewById(R.id.vertretung_specific_entry_textViewRoom);
-        SpannableString content = new SpannableString(entry[4]);
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        room.setText(content);
+
+        if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
+            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", true));
+            teacher.setText(entry[3]);
+
+            SpannableString content = new SpannableString(entry[4]);
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            room.setText(content);
+        } else {
+            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 4));
+
+            SpannableString content = new SpannableString(entry[3]);
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            teacher.setText(content);
+            teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            teacher.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            teacher.setGravity(Gravity.START);
+
+            room.setText(content);
+            room.setVisibility(View.GONE);
+        }
 
         TextView other = view.findViewById(R.id.vertretung_specific_entry_textViewOther);
+        other.setVisibility(View.VISIBLE);
         if (sonstiges)
             other.setText(entry[5]);
         else
