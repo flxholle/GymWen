@@ -91,7 +91,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         navView.setOnNavigationItemSelectedListener(this);
 
         if (!VertretungsPlanFeatures.isUninit())
-            onNavigationItemSelected(navigationView.getMenu().getItem(1));
+            onNavigationItemSelected(R.id.nav_both);
         toggle.syncState();
 
         if (!ApplicationFeatures.initSettings(false, true)) {
@@ -168,11 +168,19 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawer.closeDrawer(GravityCompat.START);
 
+        onNavigationItemSelected(item.getItemId(), item.getTitle().toString());
+
+        return true;
+    }
+
+    public void onNavigationItemSelected(int id) {
+        onNavigationItemSelected(id, "");
+    }
+
+    public void onNavigationItemSelected(int id, String title) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
         Fragment fragment = null;
         Intent intent = null;
-        String itemTitle = "" + item.getTitle();
 
         switch (id) {
             default:
@@ -194,8 +202,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
             case R.id.nav_days:
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
-                if (!item.getTitle().toString().trim().isEmpty())
-                    getSupportActionBar().setTitle(item.getTitle());
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                 findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
@@ -236,13 +242,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 startActivity(intent);
                 finish();
                 drawer.closeDrawer(GravityCompat.START);
-                return true;
+                return;
             case R.id.nav_website:
                 intent = new Intent(this, WebsiteActivity.class);
 //                intent.putExtra("url","gym-wen.de/information/unsere-schule/");
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
-                return true;
+                return;
             case R.id.nav_mebis:
                 tabIntent("https://lernplattform.mebis.bayern.de/my/");
                 break;
@@ -266,7 +272,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;
             case R.id.action_refresh2:
             case R.id.action_refresh:
-                item.setTitle(getSupportActionBar().getTitle());
                 switch (lastLoaded) {
                     case lastLoadedVertretung:
                         VertretungsPlanFeatures.setDocs(null, null);
@@ -357,8 +362,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             else
                 lastLoaded = lastLoadedVertretung;
 
-            if (!item.getTitle().toString().trim().isEmpty())
-                getSupportActionBar().setTitle(item.getTitle());
+            if (!title.trim().isEmpty())
+                getSupportActionBar().setTitle(title);
 
             //Display NavHost Fragment
             findViewById(R.id.view_pager).setVisibility(View.GONE);
@@ -382,10 +387,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
         }
-
-        item.setTitle(itemTitle);
-
-        return true;
     }
 
     @Override
