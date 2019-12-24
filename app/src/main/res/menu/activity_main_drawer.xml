@@ -3,40 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group>
-        <item
-            android:id="@+id/nav_both"
-            android:icon="@drawable/ic_today_tomorrow_black_24dp"
-            android:title="@string/menu_both" />
-        <item
-            android:id="@+id/nav_days"
-            android:icon="@drawable/ic_today_tomorrow_black_24dp"
-            android:title="@string/menu_days" />
-        <item
-            android:id="@+id/nav_today"
-            android:icon="@drawable/ic_today_black_24dp"
-            android:title="@string/menu_today"
-            android:visible="false"
-            android:enabled="false" />
-        <item
-            android:id="@+id/nav_tomorrow"
-            android:icon="@drawable/ic_tomorrow_black_24dp"
-            android:title="@string/menu_tomorrow"
-            android:visible="false"
-            android:enabled="false" />
-        <item
-            android:id="@+id/nav_all_classes_today"
-            android:icon="@drawable/ic_today_black_24dp"
-            android:title="@string/menu_all_classes_Today"
-            android:visible="false"
-            android:enabled="false" />
-        <item
-            android:id="@+id/nav_all_classes_tomorrow"
-            android:icon="@drawable/ic_tomorrow_black_24dp"
-            android:title="@string/menu_all_classes_tomorrow"
-            android:visible="false"
-            android:enabled="false" />
-    </group>
+    <item android:title="@string/menu_category_vertretung">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/nav_both"
+                    android:icon="@drawable/ic_today_tomorrow_black_24dp"
+                    android:title="@string/menu_both" />
+                <item
+                    android:id="@+id/nav_days"
+                    android:icon="@drawable/ic_today_tomorrow_black_24dp"
+                    android:title="@string/menu_days" />
+                <item
+                    android:id="@+id/nav_today"
+                    android:enabled="false"
+                    android:icon="@drawable/ic_today_black_24dp"
+                    android:title="@string/menu_today"
+                    android:visible="false" />
+                <item
+                    android:id="@+id/nav_tomorrow"
+                    android:enabled="false"
+                    android:icon="@drawable/ic_tomorrow_black_24dp"
+                    android:title="@string/menu_tomorrow"
+                    android:visible="false" />
+                <item
+                    android:id="@+id/nav_all_classes_today"
+                    android:enabled="false"
+                    android:icon="@drawable/ic_today_black_24dp"
+                    android:title="@string/menu_all_classes_Today"
+                    android:visible="false" />
+                <item
+                    android:id="@+id/nav_all_classes_tomorrow"
+                    android:enabled="false"
+                    android:icon="@drawable/ic_tomorrow_black_24dp"
+                    android:title="@string/menu_all_classes_tomorrow"
+                    android:visible="false" />
+            </group>
+        </menu>
+    </item>
 
     <item android:title="@string/menu_category_school">
         <menu>

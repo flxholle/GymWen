@@ -10,18 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -37,13 +25,34 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.lehrerliste.Lehrerliste;
+import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
+import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-    Fragment lastLoadedFragment = null;
+
     public static int vertretungFragmentState;
+    public static int lastLoaded; // 0 = Vertretung, 1 = Tabs, 2 = Lehrerliste
+    public static final int lastLoadedVertretung = 0;
+    public static final int lastLoadedTabs = 1;
+    public static final int lastLoadedLehrerliste = 2;
+
+    public static int lastLoadedInTabs;
+    public static final int lastLoadedTabsSpecific = 10;
+    public static final int lastLoadedTabsAll = 11;
 
     SectionsPagerAdapter sectionsPagerAdapter;
 
@@ -81,9 +90,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
         navView.setOnNavigationItemSelectedListener(this);
 
-
         if (!VertretungsPlanFeatures.isUninit())
-            onNavigationItemSelected(navigationView.getMenu().getItem(0));
+            onNavigationItemSelected(navigationView.getMenu().getItem(1));
         toggle.syncState();
 
         if (!ApplicationFeatures.initSettings(false, true)) {
@@ -124,6 +132,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     public void onPostCreate(Bundle b) {
         super.onPostCreate(b);
+        try {
+            findViewById(R.id.nav_header_main_icon).setOnClickListener((View v) -> {
+                Intent intent = new Intent(this, WebsiteActivity.class);
+//                intent.putExtra("url","gym-wen.de/information/unsere-schule/");
+                startActivity(intent);
+                drawer.closeDrawer(GravityCompat.START);
+            });
+        } catch (Exception e) {
+        }
         toggle.syncState();
     }
 
@@ -158,6 +175,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         String itemTitle = "" + item.getTitle();
 
         switch (id) {
+            default:
             case R.id.nav_both:
                 fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
                 break;
@@ -178,13 +196,28 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 if (!item.getTitle().toString().trim().isEmpty())
                     getSupportActionBar().setTitle(item.getTitle());
-            case R.id.navigation_filter:
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                 findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
                 findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
+
+                if (lastLoadedInTabs == lastLoadedTabsAll) {
+                    //Navigation all
+                    findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
+                    findViewById(R.id.tabs).setVisibility(View.VISIBLE);
+                    findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
+                    findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
+                    sectionsPagerAdapter.setAll(true);
+                    sectionsPagerAdapter.notifyDataSetChanged();
+                    lastLoaded = lastLoadedTabs;
+                    break;
+                }
+
+            case R.id.navigation_filter:
                 sectionsPagerAdapter.setAll(false);
                 sectionsPagerAdapter.notifyDataSetChanged();
+                lastLoaded = lastLoadedTabs;
+                lastLoadedInTabs = lastLoadedTabsSpecific;
                 break;
             case R.id.navigation_all:
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
@@ -193,16 +226,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
                 sectionsPagerAdapter.setAll(true);
                 sectionsPagerAdapter.notifyDataSetChanged();
+                lastLoaded = lastLoadedTabsAll;
+                lastLoadedInTabs = lastLoadedTabsAll;
                 break;
-            case R.id.navigation_list:
-                fragment = new LehrerlisteFragment();
-                findViewById(R.id.view_pager).setVisibility(View.GONE);
-                findViewById(R.id.tabs).setVisibility(View.GONE);
-                findViewById(R.id.nav_host_fragment).setVisibility(View.VISIBLE);
-                findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
-                return true;
 
             case R.id.action_settings: //Fallthrough
             case R.id.nav_settings:
@@ -241,15 +267,23 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_refresh2:
             case R.id.action_refresh:
                 item.setTitle(getSupportActionBar().getTitle());
-                VertretungsPlanFeatures.setDocs(null, null);
-                if (lastLoadedFragment == null)
-                    fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
-                else {
-                    if (lastLoadedFragment instanceof VertretungFragment) {
+                switch (lastLoaded) {
+                    case lastLoadedVertretung:
+                        VertretungsPlanFeatures.setDocs(null, null);
                         fragment = VertretungFragment.newInstance(vertretungFragmentState);
-                    } else {
+                        break;
+                    case lastLoadedTabs:
+                        VertretungsPlanFeatures.setDocs(null, null);
+                        sectionsPagerAdapter.notifyDataSetChanged();
+                        break;
+                    case lastLoadedLehrerliste:
+                        Lehrerliste.setDoc(null);
                         fragment = new LehrerlisteFragment();
-                    }
+                        break;
+                    default:
+                        VertretungsPlanFeatures.setDocs(null, null);
+                        fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
+                        break;
                 }
                 break;
             case R.id.action_update:
@@ -315,16 +349,18 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     startActivity(intent);
                 }
                 break;
-            default:
-                break;
-
         }
 
-        lastLoadedFragment = fragment;
-
         if (fragment != null) {
+            if (fragment instanceof LehrerlisteFragment)
+                lastLoaded = lastLoadedLehrerliste;
+            else
+                lastLoaded = lastLoadedVertretung;
+
             if (!item.getTitle().toString().trim().isEmpty())
                 getSupportActionBar().setTitle(item.getTitle());
+
+            //Display NavHost Fragment
             findViewById(R.id.view_pager).setVisibility(View.GONE);
             findViewById(R.id.tabs).setVisibility(View.GONE);
             findViewById(R.id.nav_host_fragment).setVisibility(View.VISIBLE);
@@ -383,7 +419,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         VertretungsPlanFeatures.saveDocs();
     }
 
-
     //Tabs
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
         String[] tab_titles;
@@ -420,9 +455,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         @Override
         public int getItemPosition(Object object) {
-            if (object instanceof VertretungFragment) {
-                ((VertretungFragment) object).update(all);
-            }
+            ((VertretungFragment) object).update(all);
 
             //don't return POSITION_NONE, avoid fragment recreation.
             return super.getItemPosition(object);

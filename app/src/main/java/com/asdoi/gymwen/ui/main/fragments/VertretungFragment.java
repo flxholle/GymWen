@@ -22,6 +22,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -31,10 +35,6 @@ import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private View root;
@@ -98,11 +98,11 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         // so check if update is for this fragment
         if (all != this.all) {
             this.all = all;
-
-            //Loading Pabel
-            ActivityFeatures.createLoadingPanel(root.findViewById(R.id.vertretung_frame));
-            refreshAndTable();
         }
+        //Loading Pabel
+        ActivityFeatures.createLoadingPanel(root.findViewById(R.id.vertretung_frame));
+        refreshAndTable();
+
     }
 
     @Override
