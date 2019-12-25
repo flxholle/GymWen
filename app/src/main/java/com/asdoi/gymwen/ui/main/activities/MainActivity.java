@@ -10,6 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.lehrerliste.Lehrerliste;
+import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
+import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -24,19 +37,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
-
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -164,6 +164,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 || super.onSupportNavigateUp();
     }
 
+
+    //TODO: Fix NavigationSelected of BottomNavBar
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawer.closeDrawer(GravityCompat.START);
@@ -251,7 +253,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 return;
             case R.id.nav_mebis:
                 tabIntent("https://lernplattform.mebis.bayern.de/my/");
-                break;
+                return;
             case R.id.nav_mensa:
                 String packageName = "de.eezzy.admin.apnr40";
                 intent = getPackageManager().getLaunchIntentForPackage(packageName);
@@ -260,16 +262,16 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 } else {
                     startActivity(intent);
                 }
-                break;
+                return;
             case R.id.nav_shop:
                 tabIntent("http://shop.apromote-werbemittel.de/");
-                break;
+                return;
             case R.id.nav_impressum:
             case R.id.action_impressum: // Fallthrough
                 intent = new Intent(this, ImpressumActivity.class);
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
-                break;
+                return;
             case R.id.action_refresh2:
             case R.id.action_refresh:
                 switch (lastLoaded) {
@@ -293,10 +295,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;
             case R.id.action_update:
                 checkUpdates(Display.DIALOG, true);
-                break;
+                return;
             case R.id.action_changelog:
                 showChangelogCK(false);
-                break;
+                return;
             case R.id.nav_teacherlist:
                 fragment = new LehrerlisteFragment();
                 break;
@@ -327,7 +329,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 } else {
                     startActivity(intent);
                 }
-                break;
+                return;
             case R.id.nav_timetable:
                 packageName = "juliushenke.smarttt";
                 intent = getPackageManager().getLaunchIntentForPackage(packageName);
@@ -342,7 +344,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 } else {
                     startActivity(intent);
                 }
-                break;
+                return;
             case R.id.nav_grades:
                 packageName = "com.example.user.notendings";
                 intent = getPackageManager().getLaunchIntentForPackage(packageName);
@@ -353,7 +355,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 } else {
                     startActivity(intent);
                 }
-                break;
+                return;
         }
 
         if (fragment != null) {
@@ -361,9 +363,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 lastLoaded = lastLoadedLehrerliste;
             else
                 lastLoaded = lastLoadedVertretung;
-
-            if (!title.trim().isEmpty())
-                getSupportActionBar().setTitle(title);
 
             //Display NavHost Fragment
             findViewById(R.id.view_pager).setVisibility(View.GONE);
@@ -387,11 +386,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
         }
+
+        if (!title.trim().isEmpty())
+            getSupportActionBar().setTitle(title);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        onNavigationItemSelected(item);
+        onNavigationItemSelected(item.getItemId());
         return super.onOptionsItemSelected(item);
     }
 
