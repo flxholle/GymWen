@@ -38,7 +38,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 
-public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -82,7 +82,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         tabs.setupWithViewPager(viewPager);
 
         BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
-        navView.setOnNavigationItemSelectedListener(this);
+        navView.setOnNavigationItemSelectedListener((MenuItem item) -> {
+            onNavigationItemSelected(item.getItemId());
+            return true;
+        });
 
         if (!VertretungsPlanFeatures.isUninit())
             onNavigationItemSelected(R.id.nav_both);
@@ -93,6 +96,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         checkUpdates(Display.DIALOG, false);
         showChangelogCK(true);
+
+        lastLoadedInTabs = lastLoadedTabsSpecific;
 
         Menu menu = navigationView.getMenu();
         if (ApplicationFeatures.isBetaEnabled()) {
@@ -145,7 +150,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
 
-    //TODO: Fix NavigationSelected of BottomNavBar
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawer.closeDrawer(GravityCompat.START);

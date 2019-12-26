@@ -74,6 +74,7 @@
     <string name="room">Raum</string>
     <string name="room_short">R</string>
     <string name="other">Sonstiges</string>
+    <string name="other_short">Sons.</string>
 
     <!-- Sign In -->
     <string name="title_activity_sign_in">Anmeldung</string>
