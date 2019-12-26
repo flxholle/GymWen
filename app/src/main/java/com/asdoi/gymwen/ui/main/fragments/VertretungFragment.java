@@ -21,10 +21,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -34,6 +30,10 @@ import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private View root;
@@ -441,9 +441,9 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         if (all) {
             headline = new String[]{context.getString(R.string.classes), sonstiges ? context.getString(R.string.hours_short) : context.getString(R.string.hours), context.getString(R.string.subject), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), sonstiges ? context.getString(R.string.room_short) : context.getString(R.string.room), context.getString(R.string.other)};
         } else if (oberstufe) {
-            headline = new String[]{context.getString(R.string.hours), context.getString(R.string.courses), context.getString(R.string.teacher), context.getString(R.string.room), sonstigesString, context.getString(R.string.subject)};
+            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), context.getString(R.string.teacher), context.getString(R.string.room), sonstigesString, context.getString(R.string.subject)};
         } else {
-            headline = new String[]{context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), sonstigesString, context.getString(R.string.classes)};
+            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), sonstigesString, context.getString(R.string.classes)};
         }
 
         return headline;
@@ -561,10 +561,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         params.setMargins(3, 3, 3, 3);
         TextView course = createBlankTextView();
-        course.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        course.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+        course.setTypeface(course.getTypeface(), Typeface.NORMAL);
         course.setLayoutParams(params);
         course.setText(headline[5]);
-        course.setGravity(Gravity.CENTER_VERTICAL);
         base.addView(course);
 
         return base;
