@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ArrayAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -436,14 +437,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     String[] generateHeadline() {
         String[] headline;
-        String sonstigesString = isSonstiges() ? context.getString(R.string.other) : "";
 
         if (all) {
             headline = new String[]{context.getString(R.string.classes), sonstiges ? context.getString(R.string.hours_short) : context.getString(R.string.hours), context.getString(R.string.subject), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), sonstiges ? context.getString(R.string.room_short) : context.getString(R.string.room), context.getString(R.string.other)};
         } else if (oberstufe) {
-            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), context.getString(R.string.teacher), context.getString(R.string.room), sonstigesString, context.getString(R.string.subject)};
+            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.subject)};
         } else {
-            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), sonstigesString, context.getString(R.string.classes)};
+            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.subject), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.classes)};
         }
 
         return headline;
@@ -522,14 +522,14 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         base.setOrientation(LinearLayout.HORIZONTAL);
         base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
         params.setMargins(3, 3, 3, 3);
         TextView hour = createBlankTextView();
         hour.setLayoutParams(params);
         hour.setText(headline[0]);
         base.addView(hour);
 
-        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2);
+        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
         params.setMargins(3, 3, 3, 3);
         TextView subject = createBlankTextView();
         subject.setLayoutParams(params);
@@ -558,7 +558,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             base.addView(other);
         }
 
-        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         params.setMargins(3, 3, 3, 3);
         TextView course = createBlankTextView();
         course.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
@@ -690,12 +690,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
             teacher.setGravity(Gravity.CENTER);
             teacher.setTextColor(subject.getTextColors());
-            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
+            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2));
             teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", true));
             teacher.setText(entry[3]);
 
             room.setVisibility(View.VISIBLE);
+            room.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
 
             SpannableString content = new SpannableString(entry[4]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -707,20 +708,16 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             SpannableString content = new SpannableString(entry[3]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             teacher.setText(content);
-            teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26);
             teacher.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
             teacher.setGravity(Gravity.START);
 
-            room.setText(content);
+            teacher.setText(content);
             room.setVisibility(View.GONE);
         }
 
         TextView other = view.findViewById(R.id.vertretung_specific_entry_textViewOther);
-        other.setVisibility(View.VISIBLE);
-        if (sonstiges)
-            other.setText(entry[5]);
-        /*else
-            other.setVisibility(View.GONE);*/
+        other.setText(entry[5]);
 
         TextView course = view.findViewById(R.id.vertretung_specific_entry_textViewClass);
         course.setText(oberstufe ? entry[2] : entry[0]);
@@ -794,16 +791,14 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         s1.setLayoutParams(params);
         table.setLayoutParams(params);
 
-        /*HorizontalScrollView hs2 = new HorizontalScrollView(context);
-        hs2.setLayoutParams(params);*/
+        HorizontalScrollView hs2 = new HorizontalScrollView(context);
+        hs2.setLayoutParams(params);
 
         table.setLayoutParams(params);
 
         base.addView(s1);
-        /*s1.addView(hs2);
-        hs2.addView(table);*/
-        s1.addView(table);
-
+        s1.addView(hs2);
+        hs2.addView(table);
 
         return table;
     }
