@@ -14,30 +14,6 @@
                     android:id="@+id/nav_days"
                     android:icon="@drawable/ic_today_tomorrow_black_24dp"
                     android:title="@string/menu_days" />
-                <item
-                    android:id="@+id/nav_today"
-                    android:enabled="false"
-                    android:icon="@drawable/ic_today_black_24dp"
-                    android:title="@string/menu_today"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/nav_tomorrow"
-                    android:enabled="false"
-                    android:icon="@drawable/ic_tomorrow_black_24dp"
-                    android:title="@string/menu_tomorrow"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/nav_all_classes_today"
-                    android:enabled="false"
-                    android:icon="@drawable/ic_today_black_24dp"
-                    android:title="@string/menu_all_classes_Today"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/nav_all_classes_tomorrow"
-                    android:enabled="false"
-                    android:icon="@drawable/ic_tomorrow_black_24dp"
-                    android:title="@string/menu_all_classes_tomorrow"
-                    android:visible="false" />
             </group>
         </menu>
     </item>
