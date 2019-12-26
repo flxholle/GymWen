@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ArrayAdapter;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -684,21 +683,26 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         subject.setText(oberstufe ? entry[0] : entry[2]);
 
         TextView teacher = view.findViewById(R.id.vertretung_specific_entry_textViewTeacher);
-        removeTeacherClick(teacher);
-        teacher.setTextColor(subject.getTextColors());
-        teacher.setGravity(Gravity.CENTER);
 
         TextView room = view.findViewById(R.id.vertretung_specific_entry_textViewRoom);
 
+
         if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
+            teacher.setGravity(Gravity.CENTER);
+            teacher.setTextColor(subject.getTextColors());
+            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
+            teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", true));
             teacher.setText(entry[3]);
+
+            room.setVisibility(View.VISIBLE);
 
             SpannableString content = new SpannableString(entry[4]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             room.setText(content);
         } else {
-            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 4));
+            removeTeacherClick(teacher);
+            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 5));
 
             SpannableString content = new SpannableString(entry[3]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -715,8 +719,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         other.setVisibility(View.VISIBLE);
         if (sonstiges)
             other.setText(entry[5]);
-        else
-            other.setVisibility(View.GONE);
+        /*else
+            other.setVisibility(View.GONE);*/
 
         TextView course = view.findViewById(R.id.vertretung_specific_entry_textViewClass);
         course.setText(oberstufe ? entry[2] : entry[0]);
@@ -785,18 +789,20 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         LinearLayout base = root.findViewById(R.id.vertretung_linear_layout_layer1);
 
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         ScrollView s1 = new ScrollView(context);
         s1.setLayoutParams(params);
+        table.setLayoutParams(params);
 
-        HorizontalScrollView hs2 = new HorizontalScrollView(context);
-        hs2.setLayoutParams(params);
+        /*HorizontalScrollView hs2 = new HorizontalScrollView(context);
+        hs2.setLayoutParams(params);*/
 
         table.setLayoutParams(params);
 
         base.addView(s1);
-        s1.addView(hs2);
-        hs2.addView(table);
+        /*s1.addView(hs2);
+        hs2.addView(table);*/
+        s1.addView(table);
 
 
         return table;
@@ -827,13 +833,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             for (int j = 0; j < columnNumber; j++) {
                 TextView tv = new TextView(context);
                 TableRow.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(3, 0, 3, 0);
+                params.setMargins(3, 3, 3, 0);
                 tv.setLayoutParams(params);
                 tv.setText(inhalt[i][j]);
                 tv.setTextSize(18);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                if (j == 3) {
+                if (j == 3 && !inhalt[i][3].equals("entfällt")) {
                     teacherClick(tv, inhalt[i][3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false));
                 }
                 row.addView(tv);

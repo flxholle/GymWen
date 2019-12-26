@@ -71,12 +71,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 //        supportActionBar?drawer.setDisplayHomeAsUpEnabled(true);
 //        supportActionBar?.setHomeButtonEnabled(true);
         drawer.addDrawerListener(toggle);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_today, R.id.nav_tomorrow, R.id.nav_settings,
-                R.id.nav_all_classes_today, R.id.nav_all_classes_tomorrow)
-                .setDrawerLayout(drawer)
-                .build();
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -113,20 +107,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
             }
         }
-
-        if (ApplicationFeatures.isOld()) {
-            try {
-                //Enable disabled Views
-                MenuItem[] items = new MenuItem[]{menu.findItem(R.id.nav_today), menu.findItem(R.id.nav_tomorrow), menu.findItem(R.id.nav_all_classes_today), menu.findItem(R.id.nav_all_classes_tomorrow)};
-                for (MenuItem i : items) {
-                    i.setEnabled(true);
-                    i.setVisible(true);
-                }
-            } catch (Exception e) {
-
-            }
-        }
-
     }
 
     @Override
@@ -187,19 +167,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_both:
                 fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
                 break;
-            case R.id.nav_today:
-                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Today);
-                break;
-            case R.id.nav_all_classes_today:
-                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Today_All);
-                break;
-            case R.id.nav_tomorrow:
-                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Tomorrow);
-                break;
-            case R.id.nav_all_classes_tomorrow:
-                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Tomorrow_All);
-                break;
-
             case R.id.nav_days:
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
