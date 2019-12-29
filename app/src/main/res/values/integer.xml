@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Vertretung Specific entry-->
+    <integer name="vertretung_specific_entry_hour">3</integer>
+    <integer name="vertretung_specific_entry_subject">2</integer>
+    <integer name="vertretung_specific_entry_teacher">2</integer>
+    <integer name="vertretung_specific_entry_room">3</integer>
+    <integer name="vertretung_specific_entry_other">4</integer>
+    <integer name="vertretung_specific_entry_course">1</integer>
+
+    <integer name="vertretung_specific_entry_hour_long">4</integer>
+    <integer name="vertretung_specific_entry_subject_long">3</integer>
+
+    <!--    Vertretung All entry-->
+    <integer name="vertretung_all_hour">1</integer>
+    <integer name="vertretung_all_subject">2</integer>
+    <integer name="vertretung_all_teacher">2</integer>
+    <integer name="vertretung_all_room">2</integer>
+    <integer name="vertretung_all_other">4</integer>
+    <integer name="vertretung_all_course">3</integer>
+
+    <integer name="vertretung_all_hour_long">2</integer>
+</resources>

@@ -22,6 +22,13 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
@@ -44,13 +51,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
@@ -194,7 +194,7 @@ public class ApplicationFeatures extends Application {
                 return signedIn;
             }
 
-            boolean hours = sharedPref.getBoolean("hours", false);
+            boolean hours = isHour();
 
             VertretungsPlanFeatures.setup(hours, courses.split("#"));
 
@@ -253,6 +253,10 @@ public class ApplicationFeatures extends Application {
         return sharedPref.getBoolean(key, defaultValue);
     }
 
+    public static boolean isHour() {
+        return getBooleanSettings("hours", false);
+    }
+
 
     //Website
     public static boolean isURLValid(String url) {
@@ -294,6 +298,7 @@ public class ApplicationFeatures extends Application {
     }
 
     public static class createNotification extends downloadVertretungsplanDocsTask {
+        int count = 0;
 
         @Override
         protected void onPostExecute(Void v) {
@@ -339,7 +344,7 @@ public class ApplicationFeatures extends Application {
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setWhen(System.currentTimeMillis())
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
-                        .setContentTitle(context.getString(R.string.notif_content_title))
+                        .setContentTitle(context.getString(R.string.notif_content_title) + " " + count + "x")
                         .setContentIntent(resultPendingIntent)
 //                        .setLargeIcon(getBitmapFromVectorDrawable(R.drawable.ic_stat_assignment_late))
                         .setSmallIcon(R.drawable.ic_stat_assignment_late);
@@ -376,11 +381,13 @@ public class ApplicationFeatures extends Application {
             String message = "";
             String day = VertretungsPlanFeatures.getTodayTitle();
             String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
+            count = inhalt.length;
 
             message += notifMessageContent(inhalt, day);
 
             day = VertretungsPlanFeatures.getTomorrowTitle();
             inhalt = VertretungsPlanFeatures.getTomorrowArray();
+            count += inhalt.length;
 
             message += notifMessageContent(inhalt, day);
             message = message.substring(0, message.length() - 1);
