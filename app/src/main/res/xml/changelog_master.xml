@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
+        version="1.0.6"
+        versioncode="106">
+        <change>Summe der vertretenen Stunden in der Benachrichtigung</change>
+    </release>
+    <release
         version="1.0.5"
         versioncode="105">
         <change>Neues Design im Vertretungsplan (altes Design in den Einstellungen reaktivierbar)

@@ -22,6 +22,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -31,10 +35,6 @@ import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 public class VertretungFragment extends Fragment implements View.OnClickListener {
     private View root;
@@ -478,16 +478,29 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
             switch (i) {
                 case 0:
-                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
+                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_course));
                     break;
                 case 1:
-                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+                    if (ApplicationFeatures.isHour()) {
+                        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_hour_long));
+                    } else {
+                        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_hour));
+                    }
+                    break;
+                case 2:
+                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_subject));
+                    break;
+                case 3:
+                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_teacher));
+                    break;
+                case 4:
+                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_room));
                     break;
                 case 5:
-                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 4);
+                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_other));
                     break;
                 default:
-                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2);
+                    params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_room));
             }
 
             TextView hour = createBlankTextView();
@@ -522,27 +535,35 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         base.setOrientation(LinearLayout.HORIZONTAL);
         base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_hour));
         params.setMargins(3, 3, 3, 3);
         TextView hour = createBlankTextView();
         hour.setLayoutParams(params);
         hour.setText(headline[0]);
         base.addView(hour);
 
-        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
+        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_subject));
         params.setMargins(3, 3, 3, 3);
         TextView subject = createBlankTextView();
         subject.setLayoutParams(params);
         subject.setText(headline[1]);
         base.addView(subject);
 
-        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2);
+        if (ApplicationFeatures.isHour()) {
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_hour_long)));
+            subject.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_subject_long)));
+        } else {
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_hour)));
+            subject.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_subject)));
+        }
+
+        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_teacher));
         TextView teacher = createBlankTextView();
         teacher.setLayoutParams(params);
         teacher.setText(headline[2]);
         base.addView(teacher);
 
-        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
+        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_room));
         params.setMargins(3, 3, 3, 3);
         TextView room = createBlankTextView();
         room.setLayoutParams(params);
@@ -550,7 +571,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         base.addView(room);
 
         if (sonstiges) {
-            params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
+            params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_other));
             params.setMargins(3, 3, 3, 3);
             TextView other = createBlankTextView();
             other.setLayoutParams(params);
@@ -558,7 +579,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             base.addView(other);
         }
 
-        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_course));
         params.setMargins(3, 3, 3, 3);
         TextView course = createBlankTextView();
         course.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
@@ -625,6 +646,12 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView hour = view.findViewById(R.id.vertretung_all_entry_textViewHour);
         hour.setText(entry[1]);
 
+        if (ApplicationFeatures.isHour()) {
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_hour_long)));
+        } else {
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_hour)));
+        }
+
         TextView subject = view.findViewById(R.id.vertretung_all_entry_textViewSubject);
         subject.setText(entry[2]);
 
@@ -682,6 +709,16 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView subject = view.findViewById(R.id.vertretung_specific_entry_textViewSubject);
         subject.setText(oberstufe ? entry[0] : entry[2]);
 
+        if (ApplicationFeatures.isHour()) {
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_hour_long)));
+            subject.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_subject_long)));
+            hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        } else {
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_hour)));
+            subject.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_subject)));
+            hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
+        }
+
         TextView teacher = view.findViewById(R.id.vertretung_specific_entry_textViewTeacher);
 
         TextView room = view.findViewById(R.id.vertretung_specific_entry_textViewRoom);
@@ -690,20 +727,20 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
             teacher.setGravity(Gravity.CENTER);
             teacher.setTextColor(subject.getTextColors());
-            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2));
+            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_teacher)));
             teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", true));
             teacher.setText(entry[3]);
 
             room.setVisibility(View.VISIBLE);
-            room.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
+            room.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_room)));
 
             SpannableString content = new SpannableString(entry[4]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             room.setText(content);
         } else {
             removeTeacherClick(teacher);
-            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 5));
+            teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_teacher) + context.getResources().getInteger(R.integer.vertretung_specific_entry_room)));
 
             SpannableString content = new SpannableString(entry[3]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -717,6 +754,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
 
         TextView other = view.findViewById(R.id.vertretung_specific_entry_textViewOther);
+        other.setVisibility(sonstiges ? View.VISIBLE : View.GONE);
         other.setText(entry[5]);
 
         TextView course = view.findViewById(R.id.vertretung_specific_entry_textViewClass);
