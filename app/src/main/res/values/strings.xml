@@ -8,12 +8,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="menu_today">Heute</string>
     <string name="menu_tomorrow">Morgen</string>
-    <string name="menu_all_classes_Today">Heute (gesamt)</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_website">Startseite</string>
     <string name="menu_mebis">Mebis</string>
     <string name="menu_mensa">Mensa (kitafino)</string>
-    <string name="menu_all_classes_tomorrow">Morgen (gesamt)</string>
     <string name="menu_category_other">Diverse Apps</string>
     <string name="menu_category_school">Gymnasium</string>
     <string name="menu_category_settings">Einstellungen</string>
@@ -50,18 +48,19 @@
     <string name="set_show_borders_specific">Nur beim gefilterten Plan</string>
     <string name="set_other_title">Sonstiges</string>
     <string name="set_beta_features">Beta-Features</string>
-    <string name="set_hide_days">Einzelne Tage verbergen</string>
-    <string name="set_hide_gesamt">Gesamte Tage verbergen</string>
     <string name="set_old_vertretung">Altes Design</string>
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
+    <string name="nothing_all">Es entfällt nichts für den gesamten Tag.</string>
     <string name="back_button">Erneut drücken zum Beenden</string>
     <string name="downloading">Lädt\u2026</string>
     <string name="footprint">Diese Nachricht wurde mit der GymWen App erzeugt.</string>
     <string name="noInternet">Du bist nicht mit dem Internet verbunden!</string>
     <string name="noInternetConnection">Keine Internetverbindung!</string>
     <string name="share_vertretung">Vertretung senden an\u2026</string>
+    <string name="day_past">(Vergangen)</string>
+
     <!--    Table-->
     <string name="classes">Klasse</string>
     <string name="courses">Kurs</string>
@@ -247,8 +246,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
         <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></string>
 
     <!-- Bottom Navigation Bar -->
-    <string name="nav_filter">Filter</string>
+    <string name="nav_filter">Gefiltert</string>
     <string name="nav_all">Gesamt</string>
-    <string name="nav_list">Lehrerliste</string>
 
 </resources>

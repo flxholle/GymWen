@@ -132,10 +132,23 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return root;
     }
 
+    private static boolean changedSectionsPagerAdapterTitles = true;
+
     private void refreshAndTable() {
         new Thread(() -> {
             ApplicationFeatures.downloadVertretungsplanDocs(false, true);
             getActivity().runOnUiThread(() -> {
+                try {
+                    if (changedSectionsPagerAdapterTitles) {
+                        MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
+                        spa.setTitles(VertretungsPlanFeatures.getTodayTitleArray()[0], VertretungsPlanFeatures.getTomorrowTitleArray()[0]);
+                        spa.notifyDataSetChanged();
+                        changedSectionsPagerAdapterTitles = false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 if (ApplicationFeatures.isOld())
                     setTableParams();
                 else
@@ -267,7 +280,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     }
 
     void removeTeacherClick(View view) {
-        view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackground));
+        view.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         view.setOnClickListener((View v) -> {
         });
     }
@@ -745,9 +758,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             SpannableString content = new SpannableString(entry[3]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             teacher.setText(content);
-            teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26);
+            teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
             teacher.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
-            teacher.setGravity(Gravity.START);
 
             teacher.setText(content);
             room.setVisibility(View.GONE);

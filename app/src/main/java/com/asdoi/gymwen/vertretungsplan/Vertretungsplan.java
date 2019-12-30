@@ -5,8 +5,12 @@ import com.asdoi.gymwen.R;
 
 import org.jsoup.nodes.Document;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 class Vertretungsplan {
 
@@ -15,6 +19,11 @@ class Vertretungsplan {
     boolean hours;
     Document todayDoc;
     Document tomorrowDoc;
+
+    String noInternet = ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
+    String noVertretung = ApplicationFeatures.getContext().getString(R.string.nothing);
+    String noVertetungAll = ApplicationFeatures.getContext().getString(R.string.nothing_all);
+    String laterDay = ApplicationFeatures.getContext().getString(R.string.day_past);
 
     public Vertretungsplan() {
     }
@@ -31,26 +40,126 @@ class Vertretungsplan {
 
 
     //DayArrays
-    public String[] getTitle(boolean today) {
-        if (today)
-            return Parse.getTitle(todayDoc);
-        else
-            return Parse.getTitle(tomorrowDoc);
-    }
-
-    public String getTitleString(boolean today) {
-        String[] dayTitle = getTitle(today);
+    private String getTitleStringRaw(boolean today) {
+        String[] dayTitle = Parse.getTitle(todayDoc);
         String returnValue = "";
         if (dayTitle == null || dayTitle.equals("")) {
-            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
+            return noInternet;
         }
         for (String s : dayTitle) {
             returnValue += s + " ";
         }
         if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
-            return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
+            return noInternet;
 
         return returnValue.substring(0, returnValue.length() - 1);
+    }
+
+    //Date, DateName, WeekNr
+    public String[] getTitleArray(boolean today) {
+        String[] day = new String[3];
+        String dayString = getTitleStringRaw(today);
+        char[] dayArray = dayString.toCharArray();
+
+        //Date
+        int start = -1, end = -1;
+
+        for (int i = 0; i < dayArray.length; i++) {
+            if (Character.isDigit(dayArray[i])) {
+                start = i;
+                break;
+            }
+        }
+        if (start < 0 || start == dayArray.length - 1)
+            return null;
+
+        for (int i = start + 1; i < dayArray.length; i++) {
+            if (!Character.isDigit(dayArray[i]) && dayArray[i] != '.') {
+                end = i;
+                break;
+            }
+        }
+
+        day[0] = dayString.substring(start, end);
+
+
+        //Weekday
+        try {
+            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE"); // the dayArray of the week spelled out completely
+
+            Date startDate = df.parse(day[0]);
+            day[1] = simpleDateformat.format(startDate);
+            Date currentDate = new Date();
+            if (currentDate.after(startDate)) {
+                return new String[]{laterDay, day[0]};
+            }
+
+        } catch (ParseException e) {
+            day[1] = dayString.substring(0, start - 1);
+        }
+
+
+        //Week Number
+        if (end == dayArray.length - 1)
+            return day;
+
+        try {
+            start = dayString.indexOf("Woche") + "Woche".length();
+        } catch (
+                Exception e) {
+            for (int i = end + 1; i < dayArray.length; i++) {
+                if (Character.isLetter(dayArray[i])) {
+                    start = i;
+                    break;
+                }
+            }
+        }
+
+        if (start < 0 || start == dayArray.length - 1)
+            return day;
+
+
+        try {
+            end = start + 1;
+            day[2] = dayString.substring(start, end);
+        } catch (
+                Exception e) {
+            end = -1;
+            for (int i = start + 1; i < dayArray.length; i++) {
+                if (!Character.isLetter(dayArray[i])) {
+                    end = i;
+                    break;
+                }
+            }
+            day[2] = dayString.substring(start, end);
+        }
+
+        return day;
+    }
+
+    public String getTitleString(boolean today) {
+        String[] dayTitle = getTitleArray(today);
+        if (dayTitle == null || dayTitle.equals("") || dayTitle.length <= 0) {
+            return noInternet;
+        }
+
+        String returnValue = dayTitle[0];
+        switch (dayTitle.length) {
+            default:
+            case 3:
+                for (int i = 1; i < dayTitle.length; i++) {
+                    returnValue += ", " + dayTitle[i];
+                }
+                break;
+            case 2:
+                returnValue = dayTitle[1] + " " + dayTitle[0];
+        }
+
+        if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
+            return noInternet;
+
+        return returnValue;
     }
 
     public String[][] getDay(boolean today) {
@@ -81,8 +190,7 @@ class Vertretungsplan {
         String[][] inhalt = getDay(today);
 
         if (inhalt == null) {
-            System.out.println("Es entfällt nichts für dich");
-            return "Es entfällt nichts für dich";
+            return noVertretung;
         }
 
         String todayString = "";
@@ -126,8 +234,7 @@ class Vertretungsplan {
         String[][] inhalt = getAll(today);
 
         if (inhalt == null) {
-            System.out.println("Es entfällt nichts für den gesamten Tag");
-            return "Es entfällt nichts für den gesamten Tag";
+            return noVertetungAll;
         }
 
         String todayString = "";

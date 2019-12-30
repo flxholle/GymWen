@@ -82,11 +82,11 @@ public abstract class VertretungsPlanFeatures {
     }
 
     public static String[] getTodayTitleArray() {
-        return vertretungsplan.getTitle(true);
+        return vertretungsplan.getTitleArray(true);
     }
 
     public static String[] getTomorrowTitleArray() {
-        return vertretungsplan.getTitle(false);
+        return vertretungsplan.getTitleArray(false);
     }
 
     public static boolean getOberstufe() {
