@@ -10,19 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -37,6 +24,19 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
+
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.lehrerliste.Lehrerliste;
+import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
+import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -54,7 +54,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static final int lastLoadedTabsSpecific = 10;
     public static final int lastLoadedTabsAll = 11;
 
-    SectionsPagerAdapter sectionsPagerAdapter;
+    public SectionsPagerAdapter sectionsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +148,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -394,7 +393,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     //Tabs
-    private class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
         String[] tab_titles;
         boolean all;
 
@@ -402,6 +401,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             super(fm);
             this.tab_titles = titles;
             setAll(all);
+        }
+
+        public void setTitles(String... titles) {
+            this.tab_titles = titles;
         }
 
         void setAll(boolean v) {
