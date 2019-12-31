@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">GymWen</string>
-    <string name="title">Gymnasium Wendelstein</string>
+    <!-- German -->
+    <string name="app_name" translatable="false">GymWen</string>
+    <string name="title" translatable="false">Gymnasium Wendelstein</string>
     <string name="subtitle">Offizielle App\n© 2019 Felix Hollederer</string>
 
     <!-- Navigation Drawer -->
@@ -26,6 +27,7 @@
     <string name="menu_timetable">Stundenplan</string>
     <string name="menu_grades">Notenverwaltung (Achtung optimale App wird noch gesucht!)</string>
     <string name="menu_days">Einzelne Tage</string>
+    <string name="menu_language">Sprache</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
@@ -133,28 +135,28 @@
     <string name="P_Seminar">P-Seminar</string>
     <string name="profile_subject">Profilfach</string>
     <!-- ShortNames Of Subjects -->
-    <string name="mathShort">m</string>
-    <string name="germanShort">d</string>
-    <string name="historyShort">g</string>
-    <string name="social_educationShort">sk</string>
-    <string name="PEShort">spo</string>
-    <string name="Religious_educationShort"></string>
-    <string name="englishShort">e</string>
-    <string name="franceShort">f</string>
-    <string name="latinShort">l</string>
-    <string name="spanishShort">sp</string>
-    <string name="biologyShort">b</string>
-    <string name="chemistryShort">c</string>
-    <string name="physicsShort">ph</string>
-    <string name="programmingShort">inf</string>
-    <string name="geographyShort">geo</string>
-    <string name="financeShort">wr</string>
-    <string name="artShort">ku</string>
-    <string name="musicShort">mu</string>
-    <string name="W_SeminarShort">W_</string>
-    <string name="P_SeminarShort">P_</string>
-    <string name="profile_subjectShort"></string>
-    <string name="anyShort">X</string>
+    <string name="mathShort" translatable="false">m</string>
+    <string name="germanShort" translatable="false">d</string>
+    <string name="historyShort" translatable="false">g</string>
+    <string name="social_educationShort" translatable="false">sk</string>
+    <string name="PEShort" translatable="false">spo</string>
+    <string name="Religious_educationShort" translatable="false"></string>
+    <string name="englishShort" translatable="false">e</string>
+    <string name="franceShort" translatable="false">f</string>
+    <string name="latinShort" translatable="false">l</string>
+    <string name="spanishShort" translatable="false">sp</string>
+    <string name="biologyShort" translatable="false">b</string>
+    <string name="chemistryShort" translatable="false">c</string>
+    <string name="physicsShort" translatable="false">ph</string>
+    <string name="programmingShort" translatable="false">inf</string>
+    <string name="geographyShort" translatable="false">geo</string>
+    <string name="financeShort" translatable="false">wr</string>
+    <string name="artShort" translatable="false">ku</string>
+    <string name="musicShort" translatable="false">mu</string>
+    <string name="W_SeminarShort" translatable="false">W_</string>
+    <string name="P_SeminarShort" translatable="false">P_</string>
+    <string name="profile_subjectShort" translatable="false"></string>
+    <string name="anyShort" translatable="false">X</string>
 
     <!-- Impressum -->
     <string name="impressum_headline">Impressum</string>
@@ -169,7 +171,7 @@
         <br> - Geräteinformationen wie Modell, Hersteller usw. (keine Seriennummer / IMEI)
         <br> - Betriebssystem-Version
         <br> - Stack-Trace zu dem Absturz]]></string>
-    <string name="license"><![CDATA[<h1>Lizenz</h1><br>
+    <string name="license" translatable="false"><![CDATA[<h1>Lizenz</h1><br>
     Copyright © 2019 Felix Hollederer<br>
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -228,15 +230,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="permission_ok_button">Gewähren\u2026</string>
     <string name="permission_cancel_button">Abbrechen</string>
 
-    <!-- Downloader -->
-
     <!-- Lehrerliste -->
     <string name="no_email_app">Du hast keine E-Mail App installiert</string>
     <string name="teacher_no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
     <string name="teacher_search_teacher_list">Durchsuchen\u2026</string>
 
     <!-- Credits -->
-    <string name="credits">https://pixabay.com/vectors/book-found-fun-icon-icons-reading-1294379/\n
+    <string name="credits" translatable="false">https://pixabay.com/vectors/book-found-fun-icon-icons-reading-1294379/\n
         https://pixabay.com/vectors/icons-books-learning-book-icon-3439190/\n
         <div>Icons made by <a href="https://www.flaticon.com/authors/itim2101" title="itim2101">itim2101</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
         <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n

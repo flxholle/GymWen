@@ -270,6 +270,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_changelog:
                 showChangelogCK(false);
                 return;
+            case R.id.action_language:
+                ApplicationFeatures.languageSwitcher.showChangeLanguageDialog(this);
+                return;
             case R.id.nav_teacherlist:
                 fragment = new LehrerlisteFragment();
                 break;

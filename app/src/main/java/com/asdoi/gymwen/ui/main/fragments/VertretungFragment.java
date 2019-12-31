@@ -141,7 +141,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 try {
                     if (!changedSectionsPagerAdapterTitles) {
                         MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
-                        spa.setTitles(VertretungsPlanFeatures.getTodayTitleArray()[0], VertretungsPlanFeatures.getTomorrowTitleArray()[0]);
+                        spa.setTitles(VertretungsPlanFeatures.getTodayTitleArray()[1], VertretungsPlanFeatures.getTomorrowTitleArray()[1]);
                         spa.notifyDataSetChanged();
                         changedSectionsPagerAdapterTitles = true;
                     }

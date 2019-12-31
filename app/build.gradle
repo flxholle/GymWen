@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.akaita.android.easylauncher'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.asdoi.gymwen"
         /*Android v4.1 alias "Jelly Bean"*/
         minSdkVersion 17
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 105
         versionName "1.0.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -56,7 +56,7 @@ dependencies {
     implementation 'androidx.core:core:1.1.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'saschpe.android:customtabs:2.0.0'
     implementation 'androidx.browser:browser:1.2.0'
     implementation "com.mikepenz:aboutlibraries:7.0.4"
@@ -72,5 +72,6 @@ dependencies {
     implementation 'ru.github.igla:ferriswheel:1.2'
     implementation 'com.github.IamIsPra:Sheriff:1.0.0'
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
-    implementation 'android.arch.work:work-runtime:1.0.1'
+    implementation 'androidx.work:work-runtime:2.2.0'
+    implementation "com.ahmedjazzar.rosetta:rosetta:1.0.1"
 }

@@ -29,6 +29,7 @@ import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import com.ahmedjazzar.rosetta.LanguageSwitcher;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
@@ -51,6 +52,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Locale;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
@@ -72,6 +75,7 @@ public class ApplicationFeatures extends Application {
         super.onCreate();
         mContext = this;
         ACRA.init(this);
+//        initRosetta();
     }
 
 
@@ -442,4 +446,30 @@ public class ApplicationFeatures extends Application {
     }
 
 
+    //Localization
+    public static LanguageSwitcher languageSwitcher;
+
+    private void initRosetta() {
+        // This is the locale that you wanna your app to launch with.
+        Locale displayLang = Locale.getDefault();
+
+        // You can use a HashSet<String> instead and call 'setSupportedStringLocales()' :)
+        HashSet<Locale> supportedLocales = new HashSet<>();
+        supportedLocales.add(Locale.GERMAN);
+        supportedLocales.add(Locale.ENGLISH);
+
+        boolean match = false;
+        for (Locale l : supportedLocales) {
+            if (displayLang.getDisplayLanguage().contains(l.getDisplayLanguage())) {
+                match = true;
+                break;
+            }
+        }
+
+        if (!match)
+            displayLang = Locale.ENGLISH;
+
+        languageSwitcher = new LanguageSwitcher(this, displayLang);
+        languageSwitcher.setSupportedLocales(supportedLocales);
+    }
 }
