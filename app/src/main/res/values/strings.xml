@@ -4,8 +4,8 @@
     <string name="subtitle">Offizielle App\n© 2019 Felix Hollederer</string>
 
     <!-- Navigation Drawer -->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Navigation öffnen</string>
+    <string name="navigation_drawer_close">Navigation schließen</string>
     <string name="menu_today">Heute</string>
     <string name="menu_tomorrow">Morgen</string>
     <string name="menu_settings">Einstellungen</string>

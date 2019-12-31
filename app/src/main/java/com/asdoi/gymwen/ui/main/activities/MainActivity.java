@@ -75,6 +75,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         navigationView.setNavigationItemSelectedListener(this);
 
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), false, new String[]{getString(R.string.menu_today), getString(R.string.menu_tomorrow)});
+        VertretungFragment.changedSectionsPagerAdapterTitles = false;
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
 

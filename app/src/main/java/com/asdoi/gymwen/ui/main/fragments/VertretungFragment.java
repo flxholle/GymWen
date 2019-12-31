@@ -53,6 +53,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     private static final String ALL = "all";
     private static final String BOTH = "both";
 
+    public static boolean changedSectionsPagerAdapterTitles = false;
+
     public static VertretungFragment newInstance(int state) {
         VertretungFragment fragment = new VertretungFragment();
         Bundle bundle = new Bundle();
@@ -132,18 +134,16 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return root;
     }
 
-    private static boolean changedSectionsPagerAdapterTitles = true;
-
     private void refreshAndTable() {
         new Thread(() -> {
             ApplicationFeatures.downloadVertretungsplanDocs(false, true);
             getActivity().runOnUiThread(() -> {
                 try {
-                    if (changedSectionsPagerAdapterTitles) {
+                    if (!changedSectionsPagerAdapterTitles) {
                         MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
                         spa.setTitles(VertretungsPlanFeatures.getTodayTitleArray()[0], VertretungsPlanFeatures.getTomorrowTitleArray()[0]);
                         spa.notifyDataSetChanged();
-                        changedSectionsPagerAdapterTitles = false;
+                        changedSectionsPagerAdapterTitles = true;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -281,8 +281,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     void removeTeacherClick(View view) {
         view.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
-        view.setOnClickListener((View v) -> {
-        });
+        view.setOnClickListener(null);
     }
 
     void teacherSearch(String query) {
@@ -350,7 +349,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             inhalt = VertretungsPlanFeatures.getTodayArray();
             title = VertretungsPlanFeatures.getTodayTitle();
             sonstiges = isSonstiges();
-//            generateScrollView();
             generateTop();
             generateTableSpecific();
 
