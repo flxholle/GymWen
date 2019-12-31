@@ -3,6 +3,8 @@
     <release
         version="1.0.6"
         versioncode="106">
+        <change>Anzeigen ob ein Tag schon vergangen ist</change>
+        <change>Änderung der Anzeige auf Wochentage</change>
         <change>Summe der vertretenen Stunden in der Benachrichtigung</change>
     </release>
     <release
