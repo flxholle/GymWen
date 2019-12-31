@@ -41,7 +41,7 @@ class Vertretungsplan {
 
     //DayArrays
     private String getTitleStringRaw(boolean today) {
-        String[] dayTitle = Parse.getTitle(todayDoc);
+        String[] dayTitle = Parse.getTitle(today ? todayDoc : tomorrowDoc);
         String returnValue = "";
         if (dayTitle == null || dayTitle.equals("")) {
             return noInternet;
@@ -92,7 +92,7 @@ class Vertretungsplan {
             day[1] = simpleDateformat.format(startDate);
             Date currentDate = new Date();
             if (currentDate.after(startDate)) {
-                return new String[]{laterDay, day[0]};
+                return new String[]{day[0], laterDay};
             }
 
         } catch (ParseException e) {
