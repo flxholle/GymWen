@@ -13,18 +13,18 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import androidx.core.content.ContextCompat;
+
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.main.activities.MainActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 
-import androidx.core.content.ContextCompat;
-
 /**
  * Implementation of App Widget functionality.
  */
 public class VertretungsplanWidget extends AppWidgetProvider {
-    private static Context context = ApplicationFeatures.getContext();
+    private Context context = ApplicationFeatures.getContext();
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
     private static final boolean enableListView = false;
 
@@ -224,7 +224,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
 
         for (int i = 0; i < inhalt.length; i++) {
             if (!inhalt[i][5].trim().isEmpty()) {
-                sonstiges = context.getString(R.string.other);
+                sonstiges = ApplicationFeatures.getContext().getString(R.string.other);
                 break;
             }
         }

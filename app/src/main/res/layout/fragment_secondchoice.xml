@@ -1,83 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/choice_button_A"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/choice_difference"
+            android:background="@android:color/white"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/choice_button_B"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/choice_difference"
+            android:background="@android:color/white"
+            android:text="B" />
+
+        <Button
+            android:id="@+id/choice_button_C"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/choice_difference"
+            android:background="@android:color/white"
+            android:text="C" />
+
+        <Button
+            android:id="@+id/choice_button_D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/choice_difference"
+            android:background="@android:color/white"
+            android:text="D" />
+
+        <Button
+            android:id="@+id/choice_button_E"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/choice_difference"
+            android:background="@android:color/white"
+            android:text="E" />
+
+        <Button
+            android:id="@+id/choice_button_F"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/choice_difference"
+            android:background="@android:color/white"
+            android:text="F" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/choice_first_difference"
+            android:background="@android:color/white"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/choice_button_A"
+            <EditText
+                android:id="@+id/choice_more_letters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/choice_difference"
-                android:background="@android:color/white"
-                android:text="A" />
-
-            <Button
-                android:id="@+id/choice_button_B"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/choice_difference"
-                android:background="@android:color/white"
-                android:text="B" />
-
-            <Button
-                android:id="@+id/choice_button_C"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/choice_difference"
-                android:background="@android:color/white"
-                android:text="C" />
-
-            <Button
-                android:id="@+id/choice_button_D"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/choice_difference"
-                android:background="@android:color/white"
-                android:text="D" />
-
-            <Button
-                android:id="@+id/choice_button_E"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/choice_difference"
-                android:background="@android:color/white"
-                android:text="E" />
-
-            <Button
-                android:id="@+id/choice_button_F"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/choice_difference"
-                android:background="@android:color/white"
-                android:text="F" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/choice_first_difference"
-                android:background="@android:color/white"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/choice_more_letters"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/choice_more_letters"
-                    android:maxLines="1"
-                    android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-    </ScrollView>
-
-
-</LinearLayout>
+                android:hint="@string/choice_more_letters"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</ScrollView>

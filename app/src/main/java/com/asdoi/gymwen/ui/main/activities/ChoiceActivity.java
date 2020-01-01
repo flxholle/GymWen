@@ -6,15 +6,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.main.fragments.ChoiceActivityFragment;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 public class ChoiceActivity extends ActivityFeatures {
 
@@ -99,7 +99,7 @@ public class ChoiceActivity extends ActivityFeatures {
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.putString("courses", courses);
-        editor.commit();
+        editor.apply();
     }
 
     @Override

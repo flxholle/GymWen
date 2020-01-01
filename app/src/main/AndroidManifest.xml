@@ -12,6 +12,7 @@
     <application
         android:name=".ApplicationFeatures"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/gymlogo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/gymlogo_round"
@@ -85,8 +86,7 @@
         </receiver>
         <receiver
             android:name=".receivers.NotificationDismissButtonReceiver"
-            android:enabled="true"
-            android:exported="true" />
+            android:enabled="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

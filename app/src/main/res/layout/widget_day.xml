@@ -15,65 +15,60 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/widgetDay_text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:gravity="center|center_vertical"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/widgetDay_text1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:textSize="12sp" />
+        <TextView
+            android:id="@+id/widgetDay_text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|center_vertical"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/widgetDay_text2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:textSize="12sp" />
+        <TextView
+            android:id="@+id/widgetDay_text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|center_vertical"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/widgetDay_text3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:textSize="12sp" />
+        <TextView
+            android:id="@+id/widgetDay_text4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|center_vertical"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/widgetDay_text4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:textSize="12sp" />
+        <TextView
+            android:id="@+id/widgetDay_text5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|center_vertical"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/widgetDay_text5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:textSize="12sp" />
+        <TextView
+            android:id="@+id/widgetDay_text6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|end"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/widgetDay_text6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

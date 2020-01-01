@@ -1,38 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/choice_step5_linear"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/choice_step5_linear"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:text="@string/choice_complete"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="22sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/choice_complete"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="22sp" />
-
-            <Button
-                android:id="@+id/choice_button_add_more_courses"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/choice_difference"
-                android:layout_weight="1"
-                android:background="@color/colorAccent"
-                android:text="@string/choice_add_course"
-                android:textColor="@android:color/white" />
+        <Button
+            android:id="@+id/choice_button_add_more_courses"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/choice_difference"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="@string/choice_add_course"
+            android:textColor="@android:color/white" />
 
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

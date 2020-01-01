@@ -4,6 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 abstract class Parse {
     protected static String[][] getList(Document doc) {
@@ -80,8 +81,8 @@ abstract class Parse {
         ArrayList<String[]> list = new ArrayList<String[]>();
         for (String[] s : listString) {
             for (int i = 0; i < 3; i++) {
-                String s1 = s[i].toUpperCase();
-                if (s1.contains(search.toUpperCase())) {
+                String s1 = s[i].toUpperCase(Locale.getDefault());
+                if (s1.contains(search.toUpperCase(Locale.getDefault()))) {
                     list.add(s);
                     break;
                 }
