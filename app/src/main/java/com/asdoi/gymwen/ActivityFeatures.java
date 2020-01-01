@@ -219,8 +219,8 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     }
 
     public View getTeacherView(View view, String[] entry) {
-        TextView kürzel = view.findViewById(R.id.teacher_kürzel);
-        kürzel.setText(entry[0]);
+        TextView kuerzel = view.findViewById(R.id.teacher_kürzel);
+        kuerzel.setText(entry[0]);
 
         TextView nname = view.findViewById(R.id.teacher_nname);
         nname.setText(entry[1]);

@@ -67,6 +67,7 @@ import java.util.Locale;
 
 public class ApplicationFeatures extends Application {
     public static final int vertretung_teacher_view_id = View.generateViewId();
+    public static final int old_design_vertretung_view_id = View.generateViewId();
     private static Context mContext;
     public static ArrayList<String> websiteHistorySaveInstance;
 
@@ -447,7 +448,11 @@ public class ApplicationFeatures extends Application {
 
 
     //Localization
-    public static LanguageSwitcher languageSwitcher;
+    private static LanguageSwitcher languageSwitcher;
+
+    public static LanguageSwitcher getLanguageSwitcher() {
+        return languageSwitcher;
+    }
 
     private void initRosetta() {
         // This is the locale that you wanna your app to launch with.

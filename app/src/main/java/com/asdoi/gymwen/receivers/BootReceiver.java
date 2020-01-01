@@ -11,8 +11,14 @@ import com.asdoi.gymwen.ApplicationFeatures;
 public class BootReceiver extends BroadcastReceiver {
 
     @Override
-    public void onReceive(Context context, Intent arg1) {
-        ApplicationFeatures.proofeNotification();
+    public void onReceive(Context context, Intent intent) {
+        switch (intent.getAction()) {
+            case Intent.ACTION_DATE_CHANGED:
+            case Intent.ACTION_BOOT_COMPLETED:
+                ApplicationFeatures.proofeNotification();
+                break;
+        }
+
     }
 
     public boolean isNetworkAvailable(Context context) {

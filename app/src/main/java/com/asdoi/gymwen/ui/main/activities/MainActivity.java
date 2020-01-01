@@ -271,7 +271,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 showChangelogCK(false);
                 return;
             case R.id.action_language:
-                ApplicationFeatures.languageSwitcher.showChangeLanguageDialog(this);
+                ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(this);
                 return;
             case R.id.nav_teacherlist:
                 fragment = new LehrerlisteFragment();

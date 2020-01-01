@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 class Vertretungsplan {
 
@@ -85,8 +86,8 @@ class Vertretungsplan {
 
         //Weekday
         try {
-            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-            SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE"); // the dayArray of the week spelled out completely
+            DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+            SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
 
             Date startDate = df.parse(day[0]);
             day[1] = simpleDateformat.format(startDate);

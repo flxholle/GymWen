@@ -56,7 +56,7 @@ public class SettingsActivity extends ActivityFeatures {
             return;
         }
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.commit();
+        editor.apply();
 
         boolean hours = sharedPref.getBoolean("hours", false);
 

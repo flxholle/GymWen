@@ -871,7 +871,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         for (int i = 0; i < rowNumber; i++) {
             TableRow row = new TableRow(context);
-            row.setId(i + 130);
+            row.setId(i + ApplicationFeatures.old_design_vertretung_view_id);
 
             for (int j = 0; j < columnNumber; j++) {
                 TextView tv = new TextView(context);
@@ -894,8 +894,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     void generateTableSpecific(TableLayout table) {
         for (int i = 0; i < table.getChildCount(); i++) {
-            if (root.findViewById(i + 130) != null) {
-                table.removeView(root.findViewById(i + 130));
+            if (root.findViewById(i + ApplicationFeatures.old_design_vertretung_view_id) != null) {
+                table.removeView(root.findViewById(i + ApplicationFeatures.old_design_vertretung_view_id));
                 System.out.println("removed row " + i);
             }
         }
@@ -920,7 +920,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         for (int i = 0; i < rowNumber; i++) {
             TableRow row = new TableRow(context);
-            row.setId(i + 130);
+            row.setId(i + ApplicationFeatures.old_design_vertretung_view_id);
 
             //Stunde
             int hourMargin = 5;
@@ -1041,7 +1041,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         for (int i = 0; i < rowNumber; i++) {
             TableRow row = new TableRow(context
             );
-            row.setId(i + 130);
+            row.setId(i + ApplicationFeatures.old_design_vertretung_view_id);
 
             //Stunde
             int hourMargin = 5;
@@ -1159,7 +1159,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     void generateTableNothing(TableLayout table) {
         TableRow row = new TableRow(context
         );
-        row.setId(new Integer(130));
+        row.setId(ApplicationFeatures.old_design_vertretung_view_id);
         for (int j = 0; j < 2; j++) {
             TextView tv = new TextView(context);
             tv.setText("");

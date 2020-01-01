@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.main.activities.WebsiteActivity;
-
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -161,7 +161,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             titleView.setTextSize(22);
             titleView.setTextColor(titleColor);
             titleView.setTypeface(Typeface.DEFAULT_BOLD);
-            titleView.setGravity(Gravity.LEFT);
+            titleView.setGravity(Gravity.START);
 
             if (title.isEmpty()) {
                 titleView.setVisibility(View.GONE);
@@ -173,7 +173,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             descriptionView.setTextSize(14);
             descriptionView.setTextColor(descriptionColor);
             descriptionView.setTypeface(Typeface.DEFAULT);
-            descriptionView.setGravity(Gravity.LEFT);
+            descriptionView.setGravity(Gravity.START);
 
             if (description.isEmpty()) {
                 descriptionView.setVisibility(View.GONE);
@@ -293,7 +293,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             descriptionView.setTextSize(14);
             descriptionView.setTextColor(descriptionColor);
             descriptionView.setTypeface(Typeface.DEFAULT);
-            descriptionView.setGravity(Gravity.LEFT);
+            descriptionView.setGravity(Gravity.START);
 
             if (description.isEmpty()) {
                 descriptionView.setVisibility(View.GONE);
