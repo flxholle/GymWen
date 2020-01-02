@@ -338,7 +338,8 @@ public class ApplicationFeatures extends Application {
     }
 
     public static class createNotification extends downloadVertretungsplanDocsTask {
-        int count = 0;
+        int count1 = 0;
+        int count2 = 0;
 
         @Override
         protected void onPostExecute(Void v) {
@@ -384,7 +385,7 @@ public class ApplicationFeatures extends Application {
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setWhen(System.currentTimeMillis())
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
-                        .setContentTitle(context.getString(R.string.notif_content_title) + " " + count + "x")
+                        .setContentTitle(context.getString(R.string.notif_content_title) + " " + count1 + "x" + " " + count2 + "x")
                         .setContentIntent(resultPendingIntent)
 //                        .setLargeIcon(getBitmapFromVectorDrawable(R.drawable.ic_stat_assignment_late))
                         .setSmallIcon(R.drawable.ic_stat_assignment_late);
@@ -421,13 +422,13 @@ public class ApplicationFeatures extends Application {
             String message = "";
             String day = VertretungsPlanFeatures.getTodayTitle();
             String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
-            count = inhalt.length;
+            count1 = inhalt.length;
 
             message += notifMessageContent(inhalt, day);
 
             day = VertretungsPlanFeatures.getTomorrowTitle();
             inhalt = VertretungsPlanFeatures.getTomorrowArray();
-            count += inhalt.length;
+            count2 = inhalt.length;
 
             message += notifMessageContent(inhalt, day);
             message = message.substring(0, message.length() - 1);
