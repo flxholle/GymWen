@@ -3,6 +3,7 @@
     <release
         version="1.0.6"
         versioncode="106">
+        <change>Senden der Benachrichtigung zu einer festen Zeit</change>
         <change>Englische Sprache hinzugefügt</change>
         <!--        <change>Sprachendialog hinzugefügt</change>-->
         <change>Anzeigen ob ein Tag schon vergangen ist</change>

@@ -248,5 +248,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <!-- Bottom Navigation Bar -->
     <string name="nav_filter">Gefiltert</string>
     <string name="nav_all">Gesamt</string>
+    <string name="set_notification_alarm">Zu einer best. Uhrzeit</string>
+
+    <!-- Time Picker-->
+    <string name="time_picker_title">Uhrzeit auswählen</string>
 
 </resources>

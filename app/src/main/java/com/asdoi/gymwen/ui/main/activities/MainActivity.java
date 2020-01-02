@@ -29,6 +29,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
+import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
 import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
@@ -97,6 +98,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         checkUpdates(Display.DIALOG, false);
         showChangelogCK(true);
+
+        if (ApplicationFeatures.isAlarmOn()) {
+            ApplicationFeatures.cancelReminder(getContext(), AlarmReceiver.class);
+        }
 
         lastLoadedInTabs = lastLoadedTabsSpecific;
 
@@ -265,8 +270,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
                 break;
             case R.id.action_update:
-//                checkUpdates(Display.DIALOG, true);
-                createTimePicker();
+                checkUpdates(Display.DIALOG, true);
                 return;
             case R.id.action_changelog:
                 showChangelogCK(false);

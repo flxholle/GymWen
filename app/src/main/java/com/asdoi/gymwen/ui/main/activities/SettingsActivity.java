@@ -67,7 +67,7 @@ public class SettingsActivity extends ActivityFeatures {
         VertretungsPlanFeatures.signin(username, password);
     }
 
-    public static class SettingsFragment extends PreferenceFragmentCompat {
+    public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
@@ -84,11 +84,44 @@ public class SettingsActivity extends ActivityFeatures {
                 setBorder();
                 return true;
             });
+
+            myPref = findPreference("alarm");
+            myPref.setOnPreferenceClickListener((Preference p) -> {
+                if (ApplicationFeatures.isAlarmOn()) {
+                    createTimePicker((ActivityFeatures) getActivity());
+                } else {
+                    ApplicationFeatures.setAlarmTime(-1, -1, -1);
+                }
+                return true;
+            });
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+
+        }
+
+        @Override
+        public void onPause() {
+            getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+            super.onPause();
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences var1, String var2) {
+            if (ApplicationFeatures.getAlarmTime()[0] == -1) {
+                SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("alarm", false);
+            }
         }
 
         private void setNotif() {
             boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false);
             findPreference("alwaysNotification").setEnabled(showNotif);
+            findPreference("alarm").setEnabled(showNotif);
         }
 
         private void setBorder() {
