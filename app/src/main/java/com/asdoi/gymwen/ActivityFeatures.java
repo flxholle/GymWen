@@ -1,8 +1,10 @@
 package com.asdoi.gymwen;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -35,12 +37,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.work.ExistingWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
+import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.main.activities.MainActivity;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
@@ -50,10 +48,13 @@ import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
 import com.google.android.material.snackbar.Snackbar;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.zubair.alarmmanager.builder.AlarmBuilder;
+import com.zubair.alarmmanager.enums.AlarmType;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import de.cketti.library.changelog.ChangeLog;
 import info.isuru.sheriff.enums.SheriffPermission;
@@ -336,6 +337,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
     //DownloadManager
     private String subPath;
+    private long downloadID;
 
     public void startDownload(String url, String title, String description, String subPath, BroadcastReceiver onComplete) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
@@ -349,10 +351,8 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
         }
 
-        registerReceiver(onComplete,
-                new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-        registerReceiver(onNotificationClick,
-                new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
+        registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        registerReceiver(onNotificationClick, new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
 
         this.subPath = subPath;
 
@@ -372,13 +372,18 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.allowScanningByMediaScanner();
 
-        mgr.enqueue(request);
+        downloadID = mgr.enqueue(request);
 
     }
 
     public BroadcastReceiver installApk = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
-            installApk(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + subPath);
+            //Fetching the download id received with the broadcast
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            if (downloadID == id) {
+                installApk(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + subPath);
+                unregisterReceiver(this);
+            }
         }
     };
 
@@ -386,6 +391,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         public void onReceive(Context ctxt, Intent intent) {
             Intent i = new Intent(getContext(), MainActivity.class);
             startActivity(i);
+            unregisterReceiver(this);
         }
     };
 
@@ -402,41 +408,6 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
 
     //Time picker
-    public class NotifyWork extends Worker {
-
-        public NotifyWork(@NonNull Context context, @NonNull WorkerParameters params) {
-            super(context, params);
-        }
-
-
-        @Override
-        public Result doWork() {
-            ApplicationFeatures.proofeNotification();
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-            int time = sharedPref.getInt("notif_time", 0);
-            Calendar calendar = Calendar.getInstance();
-            System.out.println("Seconds in current minute = " + calendar.get(Calendar.SECOND));
-
-            int currentTime = time - getCurrentTimeInSeconds();
-            scheduleNotification(currentTime);
-            return Result.success();
-        }
-    }
-
-    @Override
-    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-        int time = hourOfDay * 3600 + minute * 60 + second;
-        System.out.println("You picked the following time: " + hourOfDay + "h" + minute + "m" + second);
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("notif_time", time);
-        editor.apply();
-
-        int currentTimeDelay = time - getCurrentTimeInSeconds();
-        scheduleNotification(currentTimeDelay);
-    }
-
     public void createTimePicker() {
         Calendar now = Calendar.getInstance();
 
@@ -450,23 +421,58 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         tpd.show(getSupportFragmentManager(), "Timepickerdialog");
     }
 
-    private static final String NOTIFICATION_WORK = "notif_work";
+    @Override
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        int customTime = hourOfDay * 3600 + minute * 60 + second;
+        System.out.println("You picked the following time: " + hourOfDay + "h" + minute + "m" + second);
 
-    public void scheduleNotification(long timeInSeconds) {
-        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotifyWork.class)/*.setInitialDelay(timeInSeconds, TimeUnit.SECONDS)*/.build();
-        WorkManager.getInstance().beginUniqueWork(NOTIFICATION_WORK, ExistingWorkPolicy.REPLACE, notificationWork).enqueue();
-//        WorkManager.getInstance().enqueue(notificationWork);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("notif_time", customTime);
+        editor.apply();
 
-//        PeriodicWorkRequest notificationWork = new PeriodicWorkRequest.Builder(NotifyWork.class, timeInSeconds, TimeUnit.SECONDS).build();
-//        WorkManager.getInstance(this).enqueue(notificationWork);
+        Calendar customCalendar = Calendar.getInstance();
+        customCalendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, hourOfDay, minute, second);
+
+        int currentTime = ApplicationFeatures.getCurrentTimeInSeconds();
+
+        if (customTime > currentTime) {
+//            long delay = customTime - currentTime;
+//            NotifyScheduler.scheduleNotification(delay, TimeUnit.SECONDS);
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.setTimeInMillis(System.currentTimeMillis());
+//            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+//            calendar.set(Calendar.MINUTE, minute);
+//            calendar.set(Calendar.SECOND, second);
+            ApplicationFeatures.setAlarmTime(hourOfDay, minute, second);
+            ApplicationFeatures.setReminder(this, AlarmReceiver.class, hourOfDay, minute, second);
+        }
+
+//        int currentTimeDelay = time - getCurrentTimeInSeconds();
+//        scheduleNotification(currentTimeDelay);
     }
 
-    public static int getCurrentTimeInSeconds() {
-        Calendar calendar = Calendar.getInstance();
-        int time = calendar.get(Calendar.SECOND);
-        time += calendar.get(Calendar.MINUTE) * 60;
-        time += calendar.get(Calendar.HOUR_OF_DAY) * 3600;
-        return time;
+    public void setAlarm() {
+        AlarmBuilder builder = new AlarmBuilder().with(this)
+                .setTimeInMilliSeconds(TimeUnit.SECONDS.toMillis(10))
+                .setId("UPDATE_INFO_SYSTEM_SERVICE")
+                .setAlarmType(AlarmType.REPEAT);
     }
 
+    public static void sendAlarm(Calendar calendar) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
+        if (!prefs.getBoolean("firstTime", false)) {
+
+            Intent alarmIntent = new Intent(ApplicationFeatures.getContext(), AlarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(ApplicationFeatures.getContext(), 0, alarmIntent, 0);
+
+            AlarmManager manager = (AlarmManager) ApplicationFeatures.getContext().getSystemService(Context.ALARM_SERVICE);
+
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstTime", true);
+            editor.apply();
+        }
+    }
 }

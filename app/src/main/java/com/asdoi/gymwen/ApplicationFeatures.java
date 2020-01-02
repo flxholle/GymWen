@@ -1,5 +1,6 @@
 package com.asdoi.gymwen;
 
+import android.app.AlarmManager;
 import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -10,6 +11,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -52,6 +54,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -70,6 +73,14 @@ public class ApplicationFeatures extends Application {
     public static final int old_design_vertretung_view_id = View.generateViewId();
     private static Context mContext;
     public static ArrayList<String> websiteHistorySaveInstance;
+
+    public static int getCurrentTimeInSeconds() {
+        Calendar calendar = Calendar.getInstance();
+        int time = calendar.get(Calendar.SECOND);
+        time += calendar.get(Calendar.MINUTE) * 60;
+        time += calendar.get(Calendar.HOUR_OF_DAY) * 3600;
+        return time;
+    }
 
     @Override
     public void onCreate() {
@@ -128,7 +139,7 @@ public class ApplicationFeatures extends Application {
             }
             VertretungsPlanFeatures.setDocs(doc[0], doc[1]);
             if (!isWidget) {
-                proofeNotification();
+                sendNotification();
                 updateMyWidgets();
             }
         }
@@ -212,7 +223,7 @@ public class ApplicationFeatures extends Application {
 
 
             if (!isWidget) {
-                proofeNotification();
+                sendNotification();
                 updateMyWidgets();
             }
         } else if (signIn) {
@@ -262,6 +273,26 @@ public class ApplicationFeatures extends Application {
         return getBooleanSettings("hours", false);
     }
 
+    public static int[] getAlarmTime() {
+        SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
+        return new int[]{sharedPref.getInt("Alarm_hour", 0), sharedPref.getInt("Alarm_minute", 0), sharedPref.getInt("Alarm_second", 0)};
+    }
+
+    public static void setAlarmTime(int... times) {
+        if (times.length != 3) {
+            System.out.println("wrong parameters");
+            return;
+        }
+
+        SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("Alarm_hour", times[0]);
+        editor.putInt("Alarm_minute", times[1]);
+        editor.putInt("Alarm_second", times[2]);
+        editor.apply();
+
+    }
+
 
     //Website
     public static boolean isURLValid(String url) {
@@ -296,7 +327,7 @@ public class ApplicationFeatures extends Application {
     final private static int NOTIFICATION_ID = 1;
     final private static String NOTIFICATION_CHANNEL_ID = "vertretungsplan_01";
 
-    public static void proofeNotification() {
+    public static void sendNotification() {
         if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
             new ApplicationFeatures.createNotification().execute(true, false);
         }
@@ -476,5 +507,53 @@ public class ApplicationFeatures extends Application {
 
         languageSwitcher = new LanguageSwitcher(this, displayLang);
         languageSwitcher.setSupportedLocales(supportedLocales);
+    }
+
+
+    //Schedule and TimePicker
+    public static void setReminder(Context context, Class<?> cls, int hour, int min, int second) {
+        Calendar calendar = Calendar.getInstance();
+
+        Calendar setCalendar = Calendar.getInstance();
+        setCalendar.set(Calendar.HOUR_OF_DAY, hour);
+        setCalendar.set(Calendar.MINUTE, min);
+        setCalendar.set(Calendar.SECOND, second);
+
+        // cancel already scheduled reminders
+        cancelReminder(context, cls);
+
+        if (setCalendar.before(calendar))
+            setCalendar.add(Calendar.DATE, 1);
+
+        // Enable a receiver
+        ComponentName receiver = new ComponentName(context, cls);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
+
+        Intent intent1 = new Intent(context, cls);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NotifyScheduler.DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+    }
+
+    public static void cancelReminder(Context context, Class<?> cls) {
+        // Disable a receiver
+        ComponentName receiver = new ComponentName(context, cls);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+
+        Intent intent1 = new Intent(context, cls);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NotifyScheduler.DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        am.cancel(pendingIntent);
+        pendingIntent.cancel();
     }
 }
