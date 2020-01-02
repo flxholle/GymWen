@@ -87,7 +87,7 @@ public class ApplicationFeatures extends Application {
         super.onCreate();
         mContext = this;
         ACRA.init(this);
-//        initRosetta();
+        initRosetta();
     }
 
 

@@ -21,11 +21,6 @@ class Vertretungsplan {
     Document todayDoc;
     Document tomorrowDoc;
 
-    String noInternet = ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
-    String noVertretung = ApplicationFeatures.getContext().getString(R.string.nothing);
-    String noVertetungAll = ApplicationFeatures.getContext().getString(R.string.nothing_all);
-    String laterDay = ApplicationFeatures.getContext().getString(R.string.day_past);
-
     public Vertretungsplan() {
     }
 
@@ -39,19 +34,35 @@ class Vertretungsplan {
         this.hours = hours;
     }
 
+    private static String laterDay() {
+        return ApplicationFeatures.getContext().getString(R.string.day_past);
+    }
+
+    private static String noVertretungAll() {
+        return ApplicationFeatures.getContext().getString(R.string.nothing_all);
+    }
+
+    private static String noVertretung() {
+        return ApplicationFeatures.getContext().getString(R.string.nothing);
+    }
+
+    private static String noInternet() {
+        return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
+    }
+
 
     //DayArrays
     private String getTitleStringRaw(boolean today) {
         String[] dayTitle = Parse.getTitle(today ? todayDoc : tomorrowDoc);
         String returnValue = "";
         if (dayTitle == null || dayTitle.equals("")) {
-            return noInternet;
+            return noInternet();
         }
         for (String s : dayTitle) {
             returnValue += s + " ";
         }
         if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
-            return noInternet;
+            return noInternet();
 
         return returnValue.substring(0, returnValue.length() - 1);
     }
@@ -93,7 +104,7 @@ class Vertretungsplan {
             day[1] = simpleDateformat.format(startDate);
             Date currentDate = new Date();
             if (currentDate.after(startDate)) {
-                return new String[]{day[0], laterDay};
+                return new String[]{day[0], laterDay()};
             }
 
         } catch (ParseException e) {
@@ -142,7 +153,7 @@ class Vertretungsplan {
     public String getTitleString(boolean today) {
         String[] dayTitle = getTitleArray(today);
         if (dayTitle == null || dayTitle.equals("") || dayTitle.length <= 0) {
-            return noInternet;
+            return noInternet();
         }
 
         String returnValue = dayTitle[0];
@@ -158,7 +169,7 @@ class Vertretungsplan {
         }
 
         if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
-            return noInternet;
+            return noInternet();
 
         return returnValue;
     }
@@ -191,7 +202,7 @@ class Vertretungsplan {
         String[][] inhalt = getDay(today);
 
         if (inhalt == null) {
-            return noVertretung;
+            return noVertretung();
         }
 
         String todayString = "";
@@ -235,7 +246,7 @@ class Vertretungsplan {
         String[][] inhalt = getAll(today);
 
         if (inhalt == null) {
-            return noVertetungAll;
+            return noVertretungAll();
         }
 
         String todayString = "";
