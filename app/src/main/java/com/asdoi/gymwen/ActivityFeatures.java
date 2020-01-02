@@ -1,24 +1,20 @@
 package com.asdoi.gymwen;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
-import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -48,13 +44,10 @@ import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
 import com.google.android.material.snackbar.Snackbar;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-import com.zubair.alarmmanager.builder.AlarmBuilder;
-import com.zubair.alarmmanager.enums.AlarmType;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 import de.cketti.library.changelog.ChangeLog;
 import info.isuru.sheriff.enums.SheriffPermission;
@@ -408,71 +401,22 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
 
     //Time picker
-    public void createTimePicker() {
+    public static void createTimePicker(ActivityFeatures activity) {
         Calendar now = Calendar.getInstance();
 
         TimePickerDialog tpd = TimePickerDialog.newInstance(
-                this,
+                activity,
                 now.get(Calendar.HOUR_OF_DAY),
                 now.get(Calendar.MINUTE),
                 true
         );
-        tpd.setTitle("Pick a time");
-        tpd.show(getSupportFragmentManager(), "Timepickerdialog");
+        tpd.setTitle(ApplicationFeatures.getContext().getString(R.string.time_picker_title));
+        tpd.show(activity.getSupportFragmentManager(), "Timepickerdialog");
     }
 
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-        int customTime = hourOfDay * 3600 + minute * 60 + second;
-        System.out.println("You picked the following time: " + hourOfDay + "h" + minute + "m" + second);
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("notif_time", customTime);
-        editor.apply();
-
-        Calendar customCalendar = Calendar.getInstance();
-        customCalendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, hourOfDay, minute, second);
-
-        int currentTime = ApplicationFeatures.getCurrentTimeInSeconds();
-
-        if (customTime > currentTime) {
-//            long delay = customTime - currentTime;
-//            NotifyScheduler.scheduleNotification(delay, TimeUnit.SECONDS);
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTimeInMillis(System.currentTimeMillis());
-//            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-//            calendar.set(Calendar.MINUTE, minute);
-//            calendar.set(Calendar.SECOND, second);
-            ApplicationFeatures.setAlarmTime(hourOfDay, minute, second);
-            ApplicationFeatures.setReminder(this, AlarmReceiver.class, hourOfDay, minute, second);
-        }
-
-//        int currentTimeDelay = time - getCurrentTimeInSeconds();
-//        scheduleNotification(currentTimeDelay);
-    }
-
-    public void setAlarm() {
-        AlarmBuilder builder = new AlarmBuilder().with(this)
-                .setTimeInMilliSeconds(TimeUnit.SECONDS.toMillis(10))
-                .setId("UPDATE_INFO_SYSTEM_SERVICE")
-                .setAlarmType(AlarmType.REPEAT);
-    }
-
-    public static void sendAlarm(Calendar calendar) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
-        if (!prefs.getBoolean("firstTime", false)) {
-
-            Intent alarmIntent = new Intent(ApplicationFeatures.getContext(), AlarmReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(ApplicationFeatures.getContext(), 0, alarmIntent, 0);
-
-            AlarmManager manager = (AlarmManager) ApplicationFeatures.getContext().getSystemService(Context.ALARM_SERVICE);
-
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("firstTime", true);
-            editor.apply();
-        }
+        ApplicationFeatures.setAlarmTime(hourOfDay, minute, second);
+        ApplicationFeatures.setReminder(this, AlarmReceiver.class, hourOfDay, minute, second);
     }
 }

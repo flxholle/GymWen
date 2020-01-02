@@ -273,9 +273,13 @@ public class ApplicationFeatures extends Application {
         return getBooleanSettings("hours", false);
     }
 
+    public static boolean isAlarmOn() {
+        return getBooleanSettings("alarm", false);
+    }
+
     public static int[] getAlarmTime() {
         SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
-        return new int[]{sharedPref.getInt("Alarm_hour", 0), sharedPref.getInt("Alarm_minute", 0), sharedPref.getInt("Alarm_second", 0)};
+        return new int[]{sharedPref.getInt("Alarm_hour", -1), sharedPref.getInt("Alarm_minute", -1), sharedPref.getInt("Alarm_second", -1)};
     }
 
     public static void setAlarmTime(int... times) {
@@ -511,16 +515,22 @@ public class ApplicationFeatures extends Application {
 
 
     //Schedule and TimePicker
+    public static final int DAILY_REMINDER_REQUEST_CODE = 100;
+
     public static void setReminder(Context context, Class<?> cls, int hour, int min, int second) {
+        // cancel already scheduled reminders
+        cancelReminder(context, cls);
+
+        if (!isAlarmOn()) {
+            return;
+        }
+
         Calendar calendar = Calendar.getInstance();
 
         Calendar setCalendar = Calendar.getInstance();
         setCalendar.set(Calendar.HOUR_OF_DAY, hour);
         setCalendar.set(Calendar.MINUTE, min);
         setCalendar.set(Calendar.SECOND, second);
-
-        // cancel already scheduled reminders
-        cancelReminder(context, cls);
 
         if (setCalendar.before(calendar))
             setCalendar.add(Calendar.DATE, 1);
@@ -535,7 +545,7 @@ public class ApplicationFeatures extends Application {
 
 
         Intent intent1 = new Intent(context, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NotifyScheduler.DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
@@ -551,7 +561,7 @@ public class ApplicationFeatures extends Application {
                 PackageManager.DONT_KILL_APP);
 
         Intent intent1 = new Intent(context, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NotifyScheduler.DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.cancel(pendingIntent);
         pendingIntent.cancel();

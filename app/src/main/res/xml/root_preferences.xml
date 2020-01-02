@@ -52,6 +52,10 @@
             android:defaultValue="true"
             android:key="alwaysNotification"
             android:title="@string/set_notification_showAlways" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="alarm"
+            android:title="@string/set_notification_alarm" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/set_vertretung_signin">
