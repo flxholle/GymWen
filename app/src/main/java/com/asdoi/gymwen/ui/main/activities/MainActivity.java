@@ -265,7 +265,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
                 break;
             case R.id.action_update:
-                checkUpdates(Display.DIALOG, true);
+//                checkUpdates(Display.DIALOG, true);
+                createTimePicker();
                 return;
             case R.id.action_changelog:
                 showChangelogCK(false);

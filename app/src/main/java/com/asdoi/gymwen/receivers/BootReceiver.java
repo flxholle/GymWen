@@ -15,7 +15,7 @@ public class BootReceiver extends BroadcastReceiver {
         switch (intent.getAction()) {
             case Intent.ACTION_DATE_CHANGED:
             case Intent.ACTION_BOOT_COMPLETED:
-                ApplicationFeatures.proofeNotification();
+                ApplicationFeatures.sendNotification();
                 break;
         }
 

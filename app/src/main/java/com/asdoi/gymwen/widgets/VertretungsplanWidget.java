@@ -50,7 +50,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
 
             super.onUpdate(context, appWidgetManager, appWidgetIds);
         }).start();
-//        ApplicationFeatures.proofeNotification();
+//        ApplicationFeatures.sendNotification();
     }
 
     @Override
