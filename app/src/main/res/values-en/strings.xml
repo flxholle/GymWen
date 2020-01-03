@@ -21,7 +21,7 @@
     <string name="menu_both">At a glance!</string>
     <string name="menu_impressum">Imprint</string>
     <string name="menu_update">Updates</string>
-    <string name="menu_changelog">Amendments</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_shop">Online shop</string>
     <string name="menu_teacher_list">List of teachers</string>
     <string name="menu_notes">Notes</string>
@@ -183,7 +183,7 @@
     <string name="acra_toast">That shouldn\'t have happened.</string>
 
 
-    <string name="changelog_full_title">Changes \\u0026 improvements</string>
+    <string name="changelog_full_title">Changes \u0026 improvements</string>
     <string name="changelog_title">What\'s new</string>
     <string name="changelog_ok_button">All right!</string>
     <string name="changelog_show_full">More\u2026</string>

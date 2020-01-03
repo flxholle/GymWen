@@ -385,7 +385,7 @@ public class ApplicationFeatures extends Application {
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setWhen(System.currentTimeMillis())
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
-                        .setContentTitle(context.getString(R.string.notif_content_title) + " " + count1 + "x" + " " + count2 + "x")
+                        .setContentTitle(context.getString(R.string.notif_content_title) + " " + count1 + "x" + ", " + count2 + "x")
                         .setContentIntent(resultPendingIntent)
 //                        .setLargeIcon(getBitmapFromVectorDrawable(R.drawable.ic_stat_assignment_late))
                         .setSmallIcon(R.drawable.ic_stat_assignment_late);
@@ -414,6 +414,7 @@ public class ApplicationFeatures extends Application {
                 notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
 
             } catch (Exception e) {
+                e.printStackTrace();
                 //Known Icon Error
             }
         }
@@ -518,23 +519,23 @@ public class ApplicationFeatures extends Application {
     //Schedule and TimePicker
     public static final int DAILY_REMINDER_REQUEST_CODE = 100;
 
-    public static void setReminder(Context context, Class<?> cls, int hour, int min, int second) {
+    public static void setAlarm(Context context, Class<?> cls, int hour, int min, int second) {
         // cancel already scheduled reminders
-        cancelReminder(context, cls);
+        cancelAlarm(context, cls);
 
         if (!isAlarmOn()) {
             return;
         }
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar currentCalendar = Calendar.getInstance();
 
-        Calendar setCalendar = Calendar.getInstance();
-        setCalendar.set(Calendar.HOUR_OF_DAY, hour);
-        setCalendar.set(Calendar.MINUTE, min);
-        setCalendar.set(Calendar.SECOND, second);
+        Calendar customCalendar = Calendar.getInstance();
+        customCalendar.set(Calendar.HOUR_OF_DAY, hour);
+        customCalendar.set(Calendar.MINUTE, min);
+        customCalendar.set(Calendar.SECOND, second);
 
-        if (setCalendar.before(calendar))
-            setCalendar.add(Calendar.DATE, 1);
+        if (customCalendar.before(currentCalendar))
+            customCalendar.add(Calendar.DATE, 1);
 
         // Enable a receiver
         ComponentName receiver = new ComponentName(context, cls);
@@ -546,13 +547,25 @@ public class ApplicationFeatures extends Application {
 
 
         Intent intent1 = new Intent(context, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ApplicationFeatures.getContext(), 0, intent1, 0);
+
+
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, customCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+//        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, System.currentTimeMillis() + 1000, pendingIntent);
+
+        /*if (Build.VERSION.SDK_INT >= 24) {
+            AlarmManager.OnAlarmListener s = () -> {
+                ApplicationFeatures.sendNotification();
+            };
+            am.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, System.currentTimeMillis() + 1000, "sd", s);
+        }*/
+
 
     }
 
-    public static void cancelReminder(Context context, Class<?> cls) {
+    public static void cancelAlarm(Context context, Class<?> cls) {
         // Disable a receiver
         ComponentName receiver = new ComponentName(context, cls);
         PackageManager pm = context.getPackageManager();
