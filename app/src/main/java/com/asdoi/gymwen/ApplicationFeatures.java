@@ -343,13 +343,13 @@ public class ApplicationFeatures extends Application {
 
         @Override
         protected void onPostExecute(Void v) {
-            if (VertretungsPlanFeatures.getTodayTitle().equals("Keine Internetverbindung!")) {
+            if (VertretungsPlanFeatures.getTodayArray() == null) {
                 return;
             }
-            proofeNotification();
+            sendNotification();
         }
 
-        public void proofeNotification() {
+        public void sendNotification() {
             //Spanned spanBody = Html.fromHtml(notificationMessage());
             String body = notificationMessage();
             createNotification(body);
@@ -425,13 +425,21 @@ public class ApplicationFeatures extends Application {
             String message = "";
             String day = VertretungsPlanFeatures.getTodayTitle();
             String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
-            count1 = inhalt.length;
+            try {
+                count1 = inhalt.length;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             message += notifMessageContent(inhalt, day);
 
             day = VertretungsPlanFeatures.getTomorrowTitle();
             inhalt = VertretungsPlanFeatures.getTomorrowArray();
-            count2 = inhalt.length;
+            try {
+                count2 = inhalt.length;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             message += notifMessageContent(inhalt, day);
             message = message.substring(0, message.length() - 1);
