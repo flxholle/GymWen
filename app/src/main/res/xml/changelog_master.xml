@@ -3,12 +3,13 @@
     <release
         version="1.0.6"
         versioncode="106">
-        <change>Senden der Benachrichtigung zu einer festen Zeit</change>
         <change>Englische Sprache hinzugefügt</change>
         <change>Sprachendialog hinzugefügt</change>
         <change>Anzeigen ob ein Tag schon vergangen ist</change>
         <change>Änderung der Anzeige auf Wochentage</change>
         <change>Summe der vertretenen Stunden in der Benachrichtigung</change>
+        <change>Senden der Benachrichtigung zu einer festen Zeit (noch nicht voll funktionsfähig)
+        </change>
     </release>
     <release
         version="1.0.5"

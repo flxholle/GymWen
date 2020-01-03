@@ -9,17 +9,18 @@ import com.asdoi.gymwen.ApplicationFeatures;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        System.out.println("triggered alarm");
+
         if (intent.getAction() != null && context != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
                 // Set the alarm here.
                 int[] times = ApplicationFeatures.getAlarmTime();
-                ApplicationFeatures.setReminder(context, AlarmReceiver.class, times[0], times[1], times[2]);
+                ApplicationFeatures.setAlarm(context, AlarmReceiver.class, times[0], times[1], times[2]);
                 return;
             }
         }
 
         //Trigger the notification
-        System.out.println("trigger notif");
         ApplicationFeatures.sendNotification();
     }
 }

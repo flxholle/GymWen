@@ -417,6 +417,6 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
         ApplicationFeatures.setAlarmTime(hourOfDay, minute, second);
-        ApplicationFeatures.setReminder(this, AlarmReceiver.class, hourOfDay, minute, second);
+        ApplicationFeatures.setAlarm(this, AlarmReceiver.class, hourOfDay, minute, second);
     }
 }

@@ -100,7 +100,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         showChangelogCK(true);
 
         if (ApplicationFeatures.isAlarmOn()) {
-            ApplicationFeatures.cancelReminder(getContext(), AlarmReceiver.class);
+            ApplicationFeatures.cancelAlarm(getContext(), AlarmReceiver.class);
         }
 
         lastLoadedInTabs = lastLoadedTabsSpecific;
