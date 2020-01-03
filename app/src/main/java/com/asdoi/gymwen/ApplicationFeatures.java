@@ -358,6 +358,8 @@ public class ApplicationFeatures extends Application {
 
         private void createNotification(String body) {
             Context context = getContext();
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
+                return;
 
             try {
                 // Create an Intent for the activity you want to start
