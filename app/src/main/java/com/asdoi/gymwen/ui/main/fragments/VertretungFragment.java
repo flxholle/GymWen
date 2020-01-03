@@ -392,6 +392,9 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     }
 
     String[][] replaceAll(String[][] value, String regex, String replace) {
+        if (value == null) {
+            return value;
+        }
         for (int i = 0; i < value.length; i++) {
             for (int j = 0; j < value[i].length; j++) {
                 if (value[i][j].equals(regex))
