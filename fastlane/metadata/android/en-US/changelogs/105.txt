@@ -1,0 +1,4 @@
+- Neues Design im Vertretungsplan (altes Design in den Einstellungen reaktivierbar)
+- Aufnahme in F-Droid
+- Passwortverbergen beim Anmelden
+- Optimierungen
