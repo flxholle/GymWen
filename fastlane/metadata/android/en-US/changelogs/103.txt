@@ -1,0 +1,4 @@
+- Lehrerliste
+- Automatisches Herunterladen und Installieren von Updates
+- GymWen Online Shop hinzugefügt
+- Code und Widget Optimierungen

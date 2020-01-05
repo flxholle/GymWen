@@ -1,0 +1,5 @@
+- Benachrichtigung ausschalten, verbergen oder nicht dauerhaft anzeigen
+- Uhrzeiten statt Stunden anzeigen
+- Absturzverarbeitung
+- Fehlende Internetverbindung zeigt nicht mehr an, dass nichts entfällt
+- Klare Anweisung über die einzugebenden Anmeldedaten

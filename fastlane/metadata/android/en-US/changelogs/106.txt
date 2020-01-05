@@ -1,0 +1,6 @@
+- Englische Sprache hinzugefügt
+- Sprachendialog hinzugefügt
+- Anzeigen ob ein Tag schon vergangen ist
+- Änderung der Anzeige auf Wochentage
+- Summe der vertretenen Stunden in der Benachrichtigung
+- Senden der Benachrichtigung zu einer festen Zeit (noch nicht voll funktionsfähig)

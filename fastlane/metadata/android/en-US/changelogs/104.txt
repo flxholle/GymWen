@@ -1,0 +1,7 @@
+Achtung: Diese Version erscheint nicht auf f-droid
+ - Klickbare Lehrerkürzel
+ - Durchsuchbare Lehrerliste
+ - Aktivierbare Beta-Features
+ - Verbergen bestimmter Menü-Einträge
+ - Neues Design im Impressum
+ - Neue Icons
