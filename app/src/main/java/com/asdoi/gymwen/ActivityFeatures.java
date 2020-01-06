@@ -15,6 +15,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -34,8 +36,10 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.main.activities.MainActivity;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
 import com.github.javiersantos.appupdater.enums.AppUpdaterError;
@@ -418,5 +422,30 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
         ApplicationFeatures.setAlarmTime(hourOfDay, minute, second);
         ApplicationFeatures.setAlarm(this, AlarmReceiver.class, hourOfDay, minute, second);
+    }
+
+
+    //Save and Reload Documents
+    public void saveDocs() {
+        VertretungsPlanFeatures.saveDocs();
+        Lehrerliste.saveDoc();
+        Toast.makeText(ApplicationFeatures.getContext(), R.string.saved_docs, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void reloadDocs() {
+        Lehrerliste.reloadDoc();
+        if (VertretungsPlanFeatures.reloadDocs()) {
+            try {
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    Toast toast = Toast.makeText(ApplicationFeatures.getContext(), R.string.reloaded_docs, Toast.LENGTH_SHORT);
+                    TextView v = toast.getView().findViewById(android.R.id.message);
+                    if (v != null)
+                        v.setGravity(Gravity.CENTER);
+                    toast.show();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

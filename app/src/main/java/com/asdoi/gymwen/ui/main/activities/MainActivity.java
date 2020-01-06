@@ -390,14 +390,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return;
         }
         if (pressedBack) {
-            VertretungsPlanFeatures.saveDocs();
+            saveDocs();
             finish();
             System.exit(1);
             android.os.Process.killProcess(android.os.Process.myPid());
         } else {
             Toast.makeText(getApplicationContext(), R.string.back_button, Toast.LENGTH_LONG).show();
             pressedBack = true;
-            VertretungsPlanFeatures.saveDocs();
+            saveDocs();
         }
     }
 
