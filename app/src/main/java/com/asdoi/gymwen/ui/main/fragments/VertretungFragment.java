@@ -139,7 +139,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             ApplicationFeatures.downloadVertretungsplanDocs(false, true);
             getActivity().runOnUiThread(() -> {
                 try {
-                    if (!changedSectionsPagerAdapterTitles) {
+                    if (!changedSectionsPagerAdapterTitles && VertretungsPlanFeatures.areDocsDownloaded()) {
                         MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
                         spa.setTitles(VertretungsPlanFeatures.getTodayTitleArray()[1], VertretungsPlanFeatures.getTomorrowTitleArray()[1]);
                         spa.notifyDataSetChanged();
