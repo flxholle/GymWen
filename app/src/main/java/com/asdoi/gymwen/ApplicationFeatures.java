@@ -90,6 +90,12 @@ public class ApplicationFeatures extends Application {
         initRosetta();
     }
 
+//    @Override
+//    public void onTerminate() {
+//        VertretungsPlanFeatures.saveDocs();
+//        super.onTerminate();
+//    }
+
 
     public static Context getContext() {
         return mContext;
@@ -138,10 +144,12 @@ public class ApplicationFeatures extends Application {
                 }
             }
             VertretungsPlanFeatures.setDocs(doc[0], doc[1]);
+            sendNotification();
             if (!isWidget) {
-                sendNotification();
                 updateMyWidgets();
             }
+        } else if (!ApplicationFeatures.isNetworkAvailable()) {
+            VertretungsPlanFeatures.reloadDocs();
         }
     }
 
@@ -221,9 +229,9 @@ public class ApplicationFeatures extends Application {
 
             VertretungsPlanFeatures.signin(username, password);
 
+            sendNotification();
 
             if (!isWidget) {
-                sendNotification();
                 updateMyWidgets();
             }
         } else if (signIn) {

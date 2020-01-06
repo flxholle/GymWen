@@ -390,15 +390,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return;
         }
         if (pressedBack) {
+            VertretungsPlanFeatures.saveDocs();
             finish();
             System.exit(1);
             android.os.Process.killProcess(android.os.Process.myPid());
-
         } else {
             Toast.makeText(getApplicationContext(), R.string.back_button, Toast.LENGTH_LONG).show();
             pressedBack = true;
+            VertretungsPlanFeatures.saveDocs();
         }
-        VertretungsPlanFeatures.saveDocs();
     }
 
     //Tabs
@@ -443,7 +443,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         public int getItemPosition(Object object) {
             ((VertretungFragment) object).update(all);
 
-            //don't return POSITION_NONE, avoid fragment recreation.
+            //don'AndroidManifest.xml return POSITION_NONE, avoid fragment recreation.
             return super.getItemPosition(object);
         }
     }

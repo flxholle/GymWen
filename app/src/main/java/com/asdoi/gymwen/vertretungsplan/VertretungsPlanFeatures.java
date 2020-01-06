@@ -1,8 +1,18 @@
 package com.asdoi.gymwen.vertretungsplan;
 
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.Gravity;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.preference.PreferenceManager;
+
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
@@ -110,11 +120,51 @@ public abstract class VertretungsPlanFeatures {
     }
 
     public static void saveDocs() {
-//        vertretungsplan.setDocumentsToSettings();
+        if (!areDocsDownloaded())
+            return;
+
+        SharedPreferences.Editor prefsEditor = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit();
+        String doc = vertretungsplan.getDoc(true).toString();
+        prefsEditor.putString("doc1", doc);
+
+        String doc2 = vertretungsplan.getDoc(false).toString();
+        prefsEditor.putString("doc2", doc2);
+
+        prefsEditor.commit();
     }
 
     public static void reloadDocs() {
-//        vertretungsplan.getDocumentsFromSettings();
+        try {
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
+            String docString1 = sharedPref.getString("doc1", "");
+            Document doc1 = Jsoup.parse(docString1);
+
+            String docString2 = sharedPref.getString("doc2", "");
+            Document doc2 = Jsoup.parse(docString2);
+
+            if (!docString1.trim().isEmpty() && !docString2.trim().isEmpty()) {
+                setDocs(doc1, doc2);
+
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    Toast toast = Toast.makeText(ApplicationFeatures.getContext(), "Keine Internetverbindung!\nDateien vom letzten Mal wiederhergestellt.\nEventuell nicht aktuell!!!", Toast.LENGTH_LONG);
+                    TextView v = toast.getView().findViewById(android.R.id.message);
+                    if (v != null)
+                        v.setGravity(Gravity.CENTER);
+                    toast.show();
+                });
+            } /*else {
+                throw new Exception();
+            }*/
+
+        } catch (Exception e) {
+            new Handler(Looper.getMainLooper()).post(() -> {
+                Toast toast = Toast.makeText(ApplicationFeatures.getContext(), "Keine Dateien temporär gespeichert", Toast.LENGTH_SHORT);
+                TextView v = toast.getView().findViewById(android.R.id.message);
+                if (v != null)
+                    v.setGravity(Gravity.CENTER);
+                toast.show();
+            });
+        }
     }
 
     public static ArrayList<String> getNames() {
