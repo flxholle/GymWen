@@ -1,11 +1,6 @@
 package com.asdoi.gymwen.vertretungsplan;
 
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.Gravity;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.preference.PreferenceManager;
 
@@ -133,7 +128,7 @@ public abstract class VertretungsPlanFeatures {
         prefsEditor.commit();
     }
 
-    public static void reloadDocs() {
+    public static boolean reloadDocs() {
         try {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
             String docString1 = sharedPref.getString("doc1", "");
@@ -144,27 +139,13 @@ public abstract class VertretungsPlanFeatures {
 
             if (!docString1.trim().isEmpty() && !docString2.trim().isEmpty()) {
                 setDocs(doc1, doc2);
-
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    Toast toast = Toast.makeText(ApplicationFeatures.getContext(), "Keine Internetverbindung!\nDateien vom letzten Mal wiederhergestellt.\nEventuell nicht aktuell!!!", Toast.LENGTH_LONG);
-                    TextView v = toast.getView().findViewById(android.R.id.message);
-                    if (v != null)
-                        v.setGravity(Gravity.CENTER);
-                    toast.show();
-                });
-            } /*else {
-                throw new Exception();
-            }*/
+                return true;
+            }
 
         } catch (Exception e) {
-            new Handler(Looper.getMainLooper()).post(() -> {
-                Toast toast = Toast.makeText(ApplicationFeatures.getContext(), "Keine Dateien temporär gespeichert", Toast.LENGTH_SHORT);
-                TextView v = toast.getView().findViewById(android.R.id.message);
-                if (v != null)
-                    v.setGravity(Gravity.CENTER);
-                toast.show();
-            });
+            e.printStackTrace();
         }
+        return false;
     }
 
     public static ArrayList<String> getNames() {

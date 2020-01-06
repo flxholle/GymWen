@@ -92,7 +92,7 @@ public class ApplicationFeatures extends Application {
 
 //    @Override
 //    public void onTerminate() {
-//        VertretungsPlanFeatures.saveDocs();
+//        VertretungsPlanFeatures.saveDoc();
 //        super.onTerminate();
 //    }
 
@@ -113,7 +113,7 @@ public class ApplicationFeatures extends Application {
     }
 
     public static void downloadLehrerDoc() {
-        if (!Lehrerliste.isDownloaded() && ApplicationFeatures.isNetworkAvailable())
+        if (!Lehrerliste.isDownloaded() && ApplicationFeatures.isNetworkAvailable() && Lehrerliste.reloadDoc())
             Lehrerliste.setDoc(downloadDoc(Lehrerliste.listUrl));
     }
 
@@ -149,7 +149,7 @@ public class ApplicationFeatures extends Application {
                 updateMyWidgets();
             }
         } else if (!ApplicationFeatures.isNetworkAvailable()) {
-            VertretungsPlanFeatures.reloadDocs();
+            ActivityFeatures.reloadDocs();
         }
     }
 

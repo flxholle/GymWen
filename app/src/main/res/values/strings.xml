@@ -251,6 +251,12 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="set_notification_alarm">Zu einer best. Uhrzeit</string>
 
     <!-- Time Picker-->
-    <string name="time_picker_title">Uhrzeit auswählen</string>
+    <string name="time_picker_title">Uhrzeit auswählen</string>#
+
+    <!-- Reload & Save Docs-->
+    <string name="reloaded_docs">Keine Internetverbindung!
+        \nDateien vom letzten Mal wiederhergestellt.
+        \nEventuell nicht aktuell!</string>
+    <string name="saved_docs">Daten gespeichert\u2026</string>
 
 </resources>
