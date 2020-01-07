@@ -37,6 +37,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_done_white_24dp" />
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_choice" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
