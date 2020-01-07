@@ -27,6 +27,8 @@
     <string name="menu_timetable">Stundenplan</string>
     <string name="menu_grades">Notenverwaltung (Achtung optimale App wird noch gesucht!)</string>
     <string name="menu_days">Einzelne Tage</string>
+    <string name="menu_filtered">Gefiltert</string>
+    <string name="menu_unfiltered">Gesamt</string>
     <string name="menu_language">Sprache</string>
 
     <!-- Main -->
@@ -51,6 +53,8 @@
     <string name="set_other_title">Sonstiges</string>
     <string name="set_beta_features">Beta-Features</string>
     <string name="set_old_vertretung">Altes Design</string>
+    <string name="set_design_title">Design</string>
+    <string name="set_design_show_sections">Gefiltert \u0026 Gesamt einzeln anzeigen</string>
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>

@@ -281,6 +281,10 @@ public class ApplicationFeatures extends Application {
         return getBooleanSettings("hours", false);
     }
 
+    public static boolean isSections() {
+        return getBooleanSettings("show_sections", false);
+    }
+
     public static boolean isAlarmOn() {
         return getBooleanSettings("alarm", false);
     }
