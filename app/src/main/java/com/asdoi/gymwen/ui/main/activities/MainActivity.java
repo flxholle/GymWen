@@ -39,6 +39,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -106,17 +108,19 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         lastLoadedInTabs = lastLoadedTabsSpecific;
 
         Menu menu = navigationView.getMenu();
-        if (ApplicationFeatures.isBetaEnabled()) {
-            try {
-                //Enable disabled Views
-                MenuItem[] items = new MenuItem[]{menu.findItem(R.id.nav_grades)};
-                for (MenuItem i : items) {
-                    i.setEnabled(true);
-                    i.setVisible(true);
-                }
-            } catch (Exception e) {
-
+        try {
+            //Enable disabled Views
+            ArrayList<MenuItem> items = new ArrayList<>(0);
+            if (ApplicationFeatures.isBetaEnabled()) {
+                items.add(menu.findItem(R.id.nav_grades));
             }
+            //if()
+            for (MenuItem i : items) {
+                i.setEnabled(true);
+                i.setVisible(true);
+            }
+
+        } catch (Exception e) {
         }
     }
 
@@ -178,6 +182,26 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_both:
                 fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
                 break;
+            case R.id.nav_filtered_days:
+                findViewById(R.id.main_fab).setVisibility(View.GONE);
+                findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
+                findViewById(R.id.tabs).setVisibility(View.VISIBLE);
+                findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
+                findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
+                sectionsPagerAdapter.setAll(false);
+                sectionsPagerAdapter.notifyDataSetChanged();
+                lastLoaded = lastLoadedTabs;
+                break;
+            case R.id.nav_unfiltered_days:
+                findViewById(R.id.main_fab).setVisibility(View.GONE);
+                findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
+                findViewById(R.id.tabs).setVisibility(View.VISIBLE);
+                findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
+                findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
+                sectionsPagerAdapter.setAll(true);
+                sectionsPagerAdapter.notifyDataSetChanged();
+                lastLoaded = lastLoadedTabs;
+                break;
             case R.id.nav_days:
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
@@ -187,10 +211,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
                 if (lastLoadedInTabs == lastLoadedTabsAll) {
                     //Navigation all
-                    findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
-                    findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                    findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
-                    findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
                     sectionsPagerAdapter.setAll(true);
                     sectionsPagerAdapter.notifyDataSetChanged();
                     lastLoaded = lastLoadedTabs;
