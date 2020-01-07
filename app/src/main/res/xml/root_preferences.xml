@@ -28,6 +28,9 @@
             android:defaultValue="false"
             android:key="hours"
             android:title="@string/set_hours" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/set_design_title">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="show_borders"
@@ -36,6 +39,10 @@
             android:defaultValue="true"
             android:key="show_border_specific"
             android:title="@string/set_show_borders_specific" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="show_sections"
+            android:title="@string/set_design_show_sections" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="old_vertretung"
