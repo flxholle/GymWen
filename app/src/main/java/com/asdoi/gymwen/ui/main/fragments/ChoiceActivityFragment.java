@@ -1,5 +1,6 @@
 package com.asdoi.gymwen.ui.main.fragments;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,10 +14,15 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
@@ -24,7 +30,8 @@ import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.fragment.app.Fragment;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChoiceActivityFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -173,7 +180,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     private boolean checkIfEmpty() {
         boolean empty = true;
         for (int i = 0; i < quantitiyCourses; i++) {
-            if (!((EditText) root.findViewById(i+1300)).getText().toString().replaceAll(" ", "").isEmpty()) {
+            if (!((EditText) root.findViewById(i + 1300)).getText().toString().replaceAll(" ", "").isEmpty()) {
                 empty = false;
                 break;
             }
@@ -195,7 +202,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         } else {
             String oberstufe = "";
             for (int i = 0; i < quantitiyCourses; i++) {
-                String course = ((EditText) root.findViewById(i+1300)).getText().toString();
+                String course = ((EditText) root.findViewById(i + 1300)).getText().toString();
                 if (!course.replaceAll(" ", "").isEmpty()) {
                     if (!oberstufe.contains(course)) {
                         oberstufe += course + "#";
@@ -244,10 +251,30 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     break;
                 case R.id.choice_button_parents:
 //                    nextStep = 6;
-//                    ((ChoiceActivity) getActivity()).setParents(true);
-                    Snackbar snackbar = Snackbar
-                            .make(root, getString(R.string.parent_mode_not_useable), Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    ((ChoiceActivity) getActivity()).setParents(true);
+                    openAddDialog();
+                    root.findViewById(R.id.choice_button_parents).setVisibility(View.GONE);
+
+                   /* parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                            switch (parent.getItemAtPosition(pos).toString()) {
+                                case "Kind1":
+                                    break;
+                                case "Hinzufügen":
+                                    openAddDialog();
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });*/
+//                    Snackbar snackbar = Snackbar
+//                            .make(root, getString(R.string.parent_mode_not_useable), Snackbar.LENGTH_LONG);
+//                    snackbar.show();
                     break;
             }
         } else if (step == 2) {
@@ -300,10 +327,10 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 default:
                     if (id >= 130 && id <= quantitiyCourses + 130) {
                         if (!((CheckBox) root.findViewById(id)).isChecked()) {
-                            ((EditText) root.findViewById(id+(1300-130))).setText("");
+                            ((EditText) root.findViewById(id + (1300 - 130))).setText("");
 
                         } else {
-                            ((EditText) root.findViewById(id+(1300-130))).setText(((ChoiceActivity) getActivity()).getCourseFirstDigit() + getString(R.string.anyShort) + ((ChoiceActivity) getActivity()).getCourseMainDigit());
+                            ((EditText) root.findViewById(id + (1300 - 130))).setText(((ChoiceActivity) getActivity()).getCourseFirstDigit() + getString(R.string.anyShort) + ((ChoiceActivity) getActivity()).getCourseMainDigit());
                         }
                     }
                     break;
@@ -315,6 +342,47 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
             ((ChoiceActivity) getActivity()).setFragment(nextStep);
         }
 
+    }
+
+    public void openAddDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Profile hinzufügen");
+
+        // Set up the input
+        final EditText input = new EditText(getContext());
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ((ChoiceActivity) getActivity()).setName(input.getText().toString());
+                addSpinner();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ((ChoiceActivity) getActivity()).setName("Kind1");
+                dialog.cancel();
+                addSpinner();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void addSpinner() {
+        Spinner parentSpinner = getActivity().findViewById(R.id.choice_parent_spinner);
+        parentSpinner.setVisibility(View.VISIBLE);
+        parentSpinner.setEnabled(true);
+        List<String> list = new ArrayList<String>();
+        list.add(((ChoiceActivity) getActivity()).getName());
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        parentSpinner.setAdapter(dataAdapter);
     }
 
     private class MyTextWatcher implements TextWatcher {
@@ -339,14 +407,14 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 if (step != 5) {
                     activateFab();
                 } else if (step == 5) {
-                    ((CheckBox) root.findViewById(mEditText.getId()-(1300-130))).setChecked(true);
+                    ((CheckBox) root.findViewById(mEditText.getId() - (1300 - 130))).setChecked(true);
                     checkIfEmpty();
                 }
             } else {
                 if (step != 5) {
                     deactivateFab();
                 } else if (step == 5) {
-                    ((CheckBox) root.findViewById(mEditText.getId()-(1300-130))).setChecked(false);
+                    ((CheckBox) root.findViewById(mEditText.getId() - (1300 - 130))).setChecked(false);
                     checkIfEmpty();
                 }
             }
