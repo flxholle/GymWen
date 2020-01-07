@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -100,9 +101,11 @@ class Vertretungsplan {
             DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
             SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
 
-            Date startDate = df.parse(day[0]);
+            Date startDate = removeTime(df.parse(day[0]));
+
             day[1] = simpleDateformat.format(startDate);
-            Date currentDate = new Date();
+            Date currentDate = removeTime(new Date());
+
             if (currentDate.after(startDate)) {
                 return new String[]{day[0], laterDay()};
             }
@@ -148,6 +151,16 @@ class Vertretungsplan {
         }
 
         return day;
+    }
+
+    private static Date removeTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 
     public String getTitleString(boolean today) {
