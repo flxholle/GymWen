@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
+        version="1.0.7"
+        versioncode="107">
+        <change>Seperate Buttons für gefilterten und ungefilterten Plan</change>
+    </release>
+    <release
         version="1.0.6"
         versioncode="106">
         <change>Englische Sprache hinzugefügt</change>

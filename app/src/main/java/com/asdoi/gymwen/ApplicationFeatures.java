@@ -120,36 +120,38 @@ public class ApplicationFeatures extends Application {
     public static void downloadVertretungsplanDocs(boolean isWidget, boolean signIn) {
 
         //DownloadDocs
-        if (!VertretungsPlanFeatures.areDocsDownloaded() && ApplicationFeatures.isNetworkAvailable()) {
-            if (!ApplicationFeatures.initSettings(true, signIn)) {
-                return;
-            }
-            String[] strURL = new String[]{VertretungsPlanFeatures.todayURL, VertretungsPlanFeatures.tomorrowURL};
-            Document[] doc = new Document[strURL.length];
-            for (int i = 0; i < 2; i++) {
-
-                String authString = VertretungsPlanFeatures.strUserId + ":" + VertretungsPlanFeatures.strPasword;
-
-                String encodedString =
-                        new String(Base64.encodeBase64(authString.getBytes()));
-
-                try {
-                    doc[i] = Jsoup.connect(strURL[i])
-                            .header("Authorization", "Basic " + encodedString)
-                            .get();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if (!VertretungsPlanFeatures.areDocsDownloaded()) {
+            if (ApplicationFeatures.isNetworkAvailable()) {
+                if (!ApplicationFeatures.initSettings(true, signIn)) {
                     return;
                 }
+                String[] strURL = new String[]{VertretungsPlanFeatures.todayURL, VertretungsPlanFeatures.tomorrowURL};
+                Document[] doc = new Document[strURL.length];
+                for (int i = 0; i < 2; i++) {
+
+                    String authString = VertretungsPlanFeatures.strUserId + ":" + VertretungsPlanFeatures.strPasword;
+
+                    String encodedString =
+                            new String(Base64.encodeBase64(authString.getBytes()));
+
+                    try {
+                        doc[i] = Jsoup.connect(strURL[i])
+                                .header("Authorization", "Basic " + encodedString)
+                                .get();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                }
+                VertretungsPlanFeatures.setDocs(doc[0], doc[1]);
+                sendNotification();
+                if (!isWidget) {
+                    updateMyWidgets();
+                }
+            } else {
+                ActivityFeatures.reloadDocs();
             }
-            VertretungsPlanFeatures.setDocs(doc[0], doc[1]);
-            sendNotification();
-            if (!isWidget) {
-                updateMyWidgets();
-            }
-        } else if (!ApplicationFeatures.isNetworkAvailable()) {
-            ActivityFeatures.reloadDocs();
         }
     }
 
@@ -215,7 +217,7 @@ public class ApplicationFeatures extends Application {
                 Intent i = new Intent(context, ChoiceActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
-                return signedIn;
+                return false;
             }
 
             boolean hours = isHour();
@@ -282,7 +284,7 @@ public class ApplicationFeatures extends Application {
     }
 
     public static boolean isSections() {
-        return getBooleanSettings("show_sections", false);
+        return getBooleanSettings("show_sections", true);
     }
 
     public static boolean isAlarmOn() {

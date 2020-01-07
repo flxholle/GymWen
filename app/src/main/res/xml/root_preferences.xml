@@ -40,7 +40,7 @@
             android:key="show_border_specific"
             android:title="@string/set_show_borders_specific" />
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="show_sections"
             android:title="@string/set_design_show_sections" />
         <SwitchPreference

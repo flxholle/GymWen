@@ -108,19 +108,42 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         lastLoadedInTabs = lastLoadedTabsSpecific;
 
         Menu menu = navigationView.getMenu();
+
+        //Enable disabled Views
+        ArrayList<MenuItem> itemsEnable = new ArrayList<>(0);
+        ArrayList<MenuItem> itemsDisable = new ArrayList<>(0);
+
+        if (ApplicationFeatures.isBetaEnabled()) {
+            itemsEnable.add(menu.findItem(R.id.nav_grades));
+        } else {
+            itemsDisable.add(menu.findItem(R.id.nav_grades));
+        }
+        if (ApplicationFeatures.isSections()) {
+            itemsEnable.add(menu.findItem(R.id.nav_filtered_days));
+            itemsEnable.add(menu.findItem(R.id.nav_unfiltered_days));
+            itemsDisable.add(menu.findItem(R.id.nav_days));
+        } else {
+            itemsDisable.add(menu.findItem(R.id.nav_filtered_days));
+            itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
+            itemsEnable.add(menu.findItem(R.id.nav_days));
+        }
         try {
-            //Enable disabled Views
-            ArrayList<MenuItem> items = new ArrayList<>(0);
-            if (ApplicationFeatures.isBetaEnabled()) {
-                items.add(menu.findItem(R.id.nav_grades));
-            }
-            //if()
-            for (MenuItem i : items) {
+            for (MenuItem i : itemsEnable) {
                 i.setEnabled(true);
                 i.setVisible(true);
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            for (MenuItem i : itemsDisable) {
+                i.setEnabled(false);
+                i.setVisible(false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
