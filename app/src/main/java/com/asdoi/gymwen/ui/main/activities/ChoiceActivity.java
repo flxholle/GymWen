@@ -107,7 +107,7 @@ public class ChoiceActivity extends ActivityFeatures {
 
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_choice, fragment).commit();
         }
     }
 
