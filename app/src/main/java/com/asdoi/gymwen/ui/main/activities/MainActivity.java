@@ -177,7 +177,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.fragment_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
@@ -209,7 +209,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
+                findViewById(R.id.fragment_main).setVisibility(View.GONE);
                 findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
                 sectionsPagerAdapter.setAll(false);
                 sectionsPagerAdapter.notifyDataSetChanged();
@@ -219,7 +219,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
+                findViewById(R.id.fragment_main).setVisibility(View.GONE);
                 findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
                 sectionsPagerAdapter.setAll(true);
                 sectionsPagerAdapter.notifyDataSetChanged();
@@ -229,7 +229,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
+                findViewById(R.id.fragment_main).setVisibility(View.GONE);
                 findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
 
                 if (lastLoadedInTabs == lastLoadedTabsAll) {
@@ -249,7 +249,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.navigation_all:
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
+                findViewById(R.id.fragment_main).setVisibility(View.GONE);
                 findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
                 sectionsPagerAdapter.setAll(true);
                 sectionsPagerAdapter.notifyDataSetChanged();
@@ -389,7 +389,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             //Display NavHost Fragment
             findViewById(R.id.view_pager).setVisibility(View.GONE);
             findViewById(R.id.tabs).setVisibility(View.GONE);
-            findViewById(R.id.nav_host_fragment).setVisibility(View.VISIBLE);
+            findViewById(R.id.fragment_main).setVisibility(View.VISIBLE);
             findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
 
             //Set Fab
@@ -406,7 +406,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             }
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_main, fragment).commit();
         }
 
         if (!title.trim().isEmpty())
