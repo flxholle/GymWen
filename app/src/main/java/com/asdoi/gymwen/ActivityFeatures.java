@@ -74,11 +74,15 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     //Changelog
     public void showChangelogCK(boolean checkFirstRun) {
         ChangeLog cl = new ChangeLog(this);
-        if (checkFirstRun) {
-            if (cl.isFirstRun())
-                cl.getLogDialog().show();
-        } else {
-            cl.getFullLogDialog().show();
+        try {
+            if (checkFirstRun) {
+                if (cl.isFirstRun())
+                    cl.getLogDialog().show();
+            } else {
+                cl.getFullLogDialog().show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
