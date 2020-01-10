@@ -30,6 +30,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
+import com.asdoi.gymwen.ui.main.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
 import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
@@ -378,7 +379,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     startActivity(intent);
                 }
                 return;
+            case R.id.nav_colorush:
+                intent = getPackageManager().getLaunchIntentForPackage(ColoRushFragment.packageName);
+                if (intent != null)
+                    startActivity(intent);
+                else
+                    fragment = new ColoRushFragment();
+                break;
         }
+
 
         if (fragment != null) {
             if (fragment instanceof LehrerlisteFragment)
@@ -386,7 +395,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             else
                 lastLoaded = lastLoadedVertretung;
 
-            //Display NavHost Fragment
+            //Display NavHost FragmentFeatures
             findViewById(R.id.view_pager).setVisibility(View.GONE);
             findViewById(R.id.tabs).setVisibility(View.GONE);
             findViewById(R.id.fragment_main).setVisibility(View.VISIBLE);

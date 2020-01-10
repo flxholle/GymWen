@@ -30,6 +30,7 @@
     <string name="menu_filtered">Gefiltert</string>
     <string name="menu_unfiltered">Gesamt</string>
     <string name="menu_language">Sprache</string>
+    <string name="menu_colorush" translatable="false">ColoRush</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
@@ -247,7 +248,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
         <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
         <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
         <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
-        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></string>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
+        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></string>
 
     <!-- Bottom Navigation Bar -->
     <string name="nav_filter">Gefiltert</string>
