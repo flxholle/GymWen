@@ -291,6 +291,10 @@ public class ApplicationFeatures extends Application {
         return getBooleanSettings("alarm", false);
     }
 
+    public static boolean showWeekDate() {
+        return getBooleanSettings("week_dates", false);
+    }
+
     public static int[] getAlarmTime() {
         SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
         return new int[]{sharedPref.getInt("Alarm_hour", -1), sharedPref.getInt("Alarm_minute", -1), sharedPref.getInt("Alarm_second", -1)};

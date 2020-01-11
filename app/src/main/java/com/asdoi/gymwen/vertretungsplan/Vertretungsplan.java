@@ -51,6 +51,18 @@ class Vertretungsplan {
         return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
     }
 
+    private static String today() {
+        return ApplicationFeatures.getContext().getString(R.string.today);
+    }
+
+    private static String tomorrow() {
+        return ApplicationFeatures.getContext().getString(R.string.tomorrow);
+    }
+
+    private static boolean showWeekDate() {
+        return ApplicationFeatures.showWeekDate();
+    }
+
 
     //DayArrays
     private String getTitleStringRaw(boolean today) {
@@ -107,7 +119,26 @@ class Vertretungsplan {
             Date currentDate = removeTime(new Date());
 
             if (currentDate.after(startDate)) {
-                return new String[]{day[0], laterDay()};
+                //If date is in past
+                return new String[]{day[0], showWeekDate() ? day[1] + " " + laterDay() : laterDay()};
+            } else if (currentDate.equals(startDate)) {
+                //If date is today
+                day[1] = today();
+            } else {
+                //If date is tomorrow
+                //Set current date to one day in the future
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 2);
+
+                //Check if currentdate equals date -> Tomorrow
+                currentDate = cal.getTime();
+                if (currentDate.equals(startDate)) {
+                    day[1] = showWeekDate() ? day[1] + " (" + tomorrow() + ")" : tomorrow();
+                }
             }
 
         } catch (ParseException e) {
