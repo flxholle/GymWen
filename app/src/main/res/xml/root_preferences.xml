@@ -28,6 +28,10 @@
             android:defaultValue="false"
             android:key="hours"
             android:title="@string/set_hours" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="week_dates"
+            android:title="@string/set_show_weekdates" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/set_design_title">
