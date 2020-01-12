@@ -434,7 +434,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     public void saveDocs() {
         VertretungsPlanFeatures.saveDocs();
         Lehrerliste.saveDoc();
-        ProfileManagement.save();
+        ProfileManagement.save(false);
         Toast.makeText(ApplicationFeatures.getContext(), R.string.saved_docs, Toast.LENGTH_SHORT).show();
     }
 

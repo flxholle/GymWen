@@ -28,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProfileManagement.save();
+                ProfileManagement.save(true);
                 Intent i = new Intent(ApplicationFeatures.getContext(), MainActivity.class);
                 startActivity(i);
                 finish();

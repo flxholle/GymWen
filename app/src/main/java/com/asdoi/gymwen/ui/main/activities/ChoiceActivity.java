@@ -20,12 +20,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ChoiceActivity extends ActivityFeatures {
 
-    public String courses = "";
-    public boolean parents = false;
+    private static String courses = "";
+    private static boolean parents = false;
     public String courseFirstDigit = "";
     public String courseMainDigit = "";
 
-    public String name = "";
+    private static String name = "";
 
     private FloatingActionButton fab;
 
@@ -56,8 +56,12 @@ public class ChoiceActivity extends ActivityFeatures {
         return courses;
     }
 
-    public void setParents(boolean value) {
+    public static void setParents(boolean value) {
         parents = value;
+    }
+
+    public boolean getParents() {
+        return parents;
     }
 
     public void setCourseFirstDigit(String value) {
@@ -80,8 +84,8 @@ public class ChoiceActivity extends ActivityFeatures {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public static void setName(String name) {
+        ChoiceActivity.name = name;
     }
 
     public void setFragment(int nextStep) {
@@ -93,7 +97,8 @@ public class ChoiceActivity extends ActivityFeatures {
             //Finish
             if (parents) {
                 ProfileManagement.addProfile(new Profile(courses, name));
-                //TODO Start Profile activity
+                parents = false;
+                name = "";
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
                 finish();

@@ -4,6 +4,7 @@ package com.asdoi.gymwen.profiles;
 public class Profile {
     private String courses;
     private String name;
+    private final static char splitChar = '@';
 
     public Profile(String courses, String name) {
         setCourses(courses);
@@ -28,11 +29,11 @@ public class Profile {
 
     @Override
     public String toString() {
-        return name + '@' + courses;
+        return name + splitChar + courses;
     }
 
     public static Profile parse(String s) {
-        String[] sArray = s.split("@");
+        String[] sArray = s.split("" + splitChar);
         if (sArray.length >= 2) {
             return new Profile(sArray[1], sArray[0]);
         }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class ProfileManagement {
     private static ArrayList<Profile> profileList = new ArrayList<>();
+    private final static char splitChar = '%';
 
     public static Profile getProfile(int pos) {
         return profileList.get(pos);
@@ -34,7 +35,7 @@ public class ProfileManagement {
     public static void reload() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         String pref = sharedPref.getString("profiles", "");
-        String[] profiles = pref.split("$");
+        String[] profiles = pref.split("" + splitChar);
         for (String s : profiles) {
             try {
                 Profile p = Profile.parse(s);
@@ -44,18 +45,19 @@ public class ProfileManagement {
                 e.printStackTrace();
             }
         }
-        addProfile(new Profile("6b", "asd"));
     }
 
-    public static void save() {
+    public static void save(boolean apply) {
         String all = "";
         for (Profile p : profileList) {
-            all += p.toString() + "$";
+            all += p.toString() + splitChar;
         }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("profiles", all).commit();
+        editor.putString("profiles", all);
+        if (apply) editor.apply();
+        else editor.commit();
     }
 
 

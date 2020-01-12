@@ -42,6 +42,8 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
     private FloatingActionButton fab;
 
+    private ChoiceActivity mainActivity;
+
     public ChoiceActivityFragment() {
         super();
     }
@@ -54,10 +56,15 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mainActivity = ((ChoiceActivity) getActivity());
         switch (step) {
             default:
             case 1:
                 root = inflater.inflate(R.layout.fragment_firstchoice, container, false);
+                if (mainActivity.getParents()) {
+                    root.findViewById(R.id.choice_button_parents).setVisibility(View.GONE);
+                    addSpinner();
+                }
                 break;
             case 2:
                 root = inflater.inflate(R.layout.fragment_secondchoice, container, false);
@@ -166,8 +173,8 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         inputText.setId(quantitiyCourses + 1300);
         inputText.setOnEditorActionListener(this);
         inputText.setTextColor(Color.BLACK);
-        inputText.setText(((ChoiceActivity) getActivity()).getCourseFirstDigit() + courseShort + ((ChoiceActivity) getActivity()).getCourseMainDigit());
-//        inputText.setHint(((ChoiceActivity) getActivity()).getCourseFirstDigit() + courseShort + ((ChoiceActivity) getActivity()).getCourseMainDigit());
+        inputText.setText(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
+//        inputText.setHint(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
         inputText.addTextChangedListener(new MyTextWatcher(inputText));
 
         inputLayout.addView(inputText);
@@ -210,8 +217,8 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 }
             }
             oberstufe = oberstufe.substring(0, oberstufe.length() - 1);
-            ((ChoiceActivity) getActivity()).setCourses(oberstufe);
-            ((ChoiceActivity) getActivity()).setFragment(10);
+            mainActivity.setCourses(oberstufe);
+            mainActivity.setFragment(10);
         }
     }
 
@@ -226,93 +233,74 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     nextStep = 3;
                     break;
                 case R.id.choice_button_5:
-                    ((ChoiceActivity) getActivity()).setCourses("5");
+                    mainActivity.setCourses("5");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_6:
-                    ((ChoiceActivity) getActivity()).setCourses("6");
+                    mainActivity.setCourses("6");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_7:
-                    ((ChoiceActivity) getActivity()).setCourses("7");
+                    mainActivity.setCourses("7");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_8:
-                    ((ChoiceActivity) getActivity()).setCourses("8");
+                    mainActivity.setCourses("8");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_9:
-                    ((ChoiceActivity) getActivity()).setCourses("9");
+                    mainActivity.setCourses("9");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_10:
-                    ((ChoiceActivity) getActivity()).setCourses("10");
+                    mainActivity.setCourses("10");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_parents:
-//                    nextStep = 6;
-//                    ((ChoiceActivity) getActivity()).setParents(true);
-//                    openAddDialog();
-//                    root.findViewById(R.id.choice_button_parents).setVisibility(View.GONE);
-
-                   /* parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                            switch (parent.getItemAtPosition(pos).toString()) {
-                                case "Kind1":
-                                    break;
-                                case "Hinzufügen":
-                                    openAddDialog();
-                                    break;
-                            }
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });*/
-                    Snackbar snackbar = Snackbar
-                            .make(root, getString(R.string.parent_mode_not_useable), Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    break;
+                    ChoiceActivity.setParents(true);
+                    openAddDialog();
+                    root.findViewById(R.id.choice_button_parents).setVisibility(View.GONE);
+//                    Snackbar snackbar = Snackbar
+//                            .make(root, getString(R.string.parent_mode_not_useable), Snackbar.LENGTH_LONG);
+//                    snackbar.show();
+                    return;
             }
         } else if (step == 2) {
             switch (id) {
                 //Step 2
                 case R.id.choice_button_A:
-                    ((ChoiceActivity) getActivity()).setCourses(((ChoiceActivity) getActivity()).getCourses() + "a");
+                    mainActivity.setCourses(mainActivity.getCourses() + "a");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_B:
-                    ((ChoiceActivity) getActivity()).setCourses(((ChoiceActivity) getActivity()).getCourses() + "b");
+                    mainActivity.setCourses(mainActivity.getCourses() + "b");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_C:
-                    ((ChoiceActivity) getActivity()).setCourses(((ChoiceActivity) getActivity()).getCourses() + "c");
+                    mainActivity.setCourses(mainActivity.getCourses() + "c");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_D:
-                    ((ChoiceActivity) getActivity()).setCourses(((ChoiceActivity) getActivity()).getCourses() + "d");
+                    mainActivity.setCourses(mainActivity.getCourses() + "d");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_E:
-                    ((ChoiceActivity) getActivity()).setCourses(((ChoiceActivity) getActivity()).getCourses() + "e");
+                    mainActivity.setCourses(mainActivity.getCourses() + "e");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_F:
-                    ((ChoiceActivity) getActivity()).setCourses(((ChoiceActivity) getActivity()).getCourses() + "f");
+                    mainActivity.setCourses(mainActivity.getCourses() + "f");
                     nextStep = 10;
                     break;
             }
         } else if (step == 3) {
             switch (id) {//Step 3
                 case R.id.choice_button_1:
-                    ((ChoiceActivity) getActivity()).setCourseFirstDigit("1");
+                    mainActivity.setCourseFirstDigit("1");
                     nextStep = 4;
                     break;
                 case R.id.choice_button_2:
-                    ((ChoiceActivity) getActivity()).setCourseFirstDigit("2");
+                    mainActivity.setCourseFirstDigit("2");
                     nextStep = 4;
                     break;
             }
@@ -330,7 +318,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                             ((EditText) root.findViewById(id + (1300 - 130))).setText("");
 
                         } else {
-                            ((EditText) root.findViewById(id + (1300 - 130))).setText(((ChoiceActivity) getActivity()).getCourseFirstDigit() + getString(R.string.anyShort) + ((ChoiceActivity) getActivity()).getCourseMainDigit());
+                            ((EditText) root.findViewById(id + (1300 - 130))).setText(mainActivity.getCourseFirstDigit() + getString(R.string.anyShort) + mainActivity.getCourseMainDigit());
                         }
                     }
                     break;
@@ -338,7 +326,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         }
 
         if (nextStep > step) {
-            ((ChoiceActivity) getActivity()).setFragment(nextStep);
+            mainActivity.setFragment(nextStep);
         }
 
     }
@@ -357,14 +345,14 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ((ChoiceActivity) getActivity()).setName(input.getText().toString());
+                ChoiceActivity.setName(input.getText().toString());
                 addSpinner();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ((ChoiceActivity) getActivity()).setName("Kind1");
+                ChoiceActivity.setName("Kind1");
                 dialog.cancel();
                 addSpinner();
             }
@@ -374,12 +362,12 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     private void addSpinner() {
-        Spinner parentSpinner = getActivity().findViewById(R.id.choice_parent_spinner);
+        Spinner parentSpinner = mainActivity.findViewById(R.id.choice_parent_spinner);
         parentSpinner.setVisibility(View.VISIBLE);
         parentSpinner.setEnabled(true);
         List<String> list = new ArrayList<String>();
-        list.add(((ChoiceActivity) getActivity()).getName());
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, list);
+        list.add(mainActivity.getName());
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mainActivity, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         parentSpinner.setAdapter(dataAdapter);
     }
@@ -486,7 +474,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     }
                 }
                 if (correctType) {
-                    ((ChoiceActivity) getActivity()).setCourses("" + s);
+                    mainActivity.setCourses("" + s);
                     nextStep = 2;
                 } else {
                     Snackbar snackbar = Snackbar
@@ -506,7 +494,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     }
                 }
                 if (correctType) {
-                    ((ChoiceActivity) getActivity()).setCourses(((ChoiceActivity) getActivity()).getCourses() + ((EditText) root.findViewById(R.id.choice_more_letters)).getText().toString().replaceAll(" ", ""));
+                    mainActivity.setCourses(mainActivity.getCourses() + ((EditText) root.findViewById(R.id.choice_more_letters)).getText().toString().replaceAll(" ", ""));
                     nextStep = 10;
                 } else {
                     Snackbar snackbar = Snackbar
@@ -527,7 +515,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     }
                 }
                 if (correctType) {
-                    ((ChoiceActivity) getActivity()).setCourseFirstDigit("" + s);
+                    mainActivity.setCourseFirstDigit("" + s);
                     nextStep = 4;
                 } else {
                     Snackbar snackbar = Snackbar
@@ -547,7 +535,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     }
                 }
                 if (correctType) {
-                    ((ChoiceActivity) getActivity()).setCourseMainDigit("" + s);
+                    mainActivity.setCourseMainDigit("" + s);
                     nextStep = 5;
                 } else {
                     Snackbar snackbar = Snackbar
@@ -560,7 +548,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         }
 
         if (nextStep > step) {
-            ((ChoiceActivity) getActivity()).setFragment(nextStep);
+            mainActivity.setFragment(nextStep);
         }
     }
 }
