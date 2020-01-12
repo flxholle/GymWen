@@ -265,5 +265,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
         \nDateien vom letzten Mal wiederhergestellt.
         \nEventuell nicht aktuell!</string>
     <string name="saved_docs">Daten gespeichert\u2026</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

@@ -3,7 +3,9 @@
     <release
         version="1.0.7"
         versioncode="107">
+        <change>Offlinemodus</change>
         <change>Seperate Buttons für gefilterten und ungefilterten Plan</change>
+        <change>Einstellung Wochentage immer anzuzeigen</change>
     </release>
     <release
         version="1.0.6"
