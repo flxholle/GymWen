@@ -2,6 +2,7 @@ package com.asdoi.gymwen.ui.main.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -20,10 +21,8 @@ import androidx.fragment.app.Fragment;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class ProfileActivityFragment extends Fragment {
     private ProfileListAdapter adapter;
 
@@ -95,13 +94,18 @@ public class ProfileActivityFragment extends Fragment {
         final EditText input = new EditText(getContext());
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint("Name");
         builder.setView(input);
 
         // Set up the buttons
         builder.setPositiveButton("Hinzufügen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                ChoiceActivity.setParents(true);
+                ChoiceActivity.setName(input.getText().toString());
+                Intent i = new Intent(getActivity(), ChoiceActivity.class);
+                getActivity().startActivity(i);
+                getActivity().finish();
             }
         });
         builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
