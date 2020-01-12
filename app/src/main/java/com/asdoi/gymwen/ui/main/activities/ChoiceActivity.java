@@ -1,23 +1,19 @@
 package com.asdoi.gymwen.ui.main.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ProfileManagement;
-import com.asdoi.gymwen.ProfileManagement.Profile;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.profiles.Profile;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.ui.main.fragments.ChoiceActivityFragment;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,6 +28,8 @@ public class ChoiceActivity extends ActivityFeatures {
     public String name = "";
 
     private FloatingActionButton fab;
+
+//    public static ChoiceActivity newInstance(String name){}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +92,11 @@ public class ChoiceActivity extends ActivityFeatures {
         } else {
             //Finish
             if (parents) {
-                ProfileManagement.addProfile(new ProfileManagement.Profile(courses, name));
-                fragment = new ChoiceActivityFragment(8, fab);
+                ProfileManagement.addProfile(new Profile(courses, name));
+                //TODO Start Profile activity
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 setSettings();
                 finish();
@@ -126,38 +127,6 @@ public class ChoiceActivity extends ActivityFeatures {
     public void onBackPressed() {
         finish();
         super.onBackPressed();
-    }
-
-    private class ProfileListAdapter extends ArrayAdapter<String[]> {
-
-        public ProfileListAdapter(Context con, int resource) {
-            super(con, resource);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.list_parentchoice_entry, null);
-            }
-
-            return generateView(convertView, position);
-        }
-
-        @Override
-        public int getCount() {
-            return ProfileManagement.profileQuantity();
-        }
-
-        private View generateView(View base, int position) {
-            Profile p = ProfileManagement.getProfile(position);
-            TextView name = base.findViewById(R.id.parentlist_name);
-            name.setText(p.getName());
-
-            TextView courses = base.findViewById(R.id.parentlist_courses);
-            courses.setText(p.getCourses());
-
-            return base;
-        }
     }
 
 }

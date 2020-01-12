@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.main.activities.MainActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
@@ -433,10 +434,12 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     public void saveDocs() {
         VertretungsPlanFeatures.saveDocs();
         Lehrerliste.saveDoc();
+        ProfileManagement.save();
         Toast.makeText(ApplicationFeatures.getContext(), R.string.saved_docs, Toast.LENGTH_SHORT).show();
     }
 
     public static void reloadDocs() {
+        ProfileManagement.reload();
         Lehrerliste.reloadDoc();
         if (VertretungsPlanFeatures.reloadDocs()) {
             try {

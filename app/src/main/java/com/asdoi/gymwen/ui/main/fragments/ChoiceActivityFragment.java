@@ -251,9 +251,9 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     break;
                 case R.id.choice_button_parents:
 //                    nextStep = 6;
-                    ((ChoiceActivity) getActivity()).setParents(true);
-                    openAddDialog();
-                    root.findViewById(R.id.choice_button_parents).setVisibility(View.GONE);
+//                    ((ChoiceActivity) getActivity()).setParents(true);
+//                    openAddDialog();
+//                    root.findViewById(R.id.choice_button_parents).setVisibility(View.GONE);
 
                    /* parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -272,9 +272,9 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
                         }
                     });*/
-//                    Snackbar snackbar = Snackbar
-//                            .make(root, getString(R.string.parent_mode_not_useable), Snackbar.LENGTH_LONG);
-//                    snackbar.show();
+                    Snackbar snackbar = Snackbar
+                            .make(root, getString(R.string.parent_mode_not_useable), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                     break;
             }
         } else if (step == 2) {
@@ -337,7 +337,6 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
             }
         }
 
-        System.out.println("click");
         if (nextStep > step) {
             ((ChoiceActivity) getActivity()).setFragment(nextStep);
         }
