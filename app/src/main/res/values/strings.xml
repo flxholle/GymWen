@@ -2,7 +2,7 @@
     <!-- German -->
     <string name="app_name" translatable="false">GymWen</string>
     <string name="title" translatable="false">Gymnasium Wendelstein</string>
-    <string name="subtitle">Offizielle App\n© 2019 Felix Hollederer</string>
+    <string name="subtitle">Offizielle App\n© Felix Hollederer</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Navigation öffnen</string>
