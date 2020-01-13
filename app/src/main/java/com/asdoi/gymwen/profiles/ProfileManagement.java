@@ -60,5 +60,15 @@ public class ProfileManagement {
         else editor.commit();
     }
 
+    public static boolean isMoreThanOneProfile() {
+        return profileQuantity() > 1;
+    }
 
+    public static ArrayList<String> getProfileList() {
+        ArrayList a = new ArrayList();
+        for (Profile p : profileList) {
+            a.add(p.getName());
+        }
+        return a;
+    }
 }

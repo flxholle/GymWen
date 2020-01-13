@@ -101,10 +101,13 @@ public class ProfileActivityFragment extends Fragment {
         builder.setPositiveButton("Hinzufügen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ChoiceActivity.setParents(true);
-                ChoiceActivity.setName(input.getText().toString());
-                Intent i = new Intent(getActivity(), ChoiceActivity.class);
-                getActivity().startActivity(i);
+                Intent mIntent = new Intent(getActivity(), ChoiceActivity.class);
+                Bundle extras = new Bundle();
+                extras.putBoolean("parents", true);
+                extras.putString("name", input.getText().toString());
+
+                mIntent.putExtras(extras);
+                getActivity().startActivity(mIntent);
                 getActivity().finish();
             }
         });

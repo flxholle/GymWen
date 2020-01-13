@@ -8,6 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +32,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.main.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
@@ -41,6 +45,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -57,6 +62,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static int lastLoadedInTabs;
     public static final int lastLoadedTabsSpecific = 10;
     public static final int lastLoadedTabsAll = 11;
+
+    public static final int refreshFragment = 104;
 
     public SectionsPagerAdapter sectionsPagerAdapter;
 
@@ -78,6 +85,29 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         drawer.addDrawerListener(toggle);
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Set Profiles
+        if (ProfileManagement.isMoreThanOneProfile()) {
+            Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
+            parentSpinner.setVisibility(View.VISIBLE);
+            parentSpinner.setEnabled(true);
+            List<String> list = ProfileManagement.getProfileList();
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            parentSpinner.setAdapter(dataAdapter);
+            parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    ApplicationFeatures.initProfile(i);
+//                    onNavigationItemSelected(refreshFragment);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        }
 
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), false, new String[]{getString(R.string.today), getString(R.string.tomorrow)});
         VertretungFragment.changedSectionsPagerAdapterTitles = false;
@@ -310,6 +340,22 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         break;
                     default:
                         VertretungsPlanFeatures.setDocs(null, null);
+                        fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
+                        break;
+                }
+                break;
+            case refreshFragment:
+                switch (lastLoaded) {
+                    case lastLoadedVertretung:
+                        fragment = VertretungFragment.newInstance(vertretungFragmentState);
+                        break;
+                    case lastLoadedTabs:
+                        sectionsPagerAdapter.notifyDataSetChanged();
+                        break;
+                    case lastLoadedLehrerliste:
+                        fragment = new LehrerlisteFragment();
+                        break;
+                    default:
                         fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
                         break;
                 }

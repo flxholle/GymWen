@@ -20,12 +20,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ChoiceActivity extends ActivityFeatures {
 
-    private static String courses = "";
-    private static boolean parents = false;
+    private String courses = "";
+    private boolean parents = false;
     public String courseFirstDigit = "";
     public String courseMainDigit = "";
-
-    private static String name = "";
+    private String name = "";
 
     private FloatingActionButton fab;
 
@@ -44,6 +43,11 @@ public class ChoiceActivity extends ActivityFeatures {
         fab.setEnabled(false);
         fab.bringToFront();
         fab.setVisibility(View.VISIBLE);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            setParents(extras.getBoolean("parents", false));
+            setName(extras.getString("name", ""));
+        }
 
         setFragment(1);
     }
@@ -56,7 +60,7 @@ public class ChoiceActivity extends ActivityFeatures {
         return courses;
     }
 
-    public static void setParents(boolean value) {
+    public void setParents(boolean value) {
         parents = value;
     }
 
@@ -84,8 +88,8 @@ public class ChoiceActivity extends ActivityFeatures {
         return name;
     }
 
-    public static void setName(String name) {
-        ChoiceActivity.name = name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setFragment(int nextStep) {

@@ -257,7 +257,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     nextStep = 2;
                     break;
                 case R.id.choice_button_parents:
-                    ChoiceActivity.setParents(true);
+                    mainActivity.setParents(true);
                     openAddDialog();
                     root.findViewById(R.id.choice_button_parents).setVisibility(View.GONE);
 //                    Snackbar snackbar = Snackbar
@@ -345,14 +345,14 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ChoiceActivity.setName(input.getText().toString());
+                mainActivity.setName(input.getText().toString());
                 addSpinner();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ChoiceActivity.setName("Kind1");
+                mainActivity.setName("Kind1");
                 dialog.cancel();
                 addSpinner();
             }

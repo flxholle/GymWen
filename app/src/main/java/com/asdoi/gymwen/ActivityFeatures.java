@@ -439,7 +439,6 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     }
 
     public static void reloadDocs() {
-        ProfileManagement.reload();
         Lehrerliste.reloadDoc();
         if (VertretungsPlanFeatures.reloadDocs()) {
             try {

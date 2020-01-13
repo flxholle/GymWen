@@ -33,6 +33,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.ahmedjazzar.rosetta.LanguageSwitcher;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.main.activities.MainActivity;
@@ -88,6 +89,7 @@ public class ApplicationFeatures extends Application {
         mContext = this;
         ACRA.init(this);
         initRosetta();
+        ProfileManagement.reload();
     }
 
 
@@ -205,7 +207,6 @@ public class ApplicationFeatures extends Application {
         boolean signedIn = sharedPref.getBoolean("signed", false);
 
         if (signedIn) {
-            boolean oberstufe = sharedPref.getBoolean("oberstufe", true);
             String courses = sharedPref.getString("courses", "");
             if (courses.trim().isEmpty()) {
                 Intent i = new Intent(context, ChoiceActivity.class);
@@ -601,5 +602,23 @@ public class ApplicationFeatures extends Application {
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.cancel(pendingIntent);
         pendingIntent.cancel();
+    }
+
+
+    //Profiles
+    public static void initProfile(int position) {
+        String courses = ProfileManagement.getProfile(position).getCourses();
+        VertretungsPlanFeatures.setup(isHour(), courses.split("#"));
+        Context context = getContext();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("courses", courses);
+        editor.putInt("selected", position);
+        editor.apply();
+    }
+
+    public static int getSelected() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        return sharedPref.getInt("selected", 0);
     }
 }
