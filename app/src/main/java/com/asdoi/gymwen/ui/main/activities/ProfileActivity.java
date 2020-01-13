@@ -29,6 +29,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ProfileManagement.save(true);
+                ApplicationFeatures.initProfile(0);
                 Intent i = new Intent(ApplicationFeatures.getContext(), MainActivity.class);
                 startActivity(i);
                 finish();

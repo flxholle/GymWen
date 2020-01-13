@@ -6,8 +6,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/gymlogo_round" />
-
+            android:src="@mipmap/gymlogo" />
     </item>
-
 </layer-list>
