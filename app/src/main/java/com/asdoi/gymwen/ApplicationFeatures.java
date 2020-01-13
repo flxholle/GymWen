@@ -90,12 +90,6 @@ public class ApplicationFeatures extends Application {
         initRosetta();
     }
 
-//    @Override
-//    public void onTerminate() {
-//        VertretungsPlanFeatures.saveDoc();
-//        super.onTerminate();
-//    }
-
 
     public static Context getContext() {
         return mContext;
