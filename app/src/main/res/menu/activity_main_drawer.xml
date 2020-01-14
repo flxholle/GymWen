@@ -47,6 +47,10 @@
                     android:icon="@drawable/ic_restaurant"
                     android:title="@string/menu_mensa" />
                 <item
+                    android:id="@+id/nav_claxss"
+                    android:icon="@drawable/ic_domain"
+                    android:title="Claxss" />
+                <item
                     android:id="@+id/nav_shop"
                     android:icon="@drawable/ic_t_shirt"
                     android:title="@string/menu_shop" />

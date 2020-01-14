@@ -88,17 +88,17 @@ public class ProfileActivityFragment extends Fragment {
 
     public void openAddDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Profile hinzufügen");
+        builder.setTitle(getString(R.string.profiles_add));
 
         // Set up the input
         final EditText input = new EditText(getContext());
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setHint("Name");
+        input.setHint(getString(R.string.name));
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton("Hinzufügen", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.add), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent mIntent = new Intent(getActivity(), ChoiceActivity.class);
@@ -111,7 +111,7 @@ public class ProfileActivityFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -123,7 +123,7 @@ public class ProfileActivityFragment extends Fragment {
 
     public void openEditDialog(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Profil bearbeiten");
+        builder.setTitle(getString(R.string.profiles_edit));
 
         // Set up the input
         LinearLayout base = new LinearLayout(getContext());
@@ -133,6 +133,7 @@ public class ProfileActivityFragment extends Fragment {
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         name.setInputType(InputType.TYPE_CLASS_TEXT);
         name.setText(ProfileManagement.getProfile(position).getName());
+        name.setHint(R.string.name);
         base.addView(name);
 
         // Set up the input
@@ -140,6 +141,7 @@ public class ProfileActivityFragment extends Fragment {
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         name.setInputType(InputType.TYPE_CLASS_TEXT);
         course.setText(ProfileManagement.getProfile(position).getCourses());
+        course.setHint(getString(R.string.profile_courses));
         base.addView(course);
 
         TextView note = new TextView(getContext());
@@ -152,7 +154,7 @@ public class ProfileActivityFragment extends Fragment {
         builder.setView(base);
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Profile profile = ProfileManagement.getProfile(position);
@@ -163,7 +165,7 @@ public class ProfileActivityFragment extends Fragment {
             }
         });
 
-        builder.setNegativeButton("Cancel", (DialogInterface d, int w) -> {
+        builder.setNegativeButton(getString(R.string.cancel), (DialogInterface d, int w) -> {
 
         });
 
@@ -172,7 +174,7 @@ public class ProfileActivityFragment extends Fragment {
 
     public void openDeleteDialog(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Bestätigen");
+        builder.setTitle(getString(R.string.profiles_delete_submit_heading));
 
         LinearLayout base = new LinearLayout(getContext());
         base.setOrientation(LinearLayout.VERTICAL);
@@ -180,15 +182,15 @@ public class ProfileActivityFragment extends Fragment {
         TextView note = new TextView(getContext());
         Profile p = ProfileManagement.getProfile(position);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(10, 0, 10, 0);
-        note.setText("Soll der Nutzer " + p.getName() + " gelöscht werden?");
+        params.setMargins(60, 20, 10, 0);
+        note.setText(getString(R.string.profiles_delete_message, p.getName()));
         note.setLayoutParams(params);
 
         base.addView(note);
 
         builder.setView(base);
 
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ProfileManagement.removeProfile(position);
@@ -196,7 +198,7 @@ public class ProfileActivityFragment extends Fragment {
             }
         });
 
-        builder.setNegativeButton("Nein", (DialogInterface d, int w) -> {
+        builder.setNegativeButton(getString(R.string.no), (DialogInterface d, int w) -> {
 
         });
 

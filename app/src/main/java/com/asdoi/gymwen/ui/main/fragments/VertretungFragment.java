@@ -137,23 +137,27 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     private void refreshAndTable() {
         new Thread(() -> {
             ApplicationFeatures.downloadVertretungsplanDocs(false, true);
-            getActivity().runOnUiThread(() -> {
-                try {
-                    if (!changedSectionsPagerAdapterTitles && VertretungsPlanFeatures.areDocsDownloaded()) {
-                        MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
-                        spa.setTitles(VertretungsPlanFeatures.getTodayTitleArray()[1], VertretungsPlanFeatures.getTomorrowTitleArray()[1]);
-                        spa.notifyDataSetChanged();
-                        changedSectionsPagerAdapterTitles = true;
+            try {
+                getActivity().runOnUiThread(() -> {
+                    try {
+                        if (!changedSectionsPagerAdapterTitles && VertretungsPlanFeatures.areDocsDownloaded()) {
+                            MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
+                            spa.setTitles(VertretungsPlanFeatures.getTodayTitleArray()[1], VertretungsPlanFeatures.getTomorrowTitleArray()[1]);
+                            spa.notifyDataSetChanged();
+                            changedSectionsPagerAdapterTitles = true;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
-                if (ApplicationFeatures.isOld())
-                    setTableParams();
-                else
-                    generateTable();
-            });
+                    if (ApplicationFeatures.isOld())
+                        setTableParams();
+                    else
+                        generateTable();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }).start();
     }
 

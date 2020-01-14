@@ -18,8 +18,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ProfileManagement.reload();
-
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -28,8 +26,8 @@ public class ProfileActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ApplicationFeatures.resetSelectedProfile();
                 ProfileManagement.save(true);
-                ApplicationFeatures.initProfile(0);
                 Intent i = new Intent(ApplicationFeatures.getContext(), MainActivity.class);
                 startActivity(i);
                 finish();
@@ -37,4 +35,12 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        ApplicationFeatures.resetSelectedProfile();
+        ProfileManagement.save(true);
+        Intent i = new Intent(ApplicationFeatures.getContext(), MainActivity.class);
+        startActivity(i);
+        finish();
+    }
 }

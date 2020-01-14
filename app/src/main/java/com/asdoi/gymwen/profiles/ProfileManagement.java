@@ -36,6 +36,7 @@ public class ProfileManagement {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         String pref = sharedPref.getString("profiles", "");
         String[] profiles = pref.split("" + splitChar);
+        profileList = new ArrayList<>();
         for (String s : profiles) {
             try {
                 Profile p = Profile.parse(s);
