@@ -86,29 +86,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Set Profiles
-        if (ProfileManagement.isMoreThanOneProfile()) {
-            Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
-            parentSpinner.setVisibility(View.VISIBLE);
-            parentSpinner.setEnabled(true);
-            List<String> list = ProfileManagement.getProfileList();
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            parentSpinner.setAdapter(dataAdapter);
-            parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    ApplicationFeatures.initProfile(i);
-//                    onNavigationItemSelected(refreshFragment);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-        }
-
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), false, new String[]{getString(R.string.today), getString(R.string.tomorrow)});
         VertretungFragment.changedSectionsPagerAdapterTitles = false;
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -123,25 +100,62 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return true;
         });
 
+        if (!ApplicationFeatures.initSettings(false, true)) {
+            finish();
+            return;
+        }
+
+        //Set Profiles
+        Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
+
+        if (ProfileManagement.isMoreThanOneProfile()) {
+            parentSpinner.setVisibility(View.VISIBLE);
+            parentSpinner.setEnabled(true);
+            List<String> list = ProfileManagement.getProfileList();
+            list.add(getString(R.string.profiles_edit));
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            parentSpinner.setAdapter(dataAdapter);
+            parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String item = parent.getItemAtPosition(position).toString();
+                    if (item.equals(getContext().getString(R.string.profiles_edit))) {
+                        Intent intent = new Intent(getContext(), ProfileActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        ApplicationFeatures.initProfile(position);
+                        onNavigationItemSelected(refreshFragment);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        } else {
+            ApplicationFeatures.initProfile(0);
+            parentSpinner.setVisibility(View.GONE);
+            parentSpinner.setEnabled(false);
+        }
+
         if (!VertretungsPlanFeatures.isUninit())
             onNavigationItemSelected(R.id.nav_both);
         toggle.syncState();
 
-        if (!ApplicationFeatures.initSettings(false, true)) {
-            finish();
-        }
+        lastLoadedInTabs = lastLoadedTabsSpecific;
+
         checkUpdates(Display.DIALOG, false);
         showChangelogCK(true);
 
-        if (ApplicationFeatures.isAlarmOn()) {
+        if (!ApplicationFeatures.isAlarmOn()) {
             ApplicationFeatures.cancelAlarm(getContext(), AlarmReceiver.class);
         }
 
-        lastLoadedInTabs = lastLoadedTabsSpecific;
-
-        Menu menu = navigationView.getMenu();
-
         //Enable disabled Views
+        Menu menu = navigationView.getMenu();
         ArrayList<MenuItem> itemsEnable = new ArrayList<>(0);
         ArrayList<MenuItem> itemsDisable = new ArrayList<>(0);
 
@@ -159,6 +173,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
             itemsEnable.add(menu.findItem(R.id.nav_days));
         }
+        if (ApplicationFeatures.isParents()) {
+            itemsEnable.add(menu.findItem(R.id.nav_claxss));
+        } else {
+            itemsDisable.add(menu.findItem(R.id.nav_claxss));
+        }
+
         try {
             for (MenuItem i : itemsEnable) {
                 i.setEnabled(true);
@@ -433,6 +453,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 else
                     fragment = new ColoRushFragment();
                 break;
+            case R.id.action_profiles:
+                intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            case R.id.nav_claxss:
+                String link = "https://gym-wendelstein.schule-eltern.info/infoline/claxss";
+                tabIntent(link);
+                return;
         }
 
 

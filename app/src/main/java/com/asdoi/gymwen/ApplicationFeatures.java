@@ -33,6 +33,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.ahmedjazzar.rosetta.LanguageSwitcher;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
+import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
@@ -207,19 +208,20 @@ public class ApplicationFeatures extends Application {
         boolean signedIn = sharedPref.getBoolean("signed", false);
 
         if (signedIn) {
-            String courses = sharedPref.getString("courses", "");
-            if (courses.trim().isEmpty()) {
+            if (ProfileManagement.profileQuantity() <= 0) {
+//            String courses = sharedPref.getString("courses", "");
+//            if (courses.trim().isEmpty()) {
                 Intent i = new Intent(context, ChoiceActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
                 return false;
             }
 
+            String courses = getSelectedProfile().getCourses();
+
             boolean hours = isHour();
 
             VertretungsPlanFeatures.setup(hours, courses.split("#"));
-
-//            System.out.println("settings: " + oberstufe + courses);
 
             String username = sharedPref.getString("username", "");
             String password = sharedPref.getString("password", "");
@@ -288,6 +290,10 @@ public class ApplicationFeatures extends Application {
 
     public static boolean showWeekDate() {
         return getBooleanSettings("week_dates", false);
+    }
+
+    public static boolean isParents() {
+        return getBooleanSettings("parens", false);
     }
 
     public static int[] getAlarmTime() {
@@ -617,8 +623,16 @@ public class ApplicationFeatures extends Application {
         editor.apply();
     }
 
-    public static int getSelected() {
+    public static Profile getSelectedProfile() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sharedPref.getInt("selected", 0);
+        return ProfileManagement.getProfile(sharedPref.getInt("selected", 0));
+    }
+
+    public static void resetSelectedProfile() {
+        Context context = getContext();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("selected", 0);
+        editor.apply();
     }
 }

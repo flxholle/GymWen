@@ -3,6 +3,7 @@
     <release
         version="1.0.7"
         versioncode="107">
+        <change>Profile \u0026 Elternmodus</change>
         <change>Offlinemodus</change>
         <change>Startbildschirm</change>
         <change>Seperate Buttons für gefilterten und ungefilterten Plan</change>

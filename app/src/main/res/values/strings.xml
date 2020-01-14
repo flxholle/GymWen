@@ -258,13 +258,26 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="set_notification_alarm">Zu einer best. Uhrzeit</string>
 
     <!-- Time Picker-->
-    <string name="time_picker_title">Uhrzeit auswählen</string>#
+    <string name="time_picker_title">Uhrzeit auswählen</string>
 
     <!-- Reload & Save Docs-->
     <string name="reloaded_docs">Keine Internetverbindung!
         \nDateien vom letzten Mal wiederhergestellt.
         \nEventuell nicht aktuell!</string>
     <string name="saved_docs">Daten gespeichert\u2026</string>
-    <string name="title_activity_profile">ProfileActivity</string>
+
+    <!-- Profiles -->
+    <string name="title_activity_profile">Profile</string>
+    <string name="profiles_edit">Bearbeiten\u2026</string>
+    <string name="profiles_delete_submit_heading">Bestätigen</string>
+    <string name="profiles_delete_message">Soll der Nutzer %1$s gelöscht werden?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="ok">OK</string>
+    <string name="profile_courses">Klasse/Kurse</string>
+    <string name="name">Name</string>
+    <string name="add">Hinzufügen</string>
+    <string name="profiles_add">Profile hinzufügen\u2026</string>
 
 </resources>

@@ -24,7 +24,7 @@ public class ChoiceActivity extends ActivityFeatures {
     private boolean parents = false;
     public String courseFirstDigit = "";
     public String courseMainDigit = "";
-    private String name = "";
+    private String name = "Default";
 
     private FloatingActionButton fab;
 
@@ -99,19 +99,25 @@ public class ChoiceActivity extends ActivityFeatures {
             fragment = new ChoiceActivityFragment(nextStep, fab);
         } else {
             //Finish
-            if (parents) {
-                ProfileManagement.addProfile(new Profile(courses, name));
-                parents = false;
-                name = "";
-                Intent intent = new Intent(this, ProfileActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                setSettings();
-                finish();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }
+//            if (parents) {
+            ProfileManagement.addProfile(new Profile(courses, name));
+//            } else {
+//                setSettings();
+//            }
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("parens", parents);
+            editor.apply();
+
+            Intent intent = null;
+            if (parents)
+                intent = new Intent(this, ProfileActivity.class);
+            else
+                intent = new Intent(this, MainActivity.class);
+
+            ProfileManagement.save(true);
+            startActivity(intent);
+            finish();
         }
 
 
