@@ -270,7 +270,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     //Permissions
     private Sheriff sheriffPermission;
     private static final int REQUEST_MULTIPLE_PERMISSION = 101;
-    private Thread permissionRunAfter;
+    private Runnable permissionRunAfter;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -314,7 +314,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         dialog.show();
     }
 
-    private void requestPermission(Thread runAfter, SheriffPermission... permissions) {
+    private void requestPermission(Runnable runAfter, SheriffPermission... permissions) {
         sheriffPermission = Sheriff.Builder()
                 .with(this)
                 .requestCode(REQUEST_MULTIPLE_PERMISSION)
@@ -345,10 +345,9 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-            requestPermission(new Thread(() -> {
-                        startDownload(url, title, description, subPath, onComplete);
-                    }),
-                    SheriffPermission.STORAGE);
+            requestPermission(() -> {
+                startDownload(url, title, description, subPath, onComplete);
+            }, SheriffPermission.STORAGE);
             return;
 
         }
@@ -405,6 +404,21 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", apkFile);
         intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(intent);
+    }
+
+
+    //Make Call
+    public void makeCall(String telNr) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermission(() -> {
+                makeCall(telNr);
+            }, SheriffPermission.PHONE);
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + telNr));
         startActivity(intent);
     }
 

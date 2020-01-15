@@ -87,6 +87,10 @@
             android:defaultValue="false"
             android:key="beta_features"
             android:title="@string/set_beta_features" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="parents"
+            android:title="@string/set_parents" />
     </PreferenceCategory>
 
 </PreferenceScreen>
