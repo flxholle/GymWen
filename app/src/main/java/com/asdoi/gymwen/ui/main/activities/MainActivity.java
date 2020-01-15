@@ -175,8 +175,16 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         if (ApplicationFeatures.isParents()) {
             itemsEnable.add(menu.findItem(R.id.nav_claxss));
+            itemsEnable.add(menu.findItem(R.id.nav_call_office));
+            itemsEnable.add(menu.findItem(R.id.nav_forms));
+            itemsDisable.add(menu.findItem(R.id.nav_mebis));
+            itemsDisable.add(menu.findItem(R.id.nav_timetable));
         } else {
             itemsDisable.add(menu.findItem(R.id.nav_claxss));
+            itemsDisable.add(menu.findItem(R.id.nav_call_office));
+            itemsDisable.add(menu.findItem(R.id.nav_forms));
+            itemsEnable.add(menu.findItem(R.id.nav_mebis));
+            itemsEnable.add(menu.findItem(R.id.nav_timetable));
         }
 
         try {
@@ -448,9 +456,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 return;
             case R.id.nav_colorush:
                 intent = getPackageManager().getLaunchIntentForPackage(ColoRushFragment.packageName);
-                if (intent != null)
+                if (intent != null) {
                     startActivity(intent);
-                else
+                    return;
+                } else
                     fragment = new ColoRushFragment();
                 break;
             case R.id.action_profiles:
@@ -460,6 +469,43 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 return;
             case R.id.nav_claxss:
                 String link = "https://gym-wendelstein.schule-eltern.info/infoline/claxss";
+                tabIntent(link);
+                return;
+            case R.id.nav_call_office:
+                String nr = "0049 9171 818 800";
+                makeCall(nr);
+                return;
+            case R.id.nav_public_transport:
+                String packageNameOeffi = "de.schildbach.oeffi";
+                String packageNameVGN = "com.mdv.VGNCompanion";
+                String packageNameDB = "de.hafas.android.db";
+
+                intent = getPackageManager().getLaunchIntentForPackage(packageNameOeffi) == null ? getPackageManager().getLaunchIntentForPackage(packageNameVGN) : getPackageManager().getLaunchIntentForPackage(packageNameOeffi);
+                if (intent == null)
+                    intent = getPackageManager().getLaunchIntentForPackage(packageNameDB);
+
+                //If app is not installed
+                if (intent == null) {
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameOeffi)));
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameVGN)));
+                        } catch (android.content.ActivityNotFoundException a) {
+                            try {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameDB)));
+                            } catch (android.content.ActivityNotFoundException a2) {
+                                //Open Browser to Download
+                                tabIntent("https://f-droid.org/de/packages/de.schildbach.oeffi/");
+                            }
+                        }
+                    }
+                } else {
+                    startActivity(intent);
+                }
+                return;
+            case R.id.nav_forms:
+                link = "http://www.gym-wen.de/material/formulare-merkblaetter/";
                 tabIntent(link);
                 return;
         }

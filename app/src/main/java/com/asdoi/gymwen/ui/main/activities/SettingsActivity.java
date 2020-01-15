@@ -12,6 +12,8 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.profiles.Profile;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 
 public class SettingsActivity extends ActivityFeatures {
@@ -55,6 +57,8 @@ public class SettingsActivity extends ActivityFeatures {
             startActivity(i);
             return;
         }
+        ProfileManagement.editProfile(ApplicationFeatures.getSelectedProfilePosition(), new Profile(courses, ApplicationFeatures.getSelectedProfile().getName()));
+        ProfileManagement.save(true);
 
         boolean hours = sharedPref.getBoolean("hours", false);
 

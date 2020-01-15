@@ -35,6 +35,10 @@
                     android:icon="@drawable/ic_compass"
                     android:title="@string/menu_website" />
                 <item
+                    android:id="@+id/nav_forms"
+                    android:icon="@drawable/ic_stat_assignment_late"
+                    android:title="@string/menu_forms" />
+                <item
                     android:id="@+id/nav_teacherlist"
                     android:icon="@drawable/ic_teacher_at_the_blackboard"
                     android:title="@string/menu_teacher_list" />
@@ -49,11 +53,16 @@
                 <item
                     android:id="@+id/nav_claxss"
                     android:icon="@drawable/ic_domain"
-                    android:title="Claxss" />
+                    android:title="@string/menu_claxss" />
+                <item
+                    android:id="@+id/nav_call_office"
+                    android:icon="@drawable/ic_call_black_24dp"
+                    android:title="@string/menu_call_office" />
                 <item
                     android:id="@+id/nav_shop"
                     android:icon="@drawable/ic_t_shirt"
-                    android:title="@string/menu_shop" />
+                    android:title="@string/menu_shop"
+                    android:visible="false" />
             </group>
         </menu>
     </item>
@@ -76,6 +85,10 @@
     <item android:title="@string/menu_category_other">
         <menu>
             <group>
+                <item
+                    android:id="@+id/nav_public_transport"
+                    android:icon="@drawable/ic_directions_transit_black_24dp"
+                    android:title="@string/menu_public_transport" />
                 <item
                     android:id="@+id/nav_colorush"
                     android:icon="@drawable/ic_colorush2"

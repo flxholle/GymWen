@@ -106,7 +106,7 @@ public class ChoiceActivity extends ActivityFeatures {
 //            }
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("parens", parents);
+            editor.putBoolean("parents", parents);
             editor.apply();
 
             Intent intent = null;

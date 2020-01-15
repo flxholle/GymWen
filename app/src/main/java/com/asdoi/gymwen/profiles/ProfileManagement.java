@@ -66,7 +66,7 @@ public class ProfileManagement {
     }
 
     public static ArrayList<String> getProfileList() {
-        ArrayList a = new ArrayList();
+        ArrayList<String> a = new ArrayList();
         for (Profile p : profileList) {
             a.add(p.getName());
         }

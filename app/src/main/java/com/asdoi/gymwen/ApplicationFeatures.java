@@ -293,7 +293,7 @@ public class ApplicationFeatures extends Application {
     }
 
     public static boolean isParents() {
-        return getBooleanSettings("parens", false);
+        return getBooleanSettings("parents", false);
     }
 
     public static int[] getAlarmTime() {
@@ -634,5 +634,10 @@ public class ApplicationFeatures extends Application {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("selected", 0);
         editor.apply();
+    }
+
+    public static int getSelectedProfilePosition() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        return sharedPref.getInt("selected", 0);
     }
 }

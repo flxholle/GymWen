@@ -31,6 +31,11 @@
     <string name="menu_unfiltered">Gesamt</string>
     <string name="menu_language">Sprache</string>
     <string name="menu_colorush" translatable="false">ColoRush</string>
+    <string name="menu_profiles">Profile</string>
+    <string name="menu_claxss" translatable="false">Claxss</string>
+    <string name="menu_call_office">Sekretariat anrufen</string>
+    <string name="menu_public_transport">VGN</string>
+    <string name="menu_forms">Formulare</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
@@ -57,6 +62,7 @@
     <string name="set_design_title">Design</string>
     <string name="set_design_show_sections">Gefiltert \u0026 Gesamt einzeln anzeigen</string>
     <string name="set_show_weekdates">Wochentage immer anzeigen</string>
+    <string name="set_parents">Elternmodus</string>
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
