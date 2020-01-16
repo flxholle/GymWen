@@ -125,7 +125,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         startActivity(intent);
                         finish();
                     } else {
-                        ApplicationFeatures.initProfile(position);
+                        ApplicationFeatures.initProfile(position, true);
                         onNavigationItemSelected(refreshFragment);
                     }
                 }
@@ -136,7 +136,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
             });
         } else {
-            ApplicationFeatures.initProfile(0);
+            ApplicationFeatures.initProfile(0, true);
             parentSpinner.setVisibility(View.GONE);
             parentSpinner.setEnabled(false);
         }
