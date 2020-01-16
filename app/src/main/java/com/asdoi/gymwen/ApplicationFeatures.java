@@ -422,6 +422,7 @@ public class ApplicationFeatures extends Application {
                     notificationChannel.enableLights(false);
 //                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
                     notificationChannel.enableVibration(false);
+                    notificationChannel.setSound(null, null);
                     notificationManager.createNotificationChannel(notificationChannel);
                     notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 

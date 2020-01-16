@@ -333,7 +333,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
     public void openAddDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Profile hinzufügen");
+        builder.setTitle(getContext().getString(R.string.profiles_add));
 
         // Set up the input
         final EditText input = new EditText(getContext());
@@ -342,17 +342,20 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getContext().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mainActivity.setName(input.getText().toString());
+                if (input.getText().toString().trim().isEmpty())
+                    mainActivity.setName(getContext().getString(R.string.profile_empty_name));
+                else
+                    mainActivity.setName(input.getText().toString());
                 addSpinner();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mainActivity.setName("Kind1");
+                mainActivity.setName(getContext().getString(R.string.profile_empty_name));
                 dialog.cancel();
                 addSpinner();
             }
