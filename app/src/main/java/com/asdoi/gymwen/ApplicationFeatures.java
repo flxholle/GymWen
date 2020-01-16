@@ -357,22 +357,20 @@ public class ApplicationFeatures extends Application {
     }
 
     public static class createNotification extends downloadVertretungsplanDocsTask {
-        int count1 = 0;
-        int count2 = 0;
+        StringBuilder count = new StringBuilder();
 
         @Override
         protected void onPostExecute(Void v) {
             if (VertretungsPlanFeatures.getTodayArray() == null) {
                 return;
             }
+            ProfileManagement.reload();
             sendNotification();
         }
 
         public void sendNotification() {
-            //Spanned spanBody = Html.fromHtml(notificationMessage());
             String body = notificationMessage();
             createNotification(body);
-
         }
 
         private void createNotification(String body) {
@@ -406,7 +404,7 @@ public class ApplicationFeatures extends Application {
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setWhen(System.currentTimeMillis())
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
-                        .setContentTitle(context.getString(R.string.notif_content_title) + " " + count1 + "x" + ", " + count2 + "x")
+                        .setContentTitle(context.getString(R.string.notif_content_title) + " " + count)
                         .setContentIntent(resultPendingIntent)
 //                        .setLargeIcon(getBitmapFromVectorDrawable(R.drawable.ic_stat_assignment_late))
                         .setSmallIcon(R.drawable.ic_stat_assignment_late);
@@ -441,39 +439,66 @@ public class ApplicationFeatures extends Application {
         }
 
         private String notificationMessage() {
-            String message = "";
-            String day = VertretungsPlanFeatures.getTodayTitle();
-            String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
-            try {
-                count1 = inhalt.length;
-            } catch (Exception e) {
-                e.printStackTrace();
+            StringBuilder messageToday = new StringBuilder();
+            StringBuilder messageTomorrow = new StringBuilder();
+            String[] titleTodayArray = VertretungsPlanFeatures.getTodayTitleArray();
+            String[] titleTomorrowArray = VertretungsPlanFeatures.getTomorrowTitleArray();
+            String titleToday = titleTodayArray[0] + ", " + titleTodayArray[1] + ":";
+            String titleTomorrow = titleTomorrowArray[0] + ", " + titleTomorrowArray[1] + ":";
+
+            boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
+            boolean[] isNo = new boolean[]{true, true};
+
+            for (int i = 0; i < ProfileManagement.profileQuantity(); i++) {
+                ApplicationFeatures.initProfile(i, false);
+                String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
+                try {
+                    count.append(inhalt.length);
+                    if (inhalt.length != 0) {
+                        if (isMoreThanOneProfile) {
+                            messageToday.append(ProfileManagement.getProfile(i).getName());
+                            messageToday.append(":\n");
+                        }
+                        messageToday.append(notifMessageContent(inhalt));
+                        isNo[0] = false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                inhalt = VertretungsPlanFeatures.getTomorrowArray();
+                try {
+                    count.append("|");
+                    count.append(inhalt.length);
+                    count.append(" ");
+                    if (inhalt.length != 0) {
+                        if (isMoreThanOneProfile) {
+                            messageTomorrow.append(ProfileManagement.getProfile(i).getName());
+                            messageTomorrow.append(":\n");
+                        }
+                        messageTomorrow.append(notifMessageContent(inhalt));
+                        isNo[1] = false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
 
-            message += notifMessageContent(inhalt, day);
+            String messageTo = isNo[0] ? titleToday + " keine Vertretung\n" : titleToday + "\n" + messageToday;
+            String messageTom = isNo[1] ? titleToday + " keine Vertretung\n" : titleTomorrow + "\n" + messageTomorrow;
 
-            day = VertretungsPlanFeatures.getTomorrowTitle();
-            inhalt = VertretungsPlanFeatures.getTomorrowArray();
-            try {
-                count2 = inhalt.length;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            message += notifMessageContent(inhalt, day);
-            message = message.substring(0, message.length() - 1);
-            return message;
+            return (messageTo + messageTom).substring(0, (messageTo + messageTom).length() - 1);
         }
 
-        private String notifMessageContent(String[][] inhalt, String day) {
+        private String notifMessageContent(String[][] inhalt) {
             String message = "";
             if (inhalt == null) {
                 return "";
             }
             if (inhalt.length == 0) {
-                message += day + ": keine Vertretung\n";
+                message += "keine Vertretung\n";
             } else {
-                message = day + ":\n";
                 if (VertretungsPlanFeatures.getOberstufe()) {
                     for (String[] line : inhalt) {
                         if (line[3].equals("entfällt")) {
@@ -494,6 +519,7 @@ public class ApplicationFeatures extends Application {
             }
             return message;
         }
+
     }
 
     public static Bitmap getBitmapFromVectorDrawable(int drawableId) {
@@ -612,15 +638,19 @@ public class ApplicationFeatures extends Application {
 
 
     //Profiles
-    public static void initProfile(int position) {
-        String courses = ProfileManagement.getProfile(position).getCourses();
-        VertretungsPlanFeatures.setup(isHour(), courses.split("#"));
+    private static void initProfileGlobal(int position, String courses) {
         Context context = getContext();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("courses", courses);
         editor.putInt("selected", position);
         editor.apply();
+    }
+
+    public static void initProfile(int position, boolean global) {
+        String courses = ProfileManagement.getProfile(position).getCourses();
+        VertretungsPlanFeatures.setup(isHour(), courses.split("#"));
+        if (global) initProfileGlobal(position, courses);
     }
 
     public static Profile getSelectedProfile() {
