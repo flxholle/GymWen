@@ -104,7 +104,10 @@ public class ProfileActivityFragment extends Fragment {
                 Intent mIntent = new Intent(getActivity(), ChoiceActivity.class);
                 Bundle extras = new Bundle();
                 extras.putBoolean("parents", true);
-                extras.putString("name", input.getText().toString());
+                if (input.getText().toString().trim().isEmpty())
+                    extras.putString("name", getContext().getString(R.string.profile_empty_name));
+                else
+                    extras.putString("name", input.getText().toString());
 
                 mIntent.putExtras(extras);
                 getActivity().startActivity(mIntent);

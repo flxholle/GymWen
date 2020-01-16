@@ -286,5 +286,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="name">Name</string>
     <string name="add">Hinzufügen</string>
     <string name="profiles_add">Profile hinzufügen\u2026</string>
+    <string name="profile_empty_name">NeuesProfil</string>
 
 </resources>
