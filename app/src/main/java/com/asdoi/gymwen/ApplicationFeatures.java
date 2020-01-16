@@ -485,8 +485,8 @@ public class ApplicationFeatures extends Application {
 
             }
 
-            String messageTo = isNo[0] ? titleToday + " keine Vertretung\n" : titleToday + "\n" + messageToday;
-            String messageTom = isNo[1] ? titleToday + " keine Vertretung\n" : titleTomorrow + "\n" + messageTomorrow;
+            String messageTo = isNo[0] ? titleToday + getContext().getString(R.string.notif_nothing) + "\n" : titleToday + "\n" + messageToday;
+            String messageTom = isNo[1] ? titleToday + getContext().getString(R.string.notif_nothing) + "\n" : titleTomorrow + "\n" + messageTomorrow;
 
             return (messageTo + messageTom).substring(0, (messageTo + messageTom).length() - 1);
         }
@@ -497,7 +497,7 @@ public class ApplicationFeatures extends Application {
                 return "";
             }
             if (inhalt.length == 0) {
-                message += "keine Vertretung\n";
+                message += getContext().getString(R.string.notif_nothing) + "\n";
             } else {
                 if (VertretungsPlanFeatures.getOberstufe()) {
                     for (String[] line : inhalt) {
