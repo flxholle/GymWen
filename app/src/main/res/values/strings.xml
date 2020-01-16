@@ -210,6 +210,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="notification_channel_description">Vertretungsplan</string>
     <string name="notif_content_title">Vertretung:</string>
     <string name="notif_dismiss">Verbergen</string>
+    <string name="notif_nothing">Keine Vertretung</string>
 
     <!-- AppUpdater -->
     <string name="update_available_title">Update verfügbar!</string>

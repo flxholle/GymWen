@@ -676,7 +676,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView teacher = view.findViewById(R.id.vertretung_all_entry_textViewTeacher);
         teacher.setText(entry[3]);
         removeTeacherClick(teacher);
-        if (!(entry[3].equals("entfällt") || entry[3].equals("entf") || entry[3].equals("AOL")))
+        if (!(entry[3].equals("entfällt") || entry[3].equals("entf")))
             teacherClick(teacher, entry[3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false));
 
         TextView room = view.findViewById(R.id.vertretung_all_entry_textViewRoom);
@@ -742,7 +742,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView room = view.findViewById(R.id.vertretung_specific_entry_textViewRoom);
 
 
-        if (!(entry[3].equals("entfällt") || entry[3].equals("entf") || entry[3].equals("AOL"))) {
+        if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
             teacher.setGravity(Gravity.CENTER);
             teacher.setTextColor(subject.getTextColors());
             teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_teacher)));
@@ -889,7 +889,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 tv.setTextSize(18);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                if (j == 3 && !inhalt[i][3].equals("entfällt") && !inhalt[i][3].equals("AOL")) {
+                if (j == 3 && !inhalt[i][3].equals("entfällt")) {
                     teacherClick(tv, inhalt[i][3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false));
                 }
                 row.addView(tv);

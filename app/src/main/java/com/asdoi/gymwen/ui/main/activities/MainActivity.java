@@ -444,7 +444,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
                 return;
             case R.id.nav_grades:
-                packageName = "com.example.user.notendings";
+                /*packageName = "com.example.user.notendings";
                 intent = getPackageManager().getLaunchIntentForPackage(packageName);
                 //If app is not installed
                 if (intent == null) {
@@ -452,7 +452,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     tabIntent("https://github.com/Tebra/Android-Grades/blob/master/app/app-release.apk");
                 } else {
                     startActivity(intent);
-                }
+                }*/
+                checkGradesFile();
                 return;
             case R.id.nav_colorush:
                 intent = getPackageManager().getLaunchIntentForPackage(ColoRushFragment.packageName);

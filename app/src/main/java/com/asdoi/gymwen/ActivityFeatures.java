@@ -359,7 +359,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
         Uri uri = Uri.parse(url);
 
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdirs();
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
         DownloadManager mgr = (DownloadManager) getContext().getSystemService(DOWNLOAD_SERVICE);
 
@@ -382,7 +382,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
             //Fetching the download id received with the broadcast
             long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
             if (downloadID == id) {
-                installApk(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + subPath);
+                installApk(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
                 unregisterReceiver(this);
             }
         }
@@ -466,6 +466,49 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    //Grades Management
+    private final static String gradesFileName = "Notenverwaltung.xlxs";
+    public final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
+
+    public void checkGradesFile() {
+        Context context = this;
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermission(this::checkGradesFile, SheriffPermission.STORAGE);
+            return;
+        }
+
+        String path = String.valueOf(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + File.separator + gradesFileName));
+        File file = new File(path);
+        if (file.exists()) {
+            openGradesFile();
+        } else {
+            startDownload(downloadGradesTable, "Notenverwaltung", "Download Tabelle", gradesFileName, openGradesFile);
+        }
+    }
+
+    BroadcastReceiver openGradesFile = new BroadcastReceiver() {
+        public void onReceive(Context ctxt, Intent intent) {
+            openGradesFile();
+            unregisterReceiver(this);
+        }
+    };
+
+    private void openGradesFile() {
+        String path = String.valueOf(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + File.separator + gradesFileName));
+        File file = new File(path);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
+        intent.setDataAndType(fileUri, "application/vnd.ms-excel");
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Keine Excel App installiert", Toast.LENGTH_LONG).show();
         }
     }
 }
