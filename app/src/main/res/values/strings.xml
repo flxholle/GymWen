@@ -25,7 +25,7 @@
     <string name="menu_teacher_list">Lehrerliste</string>
     <string name="menu_notes">Notizen</string>
     <string name="menu_timetable">Stundenplan</string>
-    <string name="menu_grades">Notenverwaltung (Achtung optimale App wird noch gesucht!)</string>
+    <string name="menu_grades">Notenverwaltung (Excel)</string>
     <string name="menu_days">Einzelne Tage</string>
     <string name="menu_filtered">Gefiltert</string>
     <string name="menu_unfiltered">Gesamt</string>
@@ -287,5 +287,8 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="add">Hinzufügen</string>
     <string name="profiles_add">Profile hinzufügen\u2026</string>
     <string name="profile_empty_name">NeuesProfil</string>
+
+    <!-- Grades Management -->
+    <string name="grades_no_app">Keine Excel App installiert!</string>
 
 </resources>

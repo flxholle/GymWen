@@ -508,7 +508,25 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Keine Excel App installiert", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, this.getString(R.string.grades_no_app), Toast.LENGTH_LONG).show();
+            String packageNameMSExcel = "com.microsoft.office.excel";
+            String packageNameLibreOffice = "org.documentfoundation.libreoffice";
+            String packageNameWPS = "cn.wps.moffice_eng";
+
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameMSExcel)));
+            } catch (android.content.ActivityNotFoundException anfe) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameLibreOffice)));
+                } catch (android.content.ActivityNotFoundException a) {
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameWPS)));
+                    } catch (android.content.ActivityNotFoundException a2) {
+                        //Open Browser to Download
+                        tabIntent("https://f-droid.org/de/packages/org.documentfoundation.libreoffice/");
+                    }
+                }
+            }
         }
     }
 }

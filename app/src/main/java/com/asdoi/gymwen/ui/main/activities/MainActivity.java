@@ -160,9 +160,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         ArrayList<MenuItem> itemsDisable = new ArrayList<>(0);
 
         if (ApplicationFeatures.isBetaEnabled()) {
-            itemsEnable.add(menu.findItem(R.id.nav_grades));
         } else {
-            itemsDisable.add(menu.findItem(R.id.nav_grades));
         }
         if (ApplicationFeatures.isSections()) {
             itemsEnable.add(menu.findItem(R.id.nav_filtered_days));
@@ -179,12 +177,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsEnable.add(menu.findItem(R.id.nav_forms));
             itemsDisable.add(menu.findItem(R.id.nav_mebis));
             itemsDisable.add(menu.findItem(R.id.nav_timetable));
+            itemsDisable.add(menu.findItem(R.id.nav_grades));
         } else {
             itemsDisable.add(menu.findItem(R.id.nav_claxss));
             itemsDisable.add(menu.findItem(R.id.nav_call_office));
             itemsDisable.add(menu.findItem(R.id.nav_forms));
             itemsEnable.add(menu.findItem(R.id.nav_mebis));
             itemsEnable.add(menu.findItem(R.id.nav_timetable));
+            itemsEnable.add(menu.findItem(R.id.nav_grades));
         }
 
         try {
