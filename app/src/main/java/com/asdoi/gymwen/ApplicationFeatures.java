@@ -110,8 +110,13 @@ public class ApplicationFeatures extends Application {
     }
 
     public static void downloadLehrerDoc() {
-        if (!Lehrerliste.isDownloaded() && ApplicationFeatures.isNetworkAvailable() && !Lehrerliste.reloadDoc())
-            Lehrerliste.setDoc(downloadDoc(Lehrerliste.listUrl));
+        if (!Lehrerliste.isDownloaded()) {
+            if (ApplicationFeatures.isNetworkAvailable()) {
+                Lehrerliste.setDoc(downloadDoc(Lehrerliste.listUrl));
+            } else {
+                ActivityFeatures.reloadDocs();
+            }
+        }
     }
 
     public static void downloadVertretungsplanDocs(boolean isWidget, boolean signIn) {
