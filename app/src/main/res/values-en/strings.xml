@@ -193,7 +193,7 @@
     <string name="permission_required">Authorization is required!</string>
     <string name="permission_required_description">These authorization (s) are required to ensure comprehensive functionality</string>
     <string name="permission_ok_button">Grant\u2026</string>
-    <string name="permission_cancel_button">Abort</string>
+    <string name="permission_cancel_button">Cancel</string>
 
 
     <string name="no_email_app">You don\'t have an email app installed</string>
