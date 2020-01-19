@@ -471,7 +471,7 @@ public class ApplicationFeatures extends Application {
                 String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
                 try {
                     count1.append(inhalt.length);
-                    count1.append(", ");
+                    count1.append("|");
                     if (inhalt.length != 0) {
                         if (isMoreThanOneProfile) {
                             messageToday.append(ProfileManagement.getProfile(i).getName());
@@ -536,7 +536,6 @@ public class ApplicationFeatures extends Application {
                 String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
                 try {
                     count.append(inhalt.length);
-                    count.append(" ");
                     if (inhalt.length != 0) {
                         if (isMoreThanOneProfile) {
                             messageToday.append(ProfileManagement.getProfile(i).getName());

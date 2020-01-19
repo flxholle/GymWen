@@ -359,8 +359,6 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
         Uri uri = Uri.parse(url);
 
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
         DownloadManager mgr = (DownloadManager) getContext().getSystemService(DOWNLOAD_SERVICE);
 
         DownloadManager.Request request = new DownloadManager.Request(uri)
@@ -482,7 +480,10 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
             return;
         }
 
-        String path = String.valueOf(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + File.separator + gradesFileName));
+//        String path = String.valueOf(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + File.separator + gradesFileName));
+//        String p  =Environment.DIRECTORY_DOWNLOADS + File.separator + gradesFileName;
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
+//        String s = Environment.getExternalStorageState();
         File file = new File(path);
         if (file.exists()) {
             openGradesFile();
@@ -499,7 +500,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     };
 
     private void openGradesFile() {
-        String path = String.valueOf(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + File.separator + gradesFileName));
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
         File file = new File(path);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
