@@ -124,6 +124,7 @@ public class SettingsActivity extends ActivityFeatures {
             boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false);
             findPreference("alwaysNotification").setEnabled(showNotif);
             findPreference("alarm").setEnabled(showNotif);
+            findPreference("two_notifs").setEnabled(showNotif);
         }
 
         private void setBorder() {

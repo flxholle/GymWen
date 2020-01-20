@@ -301,6 +301,10 @@ public class ApplicationFeatures extends Application {
         return getBooleanSettings("parents", false);
     }
 
+    public static boolean isTwoNotifications() {
+        return getBooleanSettings("two_notifs", false);
+    }
+
     public static int[] getAlarmTime() {
         SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
         return new int[]{sharedPref.getInt("Alarm_hour", -1), sharedPref.getInt("Alarm_minute", -1), sharedPref.getInt("Alarm_second", -1)};
@@ -353,7 +357,7 @@ public class ApplicationFeatures extends Application {
 
     //Notification
     final public static int NOTIFICATION_ID = 1;
-    final private static int NOTIFICATION_ID_2 = 2;
+    final public static int NOTIFICATION_ID_2 = 2;
     final private static String NOTIFICATION_CHANNEL_ID = "vertretungsplan_01";
 
     public static void sendNotification() {
@@ -375,11 +379,10 @@ public class ApplicationFeatures extends Application {
         }
 
         public void sendNotification() {
-            if (ProfileManagement.isMoreThanOneProfile()) {
-                notificationMessageMoreProfiles();
-            } else {
-                notificationMessageOneProfile();
-            }
+            if (isTwoNotifications())
+                notificationMessageTwoNotifs();
+            else
+                notificationMessageOneNotif();
         }
 
         private void createNotification(String body, String title, int notification_id) {
@@ -399,6 +402,7 @@ public class ApplicationFeatures extends Application {
 
                 //Create an Intent for the BroadcastReceiver
                 Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
+                buttonIntent.setAction("com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver");
                 buttonIntent.putExtra("EXTRA_NOTIFICATION_ID", notification_id);
                 PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -452,7 +456,63 @@ public class ApplicationFeatures extends Application {
             }
         }
 
-        private void notificationMessageMoreProfiles() {
+        private void notificationMessageOneNotif() {
+            StringBuilder messageToday = new StringBuilder();
+            StringBuilder messageTomorrow = new StringBuilder();
+            String[] titleTodayArray = VertretungsPlanFeatures.getTodayTitleArray();
+            String[] titleTomorrowArray = VertretungsPlanFeatures.getTomorrowTitleArray();
+            String titleToday = titleTodayArray[0] + ", " + titleTodayArray[1] + ":";
+            String titleTomorrow = titleTomorrowArray[0] + ", " + titleTomorrowArray[1] + ":";
+            boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
+
+            boolean[] isNo = new boolean[]{true, true};
+
+            StringBuilder count = new StringBuilder();
+
+            for (int i = 0; i < ProfileManagement.profileQuantity(); i++) {
+                ApplicationFeatures.initProfile(i, false);
+                String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
+                try {
+                    count.append(inhalt.length);
+                    count.append("|");
+                    if (inhalt.length != 0) {
+                        if (isMoreThanOneProfile) {
+                            messageToday.append(ProfileManagement.getProfile(i).getName());
+                            messageToday.append(":\n");
+                        }
+                        messageToday.append(notifMessageContent(inhalt));
+                        isNo[0] = false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                inhalt = VertretungsPlanFeatures.getTomorrowArray();
+                try {
+                    count.append(inhalt.length);
+                    count.append(", ");
+                    if (inhalt.length != 0) {
+                        if (isMoreThanOneProfile) {
+                            messageTomorrow.append(ProfileManagement.getProfile(i).getName());
+                            messageTomorrow.append(":\n");
+                        }
+                        messageTomorrow.append(notifMessageContent(inhalt));
+                        isNo[1] = false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            count.deleteCharAt(count.lastIndexOf(", "));
+
+            StringBuilder message = new StringBuilder(titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow);
+            message.delete(message.length() - 2, message.length());
+
+            createNotification(message.toString(), getContext().getString(R.string.notif_content_title) + " " + count, NOTIFICATION_ID);
+        }
+
+        private void notificationMessageTwoNotifs() {
             StringBuilder messageToday = new StringBuilder();
             StringBuilder messageTomorrow = new StringBuilder();
             String[] titleTodayArray = VertretungsPlanFeatures.getTodayTitleArray();
@@ -471,7 +531,7 @@ public class ApplicationFeatures extends Application {
                 String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
                 try {
                     count1.append(inhalt.length);
-                    count1.append("|");
+                    count1.append(", ");
                     if (inhalt.length != 0) {
                         if (isMoreThanOneProfile) {
                             messageToday.append(ProfileManagement.getProfile(i).getName());
@@ -501,76 +561,24 @@ public class ApplicationFeatures extends Application {
                 }
 
             }
+            count1.deleteCharAt(count1.lastIndexOf(", "));
+            count2.deleteCharAt(count2.lastIndexOf(", "));
 
             String messageTo = isNo[0] ? getContext().getString(R.string.notif_nothing) + "\n" : messageToday.toString();
             String messageTom = isNo[1] ? getContext().getString(R.string.notif_nothing) + "\n" : messageTomorrow.toString();
 
-            if (isNo[0] || isNo[1]) {
-                notificationMessageOneProfile();
-                return;
-            }
+//            if (isNo[0] || isNo[1]) {
+//                notificationMessageOneProfile();
+//                return;
+//            }
 
             messageTo = messageTo.substring(0, messageTo.length() - 1);
             messageTom = messageTom.substring(0, messageTom.length() - 1);
-            createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_ID);
             createNotification(messageTom, titleTomorrow + " " + count2.toString(), NOTIFICATION_ID_2);
+            createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_ID);
 
-//            return (messageTo + messageTom).substring(0, (messageTo + messageTom).length() - 1);
-        }
-
-        private void notificationMessageOneProfile() {
-            StringBuilder messageToday = new StringBuilder();
-            StringBuilder messageTomorrow = new StringBuilder();
-            String[] titleTodayArray = VertretungsPlanFeatures.getTodayTitleArray();
-            String[] titleTomorrowArray = VertretungsPlanFeatures.getTomorrowTitleArray();
-            String titleToday = titleTodayArray[0] + ", " + titleTodayArray[1] + ":";
-            String titleTomorrow = titleTomorrowArray[0] + ", " + titleTomorrowArray[1] + ":";
-
-            boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
-            boolean[] isNo = new boolean[]{true, true};
-
-            StringBuilder count = new StringBuilder();
-
-            for (int i = 0; i < ProfileManagement.profileQuantity(); i++) {
-                ApplicationFeatures.initProfile(i, false);
-                String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
-                try {
-                    count.append(inhalt.length);
-                    if (inhalt.length != 0) {
-                        if (isMoreThanOneProfile) {
-                            messageToday.append(ProfileManagement.getProfile(i).getName());
-                            messageToday.append(":\n");
-                        }
-                        messageToday.append(notifMessageContent(inhalt));
-                        isNo[0] = false;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                inhalt = VertretungsPlanFeatures.getTomorrowArray();
-                try {
-                    count.append("|");
-                    count.append(inhalt.length);
-                    count.append(" ");
-                    if (inhalt.length != 0) {
-                        if (isMoreThanOneProfile) {
-                            messageTomorrow.append(ProfileManagement.getProfile(i).getName());
-                            messageTomorrow.append(":\n");
-                        }
-                        messageTomorrow.append(notifMessageContent(inhalt));
-                        isNo[1] = false;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            String messageTo = isNo[0] ? titleToday + getContext().getString(R.string.notif_nothing) + "\n" : titleToday + "\n" + messageToday;
-            String messageTom = isNo[1] ? titleTomorrow + getContext().getString(R.string.notif_nothing) + "\n" : titleTomorrow + "\n" + messageTomorrow;
-            String complete = (messageTom + messageTo).substring(0, (messageTo + messageTom).length() - 1);
-            createNotification(complete, getContext().getString(R.string.notif_content_title) + " " + count, NOTIFICATION_ID);
+//            String message = (messageTo + messageTom).substring(0, (messageTo + messageTom).length() - 1);
+//            createNotification(message,);
 
 //            return (messageTo + messageTom).substring(0, (messageTo + messageTom).length() - 1);
         }
