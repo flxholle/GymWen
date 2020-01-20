@@ -11,10 +11,13 @@ public class NotificationDismissButtonReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int notificationId = intent.getIntExtra("EXTRA_NOTIFICATION_ID", ApplicationFeatures.NOTIFICATION_ID);
-
         // if you want cancel notification
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.cancel(notificationId);
+        try {
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.cancel(ApplicationFeatures.NOTIFICATION_ID);
+            manager.cancel(ApplicationFeatures.NOTIFICATION_ID_2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
