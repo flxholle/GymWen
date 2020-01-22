@@ -105,41 +105,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return;
         }
 
-        //Set Profiles
-        Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
-
-        if (ProfileManagement.isMoreThanOneProfile()) {
-            parentSpinner.setVisibility(View.VISIBLE);
-            parentSpinner.setEnabled(true);
-            List<String> list = ProfileManagement.getProfileList();
-            list.add(getString(R.string.profiles_edit));
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            parentSpinner.setAdapter(dataAdapter);
-            parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String item = parent.getItemAtPosition(position).toString();
-                    if (item.equals(getContext().getString(R.string.profiles_edit))) {
-                        Intent intent = new Intent(getContext(), ProfileActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        ApplicationFeatures.initProfile(position, true);
-                        onNavigationItemSelected(refreshFragment);
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-        } else {
-            ApplicationFeatures.initProfile(0, true);
-            parentSpinner.setVisibility(View.GONE);
-            parentSpinner.setEnabled(false);
-        }
+        initSpinner();
 
         if (!VertretungsPlanFeatures.isUninit())
             onNavigationItemSelected(R.id.nav_both);
@@ -207,6 +173,54 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
     }
 
+    private void initSpinner() {
+        //Set Profiles
+        Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
+
+        if (ProfileManagement.isMoreThanOneProfile()) {
+            parentSpinner.setVisibility(View.VISIBLE);
+            parentSpinner.setEnabled(true);
+            List<String> list = ProfileManagement.getProfileList();
+            list.add(getString(R.string.profiles_edit));
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            parentSpinner.setAdapter(dataAdapter);
+            parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String item = parent.getItemAtPosition(position).toString();
+                    if (item.equals(getContext().getString(R.string.profiles_edit))) {
+                        Intent intent = new Intent(getContext(), ProfileActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        ApplicationFeatures.initProfile(position, true);
+                        onNavigationItemSelected(refreshFragment);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        } else {
+            ApplicationFeatures.initProfile(0, true);
+            parentSpinner.setVisibility(View.GONE);
+            parentSpinner.setEnabled(false);
+        }
+    }
+
+    private void setVisibiltySpinner(boolean visible) {
+        if (!ProfileManagement.isMoreThanOneProfile())
+            return;
+        Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
+        if (visible)
+            parentSpinner.setVisibility(View.VISIBLE);
+        else
+            parentSpinner.setVisibility(View.GONE);
+    }
+
     @Override
     public void onPostCreate(Bundle b) {
         super.onPostCreate(b);
@@ -263,9 +277,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         switch (id) {
             default:
             case R.id.nav_both:
+                setVisibiltySpinner(true);
                 fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
                 break;
             case R.id.nav_filtered_days:
+                setVisibiltySpinner(false);
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
@@ -276,6 +292,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 lastLoaded = lastLoadedTabs;
                 break;
             case R.id.nav_unfiltered_days:
+                setVisibiltySpinner(false);
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
@@ -286,6 +303,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 lastLoaded = lastLoadedTabs;
                 break;
             case R.id.nav_days:
+                setVisibiltySpinner(true);
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
@@ -301,12 +319,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
 
             case R.id.navigation_filter:
+                setVisibiltySpinner(true);
                 sectionsPagerAdapter.setAll(false);
                 sectionsPagerAdapter.notifyDataSetChanged();
                 lastLoaded = lastLoadedTabs;
                 lastLoadedInTabs = lastLoadedTabsSpecific;
                 break;
             case R.id.navigation_all:
+                setVisibiltySpinner(false);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                 findViewById(R.id.fragment_main).setVisibility(View.GONE);
@@ -398,6 +418,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(this);
                 return;
             case R.id.nav_teacherlist:
+                setVisibiltySpinner(false);
                 fragment = new LehrerlisteFragment();
                 break;
             case R.id.nav_notes:
@@ -451,7 +472,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     //Open Browser to Download
                     tabIntent("https://github.com/Tebra/Android-Grades/blob/master/app/app-release.apk");
                 } else {
-                    startActivity(intent);
+                    startActivity(intent);nö
                 }*/
                 checkGradesFile();
                 return;
@@ -460,8 +481,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 if (intent != null) {
                     startActivity(intent);
                     return;
-                } else
+                } else {
+                    setVisibiltySpinner(false);
                     fragment = new ColoRushFragment();
+                }
                 break;
             case R.id.action_profiles:
                 intent = new Intent(this, ProfileActivity.class);
