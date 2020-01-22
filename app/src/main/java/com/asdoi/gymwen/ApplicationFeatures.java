@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -91,6 +92,13 @@ public class ApplicationFeatures extends Application {
         ACRA.init(this);
         initRosetta();
         ProfileManagement.reload();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+//        LocaleChanger.onConfigurationChanged();
+        mContext = this;
     }
 
 
@@ -374,9 +382,13 @@ public class ApplicationFeatures extends Application {
             if (VertretungsPlanFeatures.getTodayArray() == null) {
                 return;
             }
-            ProfileManagement.reload();
+            try {
+                ProfileManagement.reload();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
             sendNotification();
-//            notificationMessage();
         }
 
         public void sendNotification() {
@@ -661,6 +673,10 @@ public class ApplicationFeatures extends Application {
 
         languageSwitcher = new LanguageSwitcher(this, displayLang);
         languageSwitcher.setSupportedLocales(supportedLocales);
+
+//        List<Locale> SUPPORTED_LOCALES = new ArrayList<Locale>(supportedLocales);
+//
+//        LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
     }
 
 

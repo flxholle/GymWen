@@ -231,8 +231,8 @@
     <string name="set_parents">Parent mode</string>
     <string name="notif_nothing">Nothing</string>
     <string name="menu_public_transport">Public transport</string>
-    <string name="menu_forms">forms</string>
-    <string name="menu_call_office">call office</string>
+    <string name="menu_forms">Forms</string>
+    <string name="menu_call_office">Call office</string>
     <string name="grades_no_app">No Excel App installed!</string>
     <string name="profile_empty_name">NewProfile</string>
     <string name="set_two_notifications">Notifiy each day seperately</string>

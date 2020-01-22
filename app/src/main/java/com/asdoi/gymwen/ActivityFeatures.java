@@ -530,4 +530,12 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
             }
         }
     }
+
+
+    //Language
+    @Override
+    protected void attachBaseContext(Context newBase) {
+//        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
 }

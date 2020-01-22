@@ -139,14 +139,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         if (ApplicationFeatures.isParents()) {
             itemsEnable.add(menu.findItem(R.id.nav_claxss));
-            itemsEnable.add(menu.findItem(R.id.nav_call_office));
             itemsEnable.add(menu.findItem(R.id.nav_forms));
             itemsDisable.add(menu.findItem(R.id.nav_mebis));
             itemsDisable.add(menu.findItem(R.id.nav_timetable));
             itemsDisable.add(menu.findItem(R.id.nav_grades));
         } else {
             itemsDisable.add(menu.findItem(R.id.nav_claxss));
-            itemsDisable.add(menu.findItem(R.id.nav_call_office));
             itemsDisable.add(menu.findItem(R.id.nav_forms));
             itemsEnable.add(menu.findItem(R.id.nav_mebis));
             itemsEnable.add(menu.findItem(R.id.nav_timetable));
@@ -171,6 +169,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onPause() {
+        saveDocs();
+        super.onPause();
     }
 
     private void initSpinner() {
@@ -204,6 +208,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
                 }
             });
+            parentSpinner.setSelection(0);
         } else {
             ApplicationFeatures.initProfile(0, true);
             parentSpinner.setVisibility(View.GONE);
@@ -281,7 +286,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
                 break;
             case R.id.nav_filtered_days:
-                setVisibiltySpinner(false);
+                setVisibiltySpinner(true);
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
