@@ -122,7 +122,7 @@ public class ApplicationFeatures extends Application {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 Lehrerliste.setDoc(downloadDoc(Lehrerliste.listUrl));
             } else {
-                ActivityFeatures.reloadDocs();
+                Lehrerliste.reloadDoc();
             }
         }
     }
@@ -161,7 +161,7 @@ public class ApplicationFeatures extends Application {
                     updateMyWidgets();
                 }
             } else {
-                ActivityFeatures.reloadDocs();
+                ActivityFeatures.reloadVertretungDocs();
             }
         }
     }
@@ -379,11 +379,12 @@ public class ApplicationFeatures extends Application {
 
         @Override
         protected void onPostExecute(Void v) {
-            if (VertretungsPlanFeatures.getTodayArray() == null) {
-                return;
-            }
             try {
                 ProfileManagement.reload();
+                ApplicationFeatures.initProfile(0, false);
+                if (VertretungsPlanFeatures.getTodayArray() == null) {
+                    return;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
