@@ -147,8 +147,9 @@ public class ApplicationFeatures extends Application {
                     }
                 }
                 VertretungsPlanFeatures.setDocs(doc[0], doc[1]);
-                sendNotification();
+
                 if (!isWidget) {
+                    sendNotification();
                     updateMyWidgets();
                 }
             } else {
@@ -233,9 +234,9 @@ public class ApplicationFeatures extends Application {
 
             VertretungsPlanFeatures.signin(username, password);
 
-            sendNotification();
 
             if (!isWidget) {
+                sendNotification();
                 updateMyWidgets();
             }
         } else if (signIn) {
