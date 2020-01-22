@@ -78,14 +78,19 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
             case 5:
                 root = inflater.inflate(R.layout.fragment_fifthchoice, container, false);
         }
+        fade = AnimationUtils.loadAnimation(getContext(), R.anim.fade);
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         initControls();
         if (step == 5) {
             checkIfEmpty();
         } else {
             deactivateFab();
         }
-        fade = AnimationUtils.loadAnimation(getContext(), R.anim.fade);
-        return root;
     }
 
     private void initControls() {

@@ -19,12 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-
-import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +47,12 @@ public class LehrerlisteFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_lehrerliste, container, false);
 
         base = root.findViewById(R.id.teacher_list_base);
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         ActivityFeatures.createLoadingPanel(base);
 
         new Thread(() -> {
@@ -54,9 +60,6 @@ public class LehrerlisteFragment extends Fragment {
             teacherList = Lehrerliste.liste();
             createLayout();
         }).start();
-
-
-        return root;
     }
 
 

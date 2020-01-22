@@ -56,8 +56,13 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
         basic = root.findViewById(R.id.website_linear);
         buttonCall = (WebsiteActivity) getActivity();
-        loadSite();
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadSite();
     }
 
     public void changeSite(String[][] con, int pageCode) {
