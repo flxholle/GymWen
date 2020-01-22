@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
-        version="1.0.7"
-        versioncode="107">
+        version="1.1"
+        versioncode="110">
         <change>Einzelne Profile</change>
         <change>Elternmodus</change>
         <change>Offlinemodus</change>
         <change>Selbstprogrammierte Notenverwaltung</change>
         <change>Startbildschirm</change>
         <change>Öffis, ColoRush und Formulare Buttons hinzugefügt</change>
+        <change>Zwei Benachrichtungen für beide Tage</change>
         <change>Seperate Buttons für gefilterten und ungefilterten Plan</change>
         <change>Einstellung Wochentage immer anzuzeigen hinzugefügt</change>
     </release>
@@ -20,8 +21,7 @@
         <change>Anzeigen ob ein Tag schon vergangen ist</change>
         <change>Änderung der Anzeige auf Wochentage</change>
         <change>Summe der vertretenen Stunden in der Benachrichtigung</change>
-        <change>Senden der Benachrichtigung zu einer festen Zeit
-        </change>
+        <change>Senden der Benachrichtigung zu einer festen Zeit</change>
     </release>
     <release
         version="1.0.5"
