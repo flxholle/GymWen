@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-class Vertretungsplan {
+public class Vertretungsplan {
 
     boolean oberstufe;
     ArrayList<String> courses;

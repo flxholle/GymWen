@@ -41,6 +41,7 @@ import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.main.activities.MainActivity;
 import com.asdoi.gymwen.ui.main.activities.SignInActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
 
 import org.acra.ACRA;
@@ -244,7 +245,7 @@ public class ApplicationFeatures extends Application {
 
 
             if (!isWidget) {
-                sendNotification();
+//                sendNotification();
                 updateMyWidgets();
             }
         } else if (signIn) {
@@ -381,15 +382,13 @@ public class ApplicationFeatures extends Application {
         protected void onPostExecute(Void v) {
             try {
                 ProfileManagement.reload();
-                ApplicationFeatures.initProfile(0, false);
-                if (VertretungsPlanFeatures.getTodayArray() == null) {
+                if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
                     return;
                 }
+                sendNotification();
             } catch (Exception e) {
                 e.printStackTrace();
-                return;
             }
-            sendNotification();
         }
 
         public void sendNotification() {
@@ -484,8 +483,9 @@ public class ApplicationFeatures extends Application {
             StringBuilder count = new StringBuilder();
 
             for (int i = 0; i < ProfileManagement.profileQuantity(); i++) {
-                ApplicationFeatures.initProfile(i, false);
-                String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
+                Profile p = ProfileManagement.getProfile(i);
+                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses());
+                String[][] inhalt = temp.getDay(true);
                 try {
                     count.append(inhalt.length);
                     count.append("|");
@@ -494,14 +494,14 @@ public class ApplicationFeatures extends Application {
                             messageToday.append(ProfileManagement.getProfile(i).getName());
                             messageToday.append(":\n");
                         }
-                        messageToday.append(notifMessageContent(inhalt));
+                        messageToday.append(notifMessageContent(inhalt, temp));
                         isNo[0] = false;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                inhalt = VertretungsPlanFeatures.getTomorrowArray();
+                inhalt = temp.getDay(false);
                 try {
                     count.append(inhalt.length);
                     count.append(", ");
@@ -510,7 +510,7 @@ public class ApplicationFeatures extends Application {
                             messageTomorrow.append(ProfileManagement.getProfile(i).getName());
                             messageTomorrow.append(":\n");
                         }
-                        messageTomorrow.append(notifMessageContent(inhalt));
+                        messageTomorrow.append(notifMessageContent(inhalt, temp));
                         isNo[1] = false;
                     }
                 } catch (Exception e) {
@@ -541,8 +541,10 @@ public class ApplicationFeatures extends Application {
             StringBuilder count2 = new StringBuilder();
 
             for (int i = 0; i < ProfileManagement.profileQuantity(); i++) {
-                ApplicationFeatures.initProfile(i, false);
-                String[][] inhalt = VertretungsPlanFeatures.getTodayArray();
+//                ApplicationFeatures.initProfile(i, false);
+                Profile p = ProfileManagement.getProfile(i);
+                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses());
+                String[][] inhalt = temp.getDay(true);
                 try {
                     count1.append(inhalt.length);
                     count1.append(", ");
@@ -551,14 +553,14 @@ public class ApplicationFeatures extends Application {
                             messageToday.append(ProfileManagement.getProfile(i).getName());
                             messageToday.append(":\n");
                         }
-                        messageToday.append(notifMessageContent(inhalt));
+                        messageToday.append(notifMessageContent(inhalt, temp));
                         isNo[0] = false;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                inhalt = VertretungsPlanFeatures.getTomorrowArray();
+                inhalt = temp.getDay(false);
                 try {
                     count2.append(inhalt.length);
                     count2.append(", ");
@@ -567,7 +569,7 @@ public class ApplicationFeatures extends Application {
                             messageTomorrow.append(ProfileManagement.getProfile(i).getName());
                             messageTomorrow.append(":\n");
                         }
-                        messageTomorrow.append(notifMessageContent(inhalt));
+                        messageTomorrow.append(notifMessageContent(inhalt, temp));
                         isNo[1] = false;
                     }
                 } catch (Exception e) {
@@ -597,7 +599,7 @@ public class ApplicationFeatures extends Application {
 //            return (messageTo + messageTom).substring(0, (messageTo + messageTom).length() - 1);
         }
 
-        private String notifMessageContent(String[][] inhalt) {
+        private String notifMessageContent(String[][] inhalt, Vertretungsplan vp) {
             String message = "";
             if (inhalt == null) {
                 return "";
@@ -605,7 +607,7 @@ public class ApplicationFeatures extends Application {
             if (inhalt.length == 0) {
                 message += getContext().getString(R.string.notif_nothing) + "\n";
             } else {
-                if (VertretungsPlanFeatures.getOberstufe()) {
+                if (vp.getOberstufe()) {
                     for (String[] line : inhalt) {
                         if (line[3].equals("entfällt")) {
                             message += line[1] + ". Stunde entfällt\n";
@@ -765,7 +767,9 @@ public class ApplicationFeatures extends Application {
 
     public static Profile getSelectedProfile() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int n = sharedPref.getInt("selected", 0);
         return ProfileManagement.getProfile(sharedPref.getInt("selected", 0));
+
     }
 
     public static void resetSelectedProfile() {

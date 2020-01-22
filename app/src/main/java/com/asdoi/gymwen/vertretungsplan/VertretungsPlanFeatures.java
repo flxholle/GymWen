@@ -53,6 +53,12 @@ public abstract class VertretungsPlanFeatures {
         }
     }
 
+    public static Vertretungsplan createTempVertretungsplan(boolean hours, String... courses) {
+        Vertretungsplan temp = new Vertretungsplan(hours, courses);
+        temp.setDocs(vertretungsplan.getDoc(true), vertretungsplan.getDoc(false));
+        return temp;
+    }
+
     public static void signin(String username, String password) {
         strUserId = username;
         strPasword = password;

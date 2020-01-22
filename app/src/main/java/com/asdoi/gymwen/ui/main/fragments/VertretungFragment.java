@@ -127,12 +127,17 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                              ViewGroup container, Bundle savedInstanceState) {
         context = getContext();
         root = inflater.inflate(R.layout.fragment_vertretung, container, false);
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
 
         //Loading Pabel
         ActivityFeatures.createLoadingPanel(root.findViewById(R.id.vertretung_frame));
 
         refreshAndTable();
-        return root;
     }
 
     private void refreshAndTable() {
