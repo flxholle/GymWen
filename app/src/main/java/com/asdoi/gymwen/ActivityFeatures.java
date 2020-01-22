@@ -450,8 +450,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         Toast.makeText(ApplicationFeatures.getContext(), R.string.saved_docs, Toast.LENGTH_SHORT).show();
     }
 
-    public static void reloadDocs() {
-        Lehrerliste.reloadDoc();
+    public static void reloadVertretungDocs() {
         if (VertretungsPlanFeatures.reloadDocs()) {
             try {
                 new Handler(Looper.getMainLooper()).post(() -> {
