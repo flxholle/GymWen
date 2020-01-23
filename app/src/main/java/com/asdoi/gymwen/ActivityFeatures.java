@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -130,7 +131,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
                         public void onClick(DialogInterface dialogInterface, int i) {
                             try {
                                 String apkUrl = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
-                                startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", installApk);
+                                startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", installApk);
                             } catch (Exception e) {
                                 tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
                             }
@@ -341,12 +342,12 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     private String subPath;
     private long downloadID;
 
-    public void startDownload(String url, String title, String description, String subPath, BroadcastReceiver onComplete) {
+    public void startDownload(String url, String title, String description, String dirType, String subPath, BroadcastReceiver onComplete) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
             requestPermission(() -> {
-                startDownload(url, title, description, subPath, onComplete);
+                startDownload(url, title, description, dirType, subPath, onComplete);
             }, SheriffPermission.STORAGE);
             return;
 
@@ -367,7 +368,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
                 .setAllowedOverRoaming(false)
                 .setTitle(title)
                 .setDescription(description)
-                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, subPath)
+                .setDestinationInExternalPublicDir(dirType, subPath)
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.allowScanningByMediaScanner();
 
@@ -447,7 +448,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         VertretungsPlanFeatures.saveDocs();
         Lehrerliste.saveDoc();
         ProfileManagement.save(false);
-        Toast.makeText(ApplicationFeatures.getContext(), R.string.saved_docs, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(ApplicationFeatures.getContext(), R.string.saved_docs, Toast.LENGTH_SHORT).show();
     }
 
     public static void reloadVertretungDocs() {
@@ -472,22 +473,18 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     public final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
 
     public void checkGradesFile() {
-        Context context = this;
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermission(this::checkGradesFile, SheriffPermission.STORAGE);
             return;
         }
 
-//        String path = String.valueOf(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + File.separator + gradesFileName));
-//        String p  =Environment.DIRECTORY_DOWNLOADS + File.separator + gradesFileName;
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
-//        String s = Environment.getExternalStorageState();
+        String path = Environment.getExternalStoragePublicDirectory(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
         File file = new File(path);
         if (file.exists()) {
             openGradesFile();
         } else {
-            startDownload(downloadGradesTable, "Notenverwaltung", "Download Tabelle", gradesFileName, openGradesFile);
+            startDownload(downloadGradesTable, "Notenverwaltung", "Download Tabelle", Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS, gradesFileName, openGradesFile);
         }
     }
 
