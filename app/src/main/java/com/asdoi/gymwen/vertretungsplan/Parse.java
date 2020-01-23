@@ -97,8 +97,7 @@ abstract class Parse {
     //specific
     protected static String[][] getList(Document doc, boolean oberstufe, ArrayList<String> classNames) {
 
-        if (doc == null) {
-            System.out.println("Authentication failed! at getting Classes");
+        if (doc == null || classNames == null) {
             return null;
         }
 
