@@ -705,7 +705,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         String[][] content;
         boolean sons;
 
-        public VertretungListAdapterSpecific(Context con, int resource, String[][] content, boolean sons) {
+        VertretungListAdapterSpecific(Context con, int resource, String[][] content, boolean sons) {
             super(con, resource);
             this.content = content;
             this.sons = sons;
