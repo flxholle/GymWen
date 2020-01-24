@@ -374,6 +374,8 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
         downloadID = mgr.enqueue(request);
 
+        Toast.makeText(this, getString(R.string.download_start), Toast.LENGTH_LONG).show();
+
     }
 
     public BroadcastReceiver installApk = new BroadcastReceiver() {

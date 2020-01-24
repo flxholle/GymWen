@@ -292,4 +292,12 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <!-- Grades Management -->
     <string name="grades_no_app">Keine Excel App installiert!</string>
 
+    <!-- ColoRush -->
+    <string name="colorush_description">In diesem Spiel müsst ihr eine Kugel mit der passenden Farbe färben um über Barrieren im Boden zu gelangen.\nEs gibt fünf verschiedene Spielmodi, in drei davon wählst du die Farbe der Kugel durch drei Knöpfe aus (Rot, Gelb, Blau).\nIn den restlichen ist sie vorgegeben und du musst mit Hilfe von Knöpfen den falschen Barrieren ausweichen.\nIm Forgeschrittenen-Modus gibt es die Möglichkeit die einzelnen Farb-Knöpfe gleichzeitig zu drücken und so neue Farben zu kreieren, wie Grün oder Orange.\nAußerdem gibt es die Möglichkeit Diamanten einzusammeln und sich davon neue Skins oder Hintergründe zu kaufen.\nDes Weiteren gibt es einen Multiplayermodus und ein tägliches Level.\nViel Spaß!</string>
+    <string name="colorush_online_version">Online Version</string>
+    <string name="colorush_android_app">Android App</string>
+
+    <!-- Download Manager -->
+    <string name="download_start">Lädt herunter\u2026</string>
+
 </resources>
