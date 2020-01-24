@@ -1,4 +1,4 @@
-Official app for the [http://gym-wen.de/startseite/ Gymnasium Wendelstein].
+Official app for the <a href="http://gym-wen.de/startseite/"> Gymnasium Wendelstein</a>.
 
 With this app pupils are able to:
 * check their teachers substitutions
@@ -7,4 +7,4 @@ With this app pupils are able to:
 * use mebis
 * and much more
 
-For more information about the [https://gitlab.com/asdoi Developer] you can visit [https://asdoi.gitlab.io/ this site].
+For more information about the <a href="https://gitlab.com/asdoi">Developer</a> you can visit <a href="https://asdoi.gitlab.io/">this site</a>.
