@@ -34,7 +34,10 @@ public class ColoRushFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         try {
-            String[] imageUrls = new String[4];
+            String[] imageUrls = new String[]{"https://gitlab.com/asdoi/GymWen/raw/master/additional_data/colorushboss1.png?inline=false",
+                    "https://gitlab.com/asdoi/GymWen/raw/master/additional_data/colorushchoosing2.png?inline=false",
+                    "https://gitlab.com/asdoi/GymWen/raw/master/additional_data/colorushlevel1.png?inline=false",
+                    "https://gitlab.com/asdoi/GymWen/raw/master/additional_data/colorushmenu.png?inline=false"};
             new ApplicationFeatures.downloadImageTask(root.findViewById(R.id.colorush_image1)).execute(imageUrls[0]);
             new ApplicationFeatures.downloadImageTask(root.findViewById(R.id.colorush_image2)).execute(imageUrls[1]);
             new ApplicationFeatures.downloadImageTask(root.findViewById(R.id.colorush_image3)).execute(imageUrls[2]);
