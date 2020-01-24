@@ -1,0 +1,10 @@
+- Einzelne Profile
+- Elternmodus
+- Offlinemodus
+- Selbstprogrammierte Notenverwaltung
+- Startbildschirm
+- Öffis, ColoRush und Formulare Buttons hinzugefügt
+- Zwei Benachrichtungen für beide Tage
+- Seperate Buttons für gefilterten und ungefilterten Plan
+- Einstellung Wochentage immer anzuzeigen hinzugefügt
+- Bugfixes

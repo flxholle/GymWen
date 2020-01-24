@@ -1,10 +1,33 @@
-Offizielle App des [http://gym-wen.de/startseite/ Gymnasium Wendelstein].
+<b>Offizielle App des <a href="http://www.gym-wen.de/startseite/">Gymnasiums Wendelstein</a></b>
+Diese App ist für alle Schüler und Eltern des Gymnasiums Wendelstein programmiert worden.
 
-Mit dieser App können Schüler:
-* Ihren Online-Vertretungsplan abrufen
-* Die Lehrerliste durchsuchen
-* Essen in der Mensa bestellen
-* Mebis nutzen
-* u.v.m.
+<font color="#2467d6"><b>Mit Hilfe dieser App kannst du:</b></font>
+ - Den <b>Vertretungsplan</b> individuell filtern und anzeigen lassen
+   und du wirst über deine Vertretungen automatisch <b>benachrichtigt</b>
+ - Die <b>Lehrerliste</b> durchsuchen und sofort eine <b>E-Mail</b> an den Lehrer schreiben
+ - Eine auf Smartphones sehr gut lesbare Version der <b>Schulhomepage</b> aufrufen
+ - Deine <b>Noten</b> und den <b>Stundenplan</b> verwalten
+ - Das <b>Sekreteriat</b> ohne Probleme anrufen
+ - <a href="https://mebis.bayern.de/"><b>Mebis</b></a> nutzen
+ - Essen ohne Umwege in der <a href="https://www.kitafino.de/"><b>Mensa</b></a> bestellen
+ - <b>Notizen</b> anlegen
+ - Und <b>Busverbindungen</b> suchen
 
-Für weitere Informationen über den [https://gitlab.com/asdoi Programmierer] können sie [https://asdoi.gitlab.io/ diese Website] besuchen.
+<font color="#2467d6"><b>Außerdem ist diese App auch für Eltern sehr nützlich.</font></b>
+So kann man <b>verschiedene Profile</b> für jedes Kind anlegen und bestimme Funktionen die besonders für Eltern nützlich sind benutzen, wie:
+- <b>Wichtige Formulare</b> (z.B. Krankheitsmeldungen)
+- <b>Claxss</b>
+- Ohne Probleme das </b>Sekreteriat anrufen</b> (z.B. um ein Kind krankzumelden)
+- Essen für Ihr Kind in der <a href="https://www.kitafino.de/"><b>Mensa</b></a> bestellen
+- Eine <b>automatische Benachrichtigung</b> über vertretene Stunden Ihrer Kinder
+
+Außerdem kommen im Laufe der Zeit immer wieder neue Funktionen dazu.
+Darüber hinaus sind Vorschläge über etwaige Funktionen der App immer willkommen.
+Bitte schicke mir dafür eine E-Mail an <a href="mailto:GymWenApp@t-online.de">GymWenApp@t-online.de</a>.
+
+Diese App habe ich in meiner Freizeit programmiert und falls du mich unterstützen willst, würde ich mich sehr darüber freuen, wenn du diese App weiterempfiehlst und mal bei <a href="https://asdoi.gitlab.io/">meinen anderen Programmen</a> vorbeischaust:
+
+<b><a href="https://asdoi.gitlab.io/">asdoi.gitlab.io</a></b>
+
+Hier veröffentliche ich immer meine neuesten Projekte und Dinge an denen ich gerade arbeite.
+Zum Beispiel ColoRush, ein anderes Spiel, das ich programmiert habe. Ein Link dazu befindet sich auch in der App, bzw. auf meiner Website oder du lädst es dir <a href="https://www.gitlab.com/asdoi/colorrush/blob/master/Apk/ColoRush.apk/">hier</a> herunter.
