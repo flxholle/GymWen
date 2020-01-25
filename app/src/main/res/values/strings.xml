@@ -121,7 +121,6 @@
     <string name="choice_complete">Bitte vervollständige deine Kurswahl:</string>
     <string name="choice_add_course">Weiteren Kurs hinzufügen</string>
     <string name="oberstufe_empty">Bitte Kurse einfügen</string>
-    <string name="parent_mode_not_useable">Dieser Modus ist noch nicht benutzbar</string>
     <string name="additional_course">Zusätzlicher Kurs</string>
     <string name="please_insert_digit">Bitte eine Zahl eingeben</string>
     <string name="please_insert_letter">Bitte einen Buchstaben eingeben</string>
@@ -248,6 +247,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="no_email_app">Du hast keine E-Mail App installiert</string>
     <string name="teacher_no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
     <string name="teacher_search_teacher_list">Durchsuchen\u2026</string>
+    <string name="teacher_mail">Mail</string>
 
     <!-- Credits -->
     <string name="credits" translatable="false">https://pixabay.com/vectors/book-found-fun-icon-icons-reading-1294379/\n
@@ -273,7 +273,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="reloaded_docs">Keine Internetverbindung!
         \nDateien vom letzten Mal wiederhergestellt.
         \nEventuell nicht aktuell!</string>
-    <string name="saved_docs">Daten gespeichert\u2026</string>
 
     <!-- Profiles -->
     <string name="title_activity_profile">Profile</string>
@@ -290,6 +289,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="profiles_add">Profile hinzufügen\u2026</string>
     <string name="profile_empty_name">NeuesProfil</string>
     <string name="profile_default_name">Standard</string>
+    <string name="add_profile_button">Weiteres Profil hinzufügen</string>
 
     <!-- Grades Management -->
     <string name="grades_no_app">Keine Excel App installiert!</string>

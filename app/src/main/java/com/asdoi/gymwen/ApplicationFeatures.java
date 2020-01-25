@@ -577,11 +577,6 @@ public class ApplicationFeatures extends Application {
                 buttonIntent.putExtra("EXTRA_NOTIFICATION_ID", notification_id);
                 PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-//                Intent snoozeIntent = new Intent(context, NotificationDismissButtonReceiver.class);
-////                snoozeIntent.setAction(ACTION_SNOOZE);
-//                snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
-//                PendingIntent snoozePendingIntent = PendingIntent.getBroadcast(context, 0, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
 
                 //Build notification
@@ -594,7 +589,6 @@ public class ApplicationFeatures extends Application {
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                         .setContentTitle(title)
                         .setContentIntent(resultPendingIntent)
-//                        .setLargeIcon(getBitmapFromVectorDrawable(R.drawable.ic_stat_assignment_late))
                         .setSmallIcon(R.drawable.ic_stat_assignment_late);
 
                 if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("alwaysNotification", true)) {

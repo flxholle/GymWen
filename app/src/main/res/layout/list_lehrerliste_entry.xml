@@ -27,7 +27,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0"
                     android:gravity="center|start"
-                    android:text="KÜRZEL"
                     android:textColor="@android:color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -54,7 +53,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center|end"
-                            android:text="Nachname"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -64,7 +62,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center|center_horizontal|start"
-                            android:text=" Vorname"
                             android:textColor="@android:color/black"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -75,7 +72,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Sprechstunde"
                         android:visibility="visible" />
 
                 </LinearLayout>
@@ -86,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|end"
                     android:layout_weight="0"
-                    android:text="Mail" />
+                    android:text="@string/teacher_mail" />
 
             </LinearLayout>
         </RelativeLayout>
