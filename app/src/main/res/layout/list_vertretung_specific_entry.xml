@@ -17,7 +17,6 @@
         android:gravity="center"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:text="10"
         android:textColor="@android:color/white"
         android:textSize="36sp"
         android:textStyle="bold" />
@@ -30,7 +29,6 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="@integer/vertretung_specific_entry_subject"
         android:gravity="center"
-        android:text="2P_sp"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -42,7 +40,6 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="@integer/vertretung_specific_entry_teacher"
         android:gravity="center"
-        android:text="entfällt"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -54,7 +51,6 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="@integer/vertretung_specific_entry_room"
         android:gravity="center"
-        android:text="E104"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -67,7 +63,6 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="@integer/vertretung_specific_entry_other"
         android:gravity="center"
-        android:text="Gottesdienst"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -78,7 +73,6 @@
         android:layout_marginStart="3dp"
         android:layout_weight="@integer/vertretung_specific_entry_course"
         android:gravity="center"
-        android:text="10ceSm"
         android:textSize="12sp" />
 
 

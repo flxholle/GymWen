@@ -13,7 +13,6 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="@integer/vertretung_all_course"
         android:gravity="center"
-        android:text="10ceSm"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -25,7 +24,6 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="@integer/vertretung_all_hour"
         android:gravity="center"
-        android:text="10:40"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -37,7 +35,6 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="@integer/vertretung_all_subject"
         android:gravity="center"
-        android:text="Aufs"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -49,7 +46,6 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="@integer/vertretung_all_teacher"
         android:gravity="center"
-        android:text="SOM"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -61,7 +57,6 @@
         android:layout_marginEnd="3dp"
         android:layout_weight="@integer/vertretung_all_room"
         android:gravity="center"
-        android:text="E104"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -72,7 +67,6 @@
         android:layout_marginStart="3dp"
         android:layout_weight="@integer/vertretung_all_other"
         android:gravity="center"
-        android:text="Gottesdienst"
         android:textSize="16sp" />
 
 </LinearLayout>
