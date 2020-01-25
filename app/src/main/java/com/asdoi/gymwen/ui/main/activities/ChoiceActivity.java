@@ -15,7 +15,6 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.ui.main.fragments.ChoiceActivityFragment;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ChoiceActivity extends ActivityFeatures {
@@ -24,7 +23,8 @@ public class ChoiceActivity extends ActivityFeatures {
     private boolean parents = false;
     public String courseFirstDigit = "";
     public String courseMainDigit = "";
-    private String name = "Default";
+    private String name = "";
+    private boolean profileAdd = false;
 
     private FloatingActionButton fab;
 
@@ -44,9 +44,11 @@ public class ChoiceActivity extends ActivityFeatures {
         fab.bringToFront();
         fab.setVisibility(View.VISIBLE);
         Bundle extras = getIntent().getExtras();
+        name = getString(R.string.profile_default_name);
         if (extras != null) {
             setParents(extras.getBoolean("parents", false));
-            setName(extras.getString("name", ""));
+            setName(extras.getString("name", getContext().getString(R.string.profile_empty_name) + (ProfileManagement.sizeProfiles() + 1)));
+            profileAdd = extras.getBoolean("profileAdd", false);
         }
 
         setFragment(1);
@@ -98,28 +100,8 @@ public class ChoiceActivity extends ActivityFeatures {
         if (nextStep > 0 && nextStep < 7) {
             fragment = new ChoiceActivityFragment(nextStep, fab);
         } else {
-            //Finish
-//            if (parents) {
-            ProfileManagement.addProfile(new Profile(courses, name));
-//            } else {
-//                setSettings();
-//            }
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("parents", parents);
-            editor.apply();
-
-            Intent intent = null;
-            if (parents)
-                intent = new Intent(this, ProfileActivity.class);
-            else
-                intent = new Intent(this, MainActivity.class);
-
-            ProfileManagement.save(true);
-            startActivity(intent);
-            finish();
+            finishChoice();
         }
-
 
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -127,19 +109,30 @@ public class ChoiceActivity extends ActivityFeatures {
         }
     }
 
-    //Finished and setSettings
-    private void setSettings() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        VertretungsPlanFeatures.setup(false, courses.split("#"));
+    private void finishChoice() {
+        //Finish
+        ProfileManagement.addProfile(new Profile(courses, name));
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = sharedPref.edit();
-
-        editor.putString("courses", courses);
+        editor.putBoolean("parents", profileAdd ? sharedPref.getBoolean("parents", false) : parents);
         editor.apply();
+
+        Intent intent;
+        if (parents || profileAdd)
+            intent = new Intent(this, ProfileActivity.class);
+        else
+            intent = new Intent(this, MainActivity.class);
+
+        ProfileManagement.save(true);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
         super.onBackPressed();
     }
