@@ -223,13 +223,20 @@ public class ApplicationFeatures extends Application {
         boolean signedIn = sharedPref.getBoolean("signed", false);
 
         if (signedIn) {
-            if (ProfileManagement.profileQuantity() <= 0) {
-//            String courses = sharedPref.getString("courses", "");
-//            if (courses.trim().isEmpty()) {
-                Intent i = new Intent(context, ChoiceActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(i);
-                return false;
+            if (ProfileManagement.sizeProfiles() <= 0) {
+
+                //Backwards compatibility for versions older 1.1
+                String courses = sharedPref.getString("courses", "");
+                if (courses.trim().isEmpty()) {
+                    Intent i = new Intent(context, ChoiceActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);
+                    return false;
+                } else {
+                    String name = getContext().getString(R.string.profile_default_name);
+                    ProfileManagement.addProfile(new Profile(courses, name));
+                    ApplicationFeatures.initProfile(0, true);
+                }
             }
 
             String courses = getSelectedProfile().getCourses();
@@ -411,7 +418,7 @@ public class ApplicationFeatures extends Application {
 
             StringBuilder count = new StringBuilder();
 
-            for (int i = 0; i < ProfileManagement.profileQuantity(); i++) {
+            for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
                 Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
                 String[][] inhalt = temp.getDay(true);
@@ -472,7 +479,7 @@ public class ApplicationFeatures extends Application {
             StringBuilder count1 = new StringBuilder();
             StringBuilder count2 = new StringBuilder();
 
-            for (int i = 0; i < ProfileManagement.profileQuantity(); i++) {
+            for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
                 Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
                 String[][] inhalt = temp.getDay(true);

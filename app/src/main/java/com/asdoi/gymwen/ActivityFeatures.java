@@ -257,12 +257,17 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
             }
         });
 
-        FrameLayout root = view.findViewById(R.id.teacher_rootLayout);
-        root.setOnClickListener((View v) -> {
-            hour.setVisibility(View.VISIBLE);
-            LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-            hideLayout.setLayoutParams(params2);
-        });
+        try {
+            FrameLayout root = view.findViewById(R.id.teacher_rootLayout);
+            root.setOnClickListener((View v) -> {
+                hour.setVisibility(View.VISIBLE);
+                LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+                hideLayout.setLayoutParams(params2);
+            });
+        } catch (Exception e) {
+            //NullPointerException for root on API 17
+            e.printStackTrace();
+        }
 
         return view;
     }
@@ -286,6 +291,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         try {
             permissionRunAfter.run();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -486,7 +492,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         if (file.exists()) {
             openGradesFile();
         } else {
-            startDownload(downloadGradesTable, "Notenverwaltung", "Download Tabelle", Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS, gradesFileName, openGradesFile);
+            startDownload(downloadGradesTable, getString(R.string.grades_management), getString(R.string.grades_down_title), Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS, gradesFileName, openGradesFile);
         }
     }
 

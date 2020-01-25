@@ -28,7 +28,7 @@ public class ProfileManagement {
         profileList.remove(position);
     }
 
-    public static int profileQuantity() {
+    public static int sizeProfiles() {
         return profileList.size();
     }
 
@@ -62,7 +62,7 @@ public class ProfileManagement {
     }
 
     public static boolean isMoreThanOneProfile() {
-        return profileQuantity() > 1;
+        return sizeProfiles() > 1;
     }
 
     public static ArrayList<String> getProfileList() {

@@ -59,6 +59,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'saschpe.android:customtabs:2.0.0'
     implementation 'androidx.browser:browser:1.2.0'
+
     implementation "com.mikepenz:aboutlibraries:7.0.4"
     implementation 'com.github.javiersantos:AppUpdater:2.7'
     implementation 'org.jsoup:jsoup:1.12.1'

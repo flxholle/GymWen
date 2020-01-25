@@ -298,6 +298,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         try {
             createTeacherView(Lehrerliste.getTeacher(query));
         } catch (NullPointerException e) {
+            e.printStackTrace();
             if (!Lehrerliste.isDownloaded()) {
                 Snackbar snackbar = Snackbar
                         .make(root.findViewById(R.id.vertretung_frame), getString(R.string.noInternet), Snackbar.LENGTH_LONG);
