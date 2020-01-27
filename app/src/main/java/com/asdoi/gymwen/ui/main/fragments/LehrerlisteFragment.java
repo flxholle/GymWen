@@ -52,7 +52,7 @@ public class LehrerlisteFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ActivityFeatures.createLoadingPanel(base);
+        ((ActivityFeatures) getActivity()).createLoadingPanel(base);
 
         new Thread(() -> {
             ApplicationFeatures.downloadLehrerDoc();
@@ -93,7 +93,7 @@ public class LehrerlisteFragment extends Fragment {
 
     TextView createTitleLayout() {
         TextView textView = new TextView(ApplicationFeatures.getContext());
-        textView.setTextColor(ApplicationFeatures.getTextColorPrimary());
+        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(getContext()));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         textView.setGravity(Gravity.CENTER);
@@ -111,7 +111,7 @@ public class LehrerlisteFragment extends Fragment {
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         inputText.setLayoutParams(params);
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
-        inputText.setTextColor(ApplicationFeatures.getTextColorSecondary());
+        inputText.setTextColor(ApplicationFeatures.getTextColorSecondary(getContext()));
         inputText.setHint(getString(R.string.teacher_search_teacher_list));
         inputText.addTextChangedListener(new TextWatcher() {
             String before = "";

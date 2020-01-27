@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_first_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="@string/choice_oberstufe" />
 
         <Button
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="@string/choice_5" />
 
         <Button
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="@string/choice_6" />
 
         <Button
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="@string/choice_7" />
 
         <Button
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="@string/choice_8" />
 
         <Button
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="@string/choice_9" />
 
         <Button
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="@string/choice_10" />
 
         <Button
@@ -71,14 +71,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/choice_first_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="@string/choice_parents" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/choice_first_difference"
-            android:background="@android:color/white">
+            android:background="?android:attr/windowBackground">
 
             <EditText
                 android:id="@+id/choice_more_classes"

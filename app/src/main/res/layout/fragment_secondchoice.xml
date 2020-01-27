@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="A" />
 
         <Button
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="B" />
 
         <Button
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="C" />
 
         <Button
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="D" />
 
         <Button
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="E" />
 
         <Button
@@ -54,14 +54,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:text="F" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/choice_first_difference"
-            android:background="@android:color/white"
+            android:background="?android:attr/windowBackground"
             android:orientation="vertical">
 
             <EditText

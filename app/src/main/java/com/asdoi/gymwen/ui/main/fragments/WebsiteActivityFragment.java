@@ -93,8 +93,8 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         int backgroundColor = ContextCompat.getColor(context, R.color.web_background_homepages);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
-        int titleColor = ApplicationFeatures.getTextColorPrimary();
-        int descriptionColor = ApplicationFeatures.getTextColorPrimary();
+        int titleColor = ApplicationFeatures.getTextColorPrimary(getContext());
+        int descriptionColor = ApplicationFeatures.getTextColorPrimary(getContext());
 
         for (int i = 0; i < content.length; i++) {
             //Create Views
@@ -211,8 +211,8 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         int backgroundColor = ContextCompat.getColor(context, R.color.web_background_content);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
-        int titleColor = ApplicationFeatures.getTextColorPrimary();
-        int descriptionColor = ApplicationFeatures.getTextColorPrimary();
+        int titleColor = ApplicationFeatures.getTextColorPrimary(getContext());
+        int descriptionColor = ApplicationFeatures.getTextColorPrimary(getContext());
 
         for (int i = 0; i < content.length; i++) {
             //Create Views

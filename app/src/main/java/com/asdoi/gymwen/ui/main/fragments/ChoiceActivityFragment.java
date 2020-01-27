@@ -177,7 +177,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
         inputText.setId(quantitiyCourses + 1300);
         inputText.setOnEditorActionListener(this);
-        inputText.setTextColor(ApplicationFeatures.getTextColorPrimary());
+        inputText.setTextColor(ApplicationFeatures.getTextColorPrimary(getContext()));
         inputText.setText(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
 //        inputText.setHint(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
         inputText.addTextChangedListener(new MyTextWatcher(inputText));
