@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/choice_first_difference"
-            android:background="@android:color/white">
+            android:background="?android:attr/windowBackground">
 
             <EditText
                 android:id="@+id/choice_digit_main_courses"

@@ -798,20 +798,19 @@ public class ApplicationFeatures extends Application {
 
 
     //Colors
-    public static int getTextColorPrimary() {
-        return getThemeColor(android.R.attr.textColorPrimary);
+    public static int getTextColorPrimary(Context context) {
+        return getThemeColor(android.R.attr.textColorPrimary, context);
     }
 
-    public static int getTextColorSecondary() {
-        return getThemeColor(android.R.attr.textColorSecondary);
+    public static int getTextColorSecondary(Context context) {
+        return getThemeColor(android.R.attr.textColorSecondary, context);
     }
 
-    public static int getBackgroundColor() {
-        return getThemeColor(android.R.attr.windowBackground);
+    public static int getBackgroundColor(Context context) {
+        return getThemeColor(android.R.attr.windowBackground, context);
     }
 
-    public static int getThemeColor(int themeAttributeId) {
-        Context context = getContext();
+    public static int getThemeColor(int themeAttributeId, Context context) {
         TypedValue outValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
         boolean wasResolved = theme.resolveAttribute(themeAttributeId, outValue, true);
