@@ -14,7 +14,8 @@
         android:layout_weight="@integer/vertretung_all_course"
         android:gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorGrey" />
 
     <TextView
         android:id="@+id/vertretung_all_entry_textViewHour"
@@ -25,7 +26,8 @@
         android:layout_weight="@integer/vertretung_all_hour"
         android:gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorGrey" />
 
     <TextView
         android:id="@+id/vertretung_all_entry_textViewSubject"
@@ -36,7 +38,8 @@
         android:layout_weight="@integer/vertretung_all_subject"
         android:gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorGrey" />
 
     <TextView
         android:id="@+id/vertretung_all_entry_textViewTeacher"
@@ -47,7 +50,8 @@
         android:layout_weight="@integer/vertretung_all_teacher"
         android:gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorGrey" />
 
     <TextView
         android:id="@+id/vertretung_all_entry_textViewRoom"
@@ -58,7 +62,8 @@
         android:layout_weight="@integer/vertretung_all_room"
         android:gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorGrey" />
 
     <TextView
         android:id="@+id/vertretung_all_entry_textViewOther"
@@ -67,6 +72,7 @@
         android:layout_marginStart="3dp"
         android:layout_weight="@integer/vertretung_all_other"
         android:gravity="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/colorGrey" />
 
 </LinearLayout>

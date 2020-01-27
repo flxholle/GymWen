@@ -2,7 +2,6 @@ package com.asdoi.gymwen.ui.main.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -315,7 +314,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.VERTICAL);
         base.setGravity(Gravity.CENTER);
-        base.setBackgroundColor(Color.parseColor("#99000000"));
+        base.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.vertretung_teacher_background));
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         base.setLayoutParams(params);
         base.setId(ApplicationFeatures.vertretung_teacher_view_id);
@@ -337,7 +336,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         LinearLayout background = new LinearLayout(context);
         params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         background.setLayoutParams(params);
-        background.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        background.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorBackground));
 
         background.addView(teacherEntry);
         base.addView(background);
@@ -430,6 +429,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         if (inhalt.length == 0) {
             TextView tv = new TextView(context);
+            tv.setTextColor(ContextCompat.getColor(getContext(), R.color.colorBlack));
             tv.setText(context.getString(R.string.nothing));
             tv.setTextSize(20);
             tv.setTypeface(Typeface.DEFAULT_BOLD);
@@ -441,7 +441,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     TextView createTitleLayout() {
         TextView textView = new TextView(context);
-        textView.setTextColor(Color.BLACK);
+        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorBlack));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         textView.setGravity(Gravity.CENTER);
@@ -620,6 +620,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView hour = new TextView(context);
         hour.setTypeface(hour.getTypeface(), Typeface.BOLD);
         hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        hour.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGrey));
         hour.setGravity(Gravity.CENTER);
         return hour;
     }
@@ -945,7 +946,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
             tv.setLayoutParams(params);
             tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-            tv.setTextColor(Color.WHITE);
+            tv.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
             tv.setText(inhalt[i][1]);
             tv.setTextSize(36);
             tv.setTypeface(Typeface.DEFAULT_BOLD);
@@ -1067,7 +1068,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
             tv.setLayoutParams(params);
             tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-            tv.setTextColor(Color.WHITE);
+            tv.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
             tv.setText(inhalt[i][1]);
             tv.setTextSize(36);
             tv.setTypeface(Typeface.DEFAULT_BOLD);

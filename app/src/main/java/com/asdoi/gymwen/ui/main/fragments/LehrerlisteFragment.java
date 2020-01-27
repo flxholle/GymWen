@@ -1,7 +1,6 @@
 package com.asdoi.gymwen.ui.main.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.ActivityFeatures;
@@ -94,7 +94,7 @@ public class LehrerlisteFragment extends Fragment {
 
     TextView createTitleLayout() {
         TextView textView = new TextView(ApplicationFeatures.getContext());
-        textView.setTextColor(Color.BLACK);
+        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorBlack));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         textView.setGravity(Gravity.CENTER);
@@ -112,7 +112,7 @@ public class LehrerlisteFragment extends Fragment {
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         inputText.setLayoutParams(params);
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
-        inputText.setTextColor(Color.BLACK);
+        inputText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorBlack));
         inputText.setHint(getString(R.string.teacher_search_teacher_list));
         inputText.addTextChangedListener(new TextWatcher() {
             String before = "";

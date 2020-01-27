@@ -3,18 +3,18 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorPrimary">#008577</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorBackground">#FFFFFFFF</color>
+    <color name="colorBackground">#000000</color>
 
-    <!--<color name="colorPrimaryDark">#1cbf5f</color>
-    <color name="colorPrimary">#1cbf5f</color>
-    <color name="colorAccent">#be1b0f</color>-->
+    <color name="colorBlack">#FFFFFF</color>
+    <color name="colorWhite">#000000</color>
 
-    <!-- <color name="colorPrimaryDark">#0023c6</color>
-     <color name="colorPrimary">#1744e8</color>
-     <color name="colorAccent">#bb17e8</color>-->
+    <color name="colorGrey">#FFFFFF</color>
+
+    <color name="vertretung_teacher_background">#99000000</color>
 
     <!--    Website Activity-->
     <color name="web_background_homepages">#80f2f2f2</color>
     <color name="web_background_content">#FFFFFFFF</color>
+    <color name="web_link_color">#0000FF</color>
 
 </resources>

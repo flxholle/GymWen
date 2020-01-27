@@ -1,7 +1,6 @@
 package com.asdoi.gymwen.ui.main.fragments;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -22,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.R;
@@ -177,7 +177,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
         inputText.setId(quantitiyCourses + 1300);
         inputText.setOnEditorActionListener(this);
-        inputText.setTextColor(Color.BLACK);
+        inputText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorBlack));
         inputText.setText(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
 //        inputText.setHint(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
         inputText.addTextChangedListener(new MyTextWatcher(inputText));
