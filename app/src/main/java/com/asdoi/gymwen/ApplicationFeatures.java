@@ -13,15 +13,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -791,5 +794,32 @@ public class ApplicationFeatures extends Application {
     public static int getSelectedProfilePosition() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sharedPref.getInt("selected", 0);
+    }
+
+
+    //Colors
+    public static int getTextColorPrimary() {
+        return getThemeColor(android.R.attr.textColorPrimary);
+    }
+
+    public static int getTextColorSecondary() {
+        return getThemeColor(android.R.attr.textColorSecondary);
+    }
+
+    public static int getBackgroundColor() {
+        return getThemeColor(android.R.attr.windowBackground);
+    }
+
+    public static int getThemeColor(int themeAttributeId) {
+        Context context = getContext();
+        TypedValue outValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        boolean wasResolved = theme.resolveAttribute(themeAttributeId, outValue, true);
+        if (wasResolved) {
+            return ContextCompat.getColor(context, outValue.resourceId);
+        } else {
+            // fallback colour handling
+            return Color.BLACK;
+        }
     }
 }

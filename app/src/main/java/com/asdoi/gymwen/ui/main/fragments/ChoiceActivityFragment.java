@@ -21,9 +21,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
@@ -177,7 +177,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
         inputText.setId(quantitiyCourses + 1300);
         inputText.setOnEditorActionListener(this);
-        inputText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorBlack));
+        inputText.setTextColor(ApplicationFeatures.getTextColorPrimary());
         inputText.setText(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
 //        inputText.setHint(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
         inputText.addTextChangedListener(new MyTextWatcher(inputText));

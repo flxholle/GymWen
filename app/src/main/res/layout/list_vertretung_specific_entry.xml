@@ -31,7 +31,7 @@
         android:gravity="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/colorGrey" />
+        android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
         android:id="@+id/vertretung_specific_entry_textViewTeacher"
@@ -43,7 +43,7 @@
         android:gravity="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/colorGrey" />
+        android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
         android:id="@+id/vertretung_specific_entry_textViewRoom"
@@ -55,7 +55,7 @@
         android:gravity="center"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/colorGrey" />
+        android:textColor="?colorAccent" />
 
     <TextView
         android:id="@+id/vertretung_specific_entry_textViewOther"
@@ -67,7 +67,7 @@
         android:gravity="center"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/colorGrey" />
+        android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
         android:id="@+id/vertretung_specific_entry_textViewClass"
@@ -77,7 +77,7 @@
         android:layout_weight="@integer/vertretung_specific_entry_course"
         android:gravity="center"
         android:textSize="12sp"
-        android:textColor="@color/colorGrey" />
+        android:textColor="?android:attr/textColorSecondary" />
 
 
 </LinearLayout>
