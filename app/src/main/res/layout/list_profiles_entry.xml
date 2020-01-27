@@ -26,7 +26,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:textColor="@color/colorGrey" />
 
             <TextView
                 android:id="@+id/profilelist_courses"
@@ -34,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center|top"
-                android:paddingBottom="5sp" />
+                android:paddingBottom="5sp"
+                android:textColor="@color/colorGrey" />
 
         </LinearLayout>
 

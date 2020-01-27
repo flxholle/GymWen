@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -204,7 +203,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
 
         TextView textView = new TextView(context);
-        textView.setTextColor(Color.BLACK);
+        textView.setTextColor(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorBlack));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textView.setGravity(Gravity.CENTER);
