@@ -23,8 +23,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.main.activities.ProfileActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_profile" />
         <activity
             android:name=".ui.main.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -39,12 +38,12 @@
         <activity
             android:name=".ui.main.activities.SignInActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/title_activity_sign_in"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_sign_in" />
         <activity
             android:name=".ui.main.activities.ImpressumActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/impressum_headline" />
+            android:label="@string/impressum_headline"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.main.activities.WebsiteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -64,8 +63,7 @@
         <activity
             android:name=".ui.main.activities.ChoiceActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/title_activity_choice"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_choice" />
         <activity
             android:name=".ui.main.activities.SettingsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

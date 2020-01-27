@@ -172,7 +172,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     public static void createLoadingPanel(ViewGroup view) {
         Context context = ApplicationFeatures.getContext();
         FrameLayout base = new FrameLayout(context);
-        base.setBackgroundColor(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorBackground));
+        base.setBackgroundColor(ApplicationFeatures.getBackgroundColor());
         base.setTag("vertretung_loading");
         base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -203,7 +203,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 
 
         TextView textView = new TextView(context);
-        textView.setTextColor(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorBlack));
+        textView.setTextColor(ApplicationFeatures.getTextColorPrimary());
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textView.setGravity(Gravity.CENTER);

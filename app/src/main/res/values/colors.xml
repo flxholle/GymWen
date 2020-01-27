@@ -3,13 +3,6 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorPrimary">#008577</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorBackground">#000000</color>
-
-    <color name="colorBlack">#FFFFFF</color>
-    <color name="colorWhite">#000000</color>
-
-    <color name="colorGrey">#FFFFFF</color>
-
     <color name="vertretung_teacher_background">#99000000</color>
 
     <!--    Website Activity-->
