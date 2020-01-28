@@ -110,6 +110,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
+                android:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
 
             <ImageView
@@ -118,6 +119,7 @@
                 android:layout_height="400dp"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
+                android:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
         </LinearLayout>
 
@@ -134,6 +136,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
+                android:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
 
             <ImageView
@@ -142,6 +145,7 @@
                 android:layout_height="400dp"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
+                android:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
         </LinearLayout>
     </LinearLayout>
