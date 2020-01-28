@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.BlendMode;
+import android.graphics.BlendModeColorFilter;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -199,8 +201,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(20, 5, 20, 0);
         bar.setLayoutParams(params);
-        bar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
-
+        bar.getIndeterminateDrawable().setColorFilter(new BlendModeColorFilter(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorAccent), BlendMode.SRC_ATOP));
 
         TextView textView = new TextView(context);
         textView.setTextColor(ApplicationFeatures.getTextColorPrimary(this));
@@ -375,7 +376,6 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
                 .setDescription(description)
                 .setDestinationInExternalPublicDir(dirType, subPath)
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.allowScanningByMediaScanner();
 
         downloadID = mgr.enqueue(request);
 
@@ -388,7 +388,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
             //Fetching the download id received with the broadcast
             long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
             if (downloadID == id) {
-                installApk(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
+                installApk(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
                 unregisterReceiver(this);
             }
         }
@@ -486,7 +486,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
             return;
         }
 
-        String path = Environment.getExternalStoragePublicDirectory(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
+        String path = this.getExternalFilesDir(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
         File file = new File(path);
         if (file.exists()) {
             openGradesFile();
@@ -503,7 +503,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     };
 
     private void openGradesFile() {
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
+        String path = this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
         File file = new File(path);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
