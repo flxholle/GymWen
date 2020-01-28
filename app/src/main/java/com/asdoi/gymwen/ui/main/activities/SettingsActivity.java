@@ -117,6 +117,7 @@ public class SettingsActivity extends ActivityFeatures {
                 SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean("alarm", false);
+                editor.apply();
             }
         }
 
