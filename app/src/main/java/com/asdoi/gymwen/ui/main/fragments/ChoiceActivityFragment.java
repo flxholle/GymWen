@@ -1,5 +1,6 @@
 package com.asdoi.gymwen.ui.main.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,8 +11,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -38,7 +37,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     private int step = 0;
     private int nextStep = 0;
     private View root;
-    private Animation fade;
+    private Context context;
 
     private FloatingActionButton fab;
 
@@ -57,6 +56,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainActivity = ((ChoiceActivity) getActivity());
+        context = getContext();
         switch (step) {
             default:
             case 1:
@@ -78,7 +78,6 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
             case 5:
                 root = inflater.inflate(R.layout.fragment_fifthchoice, container, false);
         }
-        fade = AnimationUtils.loadAnimation(getContext(), R.anim.fade);
         return root;
     }
 
@@ -152,13 +151,13 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
     private void createColumnStep5(String courseName, String courseShort) {
         LinearLayout basic = root.findViewById(R.id.choice_step5_linear);
-        LinearLayout column = new LinearLayout(getContext());
+        LinearLayout column = new LinearLayout(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         column.setLayoutParams(params);
         column.setOrientation(LinearLayout.HORIZONTAL);
 //            column.setId(i);
 
-        CheckBox box = new CheckBox(getContext());
+        CheckBox box = new CheckBox(context);
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         box.setLayoutParams(params);
         box.setGravity(Gravity.CENTER);
@@ -167,17 +166,17 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         box.setOnClickListener(this);
         box.setChecked(true);
 
-        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(getContext());
+        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         inputLayout.setLayoutParams(params);
 
-        EditText inputText = new EditText(getContext());
+        EditText inputText = new EditText(context);
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         inputText.setLayoutParams(params);
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
         inputText.setId(quantitiyCourses + 1300);
         inputText.setOnEditorActionListener(this);
-        inputText.setTextColor(ApplicationFeatures.getTextColorPrimary(getContext()));
+        inputText.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
         inputText.setText(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
 //        inputText.setHint(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
         inputText.addTextChangedListener(new MyTextWatcher(inputText));
@@ -337,30 +336,30 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     public void openAddDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(getContext().getString(R.string.profiles_add));
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(context.getString(R.string.profiles_add));
 
         // Set up the input
-        final EditText input = new EditText(getContext());
+        final EditText input = new EditText(context);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton(getContext().getString(R.string.ok), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (input.getText().toString().trim().isEmpty())
-                    mainActivity.setName(getContext().getString(R.string.profile_empty_name));
+                    mainActivity.setName(context.getString(R.string.profile_empty_name));
                 else
                     mainActivity.setName(input.getText().toString());
                 addSpinner();
             }
         });
-        builder.setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mainActivity.setName(getContext().getString(R.string.profile_empty_name));
+                mainActivity.setName(context.getString(R.string.profile_empty_name));
                 dialog.cancel();
                 addSpinner();
             }

@@ -52,11 +52,9 @@ public class SettingsActivity extends ActivityFeatures {
     public void setSettings() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String courses = sharedPref.getString("courses", "");
-        if (courses.trim().isEmpty()) {
-            Intent i = new Intent(this, ChoiceActivity.class);
-            startActivity(i);
+
+        if (!ApplicationFeatures.coursesCheck())
             return;
-        }
         ProfileManagement.editProfile(ApplicationFeatures.getSelectedProfilePosition(), new Profile(courses, ApplicationFeatures.getSelectedProfile().getName()));
         ProfileManagement.save(true);
 

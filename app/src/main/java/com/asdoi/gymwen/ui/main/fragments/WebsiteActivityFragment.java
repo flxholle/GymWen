@@ -93,8 +93,8 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         int backgroundColor = ContextCompat.getColor(context, R.color.web_background_homepages);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
-        int titleColor = ApplicationFeatures.getTextColorPrimary(getContext());
-        int descriptionColor = ApplicationFeatures.getTextColorPrimary(getContext());
+        int titleColor = ApplicationFeatures.getTextColorPrimary(context);
+        int descriptionColor = ApplicationFeatures.getTextColorPrimary(context);
 
         for (int i = 0; i < content.length; i++) {
             //Create Views
@@ -187,7 +187,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             String link = content[i][3];
 //                            linkView.setText(link);
             linkView.setTextSize(8);
-            linkView.setTextColor(ContextCompat.getColor(getContext(), R.color.web_link_color));
+            linkView.setTextColor(ContextCompat.getColor(context, R.color.web_link_color));
             linkView.setTypeface(Typeface.DEFAULT);
             linkView.setGravity(Gravity.CENTER);
 
@@ -211,8 +211,8 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         int backgroundColor = ContextCompat.getColor(context, R.color.web_background_content);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
-        int titleColor = ApplicationFeatures.getTextColorPrimary(getContext());
-        int descriptionColor = ApplicationFeatures.getTextColorPrimary(getContext());
+        int titleColor = ApplicationFeatures.getTextColorPrimary(context);
+        int descriptionColor = ApplicationFeatures.getTextColorPrimary(context);
 
         for (int i = 0; i < content.length; i++) {
             //Create Views
@@ -307,7 +307,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             String link = content[i][3];
 //                            linkView.setText(link);
             linkView.setTextSize(8);
-            linkView.setTextColor(ContextCompat.getColor(getContext(), R.color.web_link_color));
+            linkView.setTextColor(ContextCompat.getColor(context, R.color.web_link_color));
             linkView.setTypeface(Typeface.DEFAULT);
             linkView.setGravity(Gravity.CENTER);
 

@@ -32,6 +32,7 @@ public class LehrerlisteFragment extends Fragment {
     private static String[][] teacherList;
     private ViewGroup base;
     private ListView teacherListView;
+    private Context context;
 
 
     public LehrerlisteFragment() {
@@ -46,6 +47,7 @@ public class LehrerlisteFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_lehrerliste, container, false);
 
         base = root.findViewById(R.id.teacher_list_base);
+        context = getContext();
         return root;
     }
 
@@ -68,19 +70,19 @@ public class LehrerlisteFragment extends Fragment {
 
             if (teacherList == null) {
                 TextView title = createTitleLayout();
-                title.setText(getContext().getString(R.string.noInternetConnection));
+                title.setText(context.getString(R.string.noInternetConnection));
                 return;
             }
 
-            LinearLayout base2 = new LinearLayout(getContext());
+            LinearLayout base2 = new LinearLayout(context);
             base2.setOrientation(LinearLayout.VERTICAL);
             base2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             base2.addView(createSearchLayout(), 0);
             base.addView(base2);
 
-            teacherListView = new ListView(getContext());
-            teacherListView.setAdapter(new TeacherListAdapter(getContext(), 0));
+            teacherListView = new ListView(context);
+            teacherListView.setAdapter(new TeacherListAdapter(context, 0));
             teacherListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             base.addView(teacherListView);
 
@@ -92,8 +94,8 @@ public class LehrerlisteFragment extends Fragment {
     }
 
     TextView createTitleLayout() {
-        TextView textView = new TextView(ApplicationFeatures.getContext());
-        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(getContext()));
+        TextView textView = new TextView(context);
+        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         textView.setGravity(Gravity.CENTER);
@@ -103,15 +105,15 @@ public class LehrerlisteFragment extends Fragment {
     }
 
     com.google.android.material.textfield.TextInputLayout createSearchLayout() {
-        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(getContext());
+        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         inputLayout.setLayoutParams(params);
 
-        EditText inputText = new EditText(getContext());
+        EditText inputText = new EditText(context);
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         inputText.setLayoutParams(params);
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
-        inputText.setTextColor(ApplicationFeatures.getTextColorSecondary(getContext()));
+        inputText.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
         inputText.setHint(getString(R.string.teacher_search_teacher_list));
         inputText.addTextChangedListener(new TextWatcher() {
             String before = "";
