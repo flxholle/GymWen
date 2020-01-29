@@ -1,5 +1,6 @@
 package com.asdoi.gymwen.vertretungsplan;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.preference.PreferenceManager;
@@ -44,6 +45,10 @@ public abstract class VertretungsPlanFeatures {
     };
 
     private static Vertretungsplan vertretungsplan = new Vertretungsplan();
+
+    public static void setContext(Context context){
+        vertretungsplan.setContext(context);
+    }
 
     public static void setup(boolean hours, String... courses) {
         if (vertretungsplan == null) {
