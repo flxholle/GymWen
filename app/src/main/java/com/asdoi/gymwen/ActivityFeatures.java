@@ -133,7 +133,7 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
                         public void onClick(DialogInterface dialogInterface, int i) {
                             try {
                                 String apkUrl = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
-                                startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", installApk);
+                                startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
                             } catch (Exception e) {
                                 tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
                             }
@@ -362,7 +362,6 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
 
 
     //DownloadManager
-    private String subPath;
     private long downloadID;
 
     public void startDownload(String url, String title, String description, String dirType, String subPath, BroadcastReceiver onComplete) {
@@ -378,8 +377,6 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
 
         registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         registerReceiver(onNotificationClick, new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
-
-        this.subPath = subPath;
 
         Uri uri = Uri.parse(url);
 
@@ -400,16 +397,24 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
 
     }
 
-    public BroadcastReceiver installApk = new BroadcastReceiver() {
+    private class installApk extends BroadcastReceiver {
+        String subPath;
+
+        public installApk(String subPath) {
+            this.subPath = subPath;
+        }
+
+        @Override
         public void onReceive(Context ctxt, Intent intent) {
             //Fetching the download id received with the broadcast
             long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
             if (downloadID == id) {
-                installApk(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
+//                installApk(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
+                installApk(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
                 unregisterReceiver(this);
             }
         }
-    };
+    }
 
     BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
@@ -503,7 +508,8 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
             return;
         }
 
-        String path = this.getExternalFilesDir(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
+//        String path = this.getExternalFilesDir(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
+        String path = Environment.getExternalStoragePublicDirectory(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
         File file = new File(path);
         if (file.exists()) {
             openGradesFile();
@@ -520,7 +526,8 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
     };
 
     private void openGradesFile() {
-        String path = this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
+//        String path = this.getExternalFilesDir(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
+        String path = Environment.getExternalStoragePublicDirectory(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
         File file = new File(path);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
