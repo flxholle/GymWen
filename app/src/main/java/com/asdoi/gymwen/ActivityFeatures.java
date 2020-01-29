@@ -66,7 +66,7 @@ import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
 
-public class ActivityFeatures extends AppCompatActivity implements PermissionListener, TimePickerDialog.OnTimeSetListener {
+public class ActivityFeatures extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     public Context getContext() {
         return this;
     }
@@ -286,7 +286,6 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     //Permissions
     private Sheriff sheriffPermission;
     private static final int REQUEST_MULTIPLE_PERMISSION = 101;
-    private Runnable permissionRunAfter;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -294,55 +293,63 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         sheriffPermission.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    @Override
-    public void onPermissionsGranted(int requestCode, ArrayList<String> acceptedPermissionList) {
-        if (permissionRunAfter == null)
-            return;
-        try {
-            permissionRunAfter.run();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, ArrayList<String> deniedPermissionList) {
-        // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getContext().getString(R.string.permission_required));
-        builder.setMessage(getContext().getString(R.string.permission_required_description));
-
-        // add the buttons
-        builder.setPositiveButton(getContext().getString(R.string.permission_ok_button), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                openAppPermissionSettings();
-            }
-        });
-        builder.setNegativeButton(getContext().getString(R.string.permission_cancel_button), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
     private void requestPermission(Runnable runAfter, SheriffPermission... permissions) {
+        PermissionListener pl = new MyPermissionListener(runAfter);
+
         sheriffPermission = Sheriff.Builder()
                 .with(this)
                 .requestCode(REQUEST_MULTIPLE_PERMISSION)
-                .setPermissionResultCallback(this)
+                .setPermissionResultCallback(pl)
                 .askFor(permissions)
                 .rationalMessage(getContext().getString(R.string.sheriff_permission_rational))
                 .build();
 
-        permissionRunAfter = runAfter;
-
         sheriffPermission.requestPermissions();
+    }
+
+    private class MyPermissionListener implements PermissionListener {
+        Runnable runAfter;
+
+        public MyPermissionListener(Runnable r) {
+            runAfter = r;
+        }
+
+        @Override
+        public void onPermissionsGranted(int requestCode, ArrayList<String> acceptedPermissionList) {
+            if (runAfter == null)
+                return;
+            try {
+                runAfter.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onPermissionsDenied(int requestCode, ArrayList<String> deniedPermissionList) {
+            // setup the alert builder
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle(getContext().getString(R.string.permission_required));
+            builder.setMessage(getContext().getString(R.string.permission_required_description));
+
+            // add the buttons
+            builder.setPositiveButton(getContext().getString(R.string.permission_ok_button), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    openAppPermissionSettings();
+                }
+            });
+            builder.setNegativeButton(getContext().getString(R.string.permission_cancel_button), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
     private void openAppPermissionSettings() {
