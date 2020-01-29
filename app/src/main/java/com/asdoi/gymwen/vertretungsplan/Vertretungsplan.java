@@ -1,5 +1,7 @@
 package com.asdoi.gymwen.vertretungsplan;
 
+import android.content.Context;
+
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 
@@ -35,28 +37,33 @@ public class Vertretungsplan {
         this.hours = hours;
     }
 
+    private static Context context = ApplicationFeatures.getContext();
+    public void setContext(Context value){
+        context = value;
+    }
+
     private static String laterDay() {
-        return ApplicationFeatures.getContext().getString(R.string.day_past);
+        return context.getString(R.string.day_past);
     }
 
     private static String noVertretungAll() {
-        return ApplicationFeatures.getContext().getString(R.string.nothing_all);
+        return context.getString(R.string.nothing_all);
     }
 
     private static String noVertretung() {
-        return ApplicationFeatures.getContext().getString(R.string.nothing);
+        return context.getString(R.string.nothing);
     }
 
     private static String noInternet() {
-        return ApplicationFeatures.getContext().getString(R.string.noInternetConnection);
+        return context.getString(R.string.noInternetConnection);
     }
 
     private static String today() {
-        return ApplicationFeatures.getContext().getString(R.string.today);
+        return context.getString(R.string.today);
     }
 
     private static String tomorrow() {
-        return ApplicationFeatures.getContext().getString(R.string.tomorrow);
+        return context.getString(R.string.tomorrow);
     }
 
     private static boolean showWeekDate() {

@@ -2,6 +2,7 @@ package com.asdoi.gymwen.ui.main.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -88,6 +89,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         drawer.addDrawerListener(toggle);
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        VertretungsPlanFeatures.setContext(this);
 
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), false, new String[]{getString(R.string.today), getString(R.string.tomorrow)});
         VertretungFragment.changedSectionsPagerAdapterTitles = false;
