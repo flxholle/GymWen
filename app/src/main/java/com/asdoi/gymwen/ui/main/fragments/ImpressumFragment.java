@@ -41,7 +41,8 @@ public class ImpressumFragment extends Fragment {
         textView = root.findViewById(R.id.impressum_license);
         if (Build.VERSION.SDK_INT > 24)
             textView.setText(Html.fromHtml(license, Html.FROM_HTML_MODE_LEGACY));
-        else textView.setText(Html.fromHtml(license));
+        else
+            textView.setText(Html.fromHtml(license));
 
         return root;
     }

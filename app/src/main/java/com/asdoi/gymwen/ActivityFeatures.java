@@ -468,11 +468,11 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 //        Toast.makeText(ApplicationFeatures.getContext(), R.string.saved_docs, Toast.LENGTH_SHORT).show();
     }
 
-    public static void reloadVertretungDocs() {
+    public static void reloadVertretungDocs(Context context) {
         if (VertretungsPlanFeatures.reloadDocs()) {
             try {
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    Toast toast = Toast.makeText(ApplicationFeatures.getContext(), R.string.reloaded_docs, Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(context, R.string.reloaded_docs, Toast.LENGTH_SHORT);
                     TextView v = toast.getView().findViewById(android.R.id.message);
                     if (v != null)
                         v.setGravity(Gravity.CENTER);
