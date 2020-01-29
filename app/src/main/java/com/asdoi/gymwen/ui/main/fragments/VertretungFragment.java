@@ -306,6 +306,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     void teacherSearch(String query) {
         try {
+            ApplicationFeatures.downloadLehrerDoc();
             createTeacherView(Lehrerliste.getTeacher(query));
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -325,7 +326,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.VERTICAL);
         base.setGravity(Gravity.CENTER);
-        base.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.vertretung_teacher_background));
+        base.setBackgroundColor(ApplicationFeatures.getTextColorSecondary(getContext()));
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         base.setLayoutParams(params);
         base.setId(ApplicationFeatures.vertretung_teacher_view_id);

@@ -20,10 +20,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.preference.PreferenceManager;
 
 import com.ahmedjazzar.rosetta.LanguageSwitcher;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
@@ -212,10 +214,20 @@ public class ApplicationFeatures extends Application {
     }
 
     public static boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Network nw = connectivityManager.getActiveNetwork();
+                NetworkCapabilities actNw = connectivityManager.getNetworkCapabilities(nw);
+                return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
+
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
     }
 
 
@@ -559,6 +571,7 @@ public class ApplicationFeatures extends Application {
             return message;
         }
 
+        @Deprecated
         private void createNotification(String body, String title, int notification_id) {
             Context context = getContext();
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
