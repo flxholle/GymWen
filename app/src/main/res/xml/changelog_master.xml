@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
+        version="1.1.1"
+        versioncode="111">
+        <change>Dark Mode</change>
+        <change>Notenverwaltung gefixed</change>
+    </release>
+    <release
         version="1.1"
         versioncode="110">
         <change>Einzelne Profile</change>

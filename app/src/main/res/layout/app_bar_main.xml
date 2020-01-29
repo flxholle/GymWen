@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:visibility="gone"
-            android:enabled="false" />
+            android:enabled="false"
+            android:popupBackground="?android:attr/windowBackground" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
