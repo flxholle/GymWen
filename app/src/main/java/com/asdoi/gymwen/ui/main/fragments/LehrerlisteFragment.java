@@ -92,7 +92,7 @@ public class LehrerlisteFragment extends Fragment {
     }
 
     TextView createTitleLayout() {
-        TextView textView = new TextView(ApplicationFeatures.getContext());
+        TextView textView = new TextView(getContext());
         textView.setTextColor(ApplicationFeatures.getTextColorPrimary(getContext()));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);

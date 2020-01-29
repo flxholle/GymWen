@@ -274,7 +274,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     //TeacherSearch
     void teacherClick(View view, String teacherQuery, boolean showBorders) {
         if (showBorders) {
-            Drawable d = ContextCompat.getDrawable(ApplicationFeatures.getContext(), R.drawable.background_shape);
+            Drawable d = ContextCompat.getDrawable(getContext(), R.drawable.background_shape);
             try {
                 Drawable wrappedDrawable = DrawableCompat.wrap(d);
                 Drawable mutableDrawable = wrappedDrawable.mutate();

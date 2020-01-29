@@ -170,7 +170,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
     }
 
     public void createLoadingPanel(ViewGroup view) {
-        Context context = ApplicationFeatures.getContext();
+        Context context = this;
         FrameLayout base = new FrameLayout(context);
         base.setBackgroundColor(ApplicationFeatures.getBackgroundColor(this));
         base.setTag("vertretung_loading");
@@ -199,7 +199,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(20, 5, 20, 0);
         bar.setLayoutParams(params);
-        bar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
+        bar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
 
 
         TextView textView = new TextView(context);
@@ -208,7 +208,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textView.setGravity(Gravity.CENTER);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        textView.setText(ApplicationFeatures.getContext().getString(R.string.downloading));
+        textView.setText(context.getString(R.string.downloading));
 
         base.addView(ferrisWheelView);
 
@@ -251,7 +251,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
                     emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getContext().startActivity(emailIntent);
                 } catch (ActivityNotFoundException e2) {
-                    Snackbar.make(v, ApplicationFeatures.getContext().getString(R.string.no_email_app), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v, this.getString(R.string.no_email_app), Snackbar.LENGTH_LONG).show();
                 }
             }
         });
@@ -439,7 +439,7 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
                 now.get(Calendar.MINUTE),
                 true
         );
-        tpd.setTitle(ApplicationFeatures.getContext().getString(R.string.time_picker_title));
+        tpd.setTitle(activity.getString(R.string.time_picker_title));
         tpd.show(activity.getSupportFragmentManager(), "Timepickerdialog");
     }
 
@@ -458,11 +458,11 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
 //        Toast.makeText(ApplicationFeatures.getContext(), R.string.saved_docs, Toast.LENGTH_SHORT).show();
     }
 
-    public static void reloadVertretungDocs() {
+    public static void reloadVertretungDocs(Context context) {
         if (VertretungsPlanFeatures.reloadDocs()) {
             try {
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    Toast toast = Toast.makeText(ApplicationFeatures.getContext(), R.string.reloaded_docs, Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(context, R.string.reloaded_docs, Toast.LENGTH_SHORT);
                     TextView v = toast.getView().findViewById(android.R.id.message);
                     if (v != null)
                         v.setGravity(Gravity.CENTER);
