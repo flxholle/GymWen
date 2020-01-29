@@ -274,11 +274,11 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     //TeacherSearch
     void teacherClick(View view, String teacherQuery, boolean showBorders) {
         if (showBorders) {
-            Drawable d = ContextCompat.getDrawable(ApplicationFeatures.getContext(), R.drawable.background_shape);
+            Drawable d = ContextCompat.getDrawable(context, R.drawable.background_shape);
             try {
                 Drawable wrappedDrawable = DrawableCompat.wrap(d);
                 Drawable mutableDrawable = wrappedDrawable.mutate();
-                DrawableCompat.setTint(mutableDrawable, ContextCompat.getColor(context, ApplicationFeatures.getTextColorSecondary(getContext())));
+                DrawableCompat.setTint(mutableDrawable, ContextCompat.getColor(context, ApplicationFeatures.getTextColorSecondary(context)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -326,7 +326,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.VERTICAL);
         base.setGravity(Gravity.CENTER);
-        base.setBackgroundColor(ApplicationFeatures.getTextColorSecondary(getContext()));
+        base.setBackgroundColor(ApplicationFeatures.getTextColorSecondary(context));
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         base.setLayoutParams(params);
         base.setId(ApplicationFeatures.vertretung_teacher_view_id);
@@ -348,7 +348,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         LinearLayout background = new LinearLayout(context);
         params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         background.setLayoutParams(params);
-        background.setBackgroundColor(ApplicationFeatures.getBackgroundColor(getContext()));
+        background.setBackgroundColor(ApplicationFeatures.getBackgroundColor(context));
 
         background.addView(teacherEntry);
         base.addView(background);
@@ -433,7 +433,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         base.addView(titleView);
 
         if (inhalt == null) {
-            titleView.setText(getContext().getString(R.string.noInternetConnection));
+            titleView.setText(context.getString(R.string.noInternetConnection));
             return;
         } else {
             titleView.setText(title);
@@ -441,7 +441,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         if (inhalt.length == 0) {
             TextView tv = new TextView(context);
-            tv.setTextColor(ApplicationFeatures.getTextColorSecondary(getContext()));
+            tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
             tv.setText(context.getString(R.string.nothing));
             tv.setTextSize(20);
             tv.setTypeface(Typeface.DEFAULT_BOLD);
@@ -453,7 +453,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     TextView createTitleLayout() {
         TextView textView = new TextView(context);
-        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(getContext()));
+        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         textView.setGravity(Gravity.CENTER);
@@ -478,9 +478,9 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         if (all) {
             headline = new String[]{context.getString(R.string.classes), sonstiges ? context.getString(R.string.hours_short) : context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher_short), sonstiges ? context.getString(R.string.room_short) : context.getString(R.string.room), context.getString(R.string.other)};
         } else if (oberstufe) {
-            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), context.getString(R.string.teacher_short), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.subject)};
+            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.subject)};
         } else {
-            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher_short), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.classes)};
+            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.subject), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.classes)};
         }
 
         return headline;
@@ -497,7 +497,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
             //Content
             vertretungListView = new ListView(context);
-            vertretungListView.setAdapter(new VertretungListAdapterAll(getContext(), 0, inhalt, sonstiges));
+            vertretungListView.setAdapter(new VertretungListAdapterAll(context, 0, inhalt, sonstiges));
             vertretungListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             base.addView(vertretungListView);
         }
@@ -559,7 +559,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
             //Content
             vertretungListView = new ListView(context);
-            vertretungListView.setAdapter(new VertretungListAdapterSpecific(getContext(), 0, inhalt, sonstiges));
+            vertretungListView.setAdapter(new VertretungListAdapterSpecific(context, 0, inhalt, sonstiges));
             vertretungListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             base.addView(vertretungListView);
         }
@@ -632,7 +632,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView hour = new TextView(context);
         hour.setTypeface(hour.getTypeface(), Typeface.BOLD);
         hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        hour.setTextColor(ApplicationFeatures.getTextColorSecondary(getContext()));
+        hour.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
         hour.setGravity(Gravity.CENTER);
         return hour;
     }
@@ -958,7 +958,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
             tv.setLayoutParams(params);
             tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-            tv.setTextColor(ApplicationFeatures.getTextColorSecondary(getContext()));
+            tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
             tv.setText(inhalt[i][1]);
             tv.setTextSize(36);
             tv.setTypeface(Typeface.DEFAULT_BOLD);
@@ -1080,7 +1080,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
             tv.setLayoutParams(params);
             tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-            tv.setTextColor(ApplicationFeatures.getTextColorSecondary(getContext()));
+            tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
             tv.setText(inhalt[i][1]);
             tv.setTextSize(36);
             tv.setTypeface(Typeface.DEFAULT_BOLD);

@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -201,7 +202,16 @@ public class ActivityFeatures extends AppCompatActivity implements PermissionLis
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(20, 5, 20, 0);
         bar.setLayoutParams(params);
-        bar.getIndeterminateDrawable().setColorFilter(new BlendModeColorFilter(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorAccent), BlendMode.SRC_ATOP));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            try {
+                bar.getIndeterminateDrawable().setColorFilter(new BlendModeColorFilter(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorAccent), BlendMode.SRC_ATOP));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            bar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+        }
+
 
         TextView textView = new TextView(context);
         textView.setTextColor(ApplicationFeatures.getTextColorPrimary(this));

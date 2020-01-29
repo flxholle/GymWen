@@ -238,21 +238,8 @@ public class ApplicationFeatures extends Application {
         boolean signedIn = sharedPref.getBoolean("signed", false);
 
         if (signedIn) {
-            if (ProfileManagement.sizeProfiles() <= 0) {
-
-                //Backwards compatibility for versions older 1.1
-                String courses = sharedPref.getString("courses", "");
-                if (courses.trim().isEmpty()) {
-                    Intent i = new Intent(context, ChoiceActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(i);
-                    return false;
-                } else {
-                    String name = getContext().getString(R.string.profile_default_name);
-                    ProfileManagement.addProfile(new Profile(courses, name));
-                    ApplicationFeatures.initProfile(0, true);
-                }
-            }
+            if (!coursesCheck())
+                return false;
 
             String courses = getSelectedProfile().getCourses();
 
@@ -276,6 +263,25 @@ public class ApplicationFeatures extends Application {
             context.startActivity(i);
         }
         return signedIn;
+    }
+
+    public static boolean coursesCheck() {
+        if (ProfileManagement.sizeProfiles() <= 0) {
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            //Backwards compatibility for versions older 1.1
+            String courses = sharedPref.getString("courses", "");
+            if (courses.trim().isEmpty()) {
+                Intent i = new Intent(getContext(), ChoiceActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(i);
+                return false;
+            } else {
+                String name = getContext().getString(R.string.profile_default_name);
+                ProfileManagement.addProfile(new Profile(courses, name));
+                ApplicationFeatures.initProfile(0, true);
+            }
+        }
+        return true;
     }
 
     public static void updateMyWidgets() {
