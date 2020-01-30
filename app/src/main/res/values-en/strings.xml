@@ -21,7 +21,7 @@
     <string name="menu_both">At a glance!</string>
     <string name="menu_impressum">Imprint</string>
     <string name="menu_update">Updates</string>
-    <string name="menu_changelog">Changelog</string>
+    <string name="changelog">Changelog</string>
     <string name="menu_shop">Online shop</string>
     <string name="menu_teacher_list">List of teachers</string>
     <string name="menu_notes">Notes</string>

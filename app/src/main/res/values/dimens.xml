@@ -6,6 +6,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="choice_difference">2dp</dimen>
     <dimen name="choice_first_difference">5dp</dimen>
+    <dimen name="about_listitem_height">48dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

@@ -2,7 +2,6 @@ package com.asdoi.gymwen.ui.main.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -379,8 +378,21 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 return;
             case R.id.nav_impressum:
             case R.id.action_impressum: // Fallthrough
-                intent = new Intent(this, ImpressumActivity.class);
+                intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
+//                AboutViewBuilder about = new AboutViewBuilder()
+//                        .withInfoUrl("https://asdoi.gitlab.io/")
+//                        .withAppId(getApplicationInfo().packageName)
+//                        .withLang("de")
+//                        .withFlatStyleButtons(true)
+//                        .withAppBox(true)
+//                        .withAuthorBox(true)
+//                        .withOtherProjectsBox(true);
+//
+//                intent = new Intent(this,com.gmail.fattazzo.aboutlibrary.activity.AboutActivity.class);
+//                intent.putExtra(AboutActivity.EXTRA_BUILDER, about);
+//                startActivity(intent);
+
                 drawer.closeDrawer(GravityCompat.START);
                 return;
             case R.id.action_refresh2:
