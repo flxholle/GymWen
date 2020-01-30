@@ -38,7 +38,7 @@
     <item
         android:id="@+id/action_changelog"
         android:orderInCategory="100"
-        android:title="@string/menu_changelog"
+        android:title="@string/changelog"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_impressum"

@@ -20,7 +20,7 @@
     <string name="menu_both">Auf einen Blick!</string>
     <string name="menu_impressum">Impressum</string>
     <string name="menu_update">Updates</string>
-    <string name="menu_changelog">Änderungen</string>
+    <string name="changelog">Änderungen</string>
     <string name="menu_shop">Online Shop</string>
     <string name="menu_teacher_list">Lehrerliste</string>
     <string name="menu_notes">Notizen</string>
@@ -303,5 +303,17 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
 
     <!-- Download Manager -->
     <string name="download_start">Lädt herunter\u2026</string>
+    <string name="title_activity_about">AboutActivity</string>
+
+    <!-- About Author -->
+    <string name="show_intro">Einführung</string>
+    <string name="fork_on_gitlab">Fork auf GitLab</string>
+    <string name="licenses">Lizenz</string>
+    <string name="author">Autor</string>
+    <string name="author_name" translatable="false">Felix Hollederer</string>
+    <string name="write_email">Mail schreiben</string>
+    <string name="visit_website">Website besuchen</string>
+    <string name="support_development">Entwicklung unterstützen</string>
+    <string name="report_bugs">Fehler melden</string>
 
 </resources>
