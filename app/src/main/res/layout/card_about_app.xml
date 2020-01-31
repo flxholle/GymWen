@@ -39,6 +39,37 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/about_listitem_height"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:focusable="true"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/icon_share"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="?android:attr/textColorPrimary"
+                app:srcCompat="@drawable/ic_menu_share"
+                tools:ignore="ContentDescription,UnusedAttribute" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/share"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -87,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
             android:orientation="horizontal"
@@ -118,6 +150,7 @@
             android:layout_height="wrap_content"
 
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
 
@@ -150,6 +183,7 @@
             android:layout_height="wrap_content"
 
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
 
@@ -177,11 +211,45 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/about_listitem_height"
+
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/icon_privacy"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="?android:attr/textColorPrimary"
+                app:srcCompat="@drawable/ic_fingerprint_black_24dp"
+                tools:ignore="ContentDescription,UnusedAttribute" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/menu_privacy"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/licenses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
 
@@ -204,6 +272,73 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="@string/licenses"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/image_sources"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/about_listitem_height"
+
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/icon_image_sources"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="?android:attr/textColorPrimary"
+                app:srcCompat="@drawable/ic_image_black_24dp"
+                tools:ignore="ContentDescription,UnusedAttribute" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/image_sources"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/libs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:focusable="true"
+            android:background="?attr/rectSelector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/about_listitem_height"
+
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/icon_libs"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="?android:attr/textColorPrimary"
+                app:srcCompat="@drawable/ic_library_books_black_24dp"
+                tools:ignore="ContentDescription,UnusedAttribute" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/libs"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>

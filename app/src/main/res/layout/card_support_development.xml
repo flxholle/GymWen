@@ -29,14 +29,14 @@
             android:id="@+id/report_bugs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:clickable="true"
+            android:focusable="true"
             android:minHeight="@dimen/about_listitem_height"
             android:gravity="center_vertical"
-
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
+
 
             <ImageView
                 android:id="@+id/icon_bug_report"

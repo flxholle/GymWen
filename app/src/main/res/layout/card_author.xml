@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
 
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
 
@@ -69,6 +70,7 @@
             android:layout_height="wrap_content"
 
             android:clickable="true"
+            android:focusable="true"
             android:minHeight="@dimen/about_listitem_height"
             android:gravity="center_vertical"
 
@@ -102,6 +104,7 @@
 
             android:minHeight="@dimen/about_listitem_height"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
 
             android:orientation="horizontal"
@@ -124,6 +127,40 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="@string/visit_website"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/colorush"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:minHeight="@dimen/about_listitem_height"
+            android:focusable="true"
+            android:clickable="true"
+            android:gravity="center_vertical"
+
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/icon_colorush"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="?android:attr/textColorPrimary"
+                app:srcCompat="@drawable/ic_colorush2"
+                tools:ignore="ContentDescription,UnusedAttribute" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/colorush"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>

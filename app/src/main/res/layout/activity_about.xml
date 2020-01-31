@@ -25,7 +25,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/content_about" />
+        <FrameLayout
+            android:id="@+id/about_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </FrameLayout>
     </ScrollView>
 
 </LinearLayout>
