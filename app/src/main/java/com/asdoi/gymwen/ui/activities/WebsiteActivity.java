@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.main.activities;
+package com.asdoi.gymwen.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,10 +8,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.text.HtmlCompat;
+import androidx.fragment.app.FragmentManager;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.ui.main.fragments.WebsiteActivityFragment;
+import com.asdoi.gymwen.ui.fragments.WebsiteActivityFragment;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,10 +25,6 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.text.HtmlCompat;
-import androidx.fragment.app.FragmentManager;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     public ArrayList<String> history = new ArrayList<>();

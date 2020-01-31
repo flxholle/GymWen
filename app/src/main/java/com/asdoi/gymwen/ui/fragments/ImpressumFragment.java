@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.main.fragments;
+package com.asdoi.gymwen.ui.fragments;
 
 
 import android.os.Build;

@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.main.activities;
+package com.asdoi.gymwen.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.main.activities;
+package com.asdoi.gymwen.ui.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -34,9 +34,9 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
-import com.asdoi.gymwen.ui.main.fragments.ColoRushFragment;
-import com.asdoi.gymwen.ui.main.fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.ui.main.fragments.VertretungFragment;
+import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
+import com.asdoi.gymwen.ui.fragments.LehrerlisteFragment;
+import com.asdoi.gymwen.ui.fragments.VertretungFragment;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

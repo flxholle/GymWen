@@ -42,9 +42,9 @@ import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
-import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
-import com.asdoi.gymwen.ui.main.activities.MainActivity;
-import com.asdoi.gymwen.ui.main.activities.SignInActivity;
+import com.asdoi.gymwen.ui.activities.ChoiceActivity;
+import com.asdoi.gymwen.ui.activities.MainActivity;
+import com.asdoi.gymwen.ui.activities.SignInActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
@@ -829,15 +829,26 @@ public class ApplicationFeatures extends Application {
         return getThemeColor(android.R.attr.windowBackground, context);
     }
 
+    public static int getWebPageBackgroundColor(Context context) {
+        return getThemeColor(R.attr.webPageBackground, context);
+    }
+
+    public static int getLinkColor(Context context) {
+        return getThemeColor(android.R.attr.textColorLink, context);
+    }
+
     public static int getThemeColor(int themeAttributeId, Context context) {
-        //context = getContext();
-        TypedValue outValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        boolean wasResolved = theme.resolveAttribute(themeAttributeId, outValue, true);
-        if (wasResolved) {
-            return ContextCompat.getColor(context, outValue.resourceId);
-        } else {
-            // fallback colour handling
+        try {
+            TypedValue outValue = new TypedValue();
+            Resources.Theme theme = context.getTheme();
+            boolean wasResolved = theme.resolveAttribute(themeAttributeId, outValue, true);
+            if (wasResolved) {
+                return ContextCompat.getColor(context, outValue.resourceId);
+            } else {
+                // fallback colour handling
+                return Color.BLACK;
+            }
+        } catch (Exception e) {
             return Color.BLACK;
         }
     }

@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.main.fragments;
+package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,7 +31,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-import com.asdoi.gymwen.ui.main.activities.MainActivity;
+import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -274,16 +274,18 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     //TeacherSearch
     void teacherClick(View view, String teacherQuery, boolean showBorders) {
         if (showBorders) {
-            Drawable d = ContextCompat.getDrawable(context, R.drawable.background_shape);
+            Drawable drawable = ContextCompat.getDrawable(context, R.drawable.background_shape);
             try {
-                Drawable wrappedDrawable = DrawableCompat.wrap(d);
-                Drawable mutableDrawable = wrappedDrawable.mutate();
-                DrawableCompat.setTint(mutableDrawable, ContextCompat.getColor(context, ApplicationFeatures.getTextColorSecondary(context)));
+                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(context));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            view.setBackground(d);
+            view.setBackground(drawable);
+        } else {
+            view.setBackgroundResource(android.R.drawable.list_selector_background);
         }
+        view.setClickable(true);
         view.setOnClickListener((View v) -> {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 new Thread(() -> {
@@ -301,6 +303,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     void removeTeacherClick(View view) {
         view.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+        view.setBackgroundResource(0);
+        view.setClickable(false);
         view.setOnClickListener(null);
     }
 

@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.main.fragments;
+package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.ui.main.activities.ChoiceActivity;
+import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;

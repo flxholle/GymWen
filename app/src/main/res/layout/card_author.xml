@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
 
             android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             android:focusable="true"
             android:minHeight="@dimen/about_listitem_height"
             android:gravity="center_vertical"
@@ -104,6 +105,7 @@
 
             android:minHeight="@dimen/about_listitem_height"
             android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             android:focusable="true"
             android:gravity="center_vertical"
 
@@ -139,6 +141,7 @@
             android:minHeight="@dimen/about_listitem_height"
             android:focusable="true"
             android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
 
             android:orientation="horizontal"

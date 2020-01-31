@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.main.activities;
+package com.asdoi.gymwen.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.ui.main.fragments.ContributionFragment;
+import com.asdoi.gymwen.ui.fragments.ContributionFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 

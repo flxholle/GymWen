@@ -3,11 +3,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorPrimary">#008577</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="vertretung_teacher_background">#99000000</color>
 
     <!--    Website Activity-->
     <color name="web_background_homepages">#80f2f2f2</color>
-    <color name="web_background_content">#FFFFFFFF</color>
-    <color name="web_link_color">#0000FF</color>
+    <color name="web_background_homepages_dark">#803A3636</color>
 
 </resources>
