@@ -19,8 +19,7 @@ public class ImpressumActivity extends ActivityFeatures implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_impressum);
-        if (getSupportActionBar() != null)   //null check
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show backgroundShape button
+        setToolbar(true);
     }
 
     @Override

@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ActivityFeatures;
@@ -31,8 +30,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setToolbar(false);
         signInButton = findViewById(R.id.signin_login);
         signInButton.setOnClickListener(this);
         signInButton.setEnabled(true);

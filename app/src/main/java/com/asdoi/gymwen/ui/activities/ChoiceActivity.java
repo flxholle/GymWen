@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
@@ -35,9 +34,7 @@ public class ChoiceActivity extends ActivityFeatures {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Kurs-/Klassenwahl");
+        setToolbar(false);
 
         fab = findViewById(R.id.choice_fab);
         fab.setEnabled(false);

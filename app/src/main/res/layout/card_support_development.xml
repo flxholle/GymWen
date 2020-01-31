@@ -2,10 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="?attr/cardViewStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    style="?attr/cardViewStyle">
+    android:layout_gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,10 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:focusable="true"
-            android:minHeight="@dimen/about_listitem_height"
+            android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
+            android:minHeight="@dimen/about_listitem_height"
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
@@ -116,6 +116,70 @@
             </LinearLayout>
 
         </LinearLayout>-->
+
+        <LinearLayout
+            android:id="@+id/color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/about_listitem_height"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/color_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="?android:attr/textColorPrimary"
+                app:srcCompat="@drawable/ic_color_lens_black_24dp"
+                tools:ignore="ContentDescription,UnusedAttribute" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Accent Color"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/color2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/about_listitem_height"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/color_icon2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="?android:attr/textColorPrimary"
+                app:srcCompat="@drawable/ic_color_lens_black_24dp"
+                tools:ignore="ContentDescription,UnusedAttribute" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Primary Color"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

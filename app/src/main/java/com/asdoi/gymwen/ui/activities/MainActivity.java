@@ -76,7 +76,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setToolbar(false);
+
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -96,6 +97,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         viewPager.setAdapter(sectionsPagerAdapter);
 
         TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         tabs.setupWithViewPager(viewPager);
 
         BottomNavigationView navView = findViewById(R.id.bottom_nav_view);

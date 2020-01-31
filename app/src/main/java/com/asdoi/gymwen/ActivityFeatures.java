@@ -35,6 +35,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -75,6 +76,22 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
+    public void setToolbar(boolean backButton) {
+        try {
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            if (toolbar != null) {
+//                toolbar.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+                setSupportActionBar(toolbar);
+            }
+            //noinspection ConstantConditions
+            if (backButton)
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     //Changelog
     public void showChangelogCK(boolean checkFirstRun) {
         ChangeLog cl = new ChangeLog(this);
@@ -96,9 +113,9 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
         try {
             CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
                     .addDefaultShareMenuItem()
-                    .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                    .setToolbarColor(ApplicationFeatures.getPrimaryColor(this))
                     .setShowTitle(true)
-                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_arrow_back_white_24dp))
+                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.attr.colorPrimary))
                     .build();
 
 //            customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -204,12 +221,12 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
         bar.setLayoutParams(params);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             try {
-                bar.getIndeterminateDrawable().setColorFilter(new BlendModeColorFilter(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorAccent), BlendMode.SRC_ATOP));
+                bar.getIndeterminateDrawable().setColorFilter(new BlendModeColorFilter(ApplicationFeatures.getAccentColor(this), BlendMode.SRC_ATOP));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            bar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(ApplicationFeatures.getContext(), R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+            bar.getIndeterminateDrawable().setColorFilter(ApplicationFeatures.getAccentColor(this), PorterDuff.Mode.SRC_ATOP);
         }
 
 
