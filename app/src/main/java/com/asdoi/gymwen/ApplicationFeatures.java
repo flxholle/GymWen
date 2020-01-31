@@ -1,7 +1,6 @@
 package com.asdoi.gymwen;
 
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -35,6 +34,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 
 import com.ahmedjazzar.rosetta.LanguageSwitcher;
@@ -77,7 +77,7 @@ import java.util.Locale;
 @AcraToast(resText = R.string.acra_toast)
 
 
-public class ApplicationFeatures extends Application {
+public class ApplicationFeatures extends MultiDexApplication {
     public static final int vertretung_teacher_view_id = View.generateViewId();
     public static final int old_design_vertretung_view_id = View.generateViewId();
     private static Context mContext;

@@ -765,6 +765,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView teacher = view.findViewById(R.id.vertretung_specific_entry_textViewTeacher);
 
         TextView room = view.findViewById(R.id.vertretung_specific_entry_textViewRoom);
+        room.setTextColor(ApplicationFeatures.getAccentColor(context));
 
 
         if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
