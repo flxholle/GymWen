@@ -363,6 +363,12 @@ public class ApplicationFeatures extends Application {
 
     }
 
+    public static int getIntSettings(String key, int defaultValue) {
+        Context context = getContext();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getInt(key, defaultValue);
+    }
+
 
     //Website
     public static boolean isURLValid(String url) {
@@ -835,6 +841,14 @@ public class ApplicationFeatures extends Application {
 
     public static int getLinkColor(Context context) {
         return getThemeColor(android.R.attr.textColorLink, context);
+    }
+
+    public static int getPrimaryColor(Context context) {
+        return getIntSettings("colorPrimary", 0) == 0 ? getThemeColor(R.attr.colorPrimary, context) : getIntSettings("colorPrimary", 0);
+    }
+
+    public static int getAccentColor(Context context) {
+        return getIntSettings("colorAccent", 0) == 0 ? getThemeColor(R.attr.colorAccent, context) : getIntSettings("colorAccent", 0);
     }
 
     public static int getThemeColor(int themeAttributeId, Context context) {

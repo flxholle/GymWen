@@ -747,6 +747,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     private View getEntrySpecific(View view, String[] entry, boolean oberstufe, boolean sonstiges) {
         TextView hour = view.findViewById(R.id.vertretung_specific_entry_textViewHour);
         hour.setText(entry[1]);
+        hour.setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
 
         TextView subject = view.findViewById(R.id.vertretung_specific_entry_textViewSubject);
         subject.setText(oberstufe ? entry[0] : entry[2]);
@@ -788,7 +789,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             teacher.setText(content);
             teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
-            teacher.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            teacher.setTextColor(ApplicationFeatures.getAccentColor(context));
 
             teacher.setText(content);
             room.setVisibility(View.GONE);
@@ -961,7 +962,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             TextView tv = new TextView(context);
             tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
             tv.setLayoutParams(params);
-            tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+            tv.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
             tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
             tv.setText(inhalt[i][1]);
             tv.setTextSize(36);
@@ -982,7 +983,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                tv.setTextColor(ApplicationFeatures.getAccentColor(context));
                 row.addView(tv);
 
                 for (int j = 2; j < columnNumber - 1; j++) {
@@ -1035,7 +1036,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                tv.setTextColor(ApplicationFeatures.getAccentColor(context));
                 row.addView(tv);
 
                 //Sonstiges
@@ -1083,7 +1084,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             );
             tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
             tv.setLayoutParams(params);
-            tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+            tv.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
             tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
             tv.setText(inhalt[i][1]);
             tv.setTextSize(36);
@@ -1104,7 +1105,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                tv.setTextColor(ApplicationFeatures.getAccentColor(context));
                 row.addView(tv);
 
                 for (int j = 2; j < columnNumber; j++) {
@@ -1158,7 +1159,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 tv.setTextSize(24);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                tv.setTextColor(ApplicationFeatures.getAccentColor(context));
                 row.addView(tv);
 
                 //Sonstiges

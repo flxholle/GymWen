@@ -2,6 +2,7 @@ package com.asdoi.gymwen.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 
+import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.fragments.ContributionFragment;
@@ -31,16 +34,13 @@ import butterknife.ButterKnife;
  * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
  */
 @SuppressWarnings("FieldCanBeLocal")
-public class AboutActivity extends ActivityFeatures implements View.OnClickListener {
+public class AboutActivity extends ActivityFeatures implements View.OnClickListener, ColorChooserDialog.ColorCallback {
 
     private static String GITLAB = "https://gitlab.com/asdoi/GymWen/";
 
     private static String WEBSITE = "https://asdoi.gitlab.io/";
 
     private static String BUGSITE = "https://gitlab.com/asdoi/GymWen/issues";
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     @BindView(R.id.app_version)
     TextView appVersion;
@@ -70,6 +70,12 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
     @BindView(R.id.report_bugs)
     LinearLayout reportBugs;
+
+    @BindView(R.id.color)
+    LinearLayout color;
+
+    @BindView(R.id.color2)
+    LinearLayout color2;
 
 
     @Override
@@ -105,16 +111,9 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     }
 
     private void setUpViews() {
-        setUpToolbar();
+        setToolbar(true);
         setUpAppVersion();
         setUpOnClickListeners();
-    }
-
-    private void setUpToolbar() {
-//        toolbar.setBackgroundColor(ThemeStore.primaryColor(this));
-        setSupportActionBar(toolbar);
-        //noinspection ConstantConditions
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setUpAppVersion() {
@@ -134,6 +133,8 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         image_sources.setOnClickListener(this);
         libs.setOnClickListener(this);
         colorush.setOnClickListener(this);
+        color.setOnClickListener(this);
+        color2.setOnClickListener(this);
     }
 
     @Override
@@ -199,9 +200,45 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .intent(this);
 
             startActivity(intent);
+        } else if (v == color) {
+            new ColorChooserDialog.Builder(this, R.string.colorush)
+                    .accentMode(false)
+                    .allowUserColorInput(true)
+                    .allowUserColorInputAlpha(false)
+                    .show(this);
+        } else if (v == color2) {
+            new ColorChooserDialog.Builder(this, R.string.impressum_AboutLibs_Title)
+                    .accentMode(false)
+                    .allowUserColorInput(true)
+                    .allowUserColorInputAlpha(false)
+                    .show(this);
         }
     }
 
+    @Override
+    public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
+        Context context = getContext();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        switch (dialog.getTitle()) {
+            case R.string.colorush:
+                editor.putInt("colorAccent", selectedColor);
+                break;
+            case R.string.impressum_AboutLibs_Title:
+                editor.putInt("colorPrimary", selectedColor);
+                break;
+        }
+        editor.apply();
+
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            new DynamicShortcutManager(this).updateDynamicShortcuts();
+        }*/
+        recreate();
+    }
+
+    @Override
+    public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
+    }
 
     private void showLicenseDialog() {
 //        new LicensesDialog.Builder(this)

@@ -10,8 +10,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import androidx.core.content.ContextCompat;
-
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 
@@ -146,7 +145,7 @@ public class VertretungsplanWidgetService extends RemoteViewsService {
                 SpannableString content = new SpannableString(inhalt[3]);
                 content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                 row.setTextViewText(R.id.widgetBody_text2, content);
-                row.setTextColor(R.id.widgetBody_text2, ContextCompat.getColor(context, R.color.colorAccent));
+                row.setTextColor(R.id.widgetBody_text2, ApplicationFeatures.getAccentColor(context));
                 row.setTextViewTextSize(R.id.widgetBody_text2, TypedValue.COMPLEX_UNIT_SP, 18f);
 
                 row.setTextViewText(R.id.widgetBody_text6, inhalt[0]);

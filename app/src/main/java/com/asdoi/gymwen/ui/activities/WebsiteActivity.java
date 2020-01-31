@@ -64,8 +64,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show backgroundShape button
+        setToolbar(true);
 
         // Preload custom tabs service for improved performance
         // This is optional but recommended

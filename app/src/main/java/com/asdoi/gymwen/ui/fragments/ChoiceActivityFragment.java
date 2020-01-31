@@ -77,6 +77,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 break;
             case 5:
                 root = inflater.inflate(R.layout.fragment_fifthchoice, container, false);
+                root.findViewById(R.id.choice_button_add_more_courses).setBackgroundColor(ApplicationFeatures.getPrimaryColor(getContext()));
         }
         return root;
     }
