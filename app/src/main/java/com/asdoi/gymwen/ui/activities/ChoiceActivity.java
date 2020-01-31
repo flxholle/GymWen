@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.main.activities;
+package com.asdoi.gymwen.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +14,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
-import com.asdoi.gymwen.ui.main.fragments.ChoiceActivityFragment;
+import com.asdoi.gymwen.ui.fragments.ChoiceActivityFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ChoiceActivity extends ActivityFeatures {

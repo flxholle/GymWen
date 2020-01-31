@@ -17,7 +17,7 @@ import androidx.core.content.ContextCompat;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.ui.main.activities.MainActivity;
+import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 
 /**

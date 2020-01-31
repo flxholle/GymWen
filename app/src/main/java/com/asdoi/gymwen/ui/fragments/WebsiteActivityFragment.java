@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.main.fragments;
+package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -11,12 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.ui.main.activities.WebsiteActivity;
+import com.asdoi.gymwen.ui.activities.WebsiteActivity;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -52,6 +51,8 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 //        loadContentPages("http://www.gym-wen.de/schulleben/exkursionen/hc-bei-der-insights-x/");
         root = inflater.inflate(R.layout.fragment_website, container, false);
         context = getActivity();
+
+        root.setBackgroundColor(ApplicationFeatures.getWebPageBackgroundColor(context));
 
         basic = root.findViewById(R.id.website_linear);
         buttonCall = (WebsiteActivity) getActivity();
@@ -90,11 +91,12 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        int backgroundColor = ContextCompat.getColor(context, R.color.web_background_homepages);
+        int backgroundColor = ApplicationFeatures.getBackgroundColor(context);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
         int titleColor = ApplicationFeatures.getTextColorPrimary(context);
         int descriptionColor = ApplicationFeatures.getTextColorPrimary(context);
+        int linkColor = ApplicationFeatures.getLinkColor(context);
 
         for (int i = 0; i < content.length; i++) {
             //Create Views
@@ -187,7 +189,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             String link = content[i][3];
 //                            linkView.setText(link);
             linkView.setTextSize(8);
-            linkView.setTextColor(ContextCompat.getColor(context, R.color.web_link_color));
+            linkView.setTextColor(linkColor);
             linkView.setTypeface(Typeface.DEFAULT);
             linkView.setGravity(Gravity.CENTER);
 
@@ -208,11 +210,12 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        int backgroundColor = ContextCompat.getColor(context, R.color.web_background_content);
+        int backgroundColor = ApplicationFeatures.getBackgroundColor(context);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
         int titleColor = ApplicationFeatures.getTextColorPrimary(context);
         int descriptionColor = ApplicationFeatures.getTextColorPrimary(context);
+        int linkColor = ApplicationFeatures.getLinkColor(context);
 
         for (int i = 0; i < content.length; i++) {
             //Create Views
@@ -307,7 +310,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             String link = content[i][3];
 //                            linkView.setText(link);
             linkView.setTextSize(8);
-            linkView.setTextColor(ContextCompat.getColor(context, R.color.web_link_color));
+            linkView.setTextColor(linkColor);
             linkView.setTypeface(Typeface.DEFAULT);
             linkView.setGravity(Gravity.CENTER);
 

@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.activities.ImpressumActivity">
+    tools:context=".ui.activities.ImpressumActivity">
 
     <fragment
         android:id="@+id/impressumFragment"
-        android:name="com.asdoi.gymwen.ui.main.fragments.ImpressumFragment"
+        android:name="com.asdoi.gymwen.ui.fragments.ImpressumFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

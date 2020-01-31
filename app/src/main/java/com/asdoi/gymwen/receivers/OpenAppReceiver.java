@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.asdoi.gymwen.ui.main.activities.MainActivity;
+import com.asdoi.gymwen.ui.activities.MainActivity;
 
 public class OpenAppReceiver extends BroadcastReceiver {
 
