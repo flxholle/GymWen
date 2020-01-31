@@ -243,4 +243,17 @@
     <string name="grades_management">Grades management</string>
     <string name="add_profile_button">Add profile</string>
     <string name="teacher_mail">Mail</string>
+    <string name="author">Author</string>
+    <string name="fork_on_gitlab">Fork on GitLab</string>
+    <string name="image_sources">Image sources</string>
+    <string name="libs">Open source libraries</string>
+    <string name="licenses">License</string>
+    <string name="menu_privacy">Privacy</string>
+    <string name="report_bugs">Report bugs</string>
+    <string name="share">Share</string>
+    <string name="show_intro">Introduction</string>
+    <string name="support_development">Support development</string>
+    <string name="title_activity_about">Imprint</string>
+    <string name="visit_website">Visit website</string>
+    <string name="write_email">Write an email</string>
 </resources>

@@ -8,8 +8,8 @@ android {
         /*Android v4.1 alias "Jelly Bean"*/
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 109
-        versionName "1.0.9"
+        versionCode 110
+        versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -60,6 +60,8 @@ dependencies {
     implementation 'androidx.browser:browser:1.2.0'
 
     implementation "androidx.cardview:cardview:1.0.0"
+
+    implementation 'com.google.android.material:material:1.0.0'
 
     implementation 'saschpe.android:customtabs:2.0.0'
     implementation "com.mikepenz:aboutlibraries:7.0.4"

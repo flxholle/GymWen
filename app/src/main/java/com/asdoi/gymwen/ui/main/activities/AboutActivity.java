@@ -5,16 +5,23 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.ui.main.fragments.ContributionFragment;
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,27 +41,43 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
     @BindView(R.id.app_version)
     TextView appVersion;
+    @BindView(R.id.share)
+    LinearLayout share;
     @BindView(R.id.changelog)
     LinearLayout changelog;
     @BindView(R.id.intro)
     LinearLayout intro;
-    @BindView(R.id.licenses)
-    LinearLayout licenses;
-    @BindView(R.id.write_an_email)
-    LinearLayout writeAnEmail;
     @BindView(R.id.fork_on_github)
     LinearLayout forkOnGitHub;
+    @BindView(R.id.privacy)
+    LinearLayout privacy;
+    @BindView(R.id.licenses)
+    LinearLayout licenses;
+    @BindView(R.id.image_sources)
+    LinearLayout image_sources;
+    @BindView(R.id.libs)
+    LinearLayout libs;
+
+    @BindView(R.id.write_an_email)
+    LinearLayout writeAnEmail;
     @BindView(R.id.visit_website)
     LinearLayout visitWebsite;
+    @BindView(R.id.colorush)
+    LinearLayout colorush;
+
     @BindView(R.id.report_bugs)
     LinearLayout reportBugs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.about_frame, new Fragment1()).commit();
 //        setDrawUnderStatusbar();
 
 
@@ -62,6 +85,15 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 //        setNavigationbarColorAuto();
 //        setTaskDescriptionColorAuto();
 
+
+    }
+
+    public static class Fragment1 extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.content_about, container, false);
+        }
 
     }
 
@@ -97,6 +129,11 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         visitWebsite.setOnClickListener(this);
         reportBugs.setOnClickListener(this);
         writeAnEmail.setOnClickListener(this);
+        share.setOnClickListener(this);
+        privacy.setOnClickListener(this);
+        image_sources.setOnClickListener(this);
+        libs.setOnClickListener(this);
+        colorush.setOnClickListener(this);
     }
 
     @Override
@@ -137,6 +174,31 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             intent.putExtra(Intent.EXTRA_EMAIL, "GymWenApp@t-online.de");
             intent.putExtra(Intent.EXTRA_SUBJECT, "GymWenApp");
             startActivity(Intent.createChooser(intent, "E-Mail"));
+        } else if (v == colorush) {
+
+        } else if (v == share) {
+            share();
+        } else if (v == privacy) {
+        } else if (v == image_sources) {
+            try {
+                getSupportActionBar().setTitle(getString(R.string.impressum_attribution));
+            } catch (Exception e) {
+            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.about_frame, new ContributionFragment()).commit();
+        } else if (v == libs) {
+            Intent intent = new LibsBuilder()
+                    .withActivityTitle(getString(R.string.impressum_AboutLibs_Title))
+                    .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                    .withFields(R.string.class.getFields())
+                    .withAutoDetect(true)
+                    .withAboutIconShown(true)
+                    .withLicenseShown(true)
+                    .withAboutDescription(getString(R.string.subtitle))
+                    .withAboutAppName(getString(R.string.app_name))
+                    .intent(this);
+
+            startActivity(intent);
         }
     }
 
@@ -153,5 +215,15 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 //                .setIncludeOwnLicense(true)
 //                .build()
 //                .show();
+    }
+
+    private void share() {
+        String link = "https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk";
+        String message = getString(R.string.share_app_message) + " " + link;
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_SEND);
+        i.putExtra(Intent.EXTRA_TEXT, message);
+        i.setType("text/plain");
+        startActivity(Intent.createChooser(i, getString(R.string.share_app)));
     }
 }
