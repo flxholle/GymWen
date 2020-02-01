@@ -49,10 +49,6 @@
             android:label="@string/title_activity_sign_in"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activities.ImpressumActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/impressum_headline" />
-        <activity
             android:name=".ui.activities.WebsiteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"

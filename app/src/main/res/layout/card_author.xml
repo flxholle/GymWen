@@ -39,7 +39,6 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_author"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
@@ -80,7 +79,6 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_email"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
@@ -114,7 +112,6 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_website"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
@@ -149,7 +146,6 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_colorush"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"

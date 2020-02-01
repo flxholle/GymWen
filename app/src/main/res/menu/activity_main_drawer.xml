@@ -72,7 +72,7 @@
             <group android:title="@string/menu_category_settings">
                 <item
                     android:id="@+id/nav_impressum"
-                    android:icon="@drawable/ic_info_outline_black_24dp"
+                    android:icon="@drawable/ic_help_outline_black_24dp"
                     android:title="@string/menu_impressum" />
                 <item
                     android:id="@+id/nav_settings"

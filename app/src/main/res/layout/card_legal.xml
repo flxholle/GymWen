@@ -41,7 +41,6 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_privacy"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
@@ -75,7 +74,6 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_licenses"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
@@ -109,7 +107,6 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_image_sources"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
@@ -143,7 +140,6 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_libs"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
