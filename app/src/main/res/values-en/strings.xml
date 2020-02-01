@@ -248,7 +248,7 @@
     <string name="image_sources">Image sources</string>
     <string name="libs">Open source libraries</string>
     <string name="licenses">License</string>
-    <string name="menu_privacy">Privacy</string>
+    <string name="menu_privacy">Privacy policy</string>
     <string name="report_bugs">Report bugs</string>
     <string name="share">Share</string>
     <string name="show_intro">Introduction</string>
@@ -256,4 +256,7 @@
     <string name="title_activity_about">Imprint</string>
     <string name="visit_website">Visit website</string>
     <string name="write_email">Write an email</string>
+    <string name="color_accent">Accent color</string>
+    <string name="color_primary">Primary color</string>
+    <string name="legal">Legal</string>
 </resources>

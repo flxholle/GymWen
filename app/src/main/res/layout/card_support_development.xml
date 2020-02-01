@@ -118,7 +118,7 @@
         </LinearLayout>-->
 
         <LinearLayout
-            android:id="@+id/color"
+            android:id="@+id/color_accent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -144,13 +144,13 @@
                 android:layout_marginStart="32dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="Accent Color"
+                android:text="@string/color_accent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/color2"
+            android:id="@+id/color_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -176,7 +176,7 @@
                 android:layout_marginStart="32dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="Primary Color"
+                android:text="@string/color_primary"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>

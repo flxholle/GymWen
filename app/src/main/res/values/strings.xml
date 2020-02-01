@@ -308,17 +308,20 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <!-- About Author -->
     <string name="show_intro">Einführung</string>
     <string name="fork_on_gitlab">Fork auf GitLab</string>
-    <string name="licenses">Lizenz</string>
+    <string name="licenses">Lizenzen</string>
     <string name="author">Autor</string>
     <string name="author_name" translatable="false">Felix Hollederer</string>
     <string name="write_email">Mail schreiben</string>
     <string name="visit_website">Website besuchen</string>
     <string name="support_development">Entwicklung unterstützen</string>
     <string name="report_bugs">Fehler melden</string>
-    <string name="menu_privacy">Datenschutz</string>
+    <string name="menu_privacy">Datenschutzerklärung</string>
     <string name="image_sources">Bildquellen</string>
     <string name="libs">Open-Source Bibliotheken</string>
     <string name="share">Teilen</string>
     <string name="colorush" translatable="false">ColoRush</string>
+    <string name="color_accent">Akzentfarbe</string>
+    <string name="color_primary">Primäre Farbe</string>
+    <string name="legal">Rechtliches</string>
 
 </resources>

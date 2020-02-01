@@ -1,11 +1,18 @@
 package com.asdoi.gymwen.ui.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,14 +22,17 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.ui.fragments.ContributionFragment;
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
@@ -71,11 +81,11 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     @BindView(R.id.report_bugs)
     LinearLayout reportBugs;
 
-    @BindView(R.id.color)
-    LinearLayout color;
+    @BindView(R.id.color_accent)
+    LinearLayout color_accent;
 
-    @BindView(R.id.color2)
-    LinearLayout color2;
+    @BindView(R.id.color_primary)
+    LinearLayout color_primary;
 
 
     @Override
@@ -133,8 +143,8 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         image_sources.setOnClickListener(this);
         libs.setOnClickListener(this);
         colorush.setOnClickListener(this);
-        color.setOnClickListener(this);
-        color2.setOnClickListener(this);
+        color_accent.setOnClickListener(this);
+        color_primary.setOnClickListener(this);
     }
 
     @Override
@@ -176,17 +186,81 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             intent.putExtra(Intent.EXTRA_SUBJECT, "GymWenApp");
             startActivity(Intent.createChooser(intent, "E-Mail"));
         } else if (v == colorush) {
-
+            final String downloadSite = "https://gitlab.com/asdoi/colorrush/blob/master/Apk/ColoRush.apk";
+            tabIntent(downloadSite);
         } else if (v == share) {
             share();
         } else if (v == privacy) {
-        } else if (v == image_sources) {
+            String datenschutz = getString(R.string.privacy);
+
+            if (Build.VERSION.SDK_INT > 24)
+                datenschutz = Html.fromHtml(datenschutz, Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                datenschutz = Html.fromHtml(datenschutz).toString();
+
+            Drawable drawable = getDrawable(R.drawable.ic_fingerprint_black_24dp);
             try {
-                getSupportActionBar().setTitle(getString(R.string.impressum_attribution));
+                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
             } catch (Exception e) {
+                e.printStackTrace();
             }
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.about_frame, new ContributionFragment()).commit();
+
+            new AlertDialog.Builder(getContext())
+                    .setTitle(getString(R.string.menu_privacy))
+                    .setMessage(datenschutz)
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Continue with delete operation
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(drawable)
+                    .show();
+        } else if (v == image_sources) {
+            String sources = getString(R.string.credits);
+
+            if (Build.VERSION.SDK_INT > 24)
+                sources = Html.fromHtml(sources, Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                sources = Html.fromHtml(sources).toString();
+
+            Drawable drawable = getDrawable(R.drawable.ic_image_black_24dp);
+            try {
+                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            final TextView message = new TextView(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(10, 10, 10, 10);
+            message.setLayoutParams(params);
+
+            final SpannableString s = new SpannableString(sources);
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+            message.setText(s);
+            message.setMovementMethod(LinkMovementMethod.getInstance());
+
+            new AlertDialog.Builder(getContext())
+                    .setTitle(getString(R.string.image_sources))
+                    .setCancelable(true)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Continue with delete operation
+                        }
+                    })
+                    .setIcon(drawable)
+                    .setView(message)
+                    .create()
+                    .show();
+
         } else if (v == libs) {
             Intent intent = new LibsBuilder()
                     .withActivityTitle(getString(R.string.impressum_AboutLibs_Title))
@@ -197,17 +271,18 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .withLicenseShown(true)
                     .withAboutDescription(getString(R.string.subtitle))
                     .withAboutAppName(getString(R.string.app_name))
+                    .withActivityTheme(R.style.AboutLibrariesTheme)
                     .intent(this);
 
             startActivity(intent);
-        } else if (v == color) {
-            new ColorChooserDialog.Builder(this, R.string.colorush)
+        } else if (v == color_accent) {
+            new ColorChooserDialog.Builder(this, R.string.color_accent)
                     .accentMode(false)
                     .allowUserColorInput(true)
                     .allowUserColorInputAlpha(false)
                     .show(this);
-        } else if (v == color2) {
-            new ColorChooserDialog.Builder(this, R.string.impressum_AboutLibs_Title)
+        } else if (v == color_primary) {
+            new ColorChooserDialog.Builder(this, R.string.color_primary)
                     .accentMode(false)
                     .allowUserColorInput(true)
                     .allowUserColorInputAlpha(false)
@@ -221,10 +296,10 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         switch (dialog.getTitle()) {
-            case R.string.colorush:
+            case R.string.color_accent:
                 editor.putInt("colorAccent", selectedColor);
                 break;
-            case R.string.impressum_AboutLibs_Title:
+            case R.string.color_primary:
                 editor.putInt("colorPrimary", selectedColor);
                 break;
         }
@@ -241,17 +316,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     }
 
     private void showLicenseDialog() {
-//        new LicensesDialog.Builder(this)
-//                .setNotices(R.raw.notices)
-//                .setTitle(R.string.licenses)
-//                .setNoticesCssStyle(getString(R.string.license_dialog_style)
-//                        .replace("{bg-color}", ThemeSingleton.get().darkTheme ? "424242" : "ffffff")
-//                        .replace("{text-color}", ThemeSingleton.get().darkTheme ? "ffffff" : "000000")
-//                        .replace("{license-bg-color}", ThemeSingleton.get().darkTheme ? "535353" : "eeeeee")
-//                )
-//                .setIncludeOwnLicense(true)
-//                .build()
-//                .show();
+        startActivity(new Intent(this, OssLicensesMenuActivity.class));
     }
 
     private void share() {
