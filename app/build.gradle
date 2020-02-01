@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.akaita.android.easylauncher'
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
     compileSdkVersion 29
@@ -83,4 +84,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    implementation 'agency.tango.android:material-intro-screen:0.0.5'
+    implementation 'com.github.marcoscgdev:Licenser:1.0.5'
+    implementation 'de.psdev.licensesdialog:licensesdialog:2.1.0'
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 }

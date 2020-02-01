@@ -13,94 +13,39 @@
         android:layout_marginBottom="8dp"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:minHeight="@dimen/about_listitem_height"
-            android:orientation="horizontal"
-            android:padding="16dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/gymlogo"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/about_listitem_height"
-            android:orientation="horizontal"
+            android:layout_gravity="start|center_vertical"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <ImageView
-                android:id="@+id/icon_info"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_info_outline_black_24dp"
-                tools:ignore="ContentDescription,UnusedAttribute" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:orientation="vertical"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/version"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-                <TextView
-                    android:id="@+id/app_version"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0.0.0 (0)"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-
-        </LinearLayout>
+            android:paddingTop="24dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:text="@string/legal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="?android:textColorSecondary" />
 
         <LinearLayout
-            android:id="@+id/share"
+            android:id="@+id/privacy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
+
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_share"
+                android:id="@+id/icon_privacy"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_menu_share"
+                app:srcCompat="@drawable/ic_fingerprint_black_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
             <TextView
@@ -109,30 +54,32 @@
                 android:layout_marginStart="32dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="@string/share"
+                android:text="@string/menu_privacy"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/changelog"
+            android:id="@+id/licenses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
+
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_changelog"
+                android:id="@+id/icon_licenses"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_restore_white_24dp"
+                app:srcCompat="@drawable/ic_description_white_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
             <TextView
@@ -141,13 +88,13 @@
                 android:layout_marginStart="32dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="@string/changelog"
+                android:text="@string/licenses"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/intro"
+            android:id="@+id/image_sources"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -162,11 +109,11 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_intro"
+                android:id="@+id/icon_image_sources"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_assignment_turned_in_white_24dp"
+                app:srcCompat="@drawable/ic_image_black_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
             <TextView
@@ -175,13 +122,13 @@
                 android:layout_marginStart="32dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="@string/show_intro"
+                android:text="@string/image_sources"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/fork_on_github"
+            android:id="@+id/libs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -196,11 +143,11 @@
             android:paddingRight="16dp">
 
             <ImageView
-                android:id="@+id/icon_github"
+                android:id="@+id/icon_libs"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_gitlab"
+                app:srcCompat="@drawable/ic_library_books_black_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
             <TextView
@@ -209,7 +156,7 @@
                 android:layout_marginStart="32dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="@string/fork_on_gitlab"
+                android:text="@string/libs"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>
