@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.asdoi.gymwen"
         /*Android v4.1 alias "Jelly Bean"*/
-        minSdkVersion 21
+        minSdkVersion 17
         targetSdkVersion 29
         versionCode 110
         versionName "1.1.0"
@@ -84,8 +84,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
-    implementation 'agency.tango.android:material-intro-screen:0.0.5'
-    implementation 'com.github.marcoscgdev:Licenser:1.0.5'
-    implementation 'de.psdev.licensesdialog:licensesdialog:2.1.0'
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+    implementation 'com.github.AppIntro:AppIntro:5.1.0'
 }

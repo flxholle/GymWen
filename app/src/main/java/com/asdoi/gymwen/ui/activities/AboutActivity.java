@@ -23,6 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -172,7 +173,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         } else if (v == licenses) {
             showLicenseDialog();
         } else if (v == intro) {
-//            startActivity(new Intent(this, AppIntroActivity.class));
+            startActivity(new Intent(this, AppIntroActivity.class));
         } else if (v == forkOnGitHub) {
             tabIntent(GITLAB);
         } else if (v == visitWebsite) {
@@ -198,7 +199,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             else
                 datenschutz = Html.fromHtml(datenschutz).toString();
 
-            Drawable drawable = getDrawable(R.drawable.ic_fingerprint_black_24dp);
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_fingerprint_black_24dp);
             try {
                 Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
@@ -230,7 +231,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             else
                 sources = Html.fromHtml(sources).toString();
 
-            Drawable drawable = getDrawable(R.drawable.ic_image_black_24dp);
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_image_black_24dp);
             try {
                 Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));

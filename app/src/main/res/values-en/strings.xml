@@ -259,4 +259,9 @@
     <string name="color_accent">Accent color</string>
     <string name="color_primary">Primary color</string>
     <string name="legal">Legal</string>
+    <string name="intro">Introduction</string>
+    <string name="intro_five_title">Many other features</string>
+    <string name="intro_four_title">parent mode</string>
+    <string name="intro_three_title">teacherlist</string>
+    <string name="intro_two_title">sit-in</string>
 </resources>
