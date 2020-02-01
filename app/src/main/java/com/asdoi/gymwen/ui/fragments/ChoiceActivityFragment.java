@@ -2,6 +2,7 @@ package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -164,6 +165,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         box.setGravity(Gravity.CENTER);
         box.setText(courseName);
         box.setId(quantitiyCourses + 130);
+        box.setButtonTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(getContext())));
         box.setOnClickListener(this);
         box.setChecked(true);
 
@@ -371,6 +373,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
     private void addSpinner() {
         Spinner parentSpinner = mainActivity.findViewById(R.id.choice_parent_spinner);
+        parentSpinner.setBackgroundColor(ApplicationFeatures.getPrimaryColor(getContext()));
         parentSpinner.setVisibility(View.VISIBLE);
         parentSpinner.setEnabled(true);
         List<String> list = new ArrayList<String>();

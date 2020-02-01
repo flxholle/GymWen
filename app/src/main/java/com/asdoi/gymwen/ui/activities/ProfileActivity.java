@@ -1,6 +1,7 @@
 package com.asdoi.gymwen.ui.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +21,7 @@ public class ProfileActivity extends ActivityFeatures {
         setToolbar(true);
 
         FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

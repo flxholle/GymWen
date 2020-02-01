@@ -1,6 +1,7 @@
 package com.asdoi.gymwen.ui.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -98,6 +99,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
         tabs.setupWithViewPager(viewPager);
 
         BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
@@ -112,6 +114,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
 
         ApplicationFeatures.sendNotification();
+
+        findViewById(R.id.main_fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
 
         initSpinner();
 
@@ -188,6 +192,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private void initSpinner() {
         //Set Profiles
         Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
+        parentSpinner.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
 
         if (ProfileManagement.isMoreThanOneProfile()) {
             parentSpinner.setVisibility(View.VISIBLE);
