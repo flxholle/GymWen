@@ -8,4 +8,12 @@
     <color name="web_background_homepages">#80f2f2f2</color>
     <color name="web_background_homepages_dark">#803A3636</color>
 
+    <!-- Intro -->
+    <color name="intro_background_one">@color/colorPrimary</color>
+    <color name="intro_background_two">#FFD32F2F</color>
+    <!--    <color name="intro_background_three">#0A72A0</color>-->
+    <color name="intro_background_three">#FF2196F3</color>
+    <color name="intro_background_four">#D5A206</color>
+    <!--    <color name="intro_background_four">#FFFFB300</color>-->
+    <color name="intro_background_five">@color/colorPrimary</color>
 </resources>

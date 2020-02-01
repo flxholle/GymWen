@@ -324,4 +324,17 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="color_primary">Primäre Farbe</string>
     <string name="legal">Rechtliches</string>
 
+    <!-- Intro -->
+    <string name="intro">Einführung</string>
+    <string name="intro_one_title" translatable="false">Gymnasium Wendelstein App</string>
+    <string name="intro_one_desc">Diese App ist für alle Schüler und Eltern des Gymnasiums Wendelstein programmiert worden.</string>
+    <string name="intro_two_title">Vertretungsplan</string>
+    <string name="intro_two_desc">Mit Hilfe dieser App kannst du den Vertretungsplan individuell filtern und anzeigen lassen und du wirst über deine Vertretungen automatisch benachrichtigt.</string>
+    <string name="intro_three_title">Lehrerliste</string>
+    <string name="intro_three_desc">Du kannst die Lehrerliste durchsuchen und sofort eine E-Mail an den Lehrer schreiben.</string>
+    <string name="intro_four_title">Elternmodus</string>
+    <string name="intro_four_desc">Außerdem ist diese App auch für Eltern sehr nützlich.\nSo kann man verschiedene Profile für jedes Kind anlegen und bestimme Funktionen die besonders für Eltern nützlich sind benutzen.</string>
+    <string name="intro_five_title">Viele tolle Features</string>
+    <string name="intro_five_desc">Des Weiteren kannst du eine für Smartphones optimierte Version der Schulhomepage aufrufen, sowie deine Noten und deinen Stundenplan verwalten.\nAußerdem gibt es noch viele weitere Dinge für die hier leiter kein Platz mehr ist.</string>
+
 </resources>

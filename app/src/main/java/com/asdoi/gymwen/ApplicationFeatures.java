@@ -42,6 +42,7 @@ import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
+import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.activities.SignInActivity;
@@ -258,9 +259,15 @@ public class ApplicationFeatures extends MultiDexApplication {
                 updateMyWidgets();
             }
         } else if (signIn) {
-            Intent i = new Intent(context, SignInActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
+            if (isIntroShown()) {
+                Intent i = new Intent(context, SignInActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            } else {
+                Intent i = new Intent(context, AppIntroActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            }
         }
         return signedIn;
     }
@@ -341,6 +348,10 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     public static boolean isTwoNotifications() {
         return getBooleanSettings("two_notifs", false);
+    }
+
+    public static boolean isIntroShown() {
+        return getBooleanSettings("intro", false);
     }
 
     public static int[] getAlarmTime() {
