@@ -80,7 +80,7 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
         try {
             Toolbar toolbar = findViewById(R.id.toolbar);
             if (toolbar != null) {
-//                toolbar.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+                toolbar.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
                 setSupportActionBar(toolbar);
             }
             //noinspection ConstantConditions

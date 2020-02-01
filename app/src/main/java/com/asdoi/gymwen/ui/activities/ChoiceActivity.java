@@ -2,6 +2,7 @@ package com.asdoi.gymwen.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
@@ -40,6 +42,7 @@ public class ChoiceActivity extends ActivityFeatures {
         fab.setEnabled(false);
         fab.bringToFront();
         fab.setVisibility(View.VISIBLE);
+        fab.setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
         Bundle extras = getIntent().getExtras();
         name = getString(R.string.profile_default_name);
         if (extras != null) {

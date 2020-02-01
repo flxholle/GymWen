@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.asdoi.gymwen"
         /*Android v4.1 alias "Jelly Bean"*/
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 110
         versionName "1.1.0"

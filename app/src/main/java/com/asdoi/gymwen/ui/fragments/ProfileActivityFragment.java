@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
@@ -37,6 +38,7 @@ public class ProfileActivityFragment extends Fragment {
         adapter = new ProfileListAdapter(getContext(), 0);
         ((ListView) root.findViewById(R.id.profile_list)).setAdapter(adapter);
 
+        root.findViewById(R.id.profile_add_button).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
         root.findViewById(R.id.profile_add_button).setOnClickListener((View v) -> {
             openAddDialog();
         });

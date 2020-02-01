@@ -273,6 +273,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     //TeacherSearch
     void teacherClick(View view, String teacherQuery, boolean showBorders) {
+        if (teacherQuery.equals("entf") || teacherQuery.equals("entfällt") || teacherQuery.equals("AOL"))
+            return;
         if (showBorders) {
             Drawable drawable = ContextCompat.getDrawable(context, R.drawable.background_shape);
             try {
