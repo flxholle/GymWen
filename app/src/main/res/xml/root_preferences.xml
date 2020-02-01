@@ -89,13 +89,13 @@
     <PreferenceCategory android:title="@string/set_other_title">
         <SwitchPreference
             android:defaultValue="false"
-            android:key="beta_features"
-            android:title="@string/set_beta_features"
-            app:isPreferenceVisible="false" />
-        <SwitchPreference
-            android:defaultValue="false"
             android:key="parents"
             android:title="@string/set_parents" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="beta_features"
+            android:title="@string/set_beta_features"
+            app:isPreferenceVisible="true" />
     </PreferenceCategory>
 
 </PreferenceScreen>

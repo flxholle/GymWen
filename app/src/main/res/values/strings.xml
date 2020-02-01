@@ -18,7 +18,7 @@
     <string name="menu_category_settings">Einstellungen</string>
     <string name="menu_category_vertretung">Vertretungsplan</string>
     <string name="menu_both">Auf einen Blick!</string>
-    <string name="menu_impressum">Impressum</string>
+    <string name="menu_impressum">Über</string>
     <string name="menu_update">Updates</string>
     <string name="changelog">Änderungen</string>
     <string name="menu_shop">Online Shop</string>
@@ -171,7 +171,6 @@
     <string name="anyShort" translatable="false">X</string>
 
     <!-- Impressum -->
-    <string name="impressum_headline">Impressum</string>
     <string name="impressum_AboutLibs_Title">Open-Source Bibliotheken</string>
     <string name="privacy"><![CDATA[<h1>Datenschutzerklärung</h1><br>Die offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.<br>
         D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.<br>
@@ -183,21 +182,6 @@
         <br> - Geräteinformationen wie Modell, Hersteller usw. (keine Seriennummer / IMEI)
         <br> - Betriebssystem-Version
         <br> - Stack-Trace zu dem Absturz]]></string>
-    <string name="license" translatable="false"><![CDATA[<h1>Lizenz</h1><br>
-    Copyright © 2019 Felix Hollederer<br>
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.<br>
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.<br>
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
-    <string name="impressum_online_impressum">GymWen Impressum</string>
-    <string name="impressum_source_code">Quellcode</string>
-    <string name="impressum_attribution">Credits (Bildquellen)</string>
     <string name="share_app">App teilen mit\u2026</string>
     <string name="share_app_message">Lade dir die offizielle GymWen App herunter, mit ihr wirst du automatisch über deine Vertretungen informiert, kannst Essen in der Mensa bestellen, die Lehrerliste durchsuchen und vieles mehr:</string>
 
@@ -303,7 +287,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
 
     <!-- Download Manager -->
     <string name="download_start">Lädt herunter\u2026</string>
-    <string name="title_activity_about">Impressum</string>
+    <string name="title_activity_about">Über</string>
 
     <!-- About Author -->
     <string name="show_intro">Einführung</string>
@@ -325,7 +309,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/.]]></string>
     <string name="legal">Rechtliches</string>
 
     <!-- Intro -->
-    <string name="intro">Einführung</string>
     <string name="intro_one_title" translatable="false">Gymnasium Wendelstein App</string>
     <string name="intro_one_desc">Diese App ist für alle Schüler und Eltern des Gymnasiums Wendelstein programmiert worden.</string>
     <string name="intro_two_title">Vertretungsplan</string>

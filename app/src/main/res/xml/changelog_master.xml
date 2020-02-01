@@ -3,9 +3,11 @@
     <release
         version="1.1.1"
         versioncode="111">
-        <change>Impressum überarbeitet</change>
         <change>Dark Mode</change>
+        <change>Einführung hinzugefügt</change>
+        <change>Impressum überarbeitet</change>
         <change>Notenverwaltung gefixed</change>
+        <change>Farbenauswahl (Beta)</change>
     </release>
     <release
         version="1.1"

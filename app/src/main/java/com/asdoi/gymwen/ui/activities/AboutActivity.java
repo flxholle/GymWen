@@ -119,6 +119,13 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         super.onStart();
         ButterKnife.bind(this);
         setUpViews();
+        if (ApplicationFeatures.isBetaEnabled()) {
+            color_accent.setVisibility(View.VISIBLE);
+            color_primary.setVisibility(View.VISIBLE);
+        } else {
+            color_accent.setVisibility(View.GONE);
+            color_primary.setVisibility(View.GONE);
+        }
     }
 
     private void setUpViews() {
