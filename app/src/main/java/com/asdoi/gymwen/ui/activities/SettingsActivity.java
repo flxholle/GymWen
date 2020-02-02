@@ -25,9 +25,12 @@ public class SettingsActivity extends ActivityFeatures {
                 .beginTransaction()
                 .replace(R.id.settings, new SettingsFragment())
                 .commit();
-        setToolbar(true);
 
-        setSettings();
+//        setSettings();
+    }
+
+    public void setupColors() {
+        setToolbar(true);
     }
 
     @Override

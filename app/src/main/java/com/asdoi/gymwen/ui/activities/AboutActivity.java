@@ -105,6 +105,10 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
     }
 
+    public void setupColors() {
+        setToolbar(true);
+    }
+
     public static class Fragment1 extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,7 +133,6 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     }
 
     private void setUpViews() {
-        setToolbar(true);
         setUpAppVersion();
         setUpOnClickListeners();
     }

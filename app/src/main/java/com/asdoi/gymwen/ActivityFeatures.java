@@ -13,10 +13,12 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -44,6 +46,7 @@ import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.activities.MainActivity;
+import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
@@ -52,6 +55,10 @@ import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
 import com.google.android.material.snackbar.Snackbar;
+import com.kabouzeid.appthemehelper.ATH;
+import com.kabouzeid.appthemehelper.ThemeStore;
+import com.kabouzeid.appthemehelper.util.ColorUtil;
+import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.File;
@@ -67,7 +74,7 @@ import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
 
-public class ActivityFeatures extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public abstract class ActivityFeatures extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     public Context getContext() {
         return this;
     }
@@ -75,6 +82,29 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setupColors();
+        setNavigationbarColorAuto();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setTheme(PreferenceUtil.getInstance().getGeneralTheme());
+        super.onCreate(savedInstanceState);
+        MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
+    }
+
+
+    //Colors
+
+    /**
+     * @author Karim Abou Zeid (kabouzeid)
+     */
+
+    public abstract void setupColors();
 
     public void setToolbar(boolean backButton) {
         try {
@@ -89,6 +119,48 @@ public class ActivityFeatures extends AppCompatActivity implements TimePickerDia
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setNavigationbarColor(int color) {
+        if (ThemeStore.coloredNavigationBar(this)) {
+            ATH.setNavigationbarColor(this, color);
+        } else {
+            ATH.setNavigationbarColor(this, Color.BLACK);
+        }
+    }
+
+    public void setNavigationbarColorAuto() {
+        setNavigationbarColor(ThemeStore.navigationBarColor(this));
+    }
+
+    public void setStatusbarColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            final View statusBar = /*getWindow().getDecorView().getRootView().findViewById(R.id.status_bar)*/ null;
+            if (statusBar != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    statusBar.setBackgroundColor(ColorUtil.darkenColor(color));
+                    setLightStatusbarAuto(color);
+                } else {
+                    statusBar.setBackgroundColor(color);
+                }
+            } else if (Build.VERSION.SDK_INT >= 21) {
+                getWindow().setStatusBarColor(ColorUtil.darkenColor(color));
+                setLightStatusbarAuto(color);
+            }
+        }
+    }
+
+    public void setStatusbarColorAuto() {
+        // we don't want to use statusbar color because we are doing the color darkening on our own to support KitKat
+        setStatusbarColor(ThemeStore.primaryColor(this));
+    }
+
+    public void setLightStatusbar(boolean enabled) {
+        ATH.setLightStatusbar(this, enabled);
+    }
+
+    public void setLightStatusbarAuto(int bgColor) {
+        setLightStatusbar(ColorUtil.isColorLight(bgColor));
     }
 
 

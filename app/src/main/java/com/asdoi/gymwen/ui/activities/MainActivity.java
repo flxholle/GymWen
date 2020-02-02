@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +45,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.kabouzeid.appthemehelper.ThemeStore;
+import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,8 +101,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         viewPager.setAdapter(sectionsPagerAdapter);
 
         TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
-        tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
         tabs.setupWithViewPager(viewPager);
 
         BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
@@ -114,8 +115,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
 
         ApplicationFeatures.sendNotification();
-
-        findViewById(R.id.main_fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
 
         initSpinner();
 
@@ -183,6 +182,18 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
     }
 
+    public void setupColors() {
+        findViewById(R.id.main_profile_spinner).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
+        if (Build.VERSION.SDK_INT >= 21)
+            findViewById(R.id.main_fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
+        int accentColor = ThemeStore.accentColor(this);
+        NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
+        NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
+    }
+
     @Override
     public void onPause() {
         saveDocs();
@@ -192,7 +203,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private void initSpinner() {
         //Set Profiles
         Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
-        parentSpinner.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
 
         if (ProfileManagement.isMoreThanOneProfile()) {
             parentSpinner.setVisibility(View.VISIBLE);

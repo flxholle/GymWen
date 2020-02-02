@@ -29,14 +29,13 @@ public class ChoiceActivity extends ActivityFeatures {
 
     private FloatingActionButton fab;
 
-//    public static ChoiceActivity newInstance(String name){}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice);
 
-        setToolbar(false);
+
 
         fab = findViewById(R.id.choice_fab);
         fab.setEnabled(false);
@@ -52,6 +51,10 @@ public class ChoiceActivity extends ActivityFeatures {
         }
 
         setFragment(1);
+    }
+
+    public void setupColors() {
+        setToolbar(false);
     }
 
     public void setCourses(String value) {
