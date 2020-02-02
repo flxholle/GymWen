@@ -18,7 +18,6 @@ public class ProfileActivity extends ActivityFeatures {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_profile);
-        setToolbar(true);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
@@ -32,6 +31,10 @@ public class ProfileActivity extends ActivityFeatures {
                 finish();
             }
         });
+    }
+
+    public void setupColors() {
+        setToolbar(true);
     }
 
     @Override

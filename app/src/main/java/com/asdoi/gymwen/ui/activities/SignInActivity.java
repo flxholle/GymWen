@@ -30,7 +30,6 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        setToolbar(false);
         signInButton = findViewById(R.id.signin_login);
         signInButton.setOnClickListener(this);
         signInButton.setEnabled(true);
@@ -42,6 +41,10 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
             startActivity(intent);
             finish();
         }
+    }
+
+    public void setupColors() {
+        setToolbar(false);
     }
 
     @Override

@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 
@@ -61,14 +60,14 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_website);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        setToolbar(true);
 
         // Preload custom tabs service for improved performance
         // This is optional but recommended
 //        getApplication().registerActivityLifecycleCallbacks(new CustomTabsActivityLifecycleCallbacks());
+    }
+
+    public void setupColors() {
+        setToolbar(true);
     }
 
     @Override
@@ -101,7 +100,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 
         try {

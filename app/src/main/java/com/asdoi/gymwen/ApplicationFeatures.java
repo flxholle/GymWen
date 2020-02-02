@@ -49,6 +49,7 @@ import com.asdoi.gymwen.ui.activities.SignInActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
 import com.asdoi.gymwen.widgets.VertretungsplanWidget;
+import com.kabouzeid.appthemehelper.ThemeStore;
 
 import org.acra.ACRA;
 import org.acra.annotation.AcraCore;
@@ -95,6 +96,15 @@ public class ApplicationFeatures extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // default theme
+        if (!ThemeStore.isConfigured(this, 1)) {
+            ThemeStore.editTheme(this)
+                    .primaryColorRes(R.color.colorPrimary)
+                    .accentColorRes(R.color.colorAccent)
+                    .commit();
+        }
+
         mContext = this;
         ACRA.init(this);
         initRosetta();
