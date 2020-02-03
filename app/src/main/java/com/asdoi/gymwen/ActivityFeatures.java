@@ -87,12 +87,12 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     public void onStart() {
         super.onStart();
         setupColors();
-        setNavigationbarColorAuto();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(PreferenceUtil.getInstance().getGeneralTheme());
+        setStatusbarColorAuto();
         super.onCreate(savedInstanceState);
         MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
     }
@@ -101,7 +101,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     //Colors
 
     /**
-     * @author Karim Abou Zeid (kabouzeid)
+     * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
      */
 
     public abstract void setupColors();
@@ -130,7 +130,8 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     }
 
     public void setNavigationbarColorAuto() {
-        setNavigationbarColor(ThemeStore.navigationBarColor(this));
+//        setNavigationbarColor(ThemeStore.navigationBarColor(this));
+        setNavigationbarColor(ApplicationFeatures.getPrimaryColor(this));
     }
 
     public void setStatusbarColor(int color) {
@@ -152,7 +153,8 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     public void setStatusbarColorAuto() {
         // we don't want to use statusbar color because we are doing the color darkening on our own to support KitKat
-        setStatusbarColor(ThemeStore.primaryColor(this));
+//        setStatusbarColor(ThemeStore.primaryColor(this));
+        setStatusbarColor(ApplicationFeatures.getPrimaryColor(this));
     }
 
     public void setLightStatusbar(boolean enabled) {
