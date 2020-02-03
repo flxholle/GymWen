@@ -53,7 +53,7 @@ public final class PreferenceUtil {
 
     @StyleRes
     public int getGeneralTheme() {
-        return getThemeResFromPrefValue(mPreferences.getString(GENERAL_THEME, "black"));
+        return getThemeResFromPrefValue(mPreferences.getString(GENERAL_THEME, "dark"));
     }
 
     public void setGeneralTheme(String theme) {
