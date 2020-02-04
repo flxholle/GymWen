@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
@@ -518,9 +519,15 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     }
 
     private void loadFragment(final int pageCode) {
-        f = new WebsiteActivityFragment(con, pageCode);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.website_host, f).commit();
+        try {
+            f = new WebsiteActivityFragment(con, pageCode);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.website_host, f).commit();
+        } catch (Exception e) {
+            Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
     }
 
     private void overwriteContent(String[][] c) {

@@ -292,9 +292,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             if (ApplicationFeatures.isNetworkAvailable()) {
                 new Thread(() -> {
                     ApplicationFeatures.downloadLehrerDoc();
-                    getActivity().runOnUiThread(() -> {
-                        teacherSearch(teacherQuery);
-                    });
+                    try {
+                        getActivity().runOnUiThread(() -> {
+                            teacherSearch(teacherQuery);
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }).start();
             } else {
                 teacherSearch(teacherQuery);

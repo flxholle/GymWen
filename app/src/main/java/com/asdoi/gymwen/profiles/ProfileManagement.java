@@ -47,6 +47,7 @@ public class ProfileManagement {
                 e.printStackTrace();
             }
         }
+        ApplicationFeatures.coursesCheck();
     }
 
     public static void save(boolean apply) {
