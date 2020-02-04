@@ -188,6 +188,7 @@
     <!-- Website -->
     <string name="action_open_in_browser">Im Browser öffnen</string>
     <string name="share_link">Link teilen mit\u2026</string>
+    <string name="error">Es ist ein Fehler aufgetreten</string>
 
     <!-- Notification-->
     <string name="notification_channel_title">Vertretungsplan</string>

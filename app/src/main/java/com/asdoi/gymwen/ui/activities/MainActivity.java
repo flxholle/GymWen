@@ -222,7 +222,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         finish();
                     } else {
                         ApplicationFeatures.initProfile(position, true);
-                        onNavigationItemSelected(refreshFragment);
+                        try {
+                            onNavigationItemSelected(refreshFragment);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
