@@ -3,6 +3,7 @@ package com.asdoi.gymwen.ui.activities;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.asdoi.gymwen.ActivityFeatures;
@@ -18,7 +19,6 @@ public class ProfileActivity extends ActivityFeatures {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_profile);
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
         fab.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +35,15 @@ public class ProfileActivity extends ActivityFeatures {
 
     public void setupColors() {
         setToolbar(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

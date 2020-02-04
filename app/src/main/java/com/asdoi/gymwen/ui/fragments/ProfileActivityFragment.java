@@ -18,6 +18,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
@@ -89,20 +91,22 @@ public class ProfileActivityFragment extends Fragment {
     }
 
     public void openAddDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(getString(R.string.profiles_add));
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
+        builder.title(getString(R.string.profiles_add));
 
         // Set up the input
         final EditText input = new EditText(getContext());
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setHint(getString(R.string.name));
-        builder.setView(input);
+        input.setHighlightColor(ApplicationFeatures.getAccentColor(getContext()));
+//        input.setColor
+        builder.customView(input, true);
 
         // Set up the buttons
-        builder.setPositiveButton(getString(R.string.add), new DialogInterface.OnClickListener() {
+        builder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(MaterialDialog dialog, DialogAction which) {
                 Intent mIntent = new Intent(getActivity(), ChoiceActivity.class);
                 Bundle extras = new Bundle();
                 extras.putBoolean("parents", true);
@@ -117,14 +121,12 @@ public class ProfileActivityFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
-
-        builder.show();
+        builder.positiveText(R.string.add);
+        builder.negativeText(R.string.cancel);
+        builder.negativeColor(ApplicationFeatures.getAccentColor(getContext()));
+        builder.positiveColor(ApplicationFeatures.getAccentColor(getContext()));
+        builder.build().show();
     }
 
     public void openEditDialog(int position) {
