@@ -1,9 +1,7 @@
 package com.asdoi.gymwen.ui.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -20,16 +18,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.preference.PreferenceManager;
 
-import com.afollestad.materialdialogs.color.ColorChooserDialog;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -45,7 +41,7 @@ import butterknife.ButterKnife;
  * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
  */
 @SuppressWarnings("FieldCanBeLocal")
-public class AboutActivity extends ActivityFeatures implements View.OnClickListener, ColorChooserDialog.ColorCallback {
+public class AboutActivity extends ActivityFeatures implements View.OnClickListener {
 
     private static String GITLAB = "https://gitlab.com/asdoi/GymWen/";
 
@@ -82,12 +78,6 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     @BindView(R.id.report_bugs)
     LinearLayout reportBugs;
 
-    @BindView(R.id.color_accent)
-    LinearLayout color_accent;
-
-    @BindView(R.id.color_primary)
-    LinearLayout color_primary;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,13 +113,6 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         super.onStart();
         ButterKnife.bind(this);
         setUpViews();
-        if (ApplicationFeatures.isBetaEnabled()) {
-            color_accent.setVisibility(View.VISIBLE);
-            color_primary.setVisibility(View.VISIBLE);
-        } else {
-            color_accent.setVisibility(View.GONE);
-            color_primary.setVisibility(View.GONE);
-        }
     }
 
     private void setUpViews() {
@@ -154,8 +137,6 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         image_sources.setOnClickListener(this);
         libs.setOnClickListener(this);
         colorush.setOnClickListener(this);
-        color_accent.setOnClickListener(this);
-        color_primary.setOnClickListener(this);
     }
 
     @Override
@@ -217,21 +198,20 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                 e.printStackTrace();
             }
 
-            new AlertDialog.Builder(getContext())
-                    .setTitle(getString(R.string.menu_privacy))
-                    .setMessage(datenschutz)
+            new MaterialDialog.Builder(getContext())
+                    .title(getString(R.string.menu_privacy))
+                    .content(datenschutz)
 
                     // Specifying a listener allows you to take an action before dismissing the dialog.
                     // The dialog is automatically dismissed when a dialog button is clicked.
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Continue with delete operation
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            dialog.dismiss();
                         }
                     })
-
-                    // A null listener allows the button to dismiss the dialog and take no further action.
-                    .setNegativeButton(android.R.string.no, null)
-                    .setIcon(drawable)
+                    .positiveText(R.string.ok)
+                    .icon(drawable)
                     .show();
         } else if (v == image_sources) {
             String sources = getString(R.string.credits);
@@ -259,17 +239,18 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             message.setText(s);
             message.setMovementMethod(LinkMovementMethod.getInstance());
 
-            new AlertDialog.Builder(getContext())
-                    .setTitle(getString(R.string.image_sources))
-                    .setCancelable(true)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Continue with delete operation
+            new MaterialDialog.Builder(getContext())
+                    .title(getString(R.string.image_sources))
+                    .cancelable(true)
+                    .positiveText(R.string.ok)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            dialog.dismiss();
                         }
                     })
-                    .setIcon(drawable)
-                    .setView(message)
-                    .create()
+                    .icon(drawable)
+                    .customView(message, true)
                     .show();
 
         } else if (v == libs) {
@@ -286,44 +267,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .intent(this);
 
             startActivity(intent);
-        } else if (v == color_accent) {
-            new ColorChooserDialog.Builder(this, R.string.color_accent)
-                    .accentMode(false)
-                    .allowUserColorInput(true)
-                    .allowUserColorInputAlpha(false)
-                    .show(this);
-        } else if (v == color_primary) {
-            new ColorChooserDialog.Builder(this, R.string.color_primary)
-                    .accentMode(false)
-                    .allowUserColorInput(true)
-                    .allowUserColorInputAlpha(false)
-                    .show(this);
         }
-    }
-
-    @Override
-    public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
-        Context context = getContext();
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        switch (dialog.getTitle()) {
-            case R.string.color_accent:
-                editor.putInt("colorAccent", selectedColor);
-                break;
-            case R.string.color_primary:
-                editor.putInt("colorPrimary", selectedColor);
-                break;
-        }
-        editor.apply();
-
-       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            new DynamicShortcutManager(this).updateDynamicShortcuts();
-        }*/
-        recreate();
-    }
-
-    @Override
-    public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
     }
 
     private void showLicenseDialog() {

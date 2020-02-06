@@ -136,7 +136,7 @@
 
 
     <string name="impressum_AboutLibs_Title">Open source libraries</string>
-    <string name="privacy"><![CDATA[<h1> Privacy Policy </h1><br>The official Gymnasium Wendelstein App (hereinafter referred to as GymWen App) does not collect any data about its users.
+    <string name="privacy"><![CDATA[The official Gymnasium Wendelstein App (hereinafter referred to as GymWen App) does not collect any data about its users.
     <br>That neither personal data nor device-specific data are collected or passed on to third parties.
     <br>The data you enter will only be saved locally on your device and accessed from there.<br>
     In addition, only databases already used by the school are used.<br>

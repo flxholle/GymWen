@@ -127,7 +127,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         checkUpdates(Display.DIALOG, false);
         showChangelogCK(true);
 
-        if (!ApplicationFeatures.isAlarmOn()) {
+        if (!ApplicationFeatures.isAlarmOn(this)) {
             ApplicationFeatures.cancelAlarm(getContext(), AlarmReceiver.class);
         }
 

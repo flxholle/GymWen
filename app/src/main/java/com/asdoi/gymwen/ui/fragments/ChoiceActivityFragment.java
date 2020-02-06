@@ -1,7 +1,6 @@
 package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,9 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
@@ -339,34 +339,36 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     public void openAddDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(context.getString(R.string.profiles_add));
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
+        builder.title(context.getString(R.string.profiles_add));
 
         // Set up the input
         final EditText input = new EditText(context);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
+        builder.customView(input, true);
 
         // Set up the buttons
-        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (input.getText().toString().trim().isEmpty())
-                    mainActivity.setName(context.getString(R.string.profile_empty_name));
-                else
-                    mainActivity.setName(input.getText().toString());
-                addSpinner();
-            }
-        });
-        builder.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mainActivity.setName(context.getString(R.string.profile_empty_name));
-                dialog.cancel();
-                addSpinner();
-            }
-        });
+        builder.positiveText(context.getString(R.string.ok))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        if (input.getText().toString().trim().isEmpty())
+                            mainActivity.setName(context.getString(R.string.profile_empty_name));
+                        else
+                            mainActivity.setName(input.getText().toString());
+                        addSpinner();
+                    }
+                });
+        builder.negativeText(context.getString(R.string.cancel))
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        mainActivity.setName(context.getString(R.string.profile_empty_name));
+                        dialog.cancel();
+                        addSpinner();
+                    }
+                });
 
         builder.show();
     }

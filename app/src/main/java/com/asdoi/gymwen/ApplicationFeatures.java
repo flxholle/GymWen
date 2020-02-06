@@ -29,6 +29,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.StyleRes;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
@@ -330,10 +332,13 @@ public class ApplicationFeatures extends MultiDexApplication {
         return getBooleanSettings("old_vertretung", false);
     }
 
-    public static boolean getBooleanSettings(String key, boolean defaultValue) {
-        Context context = getContext();
+    public static boolean getBooleanSettings(String key, boolean defaultValue, Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getBoolean(key, defaultValue);
+    }
+
+    public static boolean getBooleanSettings(String key, boolean defaultValue) {
+        return getBooleanSettings(key, defaultValue, getContext());
     }
 
     public static boolean isHour() {
@@ -344,8 +349,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         return getBooleanSettings("show_sections", true);
     }
 
-    public static boolean isAlarmOn() {
-        return getBooleanSettings("alarm", false);
+    public static boolean isAlarmOn(Context context) {
+        return getBooleanSettings("alarm", false, context);
     }
 
     public static boolean showWeekDate() {
@@ -388,6 +393,31 @@ public class ApplicationFeatures extends MultiDexApplication {
         Context context = getContext();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getInt(key, defaultValue);
+    }
+
+    @StyleRes
+    public static int getGeneralTheme() {
+        Context context = getContext();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return getThemeResFromPrefValue(sharedPref.getString("theme", "switch"));
+    }
+
+    @StyleRes
+    public static int getThemeResFromPrefValue(String themePrefValue) {
+        switch (themePrefValue) {
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                return R.style.AppTheme_Dark;
+            case "black":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                return R.style.AppTheme_Black;
+            case "switch":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                return R.style.AppTheme_Dark;
+            case "light":
+            default:
+                return R.style.AppTheme_Light;
+        }
     }
 
 
@@ -747,7 +777,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         // cancel already scheduled reminders
         cancelAlarm(context, cls);
 
-        if (!isAlarmOn()) {
+        if (!isAlarmOn(getContext())) {
             return;
         }
 
