@@ -260,4 +260,9 @@
     <string name="intro_three_title">teacherlist</string>
     <string name="intro_two_title">sit-in</string>
     <string name="error">An error occured</string>
+    <string name="set_choose_theme">Choose theme</string>
+    <string name="set_theme_auto">Automatic</string>
+    <string name="set_theme_black">Black</string>
+    <string name="set_theme_dark">Dark</string>
+    <string name="set_theme_light">Light</string>
 </resources>
