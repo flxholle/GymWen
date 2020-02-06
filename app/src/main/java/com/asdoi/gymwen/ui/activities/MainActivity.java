@@ -51,6 +51,8 @@ import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import am.appwise.components.ni.NoInternetDialog;
+
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -70,6 +72,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static final int refreshFragment = 104;
 
     public SectionsPagerAdapter sectionsPagerAdapter;
+
+    private NoInternetDialog noInternetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +123,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         toggle.syncState();
 
         lastLoadedInTabs = lastLoadedTabsSpecific;
+
+        NoInternetDialog.Builder builder = new NoInternetDialog.Builder(this);
+        builder.setButtonColor(ApplicationFeatures.getAccentColor(this)); // Set custom color for dialog buttons
+        builder.setCancelable(true); // Set cancelable status for dialog
+        noInternetDialog = builder.build();
 
         checkUpdates(Display.DIALOG, false);
         showChangelogCK(true);
@@ -176,6 +185,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        noInternetDialog.onDestroy();
     }
 
     public void setupColors() {
