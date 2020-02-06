@@ -1,7 +1,6 @@
 package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -15,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -122,6 +120,13 @@ public class ProfileActivityFragment extends Fragment {
             }
         });
 
+        builder.onNegative(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(MaterialDialog dialog, DialogAction which) {
+                dialog.dismiss();
+            }
+        });
+
         builder.positiveText(R.string.add);
         builder.negativeText(R.string.cancel);
         builder.negativeColor(ApplicationFeatures.getAccentColor(getContext()));
@@ -130,8 +135,8 @@ public class ProfileActivityFragment extends Fragment {
     }
 
     public void openEditDialog(int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(getString(R.string.profiles_edit));
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
+        builder.title(getString(R.string.profiles_edit));
 
         // Set up the input
         LinearLayout base = new LinearLayout(getContext());
@@ -159,12 +164,14 @@ public class ProfileActivityFragment extends Fragment {
         note.setLayoutParams(params);
         base.addView(note);
 
-        builder.setView(base);
+        builder.customView(base, true);
 
         // Set up the buttons
-        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+        builder.positiveText(getString(R.string.ok));
+        builder.negativeText(getString(R.string.cancel));
+        builder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(MaterialDialog dialog, DialogAction which) {
                 Profile profile = ProfileManagement.getProfile(position);
                 String nameText = name.getText().toString();
                 String coursesText = course.getText().toString();
@@ -173,16 +180,19 @@ public class ProfileActivityFragment extends Fragment {
             }
         });
 
-        builder.setNegativeButton(getString(R.string.cancel), (DialogInterface d, int w) -> {
-
+        builder.onNegative(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(MaterialDialog dialog, DialogAction which) {
+                dialog.dismiss();
+            }
         });
 
         builder.show();
     }
 
     public void openDeleteDialog(int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(getString(R.string.profiles_delete_submit_heading));
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
+        builder.title(getString(R.string.profiles_delete_submit_heading));
 
         LinearLayout base = new LinearLayout(getContext());
         base.setOrientation(LinearLayout.VERTICAL);
@@ -196,19 +206,25 @@ public class ProfileActivityFragment extends Fragment {
 
         base.addView(note);
 
-        builder.setView(base);
+        builder.customView(base, true);
 
-        builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+        builder.positiveText(getString(R.string.yes));
+        builder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(MaterialDialog dialog, DialogAction which) {
                 ProfileManagement.removeProfile(position);
                 adapter.notifyDataSetChanged();
             }
         });
 
-        builder.setNegativeButton(getString(R.string.no), (DialogInterface d, int w) -> {
-
+        builder.onNegative(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(MaterialDialog dialog, DialogAction which) {
+                dialog.dismiss();
+            }
         });
+
+        builder.negativeText(getString(R.string.no));
 
         builder.show();
     }

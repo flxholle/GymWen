@@ -1,13 +1,18 @@
 package com.asdoi.gymwen.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -15,7 +20,7 @@ import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 
-public class SettingsActivity extends ActivityFeatures {
+public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,7 @@ public class SettingsActivity extends ActivityFeatures {
 
     public void setupColors() {
         setToolbar(true);
+
     }
 
     @Override
@@ -86,13 +92,50 @@ public class SettingsActivity extends ActivityFeatures {
 
             myPref = findPreference("alarm");
             myPref.setOnPreferenceClickListener((Preference p) -> {
-                if (ApplicationFeatures.isAlarmOn()) {
-                    createTimePicker((ActivityFeatures) getActivity());
-                } else {
-                    ApplicationFeatures.setAlarmTime(-1, -1, -1);
-                }
+                ApplicationFeatures.setAlarmTime(-1, -1, -1);
+                createTimePicker((ActivityFeatures) getActivity());
                 return true;
             });
+
+
+            ListPreference mp = findPreference("theme");
+            mp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    mp.setValue(newValue + "");
+                    getActivity().recreate();
+                    return false;
+                }
+            });
+
+            if (ApplicationFeatures.isBetaEnabled()) {
+                myPref = findPreference("primaryColor");
+                myPref.setVisible(true);
+                myPref.setOnPreferenceClickListener((Preference p) -> {
+                    new ColorChooserDialog.Builder(getContext(), R.string.color_primary)
+                            .accentMode(false)
+                            .allowUserColorInput(true)
+                            .allowUserColorInputAlpha(false)
+                            .show(getActivity());
+                    return true;
+                });
+
+                myPref = findPreference("accentColor");
+                myPref.setVisible(true);
+                myPref.setOnPreferenceClickListener((Preference p) -> {
+                    new ColorChooserDialog.Builder(getContext(), R.string.color_accent)
+                            .accentMode(false)
+                            .allowUserColorInput(true)
+                            .allowUserColorInputAlpha(false)
+                            .show(getActivity());
+                    return true;
+                });
+            } else {
+                myPref = findPreference("primaryColor");
+                myPref.setVisible(false);
+                myPref = findPreference("accentColor");
+                myPref.setVisible(false);
+            }
         }
 
         @Override
@@ -129,5 +172,31 @@ public class SettingsActivity extends ActivityFeatures {
             boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
             findPreference("show_border_specific").setEnabled(showNotif);
         }
+    }
+
+
+    @Override
+    public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
+        Context context = getContext();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        switch (dialog.getTitle()) {
+            case R.string.color_accent:
+                editor.putInt("colorAccent", selectedColor);
+                break;
+            case R.string.color_primary:
+                editor.putInt("colorPrimary", selectedColor);
+                break;
+        }
+        editor.apply();
+
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            new DynamicShortcutManager(this).updateDynamicShortcuts();
+        }*/
+        recreate();
+    }
+
+    @Override
+    public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
     }
 }

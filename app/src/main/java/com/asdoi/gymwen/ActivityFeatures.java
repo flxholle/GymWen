@@ -1,7 +1,6 @@
 package com.asdoi.gymwen;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -42,11 +41,12 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.activities.MainActivity;
-import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
@@ -91,7 +91,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(PreferenceUtil.getInstance().getGeneralTheme());
+        setTheme(ApplicationFeatures.getGeneralTheme());
         setStatusbarColorAuto();
         super.onCreate(savedInstanceState);
         MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
@@ -423,26 +423,29 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         @Override
         public void onPermissionsDenied(int requestCode, ArrayList<String> deniedPermissionList) {
             // setup the alert builder
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle(getContext().getString(R.string.permission_required));
-            builder.setMessage(getContext().getString(R.string.permission_required_description));
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
+            builder.title(getContext().getString(R.string.permission_required));
+            builder.content(getContext().getString(R.string.permission_required_description));
 
             // add the buttons
-            builder.setPositiveButton(getContext().getString(R.string.permission_ok_button), new DialogInterface.OnClickListener() {
+            builder.onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(MaterialDialog dialog, DialogAction which) {
                     openAppPermissionSettings();
                 }
             });
-            builder.setNegativeButton(getContext().getString(R.string.permission_cancel_button), new DialogInterface.OnClickListener() {
+            builder.negativeText(getContext().getString(R.string.permission_ok_button));
+
+            builder.negativeText(getContext().getString(R.string.permission_cancel_button));
+            builder.onNegative(new MaterialDialog.SingleButtonCallback() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
+                public void onClick(MaterialDialog dialog, DialogAction which) {
+                    dialog.dismiss();
                 }
             });
 
             // create and show the alert dialog
-            AlertDialog dialog = builder.create();
+            MaterialDialog dialog = builder.build();
             dialog.show();
         }
     }

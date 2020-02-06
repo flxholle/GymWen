@@ -64,6 +64,11 @@
     <string name="set_show_weekdates">Wochentage immer anzeigen</string>
     <string name="set_parents">Elternmodus</string>
     <string name="set_two_notifications">Tage einzeln als Benachrichtigung</string>
+    <string name="set_choose_theme">Theme auswählen</string>
+    <string name="set_theme_light">Hell</string>
+    <string name="set_theme_dark">Dunkel</string>
+    <string name="set_theme_black">Schwarz</string>
+
 
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
@@ -172,7 +177,7 @@
 
     <!-- Impressum -->
     <string name="impressum_AboutLibs_Title">Open-Source Bibliotheken</string>
-    <string name="privacy"><![CDATA[<h1>Datenschutzerklärung</h1><br>Die offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.<br>
+    <string name="privacy"><![CDATA[Die offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.<br>
         D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.<br>
         Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.<br>
         Außerdem werden ausschließlich schon bereits genutzte Datenbanken der Schule verwendet.

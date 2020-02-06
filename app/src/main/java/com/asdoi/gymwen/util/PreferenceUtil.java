@@ -7,10 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
-import androidx.annotation.StyleRes;
-
 import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
 
 public final class PreferenceUtil {
     public static final String GENERAL_THEME = "general_theme";
@@ -51,29 +48,12 @@ public final class PreferenceUtil {
         }
     }
 
-    @StyleRes
-    public int getGeneralTheme() {
-        return getThemeResFromPrefValue(mPreferences.getString(GENERAL_THEME, "dark"));
-    }
-
     public void setGeneralTheme(String theme) {
         final SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(GENERAL_THEME, theme);
         editor.apply();
     }
 
-    @StyleRes
-    public static int getThemeResFromPrefValue(String themePrefValue) {
-        switch (themePrefValue) {
-            case "dark":
-                return R.style.AppTheme_Dark;
-            case "black":
-                return R.style.AppTheme_Black;
-            case "light":
-            default:
-                return R.style.AppTheme_Light;
-        }
-    }
 
     public void setLastChangeLogVersion(int version) {
         mPreferences.edit().putInt(LAST_CHANGELOG_VERSION, version).apply();

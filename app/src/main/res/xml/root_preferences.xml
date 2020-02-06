@@ -35,6 +35,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/set_design_title">
+        <ListPreference
+            android:entries="@array/theme_array"
+            android:entryValues="@array/theme_array_values"
+            android:key="theme"
+            android:title="@string/set_choose_theme" />
+        <Preference
+            android:key="accentColor"
+            android:title="@string/color_accent" />
+        <Preference
+            android:key="primaryColor"
+            android:title="@string/color_primary" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="show_borders"
@@ -67,8 +78,7 @@
             android:defaultValue="false"
             android:key="two_notifs"
             android:title="@string/set_two_notifications" />
-        <SwitchPreference
-            android:defaultValue="false"
+        <Preference
             android:key="alarm"
             android:title="@string/set_notification_alarm" />
     </PreferenceCategory>
