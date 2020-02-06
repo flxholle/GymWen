@@ -263,7 +263,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .withLicenseShown(true)
                     .withAboutDescription(getString(R.string.subtitle))
                     .withAboutAppName(getString(R.string.app_name))
-                    .withActivityTheme(R.style.AboutLibrariesTheme)
+                    .withActivityTheme(R.style.AboutLibsTheme)
                     .intent(this);
 
             startActivity(intent);

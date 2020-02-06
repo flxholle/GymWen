@@ -53,6 +53,10 @@
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
-    // define a custom style
+    <style name="AboutLibsTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
 
 </resources>
