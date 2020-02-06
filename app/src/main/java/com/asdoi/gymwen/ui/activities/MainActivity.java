@@ -76,8 +76,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
 
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setToolbar(false);
@@ -87,8 +85,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-//        supportActionBar?drawer.setDisplayHomeAsUpEnabled(true);
-//        supportActionBar?.setHomeButtonEnabled(true);
         drawer.addDrawerListener(toggle);
 
         navigationView.setNavigationItemSelectedListener(this);

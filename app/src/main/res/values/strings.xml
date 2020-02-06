@@ -68,6 +68,7 @@
     <string name="set_theme_light">Hell</string>
     <string name="set_theme_dark">Dunkel</string>
     <string name="set_theme_black">Schwarz</string>
+    <string name="set_theme_auto">Automatisch</string>
 
 
     <!-- Vertretungsplan -->
