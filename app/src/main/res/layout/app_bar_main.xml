@@ -18,14 +18,22 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="?attr/popupMenuStyle" />
 
-        <Spinner
-            android:id="@+id/main_profile_spinner"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/main_spinner_relative"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:popupTheme="?attr/popupMenuStyle"
-            android:visibility="gone"
-            android:enabled="false"
-            android:popupBackground="?android:attr/windowBackground" />
+            android:background="#f00">
+
+            <Spinner
+                android:id="@+id/main_profile_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:popupTheme="?attr/popupMenuStyle"
+                android:visibility="gone"
+                android:enabled="false"
+                android:popupBackground="?android:attr/windowBackground" />
+        </RelativeLayout>
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"

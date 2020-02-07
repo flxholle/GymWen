@@ -195,7 +195,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     public void setupColors() {
-        findViewById(R.id.main_profile_spinner).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        findViewById(R.id.main_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
