@@ -201,8 +201,7 @@
     <string name="menu_language">Language</string>
     <string name="set_notification_alarm">On fixed time</string>
     <string name="time_picker_title">Pick a time</string>
-    <string name="reloaded_docs">No internet connection!
-        \nRestored data from the last session.
+    <string name="reloaded_docs">Restored data from the last session.
         \nPerhaps not up to date!</string>
     <string name="menu_filtered">Filtered</string>
     <string name="menu_unfiltered">Unfiltered</string>

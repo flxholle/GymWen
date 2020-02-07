@@ -261,8 +261,7 @@
     <string name="time_picker_title">Uhrzeit auswählen</string>
 
     <!-- Reload & Save Docs-->
-    <string name="reloaded_docs">Keine Internetverbindung!
-        \nDateien vom letzten Mal wiederhergestellt.
+    <string name="reloaded_docs">Dateien vom letzten Mal wiederhergestellt.
         \nEventuell nicht aktuell!</string>
 
     <!-- Profiles -->

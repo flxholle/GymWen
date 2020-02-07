@@ -28,7 +28,7 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.pd.chocobar.ChocoBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +78,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 break;
             case 5:
                 root = inflater.inflate(R.layout.fragment_fifthchoice, container, false);
-                root.findViewById(R.id.choice_button_add_more_courses).setBackgroundColor(ApplicationFeatures.getPrimaryColor(getContext()));
+                root.findViewById(R.id.choice_button_add_more_courses).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
         }
         return root;
     }
@@ -210,9 +210,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
     private void finishOberstufe() {
         if (checkIfEmpty()) {
-            Snackbar snackbar = Snackbar
-                    .make(root, getString(R.string.oberstufe_empty), Snackbar.LENGTH_LONG);
-            snackbar.show();
+            ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.oberstufe_empty)).setDuration(ChocoBar.LENGTH_LONG).build().show();
         } else {
             String oberstufe = "";
             for (int i = 0; i < quantitiyCourses; i++) {
@@ -490,9 +488,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     mainActivity.setCourses("" + s);
                     nextStep = 2;
                 } else {
-                    Snackbar snackbar = Snackbar
-                            .make(root, getString(R.string.please_insert_digit), Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.please_insert_digit)).setDuration(ChocoBar.LENGTH_LONG).build().show();
                 }
             }
         } else if (step == 2) {
@@ -510,9 +506,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     mainActivity.setCourses(mainActivity.getCourses() + ((EditText) root.findViewById(R.id.choice_more_letters)).getText().toString().replaceAll(" ", ""));
                     nextStep = 10;
                 } else {
-                    Snackbar snackbar = Snackbar
-                            .make(root, getString(R.string.please_insert_letter), Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.please_insert_letter)).setDuration(ChocoBar.LENGTH_LONG).build().show();
                 }
             }
 
@@ -531,9 +525,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     mainActivity.setCourseFirstDigit("" + s);
                     nextStep = 4;
                 } else {
-                    Snackbar snackbar = Snackbar
-                            .make(root, getString(R.string.please_insert_digit), Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.please_insert_digit)).setDuration(ChocoBar.LENGTH_LONG).build().show();
                 }
             }
         } else if (step == 4) {
@@ -551,9 +543,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     mainActivity.setCourseMainDigit("" + s);
                     nextStep = 5;
                 } else {
-                    Snackbar snackbar = Snackbar
-                            .make(root, getString(R.string.please_insert_digit), Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.please_insert_digit)).setDuration(ChocoBar.LENGTH_LONG).build().show();
                 }
             }
         } else if (step == 5) {
