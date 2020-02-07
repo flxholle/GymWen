@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 
+//@author = kabuzeid from Vinylmusicplayer
 public final class PreferenceUtil {
     public static final String GENERAL_THEME = "general_theme";
 

@@ -92,7 +92,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
 
             myPref = findPreference("alarm");
             myPref.setOnPreferenceClickListener((Preference p) -> {
-                ApplicationFeatures.setAlarmTime(-1, -1, -1);
+                ApplicationFeatures.setAlarmTime(0);
                 createTimePicker((ActivityFeatures) getActivity());
                 return true;
             });
