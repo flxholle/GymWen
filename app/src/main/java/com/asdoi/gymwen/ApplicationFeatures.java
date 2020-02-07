@@ -353,6 +353,12 @@ public class ApplicationFeatures extends MultiDexApplication {
         return getBooleanSettings("alarm", false, context);
     }
 
+    public static void setAlarm(Context context, boolean value) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("alarm", value);
+        editor.commit();
+    }
+
     public static boolean showWeekDate() {
         return getBooleanSettings("week_dates", false);
     }
@@ -376,12 +382,17 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     public static void setAlarmTime(int... times) {
         if (times.length != 3) {
-            System.out.println("wrong parameters");
+            if (times.length > 0 && times[0] == 0) {
+                setAlarm(getContext(), false);
+            } else {
+                System.out.println("wrong parameters");
+            }
             return;
         }
 
         SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = sharedPref.edit();
+        setAlarm(getContext(), true);
         editor.putInt("Alarm_hour", times[0]);
         editor.putInt("Alarm_minute", times[1]);
         editor.putInt("Alarm_second", times[2]);
