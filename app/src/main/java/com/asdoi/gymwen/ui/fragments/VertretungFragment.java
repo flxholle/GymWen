@@ -33,7 +33,7 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.google.android.material.snackbar.Snackbar;
+import com.pd.chocobar.ChocoBar;
 
 import java.util.ArrayList;
 
@@ -186,10 +186,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         if (VertretungsPlanFeatures.getTodayTitle().equals("Keine Internetverbindung!")) {
             //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
-            Snackbar snackbar = Snackbar
-                    .make(root.findViewById(R.id.vertretung_frame), getString(R.string.noInternet), Snackbar.LENGTH_LONG);
-            snackbar.show();
-
+            ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.noInternet)).setDuration(ChocoBar.LENGTH_LONG).orange().show();
             return;
         }
 
@@ -321,13 +318,17 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         } catch (NullPointerException e) {
             e.printStackTrace();
             if (!Lehrerliste.isDownloaded()) {
-                Snackbar snackbar = Snackbar
-                        .make(root.findViewById(R.id.vertretung_frame), getString(R.string.noInternet), Snackbar.LENGTH_LONG);
-                snackbar.show();
+                ChocoBar.builder().setActivity(getActivity())
+                        .setText(getString(R.string.noInternet))
+                        .setDuration(ChocoBar.LENGTH_LONG)
+                        .orange()
+                        .show();
             } else {
-                Snackbar snackbar = Snackbar
-                        .make(root.findViewById(R.id.vertretung_frame), getString(R.string.teacher_no_teacher_found), Snackbar.LENGTH_LONG);
-                snackbar.show();
+                ChocoBar.builder().setActivity(getActivity())
+                        .setText(getString(R.string.teacher_no_teacher_found))
+                        .setDuration(ChocoBar.LENGTH_LONG)
+                        .red()
+                        .show();
             }
         }
     }

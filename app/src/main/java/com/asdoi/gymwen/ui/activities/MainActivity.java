@@ -47,11 +47,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
+import com.pd.chocobar.ChocoBar;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import am.appwise.components.ni.NoInternetDialog;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -72,8 +71,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static final int refreshFragment = 104;
 
     public SectionsPagerAdapter sectionsPagerAdapter;
-
-    private NoInternetDialog noInternetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +121,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         lastLoadedInTabs = lastLoadedTabsSpecific;
 
-        NoInternetDialog.Builder builder = new NoInternetDialog.Builder(this);
-        builder.setButtonColor(ApplicationFeatures.getAccentColor(this)); // Set custom color for dialog buttons
-        builder.setCancelable(true); // Set cancelable status for dialog
-        noInternetDialog = builder.build();
+        if (!ApplicationFeatures.isNetworkAvailable()) {
+            ChocoBar.builder().setActivity(this)
+                    .setActionText(getString(R.string.ok))
+                    .setText(getString(R.string.noInternetConnection))
+                    .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                    .orange()
+                    .show();
+        }
 
         checkUpdates(Display.DIALOG, false);
         showChangelogCK(true);
@@ -190,7 +191,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        noInternetDialog.onDestroy();
+//        noInternetDialog.onDestroy();
     }
 
     public void setupColors() {
