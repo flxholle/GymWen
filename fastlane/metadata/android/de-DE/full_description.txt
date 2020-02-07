@@ -7,17 +7,17 @@ Diese App ist für alle Schüler und Eltern des Gymnasiums Wendelstein programmi
  - Die <b>Lehrerliste</b> durchsuchen und sofort eine <b>E-Mail</b> an den Lehrer schreiben
  - Eine auf Smartphones sehr gut lesbare Version der <b>Schulhomepage</b> aufrufen
  - Deine <b>Noten</b> und den <b>Stundenplan</b> verwalten
- - Das <b>Sekreteriat</b> ohne Probleme anrufen
+ - Das <b>Sekretariat</b> ohne Probleme anrufen
  - <a href="https://mebis.bayern.de/"><b>Mebis</b></a> nutzen
  - Essen ohne Umwege in der <a href="https://www.kitafino.de/"><b>Mensa</b></a> bestellen
  - <b>Notizen</b> anlegen
  - Und <b>Busverbindungen</b> suchen
 
 <font color="#2467d6"><b>Außerdem ist diese App auch für Eltern sehr nützlich.</font></b>
-So kann man <b>verschiedene Profile</b> für jedes Kind anlegen und bestimme Funktionen die besonders für Eltern nützlich sind benutzen, wie:
+So kann man <b>verschiedene Profile</b> für jedes Kind anlegen und bestimmte Funktionen, die besonders für Eltern nützlich sind, benutzen, wie:
 - <b>Wichtige Formulare</b> (z.B. Krankheitsmeldungen)
-- <b>Claxss</b>
-- Ohne Probleme das </b>Sekreteriat anrufen</b> (z.B. um ein Kind krankzumelden)
+- <b>ClaXss</b>
+- Ohne Probleme das </b>Sekretariat anrufen</b> (z.B. um ein Kind krankzumelden)
 - Essen für Ihr Kind in der <a href="https://www.kitafino.de/"><b>Mensa</b></a> bestellen
 - Eine <b>automatische Benachrichtigung</b> über vertretene Stunden Ihrer Kinder
 
@@ -29,5 +29,5 @@ Diese App habe ich in meiner Freizeit programmiert und falls du mich unterstütz
 
 <b><a href="https://asdoi.gitlab.io/">asdoi.gitlab.io</a></b>
 
-Hier veröffentliche ich immer meine neuesten Projekte und Dinge an denen ich gerade arbeite.
-Zum Beispiel ColoRush, ein anderes Spiel, das ich programmiert habe. Ein Link dazu befindet sich auch in der App, bzw. auf meiner Website oder du lädst es dir <a href="https://www.gitlab.com/asdoi/colorrush/blob/master/Apk/ColoRush.apk/">hier</a> herunter.
+Hier veröffentliche ich immer meine neuesten Projekte und Dinge, an denen ich gerade arbeite.
+Zum Beispiel ColoRush, ein Spiel, das ich programmiert habe. Ein Link dazu befindet sich auch in der App bzw. auf meiner Website oder du lädst es dir <a href="https://www.gitlab.com/asdoi/colorrush/blob/master/Apk/ColoRush.apk/">hier</a> herunter.

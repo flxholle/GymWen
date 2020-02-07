@@ -32,7 +32,7 @@
     <string name="menu_language">Sprache</string>
     <string name="menu_colorush" translatable="false">ColoRush</string>
     <string name="menu_profiles">Profile</string>
-    <string name="menu_claxss" translatable="false">Claxss</string>
+    <string name="menu_claxss" translatable="false">ClaXss</string>
     <string name="menu_call_office">Sekretariat anrufen</string>
     <string name="menu_public_transport">VGN</string>
     <string name="menu_forms">Formulare</string>
@@ -46,7 +46,7 @@
     <string name="title_activity_settings">Einstellungen</string>
     <string name="set_vertretung_title">Vertretungsplan</string>
     <string name="set_courses_title">Kurse/Klasse</string>
-    <string name="set_courses_summary">Einzelne Kurse mit einem # zwischen den Kursen trennen, z.B. 1ph3#1d4#1bio2</string>
+    <string name="set_courses_summary">Einzelne Kurse mit einem # zwischen den Kursen trennen, z.B. 1ph3#1d4#1bio2.</string>
     <string name="set_vertretung_signin">Anmeldedaten</string>
     <string name="set_vertretung_username">Benutzername:</string>
     <string name="set_vertretung_password">Passwort:</string>
@@ -61,10 +61,10 @@
     <string name="set_old_vertretung">Altes Design</string>
     <string name="set_design_title">Design</string>
     <string name="set_design_show_sections">Gefiltert \u0026 Gesamt einzeln anzeigen</string>
-    <string name="set_show_weekdates">Wochentage immer anzeigen</string>
+    <string name="set_show_weekdates">Wochentage immer anzeigen.</string>
     <string name="set_parents">Elternmodus</string>
     <string name="set_two_notifications">Tage einzeln als Benachrichtigung</string>
-    <string name="set_choose_theme">Theme auswählen</string>
+    <string name="set_choose_theme">Generelles Design</string>
     <string name="set_theme_light">Hell</string>
     <string name="set_theme_dark">Dunkel</string>
     <string name="set_theme_black">Schwarz</string>
@@ -74,7 +74,7 @@
     <!-- Vertretungsplan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
     <string name="nothing_all">Es entfällt nichts für den gesamten Tag.</string>
-    <string name="back_button">Erneut drücken zum Beenden</string>
+    <string name="back_button">Erneut drücken zum Beenden.</string>
     <string name="downloading">Lädt\u2026</string>
     <string name="footprint">Diese Nachricht wurde mit der GymWen App erzeugt.</string>
     <string name="noInternet">Du bist nicht mit dem Internet verbunden!</string>
@@ -102,7 +102,7 @@
     <string name="login_success">Anmeldung erfolgreich</string>
     <string name="login_sign_in">Anmelden</string>
     <string name="please_wait">Bitte warten</string>
-    <string name="proofing">Anmeldedaten werden geprüft</string>
+    <string name="proofing">Anmeldedaten werden geprüft.</string>
     <string name="username_hint">Benutzername</string>
     <string name="password_hint">Passwort</string>
     <string name="login_description">Bitte geben Sie hier die Anmeldedaten des Online-Vertretungsplans ein.</string>
@@ -125,11 +125,11 @@
     <string name="choice_title_4">Kurs der Pflichtfächer (Deutsch, Mathe, Geschichte, Sozialkunde)\n(z.B. bei 1d4, die 4)</string>
     <string name="choice_main_courses">Kurs der Pflichtfächer</string>
     <string name="choice_complete">Bitte vervollständige deine Kurswahl:</string>
-    <string name="choice_add_course">Weiteren Kurs hinzufügen</string>
-    <string name="oberstufe_empty">Bitte Kurse einfügen</string>
+    <string name="choice_add_course">Weiteren Kurs hinzufügen.</string>
+    <string name="oberstufe_empty">Bitte Kurse einfügen.</string>
     <string name="additional_course">Zusätzlicher Kurs</string>
-    <string name="please_insert_digit">Bitte eine Zahl eingeben</string>
-    <string name="please_insert_letter">Bitte einen Buchstaben eingeben</string>
+    <string name="please_insert_digit">Bitte eine Zahl eingeben.</string>
+    <string name="please_insert_letter">Bitte einen Buchstaben eingeben.</string>
     <!-- Subjects -->
     <string name="math">Mathe</string>
     <string name="german">Deutsch</string>
@@ -179,7 +179,7 @@
     <!-- Impressum -->
     <string name="impressum_AboutLibs_Title">Open-Source Bibliotheken</string>
     <string name="privacy"><![CDATA[Die offizielle Gymnasium Wendelstein App (im folgenden GymWen App genannt) sammelt keine Daten über ihre Nutzer.<br>
-        D.h. es werden weder personenenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.<br>
+        D.h. es werden weder personenbezogene Daten noch gerätspezifische Daten gesammelt oder an Dritte weitergegeben.<br>
         Ihre eingegebenen Daten werden ausschließlich lokal auf Ihrem Gerät gespeichert und von dort abgerufen.<br>
         Außerdem werden ausschließlich schon bereits genutzte Datenbanken der Schule verwendet.
         <br>Bei Absturzberichten muss jedoch beachtet werden, dass mir diverse Informationen übermittelt werden:
@@ -189,12 +189,12 @@
         <br> - Betriebssystem-Version
         <br> - Stack-Trace zu dem Absturz]]></string>
     <string name="share_app">App teilen mit\u2026</string>
-    <string name="share_app_message">Lade dir die offizielle GymWen App herunter, mit ihr wirst du automatisch über deine Vertretungen informiert, kannst Essen in der Mensa bestellen, die Lehrerliste durchsuchen und vieles mehr:</string>
+    <string name="share_app_message">Lade dir die offizielle GymWen App herunter, mit ihr wirst du automatisch über deine Vertretungen informiert, kannst Essen in der Mensa bestellen, die Lehrerliste durchsuchen und Vieles mehr:</string>
 
     <!-- Website -->
     <string name="action_open_in_browser">Im Browser öffnen</string>
     <string name="share_link">Link teilen mit\u2026</string>
-    <string name="error">Es ist ein Fehler aufgetreten</string>
+    <string name="error">Es ist ein Fehler aufgetreten.</string>
 
     <!-- Notification-->
     <string name="notification_channel_title">Vertretungsplan</string>
@@ -216,9 +216,9 @@
     <string name="acra_dialog_text">Tut mir leid! Das hätte nicht passieren sollen. Die App ist abgestürzt.
     \nBitte sende mir den Fehlerbericht, damit ich den Fehler so schnell wie möglich beheben kann.
     \nVielen Dank!</string>
-    <string name="acra_dialog_content">Bitte füge hier einen Kommentar über das ein was du gemacht hast:
+    <string name="acra_dialog_content">Bitte füge hier einen Kommentar über das ein, was du gemacht hast:
         \nBeim Klick auf OK öffnet sich die E-Mail-App und es werden persönliche Daten (wie Mail-Adresse, Gerätemodell, gespeicherte Werte, etc.) übermittelt!</string>
-    <string name="acra_dialog_title">Das hätte nicht passieren sollen</string>
+    <string name="acra_dialog_title">Das hätte nicht passieren sollen.</string>
     <string name="acra_toast">Das hätte nicht passieren sollen.</string>
 
     <!-- ckChangeLog -->
@@ -228,14 +228,14 @@
     <string name="changelog_show_full">Mehr\u2026</string>
 
     <!-- Sheriff Permissions -->
-    <string name="sheriff_permission_rational">Es werden ein paar Berechtigungen für diese Funktion benötigt. Um eine umfassende Funktionalität zu gewährleisten gewähren Sie diese bitte.</string>
+    <string name="sheriff_permission_rational">Es werden ein paar Berechtigungen für diese Funktion benötigt. Um eine umfassende Funktionalität zu gewährleisten, gewähren Sie diese bitte.</string>
     <string name="permission_required">Berechtigung wird benötigt!</string>
-    <string name="permission_required_description">Diese Berechtigung/en werden benötigt um eine umfassende Funktionalität zu gewährleisten</string>
+    <string name="permission_required_description">Diese Berechtigung/en werden benötigt, um eine umfassende Funktionalität zu gewährleisten.</string>
     <string name="permission_ok_button">Gewähren\u2026</string>
     <string name="permission_cancel_button">Abbrechen</string>
 
     <!-- Lehrerliste -->
-    <string name="no_email_app">Du hast keine E-Mail App installiert</string>
+    <string name="no_email_app">Du hast keine E-Mail App installiert.</string>
     <string name="teacher_no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
     <string name="teacher_search_teacher_list">Durchsuchen\u2026</string>
     <string name="teacher_mail">Mail</string>
@@ -283,11 +283,11 @@
 
     <!-- Grades Management -->
     <string name="grades_no_app">Keine Excel App installiert!</string>
-    <string name="grades_down_title">Lädt Tabelle herunger\u2026</string>
+    <string name="grades_down_title">Lädt Tabelle herunter\u2026</string>
     <string name="grades_management">Notenverwaltung</string>
 
     <!-- ColoRush -->
-    <string name="colorush_description">In diesem Spiel müsst ihr eine Kugel mit der passenden Farbe einfärben um über Barrieren im Boden zu gelangen.\nEs gibt fünf verschiedene Spielmodi, in drei davon wählst du die Farbe der Kugel durch drei Knöpfe aus (Rot, Gelb, Blau).\nIn den restlichen ist sie vorgegeben und du musst mit Hilfe von Knöpfen den falschen Barrieren ausweichen.\nIm Forgeschrittenen-Modus gibt es die Möglichkeit die einzelnen Farb-Knöpfe gleichzeitig zu drücken und so neue Farben , wie Grün oder Orange, zu kreieren.\nAußerdem gibt es die Möglichkeit Diamanten einzusammeln und sich davon neue Skins oder Hintergründe zu kaufen.\nDes Weiteren gibt es einen Multiplayermodus und ein tägliches Level.\nViel Spaß!</string>
+    <string name="colorush_description">In diesem Spiel müsst ihr eine Kugel mit der passenden Farbe einfärben um über Barrieren im Boden zu gelangen.\nEs gibt fünf verschiedene Spielmodi, in drei davon wählst du die Farbe der Kugel durch drei Knöpfe aus (Rot, Gelb, Blau).\nIn den restlichen ist sie vorgegeben und du musst mit Hilfe von Knöpfen den falschen Barrieren ausweichen.\nIm Forgeschrittenen-Modus gibt es die Möglichkeit, die einzelnen Farb-Knöpfe gleichzeitig zu drücken und so neue Farben, wie Grün oder Orange, zu kreieren.\nAußerdem gibt es die Möglichkeit, Diamanten einzusammeln und sich davon neue Skins oder Hintergründe zu kaufen.\nDes Weiteren gibt es einen Multiplayermodus und ein tägliches Level.\nViel Spaß!</string>
     <string name="colorush_online_version">Online Version</string>
     <string name="colorush_android_app">Android App</string>
 
@@ -311,7 +311,7 @@
     <string name="share">Teilen</string>
     <string name="colorush" translatable="false">ColoRush</string>
     <string name="color_accent">Akzentfarbe</string>
-    <string name="color_primary">Primäre Farbe</string>
+    <string name="color_primary">Hauptfarbe</string>
     <string name="legal">Rechtliches</string>
 
     <!-- Intro -->
@@ -322,8 +322,8 @@
     <string name="intro_three_title">Lehrerliste</string>
     <string name="intro_three_desc">Du kannst die Lehrerliste durchsuchen und sofort eine E-Mail an den Lehrer schreiben.</string>
     <string name="intro_four_title">Elternmodus</string>
-    <string name="intro_four_desc">Außerdem ist diese App auch für Eltern sehr nützlich.\nSo kann man verschiedene Profile für jedes Kind anlegen und bestimme Funktionen, die besonders für Eltern nützlich sind benutzen.</string>
+    <string name="intro_four_desc">Außerdem ist diese App auch für Eltern sehr nützlich.\nSo kann man verschiedene Profile für jedes Kind anlegen und bestimmte Funktionen, die besonders für Eltern nützlich sind, benutzen.</string>
     <string name="intro_five_title">Viele tolle Features</string>
-    <string name="intro_five_desc">Des Weiteren kannst du eine für Smartphones optimierte Version der Schulhomepage aufrufen, sowie deine Noten und deinen Stundenplan verwalten.\nAußerdem gibt es noch viele weitere Dinge, für die hier leider kein Platz mehr ist.</string>
+    <string name="intro_five_desc">Des Weiteren kannst du eine für Smartphones optimierte Version der Schulhomepage aufrufen sowie deine Noten und deinen Stundenplan verwalten.\nAußerdem gibt es noch viele weitere Dinge, für die hier leider kein Platz mehr ist.</string>
 
 </resources>
