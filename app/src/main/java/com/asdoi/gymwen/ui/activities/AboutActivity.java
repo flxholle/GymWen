@@ -165,6 +165,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             showLicenseDialog();
         } else if (v == intro) {
             startActivity(new Intent(this, AppIntroActivity.class));
+            finish();
         } else if (v == forkOnGitHub) {
             tabIntent(GITLAB);
         } else if (v == visitWebsite) {
