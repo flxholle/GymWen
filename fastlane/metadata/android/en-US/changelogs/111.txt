@@ -1,0 +1,8 @@
+- Einführung hinzugefügt
+- Impressum überarbeitet
+- Dark Mode (Themeauswahl)
+- Notenverwaltung gefixed
+- Farbenauswahl (Beta)
+- Einstellungen überarbeitet
+- Benachrichtigung über fehlendes Internet (-> Nutzung des Offlinemodus)
+- Bugfixes
