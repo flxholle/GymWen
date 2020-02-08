@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.asdoi.gymwen">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,7 +20,6 @@
         android:roundIcon="@mipmap/gymlogo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:theme"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.activities.AppIntroActivity"
