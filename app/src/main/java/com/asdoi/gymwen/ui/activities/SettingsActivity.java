@@ -1,6 +1,7 @@
 package com.asdoi.gymwen.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import com.asdoi.gymwen.R;
 import com.github.javiersantos.appupdater.enums.Display;
 
 public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+    private boolean isFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +29,10 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 .beginTransaction()
                 .replace(R.id.settings, new SettingsFragment())
                 .commit();
-
-//        setSettings();
     }
 
     public void setupColors() {
         setToolbar(true);
-
     }
 
     @Override
@@ -43,34 +42,38 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-       /* setSettings();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();*/
+    public void recreate() {
+        super.recreate();
+        /*if (startDesignOnRecreation) {
+            onPreferenceStartFragment(cal, pre);
+            startDesignOnRecreation = false;
+        }*/
     }
 
-/*    public void setSettings() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String courses = sharedPref.getString("courses", "");
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (!isFragment) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            isFragment = false;
+            try {
+                getSupportActionBar().setTitle(R.string.title_activity_settings);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-        if (!ApplicationFeatures.coursesCheck())
-            return;
-        ProfileManagement.editProfile(ApplicationFeatures.getSelectedProfilePosition(), new Profile(courses, ApplicationFeatures.getSelectedProfile().getName()));
-        ProfileManagement.save(true);
-
-        boolean hours = sharedPref.getBoolean("hours", false);
-
-        VertretungsPlanFeatures.setup(hours, courses.split("#"));
-
-        String username = sharedPref.getString("username", "");
-        String password = sharedPref.getString("password", "");
-        VertretungsPlanFeatures.signin(username, password);
-    }*/
+    private PreferenceFragmentCompat cal;
+    private Preference pre;
 
     @Override
     public boolean onPreferenceStartFragment(PreferenceFragmentCompat caller, Preference pref) {
+        cal = caller;
+        pre = pref;
         // Instantiate the new Fragment
         final Bundle args = pref.getExtras();
         final Fragment fragment = getSupportFragmentManager().getFragmentFactory().instantiate(
@@ -83,6 +86,14 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 .replace(R.id.settings, fragment)
                 .addToBackStack(null)
                 .commit();
+
+        try {
+            getSupportActionBar().setTitle(pref.getTitle());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        isFragment = true;
         return true;
     }
 
@@ -90,38 +101,6 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
-            /*setNotif();
-            Preference myPref = findPreference("showNotification");
-            myPref.setOnPreferenceClickListener((Preference preference) -> {
-                setNotif();
-                return true;
-            });
-
-            setBorder();
-            myPref = findPreference("show_borders");
-            myPref.setOnPreferenceClickListener((Preference preference) -> {
-                setBorder();
-                return true;
-            });
-
-            myPref = findPreference("alarm");
-            myPref.setOnPreferenceClickListener((Preference p) -> {
-                ApplicationFeatures.setAlarmTime(0);
-                createTimePicker((ActivityFeatures) getActivity());
-                return true;
-            });
-
-
-            ListPreference mp = findPreference("theme");
-            mp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    mp.setValue(newValue + "");
-                    getActivity().recreate();
-                    return false;
-                }
-            });*/
 
             Preference myPref = findPreference("language");
             myPref.setOnPreferenceClickListener((Preference p) -> {
@@ -134,50 +113,10 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 ((ActivityFeatures) getActivity()).checkUpdates(Display.DIALOG, true);
                 return true;
             });
-
-            /*if (ApplicationFeatures.isBetaEnabled()) {
-                myPref = findPreference("primaryColor");
-                myPref.setVisible(true);
-                myPref.setOnPreferenceClickListener((Preference p) -> {
-                    new ColorChooserDialog.Builder(getContext(), R.string.color_primary)
-                            .accentMode(false)
-                            .allowUserColorInput(true)
-                            .allowUserColorInputAlpha(false)
-                            .show(getActivity());
-                    return true;
-                });
-
-                myPref = findPreference("accentColor");
-                myPref.setVisible(true);
-                myPref.setOnPreferenceClickListener((Preference p) -> {
-                    new ColorChooserDialog.Builder(getContext(), R.string.color_accent)
-                            .accentMode(false)
-                            .allowUserColorInput(true)
-                            .allowUserColorInputAlpha(false)
-                            .show(getActivity());
-                    return true;
-                });
-            } else {
-                myPref = findPreference("primaryColor");
-                myPref.setVisible(false);
-                myPref = findPreference("accentColor");
-                myPref.setVisible(false);
-            }*/
-        }
-
-        private void setNotif() {
-            boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false);
-            findPreference("alwaysNotification").setEnabled(showNotif);
-            findPreference("alarm").setEnabled(showNotif);
-            findPreference("two_notifs").setEnabled(showNotif);
-        }
-
-        private void setBorder() {
-            boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-            findPreference("show_border_specific").setEnabled(showNotif);
         }
     }
 
+    private boolean startDesignOnRecreation;
 
     @Override
     public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
@@ -193,10 +132,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 break;
         }
         editor.apply();
-
-       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            new DynamicShortcutManager(this).updateDynamicShortcuts();
-        }*/
+        startDesignOnRecreation = true;
         recreate();
     }
 

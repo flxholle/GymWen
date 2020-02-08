@@ -413,19 +413,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_impressum: // Fallthrough
                 intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
-//                AboutViewBuilder about = new AboutViewBuilder()
-//                        .withInfoUrl("https://asdoi.gitlab.io/")
-//                        .withAppId(getApplicationInfo().packageName)
-//                        .withLang("de")
-//                        .withFlatStyleButtons(true)
-//                        .withAppBox(true)
-//                        .withAuthorBox(true)
-//                        .withOtherProjectsBox(true);
-//
-//                intent = new Intent(this,com.gmail.fattazzo.aboutlibrary.activity.AboutActivity.class);
-//                intent.putExtra(AboutActivity.EXTRA_BUILDER, about);
-//                startActivity(intent);
-
                 drawer.closeDrawer(GravityCompat.START);
                 return;
             case R.id.action_refresh2:

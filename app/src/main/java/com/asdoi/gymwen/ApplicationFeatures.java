@@ -396,7 +396,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         editor.putInt("Alarm_hour", times[0]);
         editor.putInt("Alarm_minute", times[1]);
         editor.putInt("Alarm_second", times[2]);
-        editor.apply();
+        editor.commit();
 
     }
 
@@ -796,10 +796,6 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static void setAlarm(Context context, Class<?> cls, int hour, int min, int second) {
         // cancel already scheduled reminders
         cancelAlarm(context, cls);
-
-        if (!isAlarmOn(getContext())) {
-            return;
-        }
 
         Calendar currentCalendar = Calendar.getInstance();
 
