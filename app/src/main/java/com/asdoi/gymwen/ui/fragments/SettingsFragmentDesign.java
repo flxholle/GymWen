@@ -34,6 +34,7 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
                         .accentMode(false)
                         .allowUserColorInput(true)
                         .allowUserColorInputAlpha(false)
+                        .preselect(ApplicationFeatures.getPrimaryColor(getContext()))
                         .show(getActivity());
                 return true;
             });
@@ -45,6 +46,7 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
                         .accentMode(false)
                         .allowUserColorInput(true)
                         .allowUserColorInputAlpha(false)
+                        .preselect(ApplicationFeatures.getAccentColor(getContext()))
                         .show(getActivity());
                 return true;
             });
