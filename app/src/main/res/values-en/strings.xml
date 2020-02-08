@@ -255,9 +255,9 @@
     <string name="color_primary">Primary color</string>
     <string name="legal">Legal</string>
     <string name="intro_five_title">Many other features</string>
-    <string name="intro_four_title">parent mode</string>
-    <string name="intro_three_title">teacherlist</string>
-    <string name="intro_two_title">sit-in</string>
+    <string name="intro_four_title">Parent mode</string>
+    <string name="intro_three_title">Teacherlist</string>
+    <string name="intro_two_title">Sit-in</string>
     <string name="error">An error occured</string>
     <string name="set_choose_theme">Choose theme</string>
     <string name="set_theme_auto">Automatic</string>
