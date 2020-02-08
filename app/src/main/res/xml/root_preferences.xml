@@ -16,91 +16,110 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Preference
+        android:title="@string/set_vertretung_title"
+        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentVertretungsplan" />
+    <Preference
+        android:title="@string/set_design_title"
+        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentDesign" />
+    <Preference
+        android:title="@string/set_notification_title"
+        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentNotification" />
+    <Preference
+        android:title="@string/set_vertretung_signin"
+        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentSignIn" />
 
-    <PreferenceCategory app:title="@string/set_vertretung_title">
-        <EditTextPreference
-            android:key="courses"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="@string/set_courses_summary"
-            android:title="@string/set_courses_title" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="hours"
-            android:title="@string/set_hours" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="week_dates"
-            android:title="@string/set_show_weekdates" />
-    </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/set_design_title">
-        <ListPreference
-            android:entries="@array/theme_array"
-            android:entryValues="@array/theme_array_values"
-            android:key="theme"
-            android:title="@string/set_choose_theme" />
-        <Preference
-            android:key="accentColor"
-            android:title="@string/color_accent" />
-        <Preference
-            android:key="primaryColor"
-            android:title="@string/color_primary" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="show_borders"
-            android:title="@string/set_show_borders" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="show_border_specific"
-            android:title="@string/set_show_borders_specific" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="show_sections"
-            android:title="@string/set_design_show_sections" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="old_vertretung"
-            android:title="@string/set_old_vertretung" />
-    </PreferenceCategory>
+    <!--    <PreferenceCategory app:title="@string/set_vertretung_title">
+            <EditTextPreference
+                android:key="courses"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:summary="@string/set_courses_summary"
+                android:title="@string/set_courses_title" />
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="hours"
+                android:title="@string/set_hours" />
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="week_dates"
+                android:title="@string/set_show_weekdates" />
+        </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/set_notification_title">
+        <PreferenceCategory app:title="@string/set_design_title">
+            <ListPreference
+                android:entries="@array/theme_array"
+                android:entryValues="@array/theme_array_values"
+                android:key="theme"
+                android:title="@string/set_choose_theme" />
+            <Preference
+                android:key="accentColor"
+                android:title="@string/color_accent" />
+            <Preference
+                android:key="primaryColor"
+                android:title="@string/color_primary" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="show_borders"
+                android:title="@string/set_show_borders" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="show_border_specific"
+                android:title="@string/set_show_borders_specific" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="show_sections"
+                android:title="@string/set_design_show_sections" />
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="old_vertretung"
+                android:title="@string/set_old_vertretung" />
+        </PreferenceCategory>
 
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="showNotification"
-            android:title="@string/set_notifiaction_isOn" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="alwaysNotification"
-            android:title="@string/set_notification_showAlways" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="two_notifs"
-            android:title="@string/set_two_notifications" />
-        <Preference
-            android:key="alarm"
-            android:title="@string/set_notification_alarm" />
-    </PreferenceCategory>
+        <PreferenceCategory android:title="@string/set_notification_title">
 
-    <PreferenceCategory android:title="@string/set_vertretung_signin">
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="showNotification"
+                android:title="@string/set_notifiaction_isOn" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="alwaysNotification"
+                android:title="@string/set_notification_showAlways" />
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="two_notifs"
+                android:title="@string/set_two_notifications" />
+            <Preference
+                android:key="alarm"
+                android:title="@string/set_notification_alarm" />
+        </PreferenceCategory>
 
-        <EditTextPreference
-            android:key="username"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="@string/set_vertretung_username" />
-        <EditTextPreference
-            android:key="password"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="@string/set_vertretung_password" />
-    </PreferenceCategory>
+        <PreferenceCategory android:title="@string/set_vertretung_signin">
+
+            <EditTextPreference
+                android:key="username"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="@string/set_vertretung_username" />
+            <EditTextPreference
+                android:key="password"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="@string/set_vertretung_password" />
+        </PreferenceCategory>-->
     <PreferenceCategory android:title="@string/set_other_title">
         <SwitchPreference
             android:defaultValue="false"
             android:key="parents"
             android:title="@string/set_parents" />
+        <Preference
+            android:key="language"
+            android:title="@string/menu_language" />
+        <Preference
+            android:key="updates"
+            android:title="@string/menu_update" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="beta_features"

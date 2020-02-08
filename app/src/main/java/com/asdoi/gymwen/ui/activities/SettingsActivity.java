@@ -1,13 +1,12 @@
 package com.asdoi.gymwen.ui.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.preference.ListPreference;
+import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -16,11 +15,9 @@ import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.profiles.Profile;
-import com.asdoi.gymwen.profiles.ProfileManagement;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.github.javiersantos.appupdater.enums.Display;
 
-public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback {
+public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +45,13 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setSettings();
+       /* setSettings();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        finish();
+        finish();*/
     }
 
-    public void setSettings() {
+/*    public void setSettings() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String courses = sharedPref.getString("courses", "");
 
@@ -70,13 +67,31 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         String username = sharedPref.getString("username", "");
         String password = sharedPref.getString("password", "");
         VertretungsPlanFeatures.signin(username, password);
+    }*/
+
+    @Override
+    public boolean onPreferenceStartFragment(PreferenceFragmentCompat caller, Preference pref) {
+        // Instantiate the new Fragment
+        final Bundle args = pref.getExtras();
+        final Fragment fragment = getSupportFragmentManager().getFragmentFactory().instantiate(
+                getClassLoader(),
+                pref.getFragment());
+        fragment.setArguments(args);
+        fragment.setTargetFragment(caller, 0);
+        // Replace the existing Fragment with the new Fragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.settings, fragment)
+                .addToBackStack(null)
+                .commit();
+        return true;
     }
 
-    public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            setNotif();
+
+            /*setNotif();
             Preference myPref = findPreference("showNotification");
             myPref.setOnPreferenceClickListener((Preference preference) -> {
                 setNotif();
@@ -106,9 +121,21 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                     getActivity().recreate();
                     return false;
                 }
+            });*/
+
+            Preference myPref = findPreference("language");
+            myPref.setOnPreferenceClickListener((Preference p) -> {
+                ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(getActivity());
+                return true;
             });
 
-            if (ApplicationFeatures.isBetaEnabled()) {
+            myPref = findPreference("updates");
+            myPref.setOnPreferenceClickListener((Preference p) -> {
+                ((ActivityFeatures) getActivity()).checkUpdates(Display.DIALOG, true);
+                return true;
+            });
+
+            /*if (ApplicationFeatures.isBetaEnabled()) {
                 myPref = findPreference("primaryColor");
                 myPref.setVisible(true);
                 myPref.setOnPreferenceClickListener((Preference p) -> {
@@ -135,30 +162,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 myPref.setVisible(false);
                 myPref = findPreference("accentColor");
                 myPref.setVisible(false);
-            }
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-
-        }
-
-        @Override
-        public void onPause() {
-            getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-            super.onPause();
-        }
-
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences var1, String var2) {
-            if (ApplicationFeatures.getAlarmTime()[0] == -1) {
-                SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean("alarm", false);
-                editor.apply();
-            }
+            }*/
         }
 
         private void setNotif() {
