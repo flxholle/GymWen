@@ -550,17 +550,21 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
 
     //Time picker
-    public static void createTimePicker(ActivityFeatures activity) {
+    public void createTimePicker() {
         Calendar now = Calendar.getInstance();
 
         TimePickerDialog tpd = TimePickerDialog.newInstance(
-                activity,
+                this,
                 now.get(Calendar.HOUR_OF_DAY),
                 now.get(Calendar.MINUTE),
                 true
         );
+        tpd.setVersion(TimePickerDialog.Version.VERSION_2);
         tpd.setTitle(ApplicationFeatures.getContext().getString(R.string.time_picker_title));
-        tpd.show(activity.getSupportFragmentManager(), "Timepickerdialog");
+        tpd.setAccentColor(ApplicationFeatures.getAccentColor(this));
+        tpd.setCancelColor(ApplicationFeatures.getAccentColor(this));
+        tpd.setOkColor(ApplicationFeatures.getAccentColor(this));
+        tpd.show(this.getSupportFragmentManager(), "Timepickerdialog");
     }
 
     @Override

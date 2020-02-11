@@ -372,8 +372,9 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     private void addSpinner() {
+        getActivity().findViewById(R.id.choice_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(getContext()));
+
         Spinner parentSpinner = mainActivity.findViewById(R.id.choice_parent_spinner);
-        parentSpinner.setBackgroundColor(ApplicationFeatures.getPrimaryColor(getContext()));
         parentSpinner.setVisibility(View.VISIBLE);
         parentSpinner.setEnabled(true);
         List<String> list = new ArrayList<String>();

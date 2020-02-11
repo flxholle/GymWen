@@ -630,9 +630,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         if (pressedBack) {
             saveDocs();
-            finish();
-            System.exit(1);
-            android.os.Process.killProcess(android.os.Process.myPid());
+            finishAffinity();
+            pressedBack = false;
         } else {
             Toast.makeText(getApplicationContext(), R.string.back_button, Toast.LENGTH_LONG).show();
             pressedBack = true;
