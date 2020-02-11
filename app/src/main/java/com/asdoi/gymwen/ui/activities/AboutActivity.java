@@ -29,7 +29,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
@@ -272,7 +271,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     }
 
     private void showLicenseDialog() {
-        startActivity(new Intent(this, OssLicensesMenuActivity.class));
+//        startActivity(new Intent(this, OssLicensesMenuActivity.class));
     }
 
     private void share() {
