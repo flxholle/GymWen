@@ -179,7 +179,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 VertretungsPlanFeatures.setDocs(doc[0], doc[1]);
 
                 if (!isWidget) {
-                    updateMyWidgets();
+                    refreshWidgets();
                 }
             } else {
                 ActivityFeatures.reloadVertretungDocs(ApplicationFeatures.getContext());
@@ -271,7 +271,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             if (!isWidget) {
 //                sendNotification();
-                updateMyWidgets();
+                refreshWidgets();
             }
         } else if (signIn) {
             if (isIntroShown()) {
@@ -306,7 +306,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return true;
     }
 
-    public static void updateMyWidgets() {
+    public static void refreshWidgets() {
         Context context = getContext();
         AppWidgetManager man = AppWidgetManager.getInstance(context);
         int[] ids = man.getAppWidgetIds(new ComponentName(context, VertretungsplanWidget.class));

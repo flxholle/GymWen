@@ -35,7 +35,10 @@ public class Profile {
     public static Profile parse(String s) {
         String[] sArray = s.split("" + splitChar);
         if (sArray.length >= 2) {
-            return new Profile(sArray[1], sArray[0]);
+            if (sArray[1].trim().isEmpty() || sArray[2].trim().isEmpty())
+                return null;
+            else
+                return new Profile(sArray[1], sArray[0]);
         }
         return null;
     }

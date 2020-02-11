@@ -125,7 +125,7 @@
         </provider>
 
         <service
-            android:name=".widgets.WidgetService"
+            android:name=".widgets.VertretungsplanWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
