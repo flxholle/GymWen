@@ -25,7 +25,7 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
         myPref = findPreference("alarm");
         myPref.setOnPreferenceClickListener((Preference p) -> {
             ApplicationFeatures.setAlarmTime(0);
-            ((ActivityFeatures) getActivity()).createTimePicker((ActivityFeatures) getActivity());
+            ((ActivityFeatures) getActivity()).createTimePicker();
             return true;
         });
     }

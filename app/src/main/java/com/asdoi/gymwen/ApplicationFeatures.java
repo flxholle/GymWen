@@ -66,8 +66,11 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -316,6 +319,10 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static Bitmap vectorToBitmap(@DrawableRes int resVector) {
         Context context = getContext();
         Drawable drawable = AppCompatResources.getDrawable(context, resVector);
+        return vectorToBitmap(drawable);
+    }
+
+    public static Bitmap vectorToBitmap(Drawable drawable) {
         Bitmap b = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
@@ -477,11 +484,11 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     public static void sendNotification() {
         if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
-            new ApplicationFeatures.createNotification().execute(true, false);
+            new createInfoNotification().execute(true, false);
         }
     }
 
-    public static class createNotification extends downloadVertretungsplanDocsTask {
+    public static class createInfoNotification extends downloadVertretungsplanDocsTask {
 
         @Override
         protected void onPostExecute(Void v) {
@@ -496,7 +503,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             }
         }
 
-        public void sendNotification() {
+        private void sendNotification() {
             if (isTwoNotifications())
                 notificationMessageTwoNotifs();
             else
@@ -625,7 +632,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_ID);
         }
 
-        private String notifMessageContent(String[][] inhalt, Vertretungsplan vp) {
+        public String notifMessageContent(String[][] inhalt, Vertretungsplan vp) {
             String message = "";
             if (inhalt == null) {
                 return "";
@@ -654,7 +661,6 @@ public class ApplicationFeatures extends MultiDexApplication {
             return message;
         }
 
-        @Deprecated
         private void createNotification(String body, String title, int notification_id) {
             Context context = getContext();
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
@@ -710,6 +716,168 @@ public class ApplicationFeatures extends MultiDexApplication {
                     notificationManager.createNotificationChannel(notificationChannel);
                 } else {
                     notificationBuilder.setPriority(Notification.PRIORITY_LOW);
+                }
+
+                notificationManager.notify(notification_id, notificationBuilder.build());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                //Known Icon Error
+            }
+        }
+    }
+
+    public static class createTodayWarningNotification extends createInfoNotification {
+
+        @Override
+        protected void onPostExecute(Void v) {
+            try {
+                ProfileManagement.reload();
+                if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+                    return;
+                }
+                sendNotification();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void sendNotification() {
+            notificationMessage();
+        }
+
+        private void notificationMessage() {
+            StringBuilder messageToday = new StringBuilder();
+
+            String[] titleTodayArray = VertretungsPlanFeatures.getTodayTitleArray();
+            String[] titleTomorrowArray = VertretungsPlanFeatures.getTomorrowTitleArray();
+
+            String title = "Vertretung Heute:";
+
+            boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
+
+            boolean nothing = true;
+            boolean today = true;
+
+            /*if (isToday(titleTodayArray[0]))
+                today = true;
+            else if (isToday(titleTomorrowArray[0]))
+                today = false;
+            else {
+                //Today is not online
+                return;
+            }*/
+
+            StringBuilder count1 = new StringBuilder();
+
+            for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
+                Profile p = ProfileManagement.getProfile(i);
+                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
+                String[][] inhalt = temp.getDay(today);
+                try {
+                    count1.append(inhalt.length);
+                    count1.append(", ");
+                    if (inhalt.length != 0) {
+                        if (isMoreThanOneProfile) {
+                            messageToday.append(ProfileManagement.getProfile(i).getName());
+                            messageToday.append(":\n");
+                        }
+                        messageToday.append(notifMessageContent(inhalt, temp));
+                        nothing = false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            count1.deleteCharAt(count1.lastIndexOf(", "));
+
+            if (nothing) {
+                //Nothing TODO
+            } else {
+                String messageTo = messageToday.toString();
+                messageTo = messageTo.substring(0, messageTo.length() - 1);
+                createNotification(messageTo, title + " " + count1.toString(), NOTIFICATION_ID, ApplicationFeatures.getPrimaryColor(getContext()));
+            }
+        }
+
+        private boolean isToday(String source) {
+            try {
+                DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+
+                Date startDate = Vertretungsplan.removeTime(df.parse(source));
+
+                Date currentDate = Vertretungsplan.removeTime(new Date());
+
+                if (currentDate.equals(startDate)) {
+                    //If date is today
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+
+        private void createNotification(String body, String title, int notification_id, int color) {
+            Context context = getContext();
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
+                return;
+
+            try {
+                // Create an Intent for the activity you want to start
+                Intent resultIntent = new Intent(getContext(), MainActivity.class);
+                // Create the TaskStackBuilder and add the intent, which inflates the backgroundShape stack
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                stackBuilder.addNextIntentWithParentStack(resultIntent);
+                // Get the PendingIntent containing the entire backgroundShape stack
+                PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+                //Create an Intent for the BroadcastReceiver
+                Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
+                buttonIntent.setAction("com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver");
+                buttonIntent.putExtra("EXTRA_NOTIFICATION_ID", notification_id);
+                PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+
+                //Build notification
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
+
+                notificationBuilder
+                        .setAutoCancel(true)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setWhen(System.currentTimeMillis())
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
+                        .setContentTitle(title)
+                        .setContentIntent(resultPendingIntent)
+                        .setSmallIcon(R.drawable.ic_error_black_24dp)
+                        .setLargeIcon(ApplicationFeatures.vectorToBitmap(R.drawable.ic_error_black_24dp))
+                        .setColorized(true)
+                        .setColor(color);
+
+
+                if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("alwaysNotification", true)) {
+                    notificationBuilder.setOngoing(true);
+                    notificationBuilder.addAction(R.drawable.ic_close_black_24dp, getContext().getString(R.string.notif_dismiss), btPendingIntent);
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_HIGH);
+
+                    // Configure the notification channel.
+                    notificationChannel.setDescription(context.getString(R.string.notification_channel_description));
+                    notificationChannel.enableLights(false);
+//                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    notificationChannel.enableVibration(false);
+                    notificationChannel.setSound(null, null);
+                    notificationManager.createNotificationChannel(notificationChannel);
+                    notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+                    notificationManager.createNotificationChannel(notificationChannel);
+                } else {
+                    notificationBuilder.setPriority(NotificationCompat.PRIORITY_LOW);
                 }
 
                 notificationManager.notify(notification_id, notificationBuilder.build());

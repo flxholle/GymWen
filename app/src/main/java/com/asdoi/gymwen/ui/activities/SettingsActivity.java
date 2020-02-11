@@ -100,7 +100,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            setPreferencesFromResource(R.xml.preferences_root, rootKey);
 
             Preference myPref = findPreference("language");
             myPref.setOnPreferenceClickListener((Preference p) -> {

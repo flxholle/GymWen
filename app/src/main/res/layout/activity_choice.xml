@@ -19,13 +19,19 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="?attr/popupMenuStyle" />
 
-        <Spinner
-            android:id="@+id/choice_parent_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:popupTheme="?attr/popupMenuStyle"
-            android:visibility="gone"
-            android:enabled="false" />
+        <RelativeLayout
+            android:id="@+id/choice_spinner_relative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/choice_parent_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:visibility="gone"
+                app:popupTheme="?attr/popupMenuStyle" />
+        </RelativeLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
