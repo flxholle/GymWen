@@ -33,7 +33,7 @@ public class ProfileManagement {
         return profileList.size();
     }
 
-    public static void reload() {
+    public static void reload(boolean courseCheck) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         String pref = sharedPref.getString("profiles", "");
         String[] profiles = pref.split("" + splitChar);
@@ -47,7 +47,8 @@ public class ProfileManagement {
                 e.printStackTrace();
             }
         }
-        ApplicationFeatures.coursesCheck();
+        if (courseCheck)
+            ApplicationFeatures.coursesCheck();
     }
 
     public static void save(boolean apply) {

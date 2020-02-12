@@ -113,7 +113,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         mContext = this;
         ACRA.init(this);
         initRosetta();
-        ProfileManagement.reload();
+        ProfileManagement.reload(true);
     }
 
     @Override
@@ -254,6 +254,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         boolean signedIn = sharedPref.getBoolean("signed", false);
 
         if (signedIn) {
+            ProfileManagement.reload(false);
             if (!coursesCheck())
                 return false;
 
@@ -288,6 +289,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static boolean coursesCheck() {
+//        ProfileManagement.reload();
         if (ProfileManagement.sizeProfiles() <= 0) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
             //Backwards compatibility for versions older 1.1
@@ -493,7 +495,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         @Override
         protected void onPostExecute(Void v) {
             try {
-                ProfileManagement.reload();
+                ProfileManagement.reload(true);
                 if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
                     return;
                 }
@@ -732,7 +734,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         @Override
         protected void onPostExecute(Void v) {
             try {
-                ProfileManagement.reload();
+                ProfileManagement.reload(true);
                 if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
                     return;
                 }
