@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.akaita.android.easylauncher'
-//apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
     compileSdkVersion 29
