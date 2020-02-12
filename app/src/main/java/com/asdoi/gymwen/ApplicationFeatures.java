@@ -113,7 +113,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         mContext = this;
         ACRA.init(this);
         initRosetta();
-        ProfileManagement.reload(true);
+        ProfileManagement.reload();
     }
 
     @Override
@@ -254,8 +254,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         boolean signedIn = sharedPref.getBoolean("signed", false);
 
         if (signedIn) {
-            ProfileManagement.reload(false);
-            if (!coursesCheck())
+            //Profile reload has been called in onCreate Application
+            if (!coursesCheck(true))
                 return false;
 
             String courses = getSelectedProfile().getCourses();
@@ -288,8 +288,26 @@ public class ApplicationFeatures extends MultiDexApplication {
         return signedIn;
     }
 
+    public static boolean coursesCheck(boolean openAddActivity) {
+        if (ProfileManagement.sizeProfiles() <= 0) {
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            //Backwards compatibility for versions older 1.1
+            String courses = sharedPref.getString("courses", "");
+            if (courses.trim().isEmpty() && openAddActivity) {
+                Intent i = new Intent(getContext(), ChoiceActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(i);
+                return false;
+            } else {
+                String name = getContext().getString(R.string.profile_default_name);
+                ProfileManagement.addProfile(new Profile(courses, name));
+                ApplicationFeatures.initProfile(0, true);
+            }
+        }
+        return true;
+    }
+
     public static boolean coursesCheck() {
-//        ProfileManagement.reload();
         if (ProfileManagement.sizeProfiles() <= 0) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
             //Backwards compatibility for versions older 1.1
@@ -307,6 +325,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
         return true;
     }
+
 
     public static void refreshWidgets() {
         Context context = getContext();
@@ -495,7 +514,9 @@ public class ApplicationFeatures extends MultiDexApplication {
         @Override
         protected void onPostExecute(Void v) {
             try {
-                ProfileManagement.reload(true);
+                ProfileManagement.reload();
+                if (!coursesCheck(false))
+                    return;
                 if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
                     return;
                 }
@@ -734,7 +755,9 @@ public class ApplicationFeatures extends MultiDexApplication {
         @Override
         protected void onPostExecute(Void v) {
             try {
-                ProfileManagement.reload(true);
+                ProfileManagement.reload();
+                if (!coursesCheck(false))
+                    return;
                 if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
                     return;
                 }
