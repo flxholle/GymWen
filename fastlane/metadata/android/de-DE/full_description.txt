@@ -2,28 +2,24 @@
 Diese App ist für alle Schüler und Eltern des Gymnasiums Wendelstein programmiert worden.
 
 <font color="#2467d6"><b>Mit Hilfe dieser App kannst du:</b></font>
-<ul>
-<li>Den <b>Vertretungsplan</b> individuell filtern und anzeigen lassen
-   und du wirst über deine Vertretungen automatisch <b>benachrichtigt</b></li>
-<li>Die <b>Lehrerliste</b> durchsuchen und sofort eine <b>E-Mail</b> an den Lehrer schreiben</li>
-<li>Eine auf Smartphones sehr gut lesbare Version der <b>Schulhomepage</b> aufrufen</li>
-<li>Deine <b>Noten</b> und den <b>Stundenplan</b> verwalten</li>
-<li>Das <b>Sekretariat</b> ohne Probleme anrufen</li>
-<li><a href="https://mebis.bayern.de/"><b>Mebis</b></a> nutzen</li>
-<li>Essen ohne Umwege in der <a href="https://www.kitafino.de/"><b>Mensa</b></a> bestellen</li>
-<li><b>Notizen</b> anlegen</li>
-<li>Und <b>Busverbindungen</b> suchen</li>
-</ul>
+- Den <b>Vertretungsplan</b> individuell filtern und anzeigen lassen
+  und du wirst über deine Vertretungen automatisch <b>benachrichtigt</b>
+- Die <b>Lehrerliste</b> durchsuchen und sofort eine <b>E-Mail</b> an den Lehrer schreiben
+- Eine auf Smartphones sehr gut lesbare Version der <b>Schulhomepage</b> aufrufen
+- Deine <b>Noten</b> und den <b>Stundenplan</b> verwalten
+- Das <b>Sekretariat</b> ohne Probleme anrufen
+- <a href="https://mebis.bayern.de/"><b>Mebis</b></a> nutzen
+- Essen ohne Umwege in der <a href="https://www.kitafino.de/"><b>Mensa</b></a> bestellen
+- <b>Notizen</b> anlegen
+- Und <b>Busverbindungen</b> suchen
 
 <font color="#2467d6"><b>Außerdem ist diese App auch für Eltern sehr nützlich.</font></b>
 So kann man <b>verschiedene Profile</b> für jedes Kind anlegen und bestimmte Funktionen, die besonders für Eltern nützlich sind, benutzen, wie:
-<ul>
-<li><b>Wichtige Formulare</b> (z.B. Krankheitsmeldungen)</li>
-<li><b>ClaXss</b></li>
-<li>Ohne Probleme das </b>Sekretariat anrufen</b> (z.B. um ein Kind krankzumelden)</li>
-<li>Essen für Ihr Kind in der <a href="https://www.kitafino.de/"><b>Mensa</b></a> bestellen</li>
-<li>Eine <b>automatische Benachrichtigung</b> über vertretene Stunden Ihrer Kinder</li>
-</ul>
+- <b>Wichtige Formulare</b> (z.B. Krankheitsmeldungen)
+- <b>ClaXss</b>
+- Ohne Probleme das </b>Sekretariat anrufen</b> (z.B. um ein Kind krankzumelden)
+- Essen für Ihr Kind in der <a href="https://www.kitafino.de/"><b>Mensa</b></a> bestellen
+- Eine <b>automatische Benachrichtigung</b> über vertretene Stunden Ihrer Kinder
 
 Außerdem kommen im Laufe der Zeit immer wieder neue Funktionen dazu.
 Darüber hinaus sind Vorschläge über etwaige Funktionen der App immer willkommen.
