@@ -14,8 +14,15 @@ public class SettingsFragmentVertretungsplan extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_vertretungsplan, rootKey);
 
+        Preference myPref = findPreference("old_vertretung");
+        if (ApplicationFeatures.isBetaEnabled()) {
+            myPref.setVisible(true);
+        } else {
+            myPref.setVisible(false);
+        }
+
         setBorder();
-        Preference myPref = findPreference("show_borders");
+        myPref = findPreference("show_borders");
         myPref.setOnPreferenceClickListener((Preference preference) -> {
             setBorder();
             return true;
