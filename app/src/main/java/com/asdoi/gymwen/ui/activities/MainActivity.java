@@ -208,7 +208,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @Override
     public void onPause() {
-//        saveDocs();
+        saveDocs();
         super.onPause();
     }
 
