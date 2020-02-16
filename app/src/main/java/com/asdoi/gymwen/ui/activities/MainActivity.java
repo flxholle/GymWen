@@ -208,7 +208,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @Override
     public void onPause() {
-        saveDocs();
+//        saveDocs();
         super.onPause();
     }
 
@@ -628,14 +628,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             }
             return;
         }
+        saveDocs();
         if (pressedBack) {
-            saveDocs();
             finishAffinity();
             pressedBack = false;
         } else {
             Toast.makeText(getApplicationContext(), R.string.back_button, Toast.LENGTH_LONG).show();
             pressedBack = true;
-            saveDocs();
         }
     }
 
