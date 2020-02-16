@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.asdoi.gymwen"
         /*Android v4.1 alias "Jelly Bean"*/
-        minSdkVersion 17
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 111
         versionName "1.1.1"
@@ -14,6 +14,8 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
+        //strip other than english resources
+        resConfigs "en", "de"
     }
     buildTypes {
         release {
