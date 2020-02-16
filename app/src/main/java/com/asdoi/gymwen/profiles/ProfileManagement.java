@@ -49,6 +49,10 @@ public class ProfileManagement {
         }
     }
 
+    public static boolean isLoaded() {
+        return getProfileList() != null;
+    }
+
     public static void save(boolean apply) {
         String all = "";
         for (Profile p : profileList) {
@@ -58,8 +62,10 @@ public class ProfileManagement {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("profiles", all);
-        if (apply) editor.apply();
-        else editor.commit();
+        if (apply)
+            editor.apply();
+        else
+            editor.commit();
     }
 
     public static boolean isMoreThanOneProfile() {

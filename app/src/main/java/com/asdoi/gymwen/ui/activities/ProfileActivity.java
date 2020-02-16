@@ -24,11 +24,7 @@ public class ProfileActivity extends ActivityFeatures {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ApplicationFeatures.resetSelectedProfile();
-                ProfileManagement.save(true);
-                Intent i = new Intent(ApplicationFeatures.getContext(), MainActivity.class);
-                startActivity(i);
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -50,7 +46,7 @@ public class ProfileActivity extends ActivityFeatures {
     public void onBackPressed() {
         ApplicationFeatures.resetSelectedProfile();
         ProfileManagement.save(true);
-        Intent i = new Intent(ApplicationFeatures.getContext(), MainActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }

@@ -514,7 +514,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         @Override
         protected void onPostExecute(Void v) {
             try {
-                ProfileManagement.reload();
+                if (!ProfileManagement.isLoaded())
+                    ProfileManagement.reload();
                 if (!coursesCheck(false))
                     return;
                 if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
@@ -755,7 +756,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         @Override
         protected void onPostExecute(Void v) {
             try {
-                ProfileManagement.reload();
+                if (!ProfileManagement.isLoaded())
+                    ProfileManagement.reload();
                 if (!coursesCheck(false))
                     return;
                 if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
@@ -1058,7 +1060,8 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static void initProfile(int position, boolean global) {
         String courses = ProfileManagement.getProfile(position).getCourses();
         VertretungsPlanFeatures.setup(isHour(), courses.split("#"));
-        if (global) initProfileGlobal(position, courses);
+        if (global)
+            initProfileGlobal(position, courses);
     }
 
     public static Profile getSelectedProfile() {
