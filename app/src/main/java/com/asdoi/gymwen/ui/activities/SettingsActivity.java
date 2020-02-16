@@ -16,6 +16,8 @@ import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.profiles.Profile;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.github.javiersantos.appupdater.enums.Display;
 
 public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
@@ -54,6 +56,10 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     public void onBackPressed() {
         super.onBackPressed();
         if (!isFragment) {
+            Profile p = ApplicationFeatures.getSelectedProfile();
+            p.setCourses(PreferenceManager.getDefaultSharedPreferences(this).getString("courses", p.getCourses()));
+            ProfileManagement.editProfile(ApplicationFeatures.getSelectedProfilePosition(), p);
+            ProfileManagement.save(true);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
