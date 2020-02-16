@@ -44,7 +44,6 @@ import androidx.core.content.FileProvider;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
-import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
@@ -578,8 +577,6 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     public void saveDocs() {
         VertretungsPlanFeatures.saveDocs();
         Lehrerliste.saveDoc();
-        ProfileManagement.save(false);
-//        Toast.makeText(ApplicationFeatures.getContext(), R.string.saved_docs, Toast.LENGTH_SHORT).show();
     }
 
     public static void reloadVertretungDocs(Context context) {
