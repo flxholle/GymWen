@@ -16,4 +16,6 @@
     <color name="intro_background_four">#D5A206</color>
     <!--    <color name="intro_background_four">#FFFFB300</color>-->
     <color name="intro_background_five">@color/colorPrimary</color>
+
+    <color name="grey">#212121</color>
 </resources>

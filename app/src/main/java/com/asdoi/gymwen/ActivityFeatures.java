@@ -564,6 +564,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         tpd.setCancelColor(ApplicationFeatures.getAccentColor(this));
         tpd.setOkColor(ApplicationFeatures.getAccentColor(this));
         tpd.setThemeDark(ApplicationFeatures.isDark());
+        tpd.vibrate(false);
         tpd.show(this.getSupportFragmentManager(), "Timepickerdialog");
     }
 

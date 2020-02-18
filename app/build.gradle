@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.akaita.android.easylauncher'
+apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 
 android {
     compileSdkVersion 29
