@@ -71,7 +71,7 @@
         <menu>
             <group android:title="@string/menu_category_settings">
                 <item
-                    android:id="@+id/nav_impressum"
+                    android:id="@+id/nav_imprint"
                     android:icon="@drawable/ic_help_outline_black_24dp"
                     android:title="@string/menu_impressum" />
                 <item

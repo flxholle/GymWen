@@ -77,6 +77,9 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     @BindView(R.id.report_bugs)
     LinearLayout reportBugs;
 
+    @BindView(R.id.imprint)
+    LinearLayout imprint;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +139,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         image_sources.setOnClickListener(this);
         libs.setOnClickListener(this);
         colorush.setOnClickListener(this);
+        imprint.setOnClickListener(this);
     }
 
     @Override
@@ -220,6 +224,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                 sources = Html.fromHtml(sources, Html.FROM_HTML_MODE_LEGACY).toString();
             else
                 sources = Html.fromHtml(sources).toString();
+            sources = sources.replaceAll("\n\n", "\n");
 
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_image_black_24dp);
             try {
@@ -230,10 +235,6 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             }
 
             final TextView message = new TextView(getContext());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(10, 10, 10, 10);
-            message.setLayoutParams(params);
-
             final SpannableString s = new SpannableString(sources);
             Linkify.addLinks(s, Linkify.WEB_URLS);
             message.setText(s);
@@ -267,6 +268,42 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .intent(this);
 
             startActivity(intent);
+        } else if (v == imprint) {
+            String sources = getString(R.string.imprint_text);
+
+            if (Build.VERSION.SDK_INT > 24)
+                sources = Html.fromHtml(sources, Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                sources = Html.fromHtml(sources).toString();
+            sources = sources.replaceAll("\n\n", "\n");
+
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_credit_card_black_24dp);
+            try {
+                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            final TextView message = new TextView(getContext());
+            final SpannableString s = new SpannableString(sources);
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+            message.setText(s);
+            message.setMovementMethod(LinkMovementMethod.getInstance());
+
+            new MaterialDialog.Builder(getContext())
+                    .title(getString(R.string.imprint))
+                    .cancelable(true)
+                    .positiveText(R.string.ok)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .icon(drawable)
+                    .customView(message, true)
+                    .show();
         }
     }
 

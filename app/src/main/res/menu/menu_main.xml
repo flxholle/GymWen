@@ -36,7 +36,7 @@
         android:visible="false"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_impressum"
+        android:id="@+id/action_imprint"
         android:orderInCategory="100"
         android:title="@string/menu_impressum"
         android:visible="true"
