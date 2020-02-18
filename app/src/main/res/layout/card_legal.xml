@@ -59,10 +59,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/licenses"
+            android:id="@+id/imprint"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
 
             android:clickable="true"
             android:focusable="true"
@@ -73,6 +72,40 @@
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="?android:attr/textColorPrimary"
+                app:srcCompat="@drawable/ic_credit_card_black_24dp"
+                tools:ignore="ContentDescription,UnusedAttribute" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/imprint"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/licenses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/about_listitem_height"
+            android:orientation="horizontal"
+
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="24dp"

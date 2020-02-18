@@ -241,16 +241,24 @@
     <string name="teacher_mail">Mail</string>
 
     <!-- Credits -->
-    <string name="credits" translatable="false">https://pixabay.com/vectors/book-found-fun-icon-icons-reading-1294379/\n
-        https://pixabay.com/vectors/icons-books-learning-book-icon-3439190/\n
-        <div>Icons made by <a href="https://www.flaticon.com/authors/itim2101" title="itim2101">itim2101</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
-        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
-        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
-        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
-        <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
-        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
-        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n
+    <string name="credits" translatable="false"><![CDATA[<div>https://pixabay.com/vectors/book-found-fun-icon-icons-reading-1294379/</div>
+        <div>https://pixabay.com/vectors/icons-books-learning-book-icon-3439190/</div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/itim2101" title="itim2101">itim2101</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+    ]]>
     </string>
+
+    <!-- Imprint -->
+    <string name="imprint_text" translatable="false"><![CDATA[
+        <div>Impressum des Gymnasiums Wendelstein:<br>
+        http://gym-wen.de/startseite/impressum/</div><br>
+        <div>Impressum des App-Entwicklers:<br>
+        --Einfuegen--</div>]]></string>
 
     <!-- Bottom Navigation Bar -->
     <string name="nav_filter">Gefiltert</string>
@@ -313,6 +321,7 @@
     <string name="color_accent">Akzentfarbe</string>
     <string name="color_primary">Hauptfarbe</string>
     <string name="legal">Rechtliches</string>
+    <string name="imprint">Impressum</string>
 
     <!-- Intro -->
     <string name="intro_one_title" translatable="false">Gymnasium Wendelstein App</string>

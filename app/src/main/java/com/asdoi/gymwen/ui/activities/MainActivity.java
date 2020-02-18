@@ -409,8 +409,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_shop:
                 tabIntent("http://shop.apromote-werbemittel.de/");
                 return;
-            case R.id.nav_impressum:
-            case R.id.action_impressum: // Fallthrough
+            case R.id.nav_imprint:
+            case R.id.action_imprint: // Fallthrough
                 intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
