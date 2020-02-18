@@ -468,6 +468,18 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
+    public static boolean isDark() {
+        int theme = getGeneralTheme();
+        switch (theme) {
+            case R.style.AppTheme_Dark:
+            case R.style.AppTheme_Black:
+                return true;
+            case R.style.AppTheme_Light:
+            default:
+                return false;
+        }
+    }
+
 
     //Website
     public static boolean isURLValid(String url) {
