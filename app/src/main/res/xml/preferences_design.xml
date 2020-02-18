@@ -4,7 +4,8 @@
         android:entries="@array/theme_array"
         android:entryValues="@array/theme_array_values"
         android:key="theme"
-        android:title="@string/set_choose_theme" />
+        android:title="@string/set_choose_theme"
+        android:defaultValue="switch" />
     <Preference
         android:key="accentColor"
         android:title="@string/color_accent" />
