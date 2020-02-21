@@ -265,4 +265,9 @@
     <string name="set_theme_dark">Dark</string>
     <string name="set_theme_light">Light</string>
     <string name="imprint">Imprint</string>
+    <string name="dont_show_again">Don\'t show again</string>
+    <string name="registration_dialog_title">User census</string>
+    <string name="registration_dialog_content">To get to know, how many users this app has, I want to make a user census. Therefore some metadata of your internet connection will be transmitted and saved, like your ip-adress or the current time.
+    \nDo you want to get involved?</string>
+
 </resources>

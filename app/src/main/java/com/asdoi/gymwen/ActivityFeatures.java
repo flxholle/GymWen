@@ -23,13 +23,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -678,40 +676,38 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     //Register Installation
     public void checkRegistration() {
-        if (ApplicationFeatures.isPhoneRegistered())
+        if (ApplicationFeatures.isPhoneRegistered() || !ApplicationFeatures.isNetworkAvailable())
             return;
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
-        builder.title(getString(R.string.profiles_add));
+        builder.title(R.string.registration_dialog_title);
 
         // Set up the input
-        final EditText input = new EditText(getContext());
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setHint(getString(R.string.name));
-        input.setHighlightColor(ApplicationFeatures.getAccentColor(getContext()));
-        builder.customView(input, true);
+        builder.content(R.string.registration_dialog_content);
 
         // Set up the buttons
-        builder.onPositive(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(MaterialDialog dialog, DialogAction which) {
-                register(getContext());
-                dialog.dismiss();
-            }
+        builder.onPositive((MaterialDialog dialog, DialogAction which) -> {
+            register(getContext());
+            dialog.dismiss();
         });
 
-        builder.onNegative(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(MaterialDialog dialog, DialogAction which) {
-                dialog.dismiss();
-            }
+        builder.onNegative((MaterialDialog dialog, DialogAction which) -> {
+            dialog.dismiss();
         });
 
-        builder.positiveText(R.string.add);
-        builder.negativeText(R.string.cancel);
+        builder.onNeutral((MaterialDialog dialog, DialogAction which) -> {
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+            editor.putBoolean("registered", true);
+            editor.apply();
+            dialog.dismiss();
+        });
+
+        builder.positiveText(R.string.yes);
+        builder.negativeText(R.string.no);
+        builder.neutralText(R.string.dont_show_again);
         builder.negativeColor(ApplicationFeatures.getAccentColor(getContext()));
         builder.positiveColor(ApplicationFeatures.getAccentColor(getContext()));
+        builder.neutralColor(ApplicationFeatures.getAccentColor(getContext()));
         builder.build().show();
 
 
@@ -719,21 +715,26 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     private static final String register_url = "https://asdoi.gitlab.io/hit_counter.html";
 
-    private static void register(Context context) {
-        Document site = null;
-        try {
-            site = Jsoup.connect(register_url).get();
+    private void register(Context context) {
+        new Thread(() -> {
+            Document site = null;
+            try {
+                site = Jsoup.connect(register_url).get();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (site == null) {
-            //No internet connection
-            return;
-        }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (site == null) {
+                //No internet connection
+                runOnUiThread(() -> {
+                    Toast.makeText(this, R.string.noInternetConnection, Toast.LENGTH_SHORT).show();
+                });
+                return;
+            }
 
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putBoolean("registered", true);
-        editor.apply();
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+            editor.putBoolean("registered", true);
+            editor.apply();
+        }).start();
     }
 }

@@ -44,15 +44,6 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     }
 
     @Override
-    public void recreate() {
-        super.recreate();
-        /*if (startDesignOnRecreation) {
-            onPreferenceStartFragment(cal, pre);
-            startDesignOnRecreation = false;
-        }*/
-    }
-
-    @Override
     public void onBackPressed() {
         super.onBackPressed();
         if (!isFragment) {
@@ -126,7 +117,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
 
     @Override
     public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
-        Context context = getContext();
+        Context context = this;
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         switch (dialog.getTitle()) {
