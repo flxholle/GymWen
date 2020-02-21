@@ -57,7 +57,6 @@ import org.acra.ACRA;
 import org.acra.annotation.AcraCore;
 import org.acra.annotation.AcraDialog;
 import org.acra.annotation.AcraMailSender;
-import org.acra.annotation.AcraToast;
 import org.acra.data.StringFormat;
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
@@ -79,9 +78,9 @@ import java.util.Locale;
 @AcraMailSender(mailTo = "GymWenApp@t-online.de")
 @AcraDialog(resText = R.string.acra_dialog_text,
         resCommentPrompt = R.string.acra_dialog_content,
-        resTheme = R.style.AppTheme,
+        resTheme = R.style.AppTheme_Dark,
         resTitle = R.string.acra_dialog_title)
-@AcraToast(resText = R.string.acra_toast)
+//@AcraToast(resText = R.string.acra_toast)
 
 
 public class ApplicationFeatures extends MultiDexApplication {

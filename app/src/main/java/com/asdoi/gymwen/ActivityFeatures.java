@@ -713,9 +713,14 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     private static final String register_url = "https://asdoi.gitlab.io/hit_counter.html";
 
     private void register(Context context) {
-        WebView wv = new WebView(this);
-        wv.getSettings().setJavaScriptEnabled(true);
-        wv.loadUrl(register_url);
+        try {
+            WebView wv = new WebView(this);
+            wv.getSettings().setJavaScriptEnabled(true);
+            wv.loadUrl(register_url);
+        } catch (Exception e) {
+            Toast.makeText(this, R.string.noInternetConnection, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("registered", true);
