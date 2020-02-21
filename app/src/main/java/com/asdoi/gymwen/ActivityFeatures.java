@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.BlendMode;
@@ -22,11 +23,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -40,6 +43,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.preference.PreferenceManager;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -60,7 +64,11 @@ import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.pd.chocobar.ChocoBar;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -665,5 +673,67 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     protected void attachBaseContext(Context newBase) {
 //        newBase = LocaleChanger.configureBaseContext(newBase);
         super.attachBaseContext(newBase);
+    }
+
+
+    //Register Installation
+    public void checkRegistration() {
+        if (ApplicationFeatures.isPhoneRegistered())
+            return;
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
+        builder.title(getString(R.string.profiles_add));
+
+        // Set up the input
+        final EditText input = new EditText(getContext());
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint(getString(R.string.name));
+        input.setHighlightColor(ApplicationFeatures.getAccentColor(getContext()));
+        builder.customView(input, true);
+
+        // Set up the buttons
+        builder.onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(MaterialDialog dialog, DialogAction which) {
+                register(getContext());
+                dialog.dismiss();
+            }
+        });
+
+        builder.onNegative(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(MaterialDialog dialog, DialogAction which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.positiveText(R.string.add);
+        builder.negativeText(R.string.cancel);
+        builder.negativeColor(ApplicationFeatures.getAccentColor(getContext()));
+        builder.positiveColor(ApplicationFeatures.getAccentColor(getContext()));
+        builder.build().show();
+
+
+    }
+
+    private static final String register_url = "https://asdoi.gitlab.io/hit_counter.html";
+
+    private static void register(Context context) {
+        Document site = null;
+        try {
+            site = Jsoup.connect(register_url).get();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (site == null) {
+            //No internet connection
+            return;
+        }
+
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("registered", true);
+        editor.apply();
     }
 }
