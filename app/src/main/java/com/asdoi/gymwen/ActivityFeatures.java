@@ -27,6 +27,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -62,11 +63,7 @@ import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.pd.chocobar.ChocoBar;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -687,8 +684,8 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
         // Set up the buttons
         builder.onPositive((MaterialDialog dialog, DialogAction which) -> {
-            register(getContext());
             dialog.dismiss();
+            register(getContext());
         });
 
         builder.onNegative((MaterialDialog dialog, DialogAction which) -> {
@@ -716,25 +713,12 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     private static final String register_url = "https://asdoi.gitlab.io/hit_counter.html";
 
     private void register(Context context) {
-        new Thread(() -> {
-            Document site = null;
-            try {
-                site = Jsoup.connect(register_url).get();
+        WebView wv = new WebView(this);
+        wv.getSettings().setJavaScriptEnabled(true);
+        wv.loadUrl(register_url);
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (site == null) {
-                //No internet connection
-                runOnUiThread(() -> {
-                    Toast.makeText(this, R.string.noInternetConnection, Toast.LENGTH_SHORT).show();
-                });
-                return;
-            }
-
-            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-            editor.putBoolean("registered", true);
-            editor.apply();
-        }).start();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("registered", true);
+        editor.apply();
     }
 }
