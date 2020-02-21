@@ -335,4 +335,8 @@
     <string name="intro_five_title">Viele tolle Features</string>
     <string name="intro_five_desc">Des Weiteren kannst du eine für Smartphones optimierte Version der Schulhomepage aufrufen sowie deine Noten und deinen Stundenplan verwalten.\nAußerdem gibt es noch viele weitere Dinge, für die hier leider kein Platz mehr ist.</string>
 
+    <!-- Registration -->
+    <string name="dont_show_again">Nicht wieder anzeigen</string>
+    <string name="registration_dialog_title">Nutzerzählung</string>
+    <string name="registration_dialog_content">Um herauszufinden, wie viele Personen diese App nutzen, möchte ich eine Nutzerzählung durchführen. Dabei werden Metadaten deiner Internetverbdingung, wie die IP-Adresse oder die Uhrzeit gespeichert.          Möchtest du daran teilnehmen?</string>
 </resources>
