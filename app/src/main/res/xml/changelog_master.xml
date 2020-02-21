@@ -3,6 +3,7 @@
     <release
         version="1.1.2"
         versioncode="112">
+        <change>Nutzerzähler</change>
         <change>Speicherplatz reduziert</change>
         <change>Bugfixes</change>
     </release>
