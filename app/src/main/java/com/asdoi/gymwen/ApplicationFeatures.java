@@ -403,6 +403,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         return getBooleanSettings("intro", false);
     }
 
+    public static boolean isPhoneRegistered() {
+        return getBooleanSettings("registered", false);
+    }
+
     public static int[] getAlarmTime() {
         SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
         return new int[]{sharedPref.getInt("Alarm_hour", -1), sharedPref.getInt("Alarm_minute", -1), sharedPref.getInt("Alarm_second", -1)};
@@ -1141,4 +1145,6 @@ public class ApplicationFeatures extends MultiDexApplication {
             return Color.BLACK;
         }
     }
+
+
 }
