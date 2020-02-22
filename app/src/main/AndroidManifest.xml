@@ -73,6 +73,18 @@
             android:name=".ui.activities.SettingsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_settings" />
+        <!--        <activity
+                    android:name=".ui.activities.ImportActivity">
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW" />
+                        <category android:name="android.intent.category.DEFAULT" />
+                        <category android:name="android.intent.category.BROWSABLE" />
+                        <data android:host="*"/>
+                        <data android:scheme="file" />
+                        <data android:mimeType="*/*" />
+                        <data android:pathPattern=".*\\.gwbackup" />
+                    </intent-filter>
+                </activity>-->
 
         <receiver android:name=".widgets.VertretungsplanWidget">
             <intent-filter>

@@ -64,6 +64,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -1145,5 +1146,18 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
+
+    //Backup, Export, Import
+    public static void exportBackup(Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write("test");
+            outputStreamWriter.close();
+        } catch (IOException e) {
+            //"Exception", "File write failed: " + e.toString());
+            //Error
+            return;
+        }
+    }
 
 }
