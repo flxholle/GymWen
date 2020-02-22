@@ -398,6 +398,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_mebis:
                 tabIntent("https://lernplattform.mebis.bayern.de/my/");
                 return;
+//            case R.id.nav_backup:
+//                backup();
+//                return;
             case R.id.nav_mensa:
                 String packageName = "de.eezzy.admin.apnr40";
                 intent = getPackageManager().getLaunchIntentForPackage(packageName);

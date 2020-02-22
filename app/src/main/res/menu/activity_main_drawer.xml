@@ -63,6 +63,11 @@
                     android:icon="@drawable/ic_t_shirt"
                     android:title="@string/menu_shop"
                     android:visible="false" />
+                <item
+                    android:id="@+id/nav_backup"
+                    android:icon="@drawable/ic_cloud_download_black_24dp"
+                    android:title="Backup"
+                    android:visible="false" />
             </group>
         </menu>
     </item>
