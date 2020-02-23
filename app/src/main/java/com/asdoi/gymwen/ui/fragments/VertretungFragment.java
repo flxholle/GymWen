@@ -381,14 +381,14 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         if (both) {
             inhalt = VertretungsPlanFeatures.getTodayArray();
             title = VertretungsPlanFeatures.getTodayTitle();
-            sonstiges = isSonstiges();
+            sonstiges = isSonstiges(inhalt);
             generateTop();
             generateTableSpecific();
 
             if (inhalt != null) {
                 inhalt = VertretungsPlanFeatures.getTomorrowArray();
                 title = VertretungsPlanFeatures.getTomorrowTitle();
-                sonstiges = isSonstiges();
+                sonstiges = isSonstiges(inhalt);
                 generateTop();
                 generateTableSpecific();
             }
@@ -401,7 +401,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 title = VertretungsPlanFeatures.getTomorrowTitle();
             }
             inhalt = replaceAll(inhalt, "entfällt", "entf");
-            sonstiges = isSonstiges();
+            sonstiges = isSonstiges(inhalt);
             generateTop();
             generateTableAll();
         } else {
@@ -412,7 +412,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 inhalt = VertretungsPlanFeatures.getTomorrowArray();
                 title = VertretungsPlanFeatures.getTomorrowTitle();
             }
-            sonstiges = isSonstiges();
+            sonstiges = isSonstiges(inhalt);
             generateTop();
             generateTableSpecific();
         }
@@ -472,7 +472,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return textView;
     }
 
-    boolean isSonstiges() {
+    public static boolean isSonstiges(String[][] inhalt) {
         if (inhalt == null)
             return false;
         for (int i = 0; i < inhalt.length; i++) {
@@ -751,10 +751,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     }
 
-    private View getEntrySpecific(View view, String[] entry, boolean oberstufe, boolean sonstiges) {
+    public View getEntrySpecific(View view, String[] entry, boolean oberstufe, boolean sonstiges) {
         TextView hour = view.findViewById(R.id.vertretung_specific_entry_textViewHour);
         hour.setText(entry[1]);
-        hour.setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
+        hour.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
 
         TextView subject = view.findViewById(R.id.vertretung_specific_entry_textViewSubject);
         subject.setText(oberstufe ? entry[0] : entry[2]);

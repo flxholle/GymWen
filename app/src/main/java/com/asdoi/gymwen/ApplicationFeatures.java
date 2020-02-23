@@ -50,7 +50,7 @@ import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.activities.SignInActivity;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
-import com.asdoi.gymwen.widgets.VertretungsplanWidget;
+import com.asdoi.gymwen.widgets.MyWidgetProvider;
 import com.kabouzeid.appthemehelper.ThemeStore;
 
 import org.acra.ACRA;
@@ -330,10 +330,10 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static void refreshWidgets() {
         Context context = getContext();
         AppWidgetManager man = AppWidgetManager.getInstance(context);
-        int[] ids = man.getAppWidgetIds(new ComponentName(context, VertretungsplanWidget.class));
+        int[] ids = man.getAppWidgetIds(new ComponentName(context, MyWidgetProvider.class));
         Intent updateIntent = new Intent();
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        updateIntent.putExtra(VertretungsplanWidget.WIDGET_ID_KEY, ids);
+        updateIntent.putExtra(MyWidgetProvider.WIDGET_ID_KEY, ids);
         context.sendBroadcast(updateIntent);
     }
 
