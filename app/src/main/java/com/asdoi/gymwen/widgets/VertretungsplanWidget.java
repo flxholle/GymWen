@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
@@ -65,18 +64,8 @@ public class VertretungsplanWidget extends AppWidgetProvider {
     private void updateAppWidget(final RemoteViews rootView, final AppWidgetManager awm, final int awID) {
         ApplicationFeatures.downloadVertretungsplanDocs(true, true);
 
-        if (enableListView) {
-//            rootView.removeAllViews(R.id.widget_list);
-            Intent i = new Intent(context, WidgetService.class);
-            i.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, awID);
-            // When intents are compared, the extras are ignored, so we need to embed the extras
-            // into the data so that the extras will not be ignored.
-            i.setData(Uri.parse(i.toUri(Intent.URI_INTENT_SCHEME)));
-//            rootView.setRemoteAdapter(R.id.widget_list, i);
-        } else {
-            rootView.removeAllViews(R.id.widget1_basic);
-            generateTable(rootView);
-        }
+        rootView.removeAllViews(R.id.widget1_basic);
+        generateTable(rootView);
 
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
@@ -85,7 +74,7 @@ public class VertretungsplanWidget extends AppWidgetProvider {
         int[] ids = awm.getAppWidgetIds(new ComponentName(context, VertretungsplanWidget.class));
         intent = new Intent();
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        intent.putExtra(VertretungsplanWidget.WIDGET_ID_KEY, ids);
+        intent.putExtra(WIDGET_ID_KEY, ids);
         pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         rootView.setOnClickPendingIntent(R.id.widget1_refresh_button, pendingIntent);
 
