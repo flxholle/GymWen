@@ -3,12 +3,16 @@ package com.asdoi.gymwen.widgets;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.google.gson.Gson;
+import com.asdoi.gymwen.ui.fragments.VertretungFragment;
 
 public class StackWidgetService extends RemoteViewsService {
     public static final String content_id = "1010";
@@ -20,11 +24,11 @@ public class StackWidgetService extends RemoteViewsService {
 }
 
 class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-    Context mContext;
+    Context context;
     int mAppWidgetId;
 
     public VertretungBothRemoteViewsFactory(Context context, Intent intent) {
-        mContext = context;
+        this.context = context;
         mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
     }
@@ -36,19 +40,14 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     }
 
     public int getCount() {
-        return 2;
+        return 1;
     }
 
     public RemoteViews getViewAt(int position) {
+        //For both today and tomorrow:
         String[][] inhalt = new String[][]{{"Hallo"}, {"Baum"}};
-        switch (position) {
-            default:
-            case 1:
-                //Today
-            case 2:
-                //Tomorrow
-        }
-        return generateTableSpecific(mContext, inhalt);
+        boolean oberstufe = false;
+        return generateTableSpecific(context, inhalt, oberstufe);
     }
 
     public RemoteViews getLoadingView() {
@@ -58,7 +57,7 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     }
 
     public int getViewTypeCount() {
-        return 2;
+        return 1;
     }
 
     public long getItemId(int position) {
@@ -72,25 +71,63 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     public void onDataSetChanged() {
     }
 
-    RemoteViews generateTableSpecific(Context context, String[][] inhalt) {
+    RemoteViews generateTableSpecific(Context context, String[][] inhalt, boolean oberstufe) {
         RemoteViews base = new RemoteViews(context.getPackageName(), R.layout.fragment_vertretung);
+
+        boolean sonstiges = VertretungFragment.isSonstiges(inhalt);
+
 
         if (inhalt != null && inhalt.length > 0) {
             //Overview
 //            base.addView(R.id.vertretung_linear_layout_layer1, generateOverviewSpecific());
             //Add Overview to content string
 
-            base.addView(R.id.vertretung_linear_layout_layer1, new RemoteViews(context.getPackageName(), R.layout.listview));
+            for (int i = 0; i < inhalt.length; i++) {
+                base.addView(R.id.vertretung_linear_layout_layer1, getEntrySpecific(inhalt[i], oberstufe, sonstiges));
+            }
 
-            // Set up the intent that starts the StackViewService, which will
-            // provide the views for this collection.
-            Intent intent = new Intent(context, SpecificVertretungWidgetService.class);
-            // Add the app widget ID to the intent extras.
-            intent.putExtra(StackWidgetService.content_id, new Gson().toJson(inhalt));
-            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-
-            base.setRemoteAdapter(R.id.widget_service_listview, intent);
         }
         return base;
+    }
+
+    //From VertretungFragment
+    private RemoteViews getEntrySpecific(String[] entry, boolean oberstufe, boolean sonstiges) {
+        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.list_vertretung_specific_entry);
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewHour, entry[1]);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewHour, ApplicationFeatures.getAccentColor(context));
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, oberstufe ? entry[0] : entry[2]);
+
+        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, ApplicationFeatures.getAccentColor(context));
+
+
+        if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
+            view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 18);
+            view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, entry[3]);
+
+            view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.VISIBLE);
+
+            SpannableString content = new SpannableString(entry[4]);
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            view.setTextViewText(R.id.vertretung_specific_entry_textViewRoom, content);
+        } else {
+
+            SpannableString content = new SpannableString(entry[3]);
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, content);
+            view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 28);
+            view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, ApplicationFeatures.getAccentColor(context));
+
+            view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, content);
+            view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
+        }
+
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, sonstiges ? View.VISIBLE : View.GONE);
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, entry[5]);
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, oberstufe ? entry[2] : entry[0]);
+
+        return view;
     }
 }
