@@ -41,6 +41,7 @@
     <string name="action_share">Teilen</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_refresh">Aktualisieren</string>
+    <string name="open_app">App öffnen</string>
 
     <!-- Settings -->
     <string name="title_activity_settings">Einstellungen</string>
@@ -84,7 +85,9 @@
 
     <!--    Table-->
     <string name="classes">Klasse</string>
+    <string name="classes_short">K</string>
     <string name="courses">Kurs</string>
+    <string name="courses_short">K</string>
     <string name="hours">Stunde</string>
     <string name="hours_short">h</string>
     <string name="hours_short_three">Std</string>

@@ -27,13 +27,15 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        ApplicationFeatures.downloadVertretungsplanDocs(true, true);
-        for (int i = 0; i < appWidgetIds.length; i++) {
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
-            updateWidget(context, appWidgetManager, appWidgetIds[i], remoteViews);
-            appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
-        }
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
+        new Thread(() -> {
+            ApplicationFeatures.downloadVertretungsplanDocs(true, true);
+            for (int i = 0; i < appWidgetIds.length; i++) {
+                RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+                updateWidget(context, appWidgetManager, appWidgetIds[i], remoteViews);
+                appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
+            }
+            super.onUpdate(context, appWidgetManager, appWidgetIds);
+        }).start();
     }
 
     public void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, RemoteViews remoteViews) {
@@ -43,11 +45,12 @@ public class MyWidgetProvider extends AppWidgetProvider {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         remoteViews.setRemoteAdapter(R.id.widget2_listview, intent);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget2_listview);
 
         //Set OnClick intent
         intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        remoteViews.setOnClickPendingIntent(R.id.widget2_frame, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.widget2_open_button, pendingIntent);
 
         int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, MyWidgetProvider.class));
         intent = new Intent();
@@ -58,5 +61,6 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
         //Set Button Image
         remoteViews.setImageViewBitmap(R.id.widget2_refresh_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
+        remoteViews.setImageViewBitmap(R.id.widget2_open_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_open_in_browser_white_24dp));
     }
 }
