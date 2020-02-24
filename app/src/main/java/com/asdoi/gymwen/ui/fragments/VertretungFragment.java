@@ -483,7 +483,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return false;
     }
 
-    String[] generateHeadline() {
+    public static String[] generateHeadline(Context context, boolean sonstiges, boolean oberstufe, boolean all) {
         String[] headline;
 
         if (all) {
@@ -515,7 +515,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     }
 
     View generateOverviewAll() {
-        String[] headline = generateHeadline();
+        String[] headline = generateHeadline(context, sonstiges, oberstufe, true);
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.HORIZONTAL);
         base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -577,7 +577,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     }
 
     View generateOverviewSpecific() {
-        String[] headline = generateHeadline();
+        String[] headline = generateHeadline(context, sonstiges, oberstufe, false);
 
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.HORIZONTAL);

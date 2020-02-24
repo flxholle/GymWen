@@ -12,7 +12,13 @@ import android.widget.RemoteViewsService;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.profiles.Profile;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.ui.fragments.VertretungFragment;
+import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
+
+import static com.asdoi.gymwen.ApplicationFeatures.coursesCheck;
 
 public class StackWidgetService extends RemoteViewsService {
     public static final String content_id = "1010";
@@ -26,6 +32,7 @@ public class StackWidgetService extends RemoteViewsService {
 class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     Context context;
     int mAppWidgetId;
+    int calledTimes = 0;
 
     public VertretungBothRemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
@@ -44,10 +51,56 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     }
 
     public RemoteViews getViewAt(int position) {
-        //For both today and tomorrow:
-        String[][] inhalt = new String[][]{{"Hallo"}, {"Baum"}};
-        boolean oberstufe = false;
-        return generateTableSpecific(context, inhalt, oberstufe);
+//        if (calledTimes >= 2)
+//            return new RemoteViews(context.getPackageName(), R.layout.linearlayout);
+//        calledTimes++;
+//        downloadVertretungsplanDocs(true, false);
+        if (!ProfileManagement.isLoaded())
+            ProfileManagement.reload();
+        if (!coursesCheck(false))
+//            return getTitleText(context, context.getString(R.string.noInternetConnection));
+            return getTitleText(context, context.getString(R.string.noInternetConnection));
+        if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+            return getTitleText(context, context.getString(R.string.noInternetConnection));
+        }
+
+        RemoteViews linearLayout = new RemoteViews(context.getPackageName(), R.layout.linearlayout);
+        Profile p = ApplicationFeatures.getSelectedProfile();
+        Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
+
+        boolean oberstufe = temp.getOberstufe();
+
+        //Today
+        String[][] inhaltToday = temp.getDay(true);
+        if (inhaltToday == null)
+            return getTitleText(context, context.getString(R.string.noInternetConnection));
+        else if (inhaltToday.length <= 0)
+            linearLayout.addView(R.id.widget2_linearlayout, getTitleText(context, context.getString(R.string.nothing)));
+        else {
+            boolean sonstiges = VertretungFragment.isSonstiges(inhaltToday);
+            linearLayout.addView(R.id.widget2_linearlayout, getEntrySpecific(VertretungFragment.generateHeadline(context, sonstiges, oberstufe, false), oberstufe, sonstiges));
+            for (int i = 0; i < inhaltToday.length; i++) {
+                linearLayout.addView(R.id.widget2_linearlayout, getEntrySpecific(inhaltToday[i], oberstufe, sonstiges));
+            }
+        }
+
+
+        //Tomorrow
+        String[][] inhaltTomorrow = temp.getDay(false);
+
+        if (inhaltTomorrow == null)
+            return getTitleText(context, context.getString(R.string.noInternetConnection));
+        else if (inhaltTomorrow.length <= 0)
+            linearLayout.addView(R.id.widget2_linearlayout, getTitleText(context, context.getString(R.string.nothing)));
+        else {
+            boolean sonstiges = VertretungFragment.isSonstiges(inhaltTomorrow);
+            linearLayout.addView(R.id.widget2_linearlayout, getEntrySpecific(VertretungFragment.generateHeadline(context, sonstiges, oberstufe, false), oberstufe, sonstiges));
+            for (int i = 0; i < inhaltTomorrow.length; i++) {
+                linearLayout.addView(R.id.widget2_linearlayout, getEntrySpecific(inhaltTomorrow[i], oberstufe, sonstiges));
+            }
+        }
+
+        return linearLayout;
     }
 
     public RemoteViews getLoadingView() {
@@ -57,7 +110,8 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     }
 
     public int getViewTypeCount() {
-        return 1;
+        //LinearLayout and TextView
+        return 2;
     }
 
     public long getItemId(int position) {
@@ -69,25 +123,7 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     }
 
     public void onDataSetChanged() {
-    }
 
-    RemoteViews generateTableSpecific(Context context, String[][] inhalt, boolean oberstufe) {
-        RemoteViews base = new RemoteViews(context.getPackageName(), R.layout.fragment_vertretung);
-
-        boolean sonstiges = VertretungFragment.isSonstiges(inhalt);
-
-
-        if (inhalt != null && inhalt.length > 0) {
-            //Overview
-//            base.addView(R.id.vertretung_linear_layout_layer1, generateOverviewSpecific());
-            //Add Overview to content string
-
-            for (int i = 0; i < inhalt.length; i++) {
-                base.addView(R.id.vertretung_linear_layout_layer1, getEntrySpecific(inhalt[i], oberstufe, sonstiges));
-            }
-
-        }
-        return base;
     }
 
     //From VertretungFragment
@@ -129,5 +165,12 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
         view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, oberstufe ? entry[2] : entry[0]);
 
         return view;
+    }
+
+    private RemoteViews getTitleText(Context context, String text) {
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.title_textview);
+        views.setTextColor(R.id.title_textview, ApplicationFeatures.getTextColorPrimary(context));
+        views.setTextViewText(R.id.title_textview, text);
+        return views;
     }
 }

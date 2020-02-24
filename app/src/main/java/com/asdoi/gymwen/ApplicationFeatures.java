@@ -530,6 +530,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         @Override
         protected void onPostExecute(Void v) {
             try {
+                downloadVertretungsplanDocs(false, false);
                 if (!ProfileManagement.isLoaded())
                     ProfileManagement.reload();
                 if (!coursesCheck(false))
