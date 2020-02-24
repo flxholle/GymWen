@@ -1,8 +1,10 @@
 package com.asdoi.gymwen.widgets;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
@@ -10,15 +12,18 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import androidx.core.content.ContextCompat;
+
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.fragments.VertretungFragment;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
 
-import static com.asdoi.gymwen.ApplicationFeatures.coursesCheck;
+import org.jetbrains.annotations.NotNull;
 
 public class StackWidgetService extends RemoteViewsService {
     public static final String content_id = "1010";
@@ -33,6 +38,19 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     Context context;
     int mAppWidgetId;
     int calledTimes = 0;
+    boolean noInternet = false;
+    String[][] inhaltToday;
+    String today;
+    boolean nothingToday = false;
+    boolean sonstigesToday = false;
+    String[][] inhaltTomorrow;
+    String tomorrow;
+    boolean nothingTomorrow = false;
+    boolean sonstigesTomorrow = false;
+    boolean oberstufe;
+
+    //Set OnClick intent
+    PendingIntent pendingIntent;
 
     public VertretungBothRemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
@@ -41,66 +59,88 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     }
 
     public void onCreate() {
+        if (!ProfileManagement.isLoaded())
+            ProfileManagement.reload();
+//        if (!coursesCheck(false))
+//            noInternet = true;
+//        if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+//            noInternet = true;
+//        }
+
+        Profile p = ApplicationFeatures.getSelectedProfile();
+        Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
+
+        oberstufe = temp.getOberstufe();
+
+        //Today
+        inhaltToday = temp.getDay(true);
+        if (inhaltToday == null)
+            noInternet = true;
+        else {
+            today = temp.getTitleString(true);
+            noInternet = false;
+
+            if (inhaltToday.length <= 0)
+                nothingToday = true;
+            else
+                sonstigesToday = VertretungFragment.isSonstiges(inhaltToday);
+        }
+
+
+        //Tomorrow
+        inhaltTomorrow = temp.getDay(false);
+        if (inhaltTomorrow == null)
+            noInternet = true;
+        else {
+            tomorrow = temp.getTitleString(false);
+            noInternet = false;
+
+            if (inhaltTomorrow.length <= 0)
+                nothingTomorrow = true;
+            else
+                sonstigesTomorrow = VertretungFragment.isSonstiges(inhaltTomorrow);
+        }
+
+        Intent intent = new Intent(context, MainActivity.class);
+        pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
     }
 
     public void onDestroy() {
     }
 
     public int getCount() {
-        return 1;
+        if (noInternet)
+            return 1;
+        else
+            return (nothingToday ? 2 : inhaltToday.length + 2) + (nothingTomorrow ? 2 : inhaltTomorrow.length + 2);
+
     }
 
     public RemoteViews getViewAt(int position) {
-//        if (calledTimes >= 2)
-//            return new RemoteViews(context.getPackageName(), R.layout.linearlayout);
-//        calledTimes++;
-//        downloadVertretungsplanDocs(true, false);
-        if (!ProfileManagement.isLoaded())
-            ProfileManagement.reload();
-        if (!coursesCheck(false))
-//            return getTitleText(context, context.getString(R.string.noInternetConnection));
+//        RemoteViews v;
+        if (noInternet)
             return getTitleText(context, context.getString(R.string.noInternetConnection));
-        if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
-            return getTitleText(context, context.getString(R.string.noInternetConnection));
+
+        int parsePos = parsePosition(position);
+        switch (parsePos) {
+            case nothingCode:
+                return getNothing(context, context.getString(R.string.nothing));
+            case isTodayHeadline:
+                return getHeadline(VertretungFragment.generateHeadline(context, sonstigesToday, oberstufe, false), sonstigesToday);
+            case isTomorrowHeadline:
+                return getHeadline(VertretungFragment.generateHeadline(context, sonstigesTomorrow, oberstufe, false), sonstigesTomorrow);
+            default:
+            case isInTodayArray:
+                return getEntrySpecific(inhaltToday[position - 2], oberstufe, sonstigesToday);
+            case isInTomorrowArray:
+                return getEntrySpecific(inhaltTomorrow[position - inhaltToday.length - 4], oberstufe, sonstigesTomorrow);
+            case isTodayDay:
+                return getTitleText(context, today);
+            case isTomorrowDay:
+                return getTitleText(context, tomorrow);
         }
-
-        RemoteViews linearLayout = new RemoteViews(context.getPackageName(), R.layout.linearlayout);
-        Profile p = ApplicationFeatures.getSelectedProfile();
-        Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
-
-        boolean oberstufe = temp.getOberstufe();
-
-        //Today
-        String[][] inhaltToday = temp.getDay(true);
-        if (inhaltToday == null)
-            return getTitleText(context, context.getString(R.string.noInternetConnection));
-        else if (inhaltToday.length <= 0)
-            linearLayout.addView(R.id.widget2_linearlayout, getTitleText(context, context.getString(R.string.nothing)));
-        else {
-            boolean sonstiges = VertretungFragment.isSonstiges(inhaltToday);
-            linearLayout.addView(R.id.widget2_linearlayout, getEntrySpecific(VertretungFragment.generateHeadline(context, sonstiges, oberstufe, false), oberstufe, sonstiges));
-            for (int i = 0; i < inhaltToday.length; i++) {
-                linearLayout.addView(R.id.widget2_linearlayout, getEntrySpecific(inhaltToday[i], oberstufe, sonstiges));
-            }
-        }
-
-
-        //Tomorrow
-        String[][] inhaltTomorrow = temp.getDay(false);
-
-        if (inhaltTomorrow == null)
-            return getTitleText(context, context.getString(R.string.noInternetConnection));
-        else if (inhaltTomorrow.length <= 0)
-            linearLayout.addView(R.id.widget2_linearlayout, getTitleText(context, context.getString(R.string.nothing)));
-        else {
-            boolean sonstiges = VertretungFragment.isSonstiges(inhaltTomorrow);
-            linearLayout.addView(R.id.widget2_linearlayout, getEntrySpecific(VertretungFragment.generateHeadline(context, sonstiges, oberstufe, false), oberstufe, sonstiges));
-            for (int i = 0; i < inhaltTomorrow.length; i++) {
-                linearLayout.addView(R.id.widget2_linearlayout, getEntrySpecific(inhaltTomorrow[i], oberstufe, sonstiges));
-            }
-        }
-
-        return linearLayout;
+//        v.setOnClickPendingIntent(R.id.widget_entry_linear, pendingIntent);
+//        return v;
     }
 
     public RemoteViews getLoadingView() {
@@ -110,8 +150,7 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     }
 
     public int getViewTypeCount() {
-        //LinearLayout and TextView
-        return 2;
+        return 1;
     }
 
     public long getItemId(int position) {
@@ -123,19 +162,73 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     }
 
     public void onDataSetChanged() {
+        onCreate();
+    }
 
+    private final int nothingTodayCode = -7;
+    private final int nothingTomorrowCode = -7;
+    private final int nothingCode = -7;
+    private final int isInTodayArray = -3;
+    private final int isInTomorrowArray = -4;
+    private final int isTodayHeadline = -5;
+    private final int isTomorrowHeadline = -6;
+    private final int isTodayDay = -8;
+    private final int isTomorrowDay = -9;
+
+    private int parsePosition(int position) {
+        if (nothingToday) {
+            if (position == 0)
+                return isTodayDay;
+            else if (position == 1)
+                return nothingTodayCode;
+            else if (position == 2)
+                return isTomorrowDay;
+            else if (position == 3) {
+                if (nothingTomorrow)
+                    return nothingTomorrowCode;
+                else
+                    return isTomorrowHeadline;
+            } else
+                return isInTomorrowArray;
+        } else if (nothingTomorrow) {
+            if (position == 0)
+                return isTodayDay;
+            else if (position == 1)
+                return isTodayHeadline;
+            else if (position < inhaltToday.length + 2)
+                return isInTodayArray;
+            else if (position == inhaltToday.length + 2)
+                return isTodayDay;
+            else
+                return nothingTomorrowCode;
+        } else {
+            if (position == 0)
+                return isTodayDay;
+            else if (position == 1)
+                return isTodayHeadline;
+            else if (position < inhaltToday.length + 2)
+                return isInTodayArray;
+            else if (position == inhaltToday.length + 2)
+                return isTomorrowDay;
+            else if (position == inhaltToday.length + 3)
+                return isTomorrowHeadline;
+            else
+                return isInTomorrowArray;
+        }
     }
 
     //From VertretungFragment
     private RemoteViews getEntrySpecific(String[] entry, boolean oberstufe, boolean sonstiges) {
-        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.list_vertretung_specific_entry);
+        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_list_entry);
+
+        resetView(view);
 
         view.setTextViewText(R.id.vertretung_specific_entry_textViewHour, entry[1]);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewHour, ApplicationFeatures.getAccentColor(context));
+//        view.setTextColor(R.id.vertretung_specific_entry_textViewHour, ApplicationFeatures.getAccentColor(context));
 
         view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, oberstufe ? entry[0] : entry[2]);
 
-        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, ApplicationFeatures.getAccentColor(context));
+//        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, ApplicationFeatures.getAccentColor(context));
 
 
         if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
@@ -153,24 +246,104 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, content);
             view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 28);
-            view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, ApplicationFeatures.getAccentColor(context));
+//            view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, ApplicationFeatures.getAccentColor(context));
 
-            view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, content);
+//            view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, content);
             view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
         }
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, sonstiges ? View.VISIBLE : View.GONE);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, entry[5]);
 
-        view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, oberstufe ? entry[2] : entry[0]);
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, oberstufe ? entry[2] : entry[0]);
 
+        view.setOnClickPendingIntent(R.id.widget_entry_linear, pendingIntent);
         return view;
     }
 
-    private RemoteViews getTitleText(Context context, String text) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.title_textview);
-        views.setTextColor(R.id.title_textview, ApplicationFeatures.getTextColorPrimary(context));
-        views.setTextViewText(R.id.title_textview, text);
-        return views;
+    private RemoteViews getTitleText(@NotNull Context context, String text) {
+        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_list_entry);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewHour, View.GONE);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.GONE);
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, text);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 25);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, Color.BLACK);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.GONE);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.GONE);
+        view.setOnClickPendingIntent(R.id.widget_entry_linear, pendingIntent);
+        return view;
+    }
+
+    private RemoteViews getNothing(@NotNull Context context, String text) {
+        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_list_entry);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewHour, View.GONE);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.GONE);
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, text);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 18);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, Color.GRAY);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.GONE);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.GONE);
+        view.setOnClickPendingIntent(R.id.widget_entry_linear, pendingIntent);
+        return view;
+    }
+
+    private void resetView(RemoteViews view) {
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewHour, View.VISIBLE);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewHour, Color.WHITE);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewHour, TypedValue.COMPLEX_UNIT_SP, 36);
+
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.VISIBLE);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewSubject, Color.GRAY);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewSubject, TypedValue.COMPLEX_UNIT_SP, 18);
+
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewTeacher, View.VISIBLE);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, Color.GRAY);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 18);
+
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.VISIBLE);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, ContextCompat.getColor(context, R.color.colorAccent));
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, 24);
+
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.VISIBLE);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewOther, Color.GRAY);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, 16);
+
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.VISIBLE);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewClass, Color.GRAY);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 12);
+
+    }
+
+
+    private RemoteViews getHeadline(@NotNull String[] headline, boolean sonstiges) {
+        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_list_entry);
+        int textSize = 18;
+
+        resetView(view);
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewHour, headline[0]);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewHour, TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, headline[1]);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewSubject, TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, textSize);
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, headline[2]);
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewRoom, headline[3]);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, Color.GRAY);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, sonstiges ? View.VISIBLE : View.GONE);
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, headline[4]);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, headline[5]);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 10);
+
+        view.setOnClickPendingIntent(R.id.widget_entry_linear, pendingIntent);
+        return view;
     }
 }
