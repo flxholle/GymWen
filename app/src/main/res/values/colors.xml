@@ -18,4 +18,7 @@
     <color name="intro_background_five">@color/colorPrimary</color>
 
     <color name="grey">#212121</color>
+
+    <!-- Widget -->
+    <color name="widget_background">#BFFFFFFF</color>
 </resources>

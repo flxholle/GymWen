@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widget2_frame"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/widget2_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/widget_background">
 
     <ListView
         android:id="@+id/widget2_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@null" />
 
     <ImageButton
         android:id="@+id/widget2_refresh_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/widget_image_width"
+        android:layout_height="@dimen/widget_image_height"
         android:layout_gravity="end"
         android:contentDescription="@string/action_refresh"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_refresh_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/widget2_open_button"
+        android:layout_width="@dimen/widget_image_width"
+        android:layout_height="@dimen/widget_image_height"
+        android:layout_gravity="start"
+        android:contentDescription="@string/open_app"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_open_in_browser_white_24dp" />
 </FrameLayout>
