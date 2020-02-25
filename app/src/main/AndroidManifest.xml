@@ -42,6 +42,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activities.SignInActivity"
@@ -86,7 +89,7 @@
                     </intent-filter>
                 </activity>-->
 
-        <receiver android:name=".widgets.MyWidgetProvider">
+        <receiver android:name=".widgets.VertretungWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -137,8 +140,21 @@
         </provider>
 
         <service
-            android:name=".widgets.StackWidgetService"
+            android:name=".widgets.VertretungWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".services.NotificationTileService"
+            android:icon="@drawable/ic_notifications_black_24dp"
+            android:label="@string/tile_name"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="true" />
+        </service>
     </application>
 
 </manifest>

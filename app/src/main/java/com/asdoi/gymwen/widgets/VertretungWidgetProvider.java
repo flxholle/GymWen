@@ -19,7 +19,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 
-public class MyWidgetProvider extends AppWidgetProvider {
+public class VertretungWidgetProvider extends AppWidgetProvider {
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
     @ColorInt
     protected static int textColorSecondary = Color.GRAY;
@@ -58,7 +58,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     public void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, RemoteViews remoteViews) {
         remoteViews.setInt(R.id.widget2_frame, "setBackgroundColor", backgroundColor);
 
-        Intent intent = new Intent(context, StackWidgetService.class);
+        Intent intent = new Intent(context, VertretungWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         remoteViews.setRemoteAdapter(R.id.widget2_listview, intent);
@@ -69,7 +69,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         remoteViews.setOnClickPendingIntent(R.id.widget2_open_button, pendingIntent);
 
-        int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, MyWidgetProvider.class));
+        int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, VertretungWidgetProvider.class));
         intent = new Intent();
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         intent.putExtra(WIDGET_ID_KEY, ids);
