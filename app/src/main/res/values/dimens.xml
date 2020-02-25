@@ -15,7 +15,7 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="widget_margin">8dp</dimen>
 
     <!-- Widget -->
-    <dimen name="widget_image_height">35dp</dimen>
-    <dimen name="widget_image_width">40dp</dimen>
+    <dimen name="widget_image_height">40dp</dimen>
+    <dimen name="widget_image_width">50dp</dimen>
 
 </resources>

@@ -175,7 +175,6 @@
     <string name="acra_dialog_content">Please add a comment about what you did here:
         \nWhen you click OK, the email app opens and personal data (such as email address, device model, saved values, etc.) are transmitted!</string>
     <string name="acra_dialog_title">That shouldn\'t have happened</string>
-    <string name="acra_toast">That shouldn\'t have happened.</string>
 
 
     <string name="changelog_full_title">Changes \u0026 improvements</string>

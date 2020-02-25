@@ -1,6 +1,5 @@
 package com.asdoi.gymwen.widgets;
 
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,24 +32,30 @@ public class StackWidgetService extends RemoteViewsService {
 }
 
 class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-    Context context;
-    int mAppWidgetId;
-    int calledTimes = 0;
-    boolean noInternet = false;
-    String[][] inhaltToday;
-    String today;
-    boolean nothingToday = false;
-    boolean sonstigesToday = false;
-    String[][] inhaltTomorrow;
-    String tomorrow;
-    boolean nothingTomorrow = false;
-    boolean sonstigesTomorrow = false;
-    boolean oberstufe;
+    private static final int nothingCode = -7;
+    private static final int isInTodayArray = -3;
+    private static final int isInTomorrowArray = -4;
+    private static final int isTodayHeadline = -5;
+    private static final int isTomorrowHeadline = -6;
+    private static final int isTodayDay = -8;
+    private static final int isTomorrowDay = -9;
 
-    public VertretungBothRemoteViewsFactory(Context context, Intent intent) {
+    private Context context;
+    private boolean noInternet = false;
+    private String[][] inhaltToday;
+    private String today;
+    private boolean nothingToday = false;
+    private boolean sonstigesToday = false;
+    private String[][] inhaltTomorrow;
+    private String tomorrow;
+    private boolean nothingTomorrow = false;
+    private boolean sonstigesTomorrow = false;
+    private boolean oberstufe;
+
+    protected VertretungBothRemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
-        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID);
+//        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+//                AppWidgetManager.INVALID_APPWIDGET_ID);
     }
 
     public void onCreate() {
@@ -154,17 +159,10 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
         onCreate();
     }
 
-    private final int nothingTodayCode = -7;
-    private final int nothingTomorrowCode = -7;
-    private final int nothingCode = -7;
-    private final int isInTodayArray = -3;
-    private final int isInTomorrowArray = -4;
-    private final int isTodayHeadline = -5;
-    private final int isTomorrowHeadline = -6;
-    private final int isTodayDay = -8;
-    private final int isTomorrowDay = -9;
-
     private int parsePosition(int position) {
+        int nothingTodayCode = nothingCode;
+        int nothingTomorrowCode = nothingCode;
+
         if (nothingToday) {
             if (position == 0)
                 return isTodayDay;
@@ -207,10 +205,51 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     }
 
     //From VertretungFragment
-    private RemoteViews getEntrySpecific(String[] entry, boolean oberstufe, boolean sonstiges) {
-        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_list_entry);
+    private RemoteViews getTitleText(@NotNull Context context, String text) {
+        RemoteViews view = getRemoteViews(context);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewHour, View.GONE);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.GONE);
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, text);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 25);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, MyWidgetProvider.textColorPrimary);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.GONE);
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.GONE);
+//        view.setOnClickPendingIntent(R.id.widget_entry_linear, MyWidgetProvider.getPendingSelfIntent(context, MyWidgetProvider.WIDGET_ON_CLICK));
+        return view;
+    }
 
-        resetView(view);
+    private RemoteViews getHeadline(@NotNull String[] headline, boolean sonstiges) {
+        RemoteViews view = getRemoteViews(context);
+
+        int textSize = 17;
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewHour, headline[0]);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewHour, TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, headline[1]);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewSubject, TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, textSize);
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, headline[2]);
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewRoom, headline[3]);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, MyWidgetProvider.textColorSecondary);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, sonstiges ? View.VISIBLE : View.GONE);
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, headline[4]);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, textSize);
+
+        view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, headline[5]);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 10);
+
+//        view.setOnClickPendingIntent(R.id.widget_entry_linear, MyWidgetProvider.getPendingSelfIntent(context, MyWidgetProvider.WIDGET_ON_CLICK));
+        return view;
+    }
+
+    private RemoteViews getEntrySpecific(String[] entry, boolean oberstufe, boolean sonstiges) {
+        RemoteViews view = getRemoteViews(context);
 
         view.setTextViewText(R.id.vertretung_specific_entry_textViewHour, entry[1]);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, oberstufe ? entry[0] : entry[2]);
@@ -241,27 +280,20 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
         return view;
     }
 
-    private RemoteViews getTitleText(@NotNull Context context, String text) {
+    @NotNull
+    private RemoteViews getRemoteViews(@NotNull Context context) {
         RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_list_entry);
-        view.setViewVisibility(R.id.vertretung_specific_entry_textViewHour, View.GONE);
-        view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.GONE);
-        view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, text);
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 25);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, Color.BLACK);
-        view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
-        view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.GONE);
-        view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.GONE);
-//        view.setOnClickPendingIntent(R.id.widget_entry_linear, MyWidgetProvider.getPendingSelfIntent(context, MyWidgetProvider.WIDGET_ON_CLICK));
+        resetView(view);
         return view;
     }
 
     private RemoteViews getNothing(@NotNull Context context, String text) {
-        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_list_entry);
+        RemoteViews view = getRemoteViews(context);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewHour, View.GONE);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.GONE);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, text);
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 18);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, Color.GRAY);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 21);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, MyWidgetProvider.textColorSecondary);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.GONE);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.GONE);
@@ -271,69 +303,38 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
 
     private void resetView(RemoteViews view) {
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewHour, View.VISIBLE);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewHour, Color.WHITE);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewHour, TypedValue.COMPLEX_UNIT_SP, 36);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewHour, "");
+        view.setTextColor(R.id.vertretung_specific_entry_textViewHour, Color.WHITE);
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.VISIBLE);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewSubject, Color.GRAY);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewSubject, TypedValue.COMPLEX_UNIT_SP, 18);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, "");
+        view.setTextColor(R.id.vertretung_specific_entry_textViewSubject, MyWidgetProvider.textColorSecondary);
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewTeacher, View.VISIBLE);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, Color.GRAY);
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 16);
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 14);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, "");
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, MyWidgetProvider.textColorSecondary);
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.VISIBLE);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, ContextCompat.getColor(context, R.color.colorAccent));
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, 24);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewRoom, "");
+        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, ContextCompat.getColor(context, R.color.colorAccent));
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.VISIBLE);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewOther, Color.GRAY);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, 16);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, "");
+        view.setTextColor(R.id.vertretung_specific_entry_textViewOther, MyWidgetProvider.textColorSecondary);
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.VISIBLE);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewClass, Color.GRAY);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 12);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, "");
+        view.setTextColor(R.id.vertretung_specific_entry_textViewClass, MyWidgetProvider.textColorSecondary);
 
     }
 
-
-    private RemoteViews getHeadline(@NotNull String[] headline, boolean sonstiges) {
-        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_list_entry);
-        int textSize = 17;
-
-        resetView(view);
-
-        view.setTextViewText(R.id.vertretung_specific_entry_textViewHour, headline[0]);
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewHour, TypedValue.COMPLEX_UNIT_SP, textSize);
-
-        view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, headline[1]);
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewSubject, TypedValue.COMPLEX_UNIT_SP, textSize);
-
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, textSize);
-        view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, headline[2]);
-
-        view.setTextViewText(R.id.vertretung_specific_entry_textViewRoom, headline[3]);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, Color.GRAY);
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, textSize);
-
-        view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, sonstiges ? View.VISIBLE : View.GONE);
-        view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, headline[4]);
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, textSize);
-
-        view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, headline[5]);
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 10);
-
-//        view.setOnClickPendingIntent(R.id.widget_entry_linear, MyWidgetProvider.getPendingSelfIntent(context, MyWidgetProvider.WIDGET_ON_CLICK));
-        return view;
-    }
-
-    public static String[] generateHeadline(Context context, boolean isShort, boolean oberstufe) {
+    private static String[] generateHeadline(Context context, boolean isShort, boolean oberstufe) {
         String[] headline;
 
         if (oberstufe) {

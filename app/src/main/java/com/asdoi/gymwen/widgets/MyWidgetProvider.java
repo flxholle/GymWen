@@ -6,8 +6,14 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.widget.RemoteViews;
+
+import androidx.annotation.ColorInt;
+import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -15,6 +21,16 @@ import com.asdoi.gymwen.ui.activities.MainActivity;
 
 public class MyWidgetProvider extends AppWidgetProvider {
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
+    @ColorInt
+    protected static int textColorSecondary = Color.GRAY;
+    @ColorInt
+    protected static int textColorPrimary = Color.BLACK;
+    @ColorInt
+    protected static int backgroundColor = Color.WHITE;
+
+    private final static int light = 1;
+    private final static int dark = 2;
+    private final static int black = 3;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -27,6 +43,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        setColors(getThemeInt(context));
         new Thread(() -> {
             ApplicationFeatures.downloadVertretungsplanDocs(true, true);
             for (int i = 0; i < appWidgetIds.length; i++) {
@@ -39,7 +56,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     }
 
     public void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, RemoteViews remoteViews) {
-//            remoteViews.setInt(R.id.widget2_frame, "setBackgroundColor", ApplicationFeatures.getBackgroundColor(context));
+        remoteViews.setInt(R.id.widget2_frame, "setBackgroundColor", backgroundColor);
 
         Intent intent = new Intent(context, StackWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -62,5 +79,53 @@ public class MyWidgetProvider extends AppWidgetProvider {
         //Set Button Image
         remoteViews.setImageViewBitmap(R.id.widget2_refresh_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
         remoteViews.setImageViewBitmap(R.id.widget2_open_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_open_in_browser_white_24dp));
+    }
+
+    public void setColors(int mode) {
+        switch (mode) {
+            default:
+            case light:
+                textColorPrimary = Color.BLACK;
+                textColorSecondary = Color.GRAY;
+                backgroundColor = Color.WHITE;
+                break;
+            case dark:
+                textColorPrimary = Color.WHITE;
+                textColorSecondary = Color.LTGRAY;
+                backgroundColor = Color.DKGRAY;
+                break;
+            case black:
+                textColorPrimary = Color.WHITE;
+                textColorSecondary = Color.LTGRAY;
+                backgroundColor = Color.BLACK;
+                break;
+        }
+    }
+
+    private int getThemeInt(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String theme = sharedPref.getString("theme", "switch");
+        return getThemeResFromPrefValue(theme, context);
+    }
+
+    private static int getThemeResFromPrefValue(String themePrefValue, Context context) {
+        switch (themePrefValue) {
+            case "dark":
+                return dark;
+            case "black":
+                return black;
+            case "switch":
+                int nightModeFlags = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                switch (nightModeFlags) {
+                    case Configuration.UI_MODE_NIGHT_YES:
+                        return dark;
+                    default:
+                    case Configuration.UI_MODE_NIGHT_NO:
+                        return light;
+                }
+            case "light":
+            default:
+                return light;
+        }
     }
 }
