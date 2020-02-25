@@ -341,4 +341,10 @@
     <string name="dont_show_again">Nicht wieder anzeigen</string>
     <string name="registration_dialog_title">Nutzerzählung</string>
     <string name="registration_dialog_content">Um herauszufinden, wie viele Personen diese App nutzen, möchte ich eine Nutzerzählung durchführen. Dabei werden Metadaten deiner Internetverbdingung, wie die IP-Adresse oder die Uhrzeit gespeichert.          Möchtest du daran teilnehmen?</string>
+
+    <!-- Quick Settings Tile -->
+    <string name="tile_name">Benachr. anzeigen</string>
+    <string name="on">An</string>
+    <string name="off">Aus</string>
+
 </resources>

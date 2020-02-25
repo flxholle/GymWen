@@ -22,7 +22,7 @@ import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
 
 import org.jetbrains.annotations.NotNull;
 
-public class StackWidgetService extends RemoteViewsService {
+public class VertretungWidgetService extends RemoteViewsService {
     public static final String content_id = "1010";
 
     @Override
@@ -211,11 +211,11 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.GONE);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, text);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 25);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, MyWidgetProvider.textColorPrimary);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, VertretungWidgetProvider.textColorPrimary);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.GONE);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.GONE);
-//        view.setOnClickPendingIntent(R.id.widget_entry_linear, MyWidgetProvider.getPendingSelfIntent(context, MyWidgetProvider.WIDGET_ON_CLICK));
+//        view.setOnClickPendingIntent(R.id.widget_entry_linear, VertretungWidgetProvider.getPendingSelfIntent(context, VertretungWidgetProvider.WIDGET_ON_CLICK));
         return view;
     }
 
@@ -234,7 +234,7 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, headline[2]);
 
         view.setTextViewText(R.id.vertretung_specific_entry_textViewRoom, headline[3]);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, MyWidgetProvider.textColorSecondary);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, VertretungWidgetProvider.textColorSecondary);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, textSize);
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, sonstiges ? View.VISIBLE : View.GONE);
@@ -244,7 +244,7 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
         view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, headline[5]);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 10);
 
-//        view.setOnClickPendingIntent(R.id.widget_entry_linear, MyWidgetProvider.getPendingSelfIntent(context, MyWidgetProvider.WIDGET_ON_CLICK));
+//        view.setOnClickPendingIntent(R.id.widget_entry_linear, VertretungWidgetProvider.getPendingSelfIntent(context, VertretungWidgetProvider.WIDGET_ON_CLICK));
         return view;
     }
 
@@ -276,7 +276,7 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
 
         view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, oberstufe ? entry[2] : entry[0]);
 
-//        view.setOnClickPendingIntent(R.id.widget_entry_linear, MyWidgetProvider.getPendingSelfIntent(context, MyWidgetProvider.WIDGET_ON_CLICK));
+//        view.setOnClickPendingIntent(R.id.widget_entry_linear, VertretungWidgetProvider.getPendingSelfIntent(context, VertretungWidgetProvider.WIDGET_ON_CLICK));
         return view;
     }
 
@@ -293,11 +293,11 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.GONE);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, text);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 21);
-        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, MyWidgetProvider.textColorSecondary);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, VertretungWidgetProvider.textColorSecondary);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.GONE);
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.GONE);
-//        view.setOnClickPendingIntent(R.id.widget_entry_linear, MyWidgetProvider.getPendingSelfIntent(context, MyWidgetProvider.WIDGET_ON_CLICK));
+//        view.setOnClickPendingIntent(R.id.widget_entry_linear, VertretungWidgetProvider.getPendingSelfIntent(context, VertretungWidgetProvider.WIDGET_ON_CLICK));
         return view;
     }
 
@@ -310,12 +310,12 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.VISIBLE);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewSubject, TypedValue.COMPLEX_UNIT_SP, 18);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, "");
-        view.setTextColor(R.id.vertretung_specific_entry_textViewSubject, MyWidgetProvider.textColorSecondary);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewSubject, VertretungWidgetProvider.textColorSecondary);
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewTeacher, View.VISIBLE);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 14);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, "");
-        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, MyWidgetProvider.textColorSecondary);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, VertretungWidgetProvider.textColorSecondary);
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.VISIBLE);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, 24);
@@ -325,12 +325,12 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.VISIBLE);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, 16);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, "");
-        view.setTextColor(R.id.vertretung_specific_entry_textViewOther, MyWidgetProvider.textColorSecondary);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewOther, VertretungWidgetProvider.textColorSecondary);
 
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.VISIBLE);
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 12);
         view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, "");
-        view.setTextColor(R.id.vertretung_specific_entry_textViewClass, MyWidgetProvider.textColorSecondary);
+        view.setTextColor(R.id.vertretung_specific_entry_textViewClass, VertretungWidgetProvider.textColorSecondary);
 
     }
 

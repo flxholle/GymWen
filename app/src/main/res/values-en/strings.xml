@@ -271,5 +271,8 @@
     <string name="classes_short">C</string>
     <string name="courses_short">C</string>
     <string name="open_app">Open app</string>
+    <string name="tile_name">Show notification</string>
+    <string name="off">Disabled</string>
+    <string name="on">Enabled</string>
 
 </resources>
