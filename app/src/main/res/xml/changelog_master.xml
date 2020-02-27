@@ -3,9 +3,8 @@
     <release
         version="1.1.2"
         versioncode="112">
-        <change>Neues Widget</change>
-        <change>Knopf für die Schnelleinstellungen in der Benachrichtiungsleiste hinzugefügt
-        </change>
+        <change>Neues Widget (mit Dark-Theme)</change>
+        <change>Schnelleinstellung in der Benachrichtiungsleiste hinzugefügt</change>
         <change>Nutzerzähler</change>
         <change>Speicherplatz reduziert</change>
         <change>Bugfixes</change>

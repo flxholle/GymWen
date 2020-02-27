@@ -22,24 +22,18 @@ import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 public class VertretungWidgetService extends RemoteViewsService {
     public static final String content_id = "1010";
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new VertretungBothRemoteViewsFactory(this.getApplicationContext(), intent);
+        return new com.asdoi.gymwen.widgets.RemoteViewsFactory(this.getApplicationContext(), intent);
     }
 }
 
-class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-    private static final int nothingCode = -7;
-    private static final int isInTodayArray = -3;
-    private static final int isInTomorrowArray = -4;
-    private static final int isTodayHeadline = -5;
-    private static final int isTomorrowHeadline = -6;
-    private static final int isTodayDay = -8;
-    private static final int isTomorrowDay = -9;
-
+class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private Context context;
     private boolean noInternet = false;
     private String[][] inhaltToday;
@@ -51,11 +45,12 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     private boolean nothingTomorrow = false;
     private boolean sonstigesTomorrow = false;
     private boolean oberstufe;
+    private String profileName;
 
-    protected VertretungBothRemoteViewsFactory(Context context, Intent intent) {
+    private ArrayList<Integer> profileLenghts;
+
+    protected RemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
-//        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-//                AppWidgetManager.INVALID_APPWIDGET_ID);
     }
 
     public void onCreate() {
@@ -63,17 +58,40 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
             ProfileManagement.reload();
 //        if (!coursesCheck(false))
 //            noInternet = true;
-//        if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
-//            noInternet = true;
-//        }
+        profileLenghts = new ArrayList<Integer>();
+        for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
+            onCreate(ProfileManagement.getProfile(i));
+            profileLenghts.add(getLengthOfThisProfile() + 1);
+        }
+        if (profileLenghts.size() == 1)
+            profileLenghts.set(0, profileLenghts.get(0) - 1);
+        onCreate(ProfileManagement.getProfile(0));
 
-        Profile p = ApplicationFeatures.getSelectedProfile();
+    }
+
+    private void reset() {
+        inhaltToday = null;
+        today = "";
+        nothingToday = false;
+        sonstigesToday = false;
+        inhaltTomorrow = null;
+        tomorrow = "";
+        nothingTomorrow = false;
+        sonstigesTomorrow = false;
+        oberstufe = false;
+        profileName = "";
+    }
+
+    private void onCreate(Profile p) {
+        reset();
         Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
 
         oberstufe = temp.getOberstufe();
+        profileName = p.getName();
 
         //Today
         inhaltToday = temp.getDay(true);
+//        nothingToday = false;
         if (inhaltToday == null)
             noInternet = true;
         else {
@@ -89,6 +107,7 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
 
         //Tomorrow
         inhaltTomorrow = temp.getDay(false);
+//        nothingTomorrow = false;
         if (inhaltTomorrow == null)
             noInternet = true;
         else {
@@ -105,19 +124,38 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     public void onDestroy() {
     }
 
-    public int getCount() {
+    private int getLengthOfThisProfile() {
         if (noInternet)
             return 1;
         else
             return (nothingToday ? 2 : inhaltToday.length + 2) + (nothingTomorrow ? 2 : inhaltTomorrow.length + 2);
-
     }
+
+    public int getCount() {
+        if (noInternet)
+            return 1;
+        int returnValue = 0;
+        for (int i : profileLenghts) {
+            returnValue += i;
+        }
+        return returnValue;
+    }
+
+    private static final int nothingCode = -7;
+    private static final int isInTodayArray = -3;
+    private static final int isInTomorrowArray = -4;
+    private static final int isTodayHeadline = -5;
+    private static final int isTomorrowHeadline = -6;
+    private static final int isTodayDay = -8;
+    private static final int isTomorrowDay = -9;
+    private static final int isProfileHeadline = -10;
 
     public RemoteViews getViewAt(int position) {
         if (noInternet)
             return getTitleText(context, context.getString(R.string.noInternetConnection));
 
-        int parsePos = parsePosition(position);
+        int profilePos = checkProfilePosition(position);
+        int parsePos = parsePosition(profilePos);
         switch (parsePos) {
             case nothingCode:
                 return getNothing(context, context.getString(R.string.nothing));
@@ -127,13 +165,15 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
                 return getHeadline(generateHeadline(context, true, oberstufe), sonstigesTomorrow);
             default:
             case isInTodayArray:
-                return getEntrySpecific(inhaltToday[position - 2], oberstufe, sonstigesToday);
+                return getEntrySpecific(inhaltToday[profilePos - 2], oberstufe, sonstigesToday);
             case isInTomorrowArray:
-                return getEntrySpecific(inhaltTomorrow[position - inhaltToday.length - 4], oberstufe, sonstigesTomorrow);
+                return getEntrySpecific(inhaltTomorrow[profilePos - inhaltToday.length - 4], oberstufe, sonstigesTomorrow);
             case isTodayDay:
                 return getTitleText(context, today);
             case isTomorrowDay:
                 return getTitleText(context, tomorrow);
+            case isProfileHeadline:
+                return getTitleText(context, profileName);
         }
     }
 
@@ -162,6 +202,9 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
     private int parsePosition(int position) {
         int nothingTodayCode = nothingCode;
         int nothingTomorrowCode = nothingCode;
+
+        if (position == isProfileHeadline)
+            return position;
 
         if (nothingToday) {
             if (position == 0)
@@ -202,6 +245,41 @@ class VertretungBothRemoteViewsFactory implements RemoteViewsService.RemoteViews
             else
                 return isInTomorrowArray;
         }
+    }
+
+    private int selectedProfile = 0;
+
+    private int checkProfilePosition(int position) {
+        int range = 0;
+        for (int i = 0; i < profileLenghts.size(); i++) {
+            range += profileLenghts.get(0);
+            //Cause position is counting from 0, the range has to start at 0
+            if (position < range) {
+                onCreate(ProfileManagement.getProfile(i));
+                selectedProfile = i;
+                break;
+            }
+        }
+        //Cause position is counting from 0, the range has to start at 0
+//        range--;
+
+//        if (position <= range) {
+        int pos = position;
+        for (int i = 0; i < selectedProfile; i++) {
+            pos -= profileLenghts.get(i);
+        }
+
+        if (pos == 0 && profileLenghts.size() > 1)
+            return isProfileHeadline;
+        else if (profileLenghts.size() > 1)
+            return pos - 1;
+        else
+            return pos;
+//        } else {
+//            onCreate(ProfileManagement.getProfile(selectedProfile + 1));
+//            selectedProfile++;
+//            return isProfileHeadline;
+//        }
     }
 
     //From VertretungFragment

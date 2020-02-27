@@ -50,7 +50,7 @@ public class ProfileManagement {
     }
 
     public static boolean isLoaded() {
-        return getProfileList() != null;
+        return getProfileListNames() != null;
     }
 
     public static void save(boolean apply) {
@@ -72,7 +72,7 @@ public class ProfileManagement {
         return sizeProfiles() > 1;
     }
 
-    public static ArrayList<String> getProfileList() {
+    public static ArrayList<String> getProfileListNames() {
         ArrayList<String> a = new ArrayList<>();
         for (Profile p : profileList) {
             a.add(p.getName());
