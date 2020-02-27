@@ -220,7 +220,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         if (ProfileManagement.isMoreThanOneProfile()) {
             parentSpinner.setVisibility(View.VISIBLE);
             parentSpinner.setEnabled(true);
-            List<String> list = ProfileManagement.getProfileList();
+            List<String> list = ProfileManagement.getProfileListNames();
             list.add(getString(R.string.profiles_edit));
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
