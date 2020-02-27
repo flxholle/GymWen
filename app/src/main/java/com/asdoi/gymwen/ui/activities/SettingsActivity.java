@@ -130,10 +130,12 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         }
         editor.apply();
         startDesignOnRecreation = true;
+        dialog.dismiss();
         recreate();
     }
 
     @Override
     public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
+        dialog.dismiss();
     }
 }

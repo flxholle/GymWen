@@ -356,6 +356,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                         else
                             mainActivity.setName(input.getText().toString());
                         addSpinner();
+                        dialog.dismiss();
                     }
                 });
         builder.negativeText(context.getString(R.string.cancel))
@@ -363,7 +364,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
                         mainActivity.setName(context.getString(R.string.profile_empty_name));
-                        dialog.cancel();
+                        dialog.dismiss();
                         addSpinner();
                     }
                 });
