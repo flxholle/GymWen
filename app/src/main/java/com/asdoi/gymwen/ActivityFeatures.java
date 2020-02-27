@@ -239,6 +239,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                             try {
                                 String apkUrl = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
                                 startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
+                                dialogInterface.dismiss();
                             } catch (Exception e) {
                                 tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
                             }
@@ -442,6 +443,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                 @Override
                 public void onClick(MaterialDialog dialog, DialogAction which) {
                     openAppPermissionSettings();
+                    dialog.dismiss();
                 }
             });
             builder.negativeText(getContext().getString(R.string.permission_ok_button));
@@ -583,6 +585,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
         ApplicationFeatures.setAlarmTime(hourOfDay, minute, second);
         ApplicationFeatures.setAlarm(this, AlarmReceiver.class, hourOfDay, minute, second);
+        view.dismiss();
     }
 
 

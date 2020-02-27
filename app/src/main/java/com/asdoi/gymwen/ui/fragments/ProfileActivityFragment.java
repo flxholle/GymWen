@@ -117,6 +117,7 @@ public class ProfileActivityFragment extends Fragment {
                 mIntent.putExtras(extras);
                 getActivity().startActivity(mIntent);
                 getActivity().finish();
+                dialog.dismiss();
             }
         });
 
@@ -177,6 +178,7 @@ public class ProfileActivityFragment extends Fragment {
                 String coursesText = course.getText().toString();
                 ProfileManagement.editProfile(position, new Profile(coursesText.trim().isEmpty() ? profile.getCourses() : coursesText, nameText.trim().isEmpty() ? profile.getName() : nameText));
                 adapter.notifyDataSetChanged();
+                dialog.dismiss();
             }
         });
 
@@ -214,6 +216,7 @@ public class ProfileActivityFragment extends Fragment {
             public void onClick(MaterialDialog dialog, DialogAction which) {
                 ProfileManagement.removeProfile(position);
                 adapter.notifyDataSetChanged();
+                dialog.dismiss();
             }
         });
 
