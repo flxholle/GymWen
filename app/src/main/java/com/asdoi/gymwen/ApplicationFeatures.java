@@ -271,7 +271,6 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
             if (!isWidget) {
-//                sendNotification();
                 refreshWidgets();
             }
         } else if (signIn) {
