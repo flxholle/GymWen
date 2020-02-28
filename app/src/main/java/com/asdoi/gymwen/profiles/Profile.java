@@ -4,7 +4,8 @@ package com.asdoi.gymwen.profiles;
 public class Profile {
     private String courses;
     private String name;
-    private final static char splitChar = '@';
+    private static final char splitChar = '@';
+    public static final String coursesSeparator = "#";
 
     public Profile(String courses, String name) {
         setCourses(courses);
@@ -41,5 +42,9 @@ public class Profile {
                 return new Profile(sArray[1], sArray[0]);
         }
         return null;
+    }
+
+    public boolean isOberstufe() {
+        return getCourses().split(coursesSeparator).length > 1;
     }
 }
