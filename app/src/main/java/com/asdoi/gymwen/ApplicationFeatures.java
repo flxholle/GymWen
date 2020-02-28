@@ -262,7 +262,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             boolean hours = isHour();
 
-            VertretungsPlanFeatures.setup(hours, courses.split("#"));
+            VertretungsPlanFeatures.setup(hours, courses.split(Profile.coursesSeparator));
 
             String username = sharedPref.getString("username", "");
             String password = sharedPref.getString("password", "");
@@ -565,7 +565,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
+                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split(Profile.coursesSeparator));
                 String[][] inhalt = temp.getDay(true);
                 try {
                     count.append(inhalt.length);
@@ -626,7 +626,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
+                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split(Profile.coursesSeparator));
                 String[][] inhalt = temp.getDay(true);
                 try {
                     count1.append(inhalt.length);
@@ -815,7 +815,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
+                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split(Profile.coursesSeparator));
                 String[][] inhalt = temp.getDay(today);
                 try {
                     count1.append(inhalt.length);
@@ -1075,7 +1075,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     public static void initProfile(int position, boolean global) {
         String courses = ProfileManagement.getProfile(position).getCourses();
-        VertretungsPlanFeatures.setup(isHour(), courses.split("#"));
+        VertretungsPlanFeatures.setup(isHour(), courses.split(Profile.coursesSeparator));
         if (global)
             initProfileGlobal(position, courses);
     }

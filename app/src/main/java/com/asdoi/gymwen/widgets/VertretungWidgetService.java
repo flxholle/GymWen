@@ -84,7 +84,7 @@ class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private void onCreate(Profile p) {
         reset();
-        Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split("#"));
+        Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split(Profile.coursesSeparator));
 
         oberstufe = temp.getOberstufe();
         profileName = p.getName();
@@ -255,8 +255,10 @@ class RemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
             range += profileLenghts.get(0);
             //Cause position is counting from 0, the range has to start at 0
             if (position < range) {
-                onCreate(ProfileManagement.getProfile(i));
-                selectedProfile = i;
+                if (i != selectedProfile) {
+                    onCreate(ProfileManagement.getProfile(i));
+                    selectedProfile = i;
+                }
                 break;
             }
         }
