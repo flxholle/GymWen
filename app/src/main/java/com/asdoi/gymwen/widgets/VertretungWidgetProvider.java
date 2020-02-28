@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 
 import androidx.annotation.ColorInt;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -43,7 +44,7 @@ public class VertretungWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        setColors(getThemeInt(context));
+        setColors(getThemeInt(context), context);
         new Thread(() -> {
             ApplicationFeatures.downloadVertretungsplanDocs(true, true);
             for (int i = 0; i < appWidgetIds.length; i++) {
@@ -58,7 +59,7 @@ public class VertretungWidgetProvider extends AppWidgetProvider {
     public void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, RemoteViews remoteViews) {
         remoteViews.setInt(R.id.widget2_frame, "setBackgroundColor", backgroundColor);
 
-        Intent intent = new Intent(context, VertretungWidgetService.class);
+        Intent intent = new Intent(context, WidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         remoteViews.setRemoteAdapter(R.id.widget2_listview, intent);
@@ -81,23 +82,23 @@ public class VertretungWidgetProvider extends AppWidgetProvider {
         remoteViews.setImageViewBitmap(R.id.widget2_open_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_open_in_browser_white_24dp));
     }
 
-    public void setColors(int mode) {
+    public void setColors(int mode, Context context) {
         switch (mode) {
             default:
             case light:
                 textColorPrimary = Color.BLACK;
                 textColorSecondary = Color.GRAY;
-                backgroundColor = Color.WHITE;
+                backgroundColor = ContextCompat.getColor(context, R.color.widget_white);
                 break;
             case dark:
                 textColorPrimary = Color.WHITE;
                 textColorSecondary = Color.LTGRAY;
-                backgroundColor = Color.DKGRAY;
+                backgroundColor = ContextCompat.getColor(context, R.color.widget_dark);
                 break;
             case black:
                 textColorPrimary = Color.WHITE;
                 textColorSecondary = Color.LTGRAY;
-                backgroundColor = Color.BLACK;
+                backgroundColor = ContextCompat.getColor(context, R.color.widget_black);
                 break;
         }
     }

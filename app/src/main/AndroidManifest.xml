@@ -140,7 +140,7 @@
         </provider>
 
         <service
-            android:name=".widgets.VertretungWidgetService"
+            android:name=".widgets.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service
             android:name=".services.NotificationTileService"

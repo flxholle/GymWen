@@ -33,6 +33,10 @@ public class ProfileManagement {
         return profileList.size();
     }
 
+    public static ArrayList<Profile> getProfileList() {
+        return profileList;
+    }
+
     public static void reload() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         String pref = sharedPref.getString("profiles", "");
