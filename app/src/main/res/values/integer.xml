@@ -17,7 +17,7 @@
     <integer name="vertretung_all_teacher">2</integer>
     <integer name="vertretung_all_room">2</integer>
     <integer name="vertretung_all_other">4</integer>
-    <integer name="vertretung_all_course">3</integer>
+    <integer name="vertretung_all_course">2</integer>
 
     <integer name="vertretung_all_hour_long">3</integer>
 

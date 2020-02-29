@@ -26,7 +26,7 @@
         android:layout_weight="@integer/vertretung_all_hour"
         android:gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_weight="@integer/vertretung_all_subject"
         android:gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
@@ -50,7 +50,7 @@
         android:layout_weight="@integer/vertretung_all_teacher"
         android:gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
@@ -62,7 +62,7 @@
         android:layout_weight="@integer/vertretung_all_room"
         android:gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
