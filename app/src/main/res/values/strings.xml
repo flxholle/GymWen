@@ -70,6 +70,8 @@
     <string name="set_theme_dark">Dunkel</string>
     <string name="set_theme_black">Schwarz</string>
     <string name="set_theme_auto">Automatisch</string>
+    <string name="set_full_names">Lehrernamen statt Kürzel anzeigen</string>
+    <string name="set_full_names_specific">Nur beim gefilterten Plan</string>
 
 
     <!-- Vertretungsplan -->

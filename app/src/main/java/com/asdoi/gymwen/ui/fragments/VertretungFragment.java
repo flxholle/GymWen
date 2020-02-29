@@ -262,7 +262,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
 
     //TeacherSearch
-    void teacherClick(View view, String teacherQuery, boolean showBorders) {
+    void teacherClick(TextView view, String teacherQuery, boolean showBorders, boolean fullNames) {
         if (teacherQuery.equals("entf") || teacherQuery.equals("entfällt") || teacherQuery.equals("AOL"))
             return;
         if (showBorders) {
@@ -277,6 +277,26 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         } else {
             view.setBackgroundResource(android.R.drawable.list_selector_background);
         }
+
+
+        if (fullNames) {
+            new Thread(() -> {
+                ApplicationFeatures.downloadLehrerDoc();
+                try {
+                    getActivity().runOnUiThread(() -> {
+                        String match = getMatchingTeacher(teacherQuery);
+                        if (match != null)
+                            view.setText(match);
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        } else {
+            view.setText(teacherQuery);
+        }
+
+
         view.setClickable(true);
         view.setOnClickListener((View v) -> {
             if (ApplicationFeatures.isNetworkAvailable()) {
@@ -357,6 +377,18 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         background.addView(teacherEntry);
         base.addView(background);
         ((ViewGroup) root.findViewById(R.id.vertretung_frame)).addView(base);
+    }
+
+    String getMatchingTeacher(String query) {
+        String teacher = null;
+        try {
+            ApplicationFeatures.downloadLehrerDoc();
+            String[] response = Lehrerliste.getTeacher(query);
+            teacher = response[1];
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return teacher;
     }
 
 
@@ -689,10 +721,12 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         subject.setText(entry[2]);
 
         TextView teacher = view.findViewById(R.id.vertretung_all_entry_textViewTeacher);
-        teacher.setText(entry[3]);
+
         removeTeacherClick(teacher);
         if (!(entry[3].equals("entfällt") || entry[3].equals("entf")))
-            teacherClick(teacher, entry[3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false));
+            teacherClick(teacher, entry[3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false), !ApplicationFeatures.isFullTeacherNamesSpecific() && ApplicationFeatures.isFullTeacherNames());
+        else
+            teacher.setText(entry[3]);
 
         TextView room = view.findViewById(R.id.vertretung_all_entry_textViewRoom);
         room.setText(entry[4]);
@@ -771,8 +805,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             teacher.setTextColor(subject.getTextColors());
             teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_teacher)));
             teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", true));
-            teacher.setText(entry[3]);
+            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", true), ApplicationFeatures.isFullTeacherNames());
 
             room.setVisibility(View.VISIBLE);
             room.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_room)));
@@ -790,7 +823,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
             teacher.setTextColor(ApplicationFeatures.getAccentColor(context));
 
-            teacher.setText(content);
             room.setVisibility(View.GONE);
         }
 
@@ -825,11 +857,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView room = view.findViewById(R.id.vertretung_card_entry_textViewRoom);
 
         if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
-            teacher.setText(entry[3]);
             teacher.setGravity(Gravity.CENTER);
             teacher.setTextColor(subject.getTextColors());
-            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", false));
-            teacher.setText(entry[3]);
+            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", false), ApplicationFeatures.isFullTeacherNames());
+
 
             room.setVisibility(View.VISIBLE);
             SpannableString content = new SpannableString("in " + entry[4]);

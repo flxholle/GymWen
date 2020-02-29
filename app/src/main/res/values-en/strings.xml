@@ -274,5 +274,7 @@
     <string name="tile_name">Show notification</string>
     <string name="off">Disabled</string>
     <string name="on">Enabled</string>
+    <string name="with_teacher">with</string>
+    <string name="set_full_names_specific">Filtered plan only</string>
 
 </resources>
