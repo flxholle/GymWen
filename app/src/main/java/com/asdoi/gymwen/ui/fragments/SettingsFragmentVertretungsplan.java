@@ -14,17 +14,17 @@ public class SettingsFragmentVertretungsplan extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_vertretungsplan, rootKey);
 
-        Preference myPref = findPreference("old_vertretung");
-        if (ApplicationFeatures.isBetaEnabled()) {
-            myPref.setVisible(true);
-        } else {
-            myPref.setVisible(false);
-        }
-
         setBorder();
-        myPref = findPreference("show_borders");
+        Preference myPref = findPreference("show_borders");
         myPref.setOnPreferenceClickListener((Preference preference) -> {
             setBorder();
+            return true;
+        });
+
+        setFullNames();
+        myPref = findPreference("show_full_names");
+        myPref.setOnPreferenceClickListener((Preference preference) -> {
+            setFullNames();
             return true;
         });
     }
@@ -32,5 +32,10 @@ public class SettingsFragmentVertretungsplan extends PreferenceFragmentCompat {
     private void setBorder() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
         findPreference("show_border_specific").setEnabled(showNotif);
+    }
+
+    private void setFullNames() {
+        boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_full_names", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
+        findPreference("show_full_names_specific").setEnabled(showNotif);
     }
 }

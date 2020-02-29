@@ -380,6 +380,14 @@ public class ApplicationFeatures extends MultiDexApplication {
         return getBooleanSettings("alarm", false, context);
     }
 
+    public static boolean isFullTeacherNames() {
+        return getBooleanSettings("show_full_names", false);
+    }
+
+    public static boolean isFullTeacherNamesSpecific() {
+        return getBooleanSettings("show_full_names_specific", true);
+    }
+
     public static void setAlarm(Context context, boolean value) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("alarm", value);
