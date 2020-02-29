@@ -14,12 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ArrayAdapter;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -157,10 +153,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                         e.printStackTrace();
                     }
 
-                    if (ApplicationFeatures.isOld())
-                        setTableParams();
-                    else
-                        generateTable();
+                    generateTable();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -565,13 +558,17 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         ViewGroup base = root.findViewById(R.id.vertretung_linear_layout_layer1);
 
         if (inhalt != null && inhalt.length > 0) {
-            //Overview
-            base.addView(generateOverviewSpecific());
-
             //Content
             vertretungListView = new ListView(context);
             vertretungListView.setAdapter(new VertretungListAdapterSpecific(context, 0, inhalt, sonstiges));
             vertretungListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+            if (!ApplicationFeatures.isOld()) {
+                vertretungListView.setDivider(null);
+            } else {
+                //Overview
+                base.addView(generateOverviewSpecific());
+            }
             base.addView(vertretungListView);
         }
     }
@@ -648,20 +645,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return hour;
     }
 
-    void generateScrollView() {
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        ScrollView s = new ScrollView(context);
-        s.setLayoutParams(params);
-        LinearLayout l = root.findViewById(R.id.vertretung_linear_layout_layer1);
-        l.setLayoutParams(params);
-        ViewGroup parent = (ViewGroup) l.getParent();
-        parent.removeAllViews();
-        parent.addView(s);
-        s.addView(l);
-    }
-
     private ListView vertretungListView;
-
 
     //All ListView
     private class VertretungListAdapterAll extends ArrayAdapter<String[]> {
@@ -738,10 +722,17 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.list_vertretung_specific_entry, null);
+            if (ApplicationFeatures.isOld()) {
+                if (convertView == null) {
+                    convertView = getLayoutInflater().inflate(R.layout.list_vertretung_specific_entry, null);
+                }
+                return getEntrySpecific(convertView, content[position], oberstufe, sons);
+            } else {
+                if (convertView == null) {
+                    convertView = getLayoutInflater().inflate(R.layout.list_vertretung_specific_card, null);
+                }
+                return getEntrySpecificRow(convertView, content[position], sons);
             }
-            return getEntrySpecific(convertView, content[position], oberstufe, sons);
         }
 
         @Override
@@ -813,509 +804,55 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return view;
     }
 
+    private View getEntrySpecificRow(View view, String[] entry, boolean sonstiges) {
+        TextView course = view.findViewById(R.id.vertretung_card_entry_textViewClass);
+        course.setText(entry[0]);
 
-    //Old TableCreation
-    void setTableParams() {
-        clear();
+        TextView hour = view.findViewById(R.id.vertretung_card_entry_textViewHour);
+        hour.setText(entry[1]);
 
-        if (both)
-            generateScrollView();
-
-        LinearLayout base = root.findViewById(R.id.vertretung_linear_layout_layer1);
-
-        TextView titleView = createTitleLayout();
-        base.addView(titleView);
-        TableLayout table = createTableLayout();
-
-        oberstufe = VertretungsPlanFeatures.getOberstufe();
-        if (both) {
-
-            inhalt = VertretungsPlanFeatures.getTodayArray();
-            title = VertretungsPlanFeatures.getTodayTitle();
-            setTitle(titleView);
-            generateTableSpecific(table);
-
-            if (inhalt != null) {
-                titleView = createTitleLayout();
-                base.addView(titleView);
-                table = createTableLayout();
-
-                inhalt = VertretungsPlanFeatures.getTomorrowArray();
-                title = VertretungsPlanFeatures.getTomorrowTitle();
-                setTitle(titleView);
-                generateTableSpecific(table);
-            }
-        } else if (all) {
-            if (today) {
-                inhalt = VertretungsPlanFeatures.getTodayArrayAll();
-                title = VertretungsPlanFeatures.getTodayTitle();
-            } else {
-                inhalt = VertretungsPlanFeatures.getTomorrowArrayAll();
-                title = VertretungsPlanFeatures.getTomorrowTitle();
-            }
-            generateTableNormal(table);
-            setTitle(titleView);
+        if (ApplicationFeatures.isHour()) {
+            hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 42);
         } else {
-            if (today) {
-                inhalt = VertretungsPlanFeatures.getTodayArray();
-                title = VertretungsPlanFeatures.getTodayTitle();
-            } else {
-                inhalt = VertretungsPlanFeatures.getTomorrowArray();
-                title = VertretungsPlanFeatures.getTomorrowTitle();
-            }
-            generateTableSpecific(table);
-            setTitle(titleView);
-        }
-    }
-
-    TableLayout createTableLayout() {
-        TableLayout table = new TableLayout(context);
-        table.setStretchAllColumns(true);
-
-        LinearLayout base = root.findViewById(R.id.vertretung_linear_layout_layer1);
-
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        ScrollView s1 = new ScrollView(context);
-        s1.setLayoutParams(params);
-        table.setLayoutParams(params);
-
-        HorizontalScrollView hs2 = new HorizontalScrollView(context);
-        hs2.setLayoutParams(params);
-
-        table.setLayoutParams(params);
-
-        base.addView(s1);
-        s1.addView(hs2);
-        hs2.addView(table);
-
-        return table;
-    }
-
-    void generateTableNormal(TableLayout table) {
-        if (inhalt == null) {
-            return;
+            hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 52);
         }
 
-        if (inhalt.length == 0) {
-            generateTableNothing(table);
-            return;
-        }
-        generateFirstRowAll(table);
-        generateBodyRowsAll(table);
+        TextView subject = view.findViewById(R.id.vertretung_card_entry_textViewSubject);
+        subject.setText(entry[2] + " " + context.getString(R.string.with_teacher) + " ");
 
-    }
+        TextView teacher = view.findViewById(R.id.vertretung_card_entry_textViewTeacher);
 
-    void generateBodyRowsAll(TableLayout table) {
-        int columnNumber = inhalt[0].length;
-        int rowNumber = inhalt.length;
+        TextView room = view.findViewById(R.id.vertretung_card_entry_textViewRoom);
 
-        for (int i = 0; i < rowNumber; i++) {
-            TableRow row = new TableRow(context);
-            row.setId(i + ApplicationFeatures.old_design_vertretung_view_id);
+        if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
+            teacher.setText(entry[3]);
+            teacher.setGravity(Gravity.CENTER);
+            teacher.setTextColor(subject.getTextColors());
+            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", false));
+            teacher.setText(entry[3]);
 
-            for (int j = 0; j < columnNumber; j++) {
-                TextView tv = new TextView(context);
-                TableRow.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(3, 3, 3, 0);
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][j]);
-                tv.setTextSize(18);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                if (j == 3 && !inhalt[i][3].equals("entfällt")) {
-                    teacherClick(tv, inhalt[i][3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false));
-                }
-                row.addView(tv);
-
-            }
-            table.addView(row);
-        }
-    }
-
-    void generateTableSpecific(TableLayout table) {
-        for (int i = 0; i < table.getChildCount(); i++) {
-            if (root.findViewById(i + ApplicationFeatures.old_design_vertretung_view_id) != null) {
-                table.removeView(root.findViewById(i + ApplicationFeatures.old_design_vertretung_view_id));
-                System.out.println("removed row " + i);
-            }
-        }
-        if (inhalt == null) {
-            return;
-        }
-        if (inhalt.length == 0) {
-            generateTableNothing(table);
-            return;
-        }
-        generateFirstRow(table);
-        if (oberstufe)
-            generateBodyRowsOberstufe(table);
-        else
-            generateBodyRowsKlasse(table);
-    }
-
-    void generateBodyRowsOberstufe(TableLayout table) {
-        int columnNumber = inhalt[0].length;
-        int rowNumber = inhalt.length;
-
-
-        for (int i = 0; i < rowNumber; i++) {
-            TableRow row = new TableRow(context);
-            row.setId(i + ApplicationFeatures.old_design_vertretung_view_id);
-
-            //Stunde
-            int hourMargin = 5;
-            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-            params.setMargins(hourMargin, hourMargin, hourMargin, hourMargin);
-
-            TextView tv = new TextView(context);
-            tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
-            tv.setLayoutParams(params);
-            tv.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
-            tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
-            tv.setText(inhalt[i][1]);
-            tv.setTextSize(36);
-            tv.setTypeface(Typeface.DEFAULT_BOLD);
-            tv.setGravity(Gravity.CENTER);
-            row.addView(tv, params);
-
-            params.setMargins(0, 0, 0, 0);
-
-            if (inhalt[i][3].equals("entfällt")) {
-                //Kurs
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                SpannableString content = new SpannableString(inhalt[i][3]);
-                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-                tv.setText(content);
-                tv.setTextSize(24);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(ApplicationFeatures.getAccentColor(context));
-                row.addView(tv);
-
-                for (int j = 2; j < columnNumber - 1; j++) {
-                    tv = new TextView(context
-                    );
-                    tv.setText("");
-                    tv.setTextSize(18);
-                    tv.setTypeface(Typeface.DEFAULT_BOLD);
-                    tv.setGravity(Gravity.CENTER);
-                    row.addView(tv);
-                }
-                //Fach
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][0]);
-                tv.setTextSize(12);
-                tv.setTypeface(Typeface.DEFAULT);
-                tv.setGravity(Gravity.END);
-                row.addView(tv);
-            } else {
-                //Kurs
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][0]);
-                tv.setTextSize(18);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                row.addView(tv);
-
-                //Lehrer
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][3]);
-                tv.setTextSize(18);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                teacherClick(tv, inhalt[i][3], ApplicationFeatures.getBooleanSettings("show_borders", true));
-                row.addView(tv);
-
-                //Raum
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                SpannableString content = new SpannableString(inhalt[i][4]);
-                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-                tv.setText(content);
-                tv.setTextSize(24);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(ApplicationFeatures.getAccentColor(context));
-                row.addView(tv);
-
-                //Sonstiges
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][5]);
-                tv.setTextSize(18);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                row.addView(tv);
-
-                //Fach
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][2]);
-                tv.setTextSize(12);
-                tv.setTypeface(Typeface.DEFAULT);
-                tv.setGravity(Gravity.END);
-                row.addView(tv);
-            }
-
-
-            table.addView(row);
-        }
-    }
-
-    void generateBodyRowsKlasse(TableLayout table) {
-        int columnNumber = inhalt[0].length;
-        int rowNumber = inhalt.length;
-
-
-        for (int i = 0; i < rowNumber; i++) {
-            TableRow row = new TableRow(context
-            );
-            row.setId(i + ApplicationFeatures.old_design_vertretung_view_id);
-
-            //Stunde
-            int hourMargin = 5;
-            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-            params.setMargins(hourMargin, hourMargin, hourMargin, hourMargin);
-
-            TextView tv = new TextView(context
-            );
-            tv.setPadding(hourMargin, hourMargin, hourMargin, hourMargin);
-            tv.setLayoutParams(params);
-            tv.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
-            tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
-            tv.setText(inhalt[i][1]);
-            tv.setTextSize(36);
-            tv.setTypeface(Typeface.DEFAULT_BOLD);
-            tv.setGravity(Gravity.CENTER);
-            row.addView(tv, params);
-
-            params.setMargins(0, 0, 0, 0);
-
-            if (inhalt[i][3].equals("entfällt")) {
-                //Klasse
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                SpannableString content = new SpannableString(inhalt[i][3]);
-                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-                tv.setText(content);
-                tv.setTextSize(24);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(ApplicationFeatures.getAccentColor(context));
-                row.addView(tv);
-
-                for (int j = 2; j < columnNumber; j++) {
-                    tv = new TextView(context
-                    );
-                    tv.setText("");
-                    tv.setTextSize(18);
-                    tv.setTypeface(Typeface.DEFAULT_BOLD);
-                    tv.setGravity(Gravity.CENTER);
-                    row.addView(tv);
-                }
-                //Klasse
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][0]);
-                tv.setTextSize(12);
-                tv.setTypeface(Typeface.DEFAULT);
-                tv.setGravity(Gravity.END);
-                row.addView(tv);
-
-            } else {
-                //Fach
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][2]);
-                tv.setTextSize(18);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                row.addView(tv);
-
-                //Lehrer
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][3]);
-                tv.setTextSize(18);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                teacherClick(tv, inhalt[i][3], ApplicationFeatures.getBooleanSettings("show_borders", true));
-                row.addView(tv);
-
-                //Raum
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                SpannableString content = new SpannableString(inhalt[i][4]);
-                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-                tv.setText(content);
-                tv.setTextSize(24);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(ApplicationFeatures.getAccentColor(context));
-                row.addView(tv);
-
-                //Sonstiges
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][5]);
-                tv.setTextSize(18);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                row.addView(tv);
-
-                //Klasse
-                tv = new TextView(context
-                );
-                tv.setLayoutParams(params);
-                tv.setText(inhalt[i][0]);
-                tv.setTextSize(12);
-                tv.setTypeface(Typeface.DEFAULT);
-                tv.setGravity(Gravity.END);
-                row.addView(tv);
-            }
-
-
-            table.addView(row);
-        }
-    }
-
-    void generateTableNothing(TableLayout table) {
-        TableRow row = new TableRow(context
-        );
-        row.setId(ApplicationFeatures.old_design_vertretung_view_id);
-        for (int j = 0; j < 2; j++) {
-            TextView tv = new TextView(context);
-            tv.setText("");
-            tv.setTextSize(24);
-            tv.setTypeface(Typeface.DEFAULT_BOLD);
-            tv.setGravity(Gravity.CENTER);
-            row.addView(tv);
-        }
-        TextView tv = new TextView(context
-        );
-        tv.setText(context.getString(R.string.nothing));
-        tv.setTextSize(20);
-        tv.setTypeface(Typeface.DEFAULT_BOLD);
-        tv.setGravity(Gravity.CENTER);
-        row.addView(tv);
-        for (int j = 0; j < 2; j++) {
-            tv = new TextView(context);
-            tv.setText("");
-            tv.setTextSize(24);
-            tv.setTypeface(Typeface.DEFAULT_BOLD);
-            tv.setGravity(Gravity.CENTER);
-            row.addView(tv);
-        }
-        table.addView(row);
-    }
-
-    void generateFirstRow(TableLayout table) {
-        //generate first Row
-        String[] headline = new String[6];
-        String sonstiges = "";
-
-        for (int i = 0; i < inhalt.length; i++) {
-            if (!inhalt[i][5].trim().isEmpty()) {
-                sonstiges = context.getString(R.string.other);
-                break;
-            }
-        }
-
-        if (all) {
-            headline = new String[]{context.getString(R.string.classes), context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), context.getString(R.string.other)};
-        } else if (oberstufe) {
-            headline = new String[]{context.getString(R.string.hours), context.getString(R.string.courses), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.subject)};
+            room.setVisibility(View.VISIBLE);
+            SpannableString content = new SpannableString("in " + entry[4]);
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            room.setText(content);
         } else {
-            headline = new String[]{context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.classes)};
+            removeTeacherClick(view);
+            room.setText(entry[4]);
+            room.setVisibility(View.GONE);
+            SpannableString content = new SpannableString(entry[3]);
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            teacher.setText(content);
         }
 
 
-        if (root.findViewById(ApplicationFeatures.vertretung_teacher_view_id) != null) {
-            table.removeView(root.findViewById(ApplicationFeatures.vertretung_teacher_view_id));
-        }
-
-
-        TableRow row = new TableRow(context
-        );
-        row.setId(ApplicationFeatures.vertretung_teacher_view_id);
-        for (int j = 0; j < 5; j++) {
-            TextView tv = new TextView(context
-            );
-            tv.setText(headline[j]);
-            tv.setTextSize(18);
-            tv.setTypeface(Typeface.DEFAULT_BOLD);
-            tv.setGravity(Gravity.CENTER);
-            row.addView(tv);
-
-        }
-        TextView tv = new TextView(context
-        );
-        tv.setText(headline[5]);
-        tv.setTextSize(12);
-        tv.setTypeface(Typeface.DEFAULT_BOLD);
-        tv.setGravity(Gravity.END);
-        row.addView(tv);
-        table.addView(row);
-    }
-
-    void generateFirstRowAll(TableLayout table) {
-        //generate first Row
-        String[] headline = new String[6];
-        String sonstiges = "";
-
-        for (int i = 0; i < inhalt.length; i++) {
-            if (!inhalt[i][5].trim().isEmpty()) {
-                sonstiges = context.getString(R.string.other);
-                break;
-            }
-        }
-
-        if (all) {
-            headline = new String[]{context.getString(R.string.classes), context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), context.getString(R.string.other)};
-        } else if (oberstufe) {
-            headline = new String[]{context.getString(R.string.hours), context.getString(R.string.courses), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.subject)};
+        TextView other = view.findViewById(R.id.vertretung_card_entry_textViewOther);
+        other.setVisibility(View.VISIBLE);
+        if (sonstiges) {
+            other.setText(entry[5]);
         } else {
-            headline = new String[]{context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher), context.getString(R.string.room), sonstiges, context.getString(R.string.classes)};
+            other.setVisibility(View.GONE);
         }
 
-
-        if (root.findViewById(ApplicationFeatures.vertretung_teacher_view_id) != null) {
-            table.removeView(root.findViewById(ApplicationFeatures.vertretung_teacher_view_id));
-        }
-
-
-        TableRow row = new TableRow(context);
-        row.setId(ApplicationFeatures.vertretung_teacher_view_id);
-        for (int j = 0; j < headline.length; j++) {
-            TextView tv = new TextView(context
-            );
-            tv.setText(headline[j]);
-            tv.setTextSize(18);
-            tv.setTypeface(Typeface.DEFAULT_BOLD);
-            tv.setGravity(Gravity.CENTER);
-            row.addView(tv);
-        }
-        table.addView(row);
-    }
-
-    void setTitle(TextView tV) {
-        tV.setText(title);
+        return view;
     }
 }
