@@ -10,11 +10,11 @@ import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.content.ContextCompat
-import com.asdoi.gymwen.ApplicationFeatures
 import com.asdoi.gymwen.R
 import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
 import com.asdoi.gymwen.ui.fragments.VertretungFragment
+import com.asdoi.gymwen.util.PreferenceUtil
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures
 
 private const val nothing = -1
@@ -48,7 +48,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         var tomorrow = ""
 
         for (p in ProfileManagement.getProfileList()) {
-            val tempVertretungsplan = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
+            val tempVertretungsplan = VertretungsPlanFeatures.createTempVertretungsplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
 
             //Today
             today = tempVertretungsplan.getTitleString(true)

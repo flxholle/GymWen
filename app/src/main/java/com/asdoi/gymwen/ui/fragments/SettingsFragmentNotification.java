@@ -9,6 +9,7 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.util.PreferenceUtil;
 
 public class SettingsFragmentNotification extends PreferenceFragmentCompat {
     @Override
@@ -24,7 +25,7 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
 
         myPref = findPreference("alarm");
         myPref.setOnPreferenceClickListener((Preference p) -> {
-            ApplicationFeatures.setAlarmTime(0);
+            PreferenceUtil.setAlarmTime(0);
             ((ActivityFeatures) getActivity()).createTimePicker();
             return true;
         });

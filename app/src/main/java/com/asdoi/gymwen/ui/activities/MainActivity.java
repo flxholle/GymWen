@@ -39,6 +39,7 @@ import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.fragments.LehrerlisteFragment;
 import com.asdoi.gymwen.ui.fragments.VertretungFragment;
+import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -134,7 +135,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         showChangelogCK(true);
         checkRegistration();
 
-        if (!ApplicationFeatures.isAlarmOn(this)) {
+        if (!PreferenceUtil.isAlarmOn(this)) {
             ApplicationFeatures.cancelAlarm(getContext(), AlarmReceiver.class);
         }
 
@@ -143,10 +144,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         ArrayList<MenuItem> itemsEnable = new ArrayList<>(0);
         ArrayList<MenuItem> itemsDisable = new ArrayList<>(0);
 
-        if (ApplicationFeatures.isBetaEnabled()) {
+        if (PreferenceUtil.isBetaEnabled()) {
         } else {
         }
-        if (ApplicationFeatures.isSections()) {
+        if (PreferenceUtil.isSections()) {
             itemsEnable.add(menu.findItem(R.id.nav_filtered_days));
             itemsEnable.add(menu.findItem(R.id.nav_unfiltered_days));
             itemsDisable.add(menu.findItem(R.id.nav_days));
@@ -155,7 +156,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
             itemsEnable.add(menu.findItem(R.id.nav_days));
         }
-        if (ApplicationFeatures.isParents()) {
+        if (PreferenceUtil.isParents()) {
             itemsEnable.add(menu.findItem(R.id.nav_claxss));
             itemsEnable.add(menu.findItem(R.id.nav_forms));
             itemsDisable.add(menu.findItem(R.id.nav_mebis));
@@ -290,7 +291,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -324,6 +325,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_both:
                 setVisibiltySpinner(true);
                 fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
+//                fragment = new WidgetFragment();
                 break;
             case R.id.nav_filtered_days:
                 setVisibiltySpinner(true);
@@ -510,15 +512,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
                 return;
             case R.id.nav_grades:
-                /*packageName = "com.example.user.notendings";
-                intent = getPackageManager().getLaunchIntentForPackage(packageName);
-                //If app is not installed
-                if (intent == null) {
-                    //Open Browser to Download
-                    tabIntent("https://github.com/Tebra/Android-Grades/blob/master/app/app-release.apk");
-                } else {
-                    startActivity(intent);nö
-                }*/
                 checkGradesFile();
                 return;
             case R.id.nav_colorush:
@@ -577,6 +570,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 link = "http://www.gym-wen.de/material/formulare-merkblaetter/";
                 tabIntent(link);
                 return;
+            case R.id.action_switch_design:
+                PreferenceUtil.changeDesign(this);
+                onNavigationItemSelected(refreshFragment);
+                return;
         }
 
 
@@ -586,7 +583,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             else
                 lastLoaded = lastLoadedVertretung;
 
-            //Display NavHost FragmentFeatures
+            //Display NavHost Fragment
             findViewById(R.id.view_pager).setVisibility(View.GONE);
             findViewById(R.id.tabs).setVisibility(View.GONE);
             findViewById(R.id.fragment_main).setVisibility(View.VISIBLE);

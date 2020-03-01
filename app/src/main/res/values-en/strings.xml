@@ -276,5 +276,11 @@
     <string name="on">Enabled</string>
     <string name="with_teacher">with</string>
     <string name="set_full_names_specific">Filtered plan only</string>
+    <string name="set_full_names">Show real names</string>
+    <string name="intro_two_desc">With the help of this app you can filter and display the substitution plan individually and you will be automatically informed about your substitutions.</string>
+    <string name="intro_three_desc">You can search the list of teachers and immediately email the teacher.</string>
+    <string name="intro_one_desc">This app has been programmed for all students and parents of the Wendelstein grammar school.</string>
+    <string name="intro_four_desc">This app is also very useful for parents. So you can create different profiles for each child and use certain functions that are particularly useful for parents.</string>
+    <string name="intro_five_desc">You can also call up a version of the school homepage optimized for smartphones and manage your grades and your timetable. There are also many other things for which there is unfortunately no more space.</string>
 
 </resources>

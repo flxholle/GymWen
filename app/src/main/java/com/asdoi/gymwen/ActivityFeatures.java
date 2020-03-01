@@ -51,6 +51,7 @@ import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.activities.MainActivity;
+import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
@@ -101,7 +102,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(ApplicationFeatures.getGeneralTheme());
+        setTheme(PreferenceUtil.getGeneralTheme());
         setStatusbarColorAuto();
         super.onCreate(savedInstanceState);
         MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
@@ -555,7 +556,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
             return;
         }
 
-        Intent intent = new Intent(Intent.ACTION_CALL);
+        Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + telNr));
         startActivity(intent);
     }
@@ -576,14 +577,14 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         tpd.setAccentColor(ApplicationFeatures.getAccentColor(this));
         tpd.setCancelColor(ApplicationFeatures.getAccentColor(this));
         tpd.setOkColor(ApplicationFeatures.getAccentColor(this));
-        tpd.setThemeDark(ApplicationFeatures.isDark());
+        tpd.setThemeDark(PreferenceUtil.isDark());
         tpd.vibrate(false);
         tpd.show(this.getSupportFragmentManager(), "Timepickerdialog");
     }
 
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-        ApplicationFeatures.setAlarmTime(hourOfDay, minute, second);
+        PreferenceUtil.setAlarmTime(hourOfDay, minute, second);
         ApplicationFeatures.setAlarm(this, AlarmReceiver.class, hourOfDay, minute, second);
         view.dismiss();
     }
@@ -684,7 +685,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     //Register Installation
     public void checkRegistration() {
-        if (ApplicationFeatures.isPhoneRegistered() || !ApplicationFeatures.isNetworkAvailable())
+        if (PreferenceUtil.isPhoneRegistered() || !ApplicationFeatures.isNetworkAvailable())
             return;
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this);

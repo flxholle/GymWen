@@ -2,44 +2,43 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_switch_design"
+        android:icon="@drawable/ic_art"
+        android:title="@string/switch_design"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_refresh"
         android:icon="@drawable/ic_refresh_white_24dp"
-        android:orderInCategory="100"
         android:title="@string/action_refresh"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_refresh2"
-        android:orderInCategory="100"
         android:title="@string/action_refresh"
         android:visible="false"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_update"
-        android:orderInCategory="100"
         android:title="@string/menu_update"
         android:visible="false"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_profiles"
-        android:orderInCategory="100"
         android:title="@string/menu_profiles"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_changelog"
-        android:orderInCategory="100"
         android:title="@string/changelog"
         android:visible="false"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_imprint"
-        android:orderInCategory="100"
         android:title="@string/menu_impressum"
         android:visible="true"
         app:showAsAction="never" />
+
 
 </menu>

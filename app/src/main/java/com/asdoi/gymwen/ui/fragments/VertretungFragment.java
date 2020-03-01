@@ -28,6 +28,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.ui.activities.MainActivity;
+import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.pd.chocobar.ChocoBar;
 
@@ -554,7 +555,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_course));
                     break;
                 case 1:
-                    if (ApplicationFeatures.isHour()) {
+                    if (PreferenceUtil.isHour()) {
                         params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_hour_long));
                     } else {
                         params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_hour));
@@ -595,7 +596,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             vertretungListView.setAdapter(new VertretungListAdapterSpecific(context, 0, inhalt, sonstiges));
             vertretungListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-            if (!ApplicationFeatures.isOld()) {
+            if (!PreferenceUtil.isOldDesign()) {
                 vertretungListView.setDivider(null);
             } else {
                 //Overview
@@ -626,7 +627,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         subject.setText(headline[1]);
         base.addView(subject);
 
-        if (ApplicationFeatures.isHour()) {
+        if (PreferenceUtil.isHour()) {
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_hour_long)));
             subject.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_subject_long)));
         } else {
@@ -711,7 +712,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView hour = view.findViewById(R.id.vertretung_all_entry_textViewHour);
         hour.setText(entry[1]);
 
-        if (ApplicationFeatures.isHour()) {
+        if (PreferenceUtil.isHour()) {
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_hour_long)));
         } else {
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_hour)));
@@ -724,7 +725,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         removeTeacherClick(teacher);
         if (!(entry[3].equals("entfällt") || entry[3].equals("entf")))
-            teacherClick(teacher, entry[3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false), !ApplicationFeatures.isFullTeacherNamesSpecific() && ApplicationFeatures.isFullTeacherNames());
+            teacherClick(teacher, entry[3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false), !PreferenceUtil.isFullTeacherNamesSpecific() && PreferenceUtil.isFullTeacherNames());
         else
             teacher.setText(entry[3]);
 
@@ -756,7 +757,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            if (ApplicationFeatures.isOld()) {
+            if (PreferenceUtil.isOldDesign()) {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_vertretung_specific_entry, null);
                 }
@@ -784,7 +785,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView subject = view.findViewById(R.id.vertretung_specific_entry_textViewSubject);
         subject.setText(oberstufe ? entry[0] : entry[2]);
 
-        if (ApplicationFeatures.isHour()) {
+        if (PreferenceUtil.isHour()) {
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_hour_long)));
             subject.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_subject_long)));
             hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
@@ -805,7 +806,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             teacher.setTextColor(subject.getTextColors());
             teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_teacher)));
             teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", true), ApplicationFeatures.isFullTeacherNames());
+            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", true), PreferenceUtil.isFullTeacherNames());
 
             room.setVisibility(View.VISIBLE);
             room.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_room)));
@@ -843,7 +844,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView hour = view.findViewById(R.id.vertretung_card_entry_textViewHour);
         hour.setText(entry[1]);
 
-        if (ApplicationFeatures.isHour()) {
+        if (PreferenceUtil.isHour()) {
             hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 42);
         } else {
             hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 52);
@@ -859,7 +860,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
             teacher.setGravity(Gravity.CENTER);
             teacher.setTextColor(subject.getTextColors());
-            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", false), ApplicationFeatures.isFullTeacherNames());
+            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
 
 
             room.setVisibility(View.VISIBLE);

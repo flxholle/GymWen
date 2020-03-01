@@ -29,8 +29,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.StyleRes;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
@@ -48,6 +46,7 @@ import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.activities.SignInActivity;
+import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
 import com.asdoi.gymwen.widgets.VertretungWidgetProvider;
@@ -260,7 +259,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             String courses = getSelectedProfile().getCourses();
 
-            boolean hours = isHour();
+            boolean hours = PreferenceUtil.isHour();
 
             VertretungsPlanFeatures.setup(hours, courses.split(Profile.coursesSeparator));
 
@@ -274,7 +273,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 refreshWidgets();
             }
         } else if (signIn) {
-            if (isIntroShown()) {
+            if (PreferenceUtil.isIntroShown()) {
                 Intent i = new Intent(context, SignInActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
@@ -326,6 +325,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
 
+
     public static void refreshWidgets() {
         Context context = getContext();
         AppWidgetManager man = AppWidgetManager.getInstance(context);
@@ -351,144 +351,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         return b;
     }
 
-    public static boolean isBetaEnabled() {
-        return getBooleanSettings("beta_features", false);
-    }
-
-    public static boolean isOld() {
-        return getBooleanSettings("old_vertretung", false);
-    }
-
-    public static boolean getBooleanSettings(String key, boolean defaultValue, Context context) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPref.getBoolean(key, defaultValue);
-    }
-
     public static boolean getBooleanSettings(String key, boolean defaultValue) {
-        return getBooleanSettings(key, defaultValue, getContext());
-    }
-
-    public static boolean isHour() {
-        return getBooleanSettings("hours", false);
-    }
-
-    public static boolean isSections() {
-        return getBooleanSettings("show_sections", true);
-    }
-
-    public static boolean isAlarmOn(Context context) {
-        return getBooleanSettings("alarm", false, context);
-    }
-
-    public static boolean isFullTeacherNames() {
-        return getBooleanSettings("show_full_names", false);
-    }
-
-    public static boolean isFullTeacherNamesSpecific() {
-        return getBooleanSettings("show_full_names_specific", true);
-    }
-
-    public static void setAlarm(Context context, boolean value) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putBoolean("alarm", value);
-        editor.commit();
-    }
-
-    public static boolean showWeekDate() {
-        return getBooleanSettings("week_dates", false);
-    }
-
-    public static boolean isParents() {
-        return getBooleanSettings("parents", false);
-    }
-
-    public static boolean isTwoNotifications() {
-        return getBooleanSettings("two_notifs", false);
-    }
-
-    public static boolean isIntroShown() {
-        return getBooleanSettings("intro", false);
-    }
-
-    public static boolean isPhoneRegistered() {
-        return getBooleanSettings("registered", false);
-    }
-
-    public static int[] getAlarmTime() {
-        SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
-        return new int[]{sharedPref.getInt("Alarm_hour", -1), sharedPref.getInt("Alarm_minute", -1), sharedPref.getInt("Alarm_second", -1)};
-    }
-
-    public static void setAlarmTime(int... times) {
-        if (times.length != 3) {
-            if (times.length > 0 && times[0] == 0) {
-                setAlarm(getContext(), false);
-            } else {
-                System.out.println("wrong parameters");
-            }
-            return;
-        }
-
-        SharedPreferences sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = sharedPref.edit();
-        setAlarm(getContext(), true);
-        editor.putInt("Alarm_hour", times[0]);
-        editor.putInt("Alarm_minute", times[1]);
-        editor.putInt("Alarm_second", times[2]);
-        editor.commit();
-
-    }
-
-    public static int getIntSettings(String key, int defaultValue) {
-        Context context = getContext();
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPref.getInt(key, defaultValue);
-    }
-
-    @StyleRes
-    public static int getGeneralTheme() {
-        Context context = getContext();
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        return getThemeResFromPrefValue(sharedPref.getString("theme", "switch"));
-    }
-
-    @StyleRes
-    public static int getThemeResFromPrefValue(String themePrefValue) {
-        switch (themePrefValue) {
-            case "dark":
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                return R.style.AppTheme_Dark;
-            case "black":
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                return R.style.AppTheme_Black;
-            case "switch":
-                int nightModeFlags = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                switch (nightModeFlags) {
-                    case Configuration.UI_MODE_NIGHT_YES:
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        return R.style.AppTheme_Dark;
-                    default:
-                    case Configuration.UI_MODE_NIGHT_NO:
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        return R.style.AppTheme_Light;
-                }
-            case "light":
-            default:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                return R.style.AppTheme_Light;
-        }
-    }
-
-    public static boolean isDark() {
-        int theme = getGeneralTheme();
-        switch (theme) {
-            case R.style.AppTheme_Dark:
-            case R.style.AppTheme_Black:
-                return true;
-            case R.style.AppTheme_Light:
-            default:
-                return false;
-        }
+        return PreferenceUtil.getBooleanSettings(key, defaultValue, getContext());
     }
 
 
@@ -552,7 +416,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
 
         private void sendNotification() {
-            if (isTwoNotifications())
+            if (PreferenceUtil.isTwoNotifications())
                 notificationMessageTwoNotifs();
             else
                 notificationMessageOneNotif();
@@ -573,7 +437,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split(Profile.coursesSeparator));
+                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
                 String[][] inhalt = temp.getDay(true);
                 try {
                     count.append(inhalt.length);
@@ -634,7 +498,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split(Profile.coursesSeparator));
+                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
                 String[][] inhalt = temp.getDay(true);
                 try {
                     count1.append(inhalt.length);
@@ -823,7 +687,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(ApplicationFeatures.isHour(), p.getCourses().split(Profile.coursesSeparator));
+                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
                 String[][] inhalt = temp.getDay(today);
                 try {
                     count1.append(inhalt.length);
@@ -1083,7 +947,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     public static void initProfile(int position, boolean global) {
         String courses = ProfileManagement.getProfile(position).getCourses();
-        VertretungsPlanFeatures.setup(isHour(), courses.split(Profile.coursesSeparator));
+        VertretungsPlanFeatures.setup(PreferenceUtil.isHour(), courses.split(Profile.coursesSeparator));
         if (global)
             initProfileGlobal(position, courses);
     }
@@ -1131,11 +995,11 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static int getPrimaryColor(Context context) {
-        return getIntSettings("colorPrimary", 0) == 0 ? getThemeColor(R.attr.colorPrimary, context) : getIntSettings("colorPrimary", 0);
+        return PreferenceUtil.getIntSettings("colorPrimary", 0) == 0 ? getThemeColor(R.attr.colorPrimary, context) : PreferenceUtil.getIntSettings("colorPrimary", 0);
     }
 
     public static int getAccentColor(Context context) {
-        return getIntSettings("colorAccent", 0) == 0 ? getThemeColor(R.attr.colorAccent, context) : getIntSettings("colorAccent", 0);
+        return PreferenceUtil.getIntSettings("colorAccent", 0) == 0 ? getThemeColor(R.attr.colorAccent, context) : PreferenceUtil.getIntSettings("colorAccent", 0);
     }
 
     public static int getThemeColor(int themeAttributeId, Context context) {

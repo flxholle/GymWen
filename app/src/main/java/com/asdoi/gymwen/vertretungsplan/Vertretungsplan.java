@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.util.PreferenceUtil;
 
 import org.jsoup.nodes.Document;
 
@@ -67,7 +68,7 @@ public class Vertretungsplan {
     }
 
     private static boolean showWeekDate() {
-        return ApplicationFeatures.showWeekDate();
+        return PreferenceUtil.showWeekDate();
     }
 
 
