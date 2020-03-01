@@ -54,10 +54,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
-
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
+    private Menu menu;
 
     public static int vertretungFragmentState;
     public static int lastLoaded; // 0 = Vertretung, 1 = Tabs, 2 = Lehrerliste
@@ -292,6 +292,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        this.menu = menu;
         return true;
     }
 
@@ -325,6 +326,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_both:
                 setVisibiltySpinner(true);
                 fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
+                setDesignChangerVisibility(true);
 //                fragment = new WidgetFragment();
                 break;
             case R.id.nav_filtered_days:
@@ -337,6 +339,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 sectionsPagerAdapter.setAll(false);
                 sectionsPagerAdapter.notifyDataSetChanged();
                 lastLoaded = lastLoadedTabs;
+                setDesignChangerVisibility(true);
                 break;
             case R.id.nav_unfiltered_days:
                 setVisibiltySpinner(false);
@@ -348,6 +351,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 sectionsPagerAdapter.setAll(true);
                 sectionsPagerAdapter.notifyDataSetChanged();
                 lastLoaded = lastLoadedTabs;
+                setDesignChangerVisibility(false);
                 break;
             case R.id.nav_days:
                 setVisibiltySpinner(true);
@@ -356,12 +360,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                 findViewById(R.id.fragment_main).setVisibility(View.GONE);
                 findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
+                setDesignChangerVisibility(true);
 
                 if (lastLoadedInTabs == lastLoadedTabsAll) {
                     //Navigation all
                     sectionsPagerAdapter.setAll(true);
                     sectionsPagerAdapter.notifyDataSetChanged();
                     lastLoaded = lastLoadedTabs;
+                    setDesignChangerVisibility(false);
                     break;
                 }
 
@@ -371,6 +377,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 sectionsPagerAdapter.notifyDataSetChanged();
                 lastLoaded = lastLoadedTabs;
                 lastLoadedInTabs = lastLoadedTabsSpecific;
+                setDesignChangerVisibility(true);
                 break;
             case R.id.navigation_all:
                 setVisibiltySpinner(false);
@@ -382,6 +389,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 sectionsPagerAdapter.notifyDataSetChanged();
                 lastLoaded = lastLoadedTabsAll;
                 lastLoadedInTabs = lastLoadedTabsAll;
+                setDesignChangerVisibility(false);
                 break;
 
             case R.id.action_settings: //Fallthrough
@@ -467,6 +475,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_teacherlist:
                 setVisibiltySpinner(false);
                 fragment = new LehrerlisteFragment();
+                setDesignChangerVisibility(false);
                 break;
             case R.id.nav_notes:
                 packageName = "com.simplemobiletools.notes";
@@ -637,6 +646,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             Toast.makeText(getApplicationContext(), R.string.back_button, Toast.LENGTH_LONG).show();
             pressedBack = true;
         }
+    }
+
+    private void setDesignChangerVisibility(boolean visible) {
+        if (menu != null)
+            menu.findItem(R.id.action_switch_design).setVisible(visible);
     }
 
     //Tabs
