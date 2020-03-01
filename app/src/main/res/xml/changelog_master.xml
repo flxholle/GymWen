@@ -3,8 +3,8 @@
     <release
         version="1.1.2"
         versioncode="112">
-        <change>Neues Widget (mit Dark-Theme)</change>
-        <change>Neues Design (Altes Design in Titelleiste reaktivierbar)</change>
+        <change>Neues Widget (auch mit Dark-Theme)</change>
+        <change>Neues Vertretungsplan-Design (Altes Design in Titelleiste reaktivierbar)</change>
         <change>Aktivierbares Ersetzen der Kürzel durch richtige Namen</change>
         <change>Schnelleinstellung in der Benachrichtiungsleiste hinzugefügt</change>
         <change>Nutzerzähler</change>
