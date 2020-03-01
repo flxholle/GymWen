@@ -1,0 +1,7 @@
+- Neues Widget (auch mit Dark-Theme)
+- Neues Vertretungsplan-Design (Altes Design in Titelleiste reaktivierbar)
+- Aktivierbares Ersetzen der Kürzel durch richtige Namen
+- Schnelleinstellung in der Benachrichtiungsleiste hinzugefügt
+- Nutzerzähler
+- Speicherplatz reduziert
+- Bugfixes
