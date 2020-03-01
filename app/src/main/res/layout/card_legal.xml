@@ -17,9 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
-            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
             android:paddingTop="24dp"
-            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
             android:paddingBottom="16dp"
             android:text="@string/legal"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -37,8 +37,8 @@
             android:minHeight="@dimen/about_listitem_height"
 
             android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <ImageView
                 android:layout_width="24dp"
@@ -70,8 +70,8 @@
             android:minHeight="@dimen/about_listitem_height"
 
             android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <ImageView
                 android:layout_width="24dp"
@@ -103,8 +103,8 @@
             android:minHeight="@dimen/about_listitem_height"
             android:orientation="horizontal"
 
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:visibility="gone">
 
             <ImageView
@@ -137,8 +137,8 @@
             android:minHeight="@dimen/about_listitem_height"
 
             android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <ImageView
                 android:layout_width="24dp"
@@ -170,8 +170,8 @@
             android:minHeight="@dimen/about_listitem_height"
 
             android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <ImageView
                 android:layout_width="24dp"
