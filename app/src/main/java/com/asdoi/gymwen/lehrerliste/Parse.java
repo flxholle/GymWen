@@ -68,7 +68,7 @@ abstract class Parse {
     protected static String[] getTeacher(String search, String[][] listString) {
         for (String[] s : listString) {
             for (String s1 : s) {
-                if (s1.equals(search)) {
+                if (s1.equalsIgnoreCase(search)) {
                     return s;
                 }
             }
