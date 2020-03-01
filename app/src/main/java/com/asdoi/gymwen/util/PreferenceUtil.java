@@ -1,76 +1,160 @@
 package com.asdoi.gymwen.util;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
+import android.content.res.Configuration;
+
+import androidx.annotation.StyleRes;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
 
-//@author = kabuzeid from Vinylmusicplayer
-public final class PreferenceUtil {
-    public static final String GENERAL_THEME = "general_theme";
+public class PreferenceUtil {
 
-    public static final String LAST_CHANGELOG_VERSION = "last_changelog_version";
-    public static final String INTRO_SHOWN = "intro_shown";
-
-    private static PreferenceUtil sInstance;
-
-    private final SharedPreferences mPreferences;
-
-    private PreferenceUtil() {
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
+    //Settings
+    public static boolean getBooleanSettings(String key, boolean defaultValue, Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getBoolean(key, defaultValue);
     }
 
-    public static PreferenceUtil getInstance() {
-        if (sInstance == null) {
-            sInstance = new PreferenceUtil();
+    public static boolean isBetaEnabled() {
+        return ApplicationFeatures.getBooleanSettings("beta_features", false);
+    }
+
+    public static boolean isHour() {
+        return ApplicationFeatures.getBooleanSettings("hours", false);
+    }
+
+    public static boolean isSections() {
+        return ApplicationFeatures.getBooleanSettings("show_sections", true);
+    }
+
+    public static boolean isAlarmOn(Context context) {
+        return getBooleanSettings("alarm", false, context);
+    }
+
+    public static boolean isFullTeacherNames() {
+        return ApplicationFeatures.getBooleanSettings("show_full_names", false);
+    }
+
+    public static boolean isFullTeacherNamesSpecific() {
+        return ApplicationFeatures.getBooleanSettings("show_full_names_specific", true);
+    }
+
+    public static void setAlarm(Context context, boolean value) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("alarm", value);
+        editor.commit();
+    }
+
+    public static boolean showWeekDate() {
+        return ApplicationFeatures.getBooleanSettings("week_dates", false);
+    }
+
+    public static boolean isParents() {
+        return ApplicationFeatures.getBooleanSettings("parents", false);
+    }
+
+    public static boolean isTwoNotifications() {
+        return ApplicationFeatures.getBooleanSettings("two_notifs", false);
+    }
+
+    public static boolean isIntroShown() {
+        return ApplicationFeatures.getBooleanSettings("intro", false);
+    }
+
+    public static boolean isPhoneRegistered() {
+        return ApplicationFeatures.getBooleanSettings("registered", false);
+    }
+
+    public static int[] getAlarmTime() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
+        return new int[]{sharedPref.getInt("Alarm_hour", -1), sharedPref.getInt("Alarm_minute", -1), sharedPref.getInt("Alarm_second", -1)};
+    }
+
+    public static void setAlarmTime(int... times) {
+        if (times.length != 3) {
+            if (times.length > 0 && times[0] == 0) {
+                setAlarm(ApplicationFeatures.getContext(), false);
+            } else {
+                System.out.println("wrong parameters");
+            }
+            return;
         }
-        return sInstance;
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        setAlarm(ApplicationFeatures.getContext(), true);
+        editor.putInt("Alarm_hour", times[0]);
+        editor.putInt("Alarm_minute", times[1]);
+        editor.putInt("Alarm_second", times[2]);
+        editor.commit();
+
     }
 
-    public String getDownloadPolicy() {
-        return "always";
+    public static int getIntSettings(String key, int defaultValue) {
+        Context context = ApplicationFeatures.getContext();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getInt(key, defaultValue);
     }
 
-    public static boolean isAllowedToDownloadMetadata(final Context context) {
-        switch (getInstance().getDownloadPolicy()) {
-            case "always":
+    @StyleRes
+    public static int getGeneralTheme() {
+        Context context = ApplicationFeatures.getContext();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return getThemeResFromPrefValue(sharedPref.getString("theme", "switch"));
+    }
+
+    @StyleRes
+    private static int getThemeResFromPrefValue(String themePrefValue) {
+        switch (themePrefValue) {
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                return R.style.AppTheme_Dark;
+            case "black":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                return R.style.AppTheme_Black;
+            case "switch":
+                int nightModeFlags = ApplicationFeatures.getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                switch (nightModeFlags) {
+                    case Configuration.UI_MODE_NIGHT_YES:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        return R.style.AppTheme_Dark;
+                    default:
+                    case Configuration.UI_MODE_NIGHT_NO:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        return R.style.AppTheme_Light;
+                }
+            case "light":
+            default:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                return R.style.AppTheme_Light;
+        }
+    }
+
+    public static boolean isDark() {
+        int theme = getGeneralTheme();
+        switch (theme) {
+            case R.style.AppTheme_Dark:
+            case R.style.AppTheme_Black:
                 return true;
-            case "only_wifi":
-                final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
-                return netInfo != null && netInfo.getType() == ConnectivityManager.TYPE_WIFI && netInfo.isConnectedOrConnecting();
-            case "never":
+            case R.style.AppTheme_Light:
             default:
                 return false;
         }
     }
 
-    public void setGeneralTheme(String theme) {
-        final SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString(GENERAL_THEME, theme);
-        editor.apply();
+    public static boolean isOldDesign() {
+        return ApplicationFeatures.getBooleanSettings("old_vertretung", false);
     }
 
-
-    public void setLastChangeLogVersion(int version) {
-        mPreferences.edit().putInt(LAST_CHANGELOG_VERSION, version).apply();
-    }
-
-    public final int getLastChangelogVersion() {
-        return mPreferences.getInt(LAST_CHANGELOG_VERSION, -1);
-    }
-
-    @SuppressLint("CommitPrefEdits")
-    public void setIntroShown() {
-        // don't use apply here
-        mPreferences.edit().putBoolean(INTRO_SHOWN, true).commit();
-    }
-
-    public final boolean introShown() {
-        return mPreferences.getBoolean(INTRO_SHOWN, false);
+    public static void changeDesign(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean newdesign = !sharedPref.getBoolean("old_vertretung", false);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("old_vertretung", newdesign);
+        editor.commit();
     }
 }

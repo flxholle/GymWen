@@ -42,6 +42,7 @@
     <string name="action_settings">Einstellungen</string>
     <string name="action_refresh">Aktualisieren</string>
     <string name="open_app">App öffnen</string>
+    <string name="switch_design">Design ändern</string>
 
     <!-- Settings -->
     <string name="title_activity_settings">Einstellungen</string>
@@ -70,7 +71,7 @@
     <string name="set_theme_dark">Dunkel</string>
     <string name="set_theme_black">Schwarz</string>
     <string name="set_theme_auto">Automatisch</string>
-    <string name="set_full_names">Lehrernamen statt Kürzel anzeigen</string>
+    <string name="set_full_names">Echte Namen statt Kürzel anzeigen</string>
     <string name="set_full_names_specific">Nur beim gefilterten Plan</string>
 
 
@@ -336,9 +337,9 @@
     <string name="intro_three_title">Lehrerliste</string>
     <string name="intro_three_desc">Du kannst die Lehrerliste durchsuchen und sofort eine E-Mail an den Lehrer schreiben.</string>
     <string name="intro_four_title">Elternmodus</string>
-    <string name="intro_four_desc">Außerdem ist diese App auch für Eltern sehr nützlich.\nSo kann man verschiedene Profile für jedes Kind anlegen und bestimmte Funktionen, die besonders für Eltern nützlich sind, benutzen.</string>
+    <string name="intro_four_desc">Außerdem ist diese App auch für Eltern sehr nützlich. So kann man verschiedene Profile für jedes Kind anlegen und bestimmte Funktionen, die besonders für Eltern nützlich sind, benutzen.</string>
     <string name="intro_five_title">Viele tolle Features</string>
-    <string name="intro_five_desc">Des Weiteren kannst du eine für Smartphones optimierte Version der Schulhomepage aufrufen sowie deine Noten und deinen Stundenplan verwalten.\nAußerdem gibt es noch viele weitere Dinge, für die hier leider kein Platz mehr ist.</string>
+    <string name="intro_five_desc">Des Weiteren kannst du eine für Smartphones optimierte Version der Schulhomepage aufrufen sowie deine Noten und deinen Stundenplan verwalten. Außerdem gibt es noch viele weitere Dinge, für die hier leider kein Platz mehr ist.</string>
 
     <!-- Registration -->
     <string name="dont_show_again">Nicht wieder anzeigen</string>

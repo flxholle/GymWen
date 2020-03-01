@@ -9,6 +9,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.util.PreferenceUtil;
 
 public class SettingsFragmentDesign extends PreferenceFragmentCompat {
     @Override
@@ -26,7 +27,7 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
         });
 
         Preference myPref;
-        if (ApplicationFeatures.isBetaEnabled()) {
+        if (PreferenceUtil.isBetaEnabled()) {
             myPref = findPreference("primaryColor");
             myPref.setVisible(true);
             myPref.setOnPreferenceClickListener((Preference p) -> {
