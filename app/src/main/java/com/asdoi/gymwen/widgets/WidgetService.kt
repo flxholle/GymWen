@@ -61,8 +61,8 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
 
 
             //Tomorrow
-            tomorrow = tempVertretungsplan.getTitleString(true)
-            val tomorrowList = tempVertretungsplan.getDay(true)
+            tomorrow = tempVertretungsplan.getTitleString(false)
+            val tomorrowList = tempVertretungsplan.getDay(false)
             if (tomorrowList == null) {
                 noInternet = true
                 break
@@ -90,14 +90,14 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         val entryList = mutableListOf<EntryHelper>()
         if (name != null) entryList.add(EntryHelper(arrayOf(name), profile))
 
-        val todaySonstiges: Boolean
+        val sonstiges: Boolean
         if (dayList.isEmpty())
             entryList.add(EntryHelper(arrayOf(), nothing))
         else {
-            todaySonstiges = VertretungFragment.isSonstiges(dayList)
-            entryList.add(EntryHelper(generateHeadline(context, true, oberstufe), headline, todaySonstiges, oberstufe))
+            sonstiges = VertretungFragment.isSonstiges(dayList)
+            entryList.add(EntryHelper(generateHeadline(context, true, oberstufe), headline, sonstiges, oberstufe))
             for (string in dayList) {
-                entryList.add(EntryHelper(string, content, todaySonstiges))
+                entryList.add(EntryHelper(string, content, sonstiges))
             }
         }
         return entryList

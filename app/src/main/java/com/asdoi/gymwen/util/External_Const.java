@@ -26,4 +26,7 @@ public abstract class External_Const {
     public final static String downloadApp_timetable = "https://apt.izzysoft.de/fdroid/index/apk/juliushenke.smarttt";
     public static final String downloadApp_colorush = "https://gitlab.com/asdoi/colorrush/blob/master/Apk/ColoRush.apk";
     public static final String downloadApp_publicTransport = "https://f-droid.org/de/packages/de.schildbach.oeffi/";
+
+    //Vertretungsplan
+//    public static final String[] nothing = new String[]{"entfällt","entf"};
 }

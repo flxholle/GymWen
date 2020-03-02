@@ -351,4 +351,14 @@
     <string name="on">An</string>
     <string name="off">Aus</string>
 
+    <!-- Share Message -->
+    <string name="share_msg_nothing_at">Keine Vertretung am</string>
+    <string name="share_msg_vertretung_at">Vertretung am</string>
+    <string name="share_msg_nothing_hour_oberstufe">Stunde entfällt für Kurs</string>
+    <string name="share_msg_hour_oberstufe">Stunde für Kurs</string>
+    <string name="share_msg_in_room">in Raum</string>
+    <string name="share_msg_nothing_hour">Stunde entfällt</string>
+    <string name="share_msg_hour">Stunde</string>
+    <string name="share_msg_for_courses">für die Kurse</string>
+
 </resources>
