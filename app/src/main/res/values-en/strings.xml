@@ -282,5 +282,14 @@
     <string name="intro_one_desc">This app has been programmed for all students and parents of the Wendelstein grammar school.</string>
     <string name="intro_four_desc">This app is also very useful for parents. So you can create different profiles for each child and use certain functions that are particularly useful for parents.</string>
     <string name="intro_five_desc">You can also call up a version of the school homepage optimized for smartphones and manage your grades and your timetable. There are also many other things for which there is unfortunately no more space.</string>
+    <string name="switch_design">Change design</string>
+    <string name="share_msg_for_courses">for the courses</string>
+    <string name="share_msg_in_room">in room</string>
+    <string name="share_msg_nothing_at">No Sit-in on</string>
+    <string name="share_msg_hour">hour</string>
+    <string name="share_msg_nothing_hour">hour is missing</string>
+    <string name="share_msg_nothing_hour_oberstufe">hour is missing for course</string>
+    <string name="share_msg_hour_oberstufe">hour for course</string>
+    <string name="share_msg_vertretung_at">Sit-in on</string>
 
 </resources>
