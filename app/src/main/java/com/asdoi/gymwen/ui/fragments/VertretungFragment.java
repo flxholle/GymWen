@@ -174,9 +174,9 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     //Share
     private void share() {
-        String message = shareMessage();
-        String footprint = getString(R.string.footprint);
-        message += footprint;
+        String message = shareMessage(true);
+//        String footprint = getString(R.string.footprint);
+//        message += footprint;
 
         if (VertretungsPlanFeatures.getTodayTitle().equals("Keine Internetverbindung!")) {
             //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
@@ -191,7 +191,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         startActivity(Intent.createChooser(i, getString(R.string.share_vertretung)));
     }
 
-    private String shareMessage() {
+    private String shareMessage(boolean withCourses) {
         String message = "";
         String[][] inhalt = null;
         String title = "";
@@ -199,9 +199,9 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         if (both) {
             both = false;
             today = true;
-            message += shareMessage();
+            message += shareMessage(true);
             today = false;
-            message += shareMessage();
+            message += shareMessage(false);
             return message;
         } else if (today) {
             inhalt = VertretungsPlanFeatures.getTodayArray();
@@ -217,7 +217,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
 
         if (VertretungsPlanFeatures.getOberstufe()) {
-            ArrayList<String> courses = new ArrayList<>();
+            /*ArrayList<String> courses = new ArrayList<>();
             if (inhalt.length != 0) {
                 for (String[] line : inhalt) {
                     if (!courses.contains(line[0])) {
@@ -228,33 +228,42 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     classes += courses.get(i) + ", ";
                 }
                 classes += courses.get(courses.size() - 1);
+            }*/
+            ArrayList<String> names = VertretungsPlanFeatures.getNames();
+            for (int i = 0; i < names.size(); i++) {
+                classes += names.get(i) + ", ";
             }
+            if (inhalt.length == 0) {
+                message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + context.getString(R.string.share_msg_for_courses) + " " + classes + ")\n" : "");
+                return message;
+            } else
+                message = context.getString(R.string.share_msg_vertretung_at) + " " + title + ":\n";
         } else {
             ArrayList<String> names = VertretungsPlanFeatures.getNames();
             for (int i = 0; i < names.size(); i++) {
                 classes += names.get(i) + "";
             }
+            if (inhalt.length == 0) {
+                message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + classes + ")\n" : "");
+                return message;
+            } else
+                message = context.getString(R.string.share_msg_vertretung_at) + " " + title + (withCourses ? " (" + classes + "):\n" : "");
         }
 
-        if (inhalt.length == 0) {
-            message += "Am " + title + " haben wir (" + classes + ") keine Vertretung.\n";
-            return message;
-        }
-        message = "Am " + title + " haben wir (" + classes + ") folgende Vertretung:\n";
         if (VertretungsPlanFeatures.getOberstufe()) {
             for (String[] line : inhalt) {
                 if (line[3].equals("entfällt")) {
-                    message += line[1] + ". Stunde entfällt für Kurs " + line[0] + "\n";
+                    message += line[1] + ". " + context.getString(R.string.share_msg_nothing_hour_oberstufe) + " " + line[0] + "\n";
                 } else {
-                    message += line[1] + ". Stunde für Kurs " + line[0] + " in Raum " + line[4] + " bei " + line[3] + " " + line[5] + "\n";
+                    message += line[1] + ". " + context.getString(R.string.share_msg_hour_oberstufe) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
                 }
             }
         } else {
             for (String[] line : inhalt) {
                 if (line[3].equals("entfällt")) {
-                    message += line[1] + ". Stunde entfällt\n";
+                    message += line[1] + ". " + context.getString(R.string.share_msg_nothing_hour) + "\n";
                 } else {
-                    message += line[1] + ". Stunde " + line[2] + " bei " + line[3] + " in Raum " + line[4] + " " + line[5] + "\n";
+                    message += line[1] + ". " + context.getString(R.string.share_msg_hour) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
                 }
             }
         }
