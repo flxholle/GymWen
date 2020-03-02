@@ -389,13 +389,42 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         return view;
     }
 
+    public boolean startApp(String... packageNames) {
+        Intent intent = null;
+        for (String s : packageNames) {
+            intent = getPackageManager().getLaunchIntentForPackage(s);
+            if (intent != null) {
+                startActivity(intent);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean openAppInStore(String... packageNames) {
+        boolean run = false;
+        for (String s : packageNames) {
+            try {
+                //Open Free Version
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + s)));
+                run = true;
+            } catch (android.content.ActivityNotFoundException anfe) {
+                run = false;
+            }
+            if (run)
+                break;
+        }
+        return run;
+    }
+
 
     //Permissions
     private Sheriff sheriffPermission;
     private static final int REQUEST_MULTIPLE_PERMISSION = 101;
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         sheriffPermission.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -549,13 +578,6 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     //Make Call
     public void makeCall(String telNr) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermission(() -> {
-                makeCall(telNr);
-            }, SheriffPermission.PHONE);
-            return;
-        }
-
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + telNr));
         startActivity(intent);
