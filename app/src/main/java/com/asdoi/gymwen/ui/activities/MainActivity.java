@@ -3,7 +3,6 @@ package com.asdoi.gymwen.ui.activities;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,6 +38,7 @@ import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.fragments.LehrerlisteFragment;
 import com.asdoi.gymwen.ui.fragments.VertretungFragment;
+import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.github.javiersantos.appupdater.enums.Display;
@@ -406,22 +406,18 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 drawer.closeDrawer(GravityCompat.START);
                 return;
             case R.id.nav_mebis:
-                tabIntent("https://lernplattform.mebis.bayern.de/my/");
+                tabIntent(External_Const.mebis_Link);
                 return;
 //            case R.id.nav_backup:
 //                backup();
 //                return;
             case R.id.nav_mensa:
-                String packageName = "de.eezzy.admin.apnr40";
-                intent = getPackageManager().getLaunchIntentForPackage(packageName);
-                if (intent == null) {
-                    tabIntent("https://www.kitafino.de/sys_k2/index.php?action=bestellen");
-                } else {
-                    startActivity(intent);
+                if (!startApp(External_Const.cafeteria_packageName)) {
+                    tabIntent(External_Const.cafeteria_Link);
                 }
                 return;
             case R.id.nav_shop:
-                tabIntent("http://shop.apromote-werbemittel.de/");
+                tabIntent(External_Const.shop_Link);
                 return;
             case R.id.nav_imprint:
             case R.id.action_imprint: // Fallthrough
@@ -478,57 +474,26 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 setDesignChangerVisibility(false);
                 break;
             case R.id.nav_notes:
-                packageName = "com.simplemobiletools.notes";
-                String packageNamePro = "com.simplemobiletools.notes.pro";
-                String samsungNotes = "com.samsung.android.app.notes";
-                //Check the two notes versions
-                intent = getPackageManager().getLaunchIntentForPackage(packageName) == null ? getPackageManager().getLaunchIntentForPackage(packageNamePro) : getPackageManager().getLaunchIntentForPackage(packageName);
-                //Check Samsung notes
-                if (intent == null)
-                    intent = getPackageManager().getLaunchIntentForPackage(samsungNotes);
-
                 //If app is not installed
-                if (intent == null) {
-                    try {
-                        //Open Free Version
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
-                    } catch (android.content.ActivityNotFoundException anfe) {
-                        try {
-                            //Open Pro Version
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNamePro)));
-                        } catch (android.content.ActivityNotFoundException a) {
-                            //Open Browser to Download
-                            tabIntent("https://f-droid.org/de/packages/com.simplemobiletools.notes.pro/");
-                        }
-                    }
-                } else {
-                    startActivity(intent);
+                if (!startApp(External_Const.notes_packageNames)) {
+                    if (!openAppInStore(External_Const.notes_packageNames))
+                        //Open Browser to Download
+                        tabIntent(External_Const.downloadApp_notes);
                 }
                 return;
             case R.id.nav_timetable:
-                packageName = "juliushenke.smarttt";
-                intent = getPackageManager().getLaunchIntentForPackage(packageName);
-                //If app is not installed
-                if (intent == null) {
-                    try {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
-                    } catch (android.content.ActivityNotFoundException a) {
+                if (!startApp(External_Const.timetable_packageNames)) {
+                    if (!openAppInStore(External_Const.timetable_packageNames))
                         //Open Browser to Download
-                        tabIntent("https://apt.izzysoft.de/fdroid/index/apk/juliushenke.smarttt");
-                    }
-                } else {
-                    startActivity(intent);
+                        tabIntent(External_Const.downloadApp_timetable);
                 }
                 return;
             case R.id.nav_grades:
                 checkGradesFile();
                 return;
             case R.id.nav_colorush:
-                intent = getPackageManager().getLaunchIntentForPackage(ColoRushFragment.packageName);
-                if (intent != null) {
-                    startActivity(intent);
-                    return;
-                } else {
+                setDesignChangerVisibility(false);
+                if (!startApp(External_Const.coloRush_packageNames)) {
                     setVisibiltySpinner(false);
                     fragment = new ColoRushFragment();
                 }
@@ -539,45 +504,20 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 finish();
                 return;
             case R.id.nav_claxss:
-                String link = "https://gym-wendelstein.schule-eltern.info/infoline/claxss";
-                tabIntent(link);
+                tabIntent(External_Const.claxss_Link);
                 return;
             case R.id.nav_call_office:
-                String nr = "0049 9171 818 800";
-                makeCall(nr);
+                makeCall(External_Const.office_TelNr);
                 return;
             case R.id.nav_public_transport:
-                String packageNameOeffi = "de.schildbach.oeffi";
-                String packageNameVGN = "com.mdv.VGNCompanion";
-                String packageNameDB = "de.hafas.android.db";
-
-                intent = getPackageManager().getLaunchIntentForPackage(packageNameOeffi) == null ? getPackageManager().getLaunchIntentForPackage(packageNameVGN) : getPackageManager().getLaunchIntentForPackage(packageNameOeffi);
-                if (intent == null)
-                    intent = getPackageManager().getLaunchIntentForPackage(packageNameDB);
-
-                //If app is not installed
-                if (intent == null) {
-                    try {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameOeffi)));
-                    } catch (android.content.ActivityNotFoundException anfe) {
-                        try {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameVGN)));
-                        } catch (android.content.ActivityNotFoundException a) {
-                            try {
-                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameDB)));
-                            } catch (android.content.ActivityNotFoundException a2) {
-                                //Open Browser to Download
-                                tabIntent("https://f-droid.org/de/packages/de.schildbach.oeffi/");
-                            }
-                        }
-                    }
-                } else {
-                    startActivity(intent);
+                if (!startApp(External_Const.publicTransport_packageNames)) {
+                    if (!openAppInStore(External_Const.publicTransport_packageNames))
+                        //Open Browser to Download
+                        tabIntent(External_Const.downloadApp_publicTransport);
                 }
                 return;
             case R.id.nav_forms:
-                link = "http://www.gym-wen.de/material/formulare-merkblaetter/";
-                tabIntent(link);
+                tabIntent(External_Const.forms_Link);
                 return;
             case R.id.action_switch_design:
                 PreferenceUtil.changeDesign(this);
