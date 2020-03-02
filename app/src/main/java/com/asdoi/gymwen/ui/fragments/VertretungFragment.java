@@ -229,10 +229,11 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 }
                 classes += courses.get(courses.size() - 1);
             }*/
-            ArrayList<String> names = VertretungsPlanFeatures.getNames();
-            for (int i = 0; i < names.size(); i++) {
-                classes += names.get(i) + ", ";
+            ArrayList<String> courses = VertretungsPlanFeatures.getNames();
+            for (int i = 0; i < courses.size() - 1; i++) {
+                classes += courses.get(i) + ", ";
             }
+            classes += courses.get(courses.size() - 1);
             if (inhalt.length == 0) {
                 message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + context.getString(R.string.share_msg_for_courses) + " " + classes + ")\n" : "");
                 return message;
