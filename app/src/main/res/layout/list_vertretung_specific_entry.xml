@@ -68,7 +68,8 @@
         android:gravity="center"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textColor="?android:attr/textColorSecondary"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/vertretung_specific_entry_textViewClass"

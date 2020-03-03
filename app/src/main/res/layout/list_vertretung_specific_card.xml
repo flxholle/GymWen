@@ -112,7 +112,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="other"
-                    android:textColor="?android:attr/textColorSecondary" />
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textIsSelectable="true" />
             </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

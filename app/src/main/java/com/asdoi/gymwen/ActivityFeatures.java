@@ -21,8 +21,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -349,6 +347,9 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         TextView vname = view.findViewById(R.id.teacher_vname);
         vname.setText(" " + entry[2]);
 
+        vname.setTextIsSelectable(false);
+        nname.setTextIsSelectable(false);
+
         TextView hour = view.findViewById(R.id.teacher_hour);
         hour.setText(entry[3]);
         hour.setVisibility(View.GONE);
@@ -380,6 +381,8 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                 hour.setVisibility(View.VISIBLE);
                 LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
                 hideLayout.setLayoutParams(params2);
+                vname.setTextIsSelectable(true);
+                nname.setTextIsSelectable(true);
             });
         } catch (Exception e) {
             //NullPointerException for root on API 17
@@ -620,7 +623,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     public static void reloadVertretungDocs(Context context) {
         if (VertretungsPlanFeatures.reloadDocs()) {
-            try {
+            /*try {
                 new Handler(Looper.getMainLooper()).post(() -> {
                     Toast toast = Toast.makeText(context, R.string.reloaded_docs, Toast.LENGTH_SHORT);
                     TextView v = toast.getView().findViewById(android.R.id.message);
@@ -630,7 +633,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                 });
             } catch (Exception e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 

@@ -73,7 +73,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:visibility="visible"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textIsSelectable="true" />
 
                 </LinearLayout>
 

@@ -73,6 +73,7 @@
         android:layout_weight="@integer/vertretung_all_other"
         android:gravity="center"
         android:textSize="16sp"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textColor="?android:attr/textColorSecondary"
+        android:textIsSelectable="true" />
 
 </LinearLayout>
