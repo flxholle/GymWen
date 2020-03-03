@@ -175,8 +175,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     //Share
     private void share() {
         String message = shareMessage(true);
-//        String footprint = getString(R.string.footprint);
-//        message += footprint;
+        String footprint = getString(R.string.footprint);
+        message += footprint;
 
         if (VertretungsPlanFeatures.getTodayTitle().equals("Keine Internetverbindung!")) {
             //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
@@ -235,7 +235,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             }
             classes += courses.get(courses.size() - 1);
             if (inhalt.length == 0) {
-                message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + context.getString(R.string.share_msg_for_courses) + " " + classes + ")\n" : "");
+                message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + context.getString(R.string.share_msg_for_courses) + " " + classes + ")\n" : "\n");
                 return message;
             } else
                 message = context.getString(R.string.share_msg_vertretung_at) + " " + title + ":\n";
@@ -245,10 +245,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 classes += names.get(i) + "";
             }
             if (inhalt.length == 0) {
-                message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + classes + ")\n" : "");
+                message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + classes + ")\n" : "\n");
                 return message;
             } else
-                message = context.getString(R.string.share_msg_vertretung_at) + " " + title + (withCourses ? " (" + classes + "):\n" : "");
+                message = context.getString(R.string.share_msg_vertretung_at) + " " + title + (withCourses ? " (" + classes + "):\n" : "\n");
         }
 
         if (VertretungsPlanFeatures.getOberstufe()) {
@@ -276,6 +276,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
     void teacherClick(TextView view, String teacherQuery, boolean showBorders, boolean fullNames) {
         if (teacherQuery.equals("entf") || teacherQuery.equals("entfällt") || teacherQuery.equals("AOL"))
             return;
+        int padding = 0;
         if (showBorders) {
             Drawable drawable = ContextCompat.getDrawable(context, R.drawable.background_shape);
             try {
@@ -285,9 +286,11 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 e.printStackTrace();
             }
             view.setBackground(drawable);
+            padding = 7;
         } else {
             view.setBackgroundResource(android.R.drawable.list_selector_background);
         }
+        view.setPadding(padding, padding, padding, padding);
 
 
         if (fullNames) {
@@ -558,11 +561,12 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         for (int i = 0; i < headline.length; i++) {
             LinearLayout.LayoutParams params;
-
+            TextView hour = createBlankTextView();
 
             switch (i) {
                 case 0:
                     params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_course));
+                    hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                     break;
                 case 1:
                     if (PreferenceUtil.isHour()) {
@@ -587,7 +591,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                     params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_all_room));
             }
 
-            TextView hour = createBlankTextView();
             params.setMargins(3, 3, 3, 3);
             hour.setLayoutParams(params);
             hour.setText(headline[i]);

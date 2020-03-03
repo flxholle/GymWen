@@ -80,7 +80,7 @@
     <string name="nothing_all">Es entfällt nichts für den gesamten Tag.</string>
     <string name="back_button">Erneut drücken zum Beenden.</string>
     <string name="downloading">Lädt\u2026</string>
-    <string name="footprint">Diese Nachricht wurde mit der GymWen App erzeugt.</string>
+    <string name="footprint">Mit der GymWen App erzeugt: https://asdoi.gitlab.io/</string>
     <string name="noInternet">Du bist nicht mit dem Internet verbunden!</string>
     <string name="noInternetConnection">Keine Internetverbindung!</string>
     <string name="share_vertretung">Vertretung senden an\u2026</string>
@@ -255,7 +255,6 @@
         <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
     ]]>
     </string>
 
@@ -264,7 +263,7 @@
         <div>Impressum des Gymnasiums Wendelstein:<br>
         http://gym-wen.de/startseite/impressum/</div><br>
         <div>Impressum des App-Entwicklers:<br>
-        --Einfuegen--</div>]]></string>
+        https://asdoi.gitlab.io/imprint.html</div>]]></string>
 
     <!-- Bottom Navigation Bar -->
     <string name="nav_filter">Gefiltert</string>
@@ -328,6 +327,7 @@
     <string name="color_primary">Hauptfarbe</string>
     <string name="legal">Rechtliches</string>
     <string name="imprint">Impressum</string>
+    <string name="version">Version</string>
 
     <!-- Intro -->
     <string name="intro_one_title" translatable="false">Gymnasium Wendelstein App</string>

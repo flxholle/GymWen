@@ -133,9 +133,11 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             );
             TextView titleView = new TextView(context);
             titleView.setLayoutParams(textViewparams);
+//            titleView.setTextIsSelectable(true);
 
             TextView descriptionView = new TextView(context);
             descriptionView.setLayoutParams(textViewparams);
+//            descriptionView.setTextIsSelectable(true);
 
             TextView linkView = new TextView(context);
             linkView.setLayoutParams(textViewparams);
@@ -252,9 +254,11 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             );
             TextView titleView = new TextView(context);
             titleView.setLayoutParams(textViewparams);
+            titleView.setTextIsSelectable(true);
 
             TextView descriptionView = new TextView(context);
             descriptionView.setLayoutParams(textViewparams);
+            descriptionView.setTextIsSelectable(true);
 
             TextView linkView = new TextView(context);
             linkView.setLayoutParams(textViewparams);
