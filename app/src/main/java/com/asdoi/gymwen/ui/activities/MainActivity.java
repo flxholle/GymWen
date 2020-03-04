@@ -169,6 +169,16 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsEnable.add(menu.findItem(R.id.nav_filtered_days));
             itemsEnable.add(menu.findItem(R.id.nav_unfiltered_days));
             itemsDisable.add(menu.findItem(R.id.nav_days));
+
+            if (PreferenceUtil.isFilteredMenu())
+                itemsEnable.add(menu.findItem(R.id.nav_filtered_days));
+            else
+                itemsDisable.add(menu.findItem(R.id.nav_filtered_days));
+
+            if (PreferenceUtil.isUnfilteredMenu())
+                itemsEnable.add(menu.findItem(R.id.nav_unfiltered_days));
+            else
+                itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
         } else {
             itemsDisable.add(menu.findItem(R.id.nav_filtered_days));
             itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
@@ -188,6 +198,31 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsEnable.add(menu.findItem(R.id.nav_timetable));
             itemsEnable.add(menu.findItem(R.id.nav_grades));
         }
+
+        if (PreferenceUtil.isBothMenu()) {
+            itemsEnable.add(menu.findItem(R.id.nav_both));
+        } else
+            itemsDisable.add(menu.findItem(R.id.nav_both));
+
+        if (PreferenceUtil.isOfficeMenu())
+            itemsEnable.add(menu.findItem(R.id.nav_call_office));
+        else
+            itemsDisable.add(menu.findItem(R.id.nav_call_office));
+
+        if (PreferenceUtil.isTransportMenu())
+            itemsEnable.add(menu.findItem(R.id.nav_public_transport));
+        else
+            itemsDisable.add(menu.findItem(R.id.nav_public_transport));
+
+        if (PreferenceUtil.isNotesMenu())
+            itemsEnable.add(menu.findItem(R.id.nav_notes));
+        else
+            itemsDisable.add(menu.findItem(R.id.nav_notes));
+
+        if (PreferenceUtil.isTimetableMenu())
+            itemsEnable.add(menu.findItem(R.id.nav_timetable));
+        else
+            itemsDisable.add(menu.findItem(R.id.nav_timetable));
 
         try {
             for (MenuItem i : itemsEnable) {

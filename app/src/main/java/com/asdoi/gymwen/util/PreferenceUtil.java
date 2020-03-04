@@ -32,10 +32,6 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("hours", false);
     }
 
-    public static boolean isSections() {
-        return ApplicationFeatures.getBooleanSettings("show_sections", true);
-    }
-
     public static boolean isAlarmOn(Context context) {
         return getBooleanSettings("alarm", false, context);
     }
@@ -72,6 +68,10 @@ public class PreferenceUtil {
 
     public static boolean isPhoneRegistered() {
         return ApplicationFeatures.getBooleanSettings("registered", false);
+    }
+
+    public static boolean isSections() {
+        return ApplicationFeatures.getBooleanSettings("show_sections", true);
     }
 
     public static boolean isBothMenu() {
