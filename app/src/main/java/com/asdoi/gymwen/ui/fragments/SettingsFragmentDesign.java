@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -57,5 +58,17 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
             myPref = findPreference("accentColor");
             myPref.setVisible(false);
         }
+
+        setBorder();
+        myPref = findPreference("show_borders");
+        myPref.setOnPreferenceClickListener((Preference preference) -> {
+            setBorder();
+            return true;
+        });
+    }
+
+    private void setBorder() {
+        boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
+        findPreference("show_border_specific").setEnabled(showNotif);
     }
 }

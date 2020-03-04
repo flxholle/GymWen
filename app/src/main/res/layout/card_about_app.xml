@@ -98,7 +98,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_menu_share"
+                app:srcCompat="@drawable/ic_share_white_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
             <TextView

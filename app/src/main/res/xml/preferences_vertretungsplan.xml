@@ -1,41 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <EditTextPreference
         android:key="courses"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary="@string/set_courses_summary"
-        android:title="@string/set_courses_title" />
+        android:title="@string/set_courses_title"
+        app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="false"
         android:key="hours"
-        android:title="@string/set_hours" />
+        android:title="@string/set_hours"
+        app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="false"
         android:key="week_dates"
-        android:title="@string/set_show_weekdates" />
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="show_borders"
-        android:title="@string/set_show_borders" />
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="show_border_specific"
-        android:title="@string/set_show_borders_specific" />
+        android:title="@string/set_show_weekdates"
+        app:iconSpaceReserved="false" />
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="show_full_names"
-        android:title="@string/set_full_names" />
+        android:title="@string/set_full_names"
+        app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="show_full_names_specific"
-        android:title="@string/set_full_names_specific" />
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="show_sections"
-        android:title="@string/set_design_show_sections" />
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="old_vertretung"
-        android:title="@string/set_old_vertretung" />
+        android:title="@string/set_full_names_specific"
+        app:iconSpaceReserved="true" />
 </PreferenceScreen>

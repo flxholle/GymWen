@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="showNotification"
-        android:title="@string/set_notifiaction_isOn" />
+        android:title="@string/set_notifiaction_isOn"
+        app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="alwaysNotification"
-        android:title="@string/set_notification_showAlways" />
+        android:title="@string/set_notification_showAlways"
+        app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="false"
         android:key="two_notifs"
-        android:title="@string/set_two_notifications" />
+        android:title="@string/set_two_notifications"
+        app:iconSpaceReserved="false" />
     <Preference
         android:key="alarm"
-        android:title="@string/set_notification_alarm" />
+        android:title="@string/set_notification_alarm"
+        app:iconSpaceReserved="false" />
 </PreferenceScreen>

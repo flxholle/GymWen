@@ -14,24 +14,12 @@ public class SettingsFragmentVertretungsplan extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_vertretungsplan, rootKey);
 
-        setBorder();
-        Preference myPref = findPreference("show_borders");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
-            setBorder();
-            return true;
-        });
-
         setFullNames();
-        myPref = findPreference("show_full_names");
+        Preference myPref = findPreference("show_full_names");
         myPref.setOnPreferenceClickListener((Preference preference) -> {
             setFullNames();
             return true;
         });
-    }
-
-    private void setBorder() {
-        boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        findPreference("show_border_specific").setEnabled(showNotif);
     }
 
     private void setFullNames() {

@@ -138,7 +138,23 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         if (!PreferenceUtil.isAlarmOn(this)) {
             ApplicationFeatures.cancelAlarm(getContext(), AlarmReceiver.class);
         }
+        setupMenuItems(navigationView);
 
+    }
+
+    public void setupColors() {
+        findViewById(R.id.main_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
+        if (Build.VERSION.SDK_INT >= 21)
+            findViewById(R.id.main_fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
+        int accentColor = ThemeStore.accentColor(this);
+        NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
+        NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
+    }
+
+    private void setupMenuItems(NavigationView navigationView) {
         //Enable disabled Views
         Menu menu = navigationView.getMenu();
         ArrayList<MenuItem> itemsEnable = new ArrayList<>(0);
@@ -147,6 +163,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         if (PreferenceUtil.isBetaEnabled()) {
         } else {
         }
+
+
         if (PreferenceUtil.isSections()) {
             itemsEnable.add(menu.findItem(R.id.nav_filtered_days));
             itemsEnable.add(menu.findItem(R.id.nav_unfiltered_days));
@@ -156,6 +174,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
             itemsEnable.add(menu.findItem(R.id.nav_days));
         }
+
         if (PreferenceUtil.isParents()) {
             itemsEnable.add(menu.findItem(R.id.nav_claxss));
             itemsEnable.add(menu.findItem(R.id.nav_forms));
@@ -194,18 +213,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     protected void onDestroy() {
         super.onDestroy();
 //        noInternetDialog.onDestroy();
-    }
-
-    public void setupColors() {
-        findViewById(R.id.main_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
-        tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
-        if (Build.VERSION.SDK_INT >= 21)
-            findViewById(R.id.main_fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
-        int accentColor = ThemeStore.accentColor(this);
-        NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
-        NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
     }
 
     @Override

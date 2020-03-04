@@ -18,34 +18,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
         android:title="@string/set_vertretung_title"
-        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentVertretungsplan" />
+        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentVertretungsplan"
+        app:iconSpaceReserved="false" />
     <Preference
         android:title="@string/set_design_title"
-        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentDesign" />
+        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentDesign"
+        app:iconSpaceReserved="false" />
     <Preference
         android:title="@string/set_notification_title"
-        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentNotification" />
+        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentNotification"
+        app:iconSpaceReserved="false" />
     <Preference
         android:title="@string/set_vertretung_signin"
-        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentSignIn" />
+        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentSignIn"
+        app:iconSpaceReserved="false" />
 
 
-    <PreferenceCategory android:title="@string/set_other_title">
+    <PreferenceCategory
+        android:title="@string/set_other_title"
+        app:iconSpaceReserved="false">
         <SwitchPreference
             android:defaultValue="false"
             android:key="parents"
-            android:title="@string/set_parents" />
+            android:title="@string/set_parents"
+            app:iconSpaceReserved="false" />
         <Preference
             android:key="language"
-            android:title="@string/menu_language" />
+            android:title="@string/menu_language"
+            app:iconSpaceReserved="false" />
         <Preference
             android:key="updates"
-            android:title="@string/menu_update" />
+            android:title="@string/menu_update"
+            app:iconSpaceReserved="false" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="beta_features"
             android:title="@string/set_beta_features"
-            app:isPreferenceVisible="true" />
+            app:isPreferenceVisible="true"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
 </PreferenceScreen>

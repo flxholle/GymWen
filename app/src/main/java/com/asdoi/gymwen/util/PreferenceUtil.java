@@ -14,9 +14,14 @@ import com.asdoi.gymwen.R;
 public class PreferenceUtil {
 
     //Settings
+    //Booleans
     public static boolean getBooleanSettings(String key, boolean defaultValue, Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getBoolean(key, defaultValue);
+    }
+
+    public static boolean getBooleanSettings(String key, boolean defaultValue) {
+        return ApplicationFeatures.getBooleanSettings(key, defaultValue);
     }
 
     public static boolean isBetaEnabled() {
@@ -69,6 +74,36 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("registered", false);
     }
 
+    public static boolean isBothMenu() {
+        return getBooleanSettings("menu_both", true);
+    }
+
+    public static boolean isFilteredMenu() {
+        return getBooleanSettings("menu_filtered", true);
+    }
+
+    public static boolean isUnfilteredMenu() {
+        return getBooleanSettings("menu_unfiltered", true);
+    }
+
+    public static boolean isOfficeMenu() {
+        return getBooleanSettings("menu_call_office", true);
+    }
+
+    public static boolean isTransportMenu() {
+        return getBooleanSettings("menu_public_transport", true);
+    }
+
+    public static boolean isNotesMenu() {
+        return getBooleanSettings("menu_notes", true);
+    }
+
+    public static boolean isTimetableMenu() {
+        return getBooleanSettings("menu_timetable", true);
+    }
+
+
+    //Other
     public static int[] getAlarmTime() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         return new int[]{sharedPref.getInt("Alarm_hour", -1), sharedPref.getInt("Alarm_minute", -1), sharedPref.getInt("Alarm_second", -1)};

@@ -52,11 +52,12 @@ abstract class Parse {
             content[i][1] = line.substring(4, indexComma);
 
             //Vorname
-            int indexNextWhiteSpace = line.indexOf(' ', indexComma + 2);
-            if (line.contains("Dr.")) {
-                indexNextWhiteSpace = line.indexOf(' ', indexNextWhiteSpace + 1);
-            }
+            int indexNextWhiteSpace = line.indexOf(',', indexComma + 2);
+//            if (line.contains("Dr.")) {
+//                content[i][2] = line.substring(indexComma + 2 + "Dr. ".length(), indexNextWhiteSpace);
+//            } else {
             content[i][2] = line.substring(indexComma + 2, indexNextWhiteSpace);
+//            }
 
             //Sprechstunde
             content[i][3] = line.substring(indexNextWhiteSpace + 1);
