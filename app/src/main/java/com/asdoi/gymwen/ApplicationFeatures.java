@@ -554,7 +554,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             } else {
                 if (vp.getOberstufe()) {
                     for (String[] line : inhalt) {
-                        if (line[3].equals("entfällt")) {
+                        if (VertretungsPlanFeatures.isNothing(line[3])) {
                             message += line[1] + ". Stunde entfällt\n";
                         } else {
                             message += line[1] + ". Stunde, " + line[0] + ", " + line[4] + ", " + line[3] + " " + line[5] + "\n";
@@ -562,7 +562,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                     }
                 } else {
                     for (String[] line : inhalt) {
-                        if (line[3].equals("entfällt")) {
+                        if (VertretungsPlanFeatures.isNothing(line[3])) {
                             message += line[1] + ". Stunde entfällt\n";
                         } else {
                             message += line[1] + ". Stunde " + line[2] + " bei " + line[3] + ", " + line[4] + " " + line[5] + "\n";

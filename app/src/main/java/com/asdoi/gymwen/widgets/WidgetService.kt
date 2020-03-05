@@ -188,7 +188,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         val view = getRemoteViews(context)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewHour, entry[1])
         view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, if (oberstufe) entry[0] else entry[2])
-        if (!(entry[3] == "entfällt" || entry[3] == "entf")) {
+        if (!VertretungsPlanFeatures.isNothing(entry[3])) {
             view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, entry[3])
             view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.VISIBLE)
             val content = SpannableString(entry[4])

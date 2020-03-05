@@ -20,6 +20,8 @@ public abstract class VertretungsPlanFeatures {
     public static final String todayURL = "http://gym-wen.de/vp/heute.htm";
     public static final String tomorrowURL = "http://gym-wen.de/vp/morgen.htm";
 
+    private static final String[] nothing = new String[]{"entfällt", "entf"};
+
     //ChoiceActivity -> Step 5
     public static final String[][] choiceCourseNames = new String[][]{{ApplicationFeatures.getContext().getString(R.string.math), ApplicationFeatures.getContext().getString(R.string.mathShort)},
             {ApplicationFeatures.getContext().getString(R.string.german), ApplicationFeatures.getContext().getString(R.string.germanShort)},
@@ -46,7 +48,7 @@ public abstract class VertretungsPlanFeatures {
 
     private static Vertretungsplan vertretungsplan = new Vertretungsplan();
 
-    public static void setContext(Context context){
+    public static void setContext(Context context) {
         vertretungsplan.setContext(context);
     }
 
@@ -161,5 +163,17 @@ public abstract class VertretungsPlanFeatures {
 
     public static ArrayList<String> getNames() {
         return vertretungsplan.getCourses();
+    }
+
+    public static boolean isNothing(String query) {
+        for (String s : nothing) {
+            if (s.equalsIgnoreCase(query))
+                return true;
+        }
+        return false;
+    }
+
+    public static String[] getNothing() {
+        return nothing;
     }
 }

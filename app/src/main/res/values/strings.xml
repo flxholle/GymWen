@@ -86,6 +86,7 @@
     <string name="share_vertretung">Vertretung senden an\u2026</string>
     <string name="day_past">(Vergangen)</string>
     <string name="with_teacher">bei</string>
+    <string name="missing_short">entf</string>
 
     <!--    Table-->
     <string name="classes">Klasse</string>

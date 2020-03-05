@@ -28,5 +28,5 @@ public abstract class External_Const {
     public static final String downloadApp_publicTransport = "https://f-droid.org/de/packages/de.schildbach.oeffi/";
 
     //Vertretungsplan
-//    public static final String[] nothing = new String[]{"entfällt","entf"};
+
 }
