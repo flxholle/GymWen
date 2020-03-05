@@ -13,6 +13,8 @@ public abstract class Lehrerliste {
     public static final String listUrl = "http://www.gym-wen.de/information/sprechstunden/";
     private static Document list;
 
+    public static String AOLShort = "AOL";
+
     public static String[][] liste() {
         if (list == null) {
             return null;
@@ -66,5 +68,9 @@ public abstract class Lehrerliste {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static boolean isAOL(String query) {
+        return query.equals(AOLShort);
     }
 }

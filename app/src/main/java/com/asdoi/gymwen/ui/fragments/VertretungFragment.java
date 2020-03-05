@@ -253,7 +253,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         if (VertretungsPlanFeatures.getOberstufe()) {
             for (String[] line : inhalt) {
-                if (line[3].equals("entfällt")) {
+                if (VertretungsPlanFeatures.isNothing(line[3])) {
                     message += line[1] + ". " + context.getString(R.string.share_msg_nothing_hour_oberstufe) + " " + line[0] + "\n";
                 } else {
                     message += line[1] + ". " + context.getString(R.string.share_msg_hour_oberstufe) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
@@ -261,7 +261,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             }
         } else {
             for (String[] line : inhalt) {
-                if (line[3].equals("entfällt")) {
+                if (VertretungsPlanFeatures.isNothing(line[3])) {
                     message += line[1] + ". " + context.getString(R.string.share_msg_nothing_hour) + "\n";
                 } else {
                     message += line[1] + ". " + context.getString(R.string.share_msg_hour) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
@@ -274,7 +274,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     //TeacherSearch
     void teacherClick(TextView view, String teacherQuery, boolean showBorders, boolean fullNames) {
-        if (teacherQuery.equals("entf") || teacherQuery.equals("entfällt") || teacherQuery.equals("AOL"))
+        if (VertretungsPlanFeatures.isNothing(teacherQuery) || Lehrerliste.isAOL(teacherQuery))
             return;
         int padding = 0;
         if (showBorders) {
@@ -439,7 +439,10 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 inhalt = VertretungsPlanFeatures.getTomorrowArrayAll();
                 title = VertretungsPlanFeatures.getTomorrowTitle();
             }
-            inhalt = replaceAll(inhalt, "entfällt", "entf");
+            String missing_short = getString(R.string.missing_short);
+            for (String s : VertretungsPlanFeatures.getNothing()) {
+                inhalt = replaceAll(inhalt, s, missing_short);
+            }
             sonstiges = isSonstiges(inhalt);
             generateTop();
             generateTableAll();
@@ -737,7 +740,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView teacher = view.findViewById(R.id.vertretung_all_entry_textViewTeacher);
 
         removeTeacherClick(teacher);
-        if (!(entry[3].equals("entfällt") || entry[3].equals("entf")))
+        if (!VertretungsPlanFeatures.isNothing(entry[3]))
             teacherClick(teacher, entry[3], !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false), !PreferenceUtil.isFullTeacherNamesSpecific() && PreferenceUtil.isFullTeacherNames());
         else
             teacher.setText(entry[3]);
@@ -814,7 +817,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         room.setTextColor(ApplicationFeatures.getAccentColor(context));
 
 
-        if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
+        if (!VertretungsPlanFeatures.isNothing(entry[3])) {
             teacher.setGravity(Gravity.CENTER);
             teacher.setTextColor(subject.getTextColors());
             teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.vertretung_specific_entry_teacher)));
@@ -870,7 +873,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         TextView room = view.findViewById(R.id.vertretung_card_entry_textViewRoom);
 
-        if (!(entry[3].equals("entfällt") || entry[3].equals("entf"))) {
+        if (!VertretungsPlanFeatures.isNothing(entry[3])) {
             teacher.setGravity(Gravity.CENTER);
             teacher.setTextColor(subject.getTextColors());
             teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
