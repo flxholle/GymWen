@@ -54,7 +54,7 @@
             android:defaultValue="false"
             android:key="beta_features"
             android:title="@string/set_beta_features"
-            app:isPreferenceVisible="true"
+            app:isPreferenceVisible="false"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 

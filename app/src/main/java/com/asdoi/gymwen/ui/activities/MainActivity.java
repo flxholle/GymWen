@@ -160,11 +160,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         ArrayList<MenuItem> itemsEnable = new ArrayList<>(0);
         ArrayList<MenuItem> itemsDisable = new ArrayList<>(0);
 
-        if (PreferenceUtil.isBetaEnabled()) {
-        } else {
-        }
-
-
         if (PreferenceUtil.isSections()) {
             itemsEnable.add(menu.findItem(R.id.nav_filtered_days));
             itemsEnable.add(menu.findItem(R.id.nav_unfiltered_days));
