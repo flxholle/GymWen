@@ -71,6 +71,21 @@
         </menu>
     </item>
 
+    <item android:title="@string/menu_from_this_developer">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/nav_colorush"
+                    android:icon="@drawable/ic_colorush2"
+                    android:title="@string/menu_colorush" />
+                <item
+                    android:id="@+id/nav_grades"
+                    android:icon="@drawable/ic_looks_one_black_24dp"
+                    android:title="@string/menu_grades" />
+            </group>
+        </menu>
+    </item>
+
     <item android:title="@string/menu_category_settings">
         <menu>
             <group android:title="@string/menu_category_settings">
@@ -90,25 +105,17 @@
         <menu>
             <group>
                 <item
+                    android:id="@+id/nav_timetable"
+                    android:icon="@drawable/ic_timetable"
+                    android:title="@string/menu_timetable" />
+                <item
                     android:id="@+id/nav_public_transport"
                     android:icon="@drawable/ic_directions_transit_black_24dp"
                     android:title="@string/menu_public_transport" />
                 <item
-                    android:id="@+id/nav_colorush"
-                    android:icon="@drawable/ic_colorush2"
-                    android:title="@string/menu_colorush" />
-                <item
-                    android:id="@+id/nav_grades"
-                    android:icon="@drawable/ic_looks_one_black_24dp"
-                    android:title="@string/menu_grades" />
-                <item
                     android:id="@+id/nav_notes"
                     android:icon="@drawable/ic_writing"
                     android:title="@string/menu_notes" />
-                <item
-                    android:id="@+id/nav_timetable"
-                    android:icon="@drawable/ic_timetable"
-                    android:title="@string/menu_timetable" />
             </group>
         </menu>
     </item>
