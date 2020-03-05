@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/colorush_image1"
                 android:layout_width="wrap_content"
                 android:layout_height="400dp"
@@ -113,7 +113,7 @@
                 android:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
 
-            <ImageView
+            <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/colorush_image2"
                 android:layout_width="wrap_content"
                 android:layout_height="400dp"
@@ -129,7 +129,7 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/colorush_image3"
                 android:layout_width="wrap_content"
                 android:layout_height="400dp"
@@ -139,7 +139,7 @@
                 android:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
 
-            <ImageView
+            <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/colorush_image4"
                 android:layout_width="wrap_content"
                 android:layout_height="400dp"

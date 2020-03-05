@@ -182,8 +182,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new ApplicationFeatures.downloadImageTask(imageView)
-                    .execute(imageUrl);
+            new ApplicationFeatures.downloadImageTask(imageView).execute(imageUrl);
 
 
             String title = content[i][1];
@@ -307,8 +306,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new ApplicationFeatures.downloadImageTask(imageView)
-                    .execute(imageUrl);
+            new ApplicationFeatures.downloadImageTask(imageView).execute(imageUrl);
 
 
             String title = content[i][1];
@@ -380,7 +378,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         }
 
         // Load the high-resolution "zoomed-in" image.
-        final ImageView expandedImageView = root.findViewById(R.id.expanded_image);
+        final PhotoView expandedImageView = root.findViewById(R.id.expanded_image);
         expandedImageView.setImageBitmap(image);
 //        expandedImageView.setImageResource(imageResId);
 
