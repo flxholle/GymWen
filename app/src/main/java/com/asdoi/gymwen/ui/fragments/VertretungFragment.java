@@ -217,18 +217,6 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
 
         if (VertretungsPlanFeatures.getOberstufe()) {
-            /*ArrayList<String> courses = new ArrayList<>();
-            if (inhalt.length != 0) {
-                for (String[] line : inhalt) {
-                    if (!courses.contains(line[0])) {
-                        courses.add(line[0]);
-                    }
-                }
-                for (int i = 0; i < courses.size() - 1; i++) {
-                    classes += courses.get(i) + ", ";
-                }
-                classes += courses.get(courses.size() - 1);
-            }*/
             ArrayList<String> courses = VertretungsPlanFeatures.getNames();
             for (int i = 0; i < courses.size() - 1; i++) {
                 classes += courses.get(i) + ", ";
@@ -248,23 +236,24 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + classes + ")\n" : "\n");
                 return message;
             } else
-                message = context.getString(R.string.share_msg_vertretung_at) + " " + title + (withCourses ? " (" + classes + "):\n" : "\n");
+                message = context.getString(R.string.share_msg_vertretung_at) + " " + title + (withCourses ? " (" + classes + "):\n" : ":\n");
         }
 
+        String freespace = "    ";
         if (VertretungsPlanFeatures.getOberstufe()) {
             for (String[] line : inhalt) {
                 if (VertretungsPlanFeatures.isNothing(line[3])) {
-                    message += line[1] + ". " + context.getString(R.string.share_msg_nothing_hour_oberstufe) + " " + line[0] + "\n";
+                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_nothing_hour_oberstufe) + " " + line[0] + "\n";
                 } else {
-                    message += line[1] + ". " + context.getString(R.string.share_msg_hour_oberstufe) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
+                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_hour_oberstufe) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
                 }
             }
         } else {
             for (String[] line : inhalt) {
                 if (VertretungsPlanFeatures.isNothing(line[3])) {
-                    message += line[1] + ". " + context.getString(R.string.share_msg_nothing_hour) + "\n";
+                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_nothing_hour) + "\n";
                 } else {
-                    message += line[1] + ". " + context.getString(R.string.share_msg_hour) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
+                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_hour) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
                 }
             }
         }

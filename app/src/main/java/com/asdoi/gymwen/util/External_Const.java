@@ -1,5 +1,8 @@
 package com.asdoi.gymwen.util;
 
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
+
 public abstract class External_Const {
 
     public final static String office_TelNr = "+49 9171 818 800";
@@ -32,5 +35,5 @@ public abstract class External_Const {
     //Vertretungsplan
     public static final String todayURL = "http://gym-wen.de/vp/heute.htm";
     public static final String tomorrowURL = "http://gym-wen.de/vp/morgen.htm";
-    public static final String[] nothing = new String[]{"entfällt", "entf"};
+    public static final String[] nothing = new String[]{"entfällt", "entf", ApplicationFeatures.getContext().getString(R.string.missing_short)};
 }
