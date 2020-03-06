@@ -775,7 +775,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_vertretung_specific_card, null);
                 }
-                return getEntrySpecificRow(convertView, content[position], sons);
+                return getEntrySpecificNew(convertView, content[position], !content[position][5].trim().isEmpty());
             }
         }
 
@@ -846,7 +846,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         return view;
     }
 
-    private View getEntrySpecificRow(View view, String[] entry, boolean sonstiges) {
+    private View getEntrySpecificNew(View view, String[] entry, boolean sonstiges) {
         TextView course = view.findViewById(R.id.vertretung_card_entry_textViewClass);
         course.setText(entry[0]);
 
@@ -860,29 +860,36 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         }
 
         TextView subject = view.findViewById(R.id.vertretung_card_entry_textViewSubject);
-        subject.setText(entry[2] + " " + context.getString(R.string.with_teacher) + " ");
 
         TextView teacher = view.findViewById(R.id.vertretung_card_entry_textViewTeacher);
 
         TextView room = view.findViewById(R.id.vertretung_card_entry_textViewRoom);
 
         if (!VertretungsPlanFeatures.isNothing(entry[3])) {
-            teacher.setGravity(Gravity.CENTER);
-            teacher.setTextColor(subject.getTextColors());
-            teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
+            if (!entry[2].trim().isEmpty()) {
+                teacher.setVisibility(View.VISIBLE);
+                teacher.setGravity(Gravity.CENTER);
+                teacher.setTextColor(subject.getTextColors());
+                teacherClick(teacher, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
 
+                subject.setText(entry[2] + " " + context.getString(R.string.with_teacher) + " ");
+            } else {
+                teacherClick(subject, entry[3], ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
+                subject.setText(entry[3]);
+            }
 
-            room.setVisibility(View.VISIBLE);
             SpannableString content = new SpannableString("in " + entry[4]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             room.setText(content);
         } else {
             removeTeacherClick(view);
-            room.setText(entry[4]);
-            room.setVisibility(View.GONE);
+            teacher.setVisibility(View.GONE);
+
+            subject.setText(entry[2]);
+
             SpannableString content = new SpannableString(entry[3]);
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            teacher.setText(content);
+            room.setText(content);
         }
 
 
@@ -896,4 +903,5 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
         return view;
     }
+
 }
