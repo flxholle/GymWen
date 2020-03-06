@@ -174,7 +174,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
 
     //Share
     private void share() {
-        String message = shareMessage(true);
+        String message = "";
+
+        today = true;
+        message += shareMessage(true);
+        today = false;
+        message += shareMessage(false);
+
         String footprint = getString(R.string.footprint);
         message += footprint;
 
@@ -196,29 +202,19 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         String[][] inhalt = null;
         String title = "";
 
-        if (both) {
-            both = false;
-            today = true;
-            message += shareMessage(true);
-            today = false;
-            message += shareMessage(false);
-            return message;
-        }
-        //Deactivated cause of ViewPager
-        /*else if (today) {
+        if (today) {
             inhalt = VertretungsPlanFeatures.getTodayArray();
             title = VertretungsPlanFeatures.getTodayTitle();
         } else {
             inhalt = VertretungsPlanFeatures.getTomorrowArray();
             title = VertretungsPlanFeatures.getTomorrowTitle();
-        }*/
-
-
+        }
         String classes = "";
 
         if (inhalt == null) {
             return "";
         }
+
 
         if (VertretungsPlanFeatures.getOberstufe()) {
             ArrayList<String> courses = VertretungsPlanFeatures.getNames();
@@ -261,6 +257,8 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 }
             }
         }
+
+
         return message;
     }
 
