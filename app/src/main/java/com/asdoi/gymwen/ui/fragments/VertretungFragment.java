@@ -729,6 +729,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         subject.setText(entry[2]);
 
         TextView teacher = view.findViewById(R.id.vertretung_all_entry_textViewTeacher);
+        teacher.setText(entry[3]);
 
         removeTeacherClick(teacher);
         if (!VertretungsPlanFeatures.isNothing(entry[3]))
