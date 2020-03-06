@@ -28,4 +28,8 @@
         android:key="show_full_names_specific"
         android:title="@string/set_full_names_specific"
         app:iconSpaceReserved="true" />
+    <Preference
+        android:title="@string/set_vertretung_signin"
+        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentSignIn"
+        app:iconSpaceReserved="false" />
 </PreferenceScreen>

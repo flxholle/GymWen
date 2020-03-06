@@ -76,6 +76,9 @@
     <string name="set_theme_auto">Automatisch</string>
     <string name="set_full_names">Echte Namen statt Kürzel anzeigen</string>
     <string name="set_full_names_specific">Nur beim gefilterten Plan</string>
+    <string name="set_today_url">URL für den ersten Tag:</string>
+    <string name="set_tomorrow_url">URL für den zweiten Tag:</string>
+    <string name="set_offline_mode">Offlinemodus</string>
 
 
     <!-- Vertretungsplan -->

@@ -615,26 +615,10 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     }
 
 
-    //Save and Reload Documents
+    //Save Documents
     public void saveDocs() {
         VertretungsPlanFeatures.saveDocs();
         Lehrerliste.saveDoc();
-    }
-
-    public static void reloadVertretungDocs(Context context) {
-        if (VertretungsPlanFeatures.reloadDocs()) {
-            /*try {
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    Toast toast = Toast.makeText(context, R.string.reloaded_docs, Toast.LENGTH_SHORT);
-                    TextView v = toast.getView().findViewById(android.R.id.message);
-                    if (v != null)
-                        v.setGravity(Gravity.CENTER);
-                    toast.show();
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
-        }
     }
 
 

@@ -28,10 +28,6 @@
         android:title="@string/set_notification_title"
         app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentNotification"
         app:iconSpaceReserved="false" />
-    <Preference
-        android:title="@string/set_vertretung_signin"
-        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentSignIn"
-        app:iconSpaceReserved="false" />
 
 
     <PreferenceCategory
@@ -55,6 +51,11 @@
             android:key="beta_features"
             android:title="@string/set_beta_features"
             app:isPreferenceVisible="false"
+            app:iconSpaceReserved="false" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="offline_mode"
+            android:title="@string/set_offline_mode"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
