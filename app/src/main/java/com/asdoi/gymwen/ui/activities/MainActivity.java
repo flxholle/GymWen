@@ -390,7 +390,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;
             case R.id.nav_filtered_days:
                 setVisibiltySpinner(true);
-                findViewById(R.id.main_fab).setVisibility(View.GONE);
+                findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                 findViewById(R.id.fragment_main).setVisibility(View.GONE);
@@ -414,7 +414,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;
             case R.id.nav_days:
                 setVisibiltySpinner(true);
-                findViewById(R.id.main_fab).setVisibility(View.GONE);
+                findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                 findViewById(R.id.fragment_main).setVisibility(View.GONE);
@@ -427,10 +427,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     sectionsPagerAdapter.notifyDataSetChanged();
                     lastLoaded = lastLoadedTabs;
                     setDesignChangerVisibility(false);
+                    findViewById(R.id.main_fab).setVisibility(View.GONE);
                     break;
                 }
 
             case R.id.navigation_filter:
+                findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
                 setVisibiltySpinner(true);
                 sectionsPagerAdapter.setAll(false);
                 sectionsPagerAdapter.notifyDataSetChanged();
@@ -440,6 +442,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;
             case R.id.navigation_all:
                 setVisibiltySpinner(false);
+                findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                 findViewById(R.id.fragment_main).setVisibility(View.GONE);
@@ -607,13 +610,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             //Set Fab
             if (fragment instanceof VertretungFragment) {
                 FloatingActionButton fab = findViewById(R.id.main_fab);
-                fab.setEnabled(true);
                 fab.bringToFront();
                 fab.setVisibility(View.VISIBLE);
                 fab.setOnClickListener((VertretungFragment) fragment);
             } else {
                 FloatingActionButton fab = findViewById(R.id.main_fab);
-                fab.setEnabled(false);
                 fab.setVisibility(View.GONE);
             }
 

@@ -203,13 +203,17 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
             today = false;
             message += shareMessage(false);
             return message;
-        } else if (today) {
+        }
+        //Deactivated cause of ViewPager
+        /*else if (today) {
             inhalt = VertretungsPlanFeatures.getTodayArray();
             title = VertretungsPlanFeatures.getTodayTitle();
         } else {
             inhalt = VertretungsPlanFeatures.getTomorrowArray();
             title = VertretungsPlanFeatures.getTomorrowTitle();
-        }
+        }*/
+
+
         String classes = "";
 
         if (inhalt == null) {
