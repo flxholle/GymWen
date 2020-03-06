@@ -18,15 +18,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
         android:title="@string/set_vertretung_title"
-        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentVertretungsplan"
+        app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentVertretungsplan"
         app:iconSpaceReserved="false" />
     <Preference
         android:title="@string/set_design_title"
-        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentDesign"
+        app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentDesign"
         app:iconSpaceReserved="false" />
     <Preference
         android:title="@string/set_notification_title"
-        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentNotification"
+        app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentNotification"
         app:iconSpaceReserved="false" />
 
 
@@ -37,7 +37,8 @@
             android:defaultValue="false"
             android:key="parents"
             android:title="@string/set_parents"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            android:summary="@string/set_desc_parents" />
         <Preference
             android:key="language"
             android:title="@string/menu_language"
@@ -45,7 +46,8 @@
         <Preference
             android:key="updates"
             android:title="@string/menu_update"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            android:summary="@string/set_desc_updates" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="beta_features"
@@ -56,7 +58,8 @@
             android:defaultValue="true"
             android:key="offline_mode"
             android:title="@string/set_offline_mode"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            android:summary="@string/set_desc_offline_mode" />
     </PreferenceCategory>
 
 </PreferenceScreen>

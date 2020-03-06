@@ -10,14 +10,17 @@
         android:defaultValue="true"
         android:key="alwaysNotification"
         android:title="@string/set_notification_showAlways"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_alwaysNotification" />
     <SwitchPreference
         android:defaultValue="false"
         android:key="two_notifs"
         android:title="@string/set_two_notifications"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_two_notifs" />
     <Preference
         android:key="alarm"
         android:title="@string/set_notification_alarm"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_alarm" />
 </PreferenceScreen>

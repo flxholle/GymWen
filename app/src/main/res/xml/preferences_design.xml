@@ -15,15 +15,18 @@
         <Preference
             android:key="accentColor"
             android:title="@string/color_accent"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            android:summary="@string/set_desc_accentColor" />
         <Preference
             android:key="primaryColor"
             android:title="@string/color_primary"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            android:summary="@string/set_desc_primaryColor" />
         <Preference
             android:title="Menüeinträge"
-            app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentHideMenuItems"
-            app:iconSpaceReserved="false" />
+            app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentHideMenuItems"
+            app:iconSpaceReserved="false"
+            android:summary="@string/set_desc_menu_items_fragment" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Vertretungsplan"
@@ -33,7 +36,8 @@
             android:defaultValue="true"
             android:key="show_borders"
             android:title="@string/set_show_borders"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            android:summary="@string/set_desc_show_borders" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="show_border_specific"
@@ -43,6 +47,7 @@
             android:defaultValue="false"
             android:key="old_vertretung"
             android:title="@string/set_old_vertretung"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            android:summary="@string/set_desc_old_vertretung" />
     </PreferenceCategory>
 </PreferenceScreen>

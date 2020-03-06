@@ -159,7 +159,7 @@ public class ProfileActivityFragment extends Fragment {
         base.addView(course);
 
         TextView note = new TextView(getContext());
-        note.setText(getContext().getString(R.string.set_courses_summary));
+        note.setText(getContext().getString(R.string.set_desc_courses));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(10, 0, 10, 0);
         note.setLayoutParams(params);

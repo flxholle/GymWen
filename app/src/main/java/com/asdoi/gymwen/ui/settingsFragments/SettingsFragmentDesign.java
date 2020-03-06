@@ -1,5 +1,6 @@
-package com.asdoi.gymwen.ui.fragments;
+package com.asdoi.gymwen.ui.settingsFragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.preference.ListPreference;
@@ -25,6 +26,7 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
                 return false;
             }
         });
+        mp.setSummary(getThemeName());
 
         Preference myPref;
         myPref = findPreference("primaryColor");
@@ -62,5 +64,22 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
     private void setBorder() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
         findPreference("show_border_specific").setEnabled(showNotif);
+    }
+
+    public String getThemeName() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        String selectedTheme = sharedPreferences.getString("theme", "switch");
+        String[] values = getResources().getStringArray(R.array.theme_array_values);
+
+        String[] names = getResources().getStringArray(R.array.theme_array);
+
+        for (int i = 0; i < values.length; i++) {
+            if (values[i].equalsIgnoreCase(selectedTheme)) {
+                return names[i];
+            }
+        }
+
+        return "";
     }
 }
