@@ -104,6 +104,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(getActivity());
                 return true;
             });
+            myPref.setSummary(ApplicationFeatures.getLanguageSwitcher().getCurrentLocale().toString());
 
             myPref = findPreference("updates");
             myPref.setOnPreferenceClickListener((Preference p) -> {

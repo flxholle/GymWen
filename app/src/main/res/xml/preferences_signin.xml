@@ -6,25 +6,29 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/set_vertretung_username"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_username" />
     <EditTextPreference
         android:key="password"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/set_vertretung_password"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_password" />
     <EditTextPreference
         android:defaultValue="http://gym-wen.de/vp/heute.htm"
         android:key="today_url"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/set_today_url"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_today_url" />
     <EditTextPreference
         android:defaultValue="http://gym-wen.de/vp/morgen.htm"
         android:key="tomorrow_url"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/set_tomorrow_url"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_tomorrow_url" />
 </PreferenceScreen>

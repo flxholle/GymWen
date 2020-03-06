@@ -5,24 +5,27 @@
         android:key="courses"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="@string/set_courses_summary"
+        android:summary="@string/set_desc_courses"
         android:title="@string/set_courses_title"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="false"
         android:key="hours"
         android:title="@string/set_hours"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_hours" />
     <SwitchPreference
         android:defaultValue="false"
         android:key="week_dates"
         android:title="@string/set_show_weekdates"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_week_dates" />
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="show_full_names"
         android:title="@string/set_full_names"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_show_full_names" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="show_full_names_specific"
@@ -30,6 +33,7 @@
         app:iconSpaceReserved="true" />
     <Preference
         android:title="@string/set_vertretung_signin"
-        app:fragment="com.asdoi.gymwen.ui.fragments.SettingsFragmentSignIn"
-        app:iconSpaceReserved="false" />
+        app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSignIn"
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_credentials_fragment" />
 </PreferenceScreen>

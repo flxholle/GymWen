@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.ui.fragments;
+package com.asdoi.gymwen.ui.settingsFragments;
 
 import android.os.Bundle;
 
