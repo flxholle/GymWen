@@ -102,6 +102,18 @@ public class PreferenceUtil {
         return getBooleanSettings("menu_timetable", true);
     }
 
+    public static boolean isNews() {
+        return getBooleanSettings("menu_news", true);
+    }
+
+    public static boolean isShop() {
+        return getBooleanSettings("menu_shop", false);
+    }
+
+    public static boolean isNavigation() {
+        return getBooleanSettings("menu_navigation", true);
+    }
+
 
     //Other
     public static int[] getAlarmTime() {

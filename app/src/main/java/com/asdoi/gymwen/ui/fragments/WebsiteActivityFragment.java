@@ -40,6 +40,8 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
     private int shortAnimationDuration;
     private Animator currentAnimator;
+    public static PhotoView expandImage;
+    public static boolean isExpanded;
 
     public WebsiteActivityFragment() {
     }
@@ -380,7 +382,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         // Load the high-resolution "zoomed-in" image.
         final PhotoView expandedImageView = root.findViewById(R.id.expanded_image);
         expandedImageView.setImageBitmap(image);
-//        expandedImageView.setImageResource(imageResId);
+//        expandImage.setImageResource(imageResId);
 
         // Calculate the starting and ending bounds for the zoomed-in image.
         // This step involves lots of math. Yay, math.
@@ -504,7 +506,11 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
                 });
                 set.start();
                 currentAnimator = set;
+
+                isExpanded = false;
             }
         });
+        isExpanded = true;
+        expandImage = expandedImageView;
     }
 }

@@ -3,6 +3,7 @@ package com.asdoi.gymwen.ui.activities;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -144,6 +145,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> {
             onNavigationItemSelected(R.id.action_settings);
         });
+        headerview.findViewById(R.id.nav_header_main_settings).setOnLongClickListener((View v) -> {
+            onNavigationItemSelected(R.id.action_imprint);
+            return true;
+        });
+
         headerview.findViewById(R.id.nav_header_main_icon).setOnClickListener((View v) -> {
             Intent intent = new Intent(this, WebsiteActivity.class);
 //            intent.putExtra("url", "gym-wen.de/information/unsere-schule/");
@@ -228,6 +234,21 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsEnable.add(menu.findItem(R.id.nav_timetable));
         else
             itemsDisable.add(menu.findItem(R.id.nav_timetable));
+
+        if (PreferenceUtil.isNews())
+            itemsEnable.add(menu.findItem(R.id.nav_news));
+        else
+            itemsDisable.add(menu.findItem(R.id.nav_news));
+
+        if (PreferenceUtil.isShop())
+            itemsEnable.add(menu.findItem(R.id.nav_shop));
+        else
+            itemsDisable.add(menu.findItem(R.id.nav_shop));
+
+        if (PreferenceUtil.isNavigation())
+            itemsEnable.add(menu.findItem(R.id.nav_navigation));
+        else
+            itemsDisable.add(menu.findItem(R.id.nav_navigation));
 
         try {
             for (MenuItem i : itemsEnable) {
@@ -560,6 +581,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_switch_design:
                 PreferenceUtil.changeDesign(this);
                 onNavigationItemSelected(refreshFragment);
+                return;
+            case R.id.nav_news:
+                tabIntent(External_Const.news_Link);
+                return;
+            case R.id.nav_navigation:
+                Uri gymwenOnMap = Uri.parse("geo:49.3462962,11.1558281?q=Gymnasium%20Wendelstein");
+                showMap(gymwenOnMap);
                 return;
         }
 
