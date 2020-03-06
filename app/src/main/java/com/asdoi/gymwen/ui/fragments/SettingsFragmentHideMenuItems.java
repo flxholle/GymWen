@@ -13,7 +13,7 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_hide_menu_items, rootKey);
 
-        setFilteredUnfiltered();
+        setBoth();
         Preference myPref = findPreference("menu_filtered");
         myPref.setOnPreferenceClickListener((Preference preference) -> {
             setFilteredUnfiltered();
