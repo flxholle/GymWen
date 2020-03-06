@@ -165,7 +165,39 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         if (v == changelog) {
             showChangelogCK(false);
         } else if (v == licenses) {
-            showLicenseDialog();
+            String license = getString(R.string.gnu_license);
+
+            if (Build.VERSION.SDK_INT > 24)
+                license = Html.fromHtml(license, Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                license = Html.fromHtml(license).toString();
+
+            SpannableString s = new SpannableString(license);
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_description_white_24dp);
+            try {
+                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            new MaterialDialog.Builder(getContext())
+                    .title(getString(R.string.licenses))
+                    .content(s)
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .positiveText(R.string.ok)
+                    .icon(drawable)
+                    .show();
         } else if (v == intro) {
             startActivity(new Intent(this, AppIntroActivity.class));
             finish();
@@ -308,6 +340,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     }
 
     private void showLicenseDialog() {
+
 //        startActivity(new Intent(this, OssLicensesMenuActivity.class));
     }
 
