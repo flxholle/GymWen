@@ -18,4 +18,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="widget_image_height">40dp</dimen>
     <dimen name="widget_image_width">50dp</dimen>
 
+    <dimen name="colorush_image_width">270dp</dimen>
+
 </resources>

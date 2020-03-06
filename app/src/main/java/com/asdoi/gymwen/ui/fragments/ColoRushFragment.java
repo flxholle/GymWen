@@ -8,40 +8,53 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.External_Const;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+
+import java.util.HashMap;
 
 public class ColoRushFragment extends Fragment implements View.OnClickListener {
-    private View root;
+    private SliderLayout mDemoSlider;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        root = inflater.inflate(R.layout.fragment_colorush, container, false);
+        View root = inflater.inflate(R.layout.fragment_colorush, container, false);
 
         root.findViewById(R.id.colorush_app).setOnClickListener(this);
         root.findViewById(R.id.colorush_online).setOnClickListener(this);
-        return root;
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        try {
-            String[] imageUrls = new String[]{"https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushboss1.png?inline=false",
-                    "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushchoosing2.png?inline=false",
-                    "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushlevel1.png?inline=false",
-                    "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushmenu.png?inline=false"};
-            new ApplicationFeatures.downloadImageTask(root.findViewById(R.id.colorush_image1)).execute(imageUrls[0]);
-            new ApplicationFeatures.downloadImageTask(root.findViewById(R.id.colorush_image2)).execute(imageUrls[1]);
-            new ApplicationFeatures.downloadImageTask(root.findViewById(R.id.colorush_image3)).execute(imageUrls[2]);
-            new ApplicationFeatures.downloadImageTask(root.findViewById(R.id.colorush_image4)).execute(imageUrls[3]);
-        } catch (Exception e) {
-            e.printStackTrace();
+        mDemoSlider = root.findViewById(R.id.slider);
+
+        String[] names = getResources().getStringArray(R.array.color_rush_screenshots);
+        HashMap<String, String> url_images = new HashMap<String, String>();
+        url_images.put(names[0], "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushboss1.png?inline=false");
+        url_images.put(names[1], "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushchoosing2.png?inline=false");
+        url_images.put(names[2], "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushlevel1.png?inline=false");
+        url_images.put(names[3], "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushmenu.png?inline=false");
+
+        for (String name : url_images.keySet()) {
+            TextSliderView textSliderView = new TextSliderView(getContext());
+            // initialize a SliderLayout
+            textSliderView
+                    .description(name)
+                    .image(url_images.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
+
+            mDemoSlider.addSlider(textSliderView);
         }
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+
+        return root;
     }
 
     @Override
@@ -56,5 +69,12 @@ public class ColoRushFragment extends Fragment implements View.OnClickListener {
                 ((ActivityFeatures) getActivity()).tabIntent(External_Const.colorush_online);
                 break;
         }
+    }
+
+    @Override
+    public void onStop() {
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        mDemoSlider.stopAutoCycle();
+        super.onStop();
     }
 }

@@ -98,55 +98,21 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <com.ritesh.ratiolayout.RatioRelativeLayout
+            android:layout_gravity="center"
+            android:id="@+id/activity_main_ratio_layout"
+            android:layout_width="@dimen/colorush_image_width"
+            android:layout_height="match_parent"
+            app:fixed_attribute="WIDTH"
+            app:horizontal_ratio="1440"
+            app:vertical_ratio="2960">
 
-            <com.github.chrisbanes.photoview.PhotoView
-                android:id="@+id/colorush_image1"
-                android:layout_width="wrap_content"
-                android:layout_height="400dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+        </com.ritesh.ratiolayout.RatioRelativeLayout>
 
-            <com.github.chrisbanes.photoview.PhotoView
-                android:id="@+id/colorush_image2"
-                android:layout_width="wrap_content"
-                android:layout_height="400dp"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <com.github.chrisbanes.photoview.PhotoView
-                android:id="@+id/colorush_image3"
-                android:layout_width="wrap_content"
-                android:layout_height="400dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
-
-            <com.github.chrisbanes.photoview.PhotoView
-                android:id="@+id/colorush_image4"
-                android:layout_width="wrap_content"
-                android:layout_height="400dp"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>
