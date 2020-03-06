@@ -12,4 +12,11 @@
         <item>black</item>
         <item>switch</item>
     </string-array>
+
+    <string-array name="color_rush_screenshots">
+        <item>@string/colorush_screen1</item>
+        <item>@string/colorush_screen2</item>
+        <item>@string/colorush_screen3</item>
+        <item>@string/colorush_screen4</item>
+    </string-array>
 </resources>
