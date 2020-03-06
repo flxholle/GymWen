@@ -15,10 +15,6 @@ abstract class Parse {
 
         Elements values = doc.select("div#content_left").select("div.csc-default").get(1).select("p.bodytext");
 
-        //Remove first and last entry
-        values.remove(0);
-        values.remove(values.size() - 1);
-
         String[] lines = new String[values.size()];
         for (int i = 0; i < values.size(); i++) {
             lines[i] = values.get(i).toString();
