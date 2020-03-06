@@ -239,7 +239,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, "")
         view.setTextColor(R.id.vertretung_specific_entry_textViewSubject, VertretungWidgetProvider.textColorSecondary)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewTeacher, View.VISIBLE)
-        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 14f)
+        view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 17f)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, "")
         view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, VertretungWidgetProvider.textColorSecondary)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.VISIBLE)
