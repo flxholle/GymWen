@@ -35,6 +35,10 @@
                     android:icon="@drawable/ic_compass"
                     android:title="@string/menu_website" />
                 <item
+                    android:id="@+id/nav_news"
+                    android:icon="@drawable/ic_news"
+                    android:title="@string/menu_news" />
+                <item
                     android:id="@+id/nav_forms"
                     android:icon="@drawable/ic_stat_assignment_late"
                     android:title="@string/menu_forms" />
@@ -55,14 +59,18 @@
                     android:icon="@drawable/ic_domain"
                     android:title="@string/menu_claxss" />
                 <item
-                    android:id="@+id/nav_call_office"
-                    android:icon="@drawable/ic_call_black_24dp"
-                    android:title="@string/menu_call_office" />
-                <item
                     android:id="@+id/nav_shop"
                     android:icon="@drawable/ic_t_shirt"
                     android:title="@string/menu_shop"
                     android:visible="false" />
+                <item
+                    android:id="@+id/nav_call_office"
+                    android:icon="@drawable/ic_call_black_24dp"
+                    android:title="@string/menu_call_office" />
+                <item
+                    android:id="@+id/nav_navigation"
+                    android:icon="@drawable/ic_navigation_black_24dp"
+                    android:title="@string/menu_navigation" />
                 <item
                     android:icon="@drawable/ic_cloud_download_black_24dp"
                     android:title="Backup"

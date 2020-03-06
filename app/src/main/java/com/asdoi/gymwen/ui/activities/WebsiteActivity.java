@@ -487,10 +487,11 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
 
         // Check if the key event was the Back button and if there's history
-//        if (myWebView.canGoBack()) {
-//            myWebView.goBack();
-//            return;
-//        }
+
+        //If image is expanded
+        if (WebsiteActivityFragment.isExpanded) {
+            return;
+        }
 
         if (history.size() >= 2) {
             String url = history.get(history.size() - 2);

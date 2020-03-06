@@ -19,6 +19,7 @@ public abstract class External_Const {
     public final static String shop_Link = "http://shop.apromote-werbemittel.de/";
     public final static String claxss_Link = "https://gym-wendelstein.schule-eltern.info/infoline/claxss";
     public static final String colorush_online = "https://asdoi.gitlab.io/colorushweb/";
+    public static final String news_Link = "http://schuelerzeitung-gym-wen.de/";
 
 
     //Download Apps
@@ -26,7 +27,4 @@ public abstract class External_Const {
     public final static String downloadApp_timetable = "https://apt.izzysoft.de/fdroid/index/apk/juliushenke.smarttt";
     public static final String downloadApp_colorush = "https://gitlab.com/asdoi/colorrush/blob/master/Apk/ColoRush.apk";
     public static final String downloadApp_publicTransport = "https://f-droid.org/de/packages/de.schildbach.oeffi/";
-
-    //Vertretungsplan
-
 }
