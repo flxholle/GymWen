@@ -294,5 +294,23 @@
     <string name="menu_from_this_developer">By this developer</string>
     <string name="missing_short">miss</string>
     <string name="version">Version</string>
+    <string name="gnu_license">
+        <![CDATA[
+        Copyright (C) [2019-2020]&nbsp;&nbsp;[<i>Felix Hollederer</i>]</p>
+
+        <p>This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.</p>
+
+        <p>This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.</p>
+
+        <p>You should have received a copy of the GNU General Public License
+        along with this program.  If not, see <a href="https://www.gnu.org/licenses/" >&lt;https://www.gnu.org/licenses/&gt;</a>.</p>
+        ]]>
+    </string>
 
 </resources>
