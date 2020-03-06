@@ -52,8 +52,8 @@
     <string name="set_vertretung_title">Vertretungsplan</string>
     <string name="set_courses_title">Kurse/Klasse</string>
     <string name="set_vertretung_signin">Anmeldedaten</string>
-    <string name="set_vertretung_username">Benutzername:</string>
-    <string name="set_vertretung_password">Passwort:</string>
+    <string name="set_vertretung_username">Benutzername</string>
+    <string name="set_vertretung_password">Passwort</string>
     <string name="set_notification_title">Benachrichtigung</string>
     <string name="set_notifiaction_isOn">Benachrichtigung anzeigen</string>
     <string name="set_notification_showAlways">Dauerhaft anzeigen</string>
@@ -75,9 +75,10 @@
     <string name="set_theme_auto">Automatisch</string>
     <string name="set_full_names">Echte Namen statt Kürzel anzeigen</string>
     <string name="set_full_names_specific">Nur beim gefilterten Plan</string>
-    <string name="set_today_url">URL für den ersten Tag:</string>
-    <string name="set_tomorrow_url">URL für den zweiten Tag:</string>
+    <string name="set_today_url">URL für den ersten Tag</string>
+    <string name="set_tomorrow_url">URL für den zweiten Tag</string>
     <string name="set_offline_mode">Offlinemodus</string>
+    <string name="set_teacherlist_url">URL für die Lehrerliste</string>
 
 
     <!-- Vertretungsplan -->

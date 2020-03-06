@@ -31,4 +31,12 @@
         android:title="@string/set_tomorrow_url"
         app:iconSpaceReserved="false"
         android:summary="@string/set_desc_tomorrow_url" />
+    <EditTextPreference
+        android:defaultValue="http://www.gym-wen.de/information/sprechstunden/"
+        android:key="teacherlist_url"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/set_teacherlist_url"
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_desc_teacherlist_url" />
 </PreferenceScreen>

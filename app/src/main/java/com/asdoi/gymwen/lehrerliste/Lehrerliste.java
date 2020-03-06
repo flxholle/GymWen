@@ -5,15 +5,13 @@ import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.util.External_Const;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public abstract class Lehrerliste {
-    public static final String listUrl = "http://www.gym-wen.de/information/sprechstunden/";
     private static Document list;
-
-    public static String AOLShort = "AOL";
 
     public static String[][] liste() {
         if (list == null) {
@@ -71,6 +69,6 @@ public abstract class Lehrerliste {
     }
 
     public static boolean isAOL(String query) {
-        return query.equals(AOLShort);
+        return query.equals(External_Const.AOLShort);
     }
 }

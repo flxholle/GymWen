@@ -139,6 +139,12 @@ public class PreferenceUtil {
         return getBooleanSettings("offline_mode", true);
     }
 
+    //Teacherlist
+    public static String getTeacherlistURL(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getString("teacherlist_url", External_Const.teacherlistUrl);
+    }
+
 
     //Other
     public static int[] getAlarmTime() {

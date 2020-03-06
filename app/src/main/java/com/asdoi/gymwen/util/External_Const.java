@@ -36,4 +36,8 @@ public abstract class External_Const {
     public static final String todayURL = "http://gym-wen.de/vp/heute.htm";
     public static final String tomorrowURL = "http://gym-wen.de/vp/morgen.htm";
     public static final String[] nothing = new String[]{"entfällt", "entf", ApplicationFeatures.getContext().getString(R.string.missing_short)};
+
+    //Teacherlist
+    public static final String teacherlistUrl = "http://www.gym-wen.de/information/sprechstunden/";
+    public static final String AOLShort = "AOL";
 }

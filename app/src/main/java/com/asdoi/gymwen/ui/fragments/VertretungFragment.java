@@ -863,6 +863,7 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
         TextView teacher = view.findViewById(R.id.vertretung_card_entry_textViewTeacher);
 
         TextView room = view.findViewById(R.id.vertretung_card_entry_textViewRoom);
+        room.setVisibility(View.VISIBLE);
 
         if (!VertretungsPlanFeatures.isNothing(entry[3])) {
             if (!entry[2].trim().isEmpty()) {
@@ -877,9 +878,13 @@ public class VertretungFragment extends Fragment implements View.OnClickListener
                 subject.setText(entry[3]);
             }
 
-            SpannableString content = new SpannableString("in " + entry[4]);
-            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            room.setText(content);
+            if (!entry[4].trim().isEmpty()) {
+                SpannableString content = new SpannableString("in " + entry[4]);
+                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                room.setText(content);
+            } else {
+                room.setVisibility(View.GONE);
+            }
         } else {
             removeTeacherClick(view);
             teacher.setVisibility(View.GONE);
