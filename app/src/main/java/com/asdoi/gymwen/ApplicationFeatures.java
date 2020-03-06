@@ -142,7 +142,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         if (!Lehrerliste.isDownloaded()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 Lehrerliste.setDoc(downloadDoc(Lehrerliste.listUrl));
-            } else {
+            } else if (PreferenceUtil.isOfflineMode()) {
                 Lehrerliste.reloadDoc();
             }
         }
@@ -156,7 +156,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 if (!ApplicationFeatures.initSettings(true, signIn)) {
                     return;
                 }
-                String[] strURL = new String[]{VertretungsPlanFeatures.todayURL, VertretungsPlanFeatures.tomorrowURL};
+                String[] strURL = new String[]{PreferenceUtil.getTodayURL(getContext()), PreferenceUtil.getTomorrowURL(getContext())};
                 Document[] doc = new Document[strURL.length];
                 for (int i = 0; i < 2; i++) {
 
@@ -180,8 +180,8 @@ public class ApplicationFeatures extends MultiDexApplication {
                 if (!isWidget) {
                     refreshWidgets();
                 }
-            } else {
-                ActivityFeatures.reloadVertretungDocs(ApplicationFeatures.getContext());
+            } else if (PreferenceUtil.isOfflineMode()) {
+                VertretungsPlanFeatures.reloadDocs();
             }
             sendNotification();
         }
@@ -262,8 +262,8 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             VertretungsPlanFeatures.setup(hours, courses.split(Profile.coursesSeparator));
 
-            String username = sharedPref.getString("username", "");
-            String password = sharedPref.getString("password", "");
+            String username = PreferenceUtil.getUsername(context);
+            String password = PreferenceUtil.getPassword(context);
 
             VertretungsPlanFeatures.signin(username, password);
 
@@ -322,7 +322,6 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
         return true;
     }
-
 
 
     public static void refreshWidgets() {

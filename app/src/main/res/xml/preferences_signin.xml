@@ -13,4 +13,18 @@
         android:singleLine="true"
         android:title="@string/set_vertretung_password"
         app:iconSpaceReserved="false" />
+    <EditTextPreference
+        android:defaultValue="http://gym-wen.de/vp/heute.htm"
+        android:key="today_url"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/set_today_url"
+        app:iconSpaceReserved="false" />
+    <EditTextPreference
+        android:defaultValue="http://gym-wen.de/vp/morgen.htm"
+        android:key="tomorrow_url"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/set_tomorrow_url"
+        app:iconSpaceReserved="false" />
 </PreferenceScreen>

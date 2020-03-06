@@ -14,7 +14,7 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
+import com.asdoi.gymwen.util.PreferenceUtil;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
@@ -83,7 +83,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
                 String encodedString =
                         new String(Base64.encodeBase64(authString.getBytes()));
                 try {
-                    doc = Jsoup.connect(VertretungsPlanFeatures.todayURL)
+                    doc = Jsoup.connect(PreferenceUtil.getTodayURL(getContext()))
                             .header("Authorization", "Basic " + encodedString)
                             .get();
                     signedIn = true;

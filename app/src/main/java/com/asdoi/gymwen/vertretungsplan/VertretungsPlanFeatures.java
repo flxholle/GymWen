@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.util.External_Const;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,11 +17,6 @@ import java.util.ArrayList;
 public abstract class VertretungsPlanFeatures {
     public static String strUserId = "";
     public static String strPasword = "";
-
-    public static final String todayURL = "http://gym-wen.de/vp/heute.htm";
-    public static final String tomorrowURL = "http://gym-wen.de/vp/morgen.htm";
-
-    private static final String[] nothing = new String[]{"entfällt", "entf"};
 
     //ChoiceActivity -> Step 5
     public static final String[][] choiceCourseNames = new String[][]{{ApplicationFeatures.getContext().getString(R.string.math), ApplicationFeatures.getContext().getString(R.string.mathShort)},
@@ -166,7 +162,7 @@ public abstract class VertretungsPlanFeatures {
     }
 
     public static boolean isNothing(String query) {
-        for (String s : nothing) {
+        for (String s : External_Const.nothing) {
             if (s.equalsIgnoreCase(query))
                 return true;
         }
@@ -174,6 +170,6 @@ public abstract class VertretungsPlanFeatures {
     }
 
     public static String[] getNothing() {
-        return nothing;
+        return External_Const.nothing;
     }
 }

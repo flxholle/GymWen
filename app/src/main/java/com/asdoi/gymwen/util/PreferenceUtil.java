@@ -13,7 +13,6 @@ import com.asdoi.gymwen.R;
 
 public class PreferenceUtil {
 
-    //Settings
     //Booleans
     public static boolean getBooleanSettings(String key, boolean defaultValue, Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -112,6 +111,32 @@ public class PreferenceUtil {
 
     public static boolean isNavigation() {
         return getBooleanSettings("menu_navigation", true);
+    }
+
+
+    //Vertretungsplan
+    public static String getUsername(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getString("username", "");
+    }
+
+    public static String getPassword(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getString("password", "");
+    }
+
+    public static String getTodayURL(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getString("today_url", External_Const.todayURL);
+    }
+
+    public static String getTomorrowURL(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getString("tomorrow_url", External_Const.tomorrowURL);
+    }
+
+    public static boolean isOfflineMode() {
+        return getBooleanSettings("offline_mode", true);
     }
 
 
