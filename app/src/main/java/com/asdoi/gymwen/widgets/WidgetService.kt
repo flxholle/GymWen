@@ -90,14 +90,14 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         val entryList = mutableListOf<EntryHelper>()
         if (name != null) entryList.add(EntryHelper(arrayOf(name), profile))
 
-        val sonstiges: Boolean
+        val miscellaneous: Boolean
         if (dayList.isEmpty())
             entryList.add(EntryHelper(arrayOf(), nothing))
         else {
-            sonstiges = SubstitutionFragment.isSonstiges(dayList)
-            entryList.add(EntryHelper(generateHeadline(context, true, senior), headline, sonstiges, senior))
+            miscellaneous = SubstitutionFragment.isMiscellaneous(dayList)
+            entryList.add(EntryHelper(generateHeadline(context, true, senior), headline, miscellaneous, senior))
             for (string in dayList) {
-                entryList.add(EntryHelper(string, content, sonstiges))
+                entryList.add(EntryHelper(string, content, miscellaneous))
             }
         }
         return entryList
@@ -116,8 +116,8 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
             day -> getTitleText(context, entry.entry[0])
             profile -> getTitleText(context, entry.entry[0])
             nothing -> getNothing(context, context.getString(R.string.nothing))
-            headline -> getHeadline(entry.entry, entry.sonstiges)
-            content -> getEntrySpecific(entry.entry, entry.senior, entry.sonstiges)
+            headline -> getHeadline(entry.entry, entry.miscellaneous)
+            content -> getEntrySpecific(entry.entry, entry.senior, entry.miscellaneous)
             internet -> getTitleText(context, context.getString(R.string.noInternetConnection))
             else -> getTitleText(context, context.getString(R.string.noInternetConnection))
         }
@@ -143,7 +143,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         onCreate()
     }
 
-    class EntryHelper(val entry: Array<String>, val code: Int = nothing, val sonstiges: Boolean = false, val senior: Boolean = false)
+    class EntryHelper(val entry: Array<String>, val code: Int = nothing, val miscellaneous: Boolean = false, val senior: Boolean = false)
 
 
     //View creators
@@ -163,7 +163,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         return view
     }
 
-    private fun getHeadline(headline: Array<String>, sonstiges: Boolean): RemoteViews {
+    private fun getHeadline(headline: Array<String>, miscellaneous: Boolean): RemoteViews {
         val view = getRemoteViews(context)
         val textSize = 17
         view.setTextViewText(R.id.substitution_specific_entry_textViewHour, headline[0])
@@ -175,7 +175,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         view.setTextViewText(R.id.substitution_specific_entry_textViewRoom, headline[3])
         view.setTextColor(R.id.substitution_specific_entry_textViewRoom, SubstitutionWidgetProvider.textColorSecondary)
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, textSize.toFloat())
-        view.setViewVisibility(R.id.substitution_specific_entry_textViewOther, if (sonstiges) View.VISIBLE else View.GONE)
+        view.setViewVisibility(R.id.substitution_specific_entry_textViewOther, if (miscellaneous) View.VISIBLE else View.GONE)
         view.setTextViewText(R.id.substitution_specific_entry_textViewOther, headline[4])
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, textSize.toFloat())
         view.setTextViewText(R.id.substitution_specific_entry_textViewClass, headline[5])
@@ -184,7 +184,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         return view
     }
 
-    private fun getEntrySpecific(entry: Array<String>, senior: Boolean, sonstiges: Boolean): RemoteViews {
+    private fun getEntrySpecific(entry: Array<String>, senior: Boolean, miscellaneous: Boolean): RemoteViews {
         val view = getRemoteViews(context)
         view.setTextViewText(R.id.substitution_specific_entry_textViewHour, entry[1])
         view.setTextViewText(R.id.substitution_specific_entry_textViewSubject, if (senior) entry[0] else entry[2])
@@ -202,7 +202,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
             view.setTextColor(R.id.substitution_specific_entry_textViewTeacher, ContextCompat.getColor(context, R.color.colorAccent))
             //            view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
         }
-        view.setViewVisibility(R.id.substitution_specific_entry_textViewOther, if (sonstiges) View.VISIBLE else View.GONE)
+        view.setViewVisibility(R.id.substitution_specific_entry_textViewOther, if (miscellaneous) View.VISIBLE else View.GONE)
         view.setTextViewText(R.id.substitution_specific_entry_textViewOther, entry[5])
         view.setTextViewText(R.id.substitution_specific_entry_textViewClass, if (senior) entry[2] else entry[0])
         //        view.setOnClickPendingIntent(R.id.widget_entry_linear, SubstitutionWidgetProvider.getPendingSelfIntent(context, SubstitutionWidgetProvider.WIDGET_ON_CLICK));
@@ -259,9 +259,9 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
     private fun generateHeadline(context: Context, isShort: Boolean, senior: Boolean): Array<String> {
         val headline: Array<String>
         headline = if (senior) {
-            arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), if (isShort) context.getString(R.string.courses_short) else context.getString(R.string.courses), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.other_short), context.getString(R.string.subject))
+            arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), if (isShort) context.getString(R.string.courses_short) else context.getString(R.string.courses), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), context.getString(R.string.subject))
         } else {
-            arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), context.getString(R.string.subject), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.other_short), if (isShort) context.getString(R.string.classes_short) else context.getString(R.string.classes))
+            arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), context.getString(R.string.subject), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), if (isShort) context.getString(R.string.classes_short) else context.getString(R.string.classes))
         }
         return headline
     }

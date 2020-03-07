@@ -48,7 +48,7 @@
     <string name="set_hours">Show times instead of hours</string>
     <string name="set_show_borders">Outline the teachers</string>
     <string name="set_show_borders_specific">Filtered plan only</string>
-    <string name="set_other_title">Others</string>
+    <string name="set_miscellaneous_title">Others</string>
     <string name="set_beta_features">Beta Features</string>
     <string name="set_old_substitution">Old design</string>
 
@@ -74,8 +74,8 @@
     <string name="teacher_short">T</string>
     <string name="room">Room</string>
     <string name="room_short">R</string>
-    <string name="other">Others</string>
-    <string name="other_short">Others</string>
+    <string name="miscellaneous">Others</string>
+    <string name="miscellaneous_short">Others</string>
 
 
     <string name="title_activity_sign_in">Registration</string>
