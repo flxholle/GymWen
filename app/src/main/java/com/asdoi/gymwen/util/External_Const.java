@@ -3,6 +3,9 @@ package com.asdoi.gymwen.util;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 
+/**
+ * Class that saves constants the can change in the future
+ */
 public abstract class External_Const {
 
     public final static String office_TelNr = "+49 9171 818 800";

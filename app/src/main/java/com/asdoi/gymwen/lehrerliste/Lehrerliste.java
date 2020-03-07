@@ -22,7 +22,7 @@ public abstract class Lehrerliste {
 
     /**
      * @return the full teacherlist
-     * @see Parse.getList()
+     * @see Parse#getList
      * new String[]{Kürzel, Nachname, Vorname, Sprechstunde}
      */
     public static String[][] liste() {
@@ -37,8 +37,8 @@ public abstract class Lehrerliste {
     /**
      * @param search a String, which is one of the four parts of the list-Array
      * @return if no match is found: null  |  else: the first match
-     * @see liste()
-     * @see Parse.getTeacher()
+     * @see #liste
+     * @see Parse#getTeacher
      */
     public static String[] getTeacher(String search) {
         return Parse.getTeacher(search, liste());
@@ -47,8 +47,8 @@ public abstract class Lehrerliste {
     /**
      * @param search a String, which is one of the four parts of the list-Array
      * @return if no match is found: null  |  else: all matches in array
-     * @see liste()
-     * @see Parse.getTeachers()
+     * @see #liste
+     * @see Parse#getTeachers
      */
     public static String[][] getTeachers(String search) {
         return Parse.getTeachers(search, liste());
@@ -92,7 +92,7 @@ public abstract class Lehrerliste {
      * reloads the docs from sharedPreferences
      *
      * @return returns true if it succeeded, false if not
-     * @see saveDoc()
+     * @see #saveDoc
      */
     public static boolean reloadDoc() {
         try {
@@ -114,7 +114,7 @@ public abstract class Lehrerliste {
     /**
      * @param query a String, which is one of the four parts of the list-Array
      * @return boolen if the query equals the AOL-Shortcut
-     * @see liste()
+     * @see #liste
      */
     public static boolean isAOL(String query) {
         return query.equals(External_Const.AOLShort);

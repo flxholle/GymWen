@@ -30,8 +30,8 @@ public class Vertretungsplan {
     /**
      * @param hours   boolean if it should show the matching hours, like a 1 will be converted to 8:10
      * @param courses The class names, which the substiution plan should be searched for
-     * @see getMatchingTime()
-     * @see reCreate()
+     * @see #getMatchingTime
+     * @see #reCreate
      */
     public Vertretungsplan(boolean hours, String... courses) {
         reCreate(hours, courses);
@@ -40,7 +40,7 @@ public class Vertretungsplan {
     /**
      * @param hours   boolean if it should show the matching hours, like a 1 will be converted to 8:10
      * @param courses The class names, which the substiution plan should be searched for
-     * @see getMatchingTime()
+     * @see #getMatchingTime
      */
     public void reCreate(boolean hours, String... courses) {
         this.oberstufe = courses.length > 1;
@@ -90,7 +90,7 @@ public class Vertretungsplan {
     /**
      * @param today: boolean if the title of today or tomorrow should be analyzed
      * @return an sorted Array of all title information, with the length 3. Like this: new String[]{Date, DateName (Weekday), WeekNr}
-     * @see Parse.getTitleArraySorted()
+     * @see Parse#getTitleArraySorted
      */
     //DayArrays
     //Date, DateName, WeekNr
@@ -105,8 +105,8 @@ public class Vertretungsplan {
     /**
      * @param today: boolean if the title of today or tomorrow should be analyzed
      * @return an sorted String with all the analyzed information separated by " "
-     * @see Parse.getTitleStringSorted()
-     * @see getTitleArray()
+     * @see Parse#getTitleStringSorted
+     * @see #getTitleArray
      */
     public String getTitleString(boolean today) {
         String s = Parse.getTitleStringSorted(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay());
@@ -117,7 +117,7 @@ public class Vertretungsplan {
     /**
      * @param today: boolean if the plan of today or tomorrow should be analyzed
      * @return a filtered List of the Subsitution, with only matching classes
-     * @see getAll()
+     * @see #getAll
      */
     //Substitution plan
     public String[][] getDay(boolean today) {

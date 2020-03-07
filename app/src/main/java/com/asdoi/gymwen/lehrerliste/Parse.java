@@ -93,8 +93,8 @@ abstract class Parse {
     }
 
     /**
-     * @param search        String that should be found in the listString (normally a part of the teacher-array, like the Kürzel)
-     * @param listStringThe list in which it should search for the query (normally the teacherlist)
+     * @param search     String that should be found in the listString (normally a part of the teacher-array, like the Kürzel)
+     * @param listString The list in which it should search for the query (normally the teacherlist)
      * @return if no match is found: null  |  else: all matches in array
      * @see Lehrerliste
      */
@@ -120,7 +120,7 @@ abstract class Parse {
 
     /**
      * @param doc same like getTeachers just with a Document as parameter
-     * @see getTeachers()
+     * @see #getTeachers
      */
     protected static String[] getTeacher(String search, Document doc) {
         return getTeacher(search, getList(doc));
