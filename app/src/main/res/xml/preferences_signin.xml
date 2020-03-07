@@ -5,14 +5,14 @@
         android:key="username"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/set_vertretung_username"
+        android:title="@string/set_substitution_username"
         app:iconSpaceReserved="false"
         android:summary="@string/set_desc_username" />
     <EditTextPreference
         android:key="password"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/set_vertretung_password"
+        android:title="@string/set_substitution_password"
         app:iconSpaceReserved="false"
         android:summary="@string/set_desc_password" />
     <EditTextPreference

@@ -45,10 +45,10 @@ import androidx.preference.PreferenceManager;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
+import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.github.javiersantos.appupdater.AppUpdater;
@@ -618,7 +618,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     //Save Documents
     public void saveDocs() {
         SubstitutionPlanFeatures.saveDocs();
-        Lehrerliste.saveDoc();
+        Teacherlist.saveDoc();
     }
 
 

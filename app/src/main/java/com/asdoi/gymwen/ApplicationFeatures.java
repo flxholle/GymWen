@@ -38,12 +38,12 @@ import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 
 import com.ahmedjazzar.rosetta.LanguageSwitcher;
-import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
+import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.activities.MainActivity;
@@ -84,8 +84,8 @@ import java.util.Locale;
 
 
 public class ApplicationFeatures extends MultiDexApplication {
-    public static final int vertretung_teacher_view_id = View.generateViewId();
-    public static final int old_design_vertretung_view_id = View.generateViewId();
+    public static final int substitution_teacher_view_id = View.generateViewId();
+    public static final int old_design_substitution_view_id = View.generateViewId();
     private static Context mContext;
     public static ArrayList<String> websiteHistorySaveInstance;
 
@@ -149,11 +149,11 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static void downloadLehrerDoc() {
-        if (!Lehrerliste.isDownloaded()) {
+        if (!Teacherlist.isDownloaded()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
-                Lehrerliste.setDoc(downloadDoc(PreferenceUtil.getTeacherlistURL(getContext())));
+                Teacherlist.setDoc(downloadDoc(PreferenceUtil.getTeacherlistURL(getContext())));
             } else if (PreferenceUtil.isOfflineMode()) {
-                Lehrerliste.reloadDoc();
+                Teacherlist.reloadDoc();
             }
         }
     }

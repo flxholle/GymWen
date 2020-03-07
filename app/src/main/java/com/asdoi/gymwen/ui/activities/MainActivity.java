@@ -33,13 +33,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
+import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
-import com.asdoi.gymwen.ui.fragments.LehrerlisteFragment;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
+import com.asdoi.gymwen.ui.fragments.TeacherListFragment;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.github.javiersantos.appupdater.enums.Display;
@@ -60,9 +60,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private ActionBarDrawerToggle toggle;
     private Menu menu;
 
-    public static int vertretungFragmentState;
-    public static int lastLoaded; // 0 = Vertretung, 1 = Tabs, 2 = Lehrerliste
-    public static final int lastLoadedVertretung = 0;
+    public static int substitutionFragmentState;
+    public static int lastLoaded; // 0 = Substitution, 1 = Tabs, 2 = Teacherlist
+    public static final int lastLoadedSubstitution = 0;
     public static final int lastLoadedTabs = 1;
     public static final int lastLoadedLehrerliste = 2;
 
@@ -490,17 +490,17 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_refresh2:
             case R.id.action_refresh:
                 switch (lastLoaded) {
-                    case lastLoadedVertretung:
+                    case lastLoadedSubstitution:
                         SubstitutionPlanFeatures.setDocs(null, null);
-                        fragment = SubstitutionFragment.newInstance(vertretungFragmentState);
+                        fragment = SubstitutionFragment.newInstance(substitutionFragmentState);
                         break;
                     case lastLoadedTabs:
                         SubstitutionPlanFeatures.setDocs(null, null);
                         sectionsPagerAdapter.notifyDataSetChanged();
                         break;
                     case lastLoadedLehrerliste:
-                        Lehrerliste.setDoc(null);
-                        fragment = new LehrerlisteFragment();
+                        Teacherlist.setDoc(null);
+                        fragment = new TeacherListFragment();
                         break;
                     default:
                         SubstitutionPlanFeatures.setDocs(null, null);
@@ -510,14 +510,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;
             case refreshFragment:
                 switch (lastLoaded) {
-                    case lastLoadedVertretung:
-                        fragment = SubstitutionFragment.newInstance(vertretungFragmentState);
+                    case lastLoadedSubstitution:
+                        fragment = SubstitutionFragment.newInstance(substitutionFragmentState);
                         break;
                     case lastLoadedTabs:
                         sectionsPagerAdapter.notifyDataSetChanged();
                         break;
                     case lastLoadedLehrerliste:
-                        fragment = new LehrerlisteFragment();
+                        fragment = new TeacherListFragment();
                         break;
                     default:
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Both);
@@ -532,7 +532,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 return;
             case R.id.nav_teacherlist:
                 setVisibiltySpinner(false);
-                fragment = new LehrerlisteFragment();
+                fragment = new TeacherListFragment();
                 setDesignChangerVisibility(false);
                 break;
             case R.id.nav_notes:
@@ -596,10 +596,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
 
         if (fragment != null) {
-            if (fragment instanceof LehrerlisteFragment)
+            if (fragment instanceof TeacherListFragment)
                 lastLoaded = lastLoadedLehrerliste;
             else
-                lastLoaded = lastLoadedVertretung;
+                lastLoaded = lastLoadedSubstitution;
 
             //Display NavHost Fragment
             findViewById(R.id.view_pager).setVisibility(View.GONE);
@@ -637,11 +637,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     public void onBackPressed() {
         //If teacher is clicked
-        if (findViewById(ApplicationFeatures.vertretung_teacher_view_id) != null) {
+        if (findViewById(ApplicationFeatures.substitution_teacher_view_id) != null) {
             try {
-                ((ViewGroup) findViewById(ApplicationFeatures.vertretung_teacher_view_id).getParent()).removeView(findViewById(ApplicationFeatures.vertretung_teacher_view_id));
+                ((ViewGroup) findViewById(ApplicationFeatures.substitution_teacher_view_id).getParent()).removeView(findViewById(ApplicationFeatures.substitution_teacher_view_id));
             } catch (NullPointerException e) {
-                findViewById(ApplicationFeatures.vertretung_teacher_view_id).setVisibility(View.GONE);
+                findViewById(ApplicationFeatures.substitution_teacher_view_id).setVisibility(View.GONE);
             }
             return;
         }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/vertretung_frame"
+    android:id="@+id/substitution_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground">
 
 
     <LinearLayout
-        android:id="@+id/vertretung_linear_layout_layer1"
+        android:id="@+id/substitution_linear_layout_layer1"
         android:paddingStart="4sp"
         android:paddingEnd="4sp"
         android:layout_width="match_parent"
