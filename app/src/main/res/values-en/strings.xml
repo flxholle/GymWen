@@ -90,7 +90,7 @@
 
 
     <string name="title_activity_choice">Courses/class choice</string>
-    <string name="choice_oberstufe">Advanced level (Q11/Q12)</string>
+    <string name="choice_senior">Advanced level (Q11/Q12)</string>
     <string name="choice_5">5th grade</string>
     <string name="choice_6">6th grade</string>
     <string name="choice_7">7th grade</string>
@@ -100,14 +100,14 @@
     <string name="choice_parents">Parents</string>
     <string name="choice_more_classes">Another class</string>
     <string name="choice_more_letters">Another letter</string>
-    <string name="choice_oberstufe_one">Year 1 (11th grade, at 1d4 the 1)</string>
-    <string name="choice_oberstufe_two">Year 2 (12th grade, at 2d4 the 2)</string>
+    <string name="choice_senior_one">Year 1 (11th grade, at 1d4 the 1)</string>
+    <string name="choice_senior_two">Year 2 (12th grade, at 2d4 the 2)</string>
     <string name="choice_more_cours_digits">Another vintage</string>
     <string name="choice_title_4">Course of compulsory subjects (German, math, history, social studies)\n(e.g. at 1d4, the 4)</string>
     <string name="choice_main_courses">Course of compulsory subjects</string>
     <string name="choice_complete">Please complete your course choice:</string>
     <string name="choice_add_course">Add another course</string>
-    <string name="oberstufe_empty">Please insert courses</string>
+    <string name="senior_empty">Please insert courses</string>
     <string name="additional_course">Additional course</string>
     <string name="please_insert_digit">Please enter a number</string>
     <string name="please_insert_letter">Please enter a letter</string>
@@ -288,8 +288,8 @@
     <string name="share_msg_nothing_at">No Sit-in on</string>
     <string name="share_msg_hour">hour</string>
     <string name="share_msg_nothing_hour">hour is missing</string>
-    <string name="share_msg_nothing_hour_oberstufe">hour is missing for course</string>
-    <string name="share_msg_hour_oberstufe">hour for course</string>
+    <string name="share_msg_nothing_hour_senior">hour is missing for course</string>
+    <string name="share_msg_hour_senior">hour for course</string>
     <string name="share_msg_substitution_at">Sit-in on</string>
     <string name="menu_from_this_developer">By this developer</string>
     <string name="version">Version</string>

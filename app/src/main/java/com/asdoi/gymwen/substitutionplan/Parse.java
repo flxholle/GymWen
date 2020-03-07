@@ -312,13 +312,13 @@ abstract class Parse {
 
     /**
      * @param doc        raw HTML-Document (Jsoup), which will be analyzed
-     * @param oberstufe  boolean: if active the returned List will sorted differently, like this new String[]{Hours, class, sit-in, room, information, subject}  |  else new String[]{hours, subject, sit-in, room, information, class}
+     * @param senior  boolean: if active the returned List will sorted differently, like this new String[]{Hours, class, sit-in, room, information, subject}  |  else new String[]{hours, subject, sit-in, room, information, class}
      * @param classNames List: The class names, which the substiution plan should be searched for
      * @return a filtered List of the Subsitution, with only matching classes
      * @see #getSubstitutionList
      */
     //specific
-    protected static String[][] getSubstitutionList(Document doc, boolean oberstufe, ArrayList<String> classNames) {
+    protected static String[][] getSubstitutionList(Document doc, boolean senior, ArrayList<String> classNames) {
         if (doc == null || classNames == null) {
             return null;
         }
@@ -377,7 +377,7 @@ abstract class Parse {
         String[][] yourInhalt = new String[line.length][columNr];
         int j = 0;
         for (int i = 0; i < inhalt.length; i++) {
-            if (oberstufe) {
+            if (senior) {
                 if (classNames.contains("" + inhalt[i][0])) {
                     yourInhalt[j] = inhalt[i];
                     j++;

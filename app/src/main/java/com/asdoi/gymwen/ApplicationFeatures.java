@@ -560,7 +560,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             if (inhalt.length == 0) {
                 message += getContext().getString(R.string.notif_nothing) + "\n";
             } else {
-                if (vp.getOberstufe()) {
+                if (vp.getSenior()) {
                     for (String[] line : inhalt) {
                         if (SubstitutionPlanFeatures.isNothing(line[3])) {
                             message += line[1] + ". Stunde entfällt\n";

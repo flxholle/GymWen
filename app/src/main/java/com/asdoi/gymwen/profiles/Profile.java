@@ -44,7 +44,7 @@ public class Profile {
         return null;
     }
 
-    public boolean isOberstufe() {
+    public boolean isSenior() {
         return getCourses().split(coursesSeparator).length > 1;
     }
 }
