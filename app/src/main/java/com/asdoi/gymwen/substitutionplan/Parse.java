@@ -268,46 +268,46 @@ abstract class Parse {
         }
 
         Elements values = doc.select("tr");
-        int columNr = 6;
+        int columnNr = 6;
 
-        String[] docInhalt = new String[values.size()];
+        String[] docContent = new String[values.size()];
         for (int i = 0; i < values.size(); i++) {
-            docInhalt[i] = "" + values.get(i);
+            docContent[i] = "" + values.get(i);
         }
 
-        String[][] line = new String[docInhalt.length - 2][20];
+        String[][] line = new String[docContent.length - 2][20];
         for (int i = 2; i < line.length + 2; i++) {
             int indexBegin = 0;
             int indexEnd = 2;
 
             for (int j = 0; 0 == 0; j++) {
                 line[i - 2][j] = "";
-                indexBegin = docInhalt[i].indexOf(">", indexBegin + 1);
-                indexEnd = docInhalt[i].indexOf("<", indexEnd + 1);
+                indexBegin = docContent[i].indexOf(">", indexBegin + 1);
+                indexEnd = docContent[i].indexOf("<", indexEnd + 1);
                 if (indexBegin > indexEnd) {
                     break;
                 }
-                line[i - 2][j] = docInhalt[i].substring(indexBegin + 1, indexEnd);
+                line[i - 2][j] = docContent[i].substring(indexBegin + 1, indexEnd);
 
             }
-            line[i - 2] = removeValues(line[i - 2], columNr);
+            line[i - 2] = removeValues(line[i - 2], columnNr);
         }
 
 
         //Analyze String
-        String[][] inhalt = new String[line.length][columNr];
+        String[][] content = new String[line.length][columnNr];
 
-        for (int i = 0; i < inhalt.length; i++) {
-            for (int j = 0; j < inhalt[0].length; j++) {
+        for (int i = 0; i < content.length; i++) {
+            for (int j = 0; j < content[0].length; j++) {
                 if (line[i][j] == null) {
-                    inhalt[i][j] = "";
+                    content[i][j] = "";
                 } else {
-                    inhalt[i][j] = line[i][j];
+                    content[i][j] = line[i][j];
                 }
             }
         }
 
-        return inhalt;
+        return content;
     }
 
     /**
@@ -325,14 +325,14 @@ abstract class Parse {
 
         Elements values = doc.select("tr");
 
-        String[] docInhalt = new String[values.size()];
+        String[] docContent = new String[values.size()];
         for (int i = 0; i < values.size(); i++) {
-            docInhalt[i] = "" + values.get(i);
+            docContent[i] = "" + values.get(i);
         }
 
         int columNr = 6;
 
-        String[][] line = new String[docInhalt.length - 2][20];
+        String[][] line = new String[docContent.length - 2][20];
         for (int i = 2; i < line.length + 2; i++) {
 //            Element elem = values.get(i);
 //            System.out.println(elem.text());
@@ -341,14 +341,14 @@ abstract class Parse {
             for (int j = 0; true; j++) {
                 line[i - 2][j] = "";
 
-//                System.out.println(docInhalt[i].indexOf(">", indexBegin) + 1);
-//                System.out.println(docInhalt[i].indexOf("<", indexEnd));
-                indexBegin = docInhalt[i].indexOf(">", indexBegin + 1);
-                indexEnd = docInhalt[i].indexOf("<", indexEnd + 1);
+//                System.out.println(docContent[i].indexOf(">", indexBegin) + 1);
+//                System.out.println(docContent[i].indexOf("<", indexEnd));
+                indexBegin = docContent[i].indexOf(">", indexBegin + 1);
+                indexEnd = docContent[i].indexOf("<", indexEnd + 1);
                 if (indexBegin > indexEnd) {
                     break;
                 }
-                line[i - 2][j] = docInhalt[i].substring(indexBegin + 1, indexEnd);
+                line[i - 2][j] = docContent[i].substring(indexBegin + 1, indexEnd);
 //                System.out.println(line[i - 2][j]);
 
             }
@@ -361,35 +361,35 @@ abstract class Parse {
 
         //Analyze String
 
-        String[][] inhalt = new String[line.length][columNr];
+        String[][] content = new String[line.length][columNr];
 
-        for (int i = 0; i < inhalt.length; i++) {
-            for (int j = 0; j < inhalt[0].length; j++) {
+        for (int i = 0; i < content.length; i++) {
+            for (int j = 0; j < content[0].length; j++) {
                 if (line[i][j] == null) {
-                    inhalt[i][j] = "";
+                    content[i][j] = "";
                 } else {
-                    inhalt[i][j] = line[i][j];
+                    content[i][j] = line[i][j];
                 }
             }
         }
 
 
-        String[][] yourInhalt = new String[line.length][columNr];
+        String[][] yourContent = new String[line.length][columNr];
         int j = 0;
-        for (int i = 0; i < inhalt.length; i++) {
+        for (int i = 0; i < content.length; i++) {
             if (senior) {
-                if (classNames.contains("" + inhalt[i][0])) {
-                    yourInhalt[j] = inhalt[i];
+                if (classNames.contains("" + content[i][0])) {
+                    yourContent[j] = content[i];
                     j++;
                 }
-            } else if (inhalt[i][0].length() > 1) {
+            } else if (content[i][0].length() > 1) {
                 //For courses like 10c
-                //System.out.println(inhalt[i][0].charAt(1));
-                if (!Character.isLetter(inhalt[i][0].charAt(1))) {
-                    if (classNames.contains("" + inhalt[i][0].charAt(0) + inhalt[i][0].charAt(1))) {
-                        for (int z = 2; z < inhalt[i][0].length(); z++) {
-                            if (classNames.contains("" + inhalt[i][0].charAt(z))) {
-                                yourInhalt[j] = inhalt[i];
+                //System.out.println(content[i][0].charAt(1));
+                if (!Character.isLetter(content[i][0].charAt(1))) {
+                    if (classNames.contains("" + content[i][0].charAt(0) + content[i][0].charAt(1))) {
+                        for (int z = 2; z < content[i][0].length(); z++) {
+                            if (classNames.contains("" + content[i][0].charAt(z))) {
+                                yourContent[j] = content[i];
                                 j++;
                                 break;
                             }
@@ -398,10 +398,10 @@ abstract class Parse {
                 }
                 //For courses like 9b
                 else {
-                    if (classNames.contains("" + inhalt[i][0].charAt(0))) {
-                        for (int z = 1; z < inhalt[i][0].length(); z++) {
-                            if (classNames.contains("" + inhalt[i][0].charAt(z))) {
-                                yourInhalt[j] = inhalt[i];
+                    if (classNames.contains("" + content[i][0].charAt(0))) {
+                        for (int z = 1; z < content[i][0].length(); z++) {
+                            if (classNames.contains("" + content[i][0].charAt(z))) {
+                                yourContent[j] = content[i];
                                 j++;
                                 break;
                             }
@@ -415,13 +415,13 @@ abstract class Parse {
             return new String[0][columNr];
         }
 
-        String[][] trimmedInhalt = new String[j][columNr];
+        String[][] trimmedContent = new String[j][columNr];
         for (int i = 0; i < j; i++) {
-            trimmedInhalt[i] = yourInhalt[i];
+            trimmedContent[i] = yourContent[i];
         }
 
 
-        return trimmedInhalt;
+        return trimmedContent;
 
 
     }

@@ -122,27 +122,27 @@ public class SubstitutionPlan {
     //Substitution plan
     public String[][] getDay(boolean today) {
         try {
-            String[][] inhalt = null;
+            String[][] content = null;
 
             if (today) {
-                inhalt = Parse.getSubstitutionList(todayDoc, senior, courses);
+                content = Parse.getSubstitutionList(todayDoc, senior, courses);
             } else {
-                inhalt = Parse.getSubstitutionList(tomorrowDoc, senior, courses);
+                content = Parse.getSubstitutionList(tomorrowDoc, senior, courses);
             }
 
-            if (inhalt != null) {
+            if (content != null) {
                 try {
-                    inhalt = sortArray(inhalt);
+                    content = sortArray(content);
                 } catch (Exception e) {
                     e.getStackTrace();
                 }
             }
 
             if (hours) {
-                inhalt = changeToTime(inhalt);
+                content = changeToTime(content);
             }
 
-            return inhalt;
+            return content;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -151,21 +151,21 @@ public class SubstitutionPlan {
 
     public String getDayString(boolean today) {
         try {
-            String[][] inhalt = getDay(today);
+            String[][] content = getDay(today);
 
-            if (inhalt == null) {
+            if (content == null) {
                 return noSubstitution();
             }
 
             String todayString = "";
 
             //System.out.println verarbeitung
-            String[] spalten = new String[inhalt.length];
-            for (int i = 0; i < inhalt.length; i++) {
+            String[] spalten = new String[content.length];
+            for (int i = 0; i < content.length; i++) {
                 spalten[i] = "";
                 for (int j = 0; j < 5; j++) {
-                    spalten[i] += inhalt[i][j] + " ";
-                    todayString += inhalt[i][j] + " ";
+                    spalten[i] += content[i][j] + " ";
+                    todayString += content[i][j] + " ";
                 }
                 todayString += "\n";
             }
@@ -187,20 +187,20 @@ public class SubstitutionPlan {
      */
     public String[][] getAll(boolean today) {
         try {
-            String[][] inhalt = null;
+            String[][] content = null;
 
 
             if (today) {
-                inhalt = Parse.getSubstitutionList(todayDoc);
+                content = Parse.getSubstitutionList(todayDoc);
             } else {
-                inhalt = Parse.getSubstitutionList(tomorrowDoc);
+                content = Parse.getSubstitutionList(tomorrowDoc);
             }
 
             if (hours) {
-                inhalt = changeToTime(inhalt);
+                content = changeToTime(content);
             }
 
-            return inhalt;
+            return content;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -209,19 +209,19 @@ public class SubstitutionPlan {
 
     public String getAllString(boolean today) {
         try {
-            String[][] inhalt = getAll(today);
+            String[][] content = getAll(today);
 
-            if (inhalt == null) {
+            if (content == null) {
                 return noSubstitutionAll();
             }
 
             String todayString = "";
-            String[] spalten = new String[inhalt.length];
-            for (int i = 0; i < inhalt.length; i++) {
+            String[] spalten = new String[content.length];
+            for (int i = 0; i < content.length; i++) {
                 spalten[i] = "";
                 for (int j = 0; j < 5; j++) {
-                    spalten[i] += inhalt[i][j] + " ";
-                    todayString += inhalt[i][j] + " ";
+                    spalten[i] += content[i][j] + " ";
+                    todayString += content[i][j] + " ";
                 }
                 todayString += "\n";
             }
