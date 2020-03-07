@@ -8,15 +8,14 @@ import com.asdoi.gymwen.util.PreferenceUtil;
 
 import org.jsoup.nodes.Document;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
+/**
+ * An object which filters the substitution plan and creates easier access to the methods of the parse-class
+ *
+ * @see Parse
+ */
 public class Vertretungsplan {
 
     boolean oberstufe;
@@ -28,10 +27,21 @@ public class Vertretungsplan {
     public Vertretungsplan() {
     }
 
+    /**
+     * @param hours   boolean if it should show the matching hours, like a 1 will be converted to 8:10
+     * @param courses The class names, which the substiution plan should be searched for
+     * @see getMatchingTime()
+     * @see reCreate()
+     */
     public Vertretungsplan(boolean hours, String... courses) {
         reCreate(hours, courses);
     }
 
+    /**
+     * @param hours   boolean if it should show the matching hours, like a 1 will be converted to 8:10
+     * @param courses The class names, which the substiution plan should be searched for
+     * @see getMatchingTime()
+     */
     public void reCreate(boolean hours, String... courses) {
         this.oberstufe = courses.length > 1;
         this.courses = generateCourseList(courses);
@@ -40,10 +50,14 @@ public class Vertretungsplan {
 
     private static Context context = ApplicationFeatures.getContext();
 
+    /**
+     * @param value Context for the Strings
+     */
     public void setContext(Context value) {
         context = value;
     }
 
+    //Strings in specific languages, @see getTitleArray
     private static String laterDay() {
         return context.getString(R.string.day_past);
     }
@@ -73,183 +87,47 @@ public class Vertretungsplan {
     }
 
 
+    /**
+     * @param today: boolean if the title of today or tomorrow should be analyzed
+     * @return an sorted Array of all title information, with the length 3. Like this: new String[]{Date, DateName (Weekday), WeekNr}
+     * @see Parse.getTitleArraySorted()
+     */
     //DayArrays
-    private String getTitleStringRaw(boolean today) {
-        try {
-            String[] dayTitle = Parse.getTitle(today ? todayDoc : tomorrowDoc);
-            String returnValue = "";
-            if (dayTitle == null || dayTitle.equals("")) {
-                return noInternet();
-            }
-            for (String s : dayTitle) {
-                returnValue += s + " ";
-            }
-            if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
-                return noInternet();
-
-            return returnValue.substring(0, returnValue.length() - 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     //Date, DateName, WeekNr
     public String[] getTitleArray(boolean today) {
-        try {
-            String[] day = new String[3];
-            String dayString = getTitleStringRaw(today);
-            char[] dayArray = dayString.toCharArray();
-
-            //Date
-            int start = -1, end = -1;
-
-            for (int i = 0; i < dayArray.length; i++) {
-                if (Character.isDigit(dayArray[i])) {
-                    start = i;
-                    break;
-                }
-            }
-            if (start < 0 || start == dayArray.length - 1)
-                return null;
-
-            for (int i = start + 1; i < dayArray.length; i++) {
-                if (!Character.isDigit(dayArray[i]) && dayArray[i] != '.') {
-                    end = i;
-                    break;
-                }
-            }
-
-            day[0] = dayString.substring(start, end);
-
-
-            //Weekday
-            try {
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-                SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
-
-                Date startDate = removeTime(df.parse(day[0]));
-
-                day[1] = simpleDateformat.format(startDate);
-                Date currentDate = removeTime(new Date());
-
-                if (currentDate.after(startDate)) {
-                    //If date is in past
-                    return new String[]{day[0], showWeekDate() ? day[1] + " " + laterDay() : laterDay()};
-                } else if (currentDate.equals(startDate)) {
-                    //If date is today
-                    day[1] = today();
-                } else {
-                    //If date is tomorrow
-                    //Set current date to one day in the future
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.HOUR_OF_DAY, 0);
-                    cal.set(Calendar.MINUTE, 0);
-                    cal.set(Calendar.SECOND, 0);
-                    cal.set(Calendar.MILLISECOND, 0);
-                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
-
-                    //Check if currentdate equals date -> Tomorrow
-                    currentDate = cal.getTime();
-                    if (currentDate.equals(startDate)) {
-                        day[1] = showWeekDate() ? day[1] + " (" + tomorrow() + ")" : tomorrow();
-                    }
-                }
-
-            } catch (ParseException e) {
-                day[1] = dayString.substring(0, start - 1);
-            }
-
-
-            //Week Number
-            if (end == dayArray.length - 1)
-                return day;
-
-            try {
-                start = dayString.indexOf("Woche") + "Woche".length();
-            } catch (
-                    Exception e) {
-                for (int i = end + 1; i < dayArray.length; i++) {
-                    if (Character.isLetter(dayArray[i])) {
-                        start = i;
-                        break;
-                    }
-                }
-            }
-
-            if (start < 0 || start == dayArray.length - 1)
-                return day;
-
-
-            try {
-                end = start + 1;
-                day[2] = dayString.substring(start, end);
-            } catch (
-                    Exception e) {
-                end = -1;
-                for (int i = start + 1; i < dayArray.length; i++) {
-                    if (!Character.isLetter(dayArray[i])) {
-                        end = i;
-                        break;
-                    }
-                }
-                day[2] = dayString.substring(start, end);
-            }
-
-            return day;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        String[] s = Parse.getTitleArraySorted(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay());
+        if (s == null) {
+            return new String[]{"", "", "", ""};
         }
+        return s;
     }
 
-    public static Date removeTime(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
-    }
-
+    /**
+     * @param today: boolean if the title of today or tomorrow should be analyzed
+     * @return an sorted String with all the analyzed information separated by " "
+     * @see Parse.getTitleStringSorted()
+     * @see getTitleArray()
+     */
     public String getTitleString(boolean today) {
-        try {
-            String[] dayTitle = getTitleArray(today);
-            if (dayTitle == null || dayTitle.equals("") || dayTitle.length <= 0) {
-                return noInternet();
-            }
-
-            String returnValue = dayTitle[0];
-            switch (dayTitle.length) {
-                default:
-                case 3:
-                    for (int i = 1; i < dayTitle.length; i++) {
-                        returnValue += ", " + dayTitle[i];
-                    }
-                    break;
-                case 2:
-                    returnValue = dayTitle[1] + " " + dayTitle[0];
-            }
-
-            if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
-                return noInternet();
-
-            return returnValue;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        String s = Parse.getTitleStringSorted(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay());
+        return s == null ? noInternet() : s;
     }
 
+
+    /**
+     * @param today: boolean if the plan of today or tomorrow should be analyzed
+     * @return a filtered List of the Subsitution, with only matching classes
+     * @see getAll()
+     */
+    //Substitution plan
     public String[][] getDay(boolean today) {
         try {
             String[][] inhalt = null;
 
             if (today) {
-                inhalt = Parse.getList(todayDoc, oberstufe, courses);
+                inhalt = Parse.getSubstitutionList(todayDoc, oberstufe, courses);
             } else {
-                inhalt = Parse.getList(tomorrowDoc, oberstufe, courses);
+                inhalt = Parse.getSubstitutionList(tomorrowDoc, oberstufe, courses);
             }
 
             if (inhalt != null) {
@@ -302,15 +180,20 @@ public class Vertretungsplan {
         }
     }
 
+
+    /**
+     * @param today: boolean if the plan of today or tomorrow should be analyzed
+     * @return an tow-dimensional String array with every entry of the plan. An entry has the same order like the plan online. My one looks like this: new String[]{class, hour, subject, sit-in, room, moreInformation}
+     */
     public String[][] getAll(boolean today) {
         try {
             String[][] inhalt = null;
 
 
             if (today) {
-                inhalt = Parse.getList(todayDoc);
+                inhalt = Parse.getSubstitutionList(todayDoc);
             } else {
-                inhalt = Parse.getList(tomorrowDoc);
+                inhalt = Parse.getSubstitutionList(tomorrowDoc);
             }
 
             if (hours) {
@@ -378,6 +261,10 @@ public class Vertretungsplan {
     }
 
 
+    /**
+     * @param value a substituion plan array with hours as the second entry
+     * @return a plan array with all hours replaced with their matching times
+     */
     //Times
     private String[][] changeToTime(String[][] value) {
         if (value == null)
@@ -393,6 +280,10 @@ public class Vertretungsplan {
         return value;
     }
 
+    /**
+     * @param lesson the lesson
+     * @return the matching time
+     */
     private String getMatchingTime(int lesson) {
         switch (lesson) {
             case 1:
@@ -438,6 +329,10 @@ public class Vertretungsplan {
         tomorrowDoc = value;
     }
 
+    /**
+     * @param today    Document of the today plan (Jsoup)
+     * @param tomorrow Document of the tomorrow plan (Jsoup)
+     */
     public void setDocs(Document today, Document tomorrow) {
         setTodayDoc(today);
         setTomorrowDoc(tomorrow);
@@ -450,6 +345,9 @@ public class Vertretungsplan {
             return tomorrowDoc;
     }
 
+    /**
+     * @return a boolean if the docs are not null, which means they were already downloaded
+     */
     public boolean areDocsDownloaded() {
         return getDoc(true) != null && getDoc(false) != null;
     }

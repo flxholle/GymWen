@@ -11,7 +11,8 @@
       "enabled": true,
       "outputFile": "app-release.apk",
       "fullName": "release",
-      "baseName": "release"
+      "baseName": "release",
+      "dirName": ""
     },
     "path": "app-release.apk",
     "properties": {}
