@@ -8,11 +8,14 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.ui.activities.SettingsActivity;
 
 public class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_substitutionplan, rootKey);
+
+        ((SettingsActivity) getActivity()).loadedFragments++;
 
         setFullNames();
         Preference myPref = findPreference("show_full_names");

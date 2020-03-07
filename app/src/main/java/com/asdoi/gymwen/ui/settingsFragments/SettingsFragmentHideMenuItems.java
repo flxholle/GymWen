@@ -7,11 +7,14 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.ui.activities.SettingsActivity;
 
 public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_hide_menu_items, rootKey);
+
+        ((SettingsActivity) getActivity()).loadedFragments++;
 
         setBoth();
         Preference myPref = findPreference("menu_filtered");
