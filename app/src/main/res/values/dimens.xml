@@ -20,4 +20,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
 
     <dimen name="colorush_image_width">270dp</dimen>
 
+    <dimen name="nav_header_settings_padding">7dp</dimen>
+
 </resources>

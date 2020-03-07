@@ -43,4 +43,7 @@ public abstract class External_Const {
     //Teacherlist
     public static final String teacherlistUrl = "http://www.gym-wen.de/information/sprechstunden/";
     public static final String AOLShort = "AOL";
+
+    //Geo location (Uri parse String)
+    public static final String location = "geo:49.34600,11.15838?q=Gymnasium%20Wendelstein";
 }
