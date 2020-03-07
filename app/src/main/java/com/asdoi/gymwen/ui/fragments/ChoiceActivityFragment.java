@@ -165,7 +165,8 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         box.setGravity(Gravity.CENTER);
         box.setText(courseName);
         box.setId(quantitiyCourses + 130);
-        box.setButtonTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(getContext())));
+        if (android.os.Build.VERSION.SDK_INT >= 21)
+            box.setButtonTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(getContext())));
         box.setOnClickListener(this);
         box.setChecked(true);
 
