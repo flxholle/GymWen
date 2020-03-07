@@ -36,12 +36,12 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.fragments.LehrerlisteFragment;
-import com.asdoi.gymwen.ui.fragments.VertretungFragment;
+import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -92,10 +92,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        VertretungsPlanFeatures.setContext(this);
+        SubstitutionPlanFeatures.setContext(this);
 
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), false, new String[]{getString(R.string.today), getString(R.string.tomorrow)});
-        VertretungFragment.changedSectionsPagerAdapterTitles = false;
+        SubstitutionFragment.changedSectionsPagerAdapterTitles = false;
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
 
@@ -117,7 +117,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         initSpinner();
 
-        if (!VertretungsPlanFeatures.isUninit())
+        if (!SubstitutionPlanFeatures.isUninit())
             onNavigationItemSelected(R.id.nav_both);
         toggle.syncState();
 
@@ -384,7 +384,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             default:
             case R.id.nav_both:
                 setVisibiltySpinner(true);
-                fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
+                fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Both);
                 setDesignChangerVisibility(true);
 //                fragment = new WidgetFragment();
                 break;
@@ -491,11 +491,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_refresh:
                 switch (lastLoaded) {
                     case lastLoadedVertretung:
-                        VertretungsPlanFeatures.setDocs(null, null);
-                        fragment = VertretungFragment.newInstance(vertretungFragmentState);
+                        SubstitutionPlanFeatures.setDocs(null, null);
+                        fragment = SubstitutionFragment.newInstance(vertretungFragmentState);
                         break;
                     case lastLoadedTabs:
-                        VertretungsPlanFeatures.setDocs(null, null);
+                        SubstitutionPlanFeatures.setDocs(null, null);
                         sectionsPagerAdapter.notifyDataSetChanged();
                         break;
                     case lastLoadedLehrerliste:
@@ -503,15 +503,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         fragment = new LehrerlisteFragment();
                         break;
                     default:
-                        VertretungsPlanFeatures.setDocs(null, null);
-                        fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
+                        SubstitutionPlanFeatures.setDocs(null, null);
+                        fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Both);
                         break;
                 }
                 break;
             case refreshFragment:
                 switch (lastLoaded) {
                     case lastLoadedVertretung:
-                        fragment = VertretungFragment.newInstance(vertretungFragmentState);
+                        fragment = SubstitutionFragment.newInstance(vertretungFragmentState);
                         break;
                     case lastLoadedTabs:
                         sectionsPagerAdapter.notifyDataSetChanged();
@@ -520,7 +520,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         fragment = new LehrerlisteFragment();
                         break;
                     default:
-                        fragment = VertretungFragment.newInstance(VertretungFragment.Instance_Both);
+                        fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Both);
                         break;
                 }
                 break;
@@ -608,11 +608,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
 
             //Set Fab
-            if (fragment instanceof VertretungFragment) {
+            if (fragment instanceof SubstitutionFragment) {
                 FloatingActionButton fab = findViewById(R.id.main_fab);
                 fab.bringToFront();
                 fab.setVisibility(View.VISIBLE);
-                fab.setOnClickListener((VertretungFragment) fragment);
+                fab.setOnClickListener((SubstitutionFragment) fragment);
             } else {
                 FloatingActionButton fab = findViewById(R.id.main_fab);
                 fab.setVisibility(View.GONE);
@@ -683,7 +683,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             position++;
-            return VertretungFragment.newInstance(all ? position + 2 : position);
+            return SubstitutionFragment.newInstance(all ? position + 2 : position);
         }
 
         @Nullable
@@ -700,7 +700,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         @Override
         public int getItemPosition(Object object) {
-            ((VertretungFragment) object).update(all);
+            ((SubstitutionFragment) object).update(all);
 
             //don'AndroidManifest.xml return POSITION_NONE, avoid fragment recreation.
             return super.getItemPosition(object);

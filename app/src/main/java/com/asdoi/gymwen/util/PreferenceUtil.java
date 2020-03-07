@@ -114,7 +114,7 @@ public class PreferenceUtil {
     }
 
 
-    //Vertretungsplan
+    //SubstitutionPlan
     public static String getUsername(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("username", "");

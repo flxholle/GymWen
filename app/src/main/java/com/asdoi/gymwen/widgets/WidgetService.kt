@@ -13,9 +13,9 @@ import androidx.core.content.ContextCompat
 import com.asdoi.gymwen.R
 import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
-import com.asdoi.gymwen.ui.fragments.VertretungFragment
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
+import com.asdoi.gymwen.ui.fragments.SubstitutionFragment
 import com.asdoi.gymwen.util.PreferenceUtil
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures
 
 private const val nothing = -1
 private const val day = -2
@@ -48,26 +48,26 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         var tomorrow = ""
 
         for (p in ProfileManagement.getProfileList()) {
-            val tempVertretungsplan = VertretungsPlanFeatures.createTempVertretungsplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
+            val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
 
             //Today
-            today = tempVertretungsplan.getTitleString(true)
-            val todayList = tempVertretungsplan.getDay(true)
+            today = tempSubstitutionplan.getTitleString(true)
+            val todayList = tempSubstitutionplan.getDay(true)
             if (todayList == null) {
                 noInternet = true
                 break
             }
-            todayEntryList.addAll(getEntryListForProfile(todayList, if (ProfileManagement.sizeProfiles() == 1) null else p.name, tempVertretungsplan.oberstufe))
+            todayEntryList.addAll(getEntryListForProfile(todayList, if (ProfileManagement.sizeProfiles() == 1) null else p.name, tempSubstitutionplan.oberstufe))
 
 
             //Tomorrow
-            tomorrow = tempVertretungsplan.getTitleString(false)
-            val tomorrowList = tempVertretungsplan.getDay(false)
+            tomorrow = tempSubstitutionplan.getTitleString(false)
+            val tomorrowList = tempSubstitutionplan.getDay(false)
             if (tomorrowList == null) {
                 noInternet = true
                 break
             }
-            tomorrowEntryList.addAll(getEntryListForProfile(tomorrowList, if (ProfileManagement.sizeProfiles() == 1) null else p.name, tempVertretungsplan.oberstufe))
+            tomorrowEntryList.addAll(getEntryListForProfile(tomorrowList, if (ProfileManagement.sizeProfiles() == 1) null else p.name, tempSubstitutionplan.oberstufe))
         }
 
         if (noInternet) {
@@ -94,7 +94,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         if (dayList.isEmpty())
             entryList.add(EntryHelper(arrayOf(), nothing))
         else {
-            sonstiges = VertretungFragment.isSonstiges(dayList)
+            sonstiges = SubstitutionFragment.isSonstiges(dayList)
             entryList.add(EntryHelper(generateHeadline(context, true, oberstufe), headline, sonstiges, oberstufe))
             for (string in dayList) {
                 entryList.add(EntryHelper(string, content, sonstiges))
@@ -148,18 +148,18 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
 
     //View creators
 
-    //From VertretungFragment (from Java imported)
+    //From SubstitutionFragment (from Java imported)
     private fun getTitleText(context: Context, text: String): RemoteViews {
         val view = getRemoteViews(context)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewHour, View.GONE)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.GONE)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, text)
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 25f)
-        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, VertretungWidgetProvider.textColorPrimary)
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, SubstitutionWidgetProvider.textColorPrimary)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.GONE)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.GONE)
-        //        view.setOnClickPendingIntent(R.id.widget_entry_linear, VertretungWidgetProvider.getPendingSelfIntent(context, VertretungWidgetProvider.WIDGET_ON_CLICK));
+        //        view.setOnClickPendingIntent(R.id.widget_entry_linear, SubstitutionWidgetProvider.getPendingSelfIntent(context, SubstitutionWidgetProvider.WIDGET_ON_CLICK));
         return view
     }
 
@@ -173,14 +173,14 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, textSize.toFloat())
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, headline[2])
         view.setTextViewText(R.id.vertretung_specific_entry_textViewRoom, headline[3])
-        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, VertretungWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.vertretung_specific_entry_textViewRoom, SubstitutionWidgetProvider.textColorSecondary)
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, textSize.toFloat())
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, if (sonstiges) View.VISIBLE else View.GONE)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, headline[4])
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, textSize.toFloat())
         view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, headline[5])
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 10f)
-        //        view.setOnClickPendingIntent(R.id.widget_entry_linear, VertretungWidgetProvider.getPendingSelfIntent(context, VertretungWidgetProvider.WIDGET_ON_CLICK));
+        //        view.setOnClickPendingIntent(R.id.widget_entry_linear, SubstitutionWidgetProvider.getPendingSelfIntent(context, SubstitutionWidgetProvider.WIDGET_ON_CLICK));
         return view
     }
 
@@ -188,7 +188,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         val view = getRemoteViews(context)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewHour, entry[1])
         view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, if (oberstufe) entry[0] else entry[2])
-        if (!VertretungsPlanFeatures.isNothing(entry[3])) {
+        if (!SubstitutionPlanFeatures.isNothing(entry[3])) {
             view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, entry[3])
             view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.VISIBLE)
             val content = SpannableString(entry[4])
@@ -205,7 +205,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, if (sonstiges) View.VISIBLE else View.GONE)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, entry[5])
         view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, if (oberstufe) entry[2] else entry[0])
-        //        view.setOnClickPendingIntent(R.id.widget_entry_linear, VertretungWidgetProvider.getPendingSelfIntent(context, VertretungWidgetProvider.WIDGET_ON_CLICK));
+        //        view.setOnClickPendingIntent(R.id.widget_entry_linear, SubstitutionWidgetProvider.getPendingSelfIntent(context, SubstitutionWidgetProvider.WIDGET_ON_CLICK));
         return view
     }
 
@@ -221,11 +221,11 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.GONE)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, text)
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 21f)
-        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, VertretungWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, SubstitutionWidgetProvider.textColorSecondary)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.GONE)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.GONE)
-        //        view.setOnClickPendingIntent(R.id.widget_entry_linear, VertretungWidgetProvider.getPendingSelfIntent(context, VertretungWidgetProvider.WIDGET_ON_CLICK));
+        //        view.setOnClickPendingIntent(R.id.widget_entry_linear, SubstitutionWidgetProvider.getPendingSelfIntent(context, SubstitutionWidgetProvider.WIDGET_ON_CLICK));
         return view
     }
 
@@ -237,11 +237,11 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewSubject, View.VISIBLE)
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewSubject, TypedValue.COMPLEX_UNIT_SP, 18f)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewSubject, "")
-        view.setTextColor(R.id.vertretung_specific_entry_textViewSubject, VertretungWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.vertretung_specific_entry_textViewSubject, SubstitutionWidgetProvider.textColorSecondary)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewTeacher, View.VISIBLE)
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 17f)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewTeacher, "")
-        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, VertretungWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.vertretung_specific_entry_textViewTeacher, SubstitutionWidgetProvider.textColorSecondary)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.VISIBLE)
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, 24f)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewRoom, "")
@@ -249,11 +249,11 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewOther, View.VISIBLE)
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, 16f)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewOther, "")
-        view.setTextColor(R.id.vertretung_specific_entry_textViewOther, VertretungWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.vertretung_specific_entry_textViewOther, SubstitutionWidgetProvider.textColorSecondary)
         view.setViewVisibility(R.id.vertretung_specific_entry_textViewClass, View.VISIBLE)
         view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 12f)
         view.setTextViewText(R.id.vertretung_specific_entry_textViewClass, "")
-        view.setTextColor(R.id.vertretung_specific_entry_textViewClass, VertretungWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.vertretung_specific_entry_textViewClass, SubstitutionWidgetProvider.textColorSecondary)
     }
 
     private fun generateHeadline(context: Context, isShort: Boolean, oberstufe: Boolean): Array<String> {

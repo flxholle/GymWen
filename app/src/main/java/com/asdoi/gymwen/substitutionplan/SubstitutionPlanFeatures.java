@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.vertretungsplan;
+package com.asdoi.gymwen.substitutionplan;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * An abstract class which organizes the substitution plan object for easier access, not necessary
  */
-public abstract class VertretungsPlanFeatures {
+public abstract class SubstitutionPlanFeatures {
     public static String strUserId = "";
     public static String strPasword = "";
 
@@ -45,23 +45,23 @@ public abstract class VertretungsPlanFeatures {
             {ApplicationFeatures.getContext().getString(R.string.profile_subject), ApplicationFeatures.getContext().getString(R.string.profile_subjectShort)}
     };
 
-    private static Vertretungsplan vertretungsplan = new Vertretungsplan();
+    private static SubstitutionPlan substitutionPlan = new SubstitutionPlan();
 
     public static void setContext(Context context) {
-        vertretungsplan.setContext(context);
+        substitutionPlan.setContext(context);
     }
 
     public static void setup(boolean hours, String... courses) {
-        if (vertretungsplan == null) {
-            vertretungsplan = new Vertretungsplan(hours, courses);
+        if (substitutionPlan == null) {
+            substitutionPlan = new SubstitutionPlan(hours, courses);
         } else {
-            vertretungsplan.reCreate(hours, courses);
+            substitutionPlan.reCreate(hours, courses);
         }
     }
 
-    public static Vertretungsplan createTempVertretungsplan(boolean hours, String[] courses) {
-        Vertretungsplan temp = new Vertretungsplan(hours, courses);
-        temp.setDocs(vertretungsplan.getDoc(true), vertretungsplan.getDoc(false));
+    public static SubstitutionPlan createTempSubstitutionplan(boolean hours, String[] courses) {
+        SubstitutionPlan temp = new SubstitutionPlan(hours, courses);
+        temp.setDocs(substitutionPlan.getDoc(true), substitutionPlan.getDoc(false));
         return temp;
     }
 
@@ -71,59 +71,59 @@ public abstract class VertretungsPlanFeatures {
     }
 
     public static boolean isUninit() {
-        return vertretungsplan == null;
+        return substitutionPlan == null;
     }
 
     public static String[][] getTomorrowArray() {
-        return vertretungsplan.getDay(false);
+        return substitutionPlan.getDay(false);
     }
 
     public static String[][] getTodayArray() {
-        return vertretungsplan.getDay(true);
+        return substitutionPlan.getDay(true);
     }
 
     public static String[][] getTodayArrayAll() {
-        return vertretungsplan.getAll(true);
+        return substitutionPlan.getAll(true);
     }
 
     public static String[][] getTomorrowArrayAll() {
-        return vertretungsplan.getAll(false);
+        return substitutionPlan.getAll(false);
     }
 
     public static String getTodayTitle() {
-        return vertretungsplan.getTitleString(true);
+        return substitutionPlan.getTitleString(true);
     }
 
     public static String getTomorrowTitle() {
-        return vertretungsplan.getTitleString(false);
+        return substitutionPlan.getTitleString(false);
     }
 
     public static String[] getTodayTitleArray() {
-        return vertretungsplan.getTitleArray(true);
+        return substitutionPlan.getTitleArray(true);
     }
 
     public static String[] getTomorrowTitleArray() {
-        return vertretungsplan.getTitleArray(false);
+        return substitutionPlan.getTitleArray(false);
     }
 
     public static boolean getOberstufe() {
-        return vertretungsplan.getOberstufe();
+        return substitutionPlan.getOberstufe();
     }
 
     public static void setTodayDoc(Document value) {
-        vertretungsplan.setTodayDoc(value);
+        substitutionPlan.setTodayDoc(value);
     }
 
     public static void setTomorrowDoc(Document value) {
-        vertretungsplan.setTomorrowDoc(value);
+        substitutionPlan.setTomorrowDoc(value);
     }
 
     public static void setDocs(Document today, Document tomorrow) {
-        vertretungsplan.setDocs(today, tomorrow);
+        substitutionPlan.setDocs(today, tomorrow);
     }
 
     public static boolean areDocsDownloaded() {
-        return vertretungsplan.areDocsDownloaded();
+        return substitutionPlan.areDocsDownloaded();
     }
 
     /**
@@ -134,10 +134,10 @@ public abstract class VertretungsPlanFeatures {
             return;
 
         SharedPreferences.Editor prefsEditor = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit();
-        String doc = vertretungsplan.getDoc(true).toString();
+        String doc = substitutionPlan.getDoc(true).toString();
         prefsEditor.putString("doc1", doc);
 
-        String doc2 = vertretungsplan.getDoc(false).toString();
+        String doc2 = substitutionPlan.getDoc(false).toString();
         prefsEditor.putString("doc2", doc2);
 
         prefsEditor.commit();
@@ -168,7 +168,7 @@ public abstract class VertretungsPlanFeatures {
     }
 
     public static ArrayList<String> getNames() {
-        return vertretungsplan.getCourses();
+        return substitutionPlan.getCourses();
     }
 
     /**

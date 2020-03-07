@@ -29,7 +29,7 @@
             android:summary="@string/set_desc_menu_items_fragment" />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="Vertretungsplan"
+        android:title="@string/set_substitution_category"
         app:iconSpaceReserved="false">
 
         <CheckBoxPreference
