@@ -124,7 +124,7 @@
 
     <!-- Choice -->
     <string name="title_activity_choice">Kurs-/Klassenwahl</string>
-    <string name="choice_oberstufe">Oberstufe (Q11/Q12)</string>
+    <string name="choice_senior">Oberstufe (Q11/Q12)</string>
     <string name="choice_5">5. Klasse</string>
     <string name="choice_6">6. Klasse</string>
     <string name="choice_7">7. Klasse</string>
@@ -134,14 +134,14 @@
     <string name="choice_parents">Elternteil</string>
     <string name="choice_more_classes">Andere Klasse</string>
     <string name="choice_more_letters">Anderer Buchstabe</string>
-    <string name="choice_oberstufe_one">Jahrgang 1 (11. Klasse, bei 1d4 die 1)</string>
-    <string name="choice_oberstufe_two">Jahrgang 2 (12. Klasse, bei 2d4 die 2)</string>
+    <string name="choice_senior_one">Jahrgang 1 (11. Klasse, bei 1d4 die 1)</string>
+    <string name="choice_senior_two">Jahrgang 2 (12. Klasse, bei 2d4 die 2)</string>
     <string name="choice_more_cours_digits">Anderer Jahrgang</string>
     <string name="choice_title_4">Kurs der Pflichtfächer (Deutsch, Mathe, Geschichte, Sozialkunde)\n(z.B. bei 1d4, die 4)</string>
     <string name="choice_main_courses">Kurs der Pflichtfächer</string>
     <string name="choice_complete">Bitte vervollständige deine Kurswahl:</string>
     <string name="choice_add_course">Weiteren Kurs hinzufügen.</string>
-    <string name="oberstufe_empty">Bitte Kurse einfügen.</string>
+    <string name="senior_empty">Bitte Kurse einfügen.</string>
     <string name="additional_course">Zusätzlicher Kurs</string>
     <string name="please_insert_digit">Bitte eine Zahl eingeben.</string>
     <string name="please_insert_letter">Bitte einen Buchstaben eingeben.</string>
@@ -367,8 +367,8 @@
     <!-- Share Message -->
     <string name="share_msg_nothing_at">Keine Vertretung am</string>
     <string name="share_msg_substitution_at">Vertretung am</string>
-    <string name="share_msg_nothing_hour_oberstufe">Stunde entfällt für Kurs</string>
-    <string name="share_msg_hour_oberstufe">Stunde für Kurs</string>
+    <string name="share_msg_nothing_hour_senior">Stunde entfällt für Kurs</string>
+    <string name="share_msg_hour_senior">Stunde für Kurs</string>
     <string name="share_msg_in_room">in Raum</string>
     <string name="share_msg_nothing_hour">Stunde entfällt</string>
     <string name="share_msg_hour">Stunde</string>

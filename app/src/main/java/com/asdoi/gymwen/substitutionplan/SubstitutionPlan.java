@@ -18,7 +18,7 @@ import java.util.Arrays;
  */
 public class SubstitutionPlan {
 
-    boolean oberstufe;
+    boolean senior;
     ArrayList<String> courses;
     boolean hours;
     Document todayDoc;
@@ -43,7 +43,7 @@ public class SubstitutionPlan {
      * @see #getMatchingTime
      */
     public void reCreate(boolean hours, String... courses) {
-        this.oberstufe = courses.length > 1;
+        this.senior = courses.length > 1;
         this.courses = generateCourseList(courses);
         this.hours = hours;
     }
@@ -125,9 +125,9 @@ public class SubstitutionPlan {
             String[][] inhalt = null;
 
             if (today) {
-                inhalt = Parse.getSubstitutionList(todayDoc, oberstufe, courses);
+                inhalt = Parse.getSubstitutionList(todayDoc, senior, courses);
             } else {
-                inhalt = Parse.getSubstitutionList(tomorrowDoc, oberstufe, courses);
+                inhalt = Parse.getSubstitutionList(tomorrowDoc, senior, courses);
             }
 
             if (inhalt != null) {
@@ -315,8 +315,8 @@ public class SubstitutionPlan {
     }
 
 
-    public boolean getOberstufe() {
-        return oberstufe;
+    public boolean getSenior() {
+        return senior;
     }
 
 
@@ -362,10 +362,10 @@ public class SubstitutionPlan {
         if (courses.length == 1) {
             return generateClassCodes(courses[0]);
         }
-        return generateOberstufeCodes(courses);
+        return generateSeniorCodes(courses);
     }
 
-    private static ArrayList<String> generateOberstufeCodes(String[] courseNames) {
+    private static ArrayList<String> generateSeniorCodes(String[] courseNames) {
         ArrayList<String> returnValue = new ArrayList<>();
         for (String s : courseNames) {
             returnValue.add(s);

@@ -106,8 +106,8 @@ public abstract class SubstitutionPlanFeatures {
         return substitutionPlan.getTitleArray(false);
     }
 
-    public static boolean getOberstufe() {
-        return substitutionPlan.getOberstufe();
+    public static boolean getSenior() {
+        return substitutionPlan.getSenior();
     }
 
     public static void setTodayDoc(Document value) {

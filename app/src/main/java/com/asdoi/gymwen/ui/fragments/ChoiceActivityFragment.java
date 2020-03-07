@@ -97,7 +97,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     private void initControls() {
         switch (step) {
             case 1:
-                root.findViewById(R.id.choice_button_oberstufe).setOnClickListener(this);
+                root.findViewById(R.id.choice_button_senior).setOnClickListener(this);
                 root.findViewById(R.id.choice_button_5).setOnClickListener(this);
                 root.findViewById(R.id.choice_button_6).setOnClickListener(this);
                 root.findViewById(R.id.choice_button_7).setOnClickListener(this);
@@ -208,21 +208,21 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
 
-    private void finishOberstufe() {
+    private void finishSenior() {
         if (checkIfEmpty()) {
-            ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.oberstufe_empty)).setDuration(ChocoBar.LENGTH_LONG).build().show();
+            ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.senior_empty)).setDuration(ChocoBar.LENGTH_LONG).build().show();
         } else {
-            String oberstufe = "";
+            String senior = "";
             for (int i = 0; i < quantitiyCourses; i++) {
                 String course = ((EditText) root.findViewById(i + 1300)).getText().toString();
                 if (!course.replaceAll(" ", "").isEmpty()) {
-                    if (!oberstufe.contains(course)) {
-                        oberstufe += course + "#";
+                    if (!senior.contains(course)) {
+                        senior += course + "#";
                     }
                 }
             }
-            oberstufe = oberstufe.substring(0, oberstufe.length() - 1);
-            mainActivity.setCourses(oberstufe);
+            senior = senior.substring(0, senior.length() - 1);
+            mainActivity.setCourses(senior);
             mainActivity.setFragment(10);
         }
     }
@@ -234,7 +234,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
             fabClicked();
         } else if (step == 1) {
             switch (id) {
-                case R.id.choice_button_oberstufe:
+                case R.id.choice_button_senior:
                     nextStep = 3;
                     break;
                 case R.id.choice_button_5:
@@ -549,7 +549,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 }
             }
         } else if (step == 5) {
-            finishOberstufe();
+            finishSenior();
         }
 
         if (nextStep > step) {

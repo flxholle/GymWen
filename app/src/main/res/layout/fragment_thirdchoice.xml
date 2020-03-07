@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
             android:background="?android:attr/windowBackground"
-            android:text="@string/choice_oberstufe_one" />
+            android:text="@string/choice_senior_one" />
 
         <Button
             android:id="@+id/choice_button_2"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
             android:background="?android:attr/windowBackground"
-            android:text="@string/choice_oberstufe_two" />
+            android:text="@string/choice_senior_two" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

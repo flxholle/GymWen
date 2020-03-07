@@ -216,7 +216,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
 
 
-        if (SubstitutionPlanFeatures.getOberstufe()) {
+        if (SubstitutionPlanFeatures.getSenior()) {
             ArrayList<String> courses = SubstitutionPlanFeatures.getNames();
             for (int i = 0; i < courses.size() - 1; i++) {
                 classes += courses.get(i) + ", ";
@@ -240,12 +240,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
 
         String freespace = "    ";
-        if (SubstitutionPlanFeatures.getOberstufe()) {
+        if (SubstitutionPlanFeatures.getSenior()) {
             for (String[] line : inhalt) {
                 if (SubstitutionPlanFeatures.isNothing(line[3])) {
-                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_nothing_hour_oberstufe) + " " + line[0] + "\n";
+                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_nothing_hour_senior) + " " + line[0] + "\n";
                 } else {
-                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_hour_oberstufe) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
+                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_hour_senior) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
                 }
             }
         } else {
@@ -398,54 +398,54 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
 
     //Generating Table
-    boolean oberstufe;
-    String[][] inhalt;
+    boolean senior;
+    String[][] content;
     String title;
     boolean sonstiges;
 
     void generateTable() {
         clear();
 
-        oberstufe = SubstitutionPlanFeatures.getOberstufe();
+        senior = SubstitutionPlanFeatures.getSenior();
 
         if (both) {
-            inhalt = SubstitutionPlanFeatures.getTodayArray();
+            content = SubstitutionPlanFeatures.getTodayArray();
             title = SubstitutionPlanFeatures.getTodayTitle();
-            sonstiges = isSonstiges(inhalt);
+            sonstiges = isSonstiges(content);
             generateTop();
             generateTableSpecific();
 
-            if (inhalt != null) {
-                inhalt = SubstitutionPlanFeatures.getTomorrowArray();
+            if (content != null) {
+                content = SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
-                sonstiges = isSonstiges(inhalt);
+                sonstiges = isSonstiges(content);
                 generateTop();
                 generateTableSpecific();
             }
         } else if (all) {
             if (today) {
-                inhalt = SubstitutionPlanFeatures.getTodayArrayAll();
+                content = SubstitutionPlanFeatures.getTodayArrayAll();
                 title = SubstitutionPlanFeatures.getTodayTitle();
             } else {
-                inhalt = SubstitutionPlanFeatures.getTomorrowArrayAll();
+                content = SubstitutionPlanFeatures.getTomorrowArrayAll();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
             }
             String missing_short = getString(R.string.missing_short);
             for (String s : SubstitutionPlanFeatures.getNothing()) {
-                inhalt = replaceAll(inhalt, s, missing_short);
+                content = replaceAll(content, s, missing_short);
             }
-            sonstiges = isSonstiges(inhalt);
+            sonstiges = isSonstiges(content);
             generateTop();
             generateTableAll();
         } else {
             if (today) {
-                inhalt = SubstitutionPlanFeatures.getTodayArray();
+                content = SubstitutionPlanFeatures.getTodayArray();
                 title = SubstitutionPlanFeatures.getTodayTitle();
             } else {
-                inhalt = SubstitutionPlanFeatures.getTomorrowArray();
+                content = SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
             }
-            sonstiges = isSonstiges(inhalt);
+            sonstiges = isSonstiges(content);
             generateTop();
             generateTableSpecific();
         }
@@ -476,14 +476,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         ViewGroup base = root.findViewById(R.id.substitution_linear_layout_layer1);
         base.addView(titleView);
 
-        if (inhalt == null) {
+        if (content == null) {
             titleView.setText(context.getString(R.string.noInternetConnection));
             return;
         } else {
             titleView.setText(title);
         }
 
-        if (inhalt.length == 0) {
+        if (content.length == 0) {
             TextView tv = new TextView(context);
             tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
             tv.setText(context.getString(R.string.nothing));
@@ -516,12 +516,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return false;
     }
 
-    public static String[] generateHeadline(Context context, boolean sonstiges, boolean oberstufe, boolean all) {
+    public static String[] generateHeadline(Context context, boolean sonstiges, boolean senior, boolean all) {
         String[] headline;
 
         if (all) {
             headline = new String[]{context.getString(R.string.classes), sonstiges ? context.getString(R.string.hours_short) : context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher_short), sonstiges ? context.getString(R.string.room_short) : context.getString(R.string.room), context.getString(R.string.other)};
-        } else if (oberstufe) {
+        } else if (senior) {
             headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.subject)};
         } else {
             headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.subject), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.classes)};
@@ -535,20 +535,20 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     void generateTableAll() {
         ViewGroup base = root.findViewById(R.id.substitution_linear_layout_layer1);
 
-        if (inhalt != null && inhalt.length > 0) {
+        if (content != null && content.length > 0) {
             //Overview
             base.addView(generateOverviewAll());
 
             //Content
             substitutionListView = new ListView(context);
-            substitutionListView.setAdapter(new SubstitutionListAdapterAll(context, 0, inhalt, sonstiges));
+            substitutionListView.setAdapter(new SubstitutionListAdapterAll(context, 0, content, sonstiges));
             substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             base.addView(substitutionListView);
         }
     }
 
     View generateOverviewAll() {
-        String[] headline = generateHeadline(context, sonstiges, oberstufe, true);
+        String[] headline = generateHeadline(context, sonstiges, senior, true);
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.HORIZONTAL);
         base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -597,10 +597,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     void generateTableSpecific() {
         ViewGroup base = root.findViewById(R.id.substitution_linear_layout_layer1);
 
-        if (inhalt != null && inhalt.length > 0) {
+        if (content != null && content.length > 0) {
             //Content
             substitutionListView = new ListView(context);
-            substitutionListView.setAdapter(new SubstitutionListAdapterSpecific(context, 0, inhalt, sonstiges));
+            substitutionListView.setAdapter(new SubstitutionListAdapterSpecific(context, 0, content, sonstiges));
             substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
             if (!PreferenceUtil.isOldDesign()) {
@@ -614,7 +614,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     View generateOverviewSpecific() {
-        String[] headline = generateHeadline(context, sonstiges, oberstufe, false);
+        String[] headline = generateHeadline(context, sonstiges, senior, false);
 
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.HORIZONTAL);
@@ -769,7 +769,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_substitution_specific_entry, null);
                 }
-                return getEntrySpecific(convertView, content[position], oberstufe, sons);
+                return getEntrySpecific(convertView, content[position], senior, sons);
             } else {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_substitution_specific_card, null);
@@ -785,13 +785,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     }
 
-    public View getEntrySpecific(View view, String[] entry, boolean oberstufe, boolean sonstiges) {
+    public View getEntrySpecific(View view, String[] entry, boolean senior, boolean sonstiges) {
         TextView hour = view.findViewById(R.id.substitution_specific_entry_textViewHour);
         hour.setText(entry[1]);
         hour.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
 
         TextView subject = view.findViewById(R.id.substitution_specific_entry_textViewSubject);
-        subject.setText(oberstufe ? entry[0] : entry[2]);
+        subject.setText(senior ? entry[0] : entry[2]);
 
         if (PreferenceUtil.isHour()) {
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_hour_long)));
@@ -840,7 +840,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         other.setText(entry[5]);
 
         TextView course = view.findViewById(R.id.substitution_specific_entry_textViewClass);
-        course.setText(oberstufe ? entry[2] : entry[0]);
+        course.setText(senior ? entry[2] : entry[0]);
 
         return view;
     }

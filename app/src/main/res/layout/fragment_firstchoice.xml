@@ -11,12 +11,12 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/choice_button_oberstufe"
+            android:id="@+id/choice_button_senior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_first_difference"
             android:background="?android:attr/windowBackground"
-            android:text="@string/choice_oberstufe" />
+            android:text="@string/choice_senior" />
 
         <Button
             android:id="@+id/choice_button_5"
