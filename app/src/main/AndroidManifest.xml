@@ -88,14 +88,14 @@
                     </intent-filter>
                 </activity>-->
 
-        <receiver android:name=".widgets.VertretungWidgetProvider">
+        <receiver android:name=".widgets.SubstitutionWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/vertretungsplan_widget_info" />
+                android:resource="@xml/substitutionplan_widget_info" />
         </receiver>
         <receiver
             android:name=".receivers.BootReceiver"

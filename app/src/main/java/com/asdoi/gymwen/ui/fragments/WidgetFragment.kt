@@ -23,7 +23,7 @@ class WidgetFragment : Fragment() {
 
     fun createWidgetView(): View {
 
-//        remoteViews.setInt(R.id.widget2_frame, "setBackgroundColor", VertretungWidgetProvider.backgroundColor)
+//        remoteViews.setInt(R.id.widget2_frame, "setBackgroundColor", SubstitutionWidgetProvider.backgroundColor)
         val parent = FrameLayout(context!!)
 
         val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_main)

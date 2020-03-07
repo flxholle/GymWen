@@ -42,14 +42,14 @@ import com.asdoi.gymwen.lehrerliste.Lehrerliste;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.activities.SignInActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
-import com.asdoi.gymwen.vertretungsplan.Vertretungsplan;
-import com.asdoi.gymwen.widgets.VertretungWidgetProvider;
+import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider;
 import com.kabouzeid.appthemehelper.ThemeStore;
 
 import org.acra.ACRA;
@@ -158,10 +158,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
-    public static void downloadVertretungsplanDocs(boolean isWidget, boolean signIn) {
+    public static void downloadSubstitutionplanDocs(boolean isWidget, boolean signIn) {
 
         //DownloadDocs
-        if (!VertretungsPlanFeatures.areDocsDownloaded()) {
+        if (!SubstitutionPlanFeatures.areDocsDownloaded()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 if (!ApplicationFeatures.initSettings(true, signIn)) {
                     return;
@@ -170,7 +170,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 Document[] doc = new Document[strURL.length];
                 for (int i = 0; i < 2; i++) {
 
-                    String authString = VertretungsPlanFeatures.strUserId + ":" + VertretungsPlanFeatures.strPasword;
+                    String authString = SubstitutionPlanFeatures.strUserId + ":" + SubstitutionPlanFeatures.strPasword;
 
                     String encodedString =
                             new String(Base64.encodeBase64(authString.getBytes()));
@@ -185,27 +185,27 @@ public class ApplicationFeatures extends MultiDexApplication {
                         return;
                     }
                 }
-                VertretungsPlanFeatures.setDocs(doc[0], doc[1]);
+                SubstitutionPlanFeatures.setDocs(doc[0], doc[1]);
 
                 if (!isWidget) {
                     refreshWidgets();
                 }
             } else if (PreferenceUtil.isOfflineMode()) {
-                VertretungsPlanFeatures.reloadDocs();
+                SubstitutionPlanFeatures.reloadDocs();
             }
             sendNotification();
         }
     }
 
 
-    public static class downloadVertretungsplanDocsTask extends AsyncTask<Boolean, Void, Void> {
+    public static class downloadSubstitutionplanDocsTask extends AsyncTask<Boolean, Void, Void> {
         @Override
         protected Void doInBackground(Boolean... params) {
             if (params == null || params.length < 2) {
                 if (params.length == 1)
                     params = new Boolean[]{params[0], true};
             }
-            downloadVertretungsplanDocs(params[0], params[1]);
+            downloadSubstitutionplanDocs(params[0], params[1]);
             return null;
         }
     }
@@ -270,12 +270,12 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             boolean hours = PreferenceUtil.isHour();
 
-            VertretungsPlanFeatures.setup(hours, courses.split(Profile.coursesSeparator));
+            SubstitutionPlanFeatures.setup(hours, courses.split(Profile.coursesSeparator));
 
             String username = PreferenceUtil.getUsername(context);
             String password = PreferenceUtil.getPassword(context);
 
-            VertretungsPlanFeatures.signin(username, password);
+            SubstitutionPlanFeatures.signin(username, password);
 
 
             if (!isWidget) {
@@ -337,10 +337,10 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static void refreshWidgets() {
         Context context = getContext();
         AppWidgetManager man = AppWidgetManager.getInstance(context);
-        int[] ids = man.getAppWidgetIds(new ComponentName(context, VertretungWidgetProvider.class));
+        int[] ids = man.getAppWidgetIds(new ComponentName(context, SubstitutionWidgetProvider.class));
         Intent updateIntent = new Intent();
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        updateIntent.putExtra(VertretungWidgetProvider.WIDGET_ID_KEY, ids);
+        updateIntent.putExtra(SubstitutionWidgetProvider.WIDGET_ID_KEY, ids);
         context.sendBroadcast(updateIntent);
     }
 
@@ -396,7 +396,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     //Notification
     final public static int NOTIFICATION_ID = 1;
     final public static int NOTIFICATION_ID_2 = 2;
-    final private static String NOTIFICATION_CHANNEL_ID = "vertretungsplan_01";
+    final private static String NOTIFICATION_CHANNEL_ID = "Substitutionplan_01";
 
     public static void sendNotification() {
         if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
@@ -404,17 +404,17 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
-    public static class createInfoNotification extends downloadVertretungsplanDocsTask {
+    public static class createInfoNotification extends downloadSubstitutionplanDocsTask {
 
         @Override
         protected void onPostExecute(Void v) {
             try {
-                downloadVertretungsplanDocs(false, false);
+                downloadSubstitutionplanDocs(false, false);
                 if (!ProfileManagement.isLoaded())
                     ProfileManagement.reload();
                 if (!coursesCheck(false))
                     return;
-                if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+                if (SubstitutionPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
                     return;
                 }
                 sendNotification();
@@ -433,8 +433,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         private void notificationMessageOneNotif() {
             StringBuilder messageToday = new StringBuilder();
             StringBuilder messageTomorrow = new StringBuilder();
-            String[] titleTodayArray = VertretungsPlanFeatures.getTodayTitleArray();
-            String[] titleTomorrowArray = VertretungsPlanFeatures.getTomorrowTitleArray();
+            String[] titleTodayArray = SubstitutionPlanFeatures.getTodayTitleArray();
+            String[] titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
             String titleToday = titleTodayArray[0] + ", " + titleTodayArray[1] + ":";
             String titleTomorrow = titleTomorrowArray[0] + ", " + titleTomorrowArray[1] + ":";
             boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
@@ -445,7 +445,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
+                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
                 String[][] inhalt = temp.getDay(true);
                 try {
                     count.append(inhalt.length);
@@ -493,8 +493,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         private void notificationMessageTwoNotifs() {
             StringBuilder messageToday = new StringBuilder();
             StringBuilder messageTomorrow = new StringBuilder();
-            String[] titleTodayArray = VertretungsPlanFeatures.getTodayTitleArray();
-            String[] titleTomorrowArray = VertretungsPlanFeatures.getTomorrowTitleArray();
+            String[] titleTodayArray = SubstitutionPlanFeatures.getTodayTitleArray();
+            String[] titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
             String titleToday = titleTodayArray[0] + ", " + titleTodayArray[1] + ":";
             String titleTomorrow = titleTomorrowArray[0] + ", " + titleTomorrowArray[1] + ":";
 
@@ -506,7 +506,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
+                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
                 String[][] inhalt = temp.getDay(true);
                 try {
                     count1.append(inhalt.length);
@@ -552,7 +552,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_ID);
         }
 
-        public String notifMessageContent(String[][] inhalt, Vertretungsplan vp) {
+        public String notifMessageContent(String[][] inhalt, SubstitutionPlan vp) {
             String message = "";
             if (inhalt == null) {
                 return "";
@@ -562,7 +562,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             } else {
                 if (vp.getOberstufe()) {
                     for (String[] line : inhalt) {
-                        if (VertretungsPlanFeatures.isNothing(line[3])) {
+                        if (SubstitutionPlanFeatures.isNothing(line[3])) {
                             message += line[1] + ". Stunde entfällt\n";
                         } else {
                             message += line[1] + ". Stunde, " + line[0] + ", " + line[4] + ", " + line[3] + " " + line[5] + "\n";
@@ -570,7 +570,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                     }
                 } else {
                     for (String[] line : inhalt) {
-                        if (VertretungsPlanFeatures.isNothing(line[3])) {
+                        if (SubstitutionPlanFeatures.isNothing(line[3])) {
                             message += line[1] + ". Stunde entfällt\n";
                         } else {
                             message += line[1] + ". Stunde " + line[2] + " bei " + line[3] + ", " + line[4] + " " + line[5] + "\n";
@@ -656,7 +656,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                     ProfileManagement.reload();
                 if (!coursesCheck(false))
                     return;
-                if (VertretungsPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+                if (SubstitutionPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
                     return;
                 }
                 sendNotification();
@@ -672,8 +672,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         private void notificationMessage() {
             StringBuilder messageToday = new StringBuilder();
 
-            String[] titleTodayArray = VertretungsPlanFeatures.getTodayTitleArray();
-            String[] titleTomorrowArray = VertretungsPlanFeatures.getTomorrowTitleArray();
+            String[] titleTodayArray = SubstitutionPlanFeatures.getTodayTitleArray();
+            String[] titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
 
             String title = "Vertretung Heute:";
 
@@ -695,7 +695,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                Vertretungsplan temp = VertretungsPlanFeatures.createTempVertretungsplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
+                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
                 String[][] inhalt = temp.getDay(today);
                 try {
                     count1.append(inhalt.length);
@@ -955,7 +955,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     public static void initProfile(int position, boolean global) {
         String courses = ProfileManagement.getProfile(position).getCourses();
-        VertretungsPlanFeatures.setup(PreferenceUtil.isHour(), courses.split(Profile.coursesSeparator));
+        SubstitutionPlanFeatures.setup(PreferenceUtil.isHour(), courses.split(Profile.coursesSeparator));
         if (global)
             initProfileGlobal(position, courses);
     }

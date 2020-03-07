@@ -79,9 +79,10 @@
     <string name="set_tomorrow_url">URL für den zweiten Tag</string>
     <string name="set_offline_mode">Offlinemodus</string>
     <string name="set_teacherlist_url">URL für die Lehrerliste</string>
+    <string name="set_substitution_category">Vertretungsplan</string>
 
 
-    <!-- Vertretungsplan -->
+    <!-- SubstitutionPlan -->
     <string name="nothing">Es entfällt nichts für dich.</string>
     <string name="nothing_all">Es entfällt nichts für den gesamten Tag.</string>
     <string name="back_button">Erneut drücken zum Beenden.</string>
@@ -433,5 +434,6 @@
     <string name="set_desc_parents">Bestimmte Funktionen aktivieren, die v.a. für Eltern nützlich sind, z.B. ClaXss</string>
     <string name="set_desc_updates">Auf Aktualisierungen überprüfen</string>
     <string name="set_desc_offline_mode">Bestimmte Dinge lokal speichern, damit die App ohne Internet funktioniert</string>
+
 
 </resources>

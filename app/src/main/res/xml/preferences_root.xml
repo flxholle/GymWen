@@ -18,7 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
         android:title="@string/set_vertretung_title"
-        app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentVertretungsplan"
+        app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSubstitution"
         app:iconSpaceReserved="false" />
     <Preference
         android:title="@string/set_design_title"

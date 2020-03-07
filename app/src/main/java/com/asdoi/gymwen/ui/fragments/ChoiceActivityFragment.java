@@ -25,8 +25,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
-import com.asdoi.gymwen.vertretungsplan.VertretungsPlanFeatures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pd.chocobar.ChocoBar;
 
@@ -142,11 +142,11 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     int quantitiyCourses = 0;
 
     private void generateStep5() {
-        for (int i = 0; i < VertretungsPlanFeatures.choiceCourseNames.length; i++) {
-            if (VertretungsPlanFeatures.choiceCourseNames[i].length < 2 || VertretungsPlanFeatures.choiceCourseNames[i][1] == null || VertretungsPlanFeatures.choiceCourseNames[i][1].trim().isEmpty()) {
-                createColumnStep5(VertretungsPlanFeatures.choiceCourseNames[i][0], getString(R.string.anyShort));
+        for (int i = 0; i < SubstitutionPlanFeatures.choiceCourseNames.length; i++) {
+            if (SubstitutionPlanFeatures.choiceCourseNames[i].length < 2 || SubstitutionPlanFeatures.choiceCourseNames[i][1] == null || SubstitutionPlanFeatures.choiceCourseNames[i][1].trim().isEmpty()) {
+                createColumnStep5(SubstitutionPlanFeatures.choiceCourseNames[i][0], getString(R.string.anyShort));
             } else {
-                createColumnStep5(VertretungsPlanFeatures.choiceCourseNames[i][0], VertretungsPlanFeatures.choiceCourseNames[i][1]);
+                createColumnStep5(SubstitutionPlanFeatures.choiceCourseNames[i][0], SubstitutionPlanFeatures.choiceCourseNames[i][1]);
             }
         }
     }

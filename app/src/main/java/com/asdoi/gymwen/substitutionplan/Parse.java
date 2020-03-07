@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.vertretungsplan;
+package com.asdoi.gymwen.substitutionplan;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,7 +22,7 @@ abstract class Parse {
     /**
      * @param doc raw HTML-Document (Jsoup), which will be analyzed
      * @return an array with all information of the title of the substitution plan, with the length 3!
-     * @see Vertretungsplan where it will be sorted in method getTitleArray()
+     * @see SubstitutionPlan where it will be sorted in method getTitleArray()
      */
     protected static String[] getTitleArrayUnsorted(Document doc) {
 
@@ -48,7 +48,7 @@ abstract class Parse {
             }
 
             //Analyze String
-            title = title.replaceAll("Vertretungsplan für ", "");
+            title = title.replaceAll("Substitutionplan für ", "");
 
             return title.split(",");
         } catch (Exception e) {

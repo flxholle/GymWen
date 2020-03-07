@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.vertretungsplan;
+package com.asdoi.gymwen.substitutionplan;
 
 import android.content.Context;
 
@@ -16,7 +16,7 @@ import java.util.Arrays;
  *
  * @see Parse
  */
-public class Vertretungsplan {
+public class SubstitutionPlan {
 
     boolean oberstufe;
     ArrayList<String> courses;
@@ -24,7 +24,7 @@ public class Vertretungsplan {
     Document todayDoc;
     Document tomorrowDoc;
 
-    public Vertretungsplan() {
+    public SubstitutionPlan() {
     }
 
     /**
@@ -33,7 +33,7 @@ public class Vertretungsplan {
      * @see #getMatchingTime
      * @see #reCreate
      */
-    public Vertretungsplan(boolean hours, String... courses) {
+    public SubstitutionPlan(boolean hours, String... courses) {
         reCreate(hours, courses);
     }
 

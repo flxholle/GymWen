@@ -9,10 +9,10 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 
-public class SettingsFragmentVertretungsplan extends PreferenceFragmentCompat {
+public class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.preferences_vertretungsplan, rootKey);
+        setPreferencesFromResource(R.xml.preferences_substitutionplan, rootKey);
 
         setFullNames();
         Preference myPref = findPreference("show_full_names");
