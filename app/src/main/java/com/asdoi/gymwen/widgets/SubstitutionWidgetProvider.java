@@ -18,7 +18,6 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 
 public class SubstitutionWidgetProvider extends AppWidgetProvider {
@@ -47,8 +46,8 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         setColors(getThemeInt(context), context);
         new Thread(() -> {
-            SubstitutionPlanFeatures.setDocs(null, null);
-            ApplicationFeatures.downloadSubstitutionplanDocs(true, true);
+//            ApplicationFeatures.deleteOfflineSubstitutionDocs();
+            ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true);
             for (int i = 0; i < appWidgetIds.length; i++) {
                 RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
                 updateWidget(context, appWidgetManager, appWidgetIds[i], remoteViews);

@@ -36,7 +36,6 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
-import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.ui.fragments.TeacherListFragment;
@@ -491,19 +490,19 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_refresh:
                 switch (lastLoaded) {
                     case lastLoadedSubstitution:
-                        SubstitutionPlanFeatures.setDocs(null, null);
+                        ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         fragment = SubstitutionFragment.newInstance(substitutionFragmentState);
                         break;
                     case lastLoadedTabs:
-                        SubstitutionPlanFeatures.setDocs(null, null);
+                        ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         sectionsPagerAdapter.notifyDataSetChanged();
                         break;
                     case lastLoadedTeacherlist:
-                        Teacherlist.setDoc(null);
+                        ApplicationFeatures.deleteOfflineTeacherlistDoc();
                         fragment = new TeacherListFragment();
                         break;
                     default:
-                        SubstitutionPlanFeatures.setDocs(null, null);
+                        ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Both);
                         break;
                 }

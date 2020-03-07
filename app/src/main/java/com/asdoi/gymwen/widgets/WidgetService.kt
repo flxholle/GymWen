@@ -36,7 +36,8 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
     private var contentList: MutableList<EntryHelper> = mutableListOf()
 
     override fun onCreate() {
-        reset()
+        contentList = mutableListOf()
+
         if (!ProfileManagement.isLoaded())
             ProfileManagement.reload()
 
@@ -80,10 +81,6 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
         contentList.add(EntryHelper(arrayOf(tomorrow), day))
         contentList.addAll(tomorrowEntryList)
 
-    }
-
-    private fun reset() {
-        contentList = mutableListOf()
     }
 
     private fun getEntryListForProfile(dayList: Array<Array<String>>, name: String? = null, senior: Boolean): List<EntryHelper> {
