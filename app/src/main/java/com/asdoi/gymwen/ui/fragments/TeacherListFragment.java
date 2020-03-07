@@ -44,7 +44,7 @@ public class TeacherListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_lehrerliste, container, false);
+        View root = inflater.inflate(R.layout.fragment_teacherlist, container, false);
 
         base = root.findViewById(R.id.teacher_list_base);
         context = getContext();
@@ -57,7 +57,7 @@ public class TeacherListFragment extends Fragment {
         ((ActivityFeatures) getActivity()).createLoadingPanel(base);
 
         new Thread(() -> {
-            ApplicationFeatures.downloadLehrerDoc();
+            ApplicationFeatures.downloadTeacherlistDoc();
             teacherList = Teacherlist.liste();
             createLayout();
         }).start();
@@ -156,7 +156,7 @@ public class TeacherListFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.list_lehrerliste_entry, null);
+                convertView = getLayoutInflater().inflate(R.layout.list_teacherlist_entry, null);
             }
 
             return ((ActivityFeatures) getActivity()).getTeacherView(convertView, teacherList[position]);

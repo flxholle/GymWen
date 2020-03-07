@@ -286,7 +286,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         if (fullNames) {
             new Thread(() -> {
-                ApplicationFeatures.downloadLehrerDoc();
+                ApplicationFeatures.downloadTeacherlistDoc();
                 try {
                     getActivity().runOnUiThread(() -> {
                         String match = getMatchingTeacher(teacherQuery);
@@ -306,7 +306,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         view.setOnClickListener((View v) -> {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 new Thread(() -> {
-                    ApplicationFeatures.downloadLehrerDoc();
+                    ApplicationFeatures.downloadTeacherlistDoc();
                     try {
                         getActivity().runOnUiThread(() -> {
                             teacherSearch(teacherQuery);
@@ -331,7 +331,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     void teacherSearch(String query) {
         try {
-            ApplicationFeatures.downloadLehrerDoc();
+            ApplicationFeatures.downloadTeacherlistDoc();
             createTeacherView(Teacherlist.getTeacher(query));
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -369,7 +369,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         ViewGroup teacherEntry = new LinearLayout(context);
         ViewStub viewStub = new ViewStub(context);
-        viewStub.setLayoutResource(R.layout.list_lehrerliste_entry);
+        viewStub.setLayoutResource(R.layout.list_teacherlist_entry);
         teacherEntry.addView(viewStub);
         viewStub.inflate();
         teacherEntry = (ViewGroup) ((MainActivity) getActivity()).getTeacherView(teacherEntry, teacher);
@@ -387,7 +387,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     String getMatchingTeacher(String query) {
         String teacher = null;
         try {
-            ApplicationFeatures.downloadLehrerDoc();
+            ApplicationFeatures.downloadTeacherlistDoc();
             String[] response = Teacherlist.getTeacher(query);
             teacher = response[1];
         } catch (NullPointerException e) {
