@@ -148,6 +148,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
+    public static void deleteOfflineTeacherlistDoc() {
+        Teacherlist.setDoc(null);
+    }
+
     public static void downloadTeacherlistDoc() {
         if (!Teacherlist.isDownloaded()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
@@ -158,6 +162,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
+    public static void deleteOfflineSubstitutionDocs() {
+        SubstitutionPlanFeatures.setDocs(null, null);
+    }
+
     public static void downloadSubstitutionplanDocs(boolean isWidget, boolean signIn) {
 
         //DownloadDocs
@@ -166,26 +174,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 if (!ApplicationFeatures.initSettings(true, signIn)) {
                     return;
                 }
-                String[] strURL = new String[]{PreferenceUtil.getTodayURL(getContext()), PreferenceUtil.getTomorrowURL(getContext())};
-                Document[] doc = new Document[strURL.length];
-                for (int i = 0; i < 2; i++) {
-
-                    String authString = SubstitutionPlanFeatures.strUserId + ":" + SubstitutionPlanFeatures.strPasword;
-
-                    String encodedString =
-                            new String(Base64.encodeBase64(authString.getBytes()));
-
-                    try {
-                        doc[i] = Jsoup.connect(strURL[i])
-                                .header("Authorization", "Basic " + encodedString)
-                                .get();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return;
-                    }
-                }
-                SubstitutionPlanFeatures.setDocs(doc[0], doc[1]);
+                downloadSubstitutionDoc();
 
                 if (!isWidget) {
                     refreshWidgets();
@@ -193,8 +182,49 @@ public class ApplicationFeatures extends MultiDexApplication {
             } else if (PreferenceUtil.isOfflineMode()) {
                 SubstitutionPlanFeatures.reloadDocs();
             }
-            sendNotification();
+//            sendNotification();
         }
+    }
+
+    public static void downloadSubstitutionplanDocsAlways(boolean isWidget, boolean signIn) {
+        //DownloadDocs
+        if (ApplicationFeatures.isNetworkAvailable()) {
+            if (!ApplicationFeatures.initSettings(true, signIn)) {
+                return;
+            }
+
+            downloadSubstitutionDoc();
+
+            if (!isWidget) {
+                refreshWidgets();
+            }
+        } else if (PreferenceUtil.isOfflineMode()) {
+            SubstitutionPlanFeatures.reloadDocs();
+        }
+//            sendNotification();
+    }
+
+    private static void downloadSubstitutionDoc() {
+        String[] strURL = new String[]{PreferenceUtil.getTodayURL(getContext()), PreferenceUtil.getTomorrowURL(getContext())};
+        Document[] doc = new Document[strURL.length];
+        for (int i = 0; i < 2; i++) {
+
+            String authString = SubstitutionPlanFeatures.strUserId + ":" + SubstitutionPlanFeatures.strPasword;
+
+            String encodedString =
+                    new String(Base64.encodeBase64(authString.getBytes()));
+
+            try {
+                doc[i] = Jsoup.connect(strURL[i])
+                        .header("Authorization", "Basic " + encodedString)
+                        .get();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+        SubstitutionPlanFeatures.setDocs(doc[0], doc[1]);
     }
 
 

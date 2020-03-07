@@ -7,9 +7,26 @@
     android:orientation="vertical"
     android:padding="3dp">
 
+
     <ImageView
         android:id="@+id/widget_refresh_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="2"
         app:srcCompat="@drawable/ic_refresh_black_24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:lines="3"
+        android:text="@string/set_substitution_category"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorWidgetForeground"
+        android:textSize="10dp"
+        android:textStyle="bold" />
+
+
 </LinearLayout>
