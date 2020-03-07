@@ -589,7 +589,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 tabIntent(External_Const.news_Link);
                 return;
             case R.id.nav_navigation:
-                Uri gymwenOnMap = Uri.parse("geo:49.3462962,11.1558281?q=Gymnasium%20Wendelstein");
+                Uri gymwenOnMap = Uri.parse(External_Const.location);
                 showMap(gymwenOnMap);
                 return;
         }
