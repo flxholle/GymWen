@@ -89,7 +89,7 @@ public class SubstitutionPlan {
 
     /**
      * @param today: boolean if the title of today or tomorrow should be analyzed
-     * @return an sorted Array of all title information, with the length 3. Like this: new String[]{Date, DateName (Weekday), WeekNr}
+     * @return an sorted Array of all title information, with the length 3. Like this: new String[]{Date, DateName (Weekday), WeekNr}  |  If day is in the past it returns an array of length 2, like this new String[]{Date, DateName (Weekday)}
      * @see Parse#getTitleArraySorted
      */
     //DayArrays
