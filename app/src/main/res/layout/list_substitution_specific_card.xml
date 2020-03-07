@@ -38,7 +38,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/vertretung_card_entry_textViewClass"
+                android:id="@+id/substitution_card_entry_textViewClass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -51,7 +51,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/vertretung_card_entry_textViewHour"
+                android:id="@+id/substitution_card_entry_textViewHour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -68,7 +68,7 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:layout_toEndOf="@id/vertretung_card_entry_textViewHour"
+                android:layout_toEndOf="@id/substitution_card_entry_textViewHour"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -77,14 +77,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/vertretung_card_entry_textViewSubject"
+                        android:id="@+id/substitution_card_entry_textViewSubject"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="subject bei"
                         android:textColor="?android:attr/textColorSecondary" />
 
                     <TextView
-                        android:id="@+id/vertretung_card_entry_textViewTeacher"
+                        android:id="@+id/substitution_card_entry_textViewTeacher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="teacher"
@@ -97,7 +97,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/vertretung_card_entry_textViewRoom"
+                        android:id="@+id/substitution_card_entry_textViewRoom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="room"
@@ -108,7 +108,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/vertretung_card_entry_textViewOther"
+                    android:id="@+id/substitution_card_entry_textViewOther"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="other"

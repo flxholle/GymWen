@@ -23,19 +23,19 @@ import androidx.fragment.app.Fragment;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.lehrerliste.Lehrerliste;
+import com.asdoi.gymwen.teacherlist.Teacherlist;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LehrerlisteFragment extends Fragment {
+public class TeacherListFragment extends Fragment {
     private static String[][] teacherList;
     private ViewGroup base;
     private ListView teacherListView;
     private Context context;
 
 
-    public LehrerlisteFragment() {
+    public TeacherListFragment() {
         // Required empty public constructor
     }
 
@@ -58,7 +58,7 @@ public class LehrerlisteFragment extends Fragment {
 
         new Thread(() -> {
             ApplicationFeatures.downloadLehrerDoc();
-            teacherList = Lehrerliste.liste();
+            teacherList = Teacherlist.liste();
             createLayout();
         }).start();
     }
@@ -127,9 +127,9 @@ public class LehrerlisteFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!charSequence.toString().equals(before)) {
                     if (charSequence.length() > 0) {
-                        teacherList = Lehrerliste.getTeachers("" + charSequence);
+                        teacherList = Teacherlist.getTeachers("" + charSequence);
                     } else {
-                        teacherList = Lehrerliste.liste();
+                        teacherList = Teacherlist.liste();
                     }
                     before = charSequence.toString();
                     ((BaseAdapter) teacherListView.getAdapter()).notifyDataSetChanged();

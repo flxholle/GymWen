@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.lehrerliste;
+package com.asdoi.gymwen.teacherlist;
 
 import android.content.SharedPreferences;
 
@@ -17,7 +17,7 @@ import org.jsoup.nodes.Document;
  * Array with length for, with content of new String[]{Kürzel, Nachname, Vorname, Sprechstunde}
  */
 
-public abstract class Lehrerliste {
+public abstract class Teacherlist {
     private static Document list;
 
     /**

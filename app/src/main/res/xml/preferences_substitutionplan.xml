@@ -32,7 +32,7 @@
         android:title="@string/set_full_names_specific"
         app:iconSpaceReserved="true" />
     <Preference
-        android:title="@string/set_vertretung_signin"
+        android:title="@string/set_substitution_signin"
         app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSignIn"
         app:iconSpaceReserved="false"
         android:summary="@string/set_desc_credentials_fragment" />

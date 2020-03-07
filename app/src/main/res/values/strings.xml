@@ -16,7 +16,7 @@
     <string name="menu_category_other">Diverse Apps</string>
     <string name="menu_category_school">Gymnasium</string>
     <string name="menu_category_settings">Einstellungen</string>
-    <string name="menu_category_vertretung">Vertretungsplan</string>
+    <string name="menu_category_substitution">Vertretungsplan</string>
     <string name="menu_both">Auf einen Blick!</string>
     <string name="menu_impressum">Über</string>
     <string name="menu_update">Updates</string>
@@ -49,20 +49,20 @@
 
     <!-- Settings -->
     <string name="title_activity_settings">Einstellungen</string>
-    <string name="set_vertretung_title">Vertretungsplan</string>
+    <string name="set_substitution_title">Vertretungsplan</string>
     <string name="set_courses_title">Kurse/Klasse</string>
-    <string name="set_vertretung_signin">Anmeldedaten</string>
-    <string name="set_vertretung_username">Benutzername</string>
-    <string name="set_vertretung_password">Passwort</string>
+    <string name="set_substitution_signin">Anmeldedaten</string>
+    <string name="set_substitution_username">Benutzername</string>
+    <string name="set_substitution_password">Passwort</string>
     <string name="set_notification_title">Benachrichtigung</string>
-    <string name="set_notifiaction_isOn">Benachrichtigung anzeigen</string>
+    <string name="set_substitution_isOn">Benachrichtigung anzeigen</string>
     <string name="set_notification_showAlways">Dauerhaft anzeigen</string>
     <string name="set_hours">Uhrzeiten statt Stunden anzeigen</string>
     <string name="set_show_borders">Umranden der Lehrerkürzel</string>
     <string name="set_show_borders_specific">Nur beim gefilterten Plan</string>
     <string name="set_other_title">Sonstiges</string>
     <string name="set_beta_features">Beta-Features</string>
-    <string name="set_old_vertretung">Altes Design</string>
+    <string name="set_old_substitution">Altes Design</string>
     <string name="set_design_title">Design</string>
     <string name="set_design_show_sections">Gefiltert \u0026 Gesamt einzeln anzeigen</string>
     <string name="set_show_weekdates">Wochentage immer anzeigen</string>
@@ -90,7 +90,7 @@
     <string name="footprint">Mit der GymWen App erzeugt: https://asdoi.gitlab.io/</string>
     <string name="noInternet">Du bist nicht mit dem Internet verbunden!</string>
     <string name="noInternetConnection">Keine Internetverbindung!</string>
-    <string name="share_vertretung">Vertretung senden an\u2026</string>
+    <string name="share_substitution_plan">Vertretung senden an\u2026</string>
     <string name="day_past">(Vergangen)</string>
     <string name="with_teacher">bei</string>
     <string name="missing_short" translatable="false">entf</string>
@@ -248,7 +248,7 @@
     <string name="permission_ok_button">Gewähren\u2026</string>
     <string name="permission_cancel_button">Abbrechen</string>
 
-    <!-- Lehrerliste -->
+    <!-- Teacherlist -->
     <string name="no_email_app">Du hast keine E-Mail App installiert.</string>
     <string name="teacher_no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
     <string name="teacher_search_teacher_list">Durchsuchen\u2026</string>
@@ -366,7 +366,7 @@
 
     <!-- Share Message -->
     <string name="share_msg_nothing_at">Keine Vertretung am</string>
-    <string name="share_msg_vertretung_at">Vertretung am</string>
+    <string name="share_msg_substitution_at">Vertretung am</string>
     <string name="share_msg_nothing_hour_oberstufe">Stunde entfällt für Kurs</string>
     <string name="share_msg_hour_oberstufe">Stunde für Kurs</string>
     <string name="share_msg_in_room">in Raum</string>
@@ -422,13 +422,13 @@
     <string name="set_desc_primaryColor">Die Farbe der Titelleiste</string>
     <string name="set_desc_menu_items_fragment">Bestimmte Einträge der Navigationsleiste verbergen oder anzeigen</string>
     <string name="set_desc_show_borders">Alle Lehrerkürzel, die angeklickt werden können, umranden</string>
-    <string name="set_desc_old_vertretung">Altes Aussehen des Vertretungsplans (kann auch über die Farbpalette in der Titelleiste geändert werden)</string>
+    <string name="set_desc_old_substitution">Altes Aussehen des Vertretungsplans (kann auch über die Farbpalette in der Titelleiste geändert werden)</string>
 
     <string name="set_desc_alwaysNotification">Die Benachrichtigung kann nur noch manuell ausgeblendet werden</string>
     <string name="set_desc_two_notifs">Für jeden Tag eine eigene Benachrichtigung anzeigen</string>
     <string name="set_desc_alarm">Die Benachrichtigung zu einer bestimmten Uhrzeit anzeigen</string>
 
-    <string name="set_desc_vertretungsplan_fragment">Spezifische Einstellungen für den Vertretungsplan</string>
+    <string name="set_desc_substitution_fragment">Spezifische Einstellungen für den Vertretungsplan</string>
     <string name="set_desc_design_fragment">Einstellungen zur Veränderung der Darstellung</string>
     <string name="set_desc_notification_fragment">Einstellungen für die Benachrichtigung</string>
     <string name="set_desc_parents">Bestimmte Funktionen aktivieren, die v.a. für Eltern nützlich sind, z.B. ClaXss</string>

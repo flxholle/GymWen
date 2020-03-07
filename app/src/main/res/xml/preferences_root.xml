@@ -17,7 +17,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
-        android:title="@string/set_vertretung_title"
+        android:title="@string/set_substitution_title"
         app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSubstitution"
         app:iconSpaceReserved="false" />
     <Preference

@@ -62,11 +62,11 @@ public class SubstitutionPlan {
         return context.getString(R.string.day_past);
     }
 
-    private static String noVertretungAll() {
+    private static String noSubstitutionAll() {
         return context.getString(R.string.nothing_all);
     }
 
-    private static String noVertretung() {
+    private static String noSubstitution() {
         return context.getString(R.string.nothing);
     }
 
@@ -154,7 +154,7 @@ public class SubstitutionPlan {
             String[][] inhalt = getDay(today);
 
             if (inhalt == null) {
-                return noVertretung();
+                return noSubstitution();
             }
 
             String todayString = "";
@@ -212,7 +212,7 @@ public class SubstitutionPlan {
             String[][] inhalt = getAll(today);
 
             if (inhalt == null) {
-                return noVertretungAll();
+                return noSubstitutionAll();
             }
 
             String todayString = "";

@@ -1,4 +1,4 @@
-package com.asdoi.gymwen.lehrerliste;
+package com.asdoi.gymwen.teacherlist;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -13,7 +13,7 @@ abstract class Parse {
     /**
      * @param doc raw HTML-Document (Jsoup), which will be analyzed
      * @return an two-dimensal String-Array with all teachers in it, one teacher entry is like this: String[]{Kürzel, Nachname, Vorname, Sprechstunde}
-     * @see Lehrerliste
+     * @see Teacherlist
      */
     protected static String[][] getList(Document doc) {
         if (doc == null) {
@@ -96,7 +96,7 @@ abstract class Parse {
      * @param search     String that should be found in the listString (normally a part of the teacher-array, like the Kürzel)
      * @param listString The list in which it should search for the query (normally the teacherlist)
      * @return if no match is found: null  |  else: all matches in array
-     * @see Lehrerliste
+     * @see Teacherlist
      */
     protected static String[][] getTeachers(String search, String[][] listString) {
         ArrayList<String[]> list = new ArrayList<String[]>();

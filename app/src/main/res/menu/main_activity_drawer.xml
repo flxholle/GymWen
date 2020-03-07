@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="@string/menu_category_vertretung">
+    <item android:title="@string/menu_category_substitution">
         <menu>
             <group>
                 <item
