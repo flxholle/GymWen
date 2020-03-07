@@ -9,12 +9,16 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 
 public class SettingsFragmentNotification extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_notification, rootKey);
+
+        ((SettingsActivity) getActivity()).loadedFragments++;
+
         setNotif();
 
         Preference myPref = findPreference("showNotification");

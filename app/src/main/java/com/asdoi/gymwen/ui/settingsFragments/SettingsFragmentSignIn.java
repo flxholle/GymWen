@@ -6,12 +6,15 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.External_Const;
 
 public class SettingsFragmentSignIn extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_signin, rootKey);
+
+        ((SettingsActivity) getActivity()).loadedFragments++;
 
         Preference myPref = findPreference("today_url");
         myPref.setDefaultValue(External_Const.todayURL);

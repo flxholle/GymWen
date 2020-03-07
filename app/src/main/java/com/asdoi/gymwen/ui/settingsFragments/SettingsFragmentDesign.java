@@ -11,11 +11,14 @@ import androidx.preference.PreferenceManager;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.ui.activities.SettingsActivity;
 
 public class SettingsFragmentDesign extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_design, rootKey);
+
+        ((SettingsActivity) getActivity()).loadedFragments++;
 
         ListPreference mp = findPreference("theme");
         mp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {

@@ -21,7 +21,7 @@ import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.github.javiersantos.appupdater.enums.Display;
 
 public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
-    private boolean isFragment = false;
+    public int loadedFragments = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (!isFragment) {
+        if (loadedFragments == 1) {
             Profile p = ApplicationFeatures.getSelectedProfile();
             p.setCourses(PreferenceManager.getDefaultSharedPreferences(this).getString("courses", p.getCourses()));
             ProfileManagement.editProfile(ApplicationFeatures.getSelectedProfilePosition(), p);
@@ -55,7 +55,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
             startActivity(intent);
             finish();
         } else {
-            isFragment = false;
+            loadedFragments--;
             try {
                 getSupportActionBar().setTitle(R.string.title_activity_settings);
             } catch (Exception e) {
@@ -64,13 +64,8 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         }
     }
 
-    private PreferenceFragmentCompat cal;
-    private Preference pre;
-
     @Override
     public boolean onPreferenceStartFragment(PreferenceFragmentCompat caller, Preference pref) {
-        cal = caller;
-        pre = pref;
         // Instantiate the new Fragment
         final Bundle args = pref.getExtras();
         final Fragment fragment = getSupportFragmentManager().getFragmentFactory().instantiate(
@@ -90,31 +85,8 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
             e.printStackTrace();
         }
 
-        isFragment = true;
         return true;
     }
-
-    public static class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.preferences_root, rootKey);
-
-            Preference myPref = findPreference("language");
-            myPref.setOnPreferenceClickListener((Preference p) -> {
-                ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(getActivity());
-                return true;
-            });
-            myPref.setSummary(ApplicationFeatures.getLanguageSwitcher().getCurrentLocale().toString());
-
-            myPref = findPreference("updates");
-            myPref.setOnPreferenceClickListener((Preference p) -> {
-                ((ActivityFeatures) getActivity()).checkUpdates(Display.DIALOG, true);
-                return true;
-            });
-        }
-    }
-
-    private boolean startDesignOnRecreation;
 
     @Override
     public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
@@ -130,7 +102,6 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 break;
         }
         editor.apply();
-        startDesignOnRecreation = true;
         dialog.dismiss();
         recreate();
     }
@@ -138,5 +109,27 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     @Override
     public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
         dialog.dismiss();
+    }
+
+    public static class SettingsFragment extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.preferences_root, rootKey);
+
+            ((SettingsActivity) getActivity()).loadedFragments++;
+
+            Preference myPref = findPreference("language");
+            myPref.setOnPreferenceClickListener((Preference p) -> {
+                ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(getActivity());
+                return true;
+            });
+            myPref.setSummary(ApplicationFeatures.getLanguageSwitcher().getCurrentLocale().toString());
+
+            myPref = findPreference("updates");
+            myPref.setOnPreferenceClickListener((Preference p) -> {
+                ((ActivityFeatures) getActivity()).checkUpdates(Display.DIALOG, true);
+                return true;
+            });
+        }
     }
 }
