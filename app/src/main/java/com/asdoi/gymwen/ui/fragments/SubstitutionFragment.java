@@ -401,7 +401,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     boolean senior;
     String[][] content;
     String title;
-    boolean sonstiges;
+    boolean miscellaneous;
 
     void generateTable() {
         clear();
@@ -411,14 +411,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         if (both) {
             content = SubstitutionPlanFeatures.getTodayArray();
             title = SubstitutionPlanFeatures.getTodayTitle();
-            sonstiges = isSonstiges(content);
+            miscellaneous = isMiscellaneous(content);
             generateTop();
             generateTableSpecific();
 
             if (content != null) {
                 content = SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
-                sonstiges = isSonstiges(content);
+                miscellaneous = isMiscellaneous(content);
                 generateTop();
                 generateTableSpecific();
             }
@@ -434,7 +434,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             for (String s : SubstitutionPlanFeatures.getNothing()) {
                 content = replaceAll(content, s, missing_short);
             }
-            sonstiges = isSonstiges(content);
+            miscellaneous = isMiscellaneous(content);
             generateTop();
             generateTableAll();
         } else {
@@ -445,7 +445,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 content = SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
             }
-            sonstiges = isSonstiges(content);
+            miscellaneous = isMiscellaneous(content);
             generateTop();
             generateTableSpecific();
         }
@@ -505,7 +505,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return textView;
     }
 
-    public static boolean isSonstiges(String[][] inhalt) {
+    public static boolean isMiscellaneous(String[][] inhalt) {
         if (inhalt == null)
             return false;
         for (int i = 0; i < inhalt.length; i++) {
@@ -516,15 +516,15 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return false;
     }
 
-    public static String[] generateHeadline(Context context, boolean sonstiges, boolean senior, boolean all) {
+    public static String[] generateHeadline(Context context, boolean miscellaneous, boolean senior, boolean all) {
         String[] headline;
 
         if (all) {
-            headline = new String[]{context.getString(R.string.classes), sonstiges ? context.getString(R.string.hours_short) : context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher_short), sonstiges ? context.getString(R.string.room_short) : context.getString(R.string.room), context.getString(R.string.other)};
+            headline = new String[]{context.getString(R.string.classes), miscellaneous ? context.getString(R.string.hours_short) : context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher_short), miscellaneous ? context.getString(R.string.room_short) : context.getString(R.string.room), context.getString(R.string.miscellaneous)};
         } else if (senior) {
-            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.subject)};
+            headline = new String[]{miscellaneous ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : "", context.getString(R.string.subject)};
         } else {
-            headline = new String[]{sonstiges ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.subject), sonstiges ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), sonstiges ? context.getString(R.string.other_short) : "", context.getString(R.string.classes)};
+            headline = new String[]{miscellaneous ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.subject), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : "", context.getString(R.string.classes)};
         }
 
         return headline;
@@ -541,14 +541,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
             //Content
             substitutionListView = new ListView(context);
-            substitutionListView.setAdapter(new SubstitutionListAdapterAll(context, 0, content, sonstiges));
+            substitutionListView.setAdapter(new SubstitutionListAdapterAll(context, 0, content, miscellaneous));
             substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             base.addView(substitutionListView);
         }
     }
 
     View generateOverviewAll() {
-        String[] headline = generateHeadline(context, sonstiges, senior, true);
+        String[] headline = generateHeadline(context, miscellaneous, senior, true);
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.HORIZONTAL);
         base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -600,7 +600,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         if (content != null && content.length > 0) {
             //Content
             substitutionListView = new ListView(context);
-            substitutionListView.setAdapter(new SubstitutionListAdapterSpecific(context, 0, content, sonstiges));
+            substitutionListView.setAdapter(new SubstitutionListAdapterSpecific(context, 0, content, miscellaneous));
             substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
             if (!PreferenceUtil.isOldDesign()) {
@@ -614,7 +614,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     View generateOverviewSpecific() {
-        String[] headline = generateHeadline(context, sonstiges, senior, false);
+        String[] headline = generateHeadline(context, miscellaneous, senior, false);
 
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.HORIZONTAL);
@@ -655,7 +655,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         room.setText(headline[3]);
         base.addView(room);
 
-        if (sonstiges) {
+        if (miscellaneous) {
             params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_other));
             params.setMargins(3, 3, 3, 3);
             TextView other = createBlankTextView();
@@ -712,7 +712,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private View getEntryAll(View view, String[] entry, boolean sonstiges) {
+    private View getEntryAll(View view, String[] entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_all_entry_textViewCourse);
         course.setText(entry[0]);
 
@@ -742,7 +742,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         TextView other = view.findViewById(R.id.substitution_all_entry_textViewOther);
         other.setVisibility(View.VISIBLE);
-        if (sonstiges) {
+        if (miscellaneous) {
             other.setText(entry[5]);
         } else {
             other.setVisibility(View.GONE);
@@ -785,7 +785,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     }
 
-    public View getEntrySpecific(View view, String[] entry, boolean senior, boolean sonstiges) {
+    public View getEntrySpecific(View view, String[] entry, boolean senior, boolean miscellaneous) {
         TextView hour = view.findViewById(R.id.substitution_specific_entry_textViewHour);
         hour.setText(entry[1]);
         hour.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
@@ -836,7 +836,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
 
         TextView other = view.findViewById(R.id.substitution_specific_entry_textViewOther);
-        other.setVisibility(sonstiges ? View.VISIBLE : View.GONE);
+        other.setVisibility(miscellaneous ? View.VISIBLE : View.GONE);
         other.setText(entry[5]);
 
         TextView course = view.findViewById(R.id.substitution_specific_entry_textViewClass);
@@ -845,7 +845,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
-    private View getEntrySpecificNew(View view, String[] entry, boolean sonstiges) {
+    private View getEntrySpecificNew(View view, String[] entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_card_entry_textViewClass);
         course.setText(entry[0]);
 
@@ -899,7 +899,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         TextView other = view.findViewById(R.id.substitution_card_entry_textViewOther);
         other.setVisibility(View.VISIBLE);
-        if (sonstiges) {
+        if (miscellaneous) {
             other.setText(entry[5]);
         } else {
             other.setVisibility(View.GONE);

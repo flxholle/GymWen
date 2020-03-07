@@ -60,7 +60,7 @@
     <string name="set_hours">Uhrzeiten statt Stunden anzeigen</string>
     <string name="set_show_borders">Umranden der Lehrerkürzel</string>
     <string name="set_show_borders_specific">Nur beim gefilterten Plan</string>
-    <string name="set_other_title">Sonstiges</string>
+    <string name="set_miscellaneous_title">Sonstiges</string>
     <string name="set_beta_features">Beta-Features</string>
     <string name="set_old_substitution">Altes Design</string>
     <string name="set_design_title">Design</string>
@@ -108,8 +108,8 @@
     <string name="teacher_short">L</string>
     <string name="room">Raum</string>
     <string name="room_short">R</string>
-    <string name="other">Sonstiges</string>
-    <string name="other_short">Sons.</string>
+    <string name="miscellaneous">Sonstiges</string>
+    <string name="miscellaneous_short">Sons.</string>
 
     <!-- Sign In -->
     <string name="title_activity_sign_in">Anmeldung</string>
