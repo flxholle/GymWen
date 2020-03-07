@@ -18,6 +18,7 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 
 public class SubstitutionWidgetProvider extends AppWidgetProvider {
@@ -46,6 +47,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         setColors(getThemeInt(context), context);
         new Thread(() -> {
+            SubstitutionPlanFeatures.setDocs(null, null);
             ApplicationFeatures.downloadSubstitutionplanDocs(true, true);
             for (int i = 0; i < appWidgetIds.length; i++) {
                 RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
@@ -82,7 +84,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         remoteViews.setImageViewBitmap(R.id.widget2_open_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_open_in_browser_white_24dp));
     }
 
-    public void setColors(int mode, Context context) {
+    protected static void setColors(int mode, Context context) {
         switch (mode) {
             default:
             case light:
@@ -103,13 +105,13 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private int getThemeInt(Context context) {
+    protected static int getThemeInt(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         String theme = sharedPref.getString("theme", "switch");
         return getThemeResFromPrefValue(theme, context);
     }
 
-    private static int getThemeResFromPrefValue(String themePrefValue, Context context) {
+    protected static int getThemeResFromPrefValue(String themePrefValue, Context context) {
         switch (themePrefValue) {
             case "dark":
                 return dark;

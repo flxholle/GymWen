@@ -20,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".ui.activities.AppIntroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -75,7 +76,8 @@
             android:name=".ui.activities.SettingsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_settings" />
-        <!--        <activity
+        <!--
+        <activity
                     android:name=".ui.activities.ImportActivity">
                     <intent-filter>
                         <action android:name="android.intent.action.VIEW" />
@@ -86,8 +88,8 @@
                         <data android:mimeType="*/*" />
                         <data android:pathPattern=".*\\.gwbackup" />
                     </intent-filter>
-                </activity>-->
-
+                </activity>
+        -->
         <receiver android:name=".widgets.SubstitutionWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -96,6 +98,24 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/substitutionplan_widget_info" />
+        </receiver>
+        <receiver android:name=".widgets.SummaryWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/summary_widget_info" />
+        </receiver>
+        <receiver android:name=".widgets.RefreshWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/refresh_widget_info" />
         </receiver>
         <receiver
             android:name=".receivers.BootReceiver"

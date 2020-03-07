@@ -434,6 +434,8 @@
     <string name="set_desc_parents">Bestimmte Funktionen aktivieren, die v.a. für Eltern nützlich sind, z.B. ClaXss</string>
     <string name="set_desc_updates">Auf Aktualisierungen überprüfen</string>
     <string name="set_desc_offline_mode">Bestimmte Dinge lokal speichern, damit die App ohne Internet funktioniert</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 
 </resources>

@@ -23,4 +23,6 @@
     <color name="widget_white">#D9FFFFFF</color>
     <color name="widget_dark">#D9212121</color>
     <color name="widget_black">#D9000000</color>
+    <color name="colorWidgetForeground">#fff</color>
+    <color name="colorWidgetBackground">#7f000000</color>
 </resources>
