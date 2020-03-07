@@ -2,6 +2,7 @@ package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -401,53 +403,61 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     boolean senior;
     String[][] content;
     String title;
+    String[] titleArray;
     boolean miscellaneous;
 
     void generateTable() {
         clear();
 
         senior = SubstitutionPlanFeatures.getSenior();
+        ViewGroup base = root.findViewById(R.id.substitution_linear_layout_layer1);
 
         if (both) {
             content = SubstitutionPlanFeatures.getTodayArray();
             title = SubstitutionPlanFeatures.getTodayTitle();
+            titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
             miscellaneous = isMiscellaneous(content);
-            generateTop();
-            generateTableSpecific();
+            generateTop(base);
+            generateTableSpecific(base);
 
             if (content != null) {
                 content = SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
+                titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
                 miscellaneous = isMiscellaneous(content);
-                generateTop();
-                generateTableSpecific();
+                generateTop(base);
+                generateTableSpecific(base);
             }
         } else if (all) {
             if (today) {
                 content = SubstitutionPlanFeatures.getTodayArrayAll();
                 title = SubstitutionPlanFeatures.getTodayTitle();
+                titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
             } else {
                 content = SubstitutionPlanFeatures.getTomorrowArrayAll();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
+                titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
             }
             String missing_short = getString(R.string.missing_short);
             for (String s : SubstitutionPlanFeatures.getNothing()) {
                 content = replaceAll(content, s, missing_short);
             }
             miscellaneous = isMiscellaneous(content);
-            generateTop();
-            generateTableAll();
+            generateTop(base);
+            generateTableAll(base);
         } else {
             if (today) {
                 content = SubstitutionPlanFeatures.getTodayArray();
                 title = SubstitutionPlanFeatures.getTodayTitle();
+                titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
             } else {
                 content = SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
+                titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
             }
             miscellaneous = isMiscellaneous(content);
-            generateTop();
-            generateTableSpecific();
+            generateTop(base);
+            generateTableSpecific(base);
         }
     }
 
@@ -471,16 +481,34 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Top (Date or noInternet, etc.)
-    void generateTop() {
-        TextView titleView = createTitleLayout();
-        ViewGroup base = root.findViewById(R.id.substitution_linear_layout_layer1);
-        base.addView(titleView);
+    void generateTop(ViewGroup base) {
 
-        if (content == null) {
-            titleView.setText(context.getString(R.string.noInternetConnection));
-            return;
+        if (PreferenceUtil.isOldDesign()) {
+            TextView titleView = createTitleLayout();
+            base.addView(titleView);
+            if (content == null) {
+                titleView.setText(context.getString(R.string.noInternetConnection));
+                return;
+            } else
+                titleView.setText(title);
         } else {
-            titleView.setText(title);
+            if (content == null) {
+                ViewGroup titleView = createTitleLayoutNew(context.getString(R.string.noInternetConnection), "", Color.RED);
+                base.addView(titleView);
+                return;
+            } else {
+                int color;
+                String today = getContext().getString(R.string.today);
+                String tomorrow = getContext().getString(R.string.today);
+                if (titleArray[1].equalsIgnoreCase(today)) {
+                    color = Color.GREEN;
+                } else if (titleArray[1].equalsIgnoreCase(tomorrow))
+                    color = Color.YELLOW;
+                else
+                    color = Color.RED;
+                ViewGroup titleView = createTitleLayoutNew(titleArray[1], titleArray[0] + (titleArray.length > 2 ? ", " + titleArray[2] : ""), color);
+                base.addView(titleView);
+            }
         }
 
         if (content.length == 0) {
@@ -503,6 +531,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         textView.setGravity(Gravity.CENTER);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return textView;
+    }
+
+    ViewGroup createTitleLayoutNew(String day, String description, @ColorInt int backgroundColor) {
+        View v = getLayoutInflater().inflate(R.layout.substitution_title_new, null);
+        v.findViewById(R.id.substitution_new_background).setBackgroundColor(backgroundColor);
+        ((TextView) v.findViewById(R.id.substitution_new_title)).setText(day);
+        ((TextView) v.findViewById(R.id.substitution_new_title_desc)).setText(description);
+        return (ViewGroup) v;
     }
 
     public static boolean isMiscellaneous(String[][] content) {
@@ -532,8 +568,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
 
     //Body
-    void generateTableAll() {
-        ViewGroup base = root.findViewById(R.id.substitution_linear_layout_layer1);
+    void generateTableAll(ViewGroup base) {
 
         if (content != null && content.length > 0) {
             //Overview
@@ -594,8 +629,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return base;
     }
 
-    void generateTableSpecific() {
-        ViewGroup base = root.findViewById(R.id.substitution_linear_layout_layer1);
+    void generateTableSpecific(ViewGroup base) {
 
         if (content != null && content.length > 0) {
             //Content
