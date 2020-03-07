@@ -199,19 +199,19 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     private String shareMessage(boolean withCourses) {
         String message = "";
-        String[][] inhalt = null;
+        String[][] content = null;
         String title = "";
 
         if (today) {
-            inhalt = SubstitutionPlanFeatures.getTodayArray();
+            content = SubstitutionPlanFeatures.getTodayArray();
             title = SubstitutionPlanFeatures.getTodayTitle();
         } else {
-            inhalt = SubstitutionPlanFeatures.getTomorrowArray();
+            content = SubstitutionPlanFeatures.getTomorrowArray();
             title = SubstitutionPlanFeatures.getTomorrowTitle();
         }
         String classes = "";
 
-        if (inhalt == null) {
+        if (content == null) {
             return "";
         }
 
@@ -222,7 +222,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 classes += courses.get(i) + ", ";
             }
             classes += courses.get(courses.size() - 1);
-            if (inhalt.length == 0) {
+            if (content.length == 0) {
                 message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + context.getString(R.string.share_msg_for_courses) + " " + classes + ")\n" : "\n");
                 return message;
             } else
@@ -232,7 +232,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             for (int i = 0; i < names.size(); i++) {
                 classes += names.get(i) + "";
             }
-            if (inhalt.length == 0) {
+            if (content.length == 0) {
                 message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + classes + ")\n" : "\n");
                 return message;
             } else
@@ -241,7 +241,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         String freespace = "    ";
         if (SubstitutionPlanFeatures.getSenior()) {
-            for (String[] line : inhalt) {
+            for (String[] line : content) {
                 if (SubstitutionPlanFeatures.isNothing(line[3])) {
                     message += freespace + line[1] + ". " + context.getString(R.string.share_msg_nothing_hour_senior) + " " + line[0] + "\n";
                 } else {
@@ -249,7 +249,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 }
             }
         } else {
-            for (String[] line : inhalt) {
+            for (String[] line : content) {
                 if (SubstitutionPlanFeatures.isNothing(line[3])) {
                     message += freespace + line[1] + ". " + context.getString(R.string.share_msg_nothing_hour) + "\n";
                 } else {
@@ -505,11 +505,11 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return textView;
     }
 
-    public static boolean isMiscellaneous(String[][] inhalt) {
-        if (inhalt == null)
+    public static boolean isMiscellaneous(String[][] content) {
+        if (content == null)
             return false;
-        for (int i = 0; i < inhalt.length; i++) {
-            if (!inhalt[i][5].trim().isEmpty()) {
+        for (int i = 0; i < content.length; i++) {
+            if (!content[i][5].trim().isEmpty()) {
                 return true;
             }
         }

@@ -446,32 +446,32 @@ public class ApplicationFeatures extends MultiDexApplication {
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
-                String[][] inhalt = temp.getDay(true);
+                String[][] content = temp.getDay(true);
                 try {
-                    count.append(inhalt.length);
+                    count.append(content.length);
                     count.append("|");
-                    if (inhalt.length != 0) {
+                    if (content.length != 0) {
                         if (isMoreThanOneProfile) {
                             messageToday.append(ProfileManagement.getProfile(i).getName());
                             messageToday.append(":\n");
                         }
-                        messageToday.append(notifMessageContent(inhalt, temp));
+                        messageToday.append(notifMessageContent(content, temp));
                         isNo[0] = false;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                inhalt = temp.getDay(false);
+                content = temp.getDay(false);
                 try {
-                    count.append(inhalt.length);
+                    count.append(content.length);
                     count.append(", ");
-                    if (inhalt.length != 0) {
+                    if (content.length != 0) {
                         if (isMoreThanOneProfile) {
                             messageTomorrow.append(ProfileManagement.getProfile(i).getName());
                             messageTomorrow.append(":\n");
                         }
-                        messageTomorrow.append(notifMessageContent(inhalt, temp));
+                        messageTomorrow.append(notifMessageContent(content, temp));
                         isNo[1] = false;
                     }
                 } catch (Exception e) {
@@ -507,32 +507,32 @@ public class ApplicationFeatures extends MultiDexApplication {
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
-                String[][] inhalt = temp.getDay(true);
+                String[][] content = temp.getDay(true);
                 try {
-                    count1.append(inhalt.length);
+                    count1.append(content.length);
                     count1.append(", ");
-                    if (inhalt.length != 0) {
+                    if (content.length != 0) {
                         if (isMoreThanOneProfile) {
                             messageToday.append(ProfileManagement.getProfile(i).getName());
                             messageToday.append(":\n");
                         }
-                        messageToday.append(notifMessageContent(inhalt, temp));
+                        messageToday.append(notifMessageContent(content, temp));
                         isNo[0] = false;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                inhalt = temp.getDay(false);
+                content = temp.getDay(false);
                 try {
-                    count2.append(inhalt.length);
+                    count2.append(content.length);
                     count2.append(", ");
-                    if (inhalt.length != 0) {
+                    if (content.length != 0) {
                         if (isMoreThanOneProfile) {
                             messageTomorrow.append(ProfileManagement.getProfile(i).getName());
                             messageTomorrow.append(":\n");
                         }
-                        messageTomorrow.append(notifMessageContent(inhalt, temp));
+                        messageTomorrow.append(notifMessageContent(content, temp));
                         isNo[1] = false;
                     }
                 } catch (Exception e) {
@@ -552,16 +552,16 @@ public class ApplicationFeatures extends MultiDexApplication {
             createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_ID);
         }
 
-        public String notifMessageContent(String[][] inhalt, SubstitutionPlan vp) {
+        public String notifMessageContent(String[][] content, SubstitutionPlan vp) {
             String message = "";
-            if (inhalt == null) {
+            if (content == null) {
                 return "";
             }
-            if (inhalt.length == 0) {
+            if (content.length == 0) {
                 message += getContext().getString(R.string.notif_nothing) + "\n";
             } else {
                 if (vp.getSenior()) {
-                    for (String[] line : inhalt) {
+                    for (String[] line : content) {
                         if (SubstitutionPlanFeatures.isNothing(line[3])) {
                             message += line[1] + ". Stunde entfällt\n";
                         } else {
@@ -569,7 +569,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                         }
                     }
                 } else {
-                    for (String[] line : inhalt) {
+                    for (String[] line : content) {
                         if (SubstitutionPlanFeatures.isNothing(line[3])) {
                             message += line[1] + ". Stunde entfällt\n";
                         } else {
@@ -696,16 +696,16 @@ public class ApplicationFeatures extends MultiDexApplication {
             for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
-                String[][] inhalt = temp.getDay(today);
+                String[][] content = temp.getDay(today);
                 try {
-                    count1.append(inhalt.length);
+                    count1.append(content.length);
                     count1.append(", ");
-                    if (inhalt.length != 0) {
+                    if (content.length != 0) {
                         if (isMoreThanOneProfile) {
                             messageToday.append(ProfileManagement.getProfile(i).getName());
                             messageToday.append(":\n");
                         }
-                        messageToday.append(notifMessageContent(inhalt, temp));
+                        messageToday.append(notifMessageContent(content, temp));
                         nothing = false;
                     }
                 } catch (Exception e) {
