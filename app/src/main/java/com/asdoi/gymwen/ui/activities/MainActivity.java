@@ -64,7 +64,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static int lastLoaded; // 0 = Substitution, 1 = Tabs, 2 = Teacherlist
     public static final int lastLoadedSubstitution = 0;
     public static final int lastLoadedTabs = 1;
-    public static final int lastLoadedLehrerliste = 2;
+    public static final int lastLoadedTeacherlist = 2;
 
     public static int lastLoadedInTabs;
     public static final int lastLoadedTabsSpecific = 10;
@@ -498,7 +498,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         SubstitutionPlanFeatures.setDocs(null, null);
                         sectionsPagerAdapter.notifyDataSetChanged();
                         break;
-                    case lastLoadedLehrerliste:
+                    case lastLoadedTeacherlist:
                         Teacherlist.setDoc(null);
                         fragment = new TeacherListFragment();
                         break;
@@ -516,7 +516,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     case lastLoadedTabs:
                         sectionsPagerAdapter.notifyDataSetChanged();
                         break;
-                    case lastLoadedLehrerliste:
+                    case lastLoadedTeacherlist:
                         fragment = new TeacherListFragment();
                         break;
                     default:
@@ -597,7 +597,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         if (fragment != null) {
             if (fragment instanceof TeacherListFragment)
-                lastLoaded = lastLoadedLehrerliste;
+                lastLoaded = lastLoadedTeacherlist;
             else
                 lastLoaded = lastLoadedSubstitution;
 

@@ -148,7 +148,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
-    public static void downloadLehrerDoc() {
+    public static void downloadTeacherlistDoc() {
         if (!Teacherlist.isDownloaded()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 Teacherlist.setDoc(downloadDoc(PreferenceUtil.getTeacherlistURL(getContext())));
