@@ -60,7 +60,7 @@ abstract class Parse {
     /**
      * @param doc raw HTML-Document (Jsoup), which will be analyzed
      * @return an unsorted String with all the analyzed information separated by " "
-     * @see getTitleArrayUnsorted()
+     * @see #getTitleArrayUnsorted
      */
     protected static String getTitleAsStringUnsorted(Document doc) {
         try {
@@ -89,7 +89,7 @@ abstract class Parse {
      * @param tomorrow      The name of tomorrow in the specific language
      * @param laterDay      The name of "day is in the past" in the specific language
      * @return an sorted Array of all title information, with the length 3. Like this: new String[]{Date, DateName (Weekday), WeekNr}
-     * @see getTitleArrayUnsorted()
+     * @see #getTitleArrayUnsorted
      */
     //Date, DateName, WeekNr
     protected static String[] getTitleArraySorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
@@ -207,7 +207,7 @@ abstract class Parse {
      * @param tomorrow      The name of tomorrow in the specific language
      * @param laterDay      The name of "day is in the past" in the specific language
      * @return an sorted String with all the analyzed information separated by " "
-     * @see getTitleArraySorted()
+     * @see #getTitleArraySorted
      */
     protected static String getTitleStringSorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
@@ -315,7 +315,7 @@ abstract class Parse {
      * @param oberstufe  boolean: if active the returned List will sorted differently, like this new String[]{Hours, class, sit-in, room, information, subject}  |  else new String[]{hours, subject, sit-in, room, information, class}
      * @param classNames List: The class names, which the substiution plan should be searched for
      * @return a filtered List of the Subsitution, with only matching classes
-     * @see getSubstitutionList()
+     * @see #getSubstitutionList
      */
     //specific
     protected static String[][] getSubstitutionList(Document doc, boolean oberstufe, ArrayList<String> classNames) {

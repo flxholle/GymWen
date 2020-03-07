@@ -145,7 +145,7 @@ public abstract class VertretungsPlanFeatures {
 
     /**
      * @return a boolean if the reloading of the docs was successful, also reloads the docs from sharedPreferences
-     * @see saveDocs()
+     * @see #saveDocs
      */
     public static boolean reloadDocs() {
         try {
