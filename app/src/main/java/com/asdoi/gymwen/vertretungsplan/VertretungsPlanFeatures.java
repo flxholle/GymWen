@@ -14,6 +14,9 @@ import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
 
+/**
+ * An abstract class which organizes the substitution plan object for easier access, not necessary
+ */
 public abstract class VertretungsPlanFeatures {
     public static String strUserId = "";
     public static String strPasword = "";
@@ -123,6 +126,9 @@ public abstract class VertretungsPlanFeatures {
         return vertretungsplan.areDocsDownloaded();
     }
 
+    /**
+     * saves the docs to SharedPreferences for offline use
+     */
     public static void saveDocs() {
         if (!areDocsDownloaded())
             return;
@@ -137,6 +143,10 @@ public abstract class VertretungsPlanFeatures {
         prefsEditor.commit();
     }
 
+    /**
+     * @return a boolean if the reloading of the docs was successful, also reloads the docs from sharedPreferences
+     * @see saveDocs()
+     */
     public static boolean reloadDocs() {
         try {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
@@ -161,6 +171,10 @@ public abstract class VertretungsPlanFeatures {
         return vertretungsplan.getCourses();
     }
 
+    /**
+     * @param query The subject of the substitution plan
+     * @return boolean if the subject equals the specific value for the hour is omitted
+     */
     public static boolean isNothing(String query) {
         for (String s : External_Const.nothing) {
             if (s.equalsIgnoreCase(query))

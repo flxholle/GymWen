@@ -97,6 +97,16 @@ public class ApplicationFeatures extends MultiDexApplication {
         return time;
     }
 
+    public static Date removeTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -717,9 +727,9 @@ public class ApplicationFeatures extends MultiDexApplication {
             try {
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
-                Date startDate = Vertretungsplan.removeTime(df.parse(source));
+                Date startDate = removeTime(df.parse(source));
 
-                Date currentDate = Vertretungsplan.removeTime(new Date());
+                Date currentDate = removeTime(new Date());
 
                 if (currentDate.equals(startDate)) {
                     //If date is today
