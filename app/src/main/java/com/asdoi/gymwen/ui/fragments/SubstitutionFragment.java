@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
@@ -461,7 +462,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 content = replaceAll(content, s, missing_short);
             }
             miscellaneous = isMiscellaneous(content);
-            generateTop(base, old);
+            generateTop(base, true);
             generateTableAll(base);
         } else {
             if (today) {
@@ -933,7 +934,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         TextView room = view.findViewById(R.id.substitution_card_entry_textViewRoom);
         room.setVisibility(View.VISIBLE);
 
+        CardView card = view.findViewById(R.id.list_substituion_widget_card);
+
         if (!SubstitutionPlanFeatures.isNothing(entry[3])) {
+            card.setBackgroundColor(card.getCardBackgroundColor().getDefaultColor());
             if (!entry[2].trim().isEmpty()) {
                 teacher.setVisibility(View.VISIBLE);
                 teacher.setGravity(Gravity.CENTER);
@@ -954,6 +958,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 room.setVisibility(View.GONE);
             }
         } else {
+            card.setBackgroundColor(Color.RED);
             removeTeacherClick(view);
             teacher.setVisibility(View.GONE);
 
