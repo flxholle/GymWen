@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.activities.MainActivity;
@@ -412,33 +413,45 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         senior = SubstitutionPlanFeatures.getSenior();
         ViewGroup base = root.findViewById(R.id.substitution_linear_layout_layer1);
+        boolean old = PreferenceUtil.isOldDesign();
+        boolean summarize = PreferenceUtil.isSummarizeUp();
+        if (old)
+            summarize = PreferenceUtil.isSummarizeUp() && PreferenceUtil.isSummarizeOld();
 
         if (both) {
             content = SubstitutionPlanFeatures.getTodayArray();
+            if (summarize)
+                content = SubstitutionPlan.summarizeArray(content, 1, "-");
             title = SubstitutionPlanFeatures.getTodayTitle();
             titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
             titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             miscellaneous = isMiscellaneous(content);
-            generateTop(base);
-            generateTableSpecific(base);
+            generateTop(base, old);
+            generateTableSpecific(base, old);
 
             if (content != null) {
                 content = SubstitutionPlanFeatures.getTomorrowArray();
+                if (summarize)
+                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
                 miscellaneous = isMiscellaneous(content);
-                generateTop(base);
-                generateTableSpecific(base);
+                generateTop(base, old);
+                generateTableSpecific(base, old);
             }
         } else if (all) {
             if (today) {
                 content = SubstitutionPlanFeatures.getTodayArrayAll();
+                if (summarize)
+                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
                 title = SubstitutionPlanFeatures.getTodayTitle();
                 titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
                 content = SubstitutionPlanFeatures.getTomorrowArrayAll();
+                if (summarize)
+                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
@@ -448,23 +461,27 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 content = replaceAll(content, s, missing_short);
             }
             miscellaneous = isMiscellaneous(content);
-            generateTop(base);
+            generateTop(base, old);
             generateTableAll(base);
         } else {
             if (today) {
                 content = SubstitutionPlanFeatures.getTodayArray();
+                if (summarize)
+                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
                 title = SubstitutionPlanFeatures.getTodayTitle();
                 titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
                 content = SubstitutionPlanFeatures.getTomorrowArray();
+                if (summarize)
+                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
             }
             miscellaneous = isMiscellaneous(content);
-            generateTop(base);
-            generateTableSpecific(base);
+            generateTop(base, old);
+            generateTableSpecific(base, old);
         }
     }
 
@@ -488,9 +505,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Top (Date or noInternet, etc.)
-    void generateTop(ViewGroup base) {
+    void generateTop(ViewGroup base, boolean old) {
 
-        if (PreferenceUtil.isOldDesign()) {
+        if (old) {
             TextView titleView = createTitleLayout();
             base.addView(titleView);
             if (content == null) {
@@ -644,15 +661,15 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return base;
     }
 
-    void generateTableSpecific(ViewGroup base) {
+    void generateTableSpecific(ViewGroup base, boolean old) {
 
         if (content != null && content.length > 0) {
             //Content
             substitutionListView = new ListView(context);
-            substitutionListView.setAdapter(new SubstitutionListAdapterSpecific(context, 0, content, miscellaneous));
+            substitutionListView.setAdapter(new SubstitutionListAdapterSpecific(context, 0, content, miscellaneous, old));
             substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-            if (!PreferenceUtil.isOldDesign()) {
+            if (!old) {
                 substitutionListView.setDivider(null);
             } else {
                 //Overview
@@ -805,16 +822,18 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private class SubstitutionListAdapterSpecific extends ArrayAdapter<String[]> {
         String[][] content;
         boolean sons;
+        boolean old;
 
-        SubstitutionListAdapterSpecific(Context con, int resource, String[][] content, boolean sons) {
+        SubstitutionListAdapterSpecific(Context con, int resource, String[][] content, boolean sons, boolean old) {
             super(con, resource);
             this.content = content;
             this.sons = sons;
+            this.old = old;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            if (PreferenceUtil.isOldDesign()) {
+            if (old) {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_substitution_specific_entry, null);
                 }
