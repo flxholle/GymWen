@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -95,6 +96,8 @@ abstract class Parse {
     protected static String[] getTitleArraySorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
             String[] day = new String[3];
+            Arrays.fill(day, "");
+
             String dayString = getTitleAsStringUnsorted(doc);
             char[] dayArray = dayString.toCharArray();
 
@@ -132,7 +135,8 @@ abstract class Parse {
 
                 if (currentDate.after(startDate)) {
                     //If date is in past
-                    return new String[]{day[0], showWeekdates ? day[1] + " " + laterDay : laterDay};
+//                    return new String[]{day[0], showWeekdates ? day[1] + " " + laterDay : laterDay};
+                    day[1] = showWeekdates ? day[1] + " " + laterDay : laterDay;
                 } else if (currentDate.equals(startDate)) {
                     //If date is today
                     day[1] = today;
@@ -200,6 +204,53 @@ abstract class Parse {
         }
     }
 
+    protected static int getTitleDayCode(Document doc, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
+        try {
+            //Weekday
+            try {
+                DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+                SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
+
+                String[] day = getTitleArraySorted(doc, false, "", "", "");
+                Date startDate = removeTime(df.parse(day[0]));
+
+                day[1] = simpleDateformat.format(startDate);
+                Date currentDate = removeTime(new Date());
+
+                if (currentDate.after(startDate)) {
+                    //If date is in past
+//                    return new String[]{day[0], showWeekdates ? day[1] + " " + laterDay : laterDay};
+                    return pastCode;
+                } else if (currentDate.equals(startDate)) {
+                    //If date is today
+                    return todayCode;
+                } else {
+                    //If date is tomorrow
+                    //Set current date to one day in the future
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+
+                    //Check if currentdate equals date -> Tomorrow
+                    currentDate = cal.getTime();
+                    if (currentDate.equals(startDate)) {
+                        return tomorrowCode;
+                    }
+                }
+
+            } catch (ParseException e) {
+                return futureCode;
+            }
+            return futureCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return pastCode;
+        }
+    }
+
     /**
      * @param doc           raw HTML-Document (Jsoup), which will be analyzed
      * @param showWeekdates boolean: if the specific day should also be shown, if the date is in the past
@@ -207,7 +258,7 @@ abstract class Parse {
      * @param tomorrow      The name of tomorrow in the specific language
      * @param laterDay      The name of "day is in the past" in the specific language
      * @return an sorted String with all the analyzed information separated by " "
-     * @see #getTitleArraySorted
+     * @see #getTitleDayCode
      */
     protected static String getTitleStringSorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
@@ -312,7 +363,7 @@ abstract class Parse {
 
     /**
      * @param doc        raw HTML-Document (Jsoup), which will be analyzed
-     * @param senior  boolean: if active the returned List will sorted differently, like this new String[]{Hours, class, sit-in, room, information, subject}  |  else new String[]{hours, subject, sit-in, room, information, class}
+     * @param senior     boolean: if active the returned List will sorted differently, like this new String[]{Hours, class, sit-in, room, information, subject}  |  else new String[]{hours, subject, sit-in, room, information, class}
      * @param classNames List: The class names, which the substiution plan should be searched for
      * @return a filtered List of the Subsitution, with only matching classes
      * @see #getSubstitutionList

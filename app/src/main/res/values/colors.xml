@@ -25,4 +25,16 @@
     <color name="widget_black">#D9000000</color>
     <color name="colorWidgetForeground">#fff</color>
     <color name="colorWidgetBackground">#7f000000</color>
+
+
+    <!-- Substitution New Design -->
+    <color name="past">#3AC540</color>
+    <color name="today">#F44336</color>
+    <color name="tomorrow">#FFC107</color>
+    <color name="future">#3AC540</color>
+
+    <color name="past_text">@android:color/black</color>
+    <color name="today_text">@android:color/white</color>
+    <color name="tomorrow_text">@android:color/black</color>
+    <color name="future_text">@android:color/black</color>
 </resources>

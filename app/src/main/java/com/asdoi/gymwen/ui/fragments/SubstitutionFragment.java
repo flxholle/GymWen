@@ -404,6 +404,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     String[][] content;
     String title;
     String[] titleArray;
+    int titleCode;
     boolean miscellaneous;
 
     void generateTable() {
@@ -416,6 +417,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             content = SubstitutionPlanFeatures.getTodayArray();
             title = SubstitutionPlanFeatures.getTodayTitle();
             titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
+            titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             miscellaneous = isMiscellaneous(content);
             generateTop(base);
             generateTableSpecific(base);
@@ -424,6 +426,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 content = SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+                titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
                 miscellaneous = isMiscellaneous(content);
                 generateTop(base);
                 generateTableSpecific(base);
@@ -433,10 +436,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 content = SubstitutionPlanFeatures.getTodayArrayAll();
                 title = SubstitutionPlanFeatures.getTodayTitle();
                 titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
+                titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
                 content = SubstitutionPlanFeatures.getTomorrowArrayAll();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+                titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
             }
             String missing_short = getString(R.string.missing_short);
             for (String s : SubstitutionPlanFeatures.getNothing()) {
@@ -450,10 +455,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 content = SubstitutionPlanFeatures.getTodayArray();
                 title = SubstitutionPlanFeatures.getTodayTitle();
                 titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
+                titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
                 content = SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+                titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
             }
             miscellaneous = isMiscellaneous(content);
             generateTop(base);
@@ -493,20 +500,26 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 titleView.setText(title);
         } else {
             if (content == null) {
-                ViewGroup titleView = createTitleLayoutNew(context.getString(R.string.noInternetConnection), "", Color.RED);
+                ViewGroup titleView = createTitleLayoutNew(context.getString(R.string.noInternetConnection), "", Color.GRAY, Color.WHITE);
                 base.addView(titleView);
                 return;
             } else {
-                int color;
-                String today = getContext().getString(R.string.today);
-                String tomorrow = getContext().getString(R.string.today);
-                if (titleArray[1].equalsIgnoreCase(today)) {
-                    color = Color.GREEN;
-                } else if (titleArray[1].equalsIgnoreCase(tomorrow))
-                    color = Color.YELLOW;
-                else
-                    color = Color.RED;
-                ViewGroup titleView = createTitleLayoutNew(titleArray[1], titleArray[0] + (titleArray.length > 2 ? ", " + titleArray[2] : ""), color);
+                int bgColor;
+                int textColor;
+                if (titleCode == SubstitutionPlanFeatures.todayCode) {
+                    bgColor = ContextCompat.getColor(getContext(), R.color.today);
+                    textColor = ContextCompat.getColor(getContext(), R.color.today_text);
+                } else if (titleCode == SubstitutionPlanFeatures.tomorrowCode) {
+                    bgColor = ContextCompat.getColor(getContext(), R.color.tomorrow);
+                    textColor = ContextCompat.getColor(getContext(), R.color.tomorrow_text);
+                } else if (titleCode == SubstitutionPlanFeatures.futureCode) {
+                    bgColor = ContextCompat.getColor(getContext(), R.color.future);
+                    textColor = ContextCompat.getColor(getContext(), R.color.future_text);
+                } else {
+                    bgColor = ContextCompat.getColor(getContext(), R.color.past);
+                    textColor = ContextCompat.getColor(getContext(), R.color.past_text);
+                }
+                ViewGroup titleView = createTitleLayoutNew(titleArray[1], titleArray[0] + (titleArray.length > 2 ? ", " + titleArray[2] : ""), bgColor, textColor);
                 base.addView(titleView);
             }
         }
@@ -523,7 +536,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     }
 
-    TextView createTitleLayout() {
+    private TextView createTitleLayout() {
         TextView textView = new TextView(context);
         textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
@@ -533,11 +546,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return textView;
     }
 
-    ViewGroup createTitleLayoutNew(String day, String description, @ColorInt int backgroundColor) {
+    private ViewGroup createTitleLayoutNew(String day, String description, @ColorInt int backgroundColor, @ColorInt int textColor) {
         View v = getLayoutInflater().inflate(R.layout.substitution_title_new, null);
         v.findViewById(R.id.substitution_new_background).setBackgroundColor(backgroundColor);
         ((TextView) v.findViewById(R.id.substitution_new_title)).setText(day);
+        ((TextView) v.findViewById(R.id.substitution_new_title)).setTextColor(textColor);
         ((TextView) v.findViewById(R.id.substitution_new_title_desc)).setText(description);
+        ((TextView) v.findViewById(R.id.substitution_new_title_desc)).setTextColor(textColor);
         return (ViewGroup) v;
     }
 

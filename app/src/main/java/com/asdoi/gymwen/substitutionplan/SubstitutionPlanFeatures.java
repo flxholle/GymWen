@@ -45,6 +45,11 @@ public abstract class SubstitutionPlanFeatures {
             {ApplicationFeatures.getContext().getString(R.string.profile_subject), ApplicationFeatures.getContext().getString(R.string.profile_subjectShort)}
     };
 
+    public static final int pastCode = 0;
+    public static final int todayCode = 1;
+    public static final int tomorrowCode = 2;
+    public static final int futureCode = 3;
+
     private static SubstitutionPlan substitutionPlan = new SubstitutionPlan();
 
     public static void setContext(Context context) {
@@ -104,6 +109,14 @@ public abstract class SubstitutionPlanFeatures {
 
     public static String[] getTomorrowTitleArray() {
         return substitutionPlan.getTitleArray(false);
+    }
+
+    public static int getTodayTitleCode() {
+        return substitutionPlan.getTitleCodeValue(true, pastCode, todayCode, tomorrowCode, futureCode);
+    }
+
+    public static int getTomorrowTitleCode() {
+        return substitutionPlan.getTitleCodeValue(false, pastCode, todayCode, tomorrowCode, futureCode);
     }
 
     public static boolean getSenior() {
