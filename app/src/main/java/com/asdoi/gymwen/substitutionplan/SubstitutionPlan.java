@@ -322,6 +322,47 @@ public class SubstitutionPlan {
         return senior;
     }
 
+    public static String[][] summarizeArray(String[][] value, int index, String separator) {
+        if (value == null || value.length <= 0)
+            return value;
+
+        ArrayList<String[]> newValuesList = new ArrayList<String[]>();
+        for (int i = 0; i < value.length; i++) {
+            if (newValuesList.size() == 0) {
+                newValuesList.add(value[i]);
+                continue;
+            }
+
+            String[] before = newValuesList.get(newValuesList.size() - 1);
+            boolean check = checkArrays(before, value[i], index);
+
+
+            if (check) {
+                int valuesAddedToBefore = before[index].indexOf(separator);
+                before[index] = before[index].substring(0, valuesAddedToBefore > 0 ? valuesAddedToBefore : before[index].length()) + separator + value[i][index];
+                newValuesList.set(newValuesList.size() - 1, before);
+            } else {
+                newValuesList.add(value[i]);
+            }
+        }
+
+        String[][] returnValue = new String[newValuesList.size()][value[0].length];
+        for (int i = 0; i < returnValue.length; i++) {
+            returnValue[i] = newValuesList.get(i);
+        }
+        return returnValue;
+    }
+
+    private static boolean checkArrays(String[] value1, String[] value2, int index) {
+        boolean check = true;
+        for (int j = 0; j < value1.length; j++) {
+            if (j != index && !value1[j].equals(value2[j])) {
+                check = false;
+                break;
+            }
+        }
+        return check;
+    }
 
     //Documents
     public void setTodayDoc(Document value) {
