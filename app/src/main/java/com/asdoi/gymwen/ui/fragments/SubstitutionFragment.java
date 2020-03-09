@@ -788,6 +788,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         if (PreferenceUtil.isHour()) {
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_all_hour_long)));
+        } else if (PreferenceUtil.isSummarizeOld()) {
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_all_hour_summary)));
         } else {
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_all_hour)));
         }
