@@ -84,6 +84,7 @@
     <string name="set_summarize">Gleiche Stunden zusammenfassen</string>
     <string name="also_at_old_design">Auch beim alten Design</string>
     <string name="set_single_days">Einzelne Tage</string>
+    <string name="set_old_title">Alte Überschrift</string>
 
 
     <!-- SubstitutionPlan -->
@@ -428,6 +429,7 @@
     <string name="set_desc_menu_items_fragment">Bestimmte Einträge der Navigationsleiste verbergen oder anzeigen</string>
     <string name="set_desc_show_borders">Alle Lehrerkürzel, die angeklickt werden können, umranden</string>
     <string name="set_desc_old_substitution">Altes Aussehen des Vertretungsplans (kann auch über die Farbpalette in der Titelleiste geändert werden)</string>
+    <string name="set_desc_old_title">Die Überschrift im alten Design anzeigen.</string>
 
     <string name="set_desc_alwaysNotification">Die Benachrichtigung kann nur noch manuell ausgeblendet werden</string>
     <string name="set_desc_two_notifs">Für jeden Tag eine eigene Benachrichtigung anzeigen</string>
