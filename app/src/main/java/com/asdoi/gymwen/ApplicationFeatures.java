@@ -50,6 +50,7 @@ import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.activities.SignInActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider;
+import com.asdoi.gymwen.widgets.SummaryWidget;
 import com.kabouzeid.appthemehelper.ThemeStore;
 
 import org.acra.ACRA;
@@ -367,10 +368,19 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static void refreshWidgets() {
         Context context = getContext();
         AppWidgetManager man = AppWidgetManager.getInstance(context);
+
+        //SubstitutionWidget
         int[] ids = man.getAppWidgetIds(new ComponentName(context, SubstitutionWidgetProvider.class));
         Intent updateIntent = new Intent();
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(SubstitutionWidgetProvider.WIDGET_ID_KEY, ids);
+        context.sendBroadcast(updateIntent);
+
+        //SummaryWidget
+        ids = man.getAppWidgetIds(new ComponentName(context, SummaryWidget.class));
+        updateIntent = new Intent();
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(SummaryWidget.SUMMARY_WIDGET_ID_KEY, ids);
         context.sendBroadcast(updateIntent);
     }
 

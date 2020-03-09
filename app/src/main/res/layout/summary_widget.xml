@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/widget"
+    android:id="@+id/widget_summary_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_background"
@@ -8,17 +8,17 @@
     android:padding="3dp">
 
     <ImageView
-        android:id="@+id/ivMessage"
-        app:srcCompat="@drawable/ic_assignment_turned_in_white_24dp"
+        android:id="@+id/widget_summary_image"
         android:layout_width="24dp"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="2"
         android:contentDescription="mail"
-        android:tint="@color/colorWidgetForeground" />
+        android:tint="@color/colorWidgetForeground"
+        app:srcCompat="@drawable/ic_stat_assignment_late" />
 
     <TextView
-        android:id="@+id/tvCount"
+        android:id="@+id/widget_summary_count"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"

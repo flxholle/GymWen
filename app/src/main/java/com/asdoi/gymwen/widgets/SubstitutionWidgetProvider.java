@@ -46,7 +46,6 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         setColors(getThemeInt(context), context);
         new Thread(() -> {
-//            ApplicationFeatures.deleteOfflineSubstitutionDocs();
             ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true);
             for (int i = 0; i < appWidgetIds.length; i++) {
                 RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
