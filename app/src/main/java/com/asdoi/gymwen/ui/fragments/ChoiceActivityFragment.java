@@ -30,6 +30,8 @@ import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pd.chocobar.ChocoBar;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +56,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainActivity = ((ChoiceActivity) getActivity());
         context = getContext();
@@ -351,7 +353,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         builder.positiveText(context.getString(R.string.ok))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                    public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                         if (input.getText().toString().trim().isEmpty())
                             mainActivity.setName(context.getString(R.string.profile_empty_name));
                         else
@@ -363,7 +365,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         builder.negativeText(context.getString(R.string.cancel))
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                    public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                         mainActivity.setName(context.getString(R.string.profile_empty_name));
                         dialog.dismiss();
                         addSpinner();

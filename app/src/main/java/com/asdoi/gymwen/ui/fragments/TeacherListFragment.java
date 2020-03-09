@@ -25,6 +25,8 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.teacherlist.Teacherlist;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -153,8 +155,9 @@ public class TeacherListFragment extends Fragment {
             super(con, resource);
         }
 
+        @NotNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_teacherlist_entry, null);
             }

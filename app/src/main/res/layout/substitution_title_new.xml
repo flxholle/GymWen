@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Heute"
             android:textColor="#FFE0E0E0"
             android:textSize="36sp"
             android:textStyle="bold" />
@@ -31,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="03.03.2020, B"
             android:textColor="#FFE0E0E0"
             android:textSize="24sp" />
     </LinearLayout>

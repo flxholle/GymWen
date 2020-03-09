@@ -81,7 +81,7 @@
                     android:title="@string/menu_navigation" />
                 <item
                     android:icon="@drawable/ic_cloud_download_black_24dp"
-                    android:title="Backup"
+                    android:title="@string/menu_backup"
                     android:visible="false" />
             </group>
         </menu>

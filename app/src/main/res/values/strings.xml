@@ -39,6 +39,7 @@
     <string name="menu_from_this_developer">Auch von diesem Entwickler</string>
     <string name="menu_news">Schülerzeitung</string>
     <string name="menu_navigation">Navigation</string>
+    <string name="menu_backup">Backup</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>

@@ -64,6 +64,8 @@ import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.pd.chocobar.ChocoBar;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -474,7 +476,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
             // add the buttons
             builder.onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override
-                public void onClick(MaterialDialog dialog, DialogAction which) {
+                public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                     openAppPermissionSettings();
                     dialog.dismiss();
                 }
@@ -484,7 +486,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
             builder.negativeText(getContext().getString(R.string.permission_cancel_button));
             builder.onNegative(new MaterialDialog.SingleButtonCallback() {
                 @Override
-                public void onClick(MaterialDialog dialog, DialogAction which) {
+                public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                     dialog.dismiss();
                 }
             });

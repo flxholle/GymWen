@@ -752,6 +752,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             all = false;
         }
 
+        @NotNull
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
@@ -787,7 +788,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
 
         @Override
-        public int getItemPosition(Object object) {
+        public int getItemPosition(@NotNull Object object) {
             if (day)
                 ((SubstitutionFragment) object).updateDay(today);
             else

@@ -24,6 +24,8 @@ import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ProfileActivityFragment extends Fragment {
     private ProfileListAdapter adapter;
 
@@ -52,8 +54,9 @@ public class ProfileActivityFragment extends Fragment {
             super(con, resource);
         }
 
+        @NotNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_profiles_entry, null);
             }
@@ -104,7 +107,7 @@ public class ProfileActivityFragment extends Fragment {
         // Set up the buttons
         builder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(MaterialDialog dialog, DialogAction which) {
+            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                 Intent mIntent = new Intent(getActivity(), ChoiceActivity.class);
                 Bundle extras = new Bundle();
                 extras.putBoolean("parents", true);
@@ -123,7 +126,7 @@ public class ProfileActivityFragment extends Fragment {
 
         builder.onNegative(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(MaterialDialog dialog, DialogAction which) {
+            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                 dialog.dismiss();
             }
         });
@@ -172,7 +175,7 @@ public class ProfileActivityFragment extends Fragment {
         builder.negativeText(getString(R.string.cancel));
         builder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(MaterialDialog dialog, DialogAction which) {
+            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                 Profile profile = ProfileManagement.getProfile(position);
                 String nameText = name.getText().toString();
                 String coursesText = course.getText().toString();
@@ -184,7 +187,7 @@ public class ProfileActivityFragment extends Fragment {
 
         builder.onNegative(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(MaterialDialog dialog, DialogAction which) {
+            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                 dialog.dismiss();
             }
         });
@@ -213,7 +216,7 @@ public class ProfileActivityFragment extends Fragment {
         builder.positiveText(getString(R.string.yes));
         builder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(MaterialDialog dialog, DialogAction which) {
+            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                 ProfileManagement.removeProfile(position);
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
@@ -222,7 +225,7 @@ public class ProfileActivityFragment extends Fragment {
 
         builder.onNegative(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(MaterialDialog dialog, DialogAction which) {
+            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                 dialog.dismiss();
             }
         });
