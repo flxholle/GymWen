@@ -69,8 +69,12 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("registered", false);
     }
 
-    public static boolean isSections() {
-        return ApplicationFeatures.getBooleanSettings("show_sections", true);
+    public static boolean isFilteredUnfiltered() {
+        return ApplicationFeatures.getBooleanSettings("show_sections", false);
+    }
+
+    public static boolean isMenuDays() {
+        return ApplicationFeatures.getBooleanSettings("show_days", true);
     }
 
     public static boolean isBothMenu() {
