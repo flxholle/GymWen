@@ -134,7 +134,7 @@ public class PreferenceUtil {
     }
 
     public static boolean isOldTitle() {
-        return ApplicationFeatures.getBooleanSettings("old_vertretung_title", true);
+        return ApplicationFeatures.getBooleanSettings("old_vertretung_title", false);
     }
 
     public static boolean isSummarizeUp() {
@@ -249,6 +249,9 @@ public class PreferenceUtil {
         boolean newdesign = !sharedPref.getBoolean("old_vertretung", false);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("old_vertretung", newdesign);
+
+        boolean newtitle = !sharedPref.getBoolean("old_vertretung_title", false);
+        editor.putBoolean("old_vertretung_title", newtitle);
         editor.commit();
     }
 }

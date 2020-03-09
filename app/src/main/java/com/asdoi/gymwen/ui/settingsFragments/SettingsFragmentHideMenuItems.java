@@ -16,8 +16,19 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
 
         ((SettingsActivity) getActivity()).loadedFragments++;
 
-        setBoth();
-        Preference myPref = findPreference("menu_filtered");
+        Preference myPref = findPreference("show_sections");
+        myPref.setOnPreferenceClickListener((Preference preference) -> {
+            SwitchPreference days = findPreference("show_days");
+            days.setChecked(!((SwitchPreference) preference).isChecked());
+            showBoth();
+            checkFilteredUnfiltered();
+            return true;
+        });
+
+        showBoth();
+        checkFilteredUnfiltered();
+        setFilteredUnfiltered();
+        myPref = findPreference("menu_filtered");
         myPref.setOnPreferenceClickListener((Preference preference) -> {
             setFilteredUnfiltered();
             return true;
@@ -29,51 +40,37 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
             return true;
         });
 
-        myPref = findPreference("show_sections");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
-            setBoth();
-            return true;
-        });
 
-        setDays();
         myPref = findPreference("show_days");
         myPref.setOnPreferenceClickListener((Preference pref) -> {
-            setDays();
-            return true;
-        });
-
-        myPref = findPreference("show_sections");
-        myPref.setOnPreferenceClickListener((Preference pref) -> {
-            setDays();
+            SwitchPreference separate = findPreference("show_sections");
+            separate.setChecked(!((SwitchPreference) pref).isChecked());
+            showBoth();
+            checkFilteredUnfiltered();
             return true;
         });
     }
 
     private void setFilteredUnfiltered() {
         SwitchPreference switchPreference = findPreference("show_sections");
-        boolean showSum = !((SwitchPreference) findPreference("menu_filtered")).isChecked() && !((SwitchPreference) findPreference("menu_unfiltered")).isChecked();
-        switchPreference.setChecked(!showSum);
+        boolean showBothFalse = !((SwitchPreference) findPreference("menu_filtered")).isChecked() && !((SwitchPreference) findPreference("menu_unfiltered")).isChecked();
+        switchPreference.setChecked(!showBothFalse);
+        showBoth();
+        if (showBothFalse)
+            ((SwitchPreference) findPreference("show_days")).setChecked(true);
     }
 
-    private void setBoth() {
+    private void checkFilteredUnfiltered() {
+        boolean bothFalse = !((SwitchPreference) findPreference("menu_filtered")).isChecked() && !((SwitchPreference) findPreference("menu_unfiltered")).isChecked();
+        if (bothFalse)
+            ((SwitchPreference) findPreference("menu_filtered")).setChecked(true);
+    }
+
+    private void showBoth() {
         SwitchPreference switchPreference = findPreference("show_sections");
         boolean showBoth = switchPreference.isChecked();
         findPreference("menu_filtered").setEnabled(showBoth);
         findPreference("menu_unfiltered").setEnabled(showBoth);
-
-        boolean showSum = !((SwitchPreference) findPreference("menu_filtered")).isChecked() && !((SwitchPreference) findPreference("menu_unfiltered")).isChecked();
-        if (showSum && showBoth)
-            ((SwitchPreference) findPreference("menu_filtered")).setChecked(true);
     }
 
-    private void setDays() {
-        SwitchPreference days = findPreference("show_days");
-        SwitchPreference separate = findPreference("show_sections");
-        if (days.isChecked())
-            separate.setChecked(false);
-        else {
-            separate.setChecked(true);
-            days.setChecked(false);
-        }
-    }
 }
