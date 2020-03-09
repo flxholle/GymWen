@@ -714,7 +714,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         void setAll(boolean v) {
             all = v;
-            setDay(false, false);
+            day = false;
+            today = false;
         }
 
         void setDay(boolean v, boolean t) {
