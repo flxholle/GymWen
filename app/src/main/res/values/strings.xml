@@ -81,6 +81,9 @@
     <string name="set_offline_mode">Offlinemodus</string>
     <string name="set_teacherlist_url">URL für die Lehrerliste</string>
     <string name="set_substitution_category">Vertretungsplan</string>
+    <string name="set_summarize">Gleiche Stunden zusammenfassen</string>
+    <string name="also_at_old_design">Auch beim alten Design</string>
+    <string name="set_single_days">Einzelne Tage</string>
 
 
     <!-- SubstitutionPlan -->
@@ -409,6 +412,7 @@
     <!-- Settings descriptions -->
     <string name="set_desc_courses">Einzelne Kurse mit einem # zwischen den Kursen trennen, z.B. 1ph3#1d4#1bio2</string>
     <string name="set_desc_hours">Die Stundenanzeige durch die jeweilige Uhrzeit ersetzen, z.B. 8:10 statt 1</string>
+    <string name="set_desc_summarize">Einzelne Stunden mit demselben Inhalt zusammenfassen (Beipielsweise der Raumtausch einer Doppelstunde).</string>
     <string name="set_desc_week_dates">Immer den zum Datum gehörenden Wochentag anzeigen (auch wenn der Tag schon vergangen ist)</string>
     <string name="set_desc_show_full_names">Alle Lehrerkürzel durch den jeweiligen Nachnamen ersetzen</string>
     <string name="set_desc_credentials_fragment">Einstellungen für das Herunterladen des Vertretungsplans/Lehrerliste</string>
