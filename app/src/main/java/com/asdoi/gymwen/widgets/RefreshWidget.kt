@@ -16,8 +16,6 @@ import kotlin.concurrent.thread
 /**
  * Implementation of App Widget functionality.
  */
-const val WIDGET_REFRESH_KEY = "mywidgetrefreshid"
-
 class RefreshWidget : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -65,6 +63,10 @@ class RefreshWidget : AppWidgetProvider() {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+    }
+
+    companion object {
+        const val WIDGET_REFRESH_KEY = "mywidgetrefreshid"
     }
 }
 
