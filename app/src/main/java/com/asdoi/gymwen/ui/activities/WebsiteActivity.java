@@ -17,6 +17,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.fragments.WebsiteActivityFragment;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -72,13 +73,13 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NotNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         ApplicationFeatures.websiteHistorySaveInstance = history;
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(@NotNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         history = ApplicationFeatures.websiteHistorySaveInstance;
     }
@@ -116,7 +117,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                 return;
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         if (ApplicationFeatures.websiteHistorySaveInstance == null) {
@@ -141,6 +142,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             try {
                 tabIntent(history.get(history.size() - 1));
             } catch (Exception e) {
+                e.printStackTrace();
             }
         } else if (item.getItemId() == R.id.action_share || item.getItemId() == R.id.action_share2) {
             Intent i = new Intent();
@@ -279,9 +281,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         for (int i = 0; i < values.size(); i++) {
             Element text = values.get(i);
             String[] littleCon = new String[4];
-            for (int j = 0; j < littleCon.length; j++) {
-                littleCon[j] = "";
-            }
+            Arrays.fill(littleCon, "");
 
             if (text != null) {
                 Elements titleElements = text.select("div.csc-header");
@@ -310,9 +310,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             if (!littleCon[1].isEmpty() || !littleCon[2].isEmpty()) {
                 contentList.add(littleCon);
                 littleCon = new String[4];
-                for (int j = 0; j < littleCon.length; j++) {
-                    littleCon[j] = "";
-                }
+                Arrays.fill(littleCon, "");
             }
 
             Elements imgElements = values.get(i).select("img");
@@ -332,9 +330,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                 if (!littleCon[0].isEmpty()) {
                     contentList.add(littleCon);
                     littleCon = new String[4];
-                    for (int j1 = 0; j1 < littleCon.length; j1++) {
-                        littleCon[j1] = "";
-                    }
+                    Arrays.fill(littleCon, "");
                 }
             }
 
@@ -423,9 +419,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                 Elements descriptionElements = currentValue.select("p.bodytext");
                 if (descriptionElements.size() > 0) {
                     String[] s = new String[4];
-                    for (int j = 0; j < s.length; j++) {
-                        s[j] = "";
-                    }
+                    Arrays.fill(s, "");
                     for (int j1 = 0; j1 < descriptionElements.size(); j1++) {
                         //Description
                         whole = descriptionElements.get(j1).toString();

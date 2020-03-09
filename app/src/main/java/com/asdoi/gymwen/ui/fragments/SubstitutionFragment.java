@@ -36,6 +36,8 @@ import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.pd.chocobar.ChocoBar;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class SubstitutionFragment extends Fragment implements View.OnClickListener {
@@ -786,8 +788,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             this.sons = sons;
         }
 
+        @NotNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_substitution_all_entry, null);
             }
@@ -855,8 +858,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             this.old = old;
         }
 
+        @NotNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NotNull ViewGroup parent) {
             if (old) {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_substitution_specific_entry, null);

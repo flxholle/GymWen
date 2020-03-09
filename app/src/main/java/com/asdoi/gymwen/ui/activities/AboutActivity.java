@@ -32,6 +32,8 @@ import com.asdoi.gymwen.R;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
+import org.jetbrains.annotations.NotNull;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -191,7 +193,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     // The dialog is automatically dismissed when a dialog button is clicked.
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                        public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                             dialog.dismiss();
                         }
                     })
@@ -242,7 +244,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     // The dialog is automatically dismissed when a dialog button is clicked.
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                        public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                             dialog.dismiss();
                         }
                     })
@@ -278,7 +280,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .positiveText(R.string.ok)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                        public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                             dialog.dismiss();
                         }
                     })
@@ -329,7 +331,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .positiveText(R.string.ok)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                        public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                             dialog.dismiss();
                         }
                     })

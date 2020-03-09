@@ -1,6 +1,8 @@
 package com.asdoi.gymwen.profiles;
 
 
+import org.jetbrains.annotations.NotNull;
+
 public class Profile {
     private String courses;
     private String name;
@@ -28,6 +30,7 @@ public class Profile {
         this.name = name;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return name + splitChar + courses;

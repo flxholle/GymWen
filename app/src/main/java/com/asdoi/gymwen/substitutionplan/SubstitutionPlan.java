@@ -277,6 +277,7 @@ public class SubstitutionPlan {
             try {
                 value[i][1] = getMatchingTime(Integer.parseInt(value[i][1]));
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

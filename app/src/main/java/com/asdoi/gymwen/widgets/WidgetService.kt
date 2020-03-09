@@ -108,7 +108,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
     }
 
     override fun getViewAt(position: Int): RemoteViews {
-        val entry: EntryHelper = contentList.get(position)
+        val entry: EntryHelper = contentList[position]
         return when (entry.code) {
             day -> getTitleText(context, entry.entry[0])
             profile -> getTitleText(context, entry.entry[0])
@@ -254,8 +254,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
     }
 
     private fun generateHeadline(context: Context, isShort: Boolean, senior: Boolean): Array<String> {
-        val headline: Array<String>
-        headline = if (senior) {
+        val headline: Array<String> = if (senior) {
             arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), if (isShort) context.getString(R.string.courses_short) else context.getString(R.string.courses), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), context.getString(R.string.subject))
         } else {
             arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), context.getString(R.string.subject), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), if (isShort) context.getString(R.string.classes_short) else context.getString(R.string.classes))

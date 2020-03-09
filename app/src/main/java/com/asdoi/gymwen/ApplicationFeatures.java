@@ -59,6 +59,7 @@ import org.acra.annotation.AcraDialog;
 import org.acra.annotation.AcraMailSender;
 import org.acra.data.StringFormat;
 import org.apache.commons.codec.binary.Base64;
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -127,7 +128,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NotNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 //        LocaleChanger.onConfigurationChanged();
         mContext = this;
@@ -1076,7 +1077,6 @@ public class ApplicationFeatures extends MultiDexApplication {
         } catch (IOException e) {
             //"Exception", "File write failed: " + e.toString());
             //Error
-            return;
         }
     }
 
