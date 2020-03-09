@@ -29,7 +29,7 @@
 
     <!-- Substitution New Design -->
     <color name="past">#3F51B5</color>
-    <color name="today">#B2180F</color>
+    <color name="today">#E31E13</color>
     <color name="tomorrow">#FFC107</color>
     <color name="future">#3AC540</color>
 
