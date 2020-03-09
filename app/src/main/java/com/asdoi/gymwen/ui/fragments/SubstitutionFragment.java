@@ -417,6 +417,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         boolean summarize = PreferenceUtil.isSummarizeUp();
         if (old)
             summarize = PreferenceUtil.isSummarizeUp() && PreferenceUtil.isSummarizeOld();
+        boolean oldTitle = PreferenceUtil.isOldTitle();
 
         if (both) {
             content = SubstitutionPlanFeatures.getTodayArray();
@@ -426,7 +427,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
             titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             miscellaneous = isMiscellaneous(content);
-            generateTop(base, old);
+            generateTop(base, oldTitle);
             generateTableSpecific(base, old);
 
             if (content != null) {
@@ -437,7 +438,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
                 miscellaneous = isMiscellaneous(content);
-                generateTop(base, old);
+                generateTop(base, oldTitle);
                 generateTableSpecific(base, old);
             }
         } else if (all) {
@@ -461,7 +462,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 content = replaceAll(content, s, missing_short);
             }
             miscellaneous = isMiscellaneous(content);
-            generateTop(base, old);
+            generateTop(base, oldTitle);
             generateTableAll(base);
         } else {
             if (today) {
@@ -480,7 +481,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
             }
             miscellaneous = isMiscellaneous(content);
-            generateTop(base, old);
+            generateTop(base, oldTitle);
             generateTableSpecific(base, old);
         }
     }

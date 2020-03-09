@@ -49,5 +49,10 @@
             android:title="@string/set_old_substitution"
             app:iconSpaceReserved="false"
             android:summary="@string/set_desc_old_substitution" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="old_vertretung_title"
+            android:title="Altes Title Design"
+            app:iconSpaceReserved="true" />
     </PreferenceCategory>
 </PreferenceScreen>

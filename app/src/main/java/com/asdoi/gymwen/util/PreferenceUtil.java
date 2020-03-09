@@ -129,12 +129,16 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("old_vertretung", false);
     }
 
+    public static boolean isOldTitle() {
+        return ApplicationFeatures.getBooleanSettings("old_vertretung_title", true);
+    }
+
     public static boolean isSummarizeUp() {
         return getBooleanSettings("summarize", true);
     }
 
     public static boolean isSummarizeOld() {
-        return getBooleanSettings("summarize_old", false);
+        return getBooleanSettings("summarize_old", true);
     }
 
 
