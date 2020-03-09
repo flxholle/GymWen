@@ -36,7 +36,7 @@
 
 
     <string name="title_activity_settings">Settings</string>
-    <string name="set_substitution_title">Cover plan</string>
+    <string name="set_substitution_title">Substitution plan</string>
     <string name="set_courses_title">Courses/Classes</string>
     <string name="set_desc_courses">Divide individual courses with a # between them, e.g. 1ph3#1d4#1bio2</string>
     <string name="set_substitution_signin">Credentials</string>

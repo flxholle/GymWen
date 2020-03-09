@@ -17,12 +17,13 @@
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="summarize"
-        android:title="Stunden zusammenfassen"
+        android:summary="@string/set_desc_summarize"
+        android:title="@string/set_summarize"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="summarize_old"
-        android:title="Auch beim alten Design"
+        android:title="@string/also_at_old_design"
         app:iconSpaceReserved="true" />
     <SwitchPreference
         android:defaultValue="false"
