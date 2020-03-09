@@ -8,6 +8,11 @@
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
+        android:key="show_days"
+        android:title="Tage einzeln anzeigen"
+        app:iconSpaceReserved="false" />
+    <SwitchPreference
+        android:defaultValue="false"
         android:key="show_sections"
         android:title="@string/set_design_show_sections"
         app:iconSpaceReserved="false" />

@@ -69,8 +69,12 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("registered", false);
     }
 
-    public static boolean isSections() {
-        return ApplicationFeatures.getBooleanSettings("show_sections", true);
+    public static boolean isFilteredUnfiltered() {
+        return ApplicationFeatures.getBooleanSettings("show_sections", false);
+    }
+
+    public static boolean isMenuDays() {
+        return ApplicationFeatures.getBooleanSettings("show_days", true);
     }
 
     public static boolean isBothMenu() {
@@ -129,12 +133,16 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("old_vertretung", false);
     }
 
+    public static boolean isOldTitle() {
+        return ApplicationFeatures.getBooleanSettings("old_vertretung_title", true);
+    }
+
     public static boolean isSummarizeUp() {
         return getBooleanSettings("summarize", true);
     }
 
     public static boolean isSummarizeOld() {
-        return getBooleanSettings("summarize_old", false);
+        return getBooleanSettings("summarize_old", true);
     }
 
 
