@@ -11,6 +11,14 @@
                     android:icon="@drawable/ic_today_tomorrow_black_24dp"
                     android:title="@string/menu_both" />
                 <item
+                    android:id="@+id/nav_today_both"
+                    android:icon="@drawable/ic_today_black_24dp"
+                    android:title="@string/tomorrow" />
+                <item
+                    android:id="@+id/nav_tomorrow_both"
+                    android:icon="@drawable/ic_tomorrow_black_24dp"
+                    android:title="@string/tomorrow" />
+                <item
                     android:id="@+id/nav_days"
                     android:icon="@drawable/ic_today_tomorrow_black_24dp"
                     android:title="@string/menu_days"
