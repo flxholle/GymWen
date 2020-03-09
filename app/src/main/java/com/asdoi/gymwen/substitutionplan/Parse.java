@@ -139,7 +139,7 @@ abstract class Parse {
                     day[1] = showWeekdates ? day[1] + " " + laterDay : laterDay;
                 } else if (currentDate.equals(startDate)) {
                     //If date is today
-                    day[1] = today;
+                    day[1] = showWeekdates ? day[1] + " (" + today + ")" : today;
                 } else {
                     //If date is tomorrow
                     //Set current date to one day in the future

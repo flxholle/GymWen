@@ -27,7 +27,6 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
 
         showBoth();
         checkFilteredUnfiltered();
-        setFilteredUnfiltered();
         myPref = findPreference("menu_filtered");
         myPref.setOnPreferenceClickListener((Preference preference) -> {
             setFilteredUnfiltered();

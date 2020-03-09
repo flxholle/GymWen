@@ -44,6 +44,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private boolean today;
     private boolean all;
     private boolean both;
+    private boolean changeSectionTitles;
 
     public static final int Instance_Both = 0;
     public static final int Instance_Today = 1;
@@ -54,10 +55,15 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private static final String TODAY = "today";
     private static final String ALL = "all";
     private static final String BOTH = "both";
+    private static final String SECTONSTITLES = "titles";
 
     public static boolean changedSectionsPagerAdapterTitles = false;
 
     public static SubstitutionFragment newInstance(int state) {
+        return newInstance(state, true);
+    }
+
+    public static SubstitutionFragment newInstance(int state, boolean cstitles) {
         SubstitutionFragment fragment = new SubstitutionFragment();
         Bundle bundle = new Bundle();
 
@@ -92,6 +98,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         bundle.putBoolean(TODAY, today);
         bundle.putBoolean(ALL, all);
         bundle.putBoolean(BOTH, both);
+        bundle.putBoolean(SECTONSTITLES, cstitles);
         MainActivity.substitutionFragmentState = state;
         fragment.setArguments(bundle);
         return fragment;
@@ -109,6 +116,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     }
 
+    public void updateDay(boolean day) {
+        today = day;
+        //Loading Pabel
+        ((ActivityFeatures) getActivity()).createLoadingPanel(root.findViewById(R.id.substitution_frame));
+        refreshAndTable();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,11 +130,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             today = getArguments().getBoolean(TODAY);
             all = getArguments().getBoolean(ALL);
             both = getArguments().getBoolean(BOTH);
+            changeSectionTitles = getArguments().getBoolean(SECTONSTITLES);
         } catch (Exception e) {
             //No Arguments set
             today = false;
             all = false;
             both = true;
+            changeSectionTitles = true;
         }
     }
 
@@ -148,12 +164,16 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             try {
                 getActivity().runOnUiThread(() -> {
                     try {
-                        if (!changedSectionsPagerAdapterTitles && SubstitutionPlanFeatures.areDocsDownloaded()) {
+                        if (!changedSectionsPagerAdapterTitles && SubstitutionPlanFeatures.areDocsDownloaded() && changeSectionTitles) {
                             MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
                             spa.setTitles(SubstitutionPlanFeatures.getTodayTitleArray()[1], SubstitutionPlanFeatures.getTomorrowTitleArray()[1]);
                             spa.notifyDataSetChanged();
                             changedSectionsPagerAdapterTitles = true;
                         }
+                        //Update menu Items for days
+                        ((MainActivity) getActivity()).setTodayMenuItemTitle(SubstitutionPlanFeatures.getTodayTitleArray()[1]);
+                        ((MainActivity) getActivity()).setTomorrowMenuItemTitle(SubstitutionPlanFeatures.getTomorrowTitleArray()[1]);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -75,6 +75,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     public SectionsPagerAdapter sectionsPagerAdapter;
 
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
@@ -85,7 +87,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         setToolbar(false);
 
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -118,8 +120,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         initSpinner();
 
-        if (!SubstitutionPlanFeatures.isUninit())
+        if (!SubstitutionPlanFeatures.isUninit()) {
             onNavigationItemSelected(R.id.nav_both);
+//            navigationView.getMenu().getItem(0).setChecked(true);
+        }
         toggle.syncState();
 
         lastLoadedInTabs = lastLoadedTabsSpecific;
@@ -284,6 +288,16 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
     }
 
+    public void setTodayMenuItemTitle(String title) {
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.nav_today_both).setTitle(title);
+    }
+
+    public void setTomorrowMenuItemTitle(String title) {
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.nav_tomorrow_both).setTitle(title);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -339,7 +353,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
     }
 
-    private void setVisibiltySpinner(boolean visible) {
+    private void setVisibilitySpinner(boolean visible) {
         if (!ProfileManagement.isMoreThanOneProfile())
             return;
         Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
@@ -397,13 +411,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         switch (id) {
             default:
             case R.id.nav_both:
-                setVisibiltySpinner(true);
+                setVisibilitySpinner(true);
                 fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Both);
                 setDesignChangerVisibility(true);
 //                fragment = new WidgetFragment();
                 break;
             case R.id.nav_filtered_days:
-                setVisibiltySpinner(true);
+                setVisibilitySpinner(true);
                 findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
@@ -415,7 +429,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 setDesignChangerVisibility(true);
                 break;
             case R.id.nav_unfiltered_days:
-                setVisibiltySpinner(false);
+                setVisibilitySpinner(false);
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
@@ -427,7 +441,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 setDesignChangerVisibility(false);
                 break;
             case R.id.nav_days:
-                setVisibiltySpinner(true);
+                setVisibilitySpinner(true);
                 findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
@@ -446,7 +460,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
             case R.id.navigation_filter:
                 findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
-                setVisibiltySpinner(true);
+                setVisibilitySpinner(true);
                 sectionsPagerAdapter.setAll(false);
                 sectionsPagerAdapter.notifyDataSetChanged();
                 lastLoaded = lastLoadedTabs;
@@ -454,7 +468,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 setDesignChangerVisibility(true);
                 break;
             case R.id.navigation_all:
-                setVisibiltySpinner(false);
+                setVisibilitySpinner(false);
                 findViewById(R.id.main_fab).setVisibility(View.GONE);
                 findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
                 findViewById(R.id.tabs).setVisibility(View.VISIBLE);
@@ -467,22 +481,33 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 setDesignChangerVisibility(false);
                 break;
             case R.id.nav_today_both:
+                setVisibilitySpinner(true);
                 findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
-                sectionsPagerAdapter.setDay(true, true);
+                findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
+                findViewById(R.id.tabs).setVisibility(View.VISIBLE);
+                findViewById(R.id.fragment_main).setVisibility(View.GONE);
+                findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
+                sectionsPagerAdapter.setDay(true);
+                sectionsPagerAdapter.setTitles(getString(R.string.menu_filtered), getString(R.string.menu_unfiltered));
                 sectionsPagerAdapter.notifyDataSetChanged();
                 lastLoaded = lastLoadedTabs;
                 lastLoadedInTabs = lastLoadedTabsToday;
+                setDesignChangerVisibility(true);
                 break;
             case R.id.nav_tomorrow_both:
+                setVisibilitySpinner(true);
                 findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
-                setVisibiltySpinner(true);
-                sectionsPagerAdapter.setDay(true, false);
+                findViewById(R.id.view_pager).setVisibility(View.VISIBLE);
+                findViewById(R.id.tabs).setVisibility(View.VISIBLE);
+                findViewById(R.id.fragment_main).setVisibility(View.GONE);
+                findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
+                sectionsPagerAdapter.setDay(false);
                 sectionsPagerAdapter.notifyDataSetChanged();
+                sectionsPagerAdapter.setTitles(getString(R.string.menu_filtered), getString(R.string.menu_unfiltered));
                 lastLoaded = lastLoadedTabs;
                 lastLoadedInTabs = lastLoadedTabsTomorrow;
                 setDesignChangerVisibility(true);
                 break;
-
             case R.id.action_settings: //Fallthrough
             case R.id.nav_settings:
                 intent = new Intent(this, SettingsActivity.class);
@@ -560,7 +585,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 showChangelogCK(false);
                 return;
             case R.id.nav_teacherlist:
-                setVisibiltySpinner(false);
+                setVisibilitySpinner(false);
                 fragment = new TeacherListFragment();
                 setDesignChangerVisibility(false);
                 break;
@@ -585,7 +610,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_colorush:
                 setDesignChangerVisibility(false);
                 if (!startApp(External_Const.coloRush_packageNames)) {
-                    setVisibiltySpinner(false);
+                    setVisibilitySpinner(false);
                     fragment = new ColoRushFragment();
                 }
                 break;
@@ -705,7 +730,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         SectionsPagerAdapter(FragmentManager fm, boolean day, boolean today, String[] titles) {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.tab_titles = titles;
-            setDay(day, today);
+            setDay(today);
         }
 
         public void setTitles(String... titles) {
@@ -718,9 +743,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             today = false;
         }
 
-        void setDay(boolean v, boolean t) {
-            day = v;
-            today = t;
+        void setDay(boolean today) {
+            day = true;
+            this.today = today;
             all = false;
         }
 
@@ -729,19 +754,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             // getItem is called to instantiate the fragment for the given page.
             if (day) {
                 if (position == 0) {
-                    setVisibiltySpinner(true);
-                    setDesignChangerVisibility(true);
                     if (today)
-                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today);
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today, false);
                     else
-                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow);
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow, false);
                 } else {
-                    setVisibiltySpinner(false);
-                    setDesignChangerVisibility(false);
                     if (today)
-                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today_All);
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today_All, false);
                     else
-                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow_All);
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow_All, false);
 
                 }
             } else if (all)
@@ -764,7 +785,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         @Override
         public int getItemPosition(Object object) {
-            ((SubstitutionFragment) object).update(all);
+            if (day)
+                ((SubstitutionFragment) object).updateDay(today);
+            else
+                ((SubstitutionFragment) object).update(all);
 
             //don'AndroidManifest.xml return POSITION_NONE, avoid fragment recreation.
             return super.getItemPosition(object);
