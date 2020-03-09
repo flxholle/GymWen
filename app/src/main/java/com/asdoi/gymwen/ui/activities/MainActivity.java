@@ -50,6 +50,8 @@ import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.pd.chocobar.ChocoBar;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,6 +180,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private void setupMenuItems(NavigationView navigationView) {
         //Enable disabled Views
         Menu menu = navigationView.getMenu();
+
         ArrayList<MenuItem> itemsEnable = new ArrayList<>(0);
         ArrayList<MenuItem> itemsDisable = new ArrayList<>(0);
 
@@ -370,7 +373,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NotNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         toggle.onConfigurationChanged(newConfig);
     }

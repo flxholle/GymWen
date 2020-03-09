@@ -47,7 +47,6 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="4dp"
                 android:gravity="end"
-                android:text="class"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="24sp" />
 
@@ -59,7 +58,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="8dp"
                 android:gravity="center_vertical"
-                android:text="hour"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="52sp" />
 
@@ -81,14 +79,12 @@
                         android:id="@+id/substitution_card_entry_textViewSubject"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="subject bei"
                         android:textColor="?android:attr/textColorSecondary" />
 
                     <TextView
                         android:id="@+id/substitution_card_entry_textViewTeacher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="teacher"
                         android:textColor="?android:attr/textColorSecondary" />
                 </LinearLayout>
 
@@ -101,7 +97,6 @@
                         android:id="@+id/substitution_card_entry_textViewRoom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="room"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textStyle="bold" />
 
@@ -112,7 +107,6 @@
                     android:id="@+id/substitution_card_entry_textViewOther"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="other"
                     android:textColor="?android:attr/textColorSecondary"
                     android:textIsSelectable="true" />
             </LinearLayout>
