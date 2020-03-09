@@ -7,6 +7,7 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreference;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -62,6 +63,12 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
             setBorder();
             return true;
         });
+
+        myPref = findPreference("old_vertretung");
+        myPref.setOnPreferenceClickListener((Preference pref) -> {
+            setOldTitle();
+            return true;
+        });
     }
 
     private void setBorder() {
@@ -84,5 +91,10 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
         }
 
         return "";
+    }
+
+    private void setOldTitle() {
+        boolean value = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("old_vertretung", false);
+        ((SwitchPreference) findPreference("old_vertretung_title")).setChecked(value);
     }
 }
