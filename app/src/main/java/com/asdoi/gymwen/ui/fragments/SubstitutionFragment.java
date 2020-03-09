@@ -171,8 +171,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                             changedSectionsPagerAdapterTitles = true;
                         }
                         //Update menu Items for days
-                        ((MainActivity) getActivity()).setTodayMenuItemTitle(SubstitutionPlanFeatures.getTodayTitleArray()[1]);
-                        ((MainActivity) getActivity()).setTomorrowMenuItemTitle(SubstitutionPlanFeatures.getTomorrowTitleArray()[1]);
+                        ((MainActivity) getActivity()).setTodayMenuItemTitle(SubstitutionPlanFeatures.getTodayTitleArray()[1] + ", " + SubstitutionPlanFeatures.getTodayTitleArray()[0]);
+                        ((MainActivity) getActivity()).setTomorrowMenuItemTitle(SubstitutionPlanFeatures.getTomorrowTitleArray()[1] + ", " + SubstitutionPlanFeatures.getTomorrowTitleArray()[0]);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -951,8 +951,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
 
         TextView subject = view.findViewById(R.id.substitution_card_entry_textViewSubject);
+        removeTeacherClick(subject);
 
         TextView teacher = view.findViewById(R.id.substitution_card_entry_textViewTeacher);
+
 
         TextView room = view.findViewById(R.id.substitution_card_entry_textViewRoom);
         room.setVisibility(View.VISIBLE);
@@ -982,7 +984,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
         } else {
             card.setBackgroundColor(Color.RED);
-            removeTeacherClick(view);
+            removeTeacherClick(teacher);
             teacher.setVisibility(View.GONE);
 
             subject.setText(entry[2]);
