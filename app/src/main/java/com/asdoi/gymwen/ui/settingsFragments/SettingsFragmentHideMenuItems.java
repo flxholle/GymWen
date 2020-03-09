@@ -34,6 +34,19 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
             setBoth();
             return true;
         });
+
+        setDays();
+        myPref = findPreference("show_days");
+        myPref.setOnPreferenceClickListener((Preference pref) -> {
+            setDays();
+            return true;
+        });
+
+        myPref = findPreference("show_sections");
+        myPref.setOnPreferenceClickListener((Preference pref) -> {
+            setDays();
+            return true;
+        });
     }
 
     private void setFilteredUnfiltered() {
@@ -51,5 +64,16 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
         boolean showSum = !((SwitchPreference) findPreference("menu_filtered")).isChecked() && !((SwitchPreference) findPreference("menu_unfiltered")).isChecked();
         if (showSum && showBoth)
             ((SwitchPreference) findPreference("menu_filtered")).setChecked(true);
+    }
+
+    private void setDays() {
+        SwitchPreference days = findPreference("show_days");
+        SwitchPreference separate = findPreference("show_sections");
+        if (days.isChecked())
+            separate.setChecked(false);
+        else {
+            separate.setChecked(true);
+            days.setChecked(false);
+        }
     }
 }

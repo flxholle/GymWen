@@ -68,6 +68,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static int lastLoadedInTabs;
     public static final int lastLoadedTabsSpecific = 10;
     public static final int lastLoadedTabsAll = 11;
+    public static final int lastLoadedTabsToday = 12;
+    public static final int lastLoadedTabsTomorrow = 13;
 
     public static final int refreshFragment = 104;
 
@@ -175,7 +177,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         ArrayList<MenuItem> itemsEnable = new ArrayList<>(0);
         ArrayList<MenuItem> itemsDisable = new ArrayList<>(0);
 
-        if (PreferenceUtil.isSections()) {
+        if (PreferenceUtil.isFilteredUnfiltered()) {
             itemsEnable.add(menu.findItem(R.id.nav_filtered_days));
             itemsEnable.add(menu.findItem(R.id.nav_unfiltered_days));
             itemsDisable.add(menu.findItem(R.id.nav_days));
@@ -189,9 +191,22 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 itemsEnable.add(menu.findItem(R.id.nav_unfiltered_days));
             else
                 itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
+
+            itemsDisable.add(menu.findItem(R.id.nav_today_both));
+            itemsDisable.add(menu.findItem(R.id.nav_tomorrow_both));
+        } else if (PreferenceUtil.isMenuDays()) {
+            itemsDisable.add(menu.findItem(R.id.nav_filtered_days));
+            itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
+            itemsDisable.add(menu.findItem(R.id.nav_days));
+
+            itemsEnable.add(menu.findItem(R.id.nav_today_both));
+            itemsEnable.add(menu.findItem(R.id.nav_tomorrow_both));
         } else {
             itemsDisable.add(menu.findItem(R.id.nav_filtered_days));
             itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
+            itemsDisable.add(menu.findItem(R.id.nav_today_both));
+            itemsDisable.add(menu.findItem(R.id.nav_tomorrow_both));
+
             itemsEnable.add(menu.findItem(R.id.nav_days));
         }
 
@@ -425,7 +440,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     sectionsPagerAdapter.setAll(true);
                     sectionsPagerAdapter.notifyDataSetChanged();
                     lastLoaded = lastLoadedTabs;
-                    setDesignChangerVisibility(false);
                     findViewById(R.id.main_fab).setVisibility(View.GONE);
                     break;
                 }
@@ -451,6 +465,22 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 lastLoaded = lastLoadedTabsAll;
                 lastLoadedInTabs = lastLoadedTabsAll;
                 setDesignChangerVisibility(false);
+                break;
+            case R.id.nav_today_both:
+                findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
+                sectionsPagerAdapter.setDay(true, true);
+                sectionsPagerAdapter.notifyDataSetChanged();
+                lastLoaded = lastLoadedTabs;
+                lastLoadedInTabs = lastLoadedTabsToday;
+                break;
+            case R.id.nav_tomorrow_both:
+                findViewById(R.id.main_fab).setVisibility(View.VISIBLE);
+                setVisibiltySpinner(true);
+                sectionsPagerAdapter.setDay(true, false);
+                sectionsPagerAdapter.notifyDataSetChanged();
+                lastLoaded = lastLoadedTabs;
+                lastLoadedInTabs = lastLoadedTabsTomorrow;
+                setDesignChangerVisibility(true);
                 break;
 
             case R.id.action_settings: //Fallthrough
@@ -663,11 +693,19 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         String[] tab_titles;
         boolean all;
+        boolean day;
+        boolean today;
 
         SectionsPagerAdapter(FragmentManager fm, boolean all, String[] titles) {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.tab_titles = titles;
             setAll(all);
+        }
+
+        SectionsPagerAdapter(FragmentManager fm, boolean day, boolean today, String[] titles) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+            this.tab_titles = titles;
+            setDay(day, today);
         }
 
         public void setTitles(String... titles) {
@@ -676,13 +714,39 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         void setAll(boolean v) {
             all = v;
+            setDay(false, false);
+        }
+
+        void setDay(boolean v, boolean t) {
+            day = v;
+            today = t;
+            all = false;
         }
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            position++;
-            return SubstitutionFragment.newInstance(all ? position + 2 : position);
+            if (day) {
+                if (position == 0) {
+                    setVisibiltySpinner(true);
+                    setDesignChangerVisibility(true);
+                    if (today)
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today);
+                    else
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow);
+                } else {
+                    setVisibiltySpinner(false);
+                    setDesignChangerVisibility(false);
+                    if (today)
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today_All);
+                    else
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow_All);
+
+                }
+            } else if (all)
+                return SubstitutionFragment.newInstance(position == 0 ? SubstitutionFragment.Instance_Today_All : SubstitutionFragment.Instance_Tomorrow_All);
+            else
+                return SubstitutionFragment.newInstance(position == 0 ? SubstitutionFragment.Instance_Today : SubstitutionFragment.Instance_Tomorrow);
         }
 
         @Nullable
