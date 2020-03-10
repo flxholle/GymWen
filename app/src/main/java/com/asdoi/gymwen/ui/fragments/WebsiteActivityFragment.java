@@ -36,7 +36,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
     private String[][] content;
     private LinearLayout basic;
     private int pageCode;
-    WebsiteActivity buttonCall;
+    private WebsiteActivity buttonCall;
 
     private int shortAnimationDuration;
     private Animator currentAnimator;
