@@ -311,5 +311,56 @@
         along with this program.  If not, see <a href="https://www.gnu.org/licenses/" >&lt;https://www.gnu.org/licenses/&gt;</a>.</p>
         ]]>
     </string>
+    <string name="menu_news">Newspaper</string>
+    <string name="menu_navigation">Navigation</string>
+    <string name="menu_backup">Backup</string>
+    <string name="set_today_url">URL for the first day</string>
+    <string name="set_tomorrow_url">URL for the second day</string>
+    <string name="set_offline_mode">Offline-mode</string>
+    <string name="set_teacherlist_url">URL for the teacher list</string>
+    <string name="set_substitution_category">Substitution plan</string>
+    <string name="set_summarize">Summarize the same hours</string>
+    <string name="also_at_old_design">Even with the old design</string>
+    <string name="set_single_days">Display days individually</string>
+    <string name="set_old_title">Old headline</string>
+    <string name="set_design_no_sections">Show filtered and total together</string>
+    <string name="click_picture">Click picture</string>
+    <string name="colorush_screen1">Boss mode</string>
+    <string name="colorush_screen2">Choosing mode</string>
+    <string name="colorush_screen3">Level 1</string>
+    <string name="colorush_screen4">Main menu</string>
+    <string name="set_desc_hours">Replace the hour display with the respective time, e.g. 8:10 instead of 1</string>
+    <string name="set_desc_summarize">Combine individual hours with the same content (for example, the exchange of a double hour).</string>
+
+    <string name="set_desc_week_dates">Always show the day of the week belonging to the date (even if the day has already passed)</string>
+    <string name="set_desc_show_full_names">Replace all teacher abbreviations with the respective last name</string>
+    <string name="set_desc_credentials_fragment">Settings for downloading the substitution plan / list of teachers</string>
+
+    <string name="set_desc_username">The username for the cover plan</string>
+    <string name="set_desc_password">The password for the substitution plan</string>
+    <string name="set_desc_today_url">Link to the first day (usually today)</string>
+    <string name="set_desc_tomorrow_url">Link to the second day (usually tomorrow)</string>
+    <string name="set_desc_teacherlist_url">Link to the list of teachers</string>
+
+    <string name="set_desc_accentColor">The color with which important things are highlighted, e.g. the hours in the substitution plan</string>
+    <string name="set_desc_primaryColor">The color of the title bar</string>
+    <string name="set_desc_menu_items_fragment">Hide or show certain entries in the navigation bar</string>
+    <string name="set_desc_show_borders">Outline all teacher abbreviations that can be clicked</string>
+    <string name="set_desc_old_substitution">Old appearance of the replacement plan (can also be changed using the color palette in the title bar)</string>
+    <string name="set_desc_old_title">Show the heading in the old design.</string>
+
+    <string name="set_desc_alwaysNotification">The notification can only be hidden manually</string>
+    <string name="set_desc_two_notifs">Show a separate notification for each day</string>
+    <string name="set_desc_alarm">Show the notification at a specific time</string>
+
+    <string name="set_desc_substitution_fragment">Specific settings for the cover plan</string>
+    <string name="set_desc_design_fragment">Settings for changing the display</string>
+    <string name="set_desc_notification_fragment">Notification settings</string>
+    <string name="set_desc_parents">Activate certain functions, especially are useful for parents, e.g. ClaXss</string>
+    <string name="set_desc_updates">Check for updates</string>
+    <string name="set_desc_offline_mode">Store certain things locally so that the app works without the internet</string>
+
+
+    <string name="loading">Loading\u2026</string>
 
 </resources>

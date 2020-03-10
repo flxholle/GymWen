@@ -446,5 +446,5 @@
 
 
     <!-- widget -->
-    <string name="loading">Lädt...</string>
+    <string name="loading">Lädt\u2026</string>
 </resources>
