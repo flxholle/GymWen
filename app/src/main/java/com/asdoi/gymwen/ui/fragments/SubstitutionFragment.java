@@ -539,6 +539,17 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 return;
             } else
                 titleView.setText(title);
+
+            if (content.length == 0) {
+                TextView tv = new TextView(context);
+                tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
+                tv.setText(context.getString(R.string.nothing));
+                tv.setTextSize(20);
+                tv.setTypeface(Typeface.DEFAULT_BOLD);
+                tv.setGravity(Gravity.CENTER);
+                base.addView(tv);
+            }
+
         } else {
             if (content == null) {
                 ViewGroup titleView = createTitleLayoutNew(context.getString(R.string.noInternetConnection), "", Color.GRAY, Color.WHITE);
@@ -562,19 +573,16 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 }
                 ViewGroup titleView = createTitleLayoutNew(titleArray[1], titleArray[0] + (titleArray.length > 2 ? ", " + titleArray[2] : ""), bgColor, textColor);
                 base.addView(titleView);
+
+                if (content.length == 0) {
+                    bgColor = ContextCompat.getColor(getContext(), R.color.nothing);
+                    textColor = ContextCompat.getColor(getContext(), R.color.nothing_text);
+                    titleView = createTitleLayoutNew("", context.getString(R.string.nothing), bgColor, textColor);
+                    base.addView(titleView);
+                }
+
             }
         }
-
-        if (content.length == 0) {
-            TextView tv = new TextView(context);
-            tv.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
-            tv.setText(context.getString(R.string.nothing));
-            tv.setTextSize(20);
-            tv.setTypeface(Typeface.DEFAULT_BOLD);
-            tv.setGravity(Gravity.CENTER);
-            base.addView(tv);
-        }
-
     }
 
     private TextView createTitleLayout() {
@@ -594,6 +602,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         ((TextView) v.findViewById(R.id.substitution_new_title)).setTextColor(textColor);
         ((TextView) v.findViewById(R.id.substitution_new_title_desc)).setText(description);
         ((TextView) v.findViewById(R.id.substitution_new_title_desc)).setTextColor(textColor);
+        if (description.trim().isEmpty()) {
+            v.findViewById(R.id.substitution_new_title_desc).setVisibility(View.GONE);
+        }
+        if (day.trim().isEmpty()) {
+            v.findViewById(R.id.substitution_new_title).setVisibility(View.GONE);
+        }
         return (ViewGroup) v;
     }
 
