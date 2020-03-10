@@ -48,7 +48,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         new Thread(() -> {
             ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true);
             for (int i = 0; i < appWidgetIds.length; i++) {
-                RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+                RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_substitution);
                 updateWidget(context, appWidgetManager, appWidgetIds[i], remoteViews);
                 appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
             }
@@ -57,29 +57,33 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
     }
 
     public void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, RemoteViews remoteViews) {
-        remoteViews.setInt(R.id.widget2_frame, "setBackgroundColor", backgroundColor);
+        remoteViews.setInt(R.id.widget_substitution_frame, "setBackgroundColor", backgroundColor);
 
+        //Setup listview
         Intent intent = new Intent(context, WidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        remoteViews.setRemoteAdapter(R.id.widget2_listview, intent);
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget2_listview);
+        remoteViews.setRemoteAdapter(R.id.widget_substitution_listview, intent);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_substitution_listview);
 
-        //Set OnClick intent
+        //Set OpenApp Button intent
         intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        remoteViews.setOnClickPendingIntent(R.id.widget2_open_button, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.widget_substitution_open_button, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.widget_substitution_frame, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.widget_substitution_listview, pendingIntent);
 
+        //Setup Refresh Button Intent
         int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, SubstitutionWidgetProvider.class));
         intent = new Intent();
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         intent.putExtra(WIDGET_ID_KEY, ids);
         pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.widget2_refresh_button, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.widget_substiution_refresh_button, pendingIntent);
 
         //Set Button Image
-        remoteViews.setImageViewBitmap(R.id.widget2_refresh_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
-        remoteViews.setImageViewBitmap(R.id.widget2_open_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_open_in_browser_white_24dp));
+        remoteViews.setImageViewBitmap(R.id.widget_substiution_refresh_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
+        remoteViews.setImageViewBitmap(R.id.widget_substitution_open_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_open_in_browser_white_24dp));
     }
 
     protected static void setColors(int mode, Context context) {

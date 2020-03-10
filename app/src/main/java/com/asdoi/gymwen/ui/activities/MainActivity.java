@@ -209,6 +209,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsEnable.add(menu.findItem(R.id.nav_today_both));
             itemsEnable.add(menu.findItem(R.id.nav_tomorrow_both));
         } else {
+            //Show No Sections
             itemsDisable.add(menu.findItem(R.id.nav_filtered_days));
             itemsDisable.add(menu.findItem(R.id.nav_unfiltered_days));
             itemsDisable.add(menu.findItem(R.id.nav_today_both));

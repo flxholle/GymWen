@@ -83,8 +83,9 @@
     <string name="set_substitution_category">Vertretungsplan</string>
     <string name="set_summarize">Gleiche Stunden zusammenfassen</string>
     <string name="also_at_old_design">Auch beim alten Design</string>
-    <string name="set_single_days">Einzelne Tage</string>
+    <string name="set_single_days">Tage einzeln anzeigen</string>
     <string name="set_old_title">Alte Überschrift</string>
+    <string name="set_design_no_sections">Gefiltert und Gesamt zusammen anzeigen</string>
 
 
     <!-- SubstitutionPlan -->

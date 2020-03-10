@@ -18,8 +18,26 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
 
         Preference myPref = findPreference("show_sections");
         myPref.setOnPreferenceClickListener((Preference preference) -> {
+            boolean checked = ((SwitchPreference) preference).isChecked();
+            SwitchPreference days = findPreference("show_days");
+            days.setChecked(!checked);
+
+            days = findPreference("show_no_sections");
+            days.setChecked(false);
+
+            showBoth();
+            checkFilteredUnfiltered();
+            return true;
+        });
+
+        myPref = findPreference("show_no_sections");
+        myPref.setOnPreferenceClickListener((Preference preference) -> {
             SwitchPreference days = findPreference("show_days");
             days.setChecked(!((SwitchPreference) preference).isChecked());
+
+            days = findPreference("show_sections");
+            days.setChecked(false);
+
             showBoth();
             checkFilteredUnfiltered();
             return true;
@@ -44,6 +62,10 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
         myPref.setOnPreferenceClickListener((Preference pref) -> {
             SwitchPreference separate = findPreference("show_sections");
             separate.setChecked(!((SwitchPreference) pref).isChecked());
+
+            SwitchPreference days = findPreference("show_no_sections");
+            days.setChecked(false);
+
             showBoth();
             checkFilteredUnfiltered();
             return true;

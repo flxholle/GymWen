@@ -14,6 +14,11 @@
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="false"
+        android:key="show_no_sections"
+        android:title="@string/set_design_no_sections"
+        app:iconSpaceReserved="false" />
+    <SwitchPreference
+        android:defaultValue="false"
         android:key="show_sections"
         android:title="@string/set_design_show_sections"
         app:iconSpaceReserved="false" />
