@@ -32,9 +32,11 @@
     <color name="today">#E31E13</color>
     <color name="tomorrow">#FFC107</color>
     <color name="future">#3AC540</color>
+    <color name="nothing">#3AC540</color>
 
-    <color name="past_text">@android:color/black</color>
+    <color name="past_text">@android:color/white</color>
     <color name="today_text">@android:color/white</color>
     <color name="tomorrow_text">@android:color/black</color>
     <color name="future_text">@android:color/black</color>
+    <color name="nothing_text">@android:color/black</color>
 </resources>
