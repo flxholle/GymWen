@@ -46,7 +46,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private boolean today;
     private boolean all;
     private boolean both;
-    private boolean changeSectionTitles;
+    private boolean changeViewPagerTitles; //In MainActivity
 
     public static final int Instance_Both = 0;
     public static final int Instance_Today = 1;
@@ -57,7 +57,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private static final String TODAY = "today";
     private static final String ALL = "all";
     private static final String BOTH = "both";
-    private static final String SECTONSTITLES = "titles";
+    private static final String VIEWPAGERTITLES = "titles";
 
     public static boolean changedSectionsPagerAdapterTitles = false;
 
@@ -100,7 +100,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         bundle.putBoolean(TODAY, today);
         bundle.putBoolean(ALL, all);
         bundle.putBoolean(BOTH, both);
-        bundle.putBoolean(SECTONSTITLES, cstitles);
+        bundle.putBoolean(VIEWPAGERTITLES, cstitles);
         MainActivity.substitutionFragmentState = state;
         fragment.setArguments(bundle);
         return fragment;
@@ -132,13 +132,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             today = getArguments().getBoolean(TODAY);
             all = getArguments().getBoolean(ALL);
             both = getArguments().getBoolean(BOTH);
-            changeSectionTitles = getArguments().getBoolean(SECTONSTITLES);
+            changeViewPagerTitles = getArguments().getBoolean(VIEWPAGERTITLES);
         } catch (Exception e) {
             //No Arguments set
             today = false;
             all = false;
             both = true;
-            changeSectionTitles = true;
+            changeViewPagerTitles = true;
         }
     }
 
@@ -166,7 +166,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             try {
                 getActivity().runOnUiThread(() -> {
                     try {
-                        if (!changedSectionsPagerAdapterTitles && SubstitutionPlanFeatures.areDocsDownloaded() && changeSectionTitles) {
+                        if (!changedSectionsPagerAdapterTitles && SubstitutionPlanFeatures.areDocsDownloaded() && changeViewPagerTitles) {
                             MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
                             spa.setTitles(SubstitutionPlanFeatures.getTodayTitleArray()[1], SubstitutionPlanFeatures.getTomorrowTitleArray()[1]);
                             spa.notifyDataSetChanged();

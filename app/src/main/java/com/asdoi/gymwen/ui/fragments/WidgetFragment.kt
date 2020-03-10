@@ -26,15 +26,15 @@ class WidgetFragment : Fragment() {
 //        remoteViews.setInt(R.id.widget2_frame, "setBackgroundColor", SubstitutionWidgetProvider.backgroundColor)
         val parent = FrameLayout(context!!)
 
-        val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_main)
+        val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_substitution)
         val intent = Intent(context, WidgetService::class.java)
         intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
-        remoteViews.setRemoteAdapter(R.id.widget2_listview, intent)
+        remoteViews.setRemoteAdapter(R.id.widget_substitution_listview, intent)
 
         val view: View = remoteViews.apply(activity, parent)
         parent.addView(view)
-        view.findViewById<ImageButton>(R.id.widget2_open_button).visibility = View.GONE
-        view.findViewById<ImageButton>(R.id.widget2_refresh_button).visibility = View.GONE
+        view.findViewById<ImageButton>(R.id.widget_substitution_open_button).visibility = View.GONE
+        view.findViewById<ImageButton>(R.id.widget_substiution_refresh_button).visibility = View.GONE
         return parent
     }
 

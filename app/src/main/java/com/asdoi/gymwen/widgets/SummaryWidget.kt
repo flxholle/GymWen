@@ -48,7 +48,7 @@ class SummaryWidget : AppWidgetProvider() {
     }
 
     private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-        val remoteViews = RemoteViews(context.packageName, R.layout.summary_widget)
+        val remoteViews = RemoteViews(context.packageName, R.layout.widget_summary)
 
 
         //Set OnClick intent

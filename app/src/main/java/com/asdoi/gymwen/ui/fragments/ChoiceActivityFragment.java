@@ -82,18 +82,15 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 root = inflater.inflate(R.layout.fragment_fifthchoice, container, false);
                 root.findViewById(R.id.choice_button_add_more_courses).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
         }
-        return root;
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
         initControls();
         if (step == 5) {
             checkIfEmpty();
         } else {
             deactivateFab();
         }
+
+        return root;
     }
 
     private void initControls() {
@@ -427,7 +424,6 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
         if (i == EditorInfo.IME_ACTION_DONE) {
-            System.out.println("works");
             int id = textView.getId();
             if (step == 1) {
                 if (id == R.id.choice_more_classes) {
@@ -477,7 +473,6 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     public void fabClicked() {
-        System.out.println("clicked fab");
         if (step == 1) {
             if (!((EditText) root.findViewById(R.id.choice_more_classes)).getText().toString().replaceAll(" ", "").isEmpty()) {
                 String s = ((EditText) root.findViewById(R.id.choice_more_classes)).getText().toString().replaceAll(" ", "");

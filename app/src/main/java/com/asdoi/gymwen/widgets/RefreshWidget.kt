@@ -48,7 +48,7 @@ class RefreshWidget : AppWidgetProvider() {
 
     private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
         // Construct the RemoteViews object
-        val remoteViews = RemoteViews(context.packageName, R.layout.refresh_widget)
+        val remoteViews = RemoteViews(context.packageName, R.layout.widget_refresh)
 
         val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, RefreshWidget::class.java))
         val intent = Intent()
