@@ -25,14 +25,14 @@ private const val content = -5
 private const val internet = -6
 
 
-class WidgetService : RemoteViewsService() {
+class SubstitutionWidgetService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
-        return WidgetFactory(this.applicationContext)
+        return SubstitutionWidgetFactory(this.applicationContext)
     }
 }
 
 
-class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactory {
+class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactory {
     private var contentList: MutableList<EntryHelper> = mutableListOf()
 
     override fun onCreate() {
@@ -109,7 +109,7 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
 
     override fun getViewAt(position: Int): RemoteViews {
         val entry: EntryHelper = contentList[position]
-        return when (entry.code) {
+        val view = when (entry.code) {
             day -> getTitleText(context, entry.entry[0])
             profile -> getTitleText(context, entry.entry[0])
             nothing -> getNothing(context, context.getString(R.string.nothing))
@@ -118,6 +118,12 @@ class WidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactor
             internet -> getTitleText(context, context.getString(R.string.noInternetConnection))
             else -> getTitleText(context, context.getString(R.string.noInternetConnection))
         }
+
+        //Set OpenApp Button intent
+        val intent = Intent()
+        intent.action = SubstitutionWidgetProvider.OPEN_APP
+        view.setOnClickFillInIntent(R.id.widget_substitution_list_linear, intent)
+        return view
     }
 
     override fun getLoadingView(): RemoteViews? {

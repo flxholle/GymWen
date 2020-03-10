@@ -11,7 +11,7 @@ import android.widget.ImageButton
 import android.widget.RemoteViews
 import androidx.fragment.app.Fragment
 import com.asdoi.gymwen.R
-import com.asdoi.gymwen.widgets.WidgetService
+import com.asdoi.gymwen.widgets.SubstitutionWidgetService
 
 
 class WidgetFragment : Fragment() {
@@ -27,7 +27,7 @@ class WidgetFragment : Fragment() {
         val parent = FrameLayout(context!!)
 
         val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_substitution)
-        val intent = Intent(context, WidgetService::class.java)
+        val intent = Intent(context, SubstitutionWidgetService::class.java)
         intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
         remoteViews.setRemoteAdapter(R.id.widget_substitution_listview, intent)
 
