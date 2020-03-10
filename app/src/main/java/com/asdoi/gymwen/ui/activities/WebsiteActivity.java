@@ -484,6 +484,14 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
         //If image is expanded
         if (WebsiteActivityFragment.isExpanded) {
+            try {
+                //Not working
+                WebsiteActivityFragment.expandImage.performClick();
+                WebsiteActivityFragment.expandImage.callOnClick();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, getString(R.string.click_picture), Toast.LENGTH_SHORT).show();
             return;
         }
 
