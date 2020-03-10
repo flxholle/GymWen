@@ -53,8 +53,8 @@
     <string name="set_old_substitution">Old design</string>
 
 
-    <string name="nothing">Nothing is missing for you.</string>
-    <string name="nothing_all">Nothing is missing for the entire day.</string>
+    <string name="nothing">No sit-ins for you</string>
+    <string name="nothing_all">Nothing has changed for the entire day.</string>
     <string name="back_button">Press again to exit</string>
     <string name="downloading">Loading\u2026</string>
     <string name="footprint">Generated with the GymWenApp: https://asdoi.gitlab.io/</string>
