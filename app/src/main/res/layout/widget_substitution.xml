@@ -26,5 +26,17 @@
         android:layout_gravity="start"
         android:contentDescription="@string/open_app"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_open_in_browser_white_24dp" />
+        android:src="@drawable/ic_open_in_browser_white_24dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/widget_substiution_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/loading"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
+        android:textStyle="bold" />
 </FrameLayout>

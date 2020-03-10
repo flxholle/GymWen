@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import androidx.annotation.ColorInt;
@@ -22,6 +23,7 @@ import com.asdoi.gymwen.ui.activities.MainActivity;
 
 public class SubstitutionWidgetProvider extends AppWidgetProvider {
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
+    public static final String OPEN_APP = "openapp";
     @ColorInt
     protected static int textColorSecondary = Color.GRAY;
     @ColorInt
@@ -38,6 +40,10 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         if (intent.hasExtra(WIDGET_ID_KEY)) {
             int[] ids = intent.getExtras().getIntArray(WIDGET_ID_KEY);
             this.onUpdate(context, AppWidgetManager.getInstance(context), ids);
+        } else if (OPEN_APP.equals(intent.getAction())) {
+            Intent openapp = new Intent(context, MainActivity.class);
+            openapp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(openapp);
         } else
             super.onReceive(context, intent);
     }
@@ -60,7 +66,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         remoteViews.setInt(R.id.widget_substitution_frame, "setBackgroundColor", backgroundColor);
 
         //Setup listview
-        Intent intent = new Intent(context, WidgetService.class);
+        Intent intent = new Intent(context, SubstitutionWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         remoteViews.setRemoteAdapter(R.id.widget_substitution_listview, intent);
@@ -71,7 +77,11 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         remoteViews.setOnClickPendingIntent(R.id.widget_substitution_open_button, pendingIntent);
         remoteViews.setOnClickPendingIntent(R.id.widget_substitution_frame, pendingIntent);
-        remoteViews.setOnClickPendingIntent(R.id.widget_substitution_listview, pendingIntent);
+
+        Intent listviewClickIntent = new Intent(context, SubstitutionWidgetProvider.class);
+        listviewClickIntent.setAction(OPEN_APP);
+        PendingIntent listviewPendingIntent = PendingIntent.getBroadcast(context, 0, listviewClickIntent, 0);
+        remoteViews.setPendingIntentTemplate(R.id.widget_substitution_listview, listviewPendingIntent);
 
         //Setup Refresh Button Intent
         int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, SubstitutionWidgetProvider.class));
@@ -84,6 +94,9 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         //Set Button Image
         remoteViews.setImageViewBitmap(R.id.widget_substiution_refresh_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_refresh_black_24dp));
         remoteViews.setImageViewBitmap(R.id.widget_substitution_open_button, ApplicationFeatures.vectorToBitmap(R.drawable.ic_open_in_browser_white_24dp));
+
+        //Remove loading view
+        remoteViews.setViewVisibility(R.id.widget_substiution_loading, View.GONE);
     }
 
     protected static void setColors(int mode, Context context) {

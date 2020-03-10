@@ -3,12 +3,16 @@
     <release
         version="1.1.3"
         versioncode="113">
+        <change>Neue Menüeinträge für einzelne Tage hinzugefügt</change>
+        <change>Neue Widgets hinzugefügt</change>
         <change>Schülerzeitung hinzugefügt</change>
         <change>Routennavigation hinzugefügt</change>
         <change>Einstellung zum Verbergen von Menü-Einträgen hinzugefügt</change>
         <change>Neues Design verfollständigt</change>
+        <change>Individulalisierbares Design</change>
         <change>Vergrößerbare Bilder auf der Homepage</change>
         <change>Beschreibungen der Einstellungen hinzugefügt</change>
+        <change>Neue Screenshots in ColoRush</change>
         <change>Neue Teilen-Nachricht</change>
     </release>
     <release
