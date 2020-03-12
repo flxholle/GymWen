@@ -42,7 +42,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_bug_report_white_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
@@ -87,7 +87,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 app:srcCompat="@drawable/ic_star_white_24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
             <LinearLayout

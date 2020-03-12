@@ -43,7 +43,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_fingerprint_black_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
@@ -76,7 +76,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_credit_card_black_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
@@ -110,7 +110,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_description_white_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
@@ -143,7 +143,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_image_black_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
@@ -176,7 +176,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_library_books_black_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
