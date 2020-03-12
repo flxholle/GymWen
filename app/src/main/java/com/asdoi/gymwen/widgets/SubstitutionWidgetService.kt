@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import com.asdoi.gymwen.R
 import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlan
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment
 import com.asdoi.gymwen.util.PreferenceUtil
@@ -42,6 +43,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
             ProfileManagement.reload()
 
         var noInternet = false
+        val summarize = PreferenceUtil.isSummarizeUp() && PreferenceUtil.isSummarizeOld()
 
         val todayEntryList = mutableListOf<EntryHelper>()
         val tomorrowEntryList = mutableListOf<EntryHelper>()
@@ -53,7 +55,8 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
 
             //Today
             today = tempSubstitutionplan.getTitleString(true)
-            val todayList = tempSubstitutionplan.getDay(true)
+            var todayList = tempSubstitutionplan.getDay(true)
+            if (summarize) todayList = SubstitutionPlan.summarizeArray(todayList, 1, "-")
             if (todayList == null) {
                 noInternet = true
                 break
@@ -64,6 +67,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
             //Tomorrow
             tomorrow = tempSubstitutionplan.getTitleString(false)
             val tomorrowList = tempSubstitutionplan.getDay(false)
+            if (summarize) tomorrowList = SubstitutionPlan.summarizeArray(tomorrowList, 1, "-")
             if (tomorrowList == null) {
                 noInternet = true
                 break
