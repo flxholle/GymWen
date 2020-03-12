@@ -55,6 +55,7 @@ class RefreshWidget : AppWidgetProvider() {
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         intent.putExtra(WIDGET_REFRESH_KEY, ids)
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
         remoteViews.setOnClickPendingIntent(R.id.widget_refresh_image, pendingIntent)
         remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent)
 
