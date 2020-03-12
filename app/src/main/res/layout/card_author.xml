@@ -41,7 +41,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_person_white_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
@@ -81,7 +81,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_mail_black_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
@@ -114,7 +114,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_open_in_browser_white_24dp"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 
@@ -147,7 +147,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="?android:attr/textColorPrimary"
+                app:tint="?android:attr/textColorPrimary"
                 app:srcCompat="@drawable/ic_colorush2"
                 tools:ignore="ContentDescription,UnusedAttribute" />
 

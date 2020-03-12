@@ -84,7 +84,7 @@
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
-                    android:tint="@android:color/holo_green_dark"
+                    app:tint="@android:color/holo_green_dark"
                     app:srcCompat="@drawable/ic_android_black_24dp" />
 
                 <TextView
