@@ -115,10 +115,6 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
      * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
      */
 
-    private void setupColors2() {
-
-    }
-
     public abstract void setupColors();
 
     public void setToolbar(boolean backButton) {

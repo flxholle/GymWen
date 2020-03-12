@@ -552,7 +552,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         } else {
             if (content == null) {
-                ViewGroup titleView = createTitleLayoutNew(context.getString(R.string.noInternetConnection), "", Color.GRAY, Color.WHITE);
+                ViewGroup titleView = createTitleLayoutNewDesign(context.getString(R.string.noInternetConnection), "", Color.GRAY, Color.WHITE);
                 base.addView(titleView);
                 return;
             } else {
@@ -571,13 +571,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                     bgColor = ContextCompat.getColor(getContext(), R.color.past);
                     textColor = ContextCompat.getColor(getContext(), R.color.past_text);
                 }
-                ViewGroup titleView = createTitleLayoutNew(titleArray[1], titleArray[0] + (titleArray.length > 2 ? ", " + titleArray[2] : ""), bgColor, textColor);
+                ViewGroup titleView = createTitleLayoutNewDesign(titleArray[1], titleArray[0] + (titleArray.length > 2 ? ", " + titleArray[2] : ""), bgColor, textColor);
                 base.addView(titleView);
 
                 if (content.length == 0) {
                     bgColor = ContextCompat.getColor(getContext(), R.color.nothing);
                     textColor = ContextCompat.getColor(getContext(), R.color.nothing_text);
-                    titleView = createTitleLayoutNew("", context.getString(R.string.nothing), bgColor, textColor);
+                    titleView = createTitleLayoutNewDesign("", context.getString(R.string.nothing), bgColor, textColor);
                     base.addView(titleView);
                 }
 
@@ -585,6 +585,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    //Title Layouts
     private TextView createTitleLayout() {
         TextView textView = new TextView(context);
         textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
@@ -595,10 +596,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return textView;
     }
 
-    private ViewGroup createTitleLayoutNew(String day, String description, @ColorInt int backgroundColor, @ColorInt int textColor) {
+    private ViewGroup createTitleLayoutNewDesign(String day, String description, @ColorInt int backgroundColor, @ColorInt int textColor) {
         View v = getLayoutInflater().inflate(R.layout.substitution_title_new, null);
         v.findViewById(R.id.substitution_new_background).setBackgroundColor(backgroundColor);
-        ((TextView) v.findViewById(R.id.substitution_new_title)).setText(day);
+
+        SpannableString dayUnderlined = new SpannableString(day);
+        dayUnderlined.setSpan(new UnderlineSpan(), 0, dayUnderlined.length(), 0);
+
+        ((TextView) v.findViewById(R.id.substitution_new_title)).setText(dayUnderlined);
         ((TextView) v.findViewById(R.id.substitution_new_title)).setTextColor(textColor);
         ((TextView) v.findViewById(R.id.substitution_new_title_desc)).setText(description);
         ((TextView) v.findViewById(R.id.substitution_new_title_desc)).setTextColor(textColor);
@@ -611,6 +616,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return (ViewGroup) v;
     }
 
+    //Other functions important for displaying headline
     public static boolean isMiscellaneous(String[][] content) {
         if (content == null)
             return false;
@@ -884,7 +890,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_substitution_specific_card, null);
                 }
-                return getEntrySpecificNew(convertView, content[position], !content[position][5].trim().isEmpty());
+                return getEntrySpecificNewDesign(convertView, content[position], !content[position][5].trim().isEmpty());
             }
         }
 
@@ -955,7 +961,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
-    private View getEntrySpecificNew(View view, String[] entry, boolean miscellaneous) {
+    private View getEntrySpecificNewDesign(View view, String[] entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_card_entry_textViewClass);
         course.setText(entry[0]);
 
@@ -973,9 +979,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         TextView teacher = view.findViewById(R.id.substitution_card_entry_textViewTeacher);
 
-
         TextView room = view.findViewById(R.id.substitution_card_entry_textViewRoom);
         room.setVisibility(View.VISIBLE);
+
+        TextView other = view.findViewById(R.id.substitution_card_entry_textViewOther);
 
         CardView card = view.findViewById(R.id.list_substituion_widget_card);
 
@@ -1001,7 +1008,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 room.setVisibility(View.GONE);
             }
         } else {
-            card.setBackgroundColor(Color.RED);
+            if (PreferenceUtil.getGeneralTheme() == R.style.AppTheme_Light) {
+                card.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.nothing_background_light));
+            } else
+                card.setBackgroundColor(Color.RED);
             removeTeacherClick(teacher);
             teacher.setVisibility(View.GONE);
 
@@ -1013,7 +1023,6 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
 
 
-        TextView other = view.findViewById(R.id.substitution_card_entry_textViewOther);
         other.setVisibility(View.VISIBLE);
         if (miscellaneous) {
             other.setText(entry[5]);
