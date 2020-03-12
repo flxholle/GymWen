@@ -265,7 +265,7 @@ public class SubstitutionPlan {
 
 
     /**
-     * @param value a substituion plan array with hours as the second entry
+     * @param value a substitution plan array with hours as the second entry
      * @return a plan array with all hours replaced with their matching times
      */
     //Times
