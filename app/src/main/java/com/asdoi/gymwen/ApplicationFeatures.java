@@ -985,6 +985,13 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Profiles
+    public static void initProfile(int position, boolean global) {
+        String courses = ProfileManagement.getProfile(position).getCourses();
+        SubstitutionPlanFeatures.setup(PreferenceUtil.isHour(), courses.split(Profile.coursesSeparator));
+        if (global)
+            initProfileGlobal(position, courses);
+    }
+
     private static void initProfileGlobal(int position, String courses) {
         Context context = getContext();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -992,13 +999,6 @@ public class ApplicationFeatures extends MultiDexApplication {
         editor.putString("courses", courses);
         editor.putInt("selected", position);
         editor.apply();
-    }
-
-    public static void initProfile(int position, boolean global) {
-        String courses = ProfileManagement.getProfile(position).getCourses();
-        SubstitutionPlanFeatures.setup(PreferenceUtil.isHour(), courses.split(Profile.coursesSeparator));
-        if (global)
-            initProfileGlobal(position, courses);
     }
 
     public static Profile getSelectedProfile() {

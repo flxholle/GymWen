@@ -39,4 +39,6 @@
     <color name="tomorrow_text">@android:color/black</color>
     <color name="future_text">@android:color/black</color>
     <color name="nothing_text">@android:color/black</color>
+
+    <color name="nothing_background_light">#BFFF0000</color>
 </resources>

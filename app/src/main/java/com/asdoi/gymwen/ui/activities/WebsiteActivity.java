@@ -16,6 +16,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.fragments.WebsiteActivityFragment;
+import com.pd.chocobar.ChocoBar;
 
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
@@ -104,6 +105,19 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     @Override
     public void onStart() {
         super.onStart();
+
+        if (!ApplicationFeatures.isNetworkAvailable()) {
+            ChocoBar.builder().setActivity(this)
+                    .setActionText(getString(R.string.ok))
+                    .setText(getString(R.string.noInternetConnection))
+                    .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                    .setActionClickListener((View v) -> {
+                        finish();
+                    })
+                    .orange()
+                    .show();
+            return;
+        }
 
         try {
             String intentURL = getIntent().getStringExtra("url");

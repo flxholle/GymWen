@@ -99,6 +99,8 @@ abstract class Parse {
             Arrays.fill(day, "");
 
             String dayString = getTitleAsStringUnsorted(doc);
+            if (dayString == null)
+                return null;
             char[] dayArray = dayString.toCharArray();
 
             //Date
