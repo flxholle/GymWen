@@ -66,7 +66,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
 
             //Tomorrow
             tomorrow = tempSubstitutionplan.getTitleString(false)
-            val tomorrowList = tempSubstitutionplan.getDay(false)
+            var tomorrowList = tempSubstitutionplan.getDay(false)
             if (summarize) tomorrowList = SubstitutionPlan.summarizeArray(tomorrowList, 1, "-")
             if (tomorrowList == null) {
                 noInternet = true
