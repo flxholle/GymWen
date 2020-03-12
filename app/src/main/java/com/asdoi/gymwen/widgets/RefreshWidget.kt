@@ -11,6 +11,7 @@ import com.asdoi.gymwen.ApplicationFeatures
 import com.asdoi.gymwen.R
 import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider.getThemeInt
 import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider.setColors
+import java.util.*
 import kotlin.concurrent.thread
 
 /**
@@ -54,7 +55,7 @@ class RefreshWidget : AppWidgetProvider() {
         val intent = Intent()
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         intent.putExtra(WIDGET_REFRESH_KEY, ids)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(context, UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         remoteViews.setOnClickPendingIntent(R.id.widget_refresh_image, pendingIntent)
         remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent)
