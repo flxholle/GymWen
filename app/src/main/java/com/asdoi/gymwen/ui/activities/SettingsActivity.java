@@ -31,6 +31,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 .beginTransaction()
                 .replace(R.id.settings, new SettingsFragment())
                 .commit();
+        loadedFragments = 0;
     }
 
     public void setupColors() {
