@@ -9,8 +9,6 @@ import android.content.Intent
 import android.widget.RemoteViews
 import com.asdoi.gymwen.ApplicationFeatures
 import com.asdoi.gymwen.R
-import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider.getThemeInt
-import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider.setColors
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -30,7 +28,7 @@ class RefreshWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
         thread(true) {
-            setColors(getThemeInt(context), context)
+//            setColors(getThemeInt(context), context)
             ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true)
             ApplicationFeatures.sendNotification()
             for (appWidgetId in appWidgetIds) {
