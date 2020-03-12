@@ -29,7 +29,6 @@ import androidx.fragment.app.Fragment;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.activities.MainActivity;
@@ -443,9 +442,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         boolean oldTitle = PreferenceUtil.isOldTitle();
 
         if (both) {
-            content = SubstitutionPlanFeatures.getTodayArray();
-            if (summarize)
-                content = SubstitutionPlan.summarizeArray(content, 1, "-");
+            content = summarize ? SubstitutionPlanFeatures.getTodayArraySummarized() : SubstitutionPlanFeatures.getTodayArray();
             title = SubstitutionPlanFeatures.getTodayTitle();
             titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
             titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
@@ -454,9 +451,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             generateTableSpecific(base, old);
 
             if (content != null) {
-                content = SubstitutionPlanFeatures.getTomorrowArray();
-                if (summarize)
-                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
+                content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
@@ -466,16 +461,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
         } else if (all) {
             if (today) {
-                content = SubstitutionPlanFeatures.getTodayArrayAll();
-                if (summarize)
-                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
+                content = summarize ? SubstitutionPlanFeatures.getTodayArrayAllSummarized() : SubstitutionPlanFeatures.getTodayArrayAll();
                 title = SubstitutionPlanFeatures.getTodayTitle();
                 titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
-                content = SubstitutionPlanFeatures.getTomorrowArrayAll();
-                if (summarize)
-                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
+                content = summarize ? SubstitutionPlanFeatures.getTomorrowArrayAllSummarized() : SubstitutionPlanFeatures.getTomorrowArrayAll();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
@@ -489,16 +480,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             generateTableAll(base);
         } else {
             if (today) {
-                content = SubstitutionPlanFeatures.getTodayArray();
-                if (summarize)
-                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
+                content = summarize ? SubstitutionPlanFeatures.getTodayArraySummarized() : SubstitutionPlanFeatures.getTodayArray();
                 title = SubstitutionPlanFeatures.getTodayTitle();
                 titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
-                content = SubstitutionPlanFeatures.getTomorrowArray();
-                if (summarize)
-                    content = SubstitutionPlan.summarizeArray(content, 1, "-");
+                content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
                 title = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();

@@ -407,6 +407,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         onNavigationItemSelected(id, "");
     }
 
+    /**
+     * @param id
+     * @param title The string through which the title in action should be replaced, empty if not
+     *              Here the code is centralized, to be called from other methods, without creating a MenuItem or others
+     */
     public void onNavigationItemSelected(int id, String title) {
         // Handle navigation view item clicks here.
         Fragment fragment = null;
@@ -456,6 +461,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 if (lastLoadedInTabs == lastLoadedTabsAll) {
                     //Navigation all
                     sectionsPagerAdapter.setAll(true);
+                    setVisibilitySpinner(false);
                     sectionsPagerAdapter.notifyDataSetChanged();
                     lastLoaded = lastLoadedTabs;
                     findViewById(R.id.main_fab).setVisibility(View.GONE);

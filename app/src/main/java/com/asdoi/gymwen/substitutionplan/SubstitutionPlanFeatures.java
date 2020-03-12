@@ -79,12 +79,20 @@ public abstract class SubstitutionPlanFeatures {
         return substitutionPlan == null;
     }
 
+    public static String[][] getTodayArray() {
+        return substitutionPlan.getDay(true);
+    }
+
     public static String[][] getTomorrowArray() {
         return substitutionPlan.getDay(false);
     }
 
-    public static String[][] getTodayArray() {
-        return substitutionPlan.getDay(true);
+    public static String[][] getTodayArraySummarized() {
+        return SubstitutionPlan.summarizeArray(getTodayArray(), 1, "-");
+    }
+
+    public static String[][] getTomorrowArraySummarized() {
+        return SubstitutionPlan.summarizeArray(getTomorrowArray(), 1, "-");
     }
 
     public static String[][] getTodayArrayAll() {
@@ -93,6 +101,14 @@ public abstract class SubstitutionPlanFeatures {
 
     public static String[][] getTomorrowArrayAll() {
         return substitutionPlan.getAll(false);
+    }
+
+    public static String[][] getTodayArrayAllSummarized() {
+        return SubstitutionPlan.summarizeArray(getTodayArrayAll(), 1, "-");
+    }
+
+    public static String[][] getTomorrowArrayAllSummarized() {
+        return SubstitutionPlan.summarizeArray(getTomorrowArrayAll(), 1, "-");
     }
 
     public static String getTodayTitle() {
