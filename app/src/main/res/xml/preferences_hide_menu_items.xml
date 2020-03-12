@@ -4,18 +4,13 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="menu_both"
-        android:summary="Wird, auch falls deaktiviert, immer beim ersten App-Start geladen!"
+        android:summary="@string/set_desc_both"
         android:title="@string/menu_both"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="show_days"
         android:title="@string/set_single_days"
-        app:iconSpaceReserved="false" />
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="show_no_sections"
-        android:title="@string/set_design_no_sections"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="false"
@@ -32,6 +27,11 @@
         android:key="menu_unfiltered"
         android:title="@string/menu_unfiltered"
         app:iconSpaceReserved="true" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="show_no_sections"
+        android:title="@string/set_design_no_sections"
+        app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="menu_news"

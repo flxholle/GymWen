@@ -85,7 +85,7 @@
     <string name="also_at_old_design">Auch beim alten Design</string>
     <string name="set_single_days">Tage einzeln anzeigen</string>
     <string name="set_old_title">Alte Überschrift</string>
-    <string name="set_design_no_sections">Gefiltert und Gesamt zusammen anzeigen</string>
+    <string name="set_design_no_sections">Gefiltert \u0026 Gesamt zusammen anzeigen</string>
 
 
     <!-- SubstitutionPlan -->
@@ -443,6 +443,8 @@
     <string name="set_desc_parents">Bestimmte Funktionen aktivieren, die v.a. für Eltern nützlich sind, z.B. ClaXss</string>
     <string name="set_desc_updates">Auf Aktualisierungen überprüfen</string>
     <string name="set_desc_offline_mode">Bestimmte Dinge lokal speichern, damit die App ohne Internet funktioniert</string>
+
+    <string name="set_desc_both">Wird, auch falls deaktiviert, immer beim ersten App-Start geladen!</string>
 
 
     <!-- widget -->

@@ -323,7 +323,7 @@
     <string name="also_at_old_design">Even with the old design</string>
     <string name="set_single_days">Display days individually</string>
     <string name="set_old_title">Old headline</string>
-    <string name="set_design_no_sections">Show filtered and total together</string>
+    <string name="set_design_no_sections">Show filtered \u0026 total together</string>
     <string name="click_picture">Click picture</string>
     <string name="colorush_screen1">Boss mode</string>
     <string name="colorush_screen2">Choosing mode</string>
@@ -362,5 +362,6 @@
 
 
     <string name="loading">Loading\u2026</string>
+    <string name="set_desc_both">It is always loaded when the app is started, even if it is deactivated!</string>
 
 </resources>
