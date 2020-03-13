@@ -33,6 +33,7 @@ import androidx.fragment.app.Fragment;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.activities.MainActivity;
@@ -878,7 +879,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     private void addToProfile(String course) {
-        if (ApplicationFeatures.addCourseToSelectedProfile(course)) {
+        if (ApplicationFeatures.addCourseToSelectedProfile(course.trim())) {
+            ProfileManagement.save(true);
             ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh, "");
         }
     }

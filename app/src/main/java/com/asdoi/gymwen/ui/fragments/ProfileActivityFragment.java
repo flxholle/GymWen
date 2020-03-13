@@ -179,6 +179,7 @@ public class ProfileActivityFragment extends Fragment {
                 Profile profile = ProfileManagement.getProfile(position);
                 String nameText = name.getText().toString();
                 String coursesText = course.getText().toString();
+                //Do not enter empty text
                 ProfileManagement.editProfile(position, new Profile(coursesText.trim().isEmpty() ? profile.getCourses() : coursesText, nameText.trim().isEmpty() ? profile.getName() : nameText));
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
