@@ -23,11 +23,11 @@ public class Profile {
     }
 
     public void setCourses(String courses) {
-        this.courses = courses;
+        this.courses = courses.trim();
     }
 
     public void addCourse(String course) {
-        courses = courses + coursesSeparator + course;
+        courses = courses + coursesSeparator + course.trim();
     }
 
     public String getName() {
