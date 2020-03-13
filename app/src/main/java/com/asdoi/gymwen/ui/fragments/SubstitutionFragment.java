@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -21,6 +24,7 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -663,6 +667,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 case 1:
                     if (PreferenceUtil.isHour()) {
                         params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_all_hour_long));
+                    } else if (PreferenceUtil.isSummarizeUp()) {
+                        params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_all_hour_summary));
                     } else {
                         params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_all_hour));
                     }
@@ -813,6 +819,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private View getEntryAll(View view, String[] entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_all_entry_textViewCourse);
         course.setText(entry[0]);
+        course.setOnClickListener((View v) -> {
+            showPopup(course, entry[0]);
+        });
 
         TextView hour = view.findViewById(R.id.substitution_all_entry_textViewHour);
         hour.setText(entry[1]);
@@ -849,6 +858,29 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
 
         return view;
+    }
+
+    //Pop up menu for adding course to profile
+    public void showPopup(View v, String course) {
+        ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
+        PopupMenu popup = new PopupMenu(theme, v);
+        popup.setOnMenuItemClickListener((MenuItem item) -> {
+            switch (item.getItemId()) {
+                case R.id.action_add_course:
+                    addToProfile(course);
+                    break;
+            }
+            return true;
+        });
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.substitution_fragment_course_menu, popup.getMenu());
+        popup.show();
+    }
+
+    private void addToProfile(String course) {
+        if (ApplicationFeatures.addCourseToSelectedProfile(course)) {
+            ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh, "");
+        }
     }
 
 

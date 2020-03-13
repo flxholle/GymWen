@@ -18,8 +18,16 @@ public class Profile {
         return courses;
     }
 
+    public String[] getCoursesArray() {
+        return getCourses().split(coursesSeparator);
+    }
+
     public void setCourses(String courses) {
         this.courses = courses;
+    }
+
+    public void addCourse(String course) {
+        courses = courses + coursesSeparator + course;
     }
 
     public String getName() {

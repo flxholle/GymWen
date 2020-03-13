@@ -46,7 +46,7 @@ public class ChoiceActivity extends ActivityFeatures {
         name = getString(R.string.profile_default_name);
         if (extras != null) {
             setParents(extras.getBoolean("parents", false));
-            setName(extras.getString("name", getContext().getString(R.string.profile_empty_name) + (ProfileManagement.sizeProfiles() + 1)));
+            setName(extras.getString("name", getContext().getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1)));
             profileAdd = extras.getBoolean("profileAdd", false);
         }
 

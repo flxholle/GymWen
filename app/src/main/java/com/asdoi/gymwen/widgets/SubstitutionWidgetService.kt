@@ -61,7 +61,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
                 noInternet = true
                 break
             }
-            todayEntryList.addAll(getEntryListForProfile(todayList, if (ProfileManagement.sizeProfiles() == 1) null else p.name, tempSubstitutionplan.senior))
+            todayEntryList.addAll(getEntryListForProfile(todayList, if (ProfileManagement.getSize() == 1) null else p.name, tempSubstitutionplan.senior))
 
 
             //Tomorrow
@@ -72,7 +72,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
                 noInternet = true
                 break
             }
-            tomorrowEntryList.addAll(getEntryListForProfile(tomorrowList, if (ProfileManagement.sizeProfiles() == 1) null else p.name, tempSubstitutionplan.senior))
+            tomorrowEntryList.addAll(getEntryListForProfile(tomorrowList, if (ProfileManagement.getSize() == 1) null else p.name, tempSubstitutionplan.senior))
         }
 
         if (noInternet) {

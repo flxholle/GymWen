@@ -117,18 +117,6 @@ public class PreferenceUtil {
         return getBooleanSettings("menu_navigation", true);
     }
 
-    public static boolean isDark() {
-        int theme = getGeneralTheme();
-        switch (theme) {
-            case R.style.AppTheme_Dark:
-            case R.style.AppTheme_Black:
-                return true;
-            case R.style.AppTheme_Light:
-            default:
-                return false;
-        }
-    }
-
     public static boolean isOldDesign() {
         return ApplicationFeatures.getBooleanSettings("old_vertretung", false);
     }
@@ -241,6 +229,18 @@ public class PreferenceUtil {
             default:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 return R.style.AppTheme_Light;
+        }
+    }
+
+    public static boolean isDark() {
+        int theme = getGeneralTheme();
+        switch (theme) {
+            case R.style.AppTheme_Dark:
+            case R.style.AppTheme_Black:
+                return true;
+            case R.style.AppTheme_Light:
+            default:
+                return false;
         }
     }
 

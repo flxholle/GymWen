@@ -71,7 +71,8 @@ class SummaryWidget : AppWidgetProvider() {
 
         if (!ProfileManagement.isLoaded())
             ProfileManagement.reload()
-        for (p in ProfileManagement.getProfileList()) {
+        val profileList = ProfileManagement.getProfileList()
+        for (p in profileList) {
             val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
             val todayList = tempSubstitutionplan.getDay(true)
             today += todayList.size
