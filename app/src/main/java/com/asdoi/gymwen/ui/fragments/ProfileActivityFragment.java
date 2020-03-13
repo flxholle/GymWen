@@ -66,7 +66,7 @@ public class ProfileActivityFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return ProfileManagement.sizeProfiles();
+            return ProfileManagement.getSize();
         }
 
         private View generateView(View base, int position) {
@@ -112,7 +112,7 @@ public class ProfileActivityFragment extends Fragment {
                 Bundle extras = new Bundle();
                 extras.putBoolean("parents", true);
                 if (input.getText().toString().trim().isEmpty())
-                    extras.putString("name", getContext().getString(R.string.profile_empty_name) + (ProfileManagement.sizeProfiles() + 1));
+                    extras.putString("name", getContext().getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1));
                 else
                     extras.putString("name", input.getText().toString());
                 extras.putBoolean("profileAdd", true);

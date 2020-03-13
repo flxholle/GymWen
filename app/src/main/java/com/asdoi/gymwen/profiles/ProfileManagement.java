@@ -7,8 +7,9 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ApplicationFeatures;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class ProfileManagement {
+public abstract class ProfileManagement {
     private static ArrayList<Profile> profileList = new ArrayList<>();
     private final static char splitChar = '%';
 
@@ -29,7 +30,7 @@ public class ProfileManagement {
         profileList.remove(position);
     }
 
-    public static int sizeProfiles() {
+    public static int getSize() {
         return profileList.size();
     }
 
@@ -73,7 +74,7 @@ public class ProfileManagement {
     }
 
     public static boolean isMoreThanOneProfile() {
-        return sizeProfiles() > 1;
+        return getSize() > 1;
     }
 
     public static ArrayList<String> getProfileListNames() {
@@ -82,5 +83,19 @@ public class ProfileManagement {
             a.add(p.getName());
         }
         return a;
+    }
+
+    public static boolean addCourseToProfile(int pos, String course) {
+        if (pos < 0 || pos >= getSize())
+            return false;
+
+        Profile p = getProfile(pos);
+        //If course isn't already in profile
+        if (!Arrays.asList(p.getCoursesArray()).contains(course)) {
+            p.addCourse(course);
+            editProfile(pos, p);
+            return true;
+        }
+        return false;
     }
 }

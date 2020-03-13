@@ -34,10 +34,10 @@
         <item name="android:windowBackground">@android:color/black</item>
         <item name="cardBackgroundColor">@color/grey</item>
         <item name="md_background_color">@color/grey</item>
-        <item name="popupMenuStyle">@style/PopupMenuBlack</item>
+        <item name="popupMenuStyle">@style/OptionsMenuBlack</item>
     </style>
 
-    <style name="PopupMenuBlack" parent="@style/ThemeOverlay.AppCompat.Dark">
+    <style name="OptionsMenuBlack" parent="@style/ThemeOverlay.AppCompat.Dark">
         <item name="android:itemBackground">@android:color/black</item>
         <item name="android:windowBackground">@android:color/black</item>
     </style>

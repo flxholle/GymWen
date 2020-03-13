@@ -328,7 +328,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static boolean coursesCheck(boolean openAddActivity) {
-        if (ProfileManagement.sizeProfiles() <= 0) {
+        if (ProfileManagement.getSize() <= 0) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
             //Backwards compatibility for versions older 1.1
             String courses = sharedPref.getString("courses", "");
@@ -347,7 +347,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static boolean coursesCheck() {
-        if (ProfileManagement.sizeProfiles() <= 0) {
+        if (ProfileManagement.getSize() <= 0) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
             //Backwards compatibility for versions older 1.1
             String courses = sharedPref.getString("courses", "");
@@ -484,9 +484,9 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             StringBuilder count = new StringBuilder();
 
-            for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
+            for (int i = 0; i < ProfileManagement.getSize(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
+                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
                 String[][] content = temp.getDay(true);
                 try {
                     count.append(content.length);
@@ -545,9 +545,9 @@ public class ApplicationFeatures extends MultiDexApplication {
             StringBuilder count1 = new StringBuilder();
             StringBuilder count2 = new StringBuilder();
 
-            for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
+            for (int i = 0; i < ProfileManagement.getSize(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
+                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
                 String[][] content = temp.getDay(true);
                 try {
                     count1.append(content.length);
@@ -734,9 +734,9 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             StringBuilder count1 = new StringBuilder();
 
-            for (int i = 0; i < ProfileManagement.sizeProfiles(); i++) {
+            for (int i = 0; i < ProfileManagement.getSize(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
-                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCourses().split(Profile.coursesSeparator));
+                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
                 String[][] content = temp.getDay(today);
                 try {
                     count1.append(content.length);
@@ -1019,6 +1019,14 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static int getSelectedProfilePosition() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sharedPref.getInt("selected", 0);
+    }
+
+    public static boolean addCourseToSelectedProfile(String course) {
+        return addCourseToProfile(getSelectedProfilePosition(), course);
+    }
+
+    public static boolean addCourseToProfile(int position, String course) {
+        return ProfileManagement.addCourseToProfile(position, course);
     }
 
 
