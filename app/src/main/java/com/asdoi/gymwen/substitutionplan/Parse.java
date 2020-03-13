@@ -441,7 +441,7 @@ abstract class Parse {
         int j = 0;
         for (int i = 0; i < content.length; i++) {
             if (senior) {
-                if (classNames.contains("" + content[i][0])) {
+                if (classNames.contains("" + content[i][0].trim())) {
                     yourContent[j] = content[i];
                     j++;
                 }

@@ -453,13 +453,12 @@ public class SubstitutionPlan {
         ArrayList<String> returnValue = new ArrayList<String>();
 
         if (className.length() > 2) {
-            returnValue.add("" + className.charAt(0) + className.charAt(1));
-            returnValue.add("" + className.charAt(2));
+            returnValue.add(("" + className.charAt(0) + className.charAt(1)).trim());
+            returnValue.add(("" + className.charAt(2)).trim());
         } else {
-            returnValue.add("" + className.charAt(0));
-            returnValue.add("" + className.charAt(1));
+            returnValue.add(("" + className.charAt(0)).trim());
+            returnValue.add(("" + className.charAt(1)).trim());
         }
-
 
         return returnValue;
     }
