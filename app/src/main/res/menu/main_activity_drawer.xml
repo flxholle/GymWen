@@ -7,9 +7,9 @@
         <menu>
             <group>
                 <item
-                    android:id="@+id/nav_both"
+                    android:id="@+id/nav_at_one_glance"
                     android:icon="@drawable/ic_today_tomorrow_black_24dp"
-                    android:title="@string/menu_both" />
+                    android:title="@string/menu_at_one_glance" />
                 <item
                     android:id="@+id/nav_today_both"
                     android:icon="@drawable/ic_today_black_24dp"

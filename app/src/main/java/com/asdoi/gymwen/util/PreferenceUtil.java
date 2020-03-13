@@ -14,6 +14,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 
 public class PreferenceUtil {
+    public static String hideDayAfterTime = "18:00:00";
 
     //Booleans
     public static boolean getBooleanSettings(String key, boolean defaultValue, Context context) {
@@ -79,7 +80,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("show_days", true);
     }
 
-    public static boolean isBothMenu() {
+    public static boolean isAtOneGlanceMenu() {
         return getBooleanSettings("menu_both", true);
     }
 
@@ -133,6 +134,11 @@ public class PreferenceUtil {
 
     public static boolean isSummarizeOld() {
         return getBooleanSettings("summarize_old", true);
+    }
+
+    //No settings button, yet
+    public static boolean isIntelligentHide() {
+        return getBooleanSettings("intelligent_hide", true);
     }
 
 

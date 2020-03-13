@@ -43,7 +43,10 @@ import com.pd.chocobar.ChocoBar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SubstitutionFragment extends Fragment implements View.OnClickListener {
     private View root;
@@ -51,10 +54,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private Context context;
     private boolean today;
     private boolean all;
-    private boolean both;
+    private boolean atOneGlance;
     private boolean changeViewPagerTitles; //In MainActivity
 
-    public static final int Instance_Both = 0;
+    public static final int Instance_AtOneGlance = 0;
     public static final int Instance_Today = 1;
     public static final int Instance_Tomorrow = 2;
     public static final int Instance_Today_All = 3;
@@ -62,7 +65,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     private static final String TODAY = "today";
     private static final String ALL = "all";
-    private static final String BOTH = "both";
+    private static final String ATONEGLANCE = "both";
     private static final String VIEWPAGERTITLES = "titles";
 
     public static boolean changedSectionsPagerAdapterTitles = false;
@@ -107,7 +110,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
         bundle.putBoolean(TODAY, today);
         bundle.putBoolean(ALL, all);
-        bundle.putBoolean(BOTH, both);
+        bundle.putBoolean(ATONEGLANCE, both);
         bundle.putBoolean(VIEWPAGERTITLES, cstitles);
         MainActivity.substitutionFragmentState = state;
         fragment.setArguments(bundle);
@@ -139,13 +142,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         try {
             today = getArguments().getBoolean(TODAY);
             all = getArguments().getBoolean(ALL);
-            both = getArguments().getBoolean(BOTH);
+            atOneGlance = getArguments().getBoolean(ATONEGLANCE);
             changeViewPagerTitles = getArguments().getBoolean(VIEWPAGERTITLES);
         } catch (Exception e) {
             //No Arguments set
             today = false;
             all = false;
-            both = true;
+            atOneGlance = true;
             changeViewPagerTitles = true;
         }
     }
@@ -453,23 +456,39 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             summarize = PreferenceUtil.isSummarizeUp() && PreferenceUtil.isSummarizeOld();
         boolean oldTitle = PreferenceUtil.isOldTitle();
 
-        if (both) {
-            content = summarize ? SubstitutionPlanFeatures.getTodayArraySummarized() : SubstitutionPlanFeatures.getTodayArray();
-            title = SubstitutionPlanFeatures.getTodayTitle();
-            titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
-            titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
-            miscellaneous = isMiscellaneous(content);
-            generateTop(base, oldTitle);
-            generateTableSpecific(base, old);
+        if (atOneGlance) {
+            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
+            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
+            //Hide days in the past and today after 18 o'clock
+            boolean showToday = !PreferenceUtil.isIntelligentHide() || !isTitleCodeInPast(titleCodeToday);
+            boolean showTomorrow = !PreferenceUtil.isIntelligentHide() || !isTitleCodeInPast(titleCodeTomorrow);
 
-            if (content != null) {
-                content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
-                title = SubstitutionPlanFeatures.getTomorrowTitle();
-                titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
-                titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
+            if (!showToday && !showTomorrow) {
+                if (titleCodeToday == SubstitutionPlanFeatures.todayCode)
+                    showToday = true;
+                else
+                    showTomorrow = true;
+            }
+
+            if (showToday) {
+                titleCode = titleCodeToday;
+                content = summarize ? SubstitutionPlanFeatures.getTodayArraySummarized() : SubstitutionPlanFeatures.getTodayArray();
+                title = SubstitutionPlanFeatures.getTodayTitle();
+                titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
                 miscellaneous = isMiscellaneous(content);
                 generateTop(base, oldTitle);
                 generateTableSpecific(base, old);
+            }
+            if (content != null) {
+                if (showTomorrow) {
+                    titleCode = titleCodeTomorrow;
+                    content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
+                    title = SubstitutionPlanFeatures.getTomorrowTitle();
+                    titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+                    miscellaneous = isMiscellaneous(content);
+                    generateTop(base, oldTitle);
+                    generateTableSpecific(base, old);
+                }
             }
         } else if (all) {
             if (today) {
@@ -506,6 +525,39 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             generateTop(base, oldTitle);
             generateTableSpecific(base, old);
         }
+    }
+
+    private boolean isTitleCodeInPast(int titleCode) {
+        boolean isPast = titleCode == SubstitutionPlanFeatures.pastCode;
+        if (!isPast && titleCode == SubstitutionPlanFeatures.todayCode) {
+            try {
+                String string1 = PreferenceUtil.hideDayAfterTime;
+                Date mydate = removeDate(new SimpleDateFormat("HH:mm:ss").parse(string1));
+
+                Date now = removeDate(new Date());
+
+                if (now.after(mydate)) {
+                    isPast = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isPast;
+    }
+
+    /**
+     * @param date Date
+     * @return param Date with removed time (only the day).
+     */
+    @NonNull
+    private static Date removeDate(@NonNull Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.YEAR, 0);
+        cal.set(Calendar.MONTH, 0);
+        cal.set(Calendar.DATE, 0);
+        return cal.getTime();
     }
 
     public void clear() {
@@ -711,7 +763,6 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     void generateTableSpecific(@NonNull ViewGroup base, boolean old) {
-
         if (content != null && content.length > 0) {
             //Content
             substitutionListView = new ListView(context);
