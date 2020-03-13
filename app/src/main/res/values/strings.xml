@@ -173,6 +173,7 @@
     <string name="W_Seminar">W-Seminar</string>
     <string name="P_Seminar">P-Seminar</string>
     <string name="profile_subject">Profilfach</string>
+    <string name="additum">Additum</string>
     <!-- ShortNames Of Subjects -->
     <string name="mathShort" translatable="false">m</string>
     <string name="germanShort" translatable="false">d</string>
@@ -196,6 +197,7 @@
     <string name="P_SeminarShort" translatable="false">P_</string>
     <string name="profile_subjectShort" translatable="false"></string>
     <string name="anyShort" translatable="false">X</string>
+    <string name="additumShort" translatable="false">X_</string>
 
     <!-- Impressum -->
     <string name="impressum_AboutLibs_Title">Open-Source Bibliotheken</string>
