@@ -29,6 +29,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
@@ -89,6 +91,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static final int substitution_teacher_view_id = View.generateViewId();
     public static final int old_design_substitution_view_id = View.generateViewId();
     private static Context mContext;
+    @Nullable
     public static ArrayList<String> websiteHistorySaveInstance;
 
     public static int getCurrentTimeInSeconds() {
@@ -99,7 +102,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         return time;
     }
 
-    public static Date removeTime(Date date) {
+    @NonNull
+    public static Date removeTime(@NonNull Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -140,6 +144,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     //Download Doc
+    @Nullable
     public static Document downloadDoc(String url) {
         try {
             return Jsoup.connect(url).get();
@@ -231,8 +236,9 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     public static class downloadSubstitutionplanDocsTask extends AsyncTask<Boolean, Void, Void> {
+        @Nullable
         @Override
-        protected Void doInBackground(Boolean... params) {
+        protected Void doInBackground(@Nullable Boolean... params) {
             if (params == null || params.length < 2) {
                 if (params.length == 1)
                     params = new Boolean[]{params[0], true};
@@ -249,6 +255,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             this.bmImage = bmImage;
         }
 
+        @Nullable
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
             if (!urldisplay.trim().isEmpty()) {
@@ -391,7 +398,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return vectorToBitmap(drawable);
     }
 
-    public static Bitmap vectorToBitmap(Drawable drawable) {
+    public static Bitmap vectorToBitmap(@NonNull Drawable drawable) {
         Bitmap b = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
@@ -417,7 +424,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         return isValid;
     }
 
-    public static String urlToRightFormat(String url) {
+    @NonNull
+    public static String urlToRightFormat(@NonNull String url) {
         //Set URL to right format
         if (!url.substring(0, 3).equals("www") && !url.substring(0, 4).equals("http")) {
             url = "http://www." + url;
@@ -593,7 +601,8 @@ public class ApplicationFeatures extends MultiDexApplication {
             createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_ID);
         }
 
-        public String notifMessageContent(String[][] content, SubstitutionPlan vp) {
+        @NonNull
+        public String notifMessageContent(@Nullable String[][] content, @NonNull SubstitutionPlan vp) {
             String message = "";
             if (content == null) {
                 return "";
@@ -764,7 +773,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             }
         }
 
-        private boolean isToday(String source) {
+        private boolean isToday(@NonNull String source) {
             try {
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
@@ -853,7 +862,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
-    public static int frequencyOfSubString(String str, String findStr) {
+    public static int frequencyOfSubString(@NonNull String str, @NonNull String findStr) {
         int lastIndex = 0;
         int count = 0;
 
@@ -925,7 +934,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     //Schedule and TimePicker
     public static final int DAILY_REMINDER_REQUEST_CODE = 100;
 
-    public static void setAlarm(Context context, Class<?> cls, int hour, int min, int second) {
+    public static void setAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second) {
         // cancel already scheduled reminders
         cancelAlarm(context, cls);
 
@@ -967,7 +976,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     }
 
-    public static void cancelAlarm(Context context, Class<?> cls) {
+    public static void cancelAlarm(@NonNull Context context, @NonNull Class<?> cls) {
         // Disable a receiver
         ComponentName receiver = new ComponentName(context, cls);
         PackageManager pm = context.getPackageManager();
@@ -1021,45 +1030,45 @@ public class ApplicationFeatures extends MultiDexApplication {
         return sharedPref.getInt("selected", 0);
     }
 
-    public static boolean addCourseToSelectedProfile(String course) {
+    public static boolean addCourseToSelectedProfile(@NonNull String course) {
         return addCourseToProfile(getSelectedProfilePosition(), course);
     }
 
-    public static boolean addCourseToProfile(int position, String course) {
+    public static boolean addCourseToProfile(int position, @NonNull String course) {
         return ProfileManagement.addCourseToProfile(position, course);
     }
 
 
     //Colors
-    public static int getTextColorPrimary(Context context) {
+    public static int getTextColorPrimary(@NonNull Context context) {
         return getThemeColor(android.R.attr.textColorPrimary, context);
     }
 
-    public static int getTextColorSecondary(Context context) {
+    public static int getTextColorSecondary(@NonNull Context context) {
         return getThemeColor(android.R.attr.textColorSecondary, context);
     }
 
-    public static int getBackgroundColor(Context context) {
+    public static int getBackgroundColor(@NonNull Context context) {
         return getThemeColor(android.R.attr.windowBackground, context);
     }
 
-    public static int getWebPageBackgroundColor(Context context) {
+    public static int getWebPageBackgroundColor(@NonNull Context context) {
         return getThemeColor(R.attr.webPageBackground, context);
     }
 
-    public static int getLinkColor(Context context) {
+    public static int getLinkColor(@NonNull Context context) {
         return getThemeColor(android.R.attr.textColorLink, context);
     }
 
-    public static int getPrimaryColor(Context context) {
+    public static int getPrimaryColor(@NonNull Context context) {
         return PreferenceUtil.getIntSettings("colorPrimary", 0) == 0 ? getThemeColor(R.attr.colorPrimary, context) : PreferenceUtil.getIntSettings("colorPrimary", 0);
     }
 
-    public static int getAccentColor(Context context) {
+    public static int getAccentColor(@NonNull Context context) {
         return PreferenceUtil.getIntSettings("colorAccent", 0) == 0 ? getThemeColor(R.attr.colorAccent, context) : PreferenceUtil.getIntSettings("colorAccent", 0);
     }
 
-    public static int getThemeColor(int themeAttributeId, Context context) {
+    public static int getThemeColor(int themeAttributeId, @NonNull Context context) {
         try {
             TypedValue outValue = new TypedValue();
             Resources.Theme theme = context.getTheme();
@@ -1077,7 +1086,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Backup, Export, Import
-    public static void exportBackup(Context context) {
+    public static void exportBackup(@NonNull Context context) {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
             outputStreamWriter.write("test");

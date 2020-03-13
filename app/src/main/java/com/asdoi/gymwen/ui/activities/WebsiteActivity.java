@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 
@@ -35,6 +36,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     private WebsiteActivityFragment f;
     private Document doc;
     private boolean intentActivationEnabled = true;
+    @NonNull
     private List<String> homeOfPagesIndexes = Arrays.asList("http://www.gym-wen.de/schulleben/",
             "http://www.gym-wen.de/schulleben/projekte/",
             "http://www.gym-wen.de/schulleben/ereignisse/",
@@ -147,7 +149,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_open_in_browser) {
             /*String url = history.get(history.size()-1);
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -472,7 +474,8 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         loadFragment(3);
     }
 
-    private String getLink(Element e) {
+    @NonNull
+    private String getLink(@NonNull Element e) {
         String link = "";
         Elements linkElements = e.select("a");
         if (linkElements.size() > 0) {
@@ -522,7 +525,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     }
 
-    private void setWebsiteTitle(Document doc) {
+    private void setWebsiteTitle(@NonNull Document doc) {
         String whole = doc.select("head").select("title").toString();
         final String title = HtmlCompat.fromHtml(whole, 0).toString().replaceAll("\n", "");
 
@@ -552,14 +555,14 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         int id = view.getId();
         if (id < con.length && id > 0) {
             loadPage(con[id][3]);
         }
     }
 
-    public void loadPage(String url) {
+    public void loadPage(@NonNull String url) {
         if (!url.trim().isEmpty()) {
 
             final String urlFinal = ApplicationFeatures.urlToRightFormat(url);

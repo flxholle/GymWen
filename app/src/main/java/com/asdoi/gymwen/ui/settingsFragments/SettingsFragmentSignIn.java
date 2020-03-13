@@ -3,6 +3,7 @@ package com.asdoi.gymwen.ui.settingsFragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -32,7 +33,7 @@ public class SettingsFragmentSignIn extends PreferenceFragmentCompat implements 
         setSummary(sp, "teacherlist_url", getString(R.string.set_desc_teacherlist_url));
     }
 
-    public void setSummary(SharedPreferences sp, String settingskey, String defaulText) {
+    public void setSummary(@NonNull SharedPreferences sp, @NonNull String settingskey, String defaulText) {
         EditTextPreference editTextPref = findPreference(settingskey);
         editTextPref.setSummary(sp.getString(settingskey, defaulText));
     }
@@ -50,7 +51,7 @@ public class SettingsFragmentSignIn extends PreferenceFragmentCompat implements 
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                                          String key) {
+                                          @NonNull String key) {
         Preference pref = findPreference(key);
         if (pref instanceof EditTextPreference) {
             EditTextPreference etp = (EditTextPreference) pref;

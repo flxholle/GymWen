@@ -2,6 +2,8 @@ package com.asdoi.gymwen.teacherlist;
 
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -25,6 +27,7 @@ public abstract class Teacherlist {
      * @see Parse#getList
      * new String[]{Kürzel, Nachname, Vorname, Sprechstunde}
      */
+    @Nullable
     public static String[][] liste() {
         if (list == null) {
             return null;
@@ -40,6 +43,7 @@ public abstract class Teacherlist {
      * @see #liste
      * @see Parse#getTeacher
      */
+    @Nullable
     public static String[] getTeacher(String search) {
         return Parse.getTeacher(search, liste());
     }
@@ -50,7 +54,8 @@ public abstract class Teacherlist {
      * @see #liste
      * @see Parse#getTeachers
      */
-    public static String[][] getTeachers(String search) {
+    @NonNull
+    public static String[][] getTeachers(@NonNull String search) {
         return Parse.getTeachers(search, liste());
     }
 
@@ -116,7 +121,7 @@ public abstract class Teacherlist {
      * @return boolen if the query equals the AOL-Shortcut
      * @see #liste
      */
-    public static boolean isAOL(String query) {
+    public static boolean isAOL(@NonNull String query) {
         return query.equals(External_Const.AOLShort);
     }
 }

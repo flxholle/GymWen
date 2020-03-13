@@ -1,5 +1,8 @@
 package com.asdoi.gymwen.teacherlist;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
@@ -15,7 +18,8 @@ abstract class Parse {
      * @return an two-dimensal String-Array with all teachers in it, one teacher entry is like this: String[]{Kürzel, Nachname, Vorname, Sprechstunde}
      * @see Teacherlist
      */
-    protected static String[][] getList(Document doc) {
+    @Nullable
+    protected static String[][] getList(@Nullable Document doc) {
         if (doc == null) {
             System.out.println("Document is null");
             return null;
@@ -80,7 +84,8 @@ abstract class Parse {
      * @param listString The list in which it should search for the query (normally the teacherlist)
      * @return if no match is found: null  |  else: the first match
      */
-    protected static String[] getTeacher(String search, String[][] listString) {
+    @Nullable
+    protected static String[] getTeacher(String search, @NonNull String[][] listString) {
         for (String[] s : listString) {
             for (String s1 : s) {
                 if (s1.equalsIgnoreCase(search)) {
@@ -98,7 +103,8 @@ abstract class Parse {
      * @return if no match is found: null  |  else: all matches in array
      * @see Teacherlist
      */
-    protected static String[][] getTeachers(String search, String[][] listString) {
+    @NonNull
+    protected static String[][] getTeachers(@NonNull String search, @NonNull String[][] listString) {
         ArrayList<String[]> list = new ArrayList<String[]>();
         for (String[] s : listString) {
             for (int i = 0; i < 3; i++) {
@@ -122,6 +128,7 @@ abstract class Parse {
      * @param doc same like getTeachers just with a Document as parameter
      * @see #getTeachers
      */
+    @Nullable
     protected static String[] getTeacher(String search, Document doc) {
         return getTeacher(search, getList(doc));
     }

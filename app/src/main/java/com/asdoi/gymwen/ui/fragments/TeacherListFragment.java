@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.ActivityFeatures;
@@ -31,9 +33,12 @@ import org.jetbrains.annotations.NotNull;
  * A simple {@link Fragment} subclass.
  */
 public class TeacherListFragment extends Fragment {
+    @Nullable
     private static String[][] teacherList;
     private ViewGroup base;
+    @Nullable
     private ListView teacherListView;
+    @Nullable
     private Context context;
 
 
@@ -43,7 +48,7 @@ public class TeacherListFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_teacherlist, container, false);
@@ -95,6 +100,7 @@ public class TeacherListFragment extends Fragment {
         base.removeAllViews();
     }
 
+    @Nullable
     TextView createTitleLayout() {
         TextView textView = new TextView(context);
         textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
@@ -106,6 +112,7 @@ public class TeacherListFragment extends Fragment {
         return textView;
     }
 
+    @Nullable
     com.google.android.material.textfield.TextInputLayout createSearchLayout() {
         com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
@@ -118,6 +125,7 @@ public class TeacherListFragment extends Fragment {
         inputText.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
         inputText.setHint(getString(R.string.teacher_search_teacher_list));
         inputText.addTextChangedListener(new TextWatcher() {
+            @NonNull
             String before = "";
 
             @Override
@@ -126,7 +134,7 @@ public class TeacherListFragment extends Fragment {
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onTextChanged(@NonNull CharSequence charSequence, int i, int i1, int i2) {
                 if (!charSequence.toString().equals(before)) {
                     if (charSequence.length() > 0) {
                         teacherList = Teacherlist.getTeachers("" + charSequence);
@@ -151,13 +159,13 @@ public class TeacherListFragment extends Fragment {
 
     private class TeacherListAdapter extends ArrayAdapter<String[]> {
 
-        public TeacherListAdapter(Context con, int resource) {
+        public TeacherListAdapter(@NonNull Context con, int resource) {
             super(con, resource);
         }
 
         @NotNull
         @Override
-        public View getView(int position, View convertView, @NotNull ViewGroup parent) {
+        public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_teacherlist_entry, null);
             }

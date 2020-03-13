@@ -2,6 +2,7 @@ package com.asdoi.gymwen.profiles;
 
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class ProfileManagement {
+    @NonNull
     private static ArrayList<Profile> profileList = new ArrayList<>();
     private final static char splitChar = '%';
 
@@ -34,6 +36,7 @@ public abstract class ProfileManagement {
         return profileList.size();
     }
 
+    @NonNull
     public static ArrayList<Profile> getProfileList() {
         return profileList;
     }
@@ -77,6 +80,7 @@ public abstract class ProfileManagement {
         return getSize() > 1;
     }
 
+    @NonNull
     public static ArrayList<String> getProfileListNames() {
         ArrayList<String> a = new ArrayList<>();
         for (Profile p : profileList) {
@@ -85,7 +89,7 @@ public abstract class ProfileManagement {
         return a;
     }
 
-    public static boolean addCourseToProfile(int pos, String course) {
+    public static boolean addCourseToProfile(int pos, @NonNull String course) {
         if (pos < 0 || pos >= getSize())
             return false;
 

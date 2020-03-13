@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
@@ -36,7 +37,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
     private final static int black = 3;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         if (intent.hasExtra(WIDGET_ID_KEY)) {
             int[] ids = intent.getExtras().getIntArray(WIDGET_ID_KEY);
             this.onUpdate(context, AppWidgetManager.getInstance(context), ids);
@@ -49,7 +50,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(@NonNull Context context, @NonNull AppWidgetManager appWidgetManager, @NonNull int[] appWidgetIds) {
         setColors(getThemeInt(context), context);
         new Thread(() -> {
             ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true);
@@ -62,7 +63,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         }).start();
     }
 
-    public void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, RemoteViews remoteViews) {
+    public void updateWidget(@NonNull Context context, @NonNull AppWidgetManager appWidgetManager, int appWidgetId, @NonNull RemoteViews remoteViews) {
         remoteViews.setInt(R.id.widget_substitution_frame, "setBackgroundColor", backgroundColor);
 
         //Setup listview
@@ -99,7 +100,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         remoteViews.setViewVisibility(R.id.widget_substiution_loading, View.GONE);
     }
 
-    protected static void setColors(int mode, Context context) {
+    protected static void setColors(int mode, @NonNull Context context) {
         switch (mode) {
             default:
             case light:
@@ -120,13 +121,13 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    protected static int getThemeInt(Context context) {
+    protected static int getThemeInt(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         String theme = sharedPref.getString("theme", "switch");
         return getThemeResFromPrefValue(theme, context);
     }
 
-    protected static int getThemeResFromPrefValue(String themePrefValue, Context context) {
+    protected static int getThemeResFromPrefValue(@NonNull String themePrefValue, @NonNull Context context) {
         switch (themePrefValue) {
             case "dark":
                 return dark;

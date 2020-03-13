@@ -177,7 +177,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
     }
 
-    private void setupMenuItems(NavigationView navigationView) {
+    private void setupMenuItems(@NonNull NavigationView navigationView) {
         //Enable disabled Views
         Menu menu = navigationView.getMenu();
 
@@ -328,7 +328,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             parentSpinner.setAdapter(dataAdapter);
             parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemSelected(@NonNull AdapterView<?> parent, View view, int position, long id) {
                     String item = parent.getItemAtPosition(position).toString();
                     if (item.equals(getContext().getString(R.string.profiles_edit))) {
                         Intent intent = new Intent(getContext(), ProfileActivity.class);
@@ -412,7 +412,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
      * @param title The string through which the title in action should be replaced, empty if not
      *              Here the code is centralized, to be called from other methods, without creating a MenuItem or others
      */
-    public void onNavigationItemSelected(int id, String title) {
+    public void onNavigationItemSelected(int id, @NonNull String title) {
         // Handle navigation view item clicks here.
         Fragment fragment = null;
         Intent intent = null;
@@ -691,7 +691,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         onNavigationItemSelected(item.getItemId());
         return super.onOptionsItemSelected(item);
     }
@@ -731,13 +731,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         boolean day;
         boolean today;
 
-        SectionsPagerAdapter(FragmentManager fm, boolean all, String[] titles) {
+        SectionsPagerAdapter(@NonNull FragmentManager fm, boolean all, String[] titles) {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.tab_titles = titles;
             setAll(all);
         }
 
-        SectionsPagerAdapter(FragmentManager fm, boolean day, boolean today, String[] titles) {
+        SectionsPagerAdapter(@NonNull FragmentManager fm, boolean day, boolean today, String[] titles) {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.tab_titles = titles;
             setDay(today);

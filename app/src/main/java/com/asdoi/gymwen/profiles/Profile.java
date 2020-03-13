@@ -1,6 +1,9 @@
 package com.asdoi.gymwen.profiles;
 
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.jetbrains.annotations.NotNull;
 
 public class Profile {
@@ -9,7 +12,7 @@ public class Profile {
     private static final char splitChar = '@';
     public static final String coursesSeparator = "#";
 
-    public Profile(String courses, String name) {
+    public Profile(@NonNull String courses, String name) {
         setCourses(courses);
         setName(name);
     }
@@ -18,15 +21,16 @@ public class Profile {
         return courses;
     }
 
+    @NonNull
     public String[] getCoursesArray() {
         return getCourses().split(coursesSeparator);
     }
 
-    public void setCourses(String courses) {
+    public void setCourses(@NonNull String courses) {
         this.courses = courses.trim();
     }
 
-    public void addCourse(String course) {
+    public void addCourse(@NonNull String course) {
         courses = courses + coursesSeparator + course.trim();
     }
 
@@ -44,7 +48,8 @@ public class Profile {
         return name + splitChar + courses;
     }
 
-    public static Profile parse(String s) {
+    @Nullable
+    public static Profile parse(@NonNull String s) {
         String[] sArray = s.split("" + splitChar);
         if (sArray.length >= 2) {
             if (sArray[0].trim().isEmpty() || sArray[1].trim().isEmpty())

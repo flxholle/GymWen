@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -32,13 +34,16 @@ import com.github.chrisbanes.photoview.PhotoView;
  */
 public class WebsiteActivityFragment extends Fragment implements View.OnClickListener {
     private View root;
+    @Nullable
     private Context context;
     private String[][] content;
     private LinearLayout basic;
     private int pageCode;
+    @Nullable
     private WebsiteActivity buttonCall;
 
     private int shortAnimationDuration;
+    @Nullable
     private Animator currentAnimator;
     public static PhotoView expandImage;
     public static boolean isExpanded;
@@ -58,7 +63,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -353,12 +358,12 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    private float convertDpToPx(Context context, float dp) {
+    private float convertDpToPx(@NonNull Context context, float dp) {
         return dp * context.getResources().getDisplayMetrics().density;
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         int id = view.getId();
         if (id == -1) {
             //Goto Home of Projects
@@ -372,7 +377,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    private void zoomImageFromThumb(final View thumbView, Bitmap image) {
+    private void zoomImageFromThumb(@NonNull final View thumbView, Bitmap image) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
         if (currentAnimator != null) {

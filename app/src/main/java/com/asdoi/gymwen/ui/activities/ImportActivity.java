@@ -5,13 +5,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 
 public class ImportActivity extends ActivityFeatures {
 
+    @NonNull
     private String TAG = "TagOpenTxt";
+    @NonNull
     private String uri = "";
+    @Nullable
     private Uri uri2;
 
     @Override
