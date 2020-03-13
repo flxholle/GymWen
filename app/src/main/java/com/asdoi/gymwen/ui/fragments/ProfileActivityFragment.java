@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -33,7 +35,7 @@ public class ProfileActivityFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -50,13 +52,13 @@ public class ProfileActivityFragment extends Fragment {
 
     private class ProfileListAdapter extends ArrayAdapter<String[]> {
 
-        public ProfileListAdapter(Context con, int resource) {
+        public ProfileListAdapter(@NonNull Context con, int resource) {
             super(con, resource);
         }
 
         @NotNull
         @Override
-        public View getView(int position, View convertView, @NotNull ViewGroup parent) {
+        public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_profiles_entry, null);
             }
@@ -69,7 +71,8 @@ public class ProfileActivityFragment extends Fragment {
             return ProfileManagement.getSize();
         }
 
-        private View generateView(View base, int position) {
+        @NonNull
+        private View generateView(@NonNull View base, int position) {
             Profile p = ProfileManagement.getProfile(position);
             TextView name = base.findViewById(R.id.profilelist_name);
             name.setText(p.getName());

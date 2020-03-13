@@ -2,6 +2,9 @@ package com.asdoi.gymwen.substitutionplan;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.PreferenceUtil;
@@ -19,6 +22,7 @@ import java.util.Arrays;
 public class SubstitutionPlan {
 
     boolean senior;
+    @Nullable
     ArrayList<String> courses;
     boolean hours;
     Document todayDoc;
@@ -42,7 +46,7 @@ public class SubstitutionPlan {
      * @param courses The class names, which the substiution plan should be searched for
      * @see #getMatchingTime
      */
-    public void reCreate(boolean hours, String... courses) {
+    public void reCreate(boolean hours, @NonNull String... courses) {
         this.senior = courses.length > 1;
         this.courses = generateCourseList(courses);
         this.hours = hours;
@@ -58,26 +62,32 @@ public class SubstitutionPlan {
     }
 
     //Strings in specific languages, @see getTitleArray
+    @NonNull
     private static String laterDay() {
         return context.getString(R.string.day_past);
     }
 
+    @NonNull
     private static String noSubstitutionAll() {
         return context.getString(R.string.nothing_all);
     }
 
+    @NonNull
     private static String noSubstitution() {
         return context.getString(R.string.nothing);
     }
 
+    @NonNull
     private static String noInternet() {
         return context.getString(R.string.noInternetConnection);
     }
 
+    @NonNull
     private static String today() {
         return context.getString(R.string.today);
     }
 
+    @NonNull
     private static String tomorrow() {
         return context.getString(R.string.tomorrow);
     }
@@ -93,6 +103,7 @@ public class SubstitutionPlan {
      * @see Parse#getTitleDayCode
      */
     //DayArrays
+    @Nullable
     public String[] getTitleArray(boolean today) {
         String[] s = Parse.getTitleArraySorted(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay());
         if (s == null) {
@@ -111,6 +122,7 @@ public class SubstitutionPlan {
      * @see Parse#getTitleStringSorted
      * @see #getTitleArray
      */
+    @NonNull
     public String getTitleString(boolean today) {
         String s = Parse.getTitleStringSorted(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay());
         return s == null ? noInternet() : s;
@@ -123,6 +135,7 @@ public class SubstitutionPlan {
      * @see #getAll
      */
     //Substitution plan
+    @Nullable
     public String[][] getDay(boolean today) {
         try {
             String[][] content = null;
@@ -152,6 +165,7 @@ public class SubstitutionPlan {
         }
     }
 
+    @Nullable
     public String getDayString(boolean today) {
         try {
             String[][] content = getDay(today);
@@ -188,6 +202,7 @@ public class SubstitutionPlan {
      * @param today: boolean if the plan of today or tomorrow should be analyzed
      * @return an tow-dimensional String array with every entry of the plan. An entry has the same order like the plan online. My one looks like this: new String[]{class, hour, subject, sit-in, room, moreInformation}
      */
+    @Nullable
     public String[][] getAll(boolean today) {
         try {
             String[][] content = null;
@@ -210,6 +225,7 @@ public class SubstitutionPlan {
         }
     }
 
+    @Nullable
     public String getAllString(boolean today) {
         try {
             String[][] content = getAll(today);
@@ -239,7 +255,8 @@ public class SubstitutionPlan {
         }
     }
 
-    private String[][] sortArray(String[][] value) {
+    @NonNull
+    private String[][] sortArray(@NonNull String[][] value) {
         int[] numbers = new int[value.length];
         for (int i = 0; i < value.length; i++) {
             numbers[i] = Integer.parseInt(value[i][1]);
@@ -269,7 +286,8 @@ public class SubstitutionPlan {
      * @return a plan array with all hours replaced with their matching times
      */
     //Times
-    private String[][] changeToTime(String[][] value) {
+    @Nullable
+    private String[][] changeToTime(@Nullable String[][] value) {
         if (value == null)
             return null;
 
@@ -288,6 +306,7 @@ public class SubstitutionPlan {
      * @param lesson the lesson
      * @return the matching time
      */
+    @NonNull
     private String getMatchingTime(int lesson) {
         switch (lesson) {
             case 1:
@@ -323,7 +342,8 @@ public class SubstitutionPlan {
         return senior;
     }
 
-    public static String[][] summarizeArray(String[][] value, int index, String separator) {
+    @Nullable
+    public static String[][] summarizeArray(@Nullable String[][] value, int index, @NonNull String separator) {
         if (value == null || value.length <= 0)
             return value;
 
@@ -354,7 +374,7 @@ public class SubstitutionPlan {
         return returnValue;
     }
 
-    private static boolean checkArrays(String[] value1, String[] value2, int index) {
+    private static boolean checkArrays(@NonNull String[] value1, String[] value2, int index) {
         boolean check = true;
         for (int j = 0; j < value1.length; j++) {
             if (j != index && !value1[j].equals(value2[j])) {
@@ -399,18 +419,21 @@ public class SubstitutionPlan {
 
 
     //Courses
+    @Nullable
     public ArrayList<String> getCourses() {
         return courses;
     }
 
-    private static ArrayList<String> generateCourseList(String... courses) {
+    @Nullable
+    private static ArrayList<String> generateCourseList(@NonNull String... courses) {
         if (courses.length == 1) {
             return generateClassCodes(courses[0]);
         }
         return generateSeniorCodes(courses);
     }
 
-    private static ArrayList<String> generateSeniorCodes(String[] courseNames) {
+    @NonNull
+    private static ArrayList<String> generateSeniorCodes(@NonNull String[] courseNames) {
         ArrayList<String> returnValue = new ArrayList<>();
         for (String s : courseNames) {
             returnValue.add(s);
@@ -419,7 +442,8 @@ public class SubstitutionPlan {
         return returnValue;
     }
 
-    private static ArrayList<String> generateClassCodes(String className) {
+    @Nullable
+    private static ArrayList<String> generateClassCodes(@NonNull String className) {
 //        if (className.length() > 3 || className.length() <= 1) {
         if (className.length() <= 1) {
             System.out.println("Wrong class format");

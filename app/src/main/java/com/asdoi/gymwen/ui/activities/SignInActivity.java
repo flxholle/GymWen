@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ActivityFeatures;
@@ -75,6 +76,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         }
         (new Thread(new Runnable() {
             boolean signedIn;
+            @Nullable
             Document doc = null;
 
             @Override

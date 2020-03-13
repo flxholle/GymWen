@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -46,6 +47,7 @@ import java.util.ArrayList;
 
 public class SubstitutionFragment extends Fragment implements View.OnClickListener {
     private View root;
+    @Nullable
     private Context context;
     private boolean today;
     private boolean all;
@@ -65,10 +67,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     public static boolean changedSectionsPagerAdapterTitles = false;
 
+    @NonNull
     public static SubstitutionFragment newInstance(int state) {
         return newInstance(state, true);
     }
 
+    @NonNull
     public static SubstitutionFragment newInstance(int state, boolean cstitles) {
         SubstitutionFragment fragment = new SubstitutionFragment();
         Bundle bundle = new Bundle();
@@ -193,7 +197,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         switch (v.getId()) {
             case R.id.main_fab:
                 share();
@@ -227,6 +231,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         startActivity(Intent.createChooser(i, getString(R.string.share_substitution_plan)));
     }
 
+    @NonNull
     private String shareMessage(boolean withCourses) {
         String message = "";
         String[][] content = null;
@@ -294,7 +299,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
 
     //TeacherSearch
-    void teacherClick(TextView view, String teacherQuery, boolean showBorders, boolean fullNames) {
+    void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean showBorders, boolean fullNames) {
         if (SubstitutionPlanFeatures.isNothing(teacherQuery) || Teacherlist.isAOL(teacherQuery))
             return;
         int padding = 0;
@@ -352,7 +357,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         });
     }
 
-    void removeTeacherClick(View view) {
+    void removeTeacherClick(@NonNull View view) {
         view.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         view.setBackgroundResource(0);
         view.setClickable(false);
@@ -381,7 +386,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private void createTeacherView(String[] teacher) {
+    private void createTeacherView(@NonNull String[] teacher) {
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.VERTICAL);
         base.setGravity(Gravity.CENTER);
@@ -414,6 +419,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(base);
     }
 
+    @Nullable
     String getMatchingTeacher(String query) {
         String teacher = null;
         try {
@@ -429,6 +435,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     //Generating Table
     boolean senior;
+    @Nullable
     String[][] content;
     String title;
     String[] titleArray;
@@ -507,7 +514,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         base.removeAllViews();
     }
 
-    String[][] replaceAll(String[][] value, String regex, String replace) {
+    @Nullable
+    String[][] replaceAll(@Nullable String[][] value, String regex, String replace) {
         if (value == null) {
             return value;
         }
@@ -521,7 +529,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Top (Date or noInternet, etc.)
-    void generateTop(ViewGroup base, boolean old) {
+    void generateTop(@NonNull ViewGroup base, boolean old) {
 
         if (old) {
             TextView titleView = createTitleLayout();
@@ -578,6 +586,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Title Layouts
+    @Nullable
     private TextView createTitleLayout() {
         TextView textView = new TextView(context);
         textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
@@ -588,7 +597,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return textView;
     }
 
-    private ViewGroup createTitleLayoutNewDesign(String day, String description, @ColorInt int backgroundColor, @ColorInt int textColor) {
+    @NonNull
+    private ViewGroup createTitleLayoutNewDesign(@NonNull String day, @NonNull String description, @ColorInt int backgroundColor, @ColorInt int textColor) {
         View v = getLayoutInflater().inflate(R.layout.substitution_title_new, null);
         v.findViewById(R.id.substitution_new_background).setBackgroundColor(backgroundColor);
 
@@ -609,7 +619,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Other functions important for displaying headline
-    public static boolean isMiscellaneous(String[][] content) {
+    public static boolean isMiscellaneous(@Nullable String[][] content) {
         if (content == null)
             return false;
         for (int i = 0; i < content.length; i++) {
@@ -620,7 +630,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return false;
     }
 
-    public static String[] generateHeadline(Context context, boolean miscellaneous, boolean senior, boolean all) {
+    public static String[] generateHeadline(@NonNull Context context, boolean miscellaneous, boolean senior, boolean all) {
         String[] headline;
 
         if (all) {
@@ -636,7 +646,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
 
     //Body
-    void generateTableAll(ViewGroup base) {
+    void generateTableAll(@NonNull ViewGroup base) {
 
         if (content != null && content.length > 0) {
             //Overview
@@ -650,6 +660,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    @Nullable
     View generateOverviewAll() {
         String[] headline = generateHeadline(context, miscellaneous, senior, true);
         LinearLayout base = new LinearLayout(context);
@@ -699,7 +710,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return base;
     }
 
-    void generateTableSpecific(ViewGroup base, boolean old) {
+    void generateTableSpecific(@NonNull ViewGroup base, boolean old) {
 
         if (content != null && content.length > 0) {
             //Content
@@ -717,6 +728,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    @Nullable
     View generateOverviewSpecific() {
         String[] headline = generateHeadline(context, miscellaneous, senior, false);
 
@@ -780,6 +792,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return base;
     }
 
+    @Nullable
     TextView createBlankTextView() {
         TextView hour = new TextView(context);
         hour.setTypeface(hour.getTypeface(), Typeface.BOLD);
@@ -789,6 +802,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return hour;
     }
 
+    @Nullable
     private ListView substitutionListView;
 
     //All ListView
@@ -796,7 +810,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         String[][] content;
         boolean sons;
 
-        public SubstitutionListAdapterAll(Context con, int resource, String[][] content, boolean sons) {
+        public SubstitutionListAdapterAll(@NonNull Context con, int resource, String[][] content, boolean sons) {
             super(con, resource);
             this.content = content;
             this.sons = sons;
@@ -804,7 +818,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         @NotNull
         @Override
-        public View getView(int position, View convertView, @NotNull ViewGroup parent) {
+        public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_substitution_all_entry, null);
             }
@@ -817,7 +831,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private View getEntryAll(View view, String[] entry, boolean miscellaneous) {
+    @NonNull
+    private View getEntryAll(@NonNull View view, String[] entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_all_entry_textViewCourse);
         course.setText(entry[0]);
         course.setOnClickListener((View v) -> {
@@ -862,7 +877,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Pop up menu for adding course to profile
-    public void showPopup(View v, String course) {
+    public void showPopup(@NonNull View v, @NonNull String course) {
         ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
         PopupMenu popup = new PopupMenu(theme, v);
         popup.setOnMenuItemClickListener((MenuItem item) -> {
@@ -878,7 +893,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         popup.show();
     }
 
-    private void addToProfile(String course) {
+    private void addToProfile(@NonNull String course) {
         if (ApplicationFeatures.addCourseToSelectedProfile(course.trim())) {
             ProfileManagement.save(true);
             ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh, "");
@@ -892,7 +907,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         boolean sons;
         boolean old;
 
-        SubstitutionListAdapterSpecific(Context con, int resource, String[][] content, boolean sons, boolean old) {
+        SubstitutionListAdapterSpecific(@NonNull Context con, int resource, String[][] content, boolean sons, boolean old) {
             super(con, resource);
             this.content = content;
             this.sons = sons;
@@ -901,7 +916,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         @NotNull
         @Override
-        public View getView(int position, View convertView, @NotNull ViewGroup parent) {
+        public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (old) {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_substitution_specific_entry, null);
@@ -922,7 +937,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     }
 
-    public View getEntrySpecific(View view, String[] entry, boolean senior, boolean miscellaneous) {
+    @NonNull
+    public View getEntrySpecific(@NonNull View view, String[] entry, boolean senior, boolean miscellaneous) {
         TextView hour = view.findViewById(R.id.substitution_specific_entry_textViewHour);
         hour.setText(entry[1]);
         hour.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
@@ -982,7 +998,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
-    private View getEntrySpecificNewDesign(View view, String[] entry, boolean miscellaneous) {
+    @NonNull
+    private View getEntrySpecificNewDesign(@NonNull View view, String[] entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_card_entry_textViewClass);
         course.setText(entry[0]);
 

@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -40,10 +42,12 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     private int step = 0;
     private int nextStep = 0;
     private View root;
+    @Nullable
     private Context context;
 
     private FloatingActionButton fab;
 
+    @Nullable
     private ChoiceActivity mainActivity;
 
     public ChoiceActivityFragment() {
@@ -228,7 +232,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         int id = view.getId();
         if (id == R.id.choice_fab) {
             fabClicked();
@@ -401,7 +405,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                                       int count, int after) {
         }
 
-        public void onTextChanged(CharSequence s, int start,
+        public void onTextChanged(@NonNull CharSequence s, int start,
                                   int before, int count) {
             if (s.length() != 0) {
                 if (step != 5) {
@@ -422,7 +426,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+    public boolean onEditorAction(@NonNull TextView textView, int i, KeyEvent keyEvent) {
         if (i == EditorInfo.IME_ACTION_DONE) {
             int id = textView.getId();
             if (step == 1) {

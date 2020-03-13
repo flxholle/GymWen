@@ -86,6 +86,7 @@ import saschpe.android.customtabs.WebViewFallback;
 
 
 public abstract class ActivityFeatures extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+    @NonNull
     public Context getContext() {
         return this;
     }
@@ -232,7 +233,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                     .setButtonUpdate(R.string.update_now)
                     .setButtonUpdateClickListener(new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                        public void onClick(@NonNull DialogInterface dialogInterface, int i) {
                             try {
                                 String apkUrl = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
                                 startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
@@ -275,7 +276,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         }
     }
 
-    public void createLoadingPanel(ViewGroup view) {
+    public void createLoadingPanel(@NonNull ViewGroup view) {
         Context context = ApplicationFeatures.getContext();
         FrameLayout base = new FrameLayout(context);
         base.setBackgroundColor(ApplicationFeatures.getBackgroundColor(this));
@@ -335,7 +336,8 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         view.addView(base);
     }
 
-    public View getTeacherView(View view, String[] entry) {
+    @NonNull
+    public View getTeacherView(@NonNull View view, String[] entry) {
         TextView kuerzel = view.findViewById(R.id.teacher_kürzel);
         kuerzel.setText(entry[0]);
 
@@ -390,7 +392,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         return view;
     }
 
-    public boolean startApp(String... packageNames) {
+    public boolean startApp(@NonNull String... packageNames) {
         Intent intent = null;
         for (String s : packageNames) {
             intent = getPackageManager().getLaunchIntentForPackage(s);
@@ -402,7 +404,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         return false;
     }
 
-    public boolean openAppInStore(String... packageNames) {
+    public boolean openAppInStore(@NonNull String... packageNames) {
         boolean run = false;
         for (String s : packageNames) {
             try {
@@ -546,7 +548,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         }
 
         @Override
-        public void onReceive(Context ctxt, Intent intent) {
+        public void onReceive(Context ctxt, @NonNull Intent intent) {
             //Fetching the download id received with the broadcast
             long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
             if (downloadID == id) {
@@ -557,6 +559,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         }
     }
 
+    @NonNull
     BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
             Intent i = new Intent(getContext(), MainActivity.class);
@@ -567,7 +570,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
 
     //Apk Installer
-    public void installApk(String path) {
+    public void installApk(@NonNull String path) {
         File apkFile = new File(path);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", apkFile);
@@ -606,7 +609,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     }
 
     @Override
-    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+    public void onTimeSet(@NonNull TimePickerDialog view, int hourOfDay, int minute, int second) {
         PreferenceUtil.setAlarmTime(hourOfDay, minute, second);
         ApplicationFeatures.setAlarm(this, AlarmReceiver.class, hourOfDay, minute, second);
         view.dismiss();
@@ -641,6 +644,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         }
     }
 
+    @NonNull
     BroadcastReceiver openGradesFile = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
             openGradesFile();
@@ -764,7 +768,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     //after the user has selected a location you get an uri where you can write your data to:
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SOME_INTEGER && resultCode == Activity.RESULT_OK) {
             Uri uri = data.getData();

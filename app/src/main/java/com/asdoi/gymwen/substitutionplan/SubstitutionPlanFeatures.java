@@ -3,6 +3,8 @@ package com.asdoi.gymwen.substitutionplan;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -50,6 +52,7 @@ public abstract class SubstitutionPlanFeatures {
     public static final int tomorrowCode = 2;
     public static final int futureCode = 3;
 
+    @NonNull
     private static SubstitutionPlan substitutionPlan = new SubstitutionPlan();
 
     public static void setContext(Context context) {
@@ -64,6 +67,7 @@ public abstract class SubstitutionPlanFeatures {
         }
     }
 
+    @NonNull
     public static SubstitutionPlan createTempSubstitutionplan(boolean hours, String[] courses) {
         SubstitutionPlan temp = new SubstitutionPlan(hours, courses);
         temp.setDocs(substitutionPlan.getDoc(true), substitutionPlan.getDoc(false));
@@ -79,50 +83,62 @@ public abstract class SubstitutionPlanFeatures {
         return substitutionPlan == null;
     }
 
+    @Nullable
     public static String[][] getTodayArray() {
         return substitutionPlan.getDay(true);
     }
 
+    @Nullable
     public static String[][] getTomorrowArray() {
         return substitutionPlan.getDay(false);
     }
 
+    @Nullable
     public static String[][] getTodayArraySummarized() {
         return SubstitutionPlan.summarizeArray(getTodayArray(), 1, "-");
     }
 
+    @Nullable
     public static String[][] getTomorrowArraySummarized() {
         return SubstitutionPlan.summarizeArray(getTomorrowArray(), 1, "-");
     }
 
+    @Nullable
     public static String[][] getTodayArrayAll() {
         return substitutionPlan.getAll(true);
     }
 
+    @Nullable
     public static String[][] getTomorrowArrayAll() {
         return substitutionPlan.getAll(false);
     }
 
+    @Nullable
     public static String[][] getTodayArrayAllSummarized() {
         return SubstitutionPlan.summarizeArray(getTodayArrayAll(), 1, "-");
     }
 
+    @Nullable
     public static String[][] getTomorrowArrayAllSummarized() {
         return SubstitutionPlan.summarizeArray(getTomorrowArrayAll(), 1, "-");
     }
 
+    @NonNull
     public static String getTodayTitle() {
         return substitutionPlan.getTitleString(true);
     }
 
+    @NonNull
     public static String getTomorrowTitle() {
         return substitutionPlan.getTitleString(false);
     }
 
+    @Nullable
     public static String[] getTodayTitleArray() {
         return substitutionPlan.getTitleArray(true);
     }
 
+    @Nullable
     public static String[] getTomorrowTitleArray() {
         return substitutionPlan.getTitleArray(false);
     }
@@ -196,6 +212,7 @@ public abstract class SubstitutionPlanFeatures {
         return false;
     }
 
+    @Nullable
     public static ArrayList<String> getNames() {
         return substitutionPlan.getCourses();
     }
@@ -212,6 +229,7 @@ public abstract class SubstitutionPlanFeatures {
         return false;
     }
 
+    @NonNull
     public static String[] getNothing() {
         return External_Const.nothing;
     }

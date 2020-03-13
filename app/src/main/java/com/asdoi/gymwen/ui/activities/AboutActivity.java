@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
@@ -44,41 +45,58 @@ import butterknife.ButterKnife;
 @SuppressWarnings("FieldCanBeLocal")
 public class AboutActivity extends ActivityFeatures implements View.OnClickListener {
 
+    @NonNull
     private static String GITLAB = "https://gitlab.com/asdoi/GymWen/";
 
+    @NonNull
     private static String WEBSITE = "https://asdoi.gitlab.io/";
 
+    @NonNull
     private static String BUGSITE = "https://gitlab.com/asdoi/GymWen/issues";
 
+    @Nullable
     @BindView(R.id.app_version)
     TextView appVersion;
+    @Nullable
     @BindView(R.id.share)
     LinearLayout share;
+    @Nullable
     @BindView(R.id.changelog)
     LinearLayout changelog;
+    @Nullable
     @BindView(R.id.intro)
     LinearLayout intro;
+    @Nullable
     @BindView(R.id.fork_on_github)
     LinearLayout forkOnGitHub;
+    @Nullable
     @BindView(R.id.privacy)
     LinearLayout privacy;
+    @Nullable
     @BindView(R.id.licenses)
     LinearLayout licenses;
+    @Nullable
     @BindView(R.id.image_sources)
     LinearLayout image_sources;
+    @Nullable
     @BindView(R.id.libs)
     LinearLayout libs;
 
+    @Nullable
     @BindView(R.id.write_an_email)
     LinearLayout writeAnEmail;
+    @Nullable
     @BindView(R.id.visit_website)
     LinearLayout visitWebsite;
+    @Nullable
     @BindView(R.id.colorush)
     LinearLayout colorush;
 
+    @Nullable
     @BindView(R.id.report_bugs)
     LinearLayout reportBugs;
 
+    @Nullable
     @BindView(R.id.imprint)
     LinearLayout imprint;
 
@@ -105,7 +123,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
     public static class Fragment1 extends Fragment {
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             return inflater.inflate(R.layout.content_about, container, false);
         }

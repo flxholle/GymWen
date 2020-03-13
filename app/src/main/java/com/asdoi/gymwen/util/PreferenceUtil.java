@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
@@ -135,21 +137,25 @@ public class PreferenceUtil {
 
 
     //SubstitutionPlan
+    @Nullable
     public static String getUsername(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("username", "");
     }
 
+    @Nullable
     public static String getPassword(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("password", "");
     }
 
+    @Nullable
     public static String getTodayURL(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("today_url", External_Const.todayURL);
     }
 
+    @Nullable
     public static String getTomorrowURL(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("tomorrow_url", External_Const.tomorrowURL);
@@ -160,6 +166,7 @@ public class PreferenceUtil {
     }
 
     //Teacherlist
+    @Nullable
     public static String getTeacherlistURL(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("teacherlist_url", External_Const.teacherlistUrl);
@@ -167,12 +174,13 @@ public class PreferenceUtil {
 
 
     //Other
+    @NonNull
     public static int[] getAlarmTime() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         return new int[]{sharedPref.getInt("Alarm_hour", -1), sharedPref.getInt("Alarm_minute", -1), sharedPref.getInt("Alarm_second", -1)};
     }
 
-    public static void setAlarmTime(int... times) {
+    public static void setAlarmTime(@NonNull int... times) {
         if (times.length != 3) {
             if (times.length > 0 && times[0] == 0) {
                 setAlarm(ApplicationFeatures.getContext(), false);
@@ -206,7 +214,7 @@ public class PreferenceUtil {
     }
 
     @StyleRes
-    private static int getThemeResFromPrefValue(String themePrefValue) {
+    private static int getThemeResFromPrefValue(@NonNull String themePrefValue) {
         switch (themePrefValue) {
             case "dark":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);

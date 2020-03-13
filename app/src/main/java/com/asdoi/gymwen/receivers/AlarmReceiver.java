@@ -4,12 +4,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.util.PreferenceUtil;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(@Nullable Context context, @NonNull Intent intent) {
         System.out.println("triggered alarm");
 
         if (intent.getAction() != null && context != null) {

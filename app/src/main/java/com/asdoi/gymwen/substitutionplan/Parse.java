@@ -1,5 +1,8 @@
 package com.asdoi.gymwen.substitutionplan;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -25,7 +28,8 @@ abstract class Parse {
      * @return an array with all information of the title of the substitution plan, with the length 3!
      * @see SubstitutionPlan where it will be sorted in method getTitleArray()
      */
-    protected static String[] getTitleArrayUnsorted(Document doc) {
+    @NonNull
+    protected static String[] getTitleArrayUnsorted(@Nullable Document doc) {
 
         if (doc == null) {
 //            System.out.println("Authentication failed! at getting Title");
@@ -63,6 +67,7 @@ abstract class Parse {
      * @return an unsorted String with all the analyzed information separated by " "
      * @see #getTitleArrayUnsorted
      */
+    @Nullable
     protected static String getTitleAsStringUnsorted(Document doc) {
         try {
             String[] dayTitle = Parse.getTitleArrayUnsorted(doc);
@@ -93,6 +98,7 @@ abstract class Parse {
      * @see #getTitleArrayUnsorted
      */
     //Date, DateName, WeekNr
+    @Nullable
     protected static String[] getTitleArraySorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
             String[] day = new String[3];
@@ -262,6 +268,7 @@ abstract class Parse {
      * @return an sorted String with all the analyzed information separated by " "
      * @see #getTitleDayCode
      */
+    @Nullable
     protected static String getTitleStringSorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
             String[] dayTitle = getTitleArraySorted(doc, showWeekdates, today, tomorrow, laterDay);
@@ -295,7 +302,8 @@ abstract class Parse {
      * @param date Date
      * @return param Date with removed time (only the day).
      */
-    private static Date removeTime(Date date) {
+    @NonNull
+    private static Date removeTime(@NonNull Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -313,7 +321,8 @@ abstract class Parse {
      * @return an tow-dimensional String array with every entry of the plan in the html-doc. An entry has the same order like the plan in the doc. My one looks like this: new String[]{class, hour, subject, sit-in, room, moreInformation}
      */
     //All
-    protected static String[][] getSubstitutionList(Document doc) {
+    @Nullable
+    protected static String[][] getSubstitutionList(@Nullable Document doc) {
 
         if (doc == null) {
             System.out.println("Document is null");
@@ -371,7 +380,8 @@ abstract class Parse {
      * @see #getSubstitutionList
      */
     //specific
-    protected static String[][] getSubstitutionList(Document doc, boolean senior, ArrayList<String> classNames) {
+    @Nullable
+    protected static String[][] getSubstitutionList(@Nullable Document doc, boolean senior, @Nullable ArrayList<String> classNames) {
         if (doc == null || classNames == null) {
             return null;
         }
@@ -484,7 +494,8 @@ abstract class Parse {
      * @param length the length the returned array should have
      * @return array with all entries after the length parameter deleted
      */
-    private static String[] removeValues(String[] array, int length) {
+    @NonNull
+    private static String[] removeValues(@NonNull String[] array, int length) {
         int multplier = 2;
         String[] returnValue = new String[length];
         int j = 0;
