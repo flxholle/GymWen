@@ -100,6 +100,7 @@
     <string name="day_past">(Vergangen)</string>
     <string name="with_teacher">bei</string>
     <string name="missing_short" translatable="false">entf</string>
+    <string name="add_to_my_courses">Zu meinen Kursen hinzufügen</string>
 
     <!--    Table-->
     <string name="classes">Klasse</string>
