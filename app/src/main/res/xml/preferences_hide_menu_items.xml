@@ -5,7 +5,7 @@
         android:defaultValue="true"
         android:key="menu_both"
         android:summary="@string/set_desc_both"
-        android:title="@string/menu_both"
+        android:title="@string/menu_at_one_glance"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"

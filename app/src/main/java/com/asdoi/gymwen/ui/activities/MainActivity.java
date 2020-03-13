@@ -123,7 +123,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         initSpinner();
 
         if (!SubstitutionPlanFeatures.isUninit()) {
-            onNavigationItemSelected(R.id.nav_both);
+            onNavigationItemSelected(R.id.nav_at_one_glance);
 //            navigationView.getMenu().getItem(0).setChecked(true);
         }
         toggle.syncState();
@@ -232,10 +232,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsEnable.add(menu.findItem(R.id.nav_grades));
         }
 
-        if (PreferenceUtil.isBothMenu()) {
-            itemsEnable.add(menu.findItem(R.id.nav_both));
+        if (PreferenceUtil.isAtOneGlanceMenu()) {
+            itemsEnable.add(menu.findItem(R.id.nav_at_one_glance));
         } else
-            itemsDisable.add(menu.findItem(R.id.nav_both));
+            itemsDisable.add(menu.findItem(R.id.nav_at_one_glance));
 
         if (PreferenceUtil.isOfficeMenu())
             itemsEnable.add(menu.findItem(R.id.nav_call_office));
@@ -419,9 +419,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         switch (id) {
             default:
-            case R.id.nav_both:
+            case R.id.nav_at_one_glance:
                 setVisibilitySpinner(true);
-                fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Both);
+                fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
                 setDesignChangerVisibility(true);
 //                fragment = new WidgetFragment();
                 break;
@@ -568,7 +568,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         break;
                     default:
                         ApplicationFeatures.deleteOfflineSubstitutionDocs();
-                        fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Both);
+                        fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
                         break;
                 }
                 break;
@@ -584,7 +584,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         fragment = new TeacherListFragment();
                         break;
                     default:
-                        fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Both);
+                        fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
                         break;
                 }
                 break;
