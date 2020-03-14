@@ -23,7 +23,7 @@ public class PreferenceUtil {
         return sharedPref.getBoolean(key, defaultValue);
     }
 
-    private static boolean getBooleanSettings(String key, boolean defaultValue) {
+    public static boolean getBooleanSettings(String key, boolean defaultValue) {
         return ApplicationFeatures.getBooleanSettings(key, defaultValue);
     }
 
@@ -47,7 +47,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("show_full_names_specific", true);
     }
 
-    private static void setAlarm(@NonNull Context context, boolean value) {
+    public static void setAlarm(@NonNull Context context, boolean value) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("alarm", value);
         editor.commit();

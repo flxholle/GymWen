@@ -22,10 +22,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public class SignInActivity extends ActivityFeatures implements View.OnClickListener {
-    private ViewGroup loading;
-    private Button signInButton;
-    private String username;
-    private String password;
+    ViewGroup loading;
+    Button signInButton;
+    String username;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,14 +98,14 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         })).start();
     }
 
-    private void signIn(boolean successful) {
+    void signIn(boolean successful) {
         if (successful)
             signInSuccess();
         else
             signInFailure();
     }
 
-    private void signInSuccess() {
+    void signInSuccess() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -119,7 +119,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         finish();
     }
 
-    private void signInFailure() {
+    void signInFailure() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -132,7 +132,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         });
     }
 
-    private void setSettings(String username, String password) {
+    void setSettings(String username, String password) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -142,7 +142,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         editor.apply();
     }
 
-    private boolean signedInBefore() {
+    boolean signedInBefore() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         return sharedPref.getBoolean("signed", false);
     }

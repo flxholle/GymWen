@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Class that parses the substitution plan, it gets information like title and entries
@@ -30,7 +29,7 @@ abstract class Parse {
      * @see SubstitutionPlan where it will be sorted in method getTitleArray()
      */
     @NonNull
-    private static String[] getTitleArrayUnsorted(@Nullable Document doc) {
+    protected static String[] getTitleArrayUnsorted(@Nullable Document doc) {
 
         if (doc == null) {
 //            System.out.println("Authentication failed! at getting Title");
@@ -69,7 +68,7 @@ abstract class Parse {
      * @see #getTitleArrayUnsorted
      */
     @Nullable
-    private static String getTitleAsStringUnsorted(Document doc) {
+    protected static String getTitleAsStringUnsorted(Document doc) {
         try {
             String[] dayTitle = Parse.getTitleArrayUnsorted(doc);
             StringBuilder returnValue = new StringBuilder();
@@ -100,7 +99,7 @@ abstract class Parse {
      */
     //Date, DateName, WeekNr
     @Nullable
-    static String[] getTitleArraySorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
+    protected static String[] getTitleArraySorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
             String[] day = new String[3];
             Arrays.fill(day, "");
@@ -137,7 +136,7 @@ abstract class Parse {
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
                 SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
 
-                Date startDate = removeTime(Objects.requireNonNull(df.parse(day[0])));
+                Date startDate = removeTime(df.parse(day[0]));
 
                 day[1] = simpleDateformat.format(startDate);
                 Date currentDate = removeTime(new Date());
@@ -213,7 +212,7 @@ abstract class Parse {
         }
     }
 
-    static int getTitleDayCode(Document doc, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
+    protected static int getTitleDayCode(Document doc, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
         try {
             //Weekday
             try {
@@ -221,7 +220,7 @@ abstract class Parse {
                 SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
 
                 String[] day = getTitleArraySorted(doc, false, "", "", "");
-                Date startDate = removeTime(Objects.requireNonNull(df.parse(Objects.requireNonNull(day)[0])));
+                Date startDate = removeTime(df.parse(day[0]));
 
                 day[1] = simpleDateformat.format(startDate);
                 Date currentDate = removeTime(new Date());
@@ -270,7 +269,7 @@ abstract class Parse {
      * @see #getTitleDayCode
      */
     @Nullable
-    static String getTitleStringSorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
+    protected static String getTitleStringSorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
             String[] dayTitle = getTitleArraySorted(doc, showWeekdates, today, tomorrow, laterDay);
             if (dayTitle == null || dayTitle.equals("") || dayTitle.length <= 0) {
@@ -323,7 +322,7 @@ abstract class Parse {
      */
     //All
     @Nullable
-    static String[][] getSubstitutionList(@Nullable Document doc) {
+    protected static String[][] getSubstitutionList(@Nullable Document doc) {
 
         if (doc == null) {
             System.out.println("Document is null");
@@ -382,7 +381,7 @@ abstract class Parse {
      */
     //specific
     @Nullable
-    static String[][] getSubstitutionList(@Nullable Document doc, boolean senior, @Nullable ArrayList<String> classNames) {
+    protected static String[][] getSubstitutionList(@Nullable Document doc, boolean senior, @Nullable ArrayList<String> classNames) {
         if (doc == null || classNames == null) {
             return null;
         }

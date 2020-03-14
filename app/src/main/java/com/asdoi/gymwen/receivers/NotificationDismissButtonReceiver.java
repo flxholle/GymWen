@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 
-import java.util.Objects;
-
 public class NotificationDismissButtonReceiver extends BroadcastReceiver {
 
     @Override
@@ -18,7 +16,7 @@ public class NotificationDismissButtonReceiver extends BroadcastReceiver {
         // if you want cancel notification
         try {
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            Objects.requireNonNull(manager).cancel(ApplicationFeatures.NOTIFICATION_ID);
+            manager.cancel(ApplicationFeatures.NOTIFICATION_ID);
             manager.cancel(ApplicationFeatures.NOTIFICATION_ID_2);
         } catch (Exception e) {
             e.printStackTrace();

@@ -17,7 +17,6 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class ColoRushFragment extends Fragment implements View.OnClickListener {
     private SliderLayout mDemoSlider;
@@ -64,11 +63,11 @@ public class ColoRushFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.colorush_app:
                 //Check the two notes versions
-                if (!((ActivityFeatures) Objects.requireNonNull(getActivity())).startApp(External_Const.coloRush_packageNames))
+                if (!((ActivityFeatures) getActivity()).startApp(External_Const.coloRush_packageNames))
                     ((ActivityFeatures) getActivity()).tabIntent(External_Const.downloadApp_colorush);
                 break;
             case R.id.colorush_online:
-                ((ActivityFeatures) Objects.requireNonNull(getActivity())).tabIntent(External_Const.colorush_online);
+                ((ActivityFeatures) getActivity()).tabIntent(External_Const.colorush_online);
                 break;
         }
     }

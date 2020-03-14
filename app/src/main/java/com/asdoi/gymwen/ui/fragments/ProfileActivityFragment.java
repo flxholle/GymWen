@@ -28,8 +28,6 @@ import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 public class ProfileActivityFragment extends Fragment {
     private ProfileListAdapter adapter;
 
@@ -41,7 +39,7 @@ public class ProfileActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        adapter = new ProfileListAdapter(Objects.requireNonNull(getContext()), 0);
+        adapter = new ProfileListAdapter(getContext(), 0);
         ((ListView) root.findViewById(R.id.profile_list)).setAdapter(adapter);
 
         root.findViewById(R.id.profile_add_button).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
@@ -54,7 +52,7 @@ public class ProfileActivityFragment extends Fragment {
 
     private class ProfileListAdapter extends ArrayAdapter<String[]> {
 
-        ProfileListAdapter(@NonNull Context con, int resource) {
+        public ProfileListAdapter(@NonNull Context con, int resource) {
             super(con, resource);
         }
 
@@ -96,8 +94,8 @@ public class ProfileActivityFragment extends Fragment {
         }
     }
 
-    private void openAddDialog() {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(Objects.requireNonNull(getActivity()));
+    public void openAddDialog() {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
         builder.title(getString(R.string.profiles_add));
 
         // Set up the input
@@ -105,7 +103,7 @@ public class ProfileActivityFragment extends Fragment {
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setHint(getString(R.string.name));
-        input.setHighlightColor(ApplicationFeatures.getAccentColor(Objects.requireNonNull(getContext())));
+        input.setHighlightColor(ApplicationFeatures.getAccentColor(getContext()));
 //        input.setColor
         builder.customView(input, true);
 
@@ -117,13 +115,13 @@ public class ProfileActivityFragment extends Fragment {
                 Bundle extras = new Bundle();
                 extras.putBoolean("parents", true);
                 if (input.getText().toString().trim().isEmpty())
-                    extras.putString("name", Objects.requireNonNull(getContext()).getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1));
+                    extras.putString("name", getContext().getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1));
                 else
                     extras.putString("name", input.getText().toString());
                 extras.putBoolean("profileAdd", true);
 
                 mIntent.putExtras(extras);
-                Objects.requireNonNull(getActivity()).startActivity(mIntent);
+                getActivity().startActivity(mIntent);
                 getActivity().finish();
                 dialog.dismiss();
             }
@@ -143,8 +141,8 @@ public class ProfileActivityFragment extends Fragment {
         builder.build().show();
     }
 
-    private void openEditDialog(int position) {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(Objects.requireNonNull(getContext()));
+    public void openEditDialog(int position) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
         builder.title(getString(R.string.profiles_edit));
 
         // Set up the input
@@ -201,8 +199,8 @@ public class ProfileActivityFragment extends Fragment {
         builder.show();
     }
 
-    private void openDeleteDialog(int position) {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(Objects.requireNonNull(getContext()));
+    public void openDeleteDialog(int position) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
         builder.title(getString(R.string.profiles_delete_submit_heading));
 
         LinearLayout base = new LinearLayout(getContext());

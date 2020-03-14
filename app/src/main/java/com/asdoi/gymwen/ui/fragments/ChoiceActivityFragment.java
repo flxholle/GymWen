@@ -36,7 +36,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ChoiceActivityFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -69,7 +68,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
             default:
             case 1:
                 root = inflater.inflate(R.layout.fragment_firstchoice, container, false);
-                if (Objects.requireNonNull(mainActivity).getParents()) {
+                if (mainActivity.getParents()) {
                     root.findViewById(R.id.choice_button_parents).setVisibility(View.GONE);
                     addSpinner();
                 }
@@ -85,7 +84,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 break;
             case 5:
                 root = inflater.inflate(R.layout.fragment_fifthchoice, container, false);
-                root.findViewById(R.id.choice_button_add_more_courses).setBackgroundColor(ApplicationFeatures.getAccentColor(Objects.requireNonNull(getContext())));
+                root.findViewById(R.id.choice_button_add_more_courses).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
         }
 
         initControls();
@@ -143,7 +142,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
 
-    private int quantitiyCourses = 0;
+    int quantitiyCourses = 0;
 
     private void generateStep5() {
         for (int i = 0; i < SubstitutionPlanFeatures.choiceCourseNames.length; i++) {
@@ -170,11 +169,11 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         box.setText(courseName);
         box.setId(quantitiyCourses + 130);
         if (android.os.Build.VERSION.SDK_INT >= 21)
-            box.setButtonTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(Objects.requireNonNull(getContext()))));
+            box.setButtonTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(getContext())));
         box.setOnClickListener(this);
         box.setChecked(true);
 
-        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(Objects.requireNonNull(context));
+        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         inputLayout.setLayoutParams(params);
 
@@ -185,7 +184,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         inputText.setId(quantitiyCourses + 1300);
         inputText.setOnEditorActionListener(this);
         inputText.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
-        inputText.setText(Objects.requireNonNull(mainActivity).getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
+        inputText.setText(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
 //        inputText.setHint(mainActivity.getCourseFirstDigit() + courseShort + mainActivity.getCourseMainDigit());
         inputText.addTextChangedListener(new MyTextWatcher(inputText));
 
@@ -215,7 +214,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
     private void finishSenior() {
         if (checkIfEmpty()) {
-            ChocoBar.builder().setActivity(Objects.requireNonNull(getActivity())).setText(getString(R.string.senior_empty)).setDuration(ChocoBar.LENGTH_LONG).build().show();
+            ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.senior_empty)).setDuration(ChocoBar.LENGTH_LONG).build().show();
         } else {
             StringBuilder senior = new StringBuilder();
             for (int i = 0; i < quantitiyCourses; i++) {
@@ -227,7 +226,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 }
             }
             senior = new StringBuilder(senior.substring(0, senior.length() - 1));
-            Objects.requireNonNull(mainActivity).setCourses(senior.toString());
+            mainActivity.setCourses(senior.toString());
             mainActivity.setFragment(10);
         }
     }
@@ -243,31 +242,31 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     nextStep = 3;
                     break;
                 case R.id.choice_button_5:
-                    Objects.requireNonNull(mainActivity).setCourses("5");
+                    mainActivity.setCourses("5");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_6:
-                    Objects.requireNonNull(mainActivity).setCourses("6");
+                    mainActivity.setCourses("6");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_7:
-                    Objects.requireNonNull(mainActivity).setCourses("7");
+                    mainActivity.setCourses("7");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_8:
-                    Objects.requireNonNull(mainActivity).setCourses("8");
+                    mainActivity.setCourses("8");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_9:
-                    Objects.requireNonNull(mainActivity).setCourses("9");
+                    mainActivity.setCourses("9");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_10:
-                    Objects.requireNonNull(mainActivity).setCourses("10");
+                    mainActivity.setCourses("10");
                     nextStep = 2;
                     break;
                 case R.id.choice_button_parents:
-                    Objects.requireNonNull(mainActivity).setParents(true);
+                    mainActivity.setParents(true);
                     openAddDialog();
                     root.findViewById(R.id.choice_button_parents).setVisibility(View.GONE);
 //                    Snackbar snackbar = Snackbar
@@ -279,38 +278,38 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
             switch (id) {
                 //Step 2
                 case R.id.choice_button_A:
-                    Objects.requireNonNull(mainActivity).setCourses(mainActivity.getCourses() + "a");
+                    mainActivity.setCourses(mainActivity.getCourses() + "a");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_B:
-                    Objects.requireNonNull(mainActivity).setCourses(mainActivity.getCourses() + "b");
+                    mainActivity.setCourses(mainActivity.getCourses() + "b");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_C:
-                    Objects.requireNonNull(mainActivity).setCourses(mainActivity.getCourses() + "c");
+                    mainActivity.setCourses(mainActivity.getCourses() + "c");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_D:
-                    Objects.requireNonNull(mainActivity).setCourses(mainActivity.getCourses() + "d");
+                    mainActivity.setCourses(mainActivity.getCourses() + "d");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_E:
-                    Objects.requireNonNull(mainActivity).setCourses(mainActivity.getCourses() + "e");
+                    mainActivity.setCourses(mainActivity.getCourses() + "e");
                     nextStep = 10;
                     break;
                 case R.id.choice_button_F:
-                    Objects.requireNonNull(mainActivity).setCourses(mainActivity.getCourses() + "f");
+                    mainActivity.setCourses(mainActivity.getCourses() + "f");
                     nextStep = 10;
                     break;
             }
         } else if (step == 3) {
             switch (id) {//Step 3
                 case R.id.choice_button_1:
-                    Objects.requireNonNull(mainActivity).setCourseFirstDigit("1");
+                    mainActivity.setCourseFirstDigit("1");
                     nextStep = 4;
                     break;
                 case R.id.choice_button_2:
-                    Objects.requireNonNull(mainActivity).setCourseFirstDigit("2");
+                    mainActivity.setCourseFirstDigit("2");
                     nextStep = 4;
                     break;
             }
@@ -328,7 +327,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                             ((EditText) root.findViewById(id + (1300 - 130))).setText("");
 
                         } else {
-                            ((EditText) root.findViewById(id + (1300 - 130))).setText(Objects.requireNonNull(mainActivity).getCourseFirstDigit() + getString(R.string.anyShort) + mainActivity.getCourseMainDigit());
+                            ((EditText) root.findViewById(id + (1300 - 130))).setText(mainActivity.getCourseFirstDigit() + getString(R.string.anyShort) + mainActivity.getCourseMainDigit());
                         }
                     }
                     break;
@@ -336,13 +335,13 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         }
 
         if (nextStep > step) {
-            Objects.requireNonNull(mainActivity).setFragment(nextStep);
+            mainActivity.setFragment(nextStep);
         }
 
     }
 
-    private void openAddDialog() {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(Objects.requireNonNull(context));
+    public void openAddDialog() {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
         builder.title(context.getString(R.string.profiles_add));
 
         // Set up the input
@@ -357,9 +356,9 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     @Override
                     public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
                         if (input.getText().toString().trim().isEmpty())
-                            Objects.requireNonNull(mainActivity).setName(context.getString(R.string.profile_empty_name));
+                            mainActivity.setName(context.getString(R.string.profile_empty_name));
                         else
-                            Objects.requireNonNull(mainActivity).setName(input.getText().toString());
+                            mainActivity.setName(input.getText().toString());
                         addSpinner();
                         dialog.dismiss();
                     }
@@ -368,7 +367,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                        Objects.requireNonNull(mainActivity).setName(context.getString(R.string.profile_empty_name));
+                        mainActivity.setName(context.getString(R.string.profile_empty_name));
                         dialog.dismiss();
                         addSpinner();
                     }
@@ -378,9 +377,9 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
     private void addSpinner() {
-        Objects.requireNonNull(getActivity()).findViewById(R.id.choice_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(Objects.requireNonNull(getContext())));
+        getActivity().findViewById(R.id.choice_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(getContext()));
 
-        Spinner parentSpinner = Objects.requireNonNull(mainActivity).findViewById(R.id.choice_parent_spinner);
+        Spinner parentSpinner = mainActivity.findViewById(R.id.choice_parent_spinner);
         parentSpinner.setVisibility(View.VISIBLE);
         parentSpinner.setEnabled(true);
         List<String> list = new ArrayList<String>();
@@ -395,7 +394,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
         private EditText mEditText;
 
-        MyTextWatcher(EditText editText) {
+        public MyTextWatcher(EditText editText) {
             mEditText = editText;
         }
 
@@ -477,7 +476,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         fab.setOnClickListener(this);
     }
 
-    private void fabClicked() {
+    public void fabClicked() {
         if (step == 1) {
             if (!((EditText) root.findViewById(R.id.choice_more_classes)).getText().toString().replaceAll(" ", "").isEmpty()) {
                 String s = ((EditText) root.findViewById(R.id.choice_more_classes)).getText().toString().replaceAll(" ", "");
@@ -490,10 +489,10 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     }
                 }
                 if (correctType) {
-                    Objects.requireNonNull(mainActivity).setCourses("" + s);
+                    mainActivity.setCourses("" + s);
                     nextStep = 2;
                 } else {
-                    ChocoBar.builder().setActivity(Objects.requireNonNull(getActivity())).setText(getString(R.string.please_insert_digit)).setDuration(ChocoBar.LENGTH_LONG).build().show();
+                    ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.please_insert_digit)).setDuration(ChocoBar.LENGTH_LONG).build().show();
                 }
             }
         } else if (step == 2) {
@@ -508,10 +507,10 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     }
                 }
                 if (correctType) {
-                    Objects.requireNonNull(mainActivity).setCourses(mainActivity.getCourses() + ((EditText) root.findViewById(R.id.choice_more_letters)).getText().toString().replaceAll(" ", ""));
+                    mainActivity.setCourses(mainActivity.getCourses() + ((EditText) root.findViewById(R.id.choice_more_letters)).getText().toString().replaceAll(" ", ""));
                     nextStep = 10;
                 } else {
-                    ChocoBar.builder().setActivity(Objects.requireNonNull(getActivity())).setText(getString(R.string.please_insert_letter)).setDuration(ChocoBar.LENGTH_LONG).build().show();
+                    ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.please_insert_letter)).setDuration(ChocoBar.LENGTH_LONG).build().show();
                 }
             }
 
@@ -527,10 +526,10 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     }
                 }
                 if (correctType) {
-                    Objects.requireNonNull(mainActivity).setCourseFirstDigit("" + s);
+                    mainActivity.setCourseFirstDigit("" + s);
                     nextStep = 4;
                 } else {
-                    ChocoBar.builder().setActivity(Objects.requireNonNull(getActivity())).setText(getString(R.string.please_insert_digit)).setDuration(ChocoBar.LENGTH_LONG).build().show();
+                    ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.please_insert_digit)).setDuration(ChocoBar.LENGTH_LONG).build().show();
                 }
             }
         } else if (step == 4) {
@@ -545,10 +544,10 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
                     }
                 }
                 if (correctType) {
-                    Objects.requireNonNull(mainActivity).setCourseMainDigit("" + s);
+                    mainActivity.setCourseMainDigit("" + s);
                     nextStep = 5;
                 } else {
-                    ChocoBar.builder().setActivity(Objects.requireNonNull(getActivity())).setText(getString(R.string.please_insert_digit)).setDuration(ChocoBar.LENGTH_LONG).build().show();
+                    ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.please_insert_digit)).setDuration(ChocoBar.LENGTH_LONG).build().show();
                 }
             }
         } else if (step == 5) {
@@ -556,7 +555,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         }
 
         if (nextStep > step) {
-            Objects.requireNonNull(mainActivity).setFragment(nextStep);
+            mainActivity.setFragment(nextStep);
         }
     }
 }

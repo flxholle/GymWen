@@ -12,20 +12,18 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.External_Const;
 
-import java.util.Objects;
-
 public class SettingsFragmentSignIn extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_signin, rootKey);
 
-        ((SettingsActivity) Objects.requireNonNull(getActivity())).loadedFragments++;
+        ((SettingsActivity) getActivity()).loadedFragments++;
 
         Preference myPref = findPreference("today_url");
-        Objects.requireNonNull(myPref).setDefaultValue(External_Const.todayURL);
+        myPref.setDefaultValue(External_Const.todayURL);
 
         myPref = findPreference("tomorrow_url");
-        Objects.requireNonNull(myPref).setDefaultValue(External_Const.tomorrowURL);
+        myPref.setDefaultValue(External_Const.tomorrowURL);
 
         SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
         setSummary(sp, "username", getString(R.string.set_desc_username));
@@ -35,9 +33,9 @@ public class SettingsFragmentSignIn extends PreferenceFragmentCompat implements 
         setSummary(sp, "teacherlist_url", getString(R.string.set_desc_teacherlist_url));
     }
 
-    private void setSummary(@NonNull SharedPreferences sp, @NonNull String settingskey, String defaulText) {
+    public void setSummary(@NonNull SharedPreferences sp, @NonNull String settingskey, String defaulText) {
         EditTextPreference editTextPref = findPreference(settingskey);
-        Objects.requireNonNull(editTextPref).setSummary(sp.getString(settingskey, defaulText));
+        editTextPref.setSummary(sp.getString(settingskey, defaulText));
     }
 
     public void onResume() {

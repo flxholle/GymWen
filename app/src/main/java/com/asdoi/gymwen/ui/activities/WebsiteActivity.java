@@ -29,7 +29,6 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     @Nullable
@@ -127,7 +126,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             String intentURL = getIntent().getStringExtra("url");
             if (intentURL == null) {
                 Uri data = getIntent().getData();
-                intentURL = Objects.requireNonNull(data).getHost() + data.getPath();
+                intentURL = data.getHost() + data.getPath();
             }
             if (intentURL != null && intentActivationEnabled) {
                 loadPage(intentURL);
@@ -158,14 +157,14 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             intent.setData(Uri.parse(url));
             startActivity(intent);*/
             try {
-                tabIntent(Objects.requireNonNull(history).get(history.size() - 1));
+                tabIntent(history.get(history.size() - 1));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (item.getItemId() == R.id.action_share || item.getItemId() == R.id.action_share2) {
             Intent i = new Intent();
             i.setAction(Intent.ACTION_SEND);
-            i.putExtra(Intent.EXTRA_TEXT, Objects.requireNonNull(history).get(history.size() - 1));
+            i.putExtra(Intent.EXTRA_TEXT, history.get(history.size() - 1));
             i.setType("text/plan");
             startActivity(Intent.createChooser(i, getString(R.string.share_link)));
         }
@@ -506,7 +505,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             return;
         }
 
-        if (Objects.requireNonNull(history).size() >= 2) {
+        if (history.size() >= 2) {
             String url = history.get(history.size() - 2);
             //Remove last two Sites, because the side that will be loaded will also be added by loadSite()
             history.remove(history.size() - 1);
@@ -527,7 +526,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
             @Override
             public void run() {
-                Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+                getSupportActionBar().setTitle(title);
             }
         });
     }
@@ -578,7 +577,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
 
                         if (isHTML) {
-                            Objects.requireNonNull(history).add(urlFinal);
+                            history.add(urlFinal);
                             setWebsiteTitle(doc);
                             //Check Site
                             if (homeOfPagesIndexes.contains(urlFinal)) {

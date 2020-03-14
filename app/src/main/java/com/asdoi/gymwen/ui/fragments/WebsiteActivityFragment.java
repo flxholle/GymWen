@@ -29,8 +29,6 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.WebsiteActivity;
 import com.github.chrisbanes.photoview.PhotoView;
 
-import java.util.Objects;
-
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -74,7 +72,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         root = inflater.inflate(R.layout.fragment_website, container, false);
         context = getActivity();
 
-        root.setBackgroundColor(ApplicationFeatures.getWebPageBackgroundColor(Objects.requireNonNull(context)));
+        root.setBackgroundColor(ApplicationFeatures.getWebPageBackgroundColor(context));
 
         basic = root.findViewById(R.id.website_linear);
         buttonCall = (WebsiteActivity) getActivity();
@@ -111,12 +109,12 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    private void loadHomeOfPages() {
+    public void loadHomeOfPages() {
         basic.removeAllViewsInLayout();
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        int backgroundColor = ApplicationFeatures.getBackgroundColor(Objects.requireNonNull(context));
+        int backgroundColor = ApplicationFeatures.getBackgroundColor(context);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
         int titleColor = ApplicationFeatures.getTextColorPrimary(context);
@@ -236,12 +234,12 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    private void loadContentPagesMixed() {
+    public void loadContentPagesMixed() {
         basic.removeAllViewsInLayout();
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        int backgroundColor = ApplicationFeatures.getBackgroundColor(Objects.requireNonNull(context));
+        int backgroundColor = ApplicationFeatures.getBackgroundColor(context);
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
         int titleColor = ApplicationFeatures.getTextColorPrimary(context);
@@ -369,13 +367,13 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         int id = view.getId();
         if (id == -1) {
             //Goto Home of Projects
-            String url = Objects.requireNonNull(((WebsiteActivity) getActivity()).history).get(Objects.requireNonNull(((WebsiteActivity) getActivity()).history).size() - 1);
+            String url = ((WebsiteActivity) getActivity()).history.get(((WebsiteActivity) getActivity()).history.size() - 1);
             String first = url.substring("http://".length() + 1);
             String second = url.substring(first.indexOf('/'));
             int charOfsecondSlash = second.indexOf('/') + 1 + "http://".length() + 2 + first.indexOf('/') + 1;
             ((WebsiteActivity) getActivity()).loadPage(url.substring(0, charOfsecondSlash));
         } else {
-            Objects.requireNonNull(buttonCall).onClick(view);
+            buttonCall.onClick(view);
         }
     }
 

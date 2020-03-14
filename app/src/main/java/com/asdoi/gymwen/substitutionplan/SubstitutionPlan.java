@@ -21,13 +21,12 @@ import java.util.Arrays;
  */
 public class SubstitutionPlan {
 
-    private boolean senior;
+    boolean senior;
     @Nullable
-    private
     ArrayList<String> courses;
-    private boolean hours;
-    private Document todayDoc;
-    private Document tomorrowDoc;
+    boolean hours;
+    Document todayDoc;
+    Document tomorrowDoc;
 
     public SubstitutionPlan() {
     }

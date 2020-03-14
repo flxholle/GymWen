@@ -8,7 +8,6 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Class that parses the teacherlist
@@ -20,7 +19,7 @@ abstract class Parse {
      * @see Teacherlist
      */
     @Nullable
-    static String[][] getList(@Nullable Document doc) {
+    protected static String[][] getList(@Nullable Document doc) {
         if (doc == null) {
             System.out.println("Document is null");
             return null;
@@ -86,7 +85,7 @@ abstract class Parse {
      * @return if no match is found: null  |  else: the first match
      */
     @Nullable
-    static String[] getTeacher(String search, @NonNull String[][] listString) {
+    protected static String[] getTeacher(String search, @NonNull String[][] listString) {
         for (String[] s : listString) {
             for (String s1 : s) {
                 if (s1.equalsIgnoreCase(search)) {
@@ -105,7 +104,7 @@ abstract class Parse {
      * @see Teacherlist
      */
     @NonNull
-    static String[][] getTeachers(@NonNull String search, @NonNull String[][] listString) {
+    protected static String[][] getTeachers(@NonNull String search, @NonNull String[][] listString) {
         ArrayList<String[]> list = new ArrayList<String[]>();
         for (String[] s : listString) {
             for (int i = 0; i < 3; i++) {
@@ -131,6 +130,6 @@ abstract class Parse {
      */
     @Nullable
     protected static String[] getTeacher(String search, Document doc) {
-        return getTeacher(search, Objects.requireNonNull(getList(doc)));
+        return getTeacher(search, getList(doc));
     }
 }

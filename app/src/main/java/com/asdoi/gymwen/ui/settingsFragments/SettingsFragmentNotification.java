@@ -12,25 +12,23 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 
-import java.util.Objects;
-
 public class SettingsFragmentNotification extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_notification, rootKey);
 
-        ((SettingsActivity) Objects.requireNonNull(getActivity())).loadedFragments++;
+        ((SettingsActivity) getActivity()).loadedFragments++;
 
         setNotif();
 
         Preference myPref = findPreference("showNotification");
-        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
+        myPref.setOnPreferenceClickListener((Preference preference) -> {
             setNotif();
             return true;
         });
 
         myPref = findPreference("alarm");
-        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
+        myPref.setOnPreferenceClickListener((Preference p) -> {
             PreferenceUtil.setAlarmTime(0);
             ((ActivityFeatures) getActivity()).createTimePicker();
             return true;
@@ -39,8 +37,8 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
 
     private void setNotif() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false);
-        Objects.requireNonNull(findPreference("alwaysNotification")).setEnabled(showNotif);
-        Objects.requireNonNull(findPreference("alarm")).setEnabled(showNotif);
-        Objects.requireNonNull(findPreference("two_notifs")).setEnabled(showNotif);
+        findPreference("alwaysNotification").setEnabled(showNotif);
+        findPreference("alarm").setEnabled(showNotif);
+        findPreference("two_notifs").setEnabled(showNotif);
     }
 }

@@ -20,8 +20,6 @@ import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.github.javiersantos.appupdater.enums.Display;
 
-import java.util.Objects;
-
 public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     public int loadedFragments = 0;
 
@@ -60,7 +58,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         } else {
             loadedFragments--;
             try {
-                Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.title_activity_settings);
+                getSupportActionBar().setTitle(R.string.title_activity_settings);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -83,7 +81,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 .commit();
 
         try {
-            Objects.requireNonNull(getSupportActionBar()).setTitle(pref.getTitle());
+            getSupportActionBar().setTitle(pref.getTitle());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,17 +117,17 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences_root, rootKey);
 
-            ((SettingsActivity) Objects.requireNonNull(getActivity())).loadedFragments++;
+            ((SettingsActivity) getActivity()).loadedFragments++;
 
             Preference myPref = findPreference("language");
-            Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
+            myPref.setOnPreferenceClickListener((Preference p) -> {
                 ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(getActivity());
                 return true;
             });
             myPref.setSummary(ApplicationFeatures.getLanguageSwitcher().getCurrentLocale().toString());
 
             myPref = findPreference("updates");
-            Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
+            myPref.setOnPreferenceClickListener((Preference p) -> {
                 ((ActivityFeatures) getActivity()).checkUpdates(Display.DIALOG, true);
                 return true;
             });
