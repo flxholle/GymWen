@@ -58,6 +58,7 @@ import java.util.List;
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
     public static final String SHORTCUT_ACTION_CALL_OFFICE = "com.asdoi.gymwen.ui.activities.MainActivity.CallOffice";
     public static final String SHORTCUT_ACTION_NAVIGATION = "com.asdoi.gymwen.ui.activities.MainActivity.Navigation";
+    public static final String SHORTCUT_ACTION_NEWSPAPER = "com.asdoi.gymwen.ui.activities.MainActivity.News";
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -191,7 +192,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 case SHORTCUT_ACTION_NAVIGATION:
                     onNavigationItemSelected(R.id.nav_navigation);
                     break;
+                case SHORTCUT_ACTION_NEWSPAPER:
+                    onNavigationItemSelected(R.id.nav_news);
+                    break;
             }
+            setIntent(null);
         }
     }
 

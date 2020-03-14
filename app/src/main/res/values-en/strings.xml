@@ -366,5 +366,9 @@
     <string name="add_to_my_courses">Add my courses</string>
     <string name="additum">Additive</string>
     <string name="remove_from_my_courses">Remove from my courses</string>
+    <string name="shortcut_website">Website</string>
+    <string name="shortcut_navigation">Navigation</string>
+    <string name="shortcut_call_office">Call Office</string>
+    <string name="shortcut_newspaper">Newspaper</string>
 
 </resources>

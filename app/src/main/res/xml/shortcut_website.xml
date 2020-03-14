@@ -30,4 +30,14 @@
             android:targetClass="com.asdoi.gymwen.ui.activities.MainActivity"
             android:targetPackage="com.asdoi.gymwen" />
     </shortcut>
+    <shortcut
+        android:shortcutId="news"
+        android:enabled="true"
+        android:icon="@drawable/ic_news"
+        android:shortcutShortLabel="@string/shortcut_newspaper">
+        <intent
+            android:action="com.asdoi.gymwen.ui.activities.MainActivity.News"
+            android:targetClass="com.asdoi.gymwen.ui.activities.MainActivity"
+            android:targetPackage="com.asdoi.gymwen" />
+    </shortcut>
 </shortcuts>

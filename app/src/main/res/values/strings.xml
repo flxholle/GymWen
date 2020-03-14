@@ -455,7 +455,8 @@
     <string name="loading">Lädt\u2026</string>
 
     <!-- Shortcuts -->
-    <string name="shortcut_website">Visit website</string>
+    <string name="shortcut_website">Website</string>
     <string name="shortcut_navigation">Navigation</string>
-    <string name="shortcut_call_office">Sekreteriat anrufen</string>
+    <string name="shortcut_call_office">Sekretariat</string>
+    <string name="shortcut_newspaper">Zeitung</string>
 </resources>
