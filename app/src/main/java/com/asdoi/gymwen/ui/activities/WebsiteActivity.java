@@ -544,7 +544,9 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.website_host, f).commit();
         } catch (Exception e) {
-            Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
+            runOnUiThread(() -> {
+                Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
+            });
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
