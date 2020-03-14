@@ -22,13 +22,10 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
         ((SettingsActivity) getActivity()).loadedFragments++;
 
         ListPreference mp = findPreference("theme");
-        mp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                mp.setValue(newValue + "");
-                getActivity().recreate();
-                return false;
-            }
+        mp.setOnPreferenceChangeListener((preference, newValue) -> {
+            mp.setValue(newValue + "");
+            getActivity().recreate();
+            return false;
         });
         mp.setSummary(getThemeName());
 

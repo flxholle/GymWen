@@ -6,7 +6,6 @@ import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -63,8 +62,6 @@ import com.kabouzeid.appthemehelper.util.ColorUtil;
 import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.pd.chocobar.ChocoBar;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -231,16 +228,13 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                     .setTitleOnUpdateNotAvailable(R.string.update_not_available_title)
                     .setContentOnUpdateNotAvailable(R.string.update_not_available_content)
                     .setButtonUpdate(R.string.update_now)
-                    .setButtonUpdateClickListener(new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(@NonNull DialogInterface dialogInterface, int i) {
-                            try {
-                                String apkUrl = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
-                                startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
-                                dialogInterface.dismiss();
-                            } catch (Exception e) {
-                                tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
-                            }
+                    .setButtonUpdateClickListener((dialogInterface, i) -> {
+                        try {
+                            String apkUrl = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
+                            startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
+                            dialogInterface.dismiss();
+                        } catch (Exception e) {
+                            tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
                         }
                     })
                     .setButtonDismiss(R.string.update_later)
@@ -472,22 +466,14 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
             builder.content(getContext().getString(R.string.permission_required_description));
 
             // add the buttons
-            builder.onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                    openAppPermissionSettings();
-                    dialog.dismiss();
-                }
+            builder.onPositive((dialog, which) -> {
+                openAppPermissionSettings();
+                dialog.dismiss();
             });
             builder.negativeText(getContext().getString(R.string.permission_ok_button));
 
             builder.negativeText(getContext().getString(R.string.permission_cancel_button));
-            builder.onNegative(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                    dialog.dismiss();
-                }
-            });
+            builder.onNegative((dialog, which) -> dialog.dismiss());
 
             // create and show the alert dialog
             MaterialDialog dialog = builder.build();
@@ -511,9 +497,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-            requestPermission(() -> {
-                startDownload(url, title, description, dirType, subPath, onComplete);
-            }, SheriffPermission.STORAGE);
+            requestPermission(() -> startDownload(url, title, description, dirType, subPath, onComplete), SheriffPermission.STORAGE);
             return;
 
         }
@@ -713,9 +697,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
             register(getContext());
         });
 
-        builder.onNegative((MaterialDialog dialog, DialogAction which) -> {
-            dialog.dismiss();
-        });
+        builder.onNegative((MaterialDialog dialog, DialogAction which) -> dialog.dismiss());
 
         builder.onNeutral((MaterialDialog dialog, DialogAction which) -> {
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();

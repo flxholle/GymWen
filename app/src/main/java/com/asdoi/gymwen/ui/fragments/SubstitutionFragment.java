@@ -350,9 +350,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 new Thread(() -> {
                     ApplicationFeatures.downloadTeacherlistDoc();
                     try {
-                        getActivity().runOnUiThread(() -> {
-                            teacherSearch(teacherQuery);
-                        });
+                        getActivity().runOnUiThread(() -> teacherSearch(teacherQuery));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -891,9 +889,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private View getEntryAll(@NonNull View view, String[] entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_all_entry_textViewCourse);
         course.setText(entry[0]);
-        course.setOnClickListener((View v) -> {
-            showAddPopup(course, entry[0]);
-        });
+        course.setOnClickListener((View v) -> showAddPopup(course, entry[0]));
 
         TextView hour = view.findViewById(R.id.substitution_all_entry_textViewHour);
         hour.setText(entry[1]);
@@ -1002,9 +998,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         TextView subject = view.findViewById(R.id.substitution_specific_entry_textViewSubject);
         if (senior) {
             subject.setText(entry[0]);
-            subject.setOnClickListener((View v) -> {
-                showRemovePopup(subject, entry[0]);
-            });
+            subject.setOnClickListener((View v) -> showRemovePopup(subject, entry[0]));
         } else {
             subject.setText(entry[2]);
         }
@@ -1073,9 +1067,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private View getEntrySpecificNewDesign(@NonNull View view, String[] entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_card_entry_textViewClass);
         course.setText(entry[0]);
-        course.setOnClickListener((View v) -> {
-            showRemovePopup(course, entry[0]);
-        });
+        course.setOnClickListener((View v) -> showRemovePopup(course, entry[0]));
 
         TextView hour = view.findViewById(R.id.substitution_card_entry_textViewHour);
         hour.setText(entry[1]);

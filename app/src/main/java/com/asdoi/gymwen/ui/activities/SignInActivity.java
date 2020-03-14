@@ -64,13 +64,10 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
 
     private void checkData(final String username, final String password) {
         if (!ApplicationFeatures.isNetworkAvailable()) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), getString(R.string.noInternetConnection), Toast.LENGTH_SHORT).show();
-                    loading.setVisibility(View.INVISIBLE);
-                    signInButton.setEnabled(true);
-                }
+            runOnUiThread(() -> {
+                Toast.makeText(getApplicationContext(), getString(R.string.noInternetConnection), Toast.LENGTH_SHORT).show();
+                loading.setVisibility(View.INVISIBLE);
+                signInButton.setEnabled(true);
             });
             return;
         }
@@ -106,13 +103,10 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
     }
 
     private void signInSuccess() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                loading.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
-                setSettings(username, password);
-            }
+        runOnUiThread(() -> {
+            loading.setVisibility(View.INVISIBLE);
+            Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
+            setSettings(username, password);
         });
         Intent intent = new Intent(this, ChoiceActivity.class);
         startActivity(intent);
@@ -120,15 +114,12 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
     }
 
     private void signInFailure() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.INVISIBLE);
-                signInButton.setEnabled(true);
+        runOnUiThread(() -> {
+            Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
+            loading.setVisibility(View.INVISIBLE);
+            signInButton.setEnabled(true);
 //                ((EditText) findViewById(R.id.signin_username)).setText("");
-                ((EditText) findViewById(R.id.signin_password)).setText("");
-            }
+            ((EditText) findViewById(R.id.signin_password)).setText("");
         });
     }
 

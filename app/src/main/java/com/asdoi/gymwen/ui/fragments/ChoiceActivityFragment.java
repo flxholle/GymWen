@@ -23,7 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -352,25 +351,19 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
         // Set up the buttons
         builder.positiveText(context.getString(R.string.ok))
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                        if (input.getText().toString().trim().isEmpty())
-                            mainActivity.setName(context.getString(R.string.profile_empty_name));
-                        else
-                            mainActivity.setName(input.getText().toString());
-                        addSpinner();
-                        dialog.dismiss();
-                    }
+                .onPositive((dialog, which) -> {
+                    if (input.getText().toString().trim().isEmpty())
+                        mainActivity.setName(context.getString(R.string.profile_empty_name));
+                    else
+                        mainActivity.setName(input.getText().toString());
+                    addSpinner();
+                    dialog.dismiss();
                 });
         builder.negativeText(context.getString(R.string.cancel))
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                        mainActivity.setName(context.getString(R.string.profile_empty_name));
-                        dialog.dismiss();
-                        addSpinner();
-                    }
+                .onNegative((dialog, which) -> {
+                    mainActivity.setName(context.getString(R.string.profile_empty_name));
+                    dialog.dismiss();
+                    addSpinner();
                 });
 
         builder.show();

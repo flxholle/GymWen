@@ -114,9 +114,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                     .setActionText(getString(R.string.ok))
                     .setText(getString(R.string.noInternetConnection))
                     .setDuration(ChocoBar.LENGTH_INDEFINITE)
-                    .setActionClickListener((View v) -> {
-                        finish();
-                    })
+                    .setActionClickListener((View v) -> finish())
                     .orange()
                     .show();
             return;
@@ -522,13 +520,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         String whole = doc.select("head").select("title").toString();
         final String title = HtmlCompat.fromHtml(whole, 0).toString().replaceAll("\n", "");
 
-        runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                getSupportActionBar().setTitle(title);
-            }
-        });
+        runOnUiThread(() -> getSupportActionBar().setTitle(title));
     }
 
     private void loadFragment(final int pageCode) {
@@ -537,9 +529,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.website_host, f).commit();
         } catch (Exception e) {
-            runOnUiThread(() -> {
-                Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
-            });
+            runOnUiThread(() -> Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show());
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
@@ -563,34 +553,31 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             final String urlFinal = ApplicationFeatures.urlToRightFormat(url);
             final Context context = this;
             if (ApplicationFeatures.isURLValid(urlFinal) && urlFinal.contains("http://www.gym-wen.de/")) {
-                (new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        boolean isHTML = false;
-                        try {
-                            doc = Jsoup.connect(urlFinal).get();
-                            isHTML = true;
-                        } catch (Exception e) {
-                            e.getStackTrace();
-                            isHTML = false;
-                        }
+                (new Thread(() -> {
+                    boolean isHTML = false;
+                    try {
+                        doc = Jsoup.connect(urlFinal).get();
+                        isHTML = true;
+                    } catch (Exception e) {
+                        e.getStackTrace();
+                        isHTML = false;
+                    }
 
 
-                        if (isHTML) {
-                            history.add(urlFinal);
-                            setWebsiteTitle(doc);
-                            //Check Site
-                            if (homeOfPagesIndexes.contains(urlFinal)) {
-                                HomeOfPages(urlFinal);
-                            } else {
-                                ContentPagesMixed(urlFinal);
-                            }
+                    if (isHTML) {
+                        history.add(urlFinal);
+                        setWebsiteTitle(doc);
+                        //Check Site
+                        if (homeOfPagesIndexes.contains(urlFinal)) {
+                            HomeOfPages(urlFinal);
                         } else {
-                            try {
-                                tabIntent(urlFinal);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            ContentPagesMixed(urlFinal);
+                        }
+                    } else {
+                        try {
+                            tabIntent(urlFinal);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 })).start();

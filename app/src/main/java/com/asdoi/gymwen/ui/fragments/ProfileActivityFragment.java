@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -43,9 +42,7 @@ public class ProfileActivityFragment extends Fragment {
         ((ListView) root.findViewById(R.id.profile_list)).setAdapter(adapter);
 
         root.findViewById(R.id.profile_add_button).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
-        root.findViewById(R.id.profile_add_button).setOnClickListener((View v) -> {
-            openAddDialog();
-        });
+        root.findViewById(R.id.profile_add_button).setOnClickListener((View v) -> openAddDialog());
 
         return root;
     }
@@ -81,14 +78,10 @@ public class ProfileActivityFragment extends Fragment {
             courses.setText(p.getCourses());
 
             ImageButton edit = base.findViewById(R.id.profilelist_edit);
-            edit.setOnClickListener((View v) -> {
-                openEditDialog(position);
-            });
+            edit.setOnClickListener((View v) -> openEditDialog(position));
 
             ImageButton delete = base.findViewById(R.id.profilelist_delete);
-            delete.setOnClickListener((View v) -> {
-                openDeleteDialog(position);
-            });
+            delete.setOnClickListener((View v) -> openDeleteDialog(position));
 
             return base;
         }
@@ -108,31 +101,23 @@ public class ProfileActivityFragment extends Fragment {
         builder.customView(input, true);
 
         // Set up the buttons
-        builder.onPositive(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                Intent mIntent = new Intent(getActivity(), ChoiceActivity.class);
-                Bundle extras = new Bundle();
-                extras.putBoolean("parents", true);
-                if (input.getText().toString().trim().isEmpty())
-                    extras.putString("name", getContext().getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1));
-                else
-                    extras.putString("name", input.getText().toString());
-                extras.putBoolean("profileAdd", true);
+        builder.onPositive((dialog, which) -> {
+            Intent mIntent = new Intent(getActivity(), ChoiceActivity.class);
+            Bundle extras = new Bundle();
+            extras.putBoolean("parents", true);
+            if (input.getText().toString().trim().isEmpty())
+                extras.putString("name", getContext().getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1));
+            else
+                extras.putString("name", input.getText().toString());
+            extras.putBoolean("profileAdd", true);
 
-                mIntent.putExtras(extras);
-                getActivity().startActivity(mIntent);
-                getActivity().finish();
-                dialog.dismiss();
-            }
+            mIntent.putExtras(extras);
+            getActivity().startActivity(mIntent);
+            getActivity().finish();
+            dialog.dismiss();
         });
 
-        builder.onNegative(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                dialog.dismiss();
-            }
-        });
+        builder.onNegative((dialog, which) -> dialog.dismiss());
 
         builder.positiveText(R.string.add);
         builder.negativeText(R.string.cancel);
@@ -176,25 +161,17 @@ public class ProfileActivityFragment extends Fragment {
         // Set up the buttons
         builder.positiveText(getString(R.string.ok));
         builder.negativeText(getString(R.string.cancel));
-        builder.onPositive(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                Profile profile = ProfileManagement.getProfile(position);
-                String nameText = name.getText().toString();
-                String coursesText = course.getText().toString();
-                //Do not enter empty text
-                ProfileManagement.editProfile(position, new Profile(coursesText.trim().isEmpty() ? profile.getCourses() : coursesText, nameText.trim().isEmpty() ? profile.getName() : nameText));
-                adapter.notifyDataSetChanged();
-                dialog.dismiss();
-            }
+        builder.onPositive((dialog, which) -> {
+            Profile profile = ProfileManagement.getProfile(position);
+            String nameText = name.getText().toString();
+            String coursesText = course.getText().toString();
+            //Do not enter empty text
+            ProfileManagement.editProfile(position, new Profile(coursesText.trim().isEmpty() ? profile.getCourses() : coursesText, nameText.trim().isEmpty() ? profile.getName() : nameText));
+            adapter.notifyDataSetChanged();
+            dialog.dismiss();
         });
 
-        builder.onNegative(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                dialog.dismiss();
-            }
-        });
+        builder.onNegative((dialog, which) -> dialog.dismiss());
 
         builder.show();
     }
@@ -218,21 +195,13 @@ public class ProfileActivityFragment extends Fragment {
         builder.customView(base, true);
 
         builder.positiveText(getString(R.string.yes));
-        builder.onPositive(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                ProfileManagement.removeProfile(position);
-                adapter.notifyDataSetChanged();
-                dialog.dismiss();
-            }
+        builder.onPositive((dialog, which) -> {
+            ProfileManagement.removeProfile(position);
+            adapter.notifyDataSetChanged();
+            dialog.dismiss();
         });
 
-        builder.onNegative(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                dialog.dismiss();
-            }
-        });
+        builder.onNegative((dialog, which) -> dialog.dismiss());
 
         builder.negativeText(getString(R.string.no));
 

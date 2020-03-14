@@ -25,15 +25,12 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
-
-import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -209,12 +206,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
                     // Specifying a listener allows you to take an action before dismissing the dialog.
                     // The dialog is automatically dismissed when a dialog button is clicked.
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                            dialog.dismiss();
-                        }
-                    })
+                    .onPositive((dialog, which) -> dialog.dismiss())
                     .positiveText(R.string.ok)
                     .icon(drawable)
                     .show();
@@ -260,12 +252,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
                     // Specifying a listener allows you to take an action before dismissing the dialog.
                     // The dialog is automatically dismissed when a dialog button is clicked.
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                            dialog.dismiss();
-                        }
-                    })
+                    .onPositive((dialog, which) -> dialog.dismiss())
                     .positiveText(R.string.ok)
                     .icon(drawable)
                     .show();
@@ -296,12 +283,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .title(getString(R.string.image_sources))
                     .cancelable(true)
                     .positiveText(R.string.ok)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                            dialog.dismiss();
-                        }
-                    })
+                    .onPositive((dialog, which) -> dialog.dismiss())
                     .icon(drawable)
                     .customView(message, true)
                     .show();
@@ -347,12 +329,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .title(getString(R.string.imprint))
                     .cancelable(true)
                     .positiveText(R.string.ok)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NotNull MaterialDialog dialog, @NotNull DialogAction which) {
-                            dialog.dismiss();
-                        }
-                    })
+                    .onPositive((dialog, which) -> dialog.dismiss())
                     .icon(drawable)
                     .customView(message, true)
                     .show();

@@ -149,9 +149,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         setupMenuItems(navigationView);
 
         View headerview = navigationView.getHeaderView(0);
-        headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> {
-            onNavigationItemSelected(R.id.action_settings);
-        });
+        headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> onNavigationItemSelected(R.id.action_settings));
         headerview.findViewById(R.id.nav_header_main_settings).setOnLongClickListener((View v) -> {
             onNavigationItemSelected(R.id.action_imprint);
             return true;
