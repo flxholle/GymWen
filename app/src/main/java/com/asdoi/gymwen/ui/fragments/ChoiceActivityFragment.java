@@ -382,9 +382,9 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         Spinner parentSpinner = mainActivity.findViewById(R.id.choice_parent_spinner);
         parentSpinner.setVisibility(View.VISIBLE);
         parentSpinner.setEnabled(true);
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add(mainActivity.getName());
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mainActivity, android.R.layout.simple_spinner_item, list);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mainActivity, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         parentSpinner.setAdapter(dataAdapter);
     }

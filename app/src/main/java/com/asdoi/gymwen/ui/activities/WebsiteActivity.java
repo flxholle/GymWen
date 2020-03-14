@@ -256,7 +256,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         }
 
         //Trim content
-        ArrayList<String[]> trimmedContentList = new ArrayList<String[]>();
+        ArrayList<String[]> trimmedContentList = new ArrayList<>();
 
 //                trimmedContentList.add(new String[]{"http://www.gym-wen.de/fileadmin/user_upload/logo.jpg", "Gymnasium Wendelstein", "Startseite", ""});
 
@@ -375,7 +375,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         }
 
         //Trim content
-        ArrayList<String[]> trimmedContentList = new ArrayList<String[]>();
+        ArrayList<String[]> trimmedContentList = new ArrayList<>();
         trimmedContentList.add(new String[]{imgLink, "", "", ""});
         for (int i = 0; i < content.length; i++) {
             if (!content[i][0].isEmpty() || !content[i][1].isEmpty() || !content[i][2].isEmpty() || !content[i][3].isEmpty()) {

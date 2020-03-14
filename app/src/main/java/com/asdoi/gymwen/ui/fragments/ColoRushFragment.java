@@ -34,7 +34,7 @@ public class ColoRushFragment extends Fragment implements View.OnClickListener {
         mDemoSlider = root.findViewById(R.id.slider);
 
         String[] names = getResources().getStringArray(R.array.color_rush_screenshots);
-        HashMap<String, String> url_images = new HashMap<String, String>();
+        HashMap<String, String> url_images = new HashMap<>();
         url_images.put(names[0], "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushboss1.png?inline=false");
         url_images.put(names[1], "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushchoosing2.png?inline=false");
         url_images.put(names[2], "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushlevel1.png?inline=false");

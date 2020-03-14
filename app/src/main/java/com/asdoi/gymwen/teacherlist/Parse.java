@@ -105,7 +105,7 @@ abstract class Parse {
      */
     @NonNull
     static String[][] getTeachers(@NonNull String search, @NonNull String[][] listString) {
-        ArrayList<String[]> list = new ArrayList<String[]>();
+        ArrayList<String[]> list = new ArrayList<>();
         for (String[] s : listString) {
             for (int i = 0; i < 3; i++) {
                 String s1 = s[i].toUpperCase(Locale.getDefault());

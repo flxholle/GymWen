@@ -324,7 +324,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             parentSpinner.setEnabled(true);
             List<String> list = ProfileManagement.getProfileListNames();
             list.add(getString(R.string.profiles_edit));
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             parentSpinner.setAdapter(dataAdapter);
             parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -348,7 +348,7 @@ public class SubstitutionPlan {
         if (value == null || value.length <= 0)
             return value;
 
-        ArrayList<String[]> newValuesList = new ArrayList<String[]>();
+        ArrayList<String[]> newValuesList = new ArrayList<>();
         for (int i = 0; i < value.length; i++) {
             if (newValuesList.size() == 0) {
                 newValuesList.add(value[i]);
@@ -449,7 +449,7 @@ public class SubstitutionPlan {
             return null;
         }
 
-        ArrayList<String> returnValue = new ArrayList<String>();
+        ArrayList<String> returnValue = new ArrayList<>();
 
         if (className.length() > 2) {
             returnValue.add(("" + className.charAt(0) + className.charAt(1)).trim());
