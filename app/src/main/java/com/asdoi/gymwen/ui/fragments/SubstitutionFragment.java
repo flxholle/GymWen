@@ -479,16 +479,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 generateTop(base, oldTitle);
                 generateTableSpecific(base, old);
             }
-            if (content != null) {
-                if (showTomorrow) {
-                    titleCode = titleCodeTomorrow;
-                    content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
-                    title = SubstitutionPlanFeatures.getTomorrowTitle();
-                    titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
-                    miscellaneous = isMiscellaneous(content);
-                    generateTop(base, oldTitle);
-                    generateTableSpecific(base, old);
-                }
+            if ((!showToday || content != null) && showTomorrow) {
+                titleCode = titleCodeTomorrow;
+                content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
+                title = SubstitutionPlanFeatures.getTomorrowTitle();
+                titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+                miscellaneous = isMiscellaneous(content);
+                generateTop(base, oldTitle);
+                generateTableSpecific(base, old);
             }
         } else if (all) {
             if (today) {
