@@ -10,6 +10,7 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.External_Const;
+import com.asdoi.gymwen.util.PreferenceUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -70,6 +71,8 @@ public abstract class SubstitutionPlanFeatures {
 
     @NonNull
     public static SubstitutionPlan createTempSubstitutionplan(boolean hours, String[] courses) {
+        if (!isUninit() && PreferenceUtil.isOfflineMode())
+            reloadDocs();
         SubstitutionPlan temp = new SubstitutionPlan(hours, courses);
         temp.setDocs(substitutionPlan.getDoc(true), substitutionPlan.getDoc(false));
         return temp;
