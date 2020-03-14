@@ -56,7 +56,7 @@ public class NotificationTileService extends TileService {
         onStartListening();
     }
 
-    public void makeTileInactive() {
+    private void makeTileInactive() {
         Tile tile = getQsTile();
         tile.setState(Tile.STATE_UNAVAILABLE);
         tile.setIcon(Icon.createWithResource(this, R.drawable.ic_notifications_black_24dp));

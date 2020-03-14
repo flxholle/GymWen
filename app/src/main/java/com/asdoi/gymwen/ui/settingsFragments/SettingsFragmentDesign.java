@@ -76,7 +76,7 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
         findPreference("show_border_specific").setEnabled(showNotif);
     }
 
-    public String getThemeName() {
+    private String getThemeName() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         String selectedTheme = sharedPreferences.getString("theme", "switch");

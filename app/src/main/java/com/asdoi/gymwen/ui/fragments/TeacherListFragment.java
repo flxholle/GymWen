@@ -101,7 +101,7 @@ public class TeacherListFragment extends Fragment {
     }
 
     @Nullable
-    TextView createTitleLayout() {
+    private TextView createTitleLayout() {
         TextView textView = new TextView(context);
         textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
@@ -113,7 +113,7 @@ public class TeacherListFragment extends Fragment {
     }
 
     @Nullable
-    com.google.android.material.textfield.TextInputLayout createSearchLayout() {
+    private com.google.android.material.textfield.TextInputLayout createSearchLayout() {
         com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         inputLayout.setLayoutParams(params);
@@ -159,7 +159,7 @@ public class TeacherListFragment extends Fragment {
 
     private class TeacherListAdapter extends ArrayAdapter<String[]> {
 
-        public TeacherListAdapter(@NonNull Context con, int resource) {
+        TeacherListAdapter(@NonNull Context con, int resource) {
             super(con, resource);
         }
 

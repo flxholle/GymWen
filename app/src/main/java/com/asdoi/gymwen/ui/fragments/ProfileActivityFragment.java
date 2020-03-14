@@ -52,7 +52,7 @@ public class ProfileActivityFragment extends Fragment {
 
     private class ProfileListAdapter extends ArrayAdapter<String[]> {
 
-        public ProfileListAdapter(@NonNull Context con, int resource) {
+        ProfileListAdapter(@NonNull Context con, int resource) {
             super(con, resource);
         }
 
@@ -94,7 +94,7 @@ public class ProfileActivityFragment extends Fragment {
         }
     }
 
-    public void openAddDialog() {
+    private void openAddDialog() {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
         builder.title(getString(R.string.profiles_add));
 
@@ -141,7 +141,7 @@ public class ProfileActivityFragment extends Fragment {
         builder.build().show();
     }
 
-    public void openEditDialog(int position) {
+    private void openEditDialog(int position) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
         builder.title(getString(R.string.profiles_edit));
 
@@ -199,7 +199,7 @@ public class ProfileActivityFragment extends Fragment {
         builder.show();
     }
 
-    public void openDeleteDialog(int position) {
+    private void openDeleteDialog(int position) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
         builder.title(getString(R.string.profiles_delete_submit_heading));
 

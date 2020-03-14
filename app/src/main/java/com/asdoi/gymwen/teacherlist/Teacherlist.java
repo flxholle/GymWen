@@ -69,7 +69,7 @@ public abstract class Teacherlist {
     /**
      * @return gets the doc
      */
-    public static Document getDoc() {
+    private static Document getDoc() {
         return list;
     }
 

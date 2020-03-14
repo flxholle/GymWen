@@ -33,7 +33,7 @@ public class SettingsFragmentSignIn extends PreferenceFragmentCompat implements 
         setSummary(sp, "teacherlist_url", getString(R.string.set_desc_teacherlist_url));
     }
 
-    public void setSummary(@NonNull SharedPreferences sp, @NonNull String settingskey, String defaulText) {
+    private void setSummary(@NonNull SharedPreferences sp, @NonNull String settingskey, String defaulText) {
         EditTextPreference editTextPref = findPreference(settingskey);
         editTextPref.setSummary(sp.getString(settingskey, defaulText));
     }

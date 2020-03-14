@@ -306,7 +306,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
 
     //TeacherSearch
-    void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean showBorders, boolean fullNames) {
+    private void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean showBorders, boolean fullNames) {
         if (SubstitutionPlanFeatures.isNothing(teacherQuery) || Teacherlist.isAOL(teacherQuery))
             return;
         int padding = 0;
@@ -364,14 +364,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         });
     }
 
-    void removeTeacherClick(@NonNull View view) {
+    private void removeTeacherClick(@NonNull View view) {
         view.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         view.setBackgroundResource(0);
         view.setClickable(false);
         view.setOnClickListener(null);
     }
 
-    void teacherSearch(String query) {
+    private void teacherSearch(String query) {
         try {
             ApplicationFeatures.downloadTeacherlistDoc();
             createTeacherView(Teacherlist.getTeacher(query));
@@ -427,7 +427,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @Nullable
-    String getMatchingTeacher(String query) {
+    private String getMatchingTeacher(String query) {
         String teacher = null;
         try {
             ApplicationFeatures.downloadTeacherlistDoc();
@@ -441,16 +441,18 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
 
     //Generating Table
-    boolean senior;
+    private boolean senior;
     @Nullable
+    private
     String[][] content;
-    String title;
+    private String title;
     @Nullable
+    private
     String[] titleArray;
-    int titleCode;
-    boolean miscellaneous;
+    private int titleCode;
+    private boolean miscellaneous;
 
-    void generateTable() {
+    private void generateTable() {
         clear();
 
         senior = SubstitutionPlanFeatures.getSenior();
@@ -563,14 +565,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return cal.getTime();
     }
 
-    public void clear() {
+    private void clear() {
         ((ViewGroup) root.findViewById(R.id.substitution_frame)).removeView(root.findViewWithTag("vertretung_loading"));
         LinearLayout base = root.findViewById(R.id.substitution_linear_layout_layer1);
         base.removeAllViews();
     }
 
     @Nullable
-    String[][] replaceAll(@Nullable String[][] value, String regex, String replace) {
+    private String[][] replaceAll(@Nullable String[][] value, String regex, String replace) {
         if (value == null) {
             return value;
         }
@@ -584,7 +586,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Top (Date or noInternet, etc.)
-    void generateTop(@NonNull ViewGroup base, boolean old) {
+    private void generateTop(@NonNull ViewGroup base, boolean old) {
 
         if (old) {
             TextView titleView = createTitleLayout();
@@ -685,7 +687,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return false;
     }
 
-    public static String[] generateHeadline(@NonNull Context context, boolean miscellaneous, boolean senior, boolean all) {
+    private static String[] generateHeadline(@NonNull Context context, boolean miscellaneous, boolean senior, boolean all) {
         String[] headline;
 
         if (all) {
@@ -701,7 +703,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
 
     //Body
-    void generateTableAll(@NonNull ViewGroup base) {
+    private void generateTableAll(@NonNull ViewGroup base) {
 
         if (content != null && content.length > 0) {
             //Overview
@@ -716,7 +718,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @Nullable
-    View generateOverviewAll() {
+    private View generateOverviewAll() {
         String[] headline = generateHeadline(context, miscellaneous, senior, true);
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.HORIZONTAL);
@@ -765,7 +767,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return base;
     }
 
-    void generateTableSpecific(@NonNull ViewGroup base, boolean old) {
+    private void generateTableSpecific(@NonNull ViewGroup base, boolean old) {
         if (content != null && content.length > 0) {
             //Content
             substitutionListView = new ListView(context);
@@ -783,7 +785,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @Nullable
-    View generateOverviewSpecific() {
+    private View generateOverviewSpecific() {
         String[] headline = generateHeadline(context, miscellaneous, senior, false);
 
         LinearLayout base = new LinearLayout(context);
@@ -847,7 +849,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @Nullable
-    TextView createBlankTextView() {
+    private TextView createBlankTextView() {
         TextView hour = new TextView(context);
         hour.setTypeface(hour.getTypeface(), Typeface.BOLD);
         hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
@@ -864,7 +866,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         final String[][] content;
         final boolean sons;
 
-        public SubstitutionListAdapterAll(@NonNull Context con, int resource, String[][] content, boolean sons) {
+        SubstitutionListAdapterAll(@NonNull Context con, int resource, String[][] content, boolean sons) {
             super(con, resource);
             this.content = content;
             this.sons = sons;

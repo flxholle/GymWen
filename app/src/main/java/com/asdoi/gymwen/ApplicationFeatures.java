@@ -103,7 +103,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     @NonNull
-    public static Date removeTime(@NonNull Date date) {
+    private static Date removeTime(@NonNull Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -145,7 +145,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     //Download Doc
     @Nullable
-    public static Document downloadDoc(String url) {
+    private static Document downloadDoc(String url) {
         try {
             return Jsoup.connect(url).get();
 
@@ -334,7 +334,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return signedIn;
     }
 
-    public static boolean coursesCheck(boolean openAddActivity) {
+    private static boolean coursesCheck(boolean openAddActivity) {
         if (ProfileManagement.getSize() <= 0) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
             //Backwards compatibility for versions older 1.1
@@ -373,7 +373,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
 
-    public static void refreshWidgets() {
+    private static void refreshWidgets() {
         Context context = getContext();
         AppWidgetManager man = AppWidgetManager.getInstance(context);
 
@@ -398,7 +398,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return vectorToBitmap(drawable);
     }
 
-    public static Bitmap vectorToBitmap(@NonNull Drawable drawable) {
+    private static Bitmap vectorToBitmap(@NonNull Drawable drawable) {
         Bitmap b = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
@@ -602,7 +602,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
 
         @NonNull
-        public String notifMessageContent(@Nullable String[][] content, @NonNull SubstitutionPlan vp) {
+        String notifMessageContent(@Nullable String[][] content, @NonNull SubstitutionPlan vp) {
             StringBuilder message = new StringBuilder();
             if (content == null) {
                 return "";
@@ -715,7 +715,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             }
         }
 
-        public void sendNotification() {
+        void sendNotification() {
             notificationMessage();
         }
 
@@ -932,7 +932,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Schedule and TimePicker
-    public static final int DAILY_REMINDER_REQUEST_CODE = 100;
+    private static final int DAILY_REMINDER_REQUEST_CODE = 100;
 
     public static void setAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second) {
         // cancel already scheduled reminders
@@ -1034,7 +1034,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return addCourseToProfile(getSelectedProfilePosition(), course);
     }
 
-    public static boolean addCourseToProfile(int position, @NonNull String course) {
+    private static boolean addCourseToProfile(int position, @NonNull String course) {
         return ProfileManagement.addCourseToProfile(position, course);
     }
 
@@ -1042,7 +1042,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return removeFromProfile(getSelectedProfilePosition(), course);
     }
 
-    public static boolean removeFromProfile(int position, String course) {
+    private static boolean removeFromProfile(int position, String course) {
         return ProfileManagement.removeFromProfile(position, course);
     }
 
@@ -1076,7 +1076,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return PreferenceUtil.getIntSettings("colorAccent", 0) == 0 ? getThemeColor(R.attr.colorAccent, context) : PreferenceUtil.getIntSettings("colorAccent", 0);
     }
 
-    public static int getThemeColor(int themeAttributeId, @NonNull Context context) {
+    private static int getThemeColor(int themeAttributeId, @NonNull Context context) {
         try {
             TypedValue outValue = new TypedValue();
             Resources.Theme theme = context.getTheme();

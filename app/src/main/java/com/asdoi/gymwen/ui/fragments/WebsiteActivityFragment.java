@@ -109,7 +109,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    public void loadHomeOfPages() {
+    private void loadHomeOfPages() {
         basic.removeAllViewsInLayout();
 
         float columnBottomDp = 10f;
@@ -234,7 +234,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    public void loadContentPagesMixed() {
+    private void loadContentPagesMixed() {
         basic.removeAllViewsInLayout();
 
         float columnBottomDp = 10f;

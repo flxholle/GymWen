@@ -29,7 +29,7 @@ abstract class Parse {
      * @see SubstitutionPlan where it will be sorted in method getTitleArray()
      */
     @NonNull
-    protected static String[] getTitleArrayUnsorted(@Nullable Document doc) {
+    private static String[] getTitleArrayUnsorted(@Nullable Document doc) {
 
         if (doc == null) {
 //            System.out.println("Authentication failed! at getting Title");
@@ -68,7 +68,7 @@ abstract class Parse {
      * @see #getTitleArrayUnsorted
      */
     @Nullable
-    protected static String getTitleAsStringUnsorted(Document doc) {
+    private static String getTitleAsStringUnsorted(Document doc) {
         try {
             String[] dayTitle = Parse.getTitleArrayUnsorted(doc);
             StringBuilder returnValue = new StringBuilder();
@@ -99,7 +99,7 @@ abstract class Parse {
      */
     //Date, DateName, WeekNr
     @Nullable
-    protected static String[] getTitleArraySorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
+    static String[] getTitleArraySorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
             String[] day = new String[3];
             Arrays.fill(day, "");
@@ -212,7 +212,7 @@ abstract class Parse {
         }
     }
 
-    protected static int getTitleDayCode(Document doc, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
+    static int getTitleDayCode(Document doc, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
         try {
             //Weekday
             try {
@@ -269,7 +269,7 @@ abstract class Parse {
      * @see #getTitleDayCode
      */
     @Nullable
-    protected static String getTitleStringSorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
+    static String getTitleStringSorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
             String[] dayTitle = getTitleArraySorted(doc, showWeekdates, today, tomorrow, laterDay);
             if (dayTitle == null || dayTitle.equals("") || dayTitle.length <= 0) {
@@ -322,7 +322,7 @@ abstract class Parse {
      */
     //All
     @Nullable
-    protected static String[][] getSubstitutionList(@Nullable Document doc) {
+    static String[][] getSubstitutionList(@Nullable Document doc) {
 
         if (doc == null) {
             System.out.println("Document is null");
@@ -381,7 +381,7 @@ abstract class Parse {
      */
     //specific
     @Nullable
-    protected static String[][] getSubstitutionList(@Nullable Document doc, boolean senior, @Nullable ArrayList<String> classNames) {
+    static String[][] getSubstitutionList(@Nullable Document doc, boolean senior, @Nullable ArrayList<String> classNames) {
         if (doc == null || classNames == null) {
             return null;
         }

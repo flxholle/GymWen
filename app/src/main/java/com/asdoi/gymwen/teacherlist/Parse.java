@@ -19,7 +19,7 @@ abstract class Parse {
      * @see Teacherlist
      */
     @Nullable
-    protected static String[][] getList(@Nullable Document doc) {
+    static String[][] getList(@Nullable Document doc) {
         if (doc == null) {
             System.out.println("Document is null");
             return null;
@@ -85,7 +85,7 @@ abstract class Parse {
      * @return if no match is found: null  |  else: the first match
      */
     @Nullable
-    protected static String[] getTeacher(String search, @NonNull String[][] listString) {
+    static String[] getTeacher(String search, @NonNull String[][] listString) {
         for (String[] s : listString) {
             for (String s1 : s) {
                 if (s1.equalsIgnoreCase(search)) {
@@ -104,7 +104,7 @@ abstract class Parse {
      * @see Teacherlist
      */
     @NonNull
-    protected static String[][] getTeachers(@NonNull String search, @NonNull String[][] listString) {
+    static String[][] getTeachers(@NonNull String search, @NonNull String[][] listString) {
         ArrayList<String[]> list = new ArrayList<String[]>();
         for (String[] s : listString) {
             for (int i = 0; i < 3; i++) {

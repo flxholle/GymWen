@@ -142,7 +142,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     }
 
 
-    int quantitiyCourses = 0;
+    private int quantitiyCourses = 0;
 
     private void generateStep5() {
         for (int i = 0; i < SubstitutionPlanFeatures.choiceCourseNames.length; i++) {
@@ -340,7 +340,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
     }
 
-    public void openAddDialog() {
+    private void openAddDialog() {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
         builder.title(context.getString(R.string.profiles_add));
 
@@ -394,7 +394,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
 
         private final EditText mEditText;
 
-        public MyTextWatcher(EditText editText) {
+        MyTextWatcher(EditText editText) {
             mEditText = editText;
         }
 
@@ -476,7 +476,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         fab.setOnClickListener(this);
     }
 
-    public void fabClicked() {
+    private void fabClicked() {
         if (step == 1) {
             if (!((EditText) root.findViewById(R.id.choice_more_classes)).getText().toString().replaceAll(" ", "").isEmpty()) {
                 String s = ((EditText) root.findViewById(R.id.choice_more_classes)).getText().toString().replaceAll(" ", "");
