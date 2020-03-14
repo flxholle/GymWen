@@ -885,7 +885,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         TextView course = view.findViewById(R.id.substitution_all_entry_textViewCourse);
         course.setText(entry[0]);
         course.setOnClickListener((View v) -> {
-            showPopup(course, entry[0]);
+            showAddPopup(course, entry[0]);
         });
 
         TextView hour = view.findViewById(R.id.substitution_all_entry_textViewHour);
@@ -926,7 +926,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Pop up menu for adding course to profile
-    public void showPopup(@NonNull View v, @NonNull String course) {
+    private void showAddPopup(@NonNull View v, @NonNull String course) {
         ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
         PopupMenu popup = new PopupMenu(theme, v);
         popup.setOnMenuItemClickListener((MenuItem item) -> {
@@ -938,7 +938,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             return true;
         });
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.substitution_fragment_course_menu, popup.getMenu());
+        inflater.inflate(R.menu.substitution_fragment_add_course_menu, popup.getMenu());
         popup.show();
     }
 
@@ -987,13 +987,20 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @NonNull
-    public View getEntrySpecific(@NonNull View view, String[] entry, boolean senior, boolean miscellaneous) {
+    private View getEntrySpecific(@NonNull View view, String[] entry, boolean senior, boolean miscellaneous) {
         TextView hour = view.findViewById(R.id.substitution_specific_entry_textViewHour);
         hour.setText(entry[1]);
         hour.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
 
         TextView subject = view.findViewById(R.id.substitution_specific_entry_textViewSubject);
-        subject.setText(senior ? entry[0] : entry[2]);
+        if (senior) {
+            subject.setText(entry[0]);
+            subject.setOnClickListener((View v) -> {
+                showRemovePopup(subject, entry[0]);
+            });
+        } else {
+            subject.setText(entry[2]);
+        }
 
         if (PreferenceUtil.isHour()) {
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_hour_long)));
@@ -1042,7 +1049,15 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         other.setText(entry[5]);
 
         TextView course = view.findViewById(R.id.substitution_specific_entry_textViewClass);
-        course.setText(senior ? entry[2] : entry[0]);
+        if (senior) {
+            course.setText(entry[2]);
+        } else {
+            course.setText(entry[0]);
+            //Only useful for senior with more than one course
+            /*subject.setOnClickListener((View v) -> {
+                showRemovePopup(subject, entry[0]);
+            });*/
+        }
 
         return view;
     }
@@ -1118,6 +1133,32 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
 
         return view;
+    }
+
+    //Pop up menu for adding course to profile
+    private void showRemovePopup(@NonNull View v, @NonNull String course) {
+        if (ApplicationFeatures.getSelectedProfile().getCoursesArray().length <= 1)
+            return;
+        ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
+        PopupMenu popup = new PopupMenu(theme, v);
+        popup.setOnMenuItemClickListener((MenuItem item) -> {
+            switch (item.getItemId()) {
+                case R.id.action_remove_course:
+                    removeFromProfile(course);
+                    break;
+            }
+            return true;
+        });
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.substitution_fragment_remove_course_menu, popup.getMenu());
+        popup.show();
+    }
+
+    private void removeFromProfile(@NonNull String course) {
+        if (ApplicationFeatures.removeFromSelectedProfile(course.trim())) {
+            ProfileManagement.save(true);
+            ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh, "");
+        }
     }
 
 }
