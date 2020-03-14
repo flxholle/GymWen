@@ -102,4 +102,20 @@ public abstract class ProfileManagement {
         }
         return false;
     }
+
+    public static boolean removeFromProfile(int pos, String course) {
+        if (pos < 0 || pos >= getSize())
+            return false;
+
+        Profile p = getProfile(pos);
+        //If course isn't already in profile
+        if (Arrays.asList(p.getCoursesArray()).contains(course)) {
+            if (p.getCoursesArray().length > 1) {
+                p.removeCourse(course);
+                editProfile(pos, p);
+                return true;
+            }
+        }
+        return false;
+    }
 }

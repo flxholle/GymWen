@@ -1038,6 +1038,14 @@ public class ApplicationFeatures extends MultiDexApplication {
         return ProfileManagement.addCourseToProfile(position, course);
     }
 
+    public static boolean removeFromSelectedProfile(@NonNull String course) {
+        return removeFromProfile(getSelectedProfilePosition(), course);
+    }
+
+    public static boolean removeFromProfile(int position, String course) {
+        return ProfileManagement.removeFromProfile(position, course);
+    }
+
 
     //Colors
     public static int getTextColorPrimary(@NonNull Context context) {

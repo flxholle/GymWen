@@ -6,6 +6,9 @@ import androidx.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Profile {
     private String courses;
     private String name;
@@ -32,6 +35,18 @@ public class Profile {
 
     public void addCourse(@NonNull String course) {
         courses = courses + coursesSeparator + course.trim();
+    }
+
+    public void removeCourse(String course) {
+        ArrayList<String> courses = new ArrayList<>(Arrays.asList(getCoursesArray()));
+        courses.remove(course);
+        StringBuilder newCourses = new StringBuilder();
+        for (String s : courses) {
+            newCourses.append(s.trim());
+            newCourses.append(coursesSeparator);
+        }
+        newCourses.replace(newCourses.lastIndexOf(coursesSeparator), newCourses.length(), "");
+        setCourses(newCourses.toString());
     }
 
     public String getName() {

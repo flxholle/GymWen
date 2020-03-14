@@ -365,5 +365,6 @@
     <string name="set_desc_both">It is always loaded when the app is started, even if it is deactivated!</string>
     <string name="add_to_my_courses">Add my courses</string>
     <string name="additum">Additive</string>
+    <string name="remove_from_my_courses">Remove from my courses</string>
 
 </resources>
