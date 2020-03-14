@@ -188,8 +188,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                             changedSectionsPagerAdapterTitles = true;
                         }
                         //Update menu Items for days
-                        ((MainActivity) getActivity()).setTodayMenuItemTitle(todayTitleArray[1] + ", " + todayTitleArray[0]);
-                        ((MainActivity) getActivity()).setTomorrowMenuItemTitle(tomorrowTitleArray[1] + ", " + tomorrowTitleArray[0]);
+                        if (!todayTitleArray[1].trim().isEmpty()) {
+                            ((MainActivity) getActivity()).setTodayMenuItemTitle(todayTitleArray[1] + ", " + todayTitleArray[0]);
+                            ((MainActivity) getActivity()).setTomorrowMenuItemTitle(tomorrowTitleArray[1] + ", " + tomorrowTitleArray[0]);
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
