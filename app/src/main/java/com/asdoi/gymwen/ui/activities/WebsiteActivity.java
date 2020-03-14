@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 
@@ -30,6 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
+    @Nullable
     public ArrayList<String> history = new ArrayList<>();
 
     private static String[][] con;
