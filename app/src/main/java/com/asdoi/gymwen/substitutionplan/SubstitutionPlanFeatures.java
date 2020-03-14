@@ -254,8 +254,6 @@ public abstract class SubstitutionPlanFeatures {
 
         if (oldFilteredToday == null || oldFilteredTomorrow == null || nowFilteredToday == null || nowFilteredTomorrow == null)
             return false; //No internet
-
-        return test.Companion.haveArraysSameContent(oldFilteredToday, nowFilteredToday) && test.Companion.haveArraysSameContent(oldFilteredTomorrow, nowFilteredTomorrow);
-
+        return false;
     }
 }
