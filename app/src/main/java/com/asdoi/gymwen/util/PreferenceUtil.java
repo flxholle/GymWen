@@ -14,10 +14,11 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 
 public class PreferenceUtil {
+    @NonNull
     public static String hideDayAfterTime = "18:00:00";
 
     //Booleans
-    public static boolean getBooleanSettings(String key, boolean defaultValue, Context context) {
+    public static boolean getBooleanSettings(String key, boolean defaultValue, @NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getBoolean(key, defaultValue);
     }
@@ -34,7 +35,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("hours", false);
     }
 
-    public static boolean isAlarmOn(Context context) {
+    public static boolean isAlarmOn(@NonNull Context context) {
         return getBooleanSettings("alarm", false, context);
     }
 
@@ -46,7 +47,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("show_full_names_specific", true);
     }
 
-    public static void setAlarm(Context context, boolean value) {
+    public static void setAlarm(@NonNull Context context, boolean value) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("alarm", value);
         editor.commit();
@@ -144,25 +145,25 @@ public class PreferenceUtil {
 
     //SubstitutionPlan
     @Nullable
-    public static String getUsername(Context context) {
+    public static String getUsername(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("username", "");
     }
 
     @Nullable
-    public static String getPassword(Context context) {
+    public static String getPassword(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("password", "");
     }
 
     @Nullable
-    public static String getTodayURL(Context context) {
+    public static String getTodayURL(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("today_url", External_Const.todayURL);
     }
 
     @Nullable
-    public static String getTomorrowURL(Context context) {
+    public static String getTomorrowURL(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("tomorrow_url", External_Const.tomorrowURL);
     }
@@ -173,7 +174,7 @@ public class PreferenceUtil {
 
     //Teacherlist
     @Nullable
-    public static String getTeacherlistURL(Context context) {
+    public static String getTeacherlistURL(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("teacherlist_url", External_Const.teacherlistUrl);
     }
@@ -258,7 +259,7 @@ public class PreferenceUtil {
         }
     }
 
-    public static void changeDesign(Context context) {
+    public static void changeDesign(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean newdesign = !sharedPref.getBoolean("old_vertretung", false);
         SharedPreferences.Editor editor = sharedPref.edit();

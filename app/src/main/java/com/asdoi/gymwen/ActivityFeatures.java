@@ -735,7 +735,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     private static final String register_url = "https://asdoi.gitlab.io/hit_counter.html";
 
-    private void register(Context context) {
+    private void register(@NonNull Context context) {
         try {
             WebView wv = new WebView(this);
             wv.getSettings().setJavaScriptEnabled(true);

@@ -441,6 +441,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     @Nullable
     String[][] content;
     String title;
+    @Nullable
     String[] titleArray;
     int titleCode;
     boolean miscellaneous;
