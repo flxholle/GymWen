@@ -35,7 +35,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     public ArrayList<String> history = new ArrayList<>();
 
     private static String[][] con;
-    private WebsiteActivityFragment f;
     private Document doc;
     private boolean intentActivationEnabled = true;
     @NonNull
@@ -186,12 +185,8 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         Elements v1 = doc.select("div.csc-default");
         Elements v2 = doc.select("div.csc-frame");
         values.add(v0.get(0));
-        for (int i = 0; i < v1.size(); i++) {
-            values.add(v1.get(i));
-        }
-        for (int i = 0; i < v2.size(); i++) {
-            values.add(v2.get(i));
-        }
+        values.addAll(v1);
+        values.addAll(v2);
 
         String[][] content = new String[values.size()][4];
         for (int i = 0; i < content.length; i++) {
@@ -410,12 +405,8 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         Elements v1 = doc.select("div.csc-default");
         Elements v2 = doc.select("div.csc-frame");
         values.add(v0.get(0));
-        for (int i = 0; i < v1.size(); i++) {
-            values.add(v1.get(i));
-        }
-        for (int i = 0; i < v2.size(); i++) {
-            values.add(v2.get(i));
-        }
+        values.addAll(v1);
+        values.addAll(v2);
 
         ArrayList<String[]> content = new ArrayList<>();
 
@@ -542,7 +533,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     private void loadFragment(final int pageCode) {
         try {
-            f = new WebsiteActivityFragment(con, pageCode);
+            WebsiteActivityFragment f = new WebsiteActivityFragment(con, pageCode);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.website_host, f).commit();
         } catch (Exception e) {

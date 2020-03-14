@@ -89,9 +89,9 @@
 
 
     <!-- SubstitutionPlan -->
-    <string name="nothing">Keine Vertretungen für dich.</string>
+    <string name="nothing">Keine Vertretung für dich.</string>
     <string name="nothing_all">Es gibt keine Vertretungen am gesamten Tag.</string>
-    <string name="back_button">Erneut drücken zum Beenden.</string>
+    <string name="back_button">Erneut drücken zum Beenden</string>
     <string name="downloading">Lädt\u2026</string>
     <string name="footprint">Mit der GymWen App erzeugt: https://asdoi.gitlab.io/</string>
     <string name="noInternet">Du bist nicht mit dem Internet verbunden!</string>

@@ -167,6 +167,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     public void setupColors() {
         findViewById(R.id.main_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        findViewById(R.id.main_profile_spinner).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
@@ -408,7 +409,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     /**
-     * @param id
      * @param title The string through which the title in action should be replaced, empty if not
      *              Here the code is centralized, to be called from other methods, without creating a MenuItem or others
      */
@@ -725,7 +725,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     //Tabs
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
         String[] tab_titles;
         boolean all;
         boolean day;

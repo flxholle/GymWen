@@ -62,14 +62,14 @@ public abstract class ProfileManagement {
     }
 
     public static void save(boolean apply) {
-        String all = "";
+        StringBuilder all = new StringBuilder();
         for (Profile p : profileList) {
-            all += p.toString() + splitChar;
+            all.append(p.toString()).append(splitChar);
         }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("profiles", all);
+        editor.putString("profiles", all.toString());
         if (apply)
             editor.apply();
         else

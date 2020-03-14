@@ -71,14 +71,14 @@ abstract class Parse {
     protected static String getTitleAsStringUnsorted(Document doc) {
         try {
             String[] dayTitle = Parse.getTitleArrayUnsorted(doc);
-            String returnValue = "";
+            StringBuilder returnValue = new StringBuilder();
             if (dayTitle == null || dayTitle.equals("")) {
                 return null;
             }
             for (String s : dayTitle) {
-                returnValue += s + " ";
+                returnValue.append(s).append(" ");
             }
-            if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
+            if ((returnValue.length() == 0) || returnValue.toString().replace(" ", "").isEmpty())
                 return null;
 
             return returnValue.substring(0, returnValue.length() - 1);
@@ -276,22 +276,22 @@ abstract class Parse {
                 return null;
             }
 
-            String returnValue = dayTitle[0];
+            StringBuilder returnValue = new StringBuilder(dayTitle[0]);
             switch (dayTitle.length) {
                 default:
                 case 3:
                     for (int i = 1; i < dayTitle.length; i++) {
-                        returnValue += ", " + dayTitle[i];
+                        returnValue.append(", ").append(dayTitle[i]);
                     }
                     break;
                 case 2:
-                    returnValue = dayTitle[1] + " " + dayTitle[0];
+                    returnValue = new StringBuilder(dayTitle[1] + " " + dayTitle[0]);
             }
 
-            if (returnValue.isEmpty() || returnValue.replace(" ", "").isEmpty())
+            if ((returnValue.length() == 0) || returnValue.toString().replace(" ", "").isEmpty())
                 return null;
 
-            return returnValue;
+            return returnValue.toString();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -342,7 +342,7 @@ abstract class Parse {
             int indexBegin = 0;
             int indexEnd = 2;
 
-            for (int j = 0; 0 == 0; j++) {
+            for (int j = 0; true; j++) {
                 line[i - 2][j] = "";
                 indexBegin = docContent[i].indexOf(">", indexBegin + 1);
                 indexEnd = docContent[i].indexOf("<", indexEnd + 1);
@@ -479,9 +479,7 @@ abstract class Parse {
         }
 
         String[][] trimmedContent = new String[j][columNr];
-        for (int i = 0; i < j; i++) {
-            trimmedContent[i] = yourContent[i];
-        }
+        System.arraycopy(yourContent, 0, trimmedContent, 0, j);
 
 
         return trimmedContent;

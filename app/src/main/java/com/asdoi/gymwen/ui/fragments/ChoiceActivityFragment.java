@@ -216,17 +216,17 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
         if (checkIfEmpty()) {
             ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.senior_empty)).setDuration(ChocoBar.LENGTH_LONG).build().show();
         } else {
-            String senior = "";
+            StringBuilder senior = new StringBuilder();
             for (int i = 0; i < quantitiyCourses; i++) {
                 String course = ((EditText) root.findViewById(i + 1300)).getText().toString();
                 if (!course.replaceAll(" ", "").isEmpty()) {
-                    if (!senior.contains(course)) {
-                        senior += course + "#";
+                    if (!senior.toString().contains(course)) {
+                        senior.append(course).append("#");
                     }
                 }
             }
-            senior = senior.substring(0, senior.length() - 1);
-            mainActivity.setCourses(senior);
+            senior = new StringBuilder(senior.substring(0, senior.length() - 1));
+            mainActivity.setCourses(senior.toString());
             mainActivity.setFragment(10);
         }
     }

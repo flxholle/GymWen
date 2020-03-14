@@ -47,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class SubstitutionFragment extends Fragment implements View.OnClickListener {
     private View root;
@@ -76,7 +77,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @NonNull
-    public static SubstitutionFragment newInstance(int state, boolean cstitles) {
+    public static SubstitutionFragment newInstance(int state, boolean viewPagerTitles) {
         SubstitutionFragment fragment = new SubstitutionFragment();
         Bundle bundle = new Bundle();
 
@@ -111,7 +112,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         bundle.putBoolean(TODAY, today);
         bundle.putBoolean(ALL, all);
         bundle.putBoolean(ATONEGLANCE, both);
-        bundle.putBoolean(VIEWPAGERTITLES, cstitles);
+        bundle.putBoolean(VIEWPAGERTITLES, viewPagerTitles);
         MainActivity.substitutionFragmentState = state;
         fragment.setArguments(bundle);
         return fragment;
@@ -123,7 +124,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         if (all != this.all) {
             this.all = all;
         }
-        //Loading Pabel
+        //Loading Panel
         ((ActivityFeatures) getActivity()).createLoadingPanel(root.findViewById(R.id.substitution_frame));
         refreshAndTable();
 
@@ -177,15 +178,18 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             try {
                 getActivity().runOnUiThread(() -> {
                     try {
+                        String[] todayTitleArray = SubstitutionPlanFeatures.getTodayTitleArray();
+                        String[] tomorrowTitleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+
                         if (!changedSectionsPagerAdapterTitles && SubstitutionPlanFeatures.areDocsDownloaded() && changeViewPagerTitles) {
                             MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
-                            spa.setTitles(SubstitutionPlanFeatures.getTodayTitleArray()[1], SubstitutionPlanFeatures.getTomorrowTitleArray()[1]);
+                            spa.setTitles(todayTitleArray[1], tomorrowTitleArray[1]);
                             spa.notifyDataSetChanged();
                             changedSectionsPagerAdapterTitles = true;
                         }
                         //Update menu Items for days
-                        ((MainActivity) getActivity()).setTodayMenuItemTitle(SubstitutionPlanFeatures.getTodayTitleArray()[1] + ", " + SubstitutionPlanFeatures.getTodayTitleArray()[0]);
-                        ((MainActivity) getActivity()).setTomorrowMenuItemTitle(SubstitutionPlanFeatures.getTomorrowTitleArray()[1] + ", " + SubstitutionPlanFeatures.getTomorrowTitleArray()[0]);
+                        ((MainActivity) getActivity()).setTodayMenuItemTitle(todayTitleArray[1] + ", " + todayTitleArray[0]);
+                        ((MainActivity) getActivity()).setTomorrowMenuItemTitle(tomorrowTitleArray[1] + ", " + tomorrowTitleArray[0]);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -236,7 +240,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     @NonNull
     private String shareMessage(boolean withCourses) {
-        String message = "";
+        StringBuilder message = new StringBuilder();
         String[][] content = null;
         String title = "";
 
@@ -247,7 +251,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             content = SubstitutionPlanFeatures.getTomorrowArray();
             title = SubstitutionPlanFeatures.getTomorrowTitle();
         }
-        String classes = "";
+        StringBuilder classes = new StringBuilder();
 
         if (content == null) {
             return "";
@@ -257,47 +261,47 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         if (SubstitutionPlanFeatures.getSenior()) {
             ArrayList<String> courses = SubstitutionPlanFeatures.getNames();
             for (int i = 0; i < courses.size() - 1; i++) {
-                classes += courses.get(i) + ", ";
+                classes.append(courses.get(i)).append(", ");
             }
-            classes += courses.get(courses.size() - 1);
+            classes.append(courses.get(courses.size() - 1));
             if (content.length == 0) {
-                message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + context.getString(R.string.share_msg_for_courses) + " " + classes + ")\n" : "\n");
-                return message;
+                message = new StringBuilder(context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + context.getString(R.string.share_msg_for_courses) + " " + classes + ")\n" : "\n"));
+                return message.toString();
             } else
-                message = context.getString(R.string.share_msg_substitution_at) + " " + title + ":\n";
+                message = new StringBuilder(context.getString(R.string.share_msg_substitution_at) + " " + title + ":\n");
         } else {
             ArrayList<String> names = SubstitutionPlanFeatures.getNames();
             for (int i = 0; i < names.size(); i++) {
-                classes += names.get(i) + "";
+                classes.append(names.get(i));
             }
             if (content.length == 0) {
-                message = context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + classes + ")\n" : "\n");
-                return message;
+                message = new StringBuilder(context.getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + classes + ")\n" : "\n"));
+                return message.toString();
             } else
-                message = context.getString(R.string.share_msg_substitution_at) + " " + title + (withCourses ? " (" + classes + "):\n" : ":\n");
+                message = new StringBuilder(context.getString(R.string.share_msg_substitution_at) + " " + title + (withCourses ? " (" + classes + "):\n" : ":\n"));
         }
 
         String freespace = "    ";
         if (SubstitutionPlanFeatures.getSenior()) {
             for (String[] line : content) {
                 if (SubstitutionPlanFeatures.isNothing(line[3])) {
-                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_nothing_hour_senior) + " " + line[0] + "\n";
+                    message.append(freespace).append(line[1]).append(". ").append(context.getString(R.string.share_msg_nothing_hour_senior)).append(" ").append(line[0]).append("\n");
                 } else {
-                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_hour_senior) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
+                    message.append(freespace).append(line[1]).append(". ").append(context.getString(R.string.share_msg_hour_senior)).append(" ").append(line[0]).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line[4]).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line[3]).append(", ").append(line[5]).append("\n");
                 }
             }
         } else {
             for (String[] line : content) {
                 if (SubstitutionPlanFeatures.isNothing(line[3])) {
-                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_nothing_hour) + "\n";
+                    message.append(freespace).append(line[1]).append(". ").append(context.getString(R.string.share_msg_nothing_hour)).append("\n");
                 } else {
-                    message += freespace + line[1] + ". " + context.getString(R.string.share_msg_hour) + " " + line[0] + " " + context.getString(R.string.share_msg_in_room) + " " + line[4] + " " + context.getString(R.string.with_teacher) + " " + line[3] + ", " + line[5] + "\n";
+                    message.append(freespace).append(line[1]).append(". ").append(context.getString(R.string.share_msg_hour)).append(" ").append(line[0]).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line[4]).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line[3]).append(", ").append(line[5]).append("\n");
                 }
             }
         }
 
 
-        return message;
+        return message.toString();
     }
 
 
@@ -619,7 +623,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                     bgColor = ContextCompat.getColor(getContext(), R.color.future);
                     textColor = ContextCompat.getColor(getContext(), R.color.future_text);
                 } else {
-                    bgColor = ContextCompat.getColor(getContext(), R.color.past);
+                    bgColor = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.past);
                     textColor = ContextCompat.getColor(getContext(), R.color.past_text);
                 }
                 ViewGroup titleView = createTitleLayoutNewDesign(titleArray[1], titleArray[0] + (titleArray.length > 2 ? ", " + titleArray[2] : ""), bgColor, textColor);

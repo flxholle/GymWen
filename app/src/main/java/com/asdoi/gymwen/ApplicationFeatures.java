@@ -603,32 +603,32 @@ public class ApplicationFeatures extends MultiDexApplication {
 
         @NonNull
         public String notifMessageContent(@Nullable String[][] content, @NonNull SubstitutionPlan vp) {
-            String message = "";
+            StringBuilder message = new StringBuilder();
             if (content == null) {
                 return "";
             }
             if (content.length == 0) {
-                message += getContext().getString(R.string.notif_nothing) + "\n";
+                message.append(getContext().getString(R.string.notif_nothing)).append("\n");
             } else {
                 if (vp.getSenior()) {
                     for (String[] line : content) {
                         if (SubstitutionPlanFeatures.isNothing(line[3])) {
-                            message += line[1] + ". Stunde entfällt\n";
+                            message.append(line[1]).append(". Stunde entfällt\n");
                         } else {
-                            message += line[1] + ". Stunde, " + line[0] + ", " + line[4] + ", " + line[3] + " " + line[5] + "\n";
+                            message.append(line[1]).append(". Stunde, ").append(line[0]).append(", ").append(line[4]).append(", ").append(line[3]).append(" ").append(line[5]).append("\n");
                         }
                     }
                 } else {
                     for (String[] line : content) {
                         if (SubstitutionPlanFeatures.isNothing(line[3])) {
-                            message += line[1] + ". Stunde entfällt\n";
+                            message.append(line[1]).append(". Stunde entfällt\n");
                         } else {
-                            message += line[1] + ". Stunde " + line[2] + " bei " + line[3] + ", " + line[4] + " " + line[5] + "\n";
+                            message.append(line[1]).append(". Stunde ").append(line[2]).append(" bei ").append(line[3]).append(", ").append(line[4]).append(" ").append(line[5]).append("\n");
                         }
                     }
                 }
             }
-            return message;
+            return message.toString();
         }
 
         private void createNotification(String body, String title, int notification_id) {

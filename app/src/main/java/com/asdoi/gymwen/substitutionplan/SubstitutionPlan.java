@@ -174,7 +174,7 @@ public class SubstitutionPlan {
                 return noSubstitution();
             }
 
-            String todayString = "";
+            StringBuilder todayString = new StringBuilder();
 
             //System.out.println verarbeitung
             String[] spalten = new String[content.length];
@@ -182,15 +182,15 @@ public class SubstitutionPlan {
                 spalten[i] = "";
                 for (int j = 0; j < 5; j++) {
                     spalten[i] += content[i][j] + " ";
-                    todayString += content[i][j] + " ";
+                    todayString.append(content[i][j]).append(" ");
                 }
-                todayString += "\n";
+                todayString.append("\n");
             }
             for (String s : spalten) {
                 System.out.println(s);
             }
 
-            return todayString;
+            return todayString.toString();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -234,21 +234,21 @@ public class SubstitutionPlan {
                 return noSubstitutionAll();
             }
 
-            String todayString = "";
+            StringBuilder todayString = new StringBuilder();
             String[] spalten = new String[content.length];
             for (int i = 0; i < content.length; i++) {
                 spalten[i] = "";
                 for (int j = 0; j < 5; j++) {
                     spalten[i] += content[i][j] + " ";
-                    todayString += content[i][j] + " ";
+                    todayString.append(content[i][j]).append(" ");
                 }
-                todayString += "\n";
+                todayString.append("\n");
             }
             for (String s : spalten) {
                 System.out.println(s);
             }
 
-            return todayString;
+            return todayString.toString();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -435,9 +435,7 @@ public class SubstitutionPlan {
     @NonNull
     private static ArrayList<String> generateSeniorCodes(@NonNull String[] courseNames) {
         ArrayList<String> returnValue = new ArrayList<>();
-        for (String s : courseNames) {
-            returnValue.add(s);
-        }
+        returnValue.addAll(Arrays.asList(courseNames));
 
         return returnValue;
     }
