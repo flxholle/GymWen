@@ -75,6 +75,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 import de.cketti.library.changelog.ChangeLog;
 import info.isuru.sheriff.enums.SheriffPermission;
@@ -116,7 +117,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
      * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
      */
 
-    public abstract void setupColors();
+    protected abstract void setupColors();
 
     public void setToolbar(boolean backButton) {
         try {
@@ -127,13 +128,13 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
             }
             //noinspection ConstantConditions
             if (backButton)
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setNavigationbarColor(int color) {
+    private void setNavigationbarColor(int color) {
         if (ThemeStore.coloredNavigationBar(this)) {
             ATH.setNavigationbarColor(this, color);
         } else {
@@ -146,7 +147,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         setNavigationbarColor(ApplicationFeatures.getPrimaryColor(this));
     }
 
-    public void setStatusbarColor(int color) {
+    private void setStatusbarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             final View statusBar = /*getWindow().getDecorView().getRootView().findViewById(R.id.status_bar)*/ null;
             if (statusBar != null) {
@@ -163,23 +164,23 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         }
     }
 
-    public void setStatusbarColorAuto() {
+    private void setStatusbarColorAuto() {
         // we don't want to use statusbar color because we are doing the color darkening on our own to support KitKat
 //        setStatusbarColor(ThemeStore.primaryColor(this));
         setStatusbarColor(ApplicationFeatures.getPrimaryColor(this));
     }
 
-    public void setLightStatusbar(boolean enabled) {
+    private void setLightStatusbar(boolean enabled) {
         ATH.setLightStatusbar(this, enabled);
     }
 
-    public void setLightStatusbarAuto(int bgColor) {
+    private void setLightStatusbarAuto(int bgColor) {
         setLightStatusbar(ColorUtil.isColorLight(bgColor));
     }
 
 
     //Changelog
-    public void showChangelogCK(boolean checkFirstRun) {
+    protected void showChangelogCK(boolean checkFirstRun) {
         ChangeLog cl = new ChangeLog(this);
         try {
             if (checkFirstRun) {
@@ -404,7 +405,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         return false;
     }
 
-    public boolean openAppInStore(@NonNull String... packageNames) {
+    protected boolean openAppInStore(@NonNull String... packageNames) {
         boolean run = false;
         for (String s : packageNames) {
             try {
@@ -449,7 +450,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     private class MyPermissionListener implements PermissionListener {
         Runnable runAfter;
 
-        public MyPermissionListener(Runnable r) {
+        MyPermissionListener(Runnable r) {
             runAfter = r;
         }
 
@@ -507,7 +508,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     //DownloadManager
     private long downloadID;
 
-    public void startDownload(String url, String title, String description, String dirType, String subPath, BroadcastReceiver onComplete) {
+    private void startDownload(String url, String title, String description, String dirType, String subPath, BroadcastReceiver onComplete) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -534,7 +535,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                 .setDestinationInExternalPublicDir(dirType, subPath)
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
-        downloadID = mgr.enqueue(request);
+        downloadID = Objects.requireNonNull(mgr).enqueue(request);
 
         Toast.makeText(this, getString(R.string.download_start), Toast.LENGTH_LONG).show();
 
@@ -560,6 +561,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     }
 
     @NonNull
+    private
     BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
             Intent i = new Intent(getContext(), MainActivity.class);
@@ -570,7 +572,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
 
     //Apk Installer
-    public void installApk(@NonNull String path) {
+    private void installApk(@NonNull String path) {
         File apkFile = new File(path);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", apkFile);
@@ -581,7 +583,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
 
     //Make Call
-    public void makeCall(String telNr) {
+    protected void makeCall(String telNr) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + telNr));
         startActivity(intent);
@@ -617,7 +619,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
 
     //Save Documents
-    public void saveDocs() {
+    protected void saveDocs() {
         SubstitutionPlanFeatures.saveDocs();
         Teacherlist.saveDoc();
     }
@@ -625,9 +627,9 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     //Grades Management
     private final static String gradesFileName = "Notenverwaltung.xlsx";
-    public final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
+    private final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
 
-    public void checkGradesFile() {
+    protected void checkGradesFile() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermission(this::checkGradesFile, SheriffPermission.STORAGE);
@@ -645,6 +647,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     }
 
     @NonNull
+    private
     BroadcastReceiver openGradesFile = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
             openGradesFile();
@@ -695,7 +698,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
 
     //Register Installation
-    public void checkRegistration() {
+    protected void checkRegistration() {
         if (PreferenceUtil.isPhoneRegistered() || !ApplicationFeatures.isNetworkAvailable())
             return;
 
@@ -750,7 +753,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         editor.apply();
     }
 
-    final int SOME_INTEGER = 1;
+    private final int SOME_INTEGER = 1;
 
     public void backup() {
         //send an ACTION_CREATE_DOCUMENT intent to the system. It will open a dialog where the user can choose a location and a filename
@@ -779,8 +782,8 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
             ProfileManagement.save(false);
 
             try {
-                OutputStream output = getContext().getContentResolver().openOutputStream(uri);
-                PrintWriter writer = new PrintWriter(output);
+                OutputStream output = getContext().getContentResolver().openOutputStream(Objects.requireNonNull(uri));
+                PrintWriter writer = new PrintWriter(Objects.requireNonNull(output));
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
                 Map<String, ?> allEntries = sharedPreferences.getAll();
@@ -813,7 +816,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
 
     //For Maps Navigation
-    public void showMap(Uri geoLocation) {
+    protected void showMap(Uri geoLocation) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(geoLocation);
         if (intent.resolveActivity(getPackageManager()) != null) {

@@ -10,23 +10,25 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 
+import java.util.Objects;
+
 public class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_substitutionplan, rootKey);
 
-        ((SettingsActivity) getActivity()).loadedFragments++;
+        ((SettingsActivity) Objects.requireNonNull(getActivity())).loadedFragments++;
 
         setFullNames();
         Preference myPref = findPreference("show_full_names");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             setFullNames();
             return true;
         });
 
         setSummarize();
         myPref = findPreference("summarize");
-        myPref.setOnPreferenceClickListener((Preference pref) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference pref) -> {
             setSummarize();
             return true;
         });
@@ -34,11 +36,11 @@ public class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
 
     private void setFullNames() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_full_names", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        findPreference("show_full_names_specific").setEnabled(showNotif);
+        Objects.requireNonNull(findPreference("show_full_names_specific")).setEnabled(showNotif);
     }
 
     private void setSummarize() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("summarize", true) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        findPreference("summarize_old").setEnabled(showNotif);
+        Objects.requireNonNull(findPreference("summarize_old")).setEnabled(showNotif);
     }
 }

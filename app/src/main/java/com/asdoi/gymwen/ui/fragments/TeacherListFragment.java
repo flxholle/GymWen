@@ -29,6 +29,8 @@ import com.asdoi.gymwen.teacherlist.Teacherlist;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -61,7 +63,7 @@ public class TeacherListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((ActivityFeatures) getActivity()).createLoadingPanel(base);
+        ((ActivityFeatures) Objects.requireNonNull(getActivity())).createLoadingPanel(base);
 
         new Thread(() -> {
             ApplicationFeatures.downloadTeacherlistDoc();
@@ -72,12 +74,12 @@ public class TeacherListFragment extends Fragment {
 
 
     private void createLayout() {
-        getActivity().runOnUiThread(() -> {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             clear();
 
             if (teacherList == null) {
                 TextView title = createTitleLayout();
-                title.setText(context.getString(R.string.noInternetConnection));
+                Objects.requireNonNull(title).setText(Objects.requireNonNull(context).getString(R.string.noInternetConnection));
                 return;
             }
 
@@ -89,7 +91,7 @@ public class TeacherListFragment extends Fragment {
             base.addView(base2);
 
             teacherListView = new ListView(context);
-            teacherListView.setAdapter(new TeacherListAdapter(context, 0));
+            teacherListView.setAdapter(new TeacherListAdapter(Objects.requireNonNull(context), 0));
             teacherListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             base.addView(teacherListView);
 
@@ -101,9 +103,9 @@ public class TeacherListFragment extends Fragment {
     }
 
     @Nullable
-    TextView createTitleLayout() {
+    private TextView createTitleLayout() {
         TextView textView = new TextView(context);
-        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
+        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(Objects.requireNonNull(context)));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         textView.setGravity(Gravity.CENTER);
@@ -113,8 +115,8 @@ public class TeacherListFragment extends Fragment {
     }
 
     @Nullable
-    com.google.android.material.textfield.TextInputLayout createSearchLayout() {
-        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
+    private com.google.android.material.textfield.TextInputLayout createSearchLayout() {
+        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(Objects.requireNonNull(context));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         inputLayout.setLayoutParams(params);
 
@@ -142,7 +144,7 @@ public class TeacherListFragment extends Fragment {
                         teacherList = Teacherlist.liste();
                     }
                     before = charSequence.toString();
-                    ((BaseAdapter) teacherListView.getAdapter()).notifyDataSetChanged();
+                    ((BaseAdapter) Objects.requireNonNull(teacherListView).getAdapter()).notifyDataSetChanged();
                 }
             }
 
@@ -159,7 +161,7 @@ public class TeacherListFragment extends Fragment {
 
     private class TeacherListAdapter extends ArrayAdapter<String[]> {
 
-        public TeacherListAdapter(@NonNull Context con, int resource) {
+        TeacherListAdapter(@NonNull Context con, int resource) {
             super(con, resource);
         }
 
@@ -170,12 +172,12 @@ public class TeacherListFragment extends Fragment {
                 convertView = getLayoutInflater().inflate(R.layout.list_teacherlist_entry, null);
             }
 
-            return ((ActivityFeatures) getActivity()).getTeacherView(convertView, teacherList[position]);
+            return ((ActivityFeatures) Objects.requireNonNull(getActivity())).getTeacherView(convertView, Objects.requireNonNull(teacherList)[position]);
         }
 
         @Override
         public int getCount() {
-            return teacherList.length;
+            return Objects.requireNonNull(teacherList).length;
         }
     }
 

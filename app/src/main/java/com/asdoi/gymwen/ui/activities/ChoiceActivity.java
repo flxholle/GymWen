@@ -22,8 +22,8 @@ public class ChoiceActivity extends ActivityFeatures {
 
     private String courses = "";
     private boolean parents = false;
-    public String courseFirstDigit = "";
-    public String courseMainDigit = "";
+    private String courseFirstDigit = "";
+    private String courseMainDigit = "";
     private String name = "";
     private boolean profileAdd = false;
 

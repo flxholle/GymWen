@@ -54,6 +54,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
     private AppBarConfiguration mAppBarConfiguration;
@@ -62,18 +63,18 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private Menu menu;
 
     public static int substitutionFragmentState;
-    public static int lastLoaded; // 0 = Substitution, 1 = Tabs, 2 = Teacherlist
-    public static final int lastLoadedSubstitution = 0;
-    public static final int lastLoadedTabs = 1;
-    public static final int lastLoadedTeacherlist = 2;
+    private static int lastLoaded; // 0 = Substitution, 1 = Tabs, 2 = Teacherlist
+    private static final int lastLoadedSubstitution = 0;
+    private static final int lastLoadedTabs = 1;
+    private static final int lastLoadedTeacherlist = 2;
 
-    public static int lastLoadedInTabs;
-    public static final int lastLoadedTabsSpecific = 10;
-    public static final int lastLoadedTabsAll = 11;
-    public static final int lastLoadedTabsToday = 12;
-    public static final int lastLoadedTabsTomorrow = 13;
+    private static int lastLoadedInTabs;
+    private static final int lastLoadedTabsSpecific = 10;
+    private static final int lastLoadedTabsAll = 11;
+    private static final int lastLoadedTabsToday = 12;
+    private static final int lastLoadedTabsTomorrow = 13;
 
-    public static final int refreshFragment = 104;
+    private static final int refreshFragment = 104;
 
     public SectionsPagerAdapter sectionsPagerAdapter;
 
@@ -404,7 +405,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         return true;
     }
 
-    public void onNavigationItemSelected(int id) {
+    private void onNavigationItemSelected(int id) {
         onNavigationItemSelected(id, "");
     }
 
@@ -687,7 +688,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
 
         if (!title.trim().isEmpty())
-            getSupportActionBar().setTitle(title);
+            Objects.requireNonNull(getSupportActionBar()).setTitle(title);
     }
 
     @Override

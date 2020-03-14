@@ -14,19 +14,21 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 
+import java.util.Objects;
+
 public class SettingsFragmentDesign extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_design, rootKey);
 
-        ((SettingsActivity) getActivity()).loadedFragments++;
+        ((SettingsActivity) Objects.requireNonNull(getActivity())).loadedFragments++;
 
         ListPreference mp = findPreference("theme");
-        mp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        Objects.requireNonNull(mp).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 mp.setValue(newValue + "");
-                getActivity().recreate();
+                Objects.requireNonNull(getActivity()).recreate();
                 return false;
             }
         });
@@ -34,9 +36,9 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
 
         Preference myPref;
         myPref = findPreference("primaryColor");
-        myPref.setVisible(true);
+        Objects.requireNonNull(myPref).setVisible(true);
         myPref.setOnPreferenceClickListener((Preference p) -> {
-            new ColorChooserDialog.Builder(getContext(), R.string.color_primary)
+            new ColorChooserDialog.Builder(Objects.requireNonNull(getContext()), R.string.color_primary)
                     .accentMode(false)
                     .allowUserColorInput(true)
                     .allowUserColorInputAlpha(false)
@@ -46,9 +48,9 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
         });
 
         myPref = findPreference("accentColor");
-        myPref.setVisible(true);
+        Objects.requireNonNull(myPref).setVisible(true);
         myPref.setOnPreferenceClickListener((Preference p) -> {
-            new ColorChooserDialog.Builder(getContext(), R.string.color_accent)
+            new ColorChooserDialog.Builder(Objects.requireNonNull(getContext()), R.string.color_accent)
                     .accentMode(false)
                     .allowUserColorInput(true)
                     .allowUserColorInputAlpha(false)
@@ -59,13 +61,13 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
 
         setBorder();
         myPref = findPreference("show_borders");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             setBorder();
             return true;
         });
 
         myPref = findPreference("old_vertretung");
-        myPref.setOnPreferenceClickListener((Preference pref) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference pref) -> {
             setOldTitle();
             return true;
         });
@@ -73,11 +75,11 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
 
     private void setBorder() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        findPreference("show_border_specific").setEnabled(showNotif);
+        Objects.requireNonNull(findPreference("show_border_specific")).setEnabled(showNotif);
     }
 
-    public String getThemeName() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+    private String getThemeName() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
 
         String selectedTheme = sharedPreferences.getString("theme", "switch");
         String[] values = getResources().getStringArray(R.array.theme_array_values);
@@ -94,7 +96,7 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
     }
 
     private void setOldTitle() {
-        boolean value = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("old_vertretung", false);
-        ((SwitchPreference) findPreference("old_vertretung_title")).setChecked(value);
+        boolean value = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext())).getBoolean("old_vertretung", false);
+        ((SwitchPreference) Objects.requireNonNull(findPreference("old_vertretung_title"))).setChecked(value);
     }
 }

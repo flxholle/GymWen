@@ -8,6 +8,8 @@ import android.util.Log;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 
+import java.util.Objects;
+
 public class ImportActivity extends ActivityFeatures {
 
     @Override
@@ -29,7 +31,7 @@ public class ImportActivity extends ActivityFeatures {
         if (Intent.ACTION_VIEW.equals(action)) {
             //uri = intent.getStringExtra("URI");
             Uri uri2 = intent.getData();
-            String uri = uri2.getEncodedPath() + "  complete: " + uri2.toString();
+            String uri = Objects.requireNonNull(uri2).getEncodedPath() + "  complete: " + uri2.toString();
 //            TextView textView = (TextView)findViewById(R.id.textView);
 //            textView.setText(uri);
             // now you call whatever function your app uses

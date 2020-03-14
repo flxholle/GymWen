@@ -76,6 +76,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Objects;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
@@ -103,7 +104,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     @NonNull
-    public static Date removeTime(@NonNull Date date) {
+    private static Date removeTime(@NonNull Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -145,7 +146,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     //Download Doc
     @Nullable
-    public static Document downloadDoc(String url) {
+    private static Document downloadDoc(String url) {
         try {
             return Jsoup.connect(url).get();
 
@@ -240,7 +241,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         @Override
         protected Void doInBackground(@Nullable Boolean... params) {
             if (params == null || params.length < 2) {
-                if (params.length == 1)
+                if (Objects.requireNonNull(params).length == 1)
                     params = new Boolean[]{params[0], true};
             }
             downloadSubstitutionplanDocs(params[0], params[1]);
@@ -280,15 +281,15 @@ public class ApplicationFeatures extends MultiDexApplication {
         ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Network nw = connectivityManager.getActiveNetwork();
+                Network nw = Objects.requireNonNull(connectivityManager).getActiveNetwork();
                 NetworkCapabilities actNw = connectivityManager.getNetworkCapabilities(nw);
-                return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
+                return Objects.requireNonNull(actNw).hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
 
             } else {
                 throw new Exception();
             }
         } catch (Exception e) {
-            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            NetworkInfo activeNetworkInfo = Objects.requireNonNull(connectivityManager).getActiveNetworkInfo();
             return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         }
     }
@@ -334,7 +335,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return signedIn;
     }
 
-    public static boolean coursesCheck(boolean openAddActivity) {
+    private static boolean coursesCheck(boolean openAddActivity) {
         if (ProfileManagement.getSize() <= 0) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
             //Backwards compatibility for versions older 1.1
@@ -373,7 +374,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
 
-    public static void refreshWidgets() {
+    private static void refreshWidgets() {
         Context context = getContext();
         AppWidgetManager man = AppWidgetManager.getInstance(context);
 
@@ -395,10 +396,10 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static Bitmap vectorToBitmap(@DrawableRes int resVector) {
         Context context = getContext();
         Drawable drawable = AppCompatResources.getDrawable(context, resVector);
-        return vectorToBitmap(drawable);
+        return vectorToBitmap(Objects.requireNonNull(drawable));
     }
 
-    public static Bitmap vectorToBitmap(@NonNull Drawable drawable) {
+    private static Bitmap vectorToBitmap(@NonNull Drawable drawable) {
         Bitmap b = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
@@ -484,8 +485,8 @@ public class ApplicationFeatures extends MultiDexApplication {
             StringBuilder messageTomorrow = new StringBuilder();
             String[] titleTodayArray = SubstitutionPlanFeatures.getTodayTitleArray();
             String[] titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
-            String titleToday = titleTodayArray[0] + ", " + titleTodayArray[1] + ":";
-            String titleTomorrow = titleTomorrowArray[0] + ", " + titleTomorrowArray[1] + ":";
+            String titleToday = Objects.requireNonNull(titleTodayArray)[0] + ", " + titleTodayArray[1] + ":";
+            String titleTomorrow = Objects.requireNonNull(titleTomorrowArray)[0] + ", " + titleTomorrowArray[1] + ":";
             boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
 
             boolean[] isNo = new boolean[]{true, true};
@@ -497,7 +498,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
                 String[][] content = temp.getDay(true);
                 try {
-                    count.append(content.length);
+                    count.append(Objects.requireNonNull(content).length);
                     count.append("|");
                     if (content.length != 0) {
                         if (isMoreThanOneProfile) {
@@ -513,7 +514,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
                 content = temp.getDay(false);
                 try {
-                    count.append(content.length);
+                    count.append(Objects.requireNonNull(content).length);
                     count.append(", ");
                     if (content.length != 0) {
                         if (isMoreThanOneProfile) {
@@ -544,8 +545,8 @@ public class ApplicationFeatures extends MultiDexApplication {
             StringBuilder messageTomorrow = new StringBuilder();
             String[] titleTodayArray = SubstitutionPlanFeatures.getTodayTitleArray();
             String[] titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
-            String titleToday = titleTodayArray[0] + ", " + titleTodayArray[1] + ":";
-            String titleTomorrow = titleTomorrowArray[0] + ", " + titleTomorrowArray[1] + ":";
+            String titleToday = Objects.requireNonNull(titleTodayArray)[0] + ", " + titleTodayArray[1] + ":";
+            String titleTomorrow = Objects.requireNonNull(titleTomorrowArray)[0] + ", " + titleTomorrowArray[1] + ":";
 
             boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
             boolean[] isNo = new boolean[]{true, true};
@@ -558,7 +559,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
                 String[][] content = temp.getDay(true);
                 try {
-                    count1.append(content.length);
+                    count1.append(Objects.requireNonNull(content).length);
                     count1.append(", ");
                     if (content.length != 0) {
                         if (isMoreThanOneProfile) {
@@ -574,7 +575,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
                 content = temp.getDay(false);
                 try {
-                    count2.append(content.length);
+                    count2.append(Objects.requireNonNull(content).length);
                     count2.append(", ");
                     if (content.length != 0) {
                         if (isMoreThanOneProfile) {
@@ -602,7 +603,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
 
         @NonNull
-        public String notifMessageContent(@Nullable String[][] content, @NonNull SubstitutionPlan vp) {
+        String notifMessageContent(@Nullable String[][] content, @NonNull SubstitutionPlan vp) {
             StringBuilder message = new StringBuilder();
             if (content == null) {
                 return "";
@@ -680,7 +681,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 //                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
                     notificationChannel.enableVibration(false);
                     notificationChannel.setSound(null, null);
-                    notificationManager.createNotificationChannel(notificationChannel);
+                    Objects.requireNonNull(notificationManager).createNotificationChannel(notificationChannel);
                     notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
                     notificationManager.createNotificationChannel(notificationChannel);
@@ -688,7 +689,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                     notificationBuilder.setPriority(Notification.PRIORITY_LOW);
                 }
 
-                notificationManager.notify(notification_id, notificationBuilder.build());
+                Objects.requireNonNull(notificationManager).notify(notification_id, notificationBuilder.build());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -715,7 +716,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             }
         }
 
-        public void sendNotification() {
+        void sendNotification() {
             notificationMessage();
         }
 
@@ -748,7 +749,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
                 String[][] content = temp.getDay(today);
                 try {
-                    count1.append(content.length);
+                    count1.append(Objects.requireNonNull(content).length);
                     count1.append(", ");
                     if (content.length != 0) {
                         if (isMoreThanOneProfile) {
@@ -777,7 +778,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             try {
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
-                Date startDate = removeTime(df.parse(source));
+                Date startDate = removeTime(Objects.requireNonNull(df.parse(source)));
 
                 Date currentDate = removeTime(new Date());
 
@@ -845,7 +846,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 //                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
                     notificationChannel.enableVibration(false);
                     notificationChannel.setSound(null, null);
-                    notificationManager.createNotificationChannel(notificationChannel);
+                    Objects.requireNonNull(notificationManager).createNotificationChannel(notificationChannel);
                     notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
                     notificationManager.createNotificationChannel(notificationChannel);
@@ -853,7 +854,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                     notificationBuilder.setPriority(NotificationCompat.PRIORITY_LOW);
                 }
 
-                notificationManager.notify(notification_id, notificationBuilder.build());
+                Objects.requireNonNull(notificationManager).notify(notification_id, notificationBuilder.build());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -882,10 +883,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         Context context = ApplicationFeatures.getContext();
         Drawable drawable = ContextCompat.getDrawable(context, drawableId);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            drawable = (DrawableCompat.wrap(drawable)).mutate();
+            drawable = (DrawableCompat.wrap(Objects.requireNonNull(drawable))).mutate();
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+        Bitmap bitmap = Bitmap.createBitmap(Objects.requireNonNull(drawable).getIntrinsicWidth(),
                 drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -932,7 +933,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Schedule and TimePicker
-    public static final int DAILY_REMINDER_REQUEST_CODE = 100;
+    private static final int DAILY_REMINDER_REQUEST_CODE = 100;
 
     public static void setAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second) {
         // cancel already scheduled reminders
@@ -962,7 +963,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, customCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        Objects.requireNonNull(am).setInexactRepeating(AlarmManager.RTC_WAKEUP, customCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
 //        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, System.currentTimeMillis() + 1000, pendingIntent);
 
@@ -988,7 +989,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         Intent intent1 = new Intent(context, cls);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.cancel(pendingIntent);
+        Objects.requireNonNull(am).cancel(pendingIntent);
         pendingIntent.cancel();
     }
 
@@ -1034,7 +1035,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return addCourseToProfile(getSelectedProfilePosition(), course);
     }
 
-    public static boolean addCourseToProfile(int position, @NonNull String course) {
+    private static boolean addCourseToProfile(int position, @NonNull String course) {
         return ProfileManagement.addCourseToProfile(position, course);
     }
 
@@ -1042,7 +1043,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return removeFromProfile(getSelectedProfilePosition(), course);
     }
 
-    public static boolean removeFromProfile(int position, String course) {
+    private static boolean removeFromProfile(int position, String course) {
         return ProfileManagement.removeFromProfile(position, course);
     }
 
@@ -1076,7 +1077,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return PreferenceUtil.getIntSettings("colorAccent", 0) == 0 ? getThemeColor(R.attr.colorAccent, context) : PreferenceUtil.getIntSettings("colorAccent", 0);
     }
 
-    public static int getThemeColor(int themeAttributeId, @NonNull Context context) {
+    private static int getThemeColor(int themeAttributeId, @NonNull Context context) {
         try {
             TypedValue outValue = new TypedValue();
             Resources.Theme theme = context.getTheme();

@@ -12,6 +12,8 @@ import com.asdoi.gymwen.util.External_Const;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.util.Objects;
+
 /**
  * Meta-Class that creates more useabilty for the Parse-Class
  *
@@ -45,7 +47,7 @@ public abstract class Teacherlist {
      */
     @Nullable
     public static String[] getTeacher(String search) {
-        return Parse.getTeacher(search, liste());
+        return Parse.getTeacher(search, Objects.requireNonNull(liste()));
     }
 
     /**
@@ -56,7 +58,7 @@ public abstract class Teacherlist {
      */
     @NonNull
     public static String[][] getTeachers(@NonNull String search) {
-        return Parse.getTeachers(search, liste());
+        return Parse.getTeachers(search, Objects.requireNonNull(liste()));
     }
 
     /**
@@ -69,7 +71,7 @@ public abstract class Teacherlist {
     /**
      * @return gets the doc
      */
-    public static Document getDoc() {
+    private static Document getDoc() {
         return list;
     }
 
