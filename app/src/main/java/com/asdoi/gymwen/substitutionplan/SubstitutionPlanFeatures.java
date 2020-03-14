@@ -234,4 +234,28 @@ public abstract class SubstitutionPlanFeatures {
     public static String[] getNothing() {
         return External_Const.nothing;
     }
+
+    public static boolean hasSthChanged(Document[] old, Document[] now) {
+        if (old.length < 2 || now.length < 2)
+            return false;
+        //Old
+        setDocs(old[0], old[1]);
+        String[][] oldFilteredToday = new String[2][];
+        String[][] oldFilteredTomorrow = new String[2][];
+        oldFilteredToday = getTodayArray();
+        oldFilteredTomorrow = getTomorrowArray();
+
+        //Now
+        setDocs(now[0], now[1]);
+        String[][] nowFilteredToday = new String[2][];
+        String[][] nowFilteredTomorrow = new String[2][];
+        nowFilteredToday = getTodayArray();
+        nowFilteredTomorrow = getTomorrowArray();
+
+        if (oldFilteredToday == null || oldFilteredTomorrow == null || nowFilteredToday == null || nowFilteredTomorrow == null)
+            return false; //No internet
+
+        return test.Companion.haveArraysSameContent(oldFilteredToday, nowFilteredToday) && test.Companion.haveArraysSameContent(oldFilteredTomorrow, nowFilteredTomorrow);
+
+    }
 }
