@@ -168,6 +168,18 @@ public abstract class SubstitutionPlanFeatures {
         substitutionPlan.setDocs(today, tomorrow);
     }
 
+    public static Document getTodayDoc() {
+        return substitutionPlan.getDoc(true);
+    }
+
+    public static Document getTomorrowDoc() {
+        return substitutionPlan.getDoc(false);
+    }
+
+    public static Document[] getDocs() {
+        return new Document[]{getTodayDoc(), getTomorrowDoc()};
+    }
+
     public static boolean areDocsDownloaded() {
         return substitutionPlan.areDocsDownloaded();
     }

@@ -42,6 +42,7 @@ import androidx.preference.PreferenceManager;
 import com.ahmedjazzar.rosetta.LanguageSwitcher;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.receivers.CheckSubstitutionPlanReceiver;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
@@ -75,6 +76,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
@@ -129,6 +131,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         ACRA.init(this);
         initRosetta();
         ProfileManagement.reload();
+
+        //Setup CheckSubstitutionPlanReceiver
+        List<Integer> time = CheckSubstitutionPlanReceiver.Companion.getNextTime();
+        ApplicationFeatures.setAlarm(getContext(), CheckSubstitutionPlanReceiver.class, time.get(0), time.get(1), time.get(2));
     }
 
     @Override
@@ -1090,6 +1096,46 @@ public class ApplicationFeatures extends MultiDexApplication {
             //"Exception", "File write failed: " + e.toString());
             //Error
         }
+    }
+
+
+    //Check if sth has changed -> Send Notification
+    public static void checkSubstitutionPlan() {
+        if (SubstitutionPlanFeatures.isUninit())
+            SubstitutionPlanFeatures.reloadDocs();
+        Document[] oldDocs = SubstitutionPlanFeatures.getDocs();
+
+        downloadSubstitutionplanDocs(false, false);
+        if (!ProfileManagement.isLoaded())
+            ProfileManagement.reload();
+        if (!coursesCheck(false))
+            return;
+        if (SubstitutionPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+            //No Internet
+            return;
+        }
+
+        Document[] newDocs = SubstitutionPlanFeatures.getDocs();
+
+        for (int i = 0; i < ProfileManagement.getSize(); i++) {
+            Profile p = ProfileManagement.getProfile(i);
+            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
+
+            if (temp.hasSthChanged(oldDocs, newDocs)) {
+                //Sth has changed since last download of substitutionplan
+                if (i == PreferenceUtil.getPreferredProfilePosition())
+                    sendMainNotif();
+                else
+                    sendSummaryNotif();
+                break;
+            }
+        }
+    }
+
+    private static void sendMainNotif() {
+    }
+
+    private static void sendSummaryNotif() {
     }
 
 }

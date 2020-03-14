@@ -269,4 +269,9 @@ public class PreferenceUtil {
         editor.putBoolean("old_vertretung_title", newtitle);
         editor.commit();
     }
+
+
+    public static int getPreferredProfilePosition() {
+        return 0;
+    }
 }

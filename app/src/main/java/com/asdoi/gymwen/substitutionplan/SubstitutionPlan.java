@@ -464,7 +464,11 @@ public class SubstitutionPlan {
 
 
     //Check if sth has changed in filtered
-    private boolean hasSthChanged(Document[] old, Document[] now) {
+    public boolean hasSthChanged(Document[] old) {
+        return hasSthChanged(old, new Document[]{todayDoc, tomorrowDoc});
+    }
+
+    public boolean hasSthChanged(Document[] old, Document[] now) {
         if (old.length < 2 || now.length < 2)
             return false;
         //Old
@@ -480,6 +484,6 @@ public class SubstitutionPlan {
         if (oldFilteredToday == null || oldFilteredTomorrow == null || nowFilteredToday == null || nowFilteredTomorrow == null)
             return false; //No internet
 
-        return !PlanUtils.Companion.areArraysEqual(oldFilteredToday, nowFilteredTomorrow) && PlanUtils.Companion.areArraysEqual(oldFilteredTomorrow, nowFilteredTomorrow);
+        return !(!PlanUtils.Companion.areArraysEqual(oldFilteredToday, nowFilteredTomorrow) || !PlanUtils.Companion.areArraysEqual(oldFilteredTomorrow, nowFilteredTomorrow));
     }
 }
