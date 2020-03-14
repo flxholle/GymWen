@@ -1067,6 +1067,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private View getEntrySpecificNewDesign(@NonNull View view, String[] entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_card_entry_textViewClass);
         course.setText(entry[0]);
+        course.setOnClickListener((View v) -> {
+            showRemovePopup(course, entry[0]);
+        });
 
         TextView hour = view.findViewById(R.id.substitution_card_entry_textViewHour);
         hour.setText(entry[1]);
