@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="visit_website"
+        android:enabled="true"
+        android:icon="@drawable/ic_compass"
+        android:shortcutShortLabel="@string/shortcut_website">
+        <intent
+            android:action="none"
+            android:targetClass="com.asdoi.gymwen.ui.activities.WebsiteActivity"
+            android:targetPackage="com.asdoi.gymwen" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="navigation"
+        android:enabled="true"
+        android:icon="@drawable/ic_navigation_black_24dp"
+        android:shortcutShortLabel="@string/shortcut_navigation">
+        <intent
+            android:action="com.asdoi.gymwen.ui.activities.MainActivity.Navigation"
+            android:targetClass="com.asdoi.gymwen.ui.activities.MainActivity"
+            android:targetPackage="com.asdoi.gymwen" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="call_office"
+        android:enabled="true"
+        android:icon="@drawable/ic_call_black_24dp"
+        android:shortcutShortLabel="@string/shortcut_call_office">
+        <intent
+            android:action="com.asdoi.gymwen.ui.activities.MainActivity.CallOffice"
+            android:targetClass="com.asdoi.gymwen.ui.activities.MainActivity"
+            android:targetPackage="com.asdoi.gymwen" />
+    </shortcut>
+</shortcuts>

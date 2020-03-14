@@ -91,7 +91,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.website_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_website, menu);
         return true;
     }
 

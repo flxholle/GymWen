@@ -56,6 +56,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String SHORTCUT_ACTION_CALL_OFFICE = "com.asdoi.gymwen.ui.activities.MainActivity.CallOffice";
+    public static final String SHORTCUT_ACTION_NAVIGATION = "com.asdoi.gymwen.ui.activities.MainActivity.Navigation";
+
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -173,6 +176,23 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         int accentColor = ThemeStore.accentColor(this);
         NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
         NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Apply Shortcut functions
+        Intent i = getIntent();
+        if (i != null && i.getAction() != null) {
+            switch (i.getAction()) {
+                case SHORTCUT_ACTION_CALL_OFFICE:
+                    onNavigationItemSelected(R.id.nav_call_office);
+                    break;
+                case SHORTCUT_ACTION_NAVIGATION:
+                    onNavigationItemSelected(R.id.nav_navigation);
+                    break;
+            }
+        }
     }
 
     private void setupMenuItems(@NonNull NavigationView navigationView) {
@@ -380,7 +400,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         this.menu = menu;
         return true;
     }

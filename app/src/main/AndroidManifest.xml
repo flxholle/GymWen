@@ -45,6 +45,10 @@
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcut_website" />
         </activity>
         <activity
             android:name=".ui.activities.SignInActivity"
@@ -97,7 +101,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/substitutionplan_widget_info" />
+                android:resource="@xml/widget_info_substitutionplan" />
         </receiver>
         <receiver android:name=".widgets.SummaryWidget">
             <intent-filter>
@@ -106,7 +110,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/summary_widget_info" />
+                android:resource="@xml/widget_info_summary" />
         </receiver>
         <receiver android:name=".widgets.RefreshWidget">
             <intent-filter>
@@ -115,7 +119,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/refresh_widget_info" />
+                android:resource="@xml/widget_info_refresh" />
         </receiver>
         <receiver
             android:name=".receivers.CheckSubstitutionPlanReceiver"

@@ -453,4 +453,9 @@
 
     <!-- widget -->
     <string name="loading">Lädt\u2026</string>
+
+    <!-- Shortcuts -->
+    <string name="shortcut_website">Visit website</string>
+    <string name="shortcut_navigation">Navigation</string>
+    <string name="shortcut_call_office">Sekreteriat anrufen</string>
 </resources>

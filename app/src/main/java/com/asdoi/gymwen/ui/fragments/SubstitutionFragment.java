@@ -941,7 +941,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             return true;
         });
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.substitution_fragment_add_course_menu, popup.getMenu());
+        inflater.inflate(R.menu.popup_substitution_fragment_add_course_menu, popup.getMenu());
         popup.show();
     }
 
@@ -1152,7 +1152,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             return true;
         });
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.substitution_fragment_remove_course_menu, popup.getMenu());
+        inflater.inflate(R.menu.popup_substitution_fragment_remove_course_menu, popup.getMenu());
         popup.show();
     }
 

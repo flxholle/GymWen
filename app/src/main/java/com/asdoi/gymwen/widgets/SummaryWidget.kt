@@ -75,7 +75,8 @@ class SummaryWidget : AppWidgetProvider() {
         for (p in profileList) {
             val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
             val todayList = tempSubstitutionplan.getDay(true)
-            today += todayList!!.size
+            todayList ?: return "?"
+            today += todayList.size
             val tomorrowList = tempSubstitutionplan.getDay(false)
             tomorrow += tomorrowList!!.size
         }
