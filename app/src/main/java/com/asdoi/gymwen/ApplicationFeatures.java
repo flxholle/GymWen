@@ -249,7 +249,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static class downloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+        final ImageView bmImage;
 
         public downloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;

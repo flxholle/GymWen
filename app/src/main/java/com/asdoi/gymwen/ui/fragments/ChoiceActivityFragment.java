@@ -392,7 +392,7 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     private class MyTextWatcher implements TextWatcher {
 
 
-        private EditText mEditText;
+        private final EditText mEditText;
 
         public MyTextWatcher(EditText editText) {
             mEditText = editText;

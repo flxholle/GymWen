@@ -38,7 +38,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     private Document doc;
     private boolean intentActivationEnabled = true;
     @NonNull
-    private List<String> homeOfPagesIndexes = Arrays.asList("http://www.gym-wen.de/schulleben/",
+    private final List<String> homeOfPagesIndexes = Arrays.asList("http://www.gym-wen.de/schulleben/",
             "http://www.gym-wen.de/schulleben/projekte/",
             "http://www.gym-wen.de/schulleben/ereignisse/",
             "http://www.gym-wen.de/schulleben/exkursionen/",

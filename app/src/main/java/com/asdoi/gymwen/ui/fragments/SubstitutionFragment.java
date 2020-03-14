@@ -861,8 +861,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     //All ListView
     private class SubstitutionListAdapterAll extends ArrayAdapter<String[]> {
-        String[][] content;
-        boolean sons;
+        final String[][] content;
+        final boolean sons;
 
         public SubstitutionListAdapterAll(@NonNull Context con, int resource, String[][] content, boolean sons) {
             super(con, resource);
@@ -957,9 +957,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     //Specific ListView
     private class SubstitutionListAdapterSpecific extends ArrayAdapter<String[]> {
-        String[][] content;
-        boolean sons;
-        boolean old;
+        final String[][] content;
+        final boolean sons;
+        final boolean old;
 
         SubstitutionListAdapterSpecific(@NonNull Context con, int resource, String[][] content, boolean sons, boolean old) {
             super(con, resource);

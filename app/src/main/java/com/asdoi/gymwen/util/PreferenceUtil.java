@@ -15,7 +15,7 @@ import com.asdoi.gymwen.R;
 
 public class PreferenceUtil {
     @NonNull
-    public static String hideDayAfterTime = "18:00:00";
+    public static final String hideDayAfterTime = "18:00:00";
 
     //Booleans
     public static boolean getBooleanSettings(String key, boolean defaultValue, @NonNull Context context) {

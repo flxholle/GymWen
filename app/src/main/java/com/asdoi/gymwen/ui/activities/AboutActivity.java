@@ -46,13 +46,13 @@ import butterknife.ButterKnife;
 public class AboutActivity extends ActivityFeatures implements View.OnClickListener {
 
     @NonNull
-    private static String GITLAB = "https://gitlab.com/asdoi/GymWen/";
+    private static final String GITLAB = "https://gitlab.com/asdoi/GymWen/";
 
     @NonNull
-    private static String WEBSITE = "https://asdoi.gitlab.io/";
+    private static final String WEBSITE = "https://asdoi.gitlab.io/";
 
     @NonNull
-    private static String BUGSITE = "https://gitlab.com/asdoi/GymWen/issues";
+    private static final String BUGSITE = "https://gitlab.com/asdoi/GymWen/issues";
 
     @Nullable
     @BindView(R.id.app_version)
