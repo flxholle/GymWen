@@ -932,8 +932,6 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Schedule and TimePicker
-    private static final int DAILY_REMINDER_REQUEST_CODE = 100;
-
     public static void setAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second) {
         // cancel already scheduled reminders
         cancelAlarm(context, cls);
@@ -963,17 +961,6 @@ public class ApplicationFeatures extends MultiDexApplication {
 
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.setInexactRepeating(AlarmManager.RTC_WAKEUP, customCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-//        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, System.currentTimeMillis() + 1000, pendingIntent);
-
-        /*if (Build.VERSION.SDK_INT >= 24) {
-            AlarmManager.OnAlarmListener s = () -> {
-                ApplicationFeatures.sendNotification();
-            };
-            am.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, System.currentTimeMillis() + 1000, "sd", s);
-        }*/
-
-
     }
 
     public static void cancelAlarm(@NonNull Context context, @NonNull Class<?> cls) {
@@ -986,7 +973,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 PackageManager.DONT_KILL_APP);
 
         Intent intent1 = new Intent(context, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.cancel(pendingIntent);
         pendingIntent.cancel();

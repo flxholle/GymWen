@@ -1,7 +1,6 @@
 package com.asdoi.gymwen.substitutionplan
 
 import org.jsoup.nodes.Document
-import java.util.*
 
 class PlanUtils {
 
@@ -10,7 +9,7 @@ class PlanUtils {
         fun areArraysEqual(array1: Array<Array<String>>, array2: Array<Array<String>>): Boolean {
             if (array1.size != array2.size)
                 return false
-            return Arrays.equals(array1, array2)
+            return array1.contentEquals(array2)
         }
 
         fun arePlansEqual(doc1: Document, doc2: Document, today: Boolean = true) {
