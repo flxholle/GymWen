@@ -1,0 +1,14 @@
+- Neue Widgets hinzugefügt
+- Klassen/Kurse im ungefilterten Plan per Klick darauf zu deinen Kursen hinzufügen
+- Und im gefilterten Plan per Klick entfernen
+- Neue Menüeinträge für einzelne Tage hinzugefügt
+- Schülerzeitung hinzugefügt
+- Routennavigation hinzugefügt
+- Einstellung zum Verbergen von Menü-Einträgen hinzugefügt
+- Neues Design vervollständigt
+- Individulalisierbares Design (-> Einstellungen)
+- Vergrößerbare Bilder auf der Homepage
+- Beschreibungen der Einstellungen hinzugefügt
+- Intelligentes Ausblenden bei "Auf einen Blick!"
+- Neue Screenshots in ColoRush
+- Neue Teilen-Nachricht
