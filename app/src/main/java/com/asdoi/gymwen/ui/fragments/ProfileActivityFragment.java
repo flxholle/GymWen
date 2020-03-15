@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ProfileActivityFragment extends Fragment {
     private ProfileListAdapter adapter;
-    private int preferredProfilePos;
+    private int preferredProfilePos = ProfileManagement.getPreferredProfilePosition();
 
     public ProfileActivityFragment() {
     }
@@ -44,7 +44,6 @@ public class ProfileActivityFragment extends Fragment {
 
         root.findViewById(R.id.profile_add_button).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
         root.findViewById(R.id.profile_add_button).setOnClickListener((View v) -> openAddDialog());
-        ProfileManagement.getPreferredProfilePosition();
         return root;
     }
 
@@ -218,11 +217,8 @@ public class ProfileActivityFragment extends Fragment {
     }
 
     private void setPreferredProfile(int position) {
-        if (position == preferredProfilePos)
-            return;
-
         ProfileManagement.setPreferredProfilePosition(position);
-        preferredProfilePos = position;
+        preferredProfilePos = ProfileManagement.getPreferredProfilePosition();
         adapter.notifyDataSetChanged();
     }
 

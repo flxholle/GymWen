@@ -127,11 +127,14 @@ public abstract class ProfileManagement {
     }
 
     public static void setPreferredProfilePosition(int value) {
-        preferredProfile = value;
+        if (value == preferredProfile)
+            preferredProfile = -1;
+        else
+            preferredProfile = value;
     }
 
     public static boolean checkPreferredProfile() {
-        if (preferredProfile < 0 || preferredProfile >= getSize()) {
+        if (preferredProfile >= getSize()) {
             setPreferredProfilePosition(0);
             return false;
         }
