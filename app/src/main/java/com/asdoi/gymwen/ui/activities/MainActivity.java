@@ -426,7 +426,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         return true;
     }
 
-    private void onNavigationItemSelected(int id) {
+    public void onNavigationItemSelected(int id) {
         onNavigationItemSelected(id, "");
     }
 

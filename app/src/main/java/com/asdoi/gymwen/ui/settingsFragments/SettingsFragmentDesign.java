@@ -66,11 +66,18 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
             setOldTitle();
             return true;
         });
+
+        setSwipeSpecific();
+        myPref = findPreference("swipe_to_refresh");
+        myPref.setOnPreferenceClickListener((Preference pref) -> {
+            setSwipeSpecific();
+            return true;
+        });
     }
 
     private void setBorder() {
-        boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        findPreference("show_border_specific").setEnabled(showNotif);
+        boolean showBorder = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
+        findPreference("show_border_specific").setEnabled(showBorder);
     }
 
     private String getThemeName() {
@@ -93,5 +100,10 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
     private void setOldTitle() {
         boolean value = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("old_vertretung", false);
         ((SwitchPreference) findPreference("old_vertretung_title")).setChecked(value);
+    }
+
+    private void setSwipeSpecific() {
+        boolean showSpecific = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("swipe_to_refresh", true);
+        findPreference("swipe_to_refresh_filtered").setEnabled(showSpecific);
     }
 }

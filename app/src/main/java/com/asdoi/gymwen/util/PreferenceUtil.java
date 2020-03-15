@@ -142,6 +142,14 @@ public class PreferenceUtil {
         return getBooleanSettings("intelligent_hide", true);
     }
 
+    public static boolean isSwipeToRefresh() {
+        return getBooleanSettings("swipe_to_refresh", true);
+    }
+
+    public static boolean isSwipeToRefreshFiltered() {
+        return getBooleanSettings("swipe_to_refresh_filtered", false);
+    }
+
 
     //SubstitutionPlan
     @Nullable

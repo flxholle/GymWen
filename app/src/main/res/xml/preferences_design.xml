@@ -43,7 +43,6 @@
             android:summary="@string/set_desc_old_title"
             android:title="@string/set_old_title"
             app:iconSpaceReserved="true" />
-
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="show_borders"
@@ -54,6 +53,18 @@
             android:defaultValue="true"
             android:key="show_border_specific"
             android:title="@string/set_show_borders_specific"
+            app:iconSpaceReserved="true" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="swipe_to_refresh"
+            android:summary="@string/set_desc_swipe_to_refresh"
+            android:title="@string/set_swipe_to_refresh"
+            app:iconSpaceReserved="false" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="swipe_to_refresh_filtered"
+            android:summary="@string/set_desc_swipe_to_refresh_filtered"
+            android:title="@string/set_at_filtered_plan"
             app:iconSpaceReserved="true" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -30,6 +30,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -713,7 +714,15 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             substitutionListView = new ListView(context);
             substitutionListView.setAdapter(new SubstitutionListAdapterAll(context, 0, content, miscellaneous));
             substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            base.addView(substitutionListView);
+
+            //Swipe to Refresh
+            if (PreferenceUtil.isSwipeToRefresh()) {
+                SwipeRefreshLayout swipeRefreshLayout = new SwipeRefreshLayout(context);
+                swipeRefreshLayout.setOnRefreshListener(() -> ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh));
+                swipeRefreshLayout.addView(substitutionListView);
+                base.addView(swipeRefreshLayout);
+            } else
+                base.addView(substitutionListView);
         }
     }
 
@@ -780,7 +789,15 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 //Overview
                 base.addView(generateOverviewSpecific());
             }
-            base.addView(substitutionListView);
+
+            //Swipe to Refresh
+            if (PreferenceUtil.isSwipeToRefresh() && PreferenceUtil.isSwipeToRefreshFiltered()) {
+                SwipeRefreshLayout swipeRefreshLayout = new SwipeRefreshLayout(context);
+                swipeRefreshLayout.setOnRefreshListener(() -> ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh));
+                swipeRefreshLayout.addView(substitutionListView);
+                base.addView(swipeRefreshLayout);
+            } else
+                base.addView(substitutionListView);
         }
     }
 
