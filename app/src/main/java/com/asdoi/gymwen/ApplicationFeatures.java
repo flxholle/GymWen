@@ -34,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -559,10 +560,10 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static void sendSummaryNotif() {
-//        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
-//            new CreateInfoNotification().execute(true, false);
-//        }
-        sendMainNotif("title", new String[][]{});
+        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
+            new CreateInfoNotification().execute(true, false);
+        }
+//        sendMainNotif("title", new String[][]{});
     }
 
     private static class CreateInfoNotification extends DownloadSubstitutionplanDocsTask {
@@ -749,6 +750,9 @@ public class ApplicationFeatures extends MultiDexApplication {
                 return;
 
             try {
+                String[] lines = body.split("\n");
+
+                //Intent
                 // Create an Intent for the activity you want to start
                 Intent resultIntent = new Intent(getContext(), MainActivity.class);
                 // Create the TaskStackBuilder and add the intent, which inflates the backgroundShape stack
@@ -756,55 +760,64 @@ public class ApplicationFeatures extends MultiDexApplication {
                 stackBuilder.addNextIntentWithParentStack(resultIntent);
                 // Get the PendingIntent containing the entire backgroundShape stack
                 PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
                 //Create an Intent for the BroadcastReceiver
                 Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
                 buttonIntent.setAction("com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver");
                 buttonIntent.putExtra("EXTRA_NOTIFICATION_ID", notification_id);
                 PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
 
                 //Build notification
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
+
+                NotificationCompat.InboxStyle notifStyle = new NotificationCompat.InboxStyle();
+                for (String s : lines) {
+                    notifStyle.addLine(s);
+                }
+                if (lines.length > 7) {
+                    notifStyle.setSummaryText("+" + (lines.length - 7) + " " + context.getString(R.string.more));
+                }
 
                 notificationBuilder
                         .setAutoCancel(true)
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setWhen(System.currentTimeMillis())
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
+                        .setStyle(notifStyle)
                         .setContentTitle(title)
                         .setContentIntent(resultPendingIntent)
-                        .setSmallIcon(R.drawable.ic_stat_assignment_late);
+                        .setSmallIcon(R.drawable.ic_assignment_black_24dp)
+                        .setPriority(Notification.PRIORITY_LOW);
 
                 if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("alwaysNotification", true)) {
                     notificationBuilder.setOngoing(true);
                     notificationBuilder.addAction(R.drawable.ic_close_black_24dp, getContext().getString(R.string.notif_dismiss), btPendingIntent);
                 }
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_LOW);
-
-                    // Configure the notification channel.
-                    notificationChannel.setDescription(context.getString(R.string.notification_channel_description));
-                    notificationChannel.enableLights(false);
-//                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
-                    notificationChannel.enableVibration(false);
-                    notificationChannel.setSound(null, null);
-                    notificationManager.createNotificationChannel(notificationChannel);
-                    notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-
-                    notificationManager.createNotificationChannel(notificationChannel);
-                } else {
-                    notificationBuilder.setPriority(Notification.PRIORITY_LOW);
-                }
-
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+                // notificationId is a unique int for each notification that you must define
                 notificationManager.notify(notification_id, notificationBuilder.build());
 
             } catch (Exception e) {
                 e.printStackTrace();
                 //Known Icon Error
+            }
+        }
+
+        private void createNotificationChannel(Context context) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_LOW);
+
+                // Configure the notification channel.
+                notificationChannel.setDescription(context.getString(R.string.notification_channel_description));
+                notificationChannel.enableLights(false);
+//                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
+                notificationChannel.enableVibration(false);
+                notificationChannel.setSound(null, null);
+                notificationManager.createNotificationChannel(notificationChannel);
+                notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+                notificationManager.createNotificationChannel(notificationChannel);
             }
         }
     }

@@ -57,7 +57,7 @@ class SummaryWidget : AppWidgetProvider() {
         remoteViews.setOnClickPendingIntent(R.id.widget_summary_layout, pendingIntent)
 
         //Set Button Image
-        remoteViews.setImageViewBitmap(R.id.widget_summary_image, ApplicationFeatures.vectorToBitmap(R.drawable.ic_stat_assignment_late))
+        remoteViews.setImageViewBitmap(R.id.widget_summary_image, ApplicationFeatures.vectorToBitmap(R.drawable.ic_assignment_late))
 
         remoteViews.setTextViewText(R.id.widget_summary_count, generateText())
 

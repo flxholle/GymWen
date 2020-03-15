@@ -230,6 +230,7 @@
     <string name="notif_content_title">Vertretung:</string>
     <string name="notif_dismiss">Verbergen</string>
     <string name="notif_nothing">Keine Vertretung</string>
+    <string name="more">mehr</string>
 
     <!-- AppUpdater -->
     <string name="update_available_title">Update verfügbar!</string>
