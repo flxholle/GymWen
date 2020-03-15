@@ -92,7 +92,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
-//    implementation 'com.github.kabouzeid:app-theme-helper:1.3.10'
+    implementation 'com.github.kabouzeid:app-theme-helper:1.3.10'
     implementation 'com.github.Pradyuman7:ChocoBar:V1.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.ritesh:ratiolayout:1.0.0'
@@ -101,6 +101,4 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.3.2'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.daimajia.slider:library:1.1.5@aar'
-
-    implementation 'com.jaredrummler:cyanea:1.0.2'
 }

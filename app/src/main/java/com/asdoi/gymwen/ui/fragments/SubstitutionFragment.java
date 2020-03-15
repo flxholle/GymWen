@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -948,8 +949,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     //Pop up menu for adding course to profile
     private void showAddPopup(@NonNull View v, @NonNull String course) {
-//        ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
-        PopupMenu popup = new PopupMenu(context, v);
+        ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
+        PopupMenu popup = new PopupMenu(theme, v);
         popup.setOnMenuItemClickListener((MenuItem item) -> {
             switch (item.getItemId()) {
                 case R.id.action_add_course:
@@ -1130,9 +1131,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 room.setVisibility(View.GONE);
             }
         } else {
-//            if (PreferenceUtil.getGeneralTheme() == R.style.AppTheme_Light) {
-//                card.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.nothing_background_light));
-//            } else
+            if (PreferenceUtil.getGeneralTheme() == R.style.AppTheme_Light) {
+                card.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.nothing_background_light));
+            } else
                 card.setBackgroundColor(Color.RED);
             removeTeacherClick(teacher);
             teacher.setVisibility(View.GONE);
@@ -1159,8 +1160,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private void showRemovePopup(@NonNull View v, @NonNull String course) {
         if (ApplicationFeatures.getSelectedProfile().getCoursesArray().length <= 1)
             return;
-//        ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
-        PopupMenu popup = new PopupMenu(context, v);
+        ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
+        PopupMenu popup = new PopupMenu(theme, v);
         popup.setOnMenuItemClickListener((MenuItem item) -> {
             switch (item.getItemId()) {
                 case R.id.action_remove_course:

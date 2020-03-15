@@ -18,19 +18,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/gymlogo_round"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
         <activity
             android:name=".ui.activities.AppIntroActivity"
-            android:theme="@style/Theme.Cyanea.Light.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.AboutActivity"
             android:label="@string/title_activity_about"
-            android:theme="@style/Theme.Cyanea.Light.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/Theme.Cyanea.Light.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -53,12 +54,12 @@
             android:name=".ui.activities.SignInActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_sign_in"
-            android:theme="@style/Theme.Cyanea.Light.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.WebsiteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Cyanea.Light.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -74,7 +75,7 @@
             android:name=".ui.activities.ChoiceActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_choice"
-            android:theme="@style/Theme.Cyanea.Light.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.SettingsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

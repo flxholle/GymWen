@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -33,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
@@ -54,7 +56,10 @@ import com.github.javiersantos.appupdater.enums.AppUpdaterError;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
-import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity;
+import com.kabouzeid.appthemehelper.ATH;
+import com.kabouzeid.appthemehelper.ThemeStore;
+import com.kabouzeid.appthemehelper.util.ColorUtil;
+import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.pd.chocobar.ChocoBar;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -77,7 +82,7 @@ import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
 
-public abstract class ActivityFeatures extends CyaneaAppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public abstract class ActivityFeatures extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     @NonNull
     public Context getContext() {
         return this;
@@ -95,9 +100,10 @@ public abstract class ActivityFeatures extends CyaneaAppCompatActivity implement
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_Cyanea_Light_NoActionBar);
+        setTheme(PreferenceUtil.getGeneralTheme());
+        setStatusbarColorAuto();
         super.onCreate(savedInstanceState);
-//        MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
+        MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
     }
 
 
@@ -124,7 +130,7 @@ public abstract class ActivityFeatures extends CyaneaAppCompatActivity implement
         }
     }
 
-   /* private void setNavigationbarColor(int color) {
+    private void setNavigationbarColor(int color) {
         if (ThemeStore.coloredNavigationBar(this)) {
             ATH.setNavigationbarColor(this, color);
         } else {
@@ -139,7 +145,7 @@ public abstract class ActivityFeatures extends CyaneaAppCompatActivity implement
 
     private void setStatusbarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            final View statusBar = *//*getWindow().getDecorView().getRootView().findViewById(R.id.status_bar)*//* null;
+            final View statusBar = /*getWindow().getDecorView().getRootView().findViewById(R.id.status_bar)*/ null;
             if (statusBar != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     statusBar.setBackgroundColor(ColorUtil.darkenColor(color));
@@ -166,7 +172,7 @@ public abstract class ActivityFeatures extends CyaneaAppCompatActivity implement
 
     private void setLightStatusbarAuto(int bgColor) {
         setLightStatusbar(ColorUtil.isColorLight(bgColor));
-    }*/
+    }
 
 
     //Changelog
@@ -306,6 +312,7 @@ public abstract class ActivityFeatures extends CyaneaAppCompatActivity implement
 
 
         TextView textView = new TextView(context);
+        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(this));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textView.setGravity(Gravity.CENTER);
@@ -581,7 +588,7 @@ public abstract class ActivityFeatures extends CyaneaAppCompatActivity implement
         tpd.setAccentColor(ApplicationFeatures.getAccentColor(this));
         tpd.setCancelColor(ApplicationFeatures.getAccentColor(this));
         tpd.setOkColor(ApplicationFeatures.getAccentColor(this));
-//        tpd.setThemeDark(PreferenceUtil.isDark());
+        tpd.setThemeDark(PreferenceUtil.isDark());
         tpd.vibrate(false);
         tpd.show(this.getSupportFragmentManager(), "Timepickerdialog");
     }
