@@ -44,10 +44,7 @@ import com.pd.chocobar.ChocoBar;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 public class SubstitutionFragment extends Fragment implements View.OnClickListener {
@@ -468,8 +465,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
             int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
             //Hide days in the past and today after 18 o'clock
-            boolean showToday = !PreferenceUtil.isIntelligentHide() || !isTitleCodeInPast(titleCodeToday);
-            boolean showTomorrow = !PreferenceUtil.isIntelligentHide() || !isTitleCodeInPast(titleCodeTomorrow);
+            boolean showToday = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.isTitleCodeInPast(titleCodeToday);
+            boolean showTomorrow = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.isTitleCodeInPast(titleCodeTomorrow);
 
             if (!showToday && !showTomorrow) {
                 if (titleCodeToday == SubstitutionPlanFeatures.todayCode)
@@ -531,39 +528,6 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             generateTop(base, oldTitle);
             generateTableSpecific(base, old);
         }
-    }
-
-    private boolean isTitleCodeInPast(int titleCode) {
-        boolean isPast = titleCode == SubstitutionPlanFeatures.pastCode;
-        if (!isPast && titleCode == SubstitutionPlanFeatures.todayCode) {
-            try {
-                String string1 = PreferenceUtil.hideDayAfterTime;
-                Date mydate = removeDate(new SimpleDateFormat("HH:mm:ss").parse(string1));
-
-                Date now = removeDate(new Date());
-
-                if (now.after(mydate)) {
-                    isPast = true;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return isPast;
-    }
-
-    /**
-     * @param date Date
-     * @return param Date with removed time (only the day).
-     */
-    @NonNull
-    private static Date removeDate(@NonNull Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.YEAR, 0);
-        cal.set(Calendar.MONTH, 0);
-        cal.set(Calendar.DATE, 0);
-        return cal.getTime();
     }
 
     private void clear() {

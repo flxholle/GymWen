@@ -12,6 +12,8 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.profiles.Profile;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 
 public class PreferenceUtil {
     @NonNull
@@ -281,5 +283,14 @@ public class PreferenceUtil {
 
     public static int getPreferredProfilePosition() {
         return 0;
+    }
+
+    public static Profile getPreferredProfile() {
+        if (!ProfileManagement.isLoaded())
+            ProfileManagement.reload();
+        int pos = getPreferredProfilePosition();
+        if (pos < 0 || pos >= ProfileManagement.getSize())
+            return null;
+        return ProfileManagement.getProfile(pos);
     }
 }

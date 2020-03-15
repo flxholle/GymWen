@@ -1117,22 +1117,67 @@ public class ApplicationFeatures extends MultiDexApplication {
 
         Document[] newDocs = SubstitutionPlanFeatures.getDocs();
 
+        Profile preferredProfile = PreferenceUtil.getPreferredProfile();
+        if (preferredProfile != null) {
+            int whichDocIsToday = -1;
+
+            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
+            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
+
+            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
+                whichDocIsToday = 0;
+            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
+                whichDocIsToday = 1;
+
+            if (whichDocIsToday >= 0) {
+                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
+                if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
+                    //Send Main Notif only if day sth has changed today for the preferred profile, else -> summaryNotif
+                    temp.setTodayDoc(newDocs[whichDocIsToday]);
+                    sendMainNotif(temp.getTitleString(true), temp.getDay(true));
+                }
+            }
+        }
+
         for (int i = 0; i < ProfileManagement.getSize(); i++) {
             Profile p = ProfileManagement.getProfile(i);
             SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
 
             if (temp.hasSthChanged(oldDocs, newDocs)) {
                 //Sth has changed since last download of substitutionplan
-                if (i == PreferenceUtil.getPreferredProfilePosition())
-                    sendMainNotif();
-                else
-                    sendSummaryNotif();
+                sendSummaryNotif();
                 break;
             }
         }
     }
 
     private static void sendMainNotif() {
+        Profile preferredProfile = PreferenceUtil.getPreferredProfile();
+        if (preferredProfile != null) {
+            int whichDayIsToday = -1;
+
+            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
+            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
+
+            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
+                whichDayIsToday = 0;
+            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
+                whichDayIsToday = 1;
+
+            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
+
+            switch (whichDayIsToday) {
+                case 0:
+                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitle(), temp.getDay(true));
+                    break;
+                case 1:
+                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitle(), temp.getDay(false));
+                    break;
+            }
+        }
+    }
+
+    private static void sendMainNotif(String title, String[][] content) {
     }
 
     private static void sendSummaryNotif() {

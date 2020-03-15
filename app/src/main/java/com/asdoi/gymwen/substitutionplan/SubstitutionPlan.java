@@ -486,4 +486,27 @@ public class SubstitutionPlan {
 
         return !(!PlanUtils.Companion.areArraysEqual(oldFilteredToday, nowFilteredTomorrow) || !PlanUtils.Companion.areArraysEqual(oldFilteredTomorrow, nowFilteredTomorrow));
     }
+
+    public boolean hasSthChanged(Document old, Document now) {
+        return hasSthChanged(old, now, true);
+    }
+
+    public boolean hasSthChanged(Document old, Document now, boolean today) {
+        if (today)
+            setTodayDoc(old);
+        else
+            setTomorrowDoc(old);
+        String[][] oldFiltered = getDay(today);
+
+        if (today)
+            setTodayDoc(now);
+        else
+            setTomorrowDoc(now);
+        String[][] nowFiltered = getDay(today);
+
+        if (oldFiltered == null || nowFiltered == null)
+            return false; //no internet
+
+        return !PlanUtils.Companion.areArraysEqual(oldFiltered, nowFiltered);
+    }
 }
