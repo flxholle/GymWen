@@ -7,19 +7,15 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.asdoi.gymwen.ApplicationFeatures;
-
 public class NotificationDismissButtonReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(@NonNull Context context, Intent intent) {
         // if you want cancel notification
-        try {
-            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.cancel(ApplicationFeatures.NOTIFICATION_INFO_ID);
-            manager.cancel(ApplicationFeatures.NOTIFICATION_INFO_ID_2);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        int notificationId = intent.getIntExtra("EXTRA_NOTIFICATION_ID", 0);
+
+        // if you want cancel notification
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.cancel(notificationId);
     }
 }

@@ -78,6 +78,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import saschpe.android.customtabs.CustomTabsActivityLifecycleCallbacks;
 
@@ -567,6 +568,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     private static class CreateInfoNotification extends DownloadSubstitutionplanDocsTask {
+        boolean summarize = PreferenceUtil.isSummarizeUp();
 
         @Override
         protected void onPostExecute(Void v) {
@@ -608,7 +610,8 @@ public class ApplicationFeatures extends MultiDexApplication {
             for (int i = 0; i < ProfileManagement.getSize(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
-                String[][] content = temp.getDay(true);
+                String[][] content = summarize ? SubstitutionPlan.summarizeArray(temp.getDay(true), 1, "-") : temp.getDay(true);
+                temp.getDay(true);
                 try {
                     count.append(content.length);
                     count.append("|");
@@ -624,7 +627,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                     e.printStackTrace();
                 }
 
-                content = temp.getDay(false);
+                content = summarize ? SubstitutionPlan.summarizeArray(temp.getDay(false), 1, "-") : temp.getDay(false);
                 try {
                     count.append(content.length);
                     count.append(", ");
@@ -669,7 +672,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             for (int i = 0; i < ProfileManagement.getSize(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
-                String[][] content = temp.getDay(true);
+                String[][] content = summarize ? SubstitutionPlan.summarizeArray(temp.getDay(true), 1, "-") : temp.getDay(true);
                 try {
                     count1.append(content.length);
                     count1.append(", ");
@@ -685,7 +688,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                     e.printStackTrace();
                 }
 
-                content = temp.getDay(false);
+                content = summarize ? SubstitutionPlan.summarizeArray(temp.getDay(false), 1, "-") : temp.getDay(false);
                 try {
                     count2.append(content.length);
                     count2.append(", ");
@@ -764,7 +767,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
                 buttonIntent.setAction("com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver");
                 buttonIntent.putExtra("EXTRA_NOTIFICATION_ID", notification_id);
-                PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, UUID.randomUUID().hashCode(), buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
                 //Build notification
@@ -777,6 +780,8 @@ public class ApplicationFeatures extends MultiDexApplication {
                 if (lines.length > 7) {
                     notifStyle.setSummaryText("+" + (lines.length - 7) + " " + context.getString(R.string.more));
                 }
+
+                createNotificationChannel(context);
 
                 notificationBuilder
                         .setAutoCancel(true)
