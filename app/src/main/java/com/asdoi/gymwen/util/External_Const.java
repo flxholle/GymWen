@@ -43,7 +43,13 @@ public abstract class External_Const {
     //Teacherlist
     public static final String teacherlistUrl = "http://www.gym-wen.de/information/sprechstunden/";
     public static final String AOLShort = "AOL";
+    public static final String MAIL_ENDING = "@gym-wendelstein.de";
 
     //Geo location (Uri parse String)
     public static final String location = "geo:49.34600,11.15838?q=Gymnasium%20Wendelstein";
+
+    //Updater
+    public static final String UPDATER_JSON = "https://gitlab.com/asdoi/gymwenreleases/raw/master/UpdaterFile.json";
+    public static final String APK_DOWNLOAD = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
+    public static final String APK_DOWNLOAD_PAGE = "https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk";
 }

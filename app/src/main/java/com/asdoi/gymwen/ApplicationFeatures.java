@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
@@ -77,6 +78,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import saschpe.android.customtabs.CustomTabsActivityLifecycleCallbacks;
+
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
 @AcraMailSender(mailTo = "GymWenApp@t-online.de")
@@ -117,6 +120,9 @@ public class ApplicationFeatures extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
+        // Support vector drawable support for pre-Lollipop devices
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         // default theme
         if (!ThemeStore.isConfigured(this, 1)) {
             ThemeStore.editTheme(this)
@@ -133,6 +139,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         //Setup CheckSubstitutionPlanReceiver
         List<Integer> time = CheckSubstitutionPlanReceiver.Companion.getNextTime();
         ApplicationFeatures.setAlarm(getContext(), CheckSubstitutionPlanReceiver.class, time.get(0), time.get(1), time.get(2));
+
+        // Preload custom tabs service for improved performance
+        // This is optional but recommended
+        registerActivityLifecycleCallbacks(new CustomTabsActivityLifecycleCallbacks());
     }
 
     @Override

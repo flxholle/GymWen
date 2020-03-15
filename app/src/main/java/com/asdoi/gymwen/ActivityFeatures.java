@@ -49,6 +49,7 @@ import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.activities.MainActivity;
+import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
@@ -83,6 +84,7 @@ import saschpe.android.customtabs.WebViewFallback;
 
 
 public abstract class ActivityFeatures extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+
     @NonNull
     public Context getContext() {
         return this;
@@ -216,7 +218,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     public void checkUpdates(Display display, boolean showUpdated) {
         Context context = this;
-        String url = "https://gitlab.com/asdoi/gymwenreleases/raw/master/UpdaterFile.json";
+        String url = External_Const.UPDATER_JSON;
 
         try {
             AppUpdater appUpdater = new AppUpdater(context)
@@ -230,11 +232,11 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                     .setButtonUpdate(R.string.update_now)
                     .setButtonUpdateClickListener((dialogInterface, i) -> {
                         try {
-                            String apkUrl = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
+                            String apkUrl = External_Const.APK_DOWNLOAD;
                             startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
                             dialogInterface.dismiss();
                         } catch (Exception e) {
-                            tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
+                            tabIntent(External_Const.APK_DOWNLOAD_PAGE);
                         }
                     })
                     .setButtonDismiss(R.string.update_later)
@@ -257,7 +259,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                         public void onSuccess(Update update, Boolean isUpdateAvailable) {
                             if (isUpdateAvailable) {
                                 Toast.makeText(getContext(), getContext().getString(R.string.update_available_title), Toast.LENGTH_LONG).show();
-                                tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
+                                tabIntent(External_Const.APK_DOWNLOAD_PAGE);
                             }
                         }
 
@@ -356,7 +358,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         Button mailButton = view.findViewById(R.id.teacher_mail);
         mailButton.setOnClickListener((View v) -> {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-            emailIntent.setData(Uri.parse("mailto:" + entry[0] + "@gym-wendelstein.de"));
+            emailIntent.setData(Uri.parse("mailto:" + entry[0] + External_Const.MAIL_ENDING));
             try {
                 startActivity(emailIntent);
             } catch (Exception e) {
@@ -801,7 +803,11 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(geoLocation);
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e2) {
+                ChocoBar.builder().setActivity(this).setText(getString(R.string.no_email_app)).setDuration(ChocoBar.LENGTH_LONG).red().show();
+            }
         }
     }
 }

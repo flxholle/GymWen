@@ -40,7 +40,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
     private LinearLayout basic;
     private int pageCode;
     @Nullable
-    private WebsiteActivity buttonCall;
+    private WebsiteActivity websiteActivity;
 
     private int shortAnimationDuration;
     @Nullable
@@ -75,18 +75,19 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         root.setBackgroundColor(ApplicationFeatures.getWebPageBackgroundColor(context));
 
         basic = root.findViewById(R.id.website_linear);
-        buttonCall = (WebsiteActivity) getActivity();
+        websiteActivity = (WebsiteActivity) getActivity();
 
         shortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        loadSite();
 
         return root;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadSite();
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//    }
 
     public void changeSite(String[][] con, int pageCode) {
         this.content = con;
@@ -128,7 +129,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             columnViewParams.setMargins((int) convertDpToPx(context, columnLeftRightDp), 0, (int) convertDpToPx(context, columnLeftRightDp), (int) convertDpToPx(context, columnBottomDp));
             LinearLayout column = new LinearLayout(context);
-            column.setOnClickListener(buttonCall);
+            column.setOnClickListener(websiteActivity);
             column.setLayoutParams(columnViewParams);
             column.setOrientation(LinearLayout.HORIZONTAL);
             column.setBackgroundColor(backgroundColor);
@@ -253,7 +254,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             columnViewParams.setMargins((int) convertDpToPx(context, columnLeftRightDp), 0, (int) convertDpToPx(context, columnLeftRightDp), (int) convertDpToPx(context, columnBottomDp));
             LinearLayout column = new LinearLayout(context);
-            column.setOnClickListener(buttonCall);
+            column.setOnClickListener(websiteActivity);
             column.setLayoutParams(columnViewParams);
             column.setOrientation(LinearLayout.HORIZONTAL);
             column.setBackgroundColor(backgroundColor);
@@ -373,7 +374,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
             int charOfsecondSlash = second.indexOf('/') + 1 + "http://".length() + 2 + first.indexOf('/') + 1;
             ((WebsiteActivity) getActivity()).loadPage(url.substring(0, charOfsecondSlash));
         } else {
-            buttonCall.onClick(view);
+            websiteActivity.onClick(view);
         }
     }
 

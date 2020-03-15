@@ -463,4 +463,8 @@
     <string name="shortcut_navigation">Navigation</string>
     <string name="shortcut_call_office">Sekretariat</string>
     <string name="shortcut_newspaper">Zeitung</string>
+
+
+    <!-- Maps -->
+    <string name="no_navi">Du hast keine Navigations App installiert.</string>
 </resources>

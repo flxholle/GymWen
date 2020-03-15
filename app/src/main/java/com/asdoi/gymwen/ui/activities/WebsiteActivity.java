@@ -66,10 +66,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_website);
-
-        // Preload custom tabs service for improved performance
-        // This is optional but recommended
-//        getApplication().registerActivityLifecycleCallbacks(new CustomTabsActivityLifecycleCallbacks());
+        start();
     }
 
     public void setupColors() {
@@ -105,9 +102,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         return true;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    public void start() {
 
         if (!ApplicationFeatures.isNetworkAvailable()) {
             ChocoBar.builder().setActivity(this)
@@ -155,7 +150,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             intent.setData(Uri.parse(url));
             startActivity(intent);*/
             try {
-                tabIntent(history.get(history.size() - 1));
+                openInTabIntent(history.get(history.size() - 1));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -550,13 +545,13 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     public void loadPage(@NonNull String url) {
         if (!url.trim().isEmpty()) {
 
-            final String urlFinal = ApplicationFeatures.urlToRightFormat(url);
+            final String formattedUrl = ApplicationFeatures.urlToRightFormat(url);
             final Context context = this;
-            if (ApplicationFeatures.isURLValid(urlFinal) && urlFinal.contains("http://www.gym-wen.de/")) {
+            if (ApplicationFeatures.isURLValid(formattedUrl) && formattedUrl.contains("http://www.gym-wen.de/")) {
                 (new Thread(() -> {
                     boolean isHTML = false;
                     try {
-                        doc = Jsoup.connect(urlFinal).get();
+                        doc = Jsoup.connect(formattedUrl).get();
                         isHTML = true;
                     } catch (Exception e) {
                         e.getStackTrace();
@@ -565,25 +560,31 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
 
                     if (isHTML) {
-                        history.add(urlFinal);
+                        history.add(formattedUrl);
                         setWebsiteTitle(doc);
                         //Check Site
-                        if (homeOfPagesIndexes.contains(urlFinal)) {
-                            HomeOfPages(urlFinal);
+                        if (homeOfPagesIndexes.contains(formattedUrl)) {
+                            HomeOfPages(formattedUrl);
                         } else {
-                            ContentPagesMixed(urlFinal);
+                            ContentPagesMixed(formattedUrl);
                         }
                     } else {
                         try {
-                            tabIntent(urlFinal);
+                            openInTabIntent(formattedUrl);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 })).start();
             } else {
-                tabIntent(urlFinal);
+                openInTabIntent(formattedUrl);
             }
         }
+    }
+
+    private void openInTabIntent(String url) {
+        if (url.charAt(url.length() - 1) == '/')
+            url = url.substring(0, url.length() - 1);
+        tabIntent(url);
     }
 }
