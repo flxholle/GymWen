@@ -16,8 +16,8 @@ public class NotificationDismissButtonReceiver extends BroadcastReceiver {
         // if you want cancel notification
         try {
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.cancel(ApplicationFeatures.NOTIFICATION_ID);
-            manager.cancel(ApplicationFeatures.NOTIFICATION_ID_2);
+            manager.cancel(ApplicationFeatures.NOTIFICATION_INFO_ID);
+            manager.cancel(ApplicationFeatures.NOTIFICATION_INFO_ID_2);
         } catch (Exception e) {
             e.printStackTrace();
         }

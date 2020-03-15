@@ -70,8 +70,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -179,6 +177,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         SubstitutionPlanFeatures.setDocs(null, null);
     }
 
+    //Substitutionplan docs
     public static void downloadSubstitutionplanDocs(boolean isWidget, boolean signIn) {
 
         //DownloadDocs
@@ -240,24 +239,31 @@ public class ApplicationFeatures extends MultiDexApplication {
         SubstitutionPlanFeatures.setDocs(doc[0], doc[1]);
     }
 
-
-    public static class downloadSubstitutionplanDocsTask extends AsyncTask<Boolean, Void, Void> {
+    public static class DownloadSubstitutionplanDocsTask extends AsyncTask<Boolean, Void, Void> {
         @Nullable
         @Override
         protected Void doInBackground(@Nullable Boolean... params) {
-            if (params == null || params.length < 2) {
-                if (params.length == 1)
-                    params = new Boolean[]{params[0], true};
+            try {
+                if (params == null)
+                    params = new Boolean[]{false, false};
+                else if (params.length < 2) {
+                    if (params.length == 1)
+                        params = new Boolean[]{params[0], true};
+                    else
+                        params = new Boolean[]{false, false};
+                }
+                downloadSubstitutionplanDocs(params[0], params[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            downloadSubstitutionplanDocs(params[0], params[1]);
             return null;
         }
     }
 
-    public static class downloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    public static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         final ImageView bmImage;
 
-        public downloadImageTask(ImageView bmImage) {
+        public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
@@ -340,7 +346,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return signedIn;
     }
 
-    private static boolean coursesCheck(boolean openAddActivity) {
+    public static boolean coursesCheck(boolean openAddActivity) {
         if (ProfileManagement.getSize() <= 0) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
             //Backwards compatibility for versions older 1.1
@@ -449,22 +455,112 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Notification
-    final public static int NOTIFICATION_ID = 1;
-    final public static int NOTIFICATION_ID_2 = 2;
-    final private static String NOTIFICATION_CHANNEL_ID = "Substitutionplan_01";
+    final public static int NOTIFICATION_INFO_ID = 1;
+    final public static int NOTIFICATION_INFO_ID_2 = 2;
+    final public static int NOTIFICATION_MAIN_ID = 3;
+    final public static String NOTIFICATION_CHANNEL_ID = "Substitutionplan_01";
 
     public static void sendNotification() {
-        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
-            new createInfoNotification().execute(true, false);
+        sendSummaryNotif();
+    }
+
+    //Check if sth has changed -> Send Notification
+    public static void checkSubstitutionPlan() {
+        if (SubstitutionPlanFeatures.isUninit())
+            SubstitutionPlanFeatures.reloadDocs();
+        Document[] oldDocs = SubstitutionPlanFeatures.getDocs();
+
+        downloadSubstitutionplanDocs(false, false);
+        if (ProfileManagement.isUninit())
+            ProfileManagement.reload();
+        if (!coursesCheck(false))
+            return;
+        if (SubstitutionPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+            //No Internet
+            return;
+        }
+
+        Document[] newDocs = SubstitutionPlanFeatures.getDocs();
+
+        Profile preferredProfile = ProfileManagement.getPreferredProfile();
+        if (preferredProfile != null) {
+            int whichDocIsToday = -1;
+
+            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
+            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
+
+            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
+                whichDocIsToday = 0;
+            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
+                whichDocIsToday = 1;
+
+            if (whichDocIsToday >= 0) {
+                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
+                if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
+                    //Send Main Notif only if day sth has changed today for the preferred profile, else -> summaryNotif
+                    temp.setTodayDoc(newDocs[whichDocIsToday]);
+                    sendMainNotif(temp.getTitleString(true), temp.getDay(true));
+                }
+            }
+        }
+
+        for (int i = 0; i < ProfileManagement.getSize(); i++) {
+            Profile p = ProfileManagement.getProfile(i);
+            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
+
+            if (temp.hasSthChanged(oldDocs, newDocs)) {
+                //Sth has changed since last download of substitutionplan
+                sendSummaryNotif();
+                break;
+            }
         }
     }
 
-    public static class createInfoNotification extends downloadSubstitutionplanDocsTask {
+    private static void sendMainNotif() {
+        if (ProfileManagement.isUninit())
+            ProfileManagement.reload();
+        Profile preferredProfile = ProfileManagement.getPreferredProfile();
+        if (preferredProfile != null) {
+            int whichDayIsToday = -1;
+
+            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
+            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
+
+            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
+                whichDayIsToday = 0;
+            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
+                whichDayIsToday = 1;
+
+            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
+
+            switch (whichDayIsToday) {
+                case 0:
+                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitle(), temp.getDay(true));
+                    break;
+                case 1:
+                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitle(), temp.getDay(false));
+                    break;
+            }
+        }
+    }
+
+    private static void sendMainNotif(String title, String[][] content) {
+        new ApplicationFeaturesUtils.Companion.CreateMainNotification(title, content).execute(true, false);
+    }
+
+    public static void sendSummaryNotif() {
+//        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
+//            new CreateInfoNotification().execute(true, false);
+//        }
+        sendMainNotif("title", new String[][]{});
+    }
+
+    private static class CreateInfoNotification extends DownloadSubstitutionplanDocsTask {
 
         @Override
         protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
             try {
-                downloadSubstitutionplanDocs(false, false);
                 if (ProfileManagement.isUninit())
                     ProfileManagement.reload();
                 if (!coursesCheck(false))
@@ -542,7 +638,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             StringBuilder message = new StringBuilder(titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow);
             message.delete(message.length() - 1, message.length());
 
-            createNotification(message.toString(), getContext().getString(R.string.notif_content_title) + " " + count, NOTIFICATION_ID);
+            createNotification(message.toString(), getContext().getString(R.string.notif_content_title) + " " + count, NOTIFICATION_INFO_ID);
         }
 
         private void notificationMessageTwoNotifs() {
@@ -603,8 +699,8 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             messageTo = messageTo.substring(0, messageTo.length() - 1);
             messageTom = messageTom.substring(0, messageTom.length() - 1);
-            createNotification(messageTom, titleTomorrow + " " + count2.toString(), NOTIFICATION_ID_2);
-            createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_ID);
+            createNotification(messageTom, titleTomorrow + " " + count2.toString(), NOTIFICATION_INFO_ID_2);
+            createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_INFO_ID);
         }
 
         @NonNull
@@ -703,171 +799,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
-    public static class createTodayWarningNotification extends createInfoNotification {
 
-        @Override
-        protected void onPostExecute(Void v) {
-            try {
-                if (ProfileManagement.isUninit())
-                    ProfileManagement.reload();
-                if (!coursesCheck(false))
-                    return;
-                if (SubstitutionPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
-                    return;
-                }
-                sendNotification();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        void sendNotification() {
-            notificationMessage();
-        }
-
-        private void notificationMessage() {
-            StringBuilder messageToday = new StringBuilder();
-
-            String[] titleTodayArray = SubstitutionPlanFeatures.getTodayTitleArray();
-            String[] titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
-
-            String title = "Vertretung Heute:";
-
-            boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
-
-            boolean nothing = true;
-            boolean today = true;
-
-            /*if (isToday(titleTodayArray[0]))
-                today = true;
-            else if (isToday(titleTomorrowArray[0]))
-                today = false;
-            else {
-                //Today is not online
-                return;
-            }*/
-
-            StringBuilder count1 = new StringBuilder();
-
-            for (int i = 0; i < ProfileManagement.getSize(); i++) {
-                Profile p = ProfileManagement.getProfile(i);
-                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
-                String[][] content = temp.getDay(today);
-                try {
-                    count1.append(content.length);
-                    count1.append(", ");
-                    if (content.length != 0) {
-                        if (isMoreThanOneProfile) {
-                            messageToday.append(ProfileManagement.getProfile(i).getName());
-                            messageToday.append(":\n");
-                        }
-                        messageToday.append(notifMessageContent(content, temp));
-                        nothing = false;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            count1.deleteCharAt(count1.lastIndexOf(", "));
-
-            if (nothing) {
-                //Nothing TODO
-            } else {
-                String messageTo = messageToday.toString();
-                messageTo = messageTo.substring(0, messageTo.length() - 1);
-                createNotification(messageTo, title + " " + count1.toString(), NOTIFICATION_ID, ApplicationFeatures.getPrimaryColor(getContext()));
-            }
-        }
-
-        private boolean isToday(@NonNull String source) {
-            try {
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-
-                Date startDate = removeTime(df.parse(source));
-
-                Date currentDate = removeTime(new Date());
-
-                if (currentDate.equals(startDate)) {
-                    //If date is today
-                    return true;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-
-
-        private void createNotification(String body, String title, int notification_id, int color) {
-            Context context = getContext();
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
-                return;
-
-            try {
-                // Create an Intent for the activity you want to start
-                Intent resultIntent = new Intent(getContext(), MainActivity.class);
-                // Create the TaskStackBuilder and add the intent, which inflates the backgroundShape stack
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                stackBuilder.addNextIntentWithParentStack(resultIntent);
-                // Get the PendingIntent containing the entire backgroundShape stack
-                PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-                //Create an Intent for the BroadcastReceiver
-                Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
-                buttonIntent.setAction("com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver");
-                buttonIntent.putExtra("EXTRA_NOTIFICATION_ID", notification_id);
-                PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-
-                //Build notification
-                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
-
-                notificationBuilder
-                        .setAutoCancel(true)
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setWhen(System.currentTimeMillis())
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
-                        .setContentTitle(title)
-                        .setContentIntent(resultPendingIntent)
-                        .setSmallIcon(R.drawable.ic_error_black_24dp)
-                        .setLargeIcon(ApplicationFeatures.vectorToBitmap(R.drawable.ic_error_black_24dp))
-                        .setColorized(true)
-                        .setColor(color);
-
-
-                if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("alwaysNotification", true)) {
-                    notificationBuilder.setOngoing(true);
-                    notificationBuilder.addAction(R.drawable.ic_close_black_24dp, getContext().getString(R.string.notif_dismiss), btPendingIntent);
-                }
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_HIGH);
-
-                    // Configure the notification channel.
-                    notificationChannel.setDescription(context.getString(R.string.notification_channel_description));
-                    notificationChannel.enableLights(false);
-//                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
-                    notificationChannel.enableVibration(false);
-                    notificationChannel.setSound(null, null);
-                    notificationManager.createNotificationChannel(notificationChannel);
-                    notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-
-                    notificationManager.createNotificationChannel(notificationChannel);
-                } else {
-                    notificationBuilder.setPriority(NotificationCompat.PRIORITY_LOW);
-                }
-
-                notificationManager.notify(notification_id, notificationBuilder.build());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                //Known Icon Error
-            }
-        }
-    }
-
+    //Others
     public static int frequencyOfSubString(@NonNull String str, @NonNull String findStr) {
         int lastIndex = 0;
         int count = 0;
@@ -1097,92 +1030,4 @@ public class ApplicationFeatures extends MultiDexApplication {
             //Error
         }
     }
-
-
-    //Check if sth has changed -> Send Notification
-    public static void checkSubstitutionPlan() {
-        if (SubstitutionPlanFeatures.isUninit())
-            SubstitutionPlanFeatures.reloadDocs();
-        Document[] oldDocs = SubstitutionPlanFeatures.getDocs();
-
-        downloadSubstitutionplanDocs(false, false);
-        if (ProfileManagement.isUninit())
-            ProfileManagement.reload();
-        if (!coursesCheck(false))
-            return;
-        if (SubstitutionPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
-            //No Internet
-            return;
-        }
-
-        Document[] newDocs = SubstitutionPlanFeatures.getDocs();
-
-        Profile preferredProfile = ProfileManagement.getPreferredProfile();
-        if (preferredProfile != null) {
-            int whichDocIsToday = -1;
-
-            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
-            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
-
-            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
-                whichDocIsToday = 0;
-            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
-                whichDocIsToday = 1;
-
-            if (whichDocIsToday >= 0) {
-                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
-                if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
-                    //Send Main Notif only if day sth has changed today for the preferred profile, else -> summaryNotif
-                    temp.setTodayDoc(newDocs[whichDocIsToday]);
-                    sendMainNotif(temp.getTitleString(true), temp.getDay(true));
-                }
-            }
-        }
-
-        for (int i = 0; i < ProfileManagement.getSize(); i++) {
-            Profile p = ProfileManagement.getProfile(i);
-            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
-
-            if (temp.hasSthChanged(oldDocs, newDocs)) {
-                //Sth has changed since last download of substitutionplan
-                sendSummaryNotif();
-                break;
-            }
-        }
-    }
-
-    private static void sendMainNotif() {
-        if (ProfileManagement.isUninit())
-            ProfileManagement.reload();
-        Profile preferredProfile = ProfileManagement.getPreferredProfile();
-        if (preferredProfile != null) {
-            int whichDayIsToday = -1;
-
-            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
-            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
-
-            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
-                whichDayIsToday = 0;
-            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
-                whichDayIsToday = 1;
-
-            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
-
-            switch (whichDayIsToday) {
-                case 0:
-                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitle(), temp.getDay(true));
-                    break;
-                case 1:
-                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitle(), temp.getDay(false));
-                    break;
-            }
-        }
-    }
-
-    private static void sendMainNotif(String title, String[][] content) {
-    }
-
-    private static void sendSummaryNotif() {
-    }
-
 }

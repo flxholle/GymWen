@@ -189,7 +189,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new ApplicationFeatures.downloadImageTask(imageView).execute(imageUrl);
+            new ApplicationFeatures.DownloadImageTask(imageView).execute(imageUrl);
 
 
             String title = content[i][1];
@@ -313,7 +313,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
             //Set Views to values
 
-            new ApplicationFeatures.downloadImageTask(imageView).execute(imageUrl);
+            new ApplicationFeatures.DownloadImageTask(imageView).execute(imageUrl);
 
 
             String title = content[i][1];
