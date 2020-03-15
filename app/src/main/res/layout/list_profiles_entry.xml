@@ -41,6 +41,12 @@
     </LinearLayout>
 
     <ImageButton
+        android:id="@+id/profilelist_preferred"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_star_border_black_24dp" />
+    <ImageButton
         android:id="@+id/profilelist_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

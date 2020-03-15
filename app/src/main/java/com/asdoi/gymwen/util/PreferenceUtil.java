@@ -280,15 +280,35 @@ public class PreferenceUtil {
         editor.commit();
     }
 
-
-    public static int getPreferredProfilePosition() {
-        return 0;
+    public static void setPreferredProfilePosition(Context context, int value) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("preferred_position", value);
+        if (checkPreferredProfile(context, value))
+            editor.apply();
     }
 
-    public static Profile getPreferredProfile() {
+    public static boolean checkPreferredProfile(Context context, int pos) {
+        if (pos < 0 || pos >= ProfileManagement.getSize()) {
+            setPreferredProfilePosition(context, 0);
+            return false;
+        }
+        return true;
+    }
+
+    public static void checkPreferredProfile(Context context) {
+        checkPreferredProfile(context, getPreferredProfilePosition(context));
+    }
+
+    public static int getPreferredProfilePosition(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getInt("preferred_position", 0);
+    }
+
+    public static Profile getPreferredProfile(Context context) {
         if (!ProfileManagement.isLoaded())
             ProfileManagement.reload();
-        int pos = getPreferredProfilePosition();
+        int pos = getPreferredProfilePosition(context);
         if (pos < 0 || pos >= ProfileManagement.getSize())
             return null;
         return ProfileManagement.getProfile(pos);

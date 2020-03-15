@@ -24,11 +24,13 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
+import com.asdoi.gymwen.util.PreferenceUtil;
 
 import org.jetbrains.annotations.NotNull;
 
 public class ProfileActivityFragment extends Fragment {
     private ProfileListAdapter adapter;
+    private int preferredProfilePos;
 
     public ProfileActivityFragment() {
     }
@@ -43,7 +45,7 @@ public class ProfileActivityFragment extends Fragment {
 
         root.findViewById(R.id.profile_add_button).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
         root.findViewById(R.id.profile_add_button).setOnClickListener((View v) -> openAddDialog());
-
+        PreferenceUtil.getPreferredProfilePosition(getContext());
         return root;
     }
 
@@ -82,6 +84,14 @@ public class ProfileActivityFragment extends Fragment {
 
             ImageButton delete = base.findViewById(R.id.profilelist_delete);
             delete.setOnClickListener((View v) -> openDeleteDialog(position));
+
+            ImageButton star = base.findViewById(R.id.profilelist_preferred);
+            if (position == preferredProfilePos) {
+                star.setImageResource(R.drawable.ic_star_black_24dp);
+            } else {
+                star.setImageResource(R.drawable.ic_star_border_black_24dp);
+            }
+            star.setOnClickListener((View v) -> setPreferredProfile(position));
 
             return base;
         }
@@ -206,6 +216,15 @@ public class ProfileActivityFragment extends Fragment {
         builder.negativeText(getString(R.string.no));
 
         builder.show();
+    }
+
+    private void setPreferredProfile(int position) {
+        if (position == preferredProfilePos)
+            return;
+
+        PreferenceUtil.setPreferredProfilePosition(getContext(), position);
+        preferredProfilePos = position;
+        adapter.notifyDataSetChanged();
     }
 
 }

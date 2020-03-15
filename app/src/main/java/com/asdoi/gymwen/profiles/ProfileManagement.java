@@ -14,6 +14,7 @@ public abstract class ProfileManagement {
     @NonNull
     private static ArrayList<Profile> profileList = new ArrayList<>();
     private final static char splitChar = '%';
+    private int preferredProfile;
 
     public static Profile getProfile(int pos) {
         return profileList.get(pos);

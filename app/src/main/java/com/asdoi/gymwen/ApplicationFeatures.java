@@ -1117,7 +1117,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
         Document[] newDocs = SubstitutionPlanFeatures.getDocs();
 
-        Profile preferredProfile = PreferenceUtil.getPreferredProfile();
+        Profile preferredProfile = PreferenceUtil.getPreferredProfile(getContext());
         if (preferredProfile != null) {
             int whichDocIsToday = -1;
 
@@ -1152,7 +1152,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     private static void sendMainNotif() {
-        Profile preferredProfile = PreferenceUtil.getPreferredProfile();
+        Profile preferredProfile = PreferenceUtil.getPreferredProfile(getContext());
         if (preferredProfile != null) {
             int whichDayIsToday = -1;
 

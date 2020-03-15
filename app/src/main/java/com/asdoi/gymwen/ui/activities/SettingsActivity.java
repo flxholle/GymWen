@@ -104,7 +104,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         }
         editor.apply();
         dialog.dismiss();
-        recreate();
+//        recreate(); //Not necessary because SettingsActivity isn't themed
     }
 
     @Override
