@@ -372,7 +372,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
                 }
             });
-            parentSpinner.setSelection(0);
+            parentSpinner.setSelection(ProfileManagement.loadPreferredProfilePosition());
         } else {
             ApplicationFeatures.initProfile(0, true);
             parentSpinner.setVisibility(View.GONE);

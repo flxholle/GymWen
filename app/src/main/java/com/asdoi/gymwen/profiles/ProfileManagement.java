@@ -145,6 +145,12 @@ public abstract class ProfileManagement {
         return preferredProfile;
     }
 
+    public static int loadPreferredProfilePosition() {
+        if (preferredProfile < 0 || preferredProfile >= getSize())
+            return 0;
+        return preferredProfile;
+    }
+
     public static Profile getPreferredProfile() {
         int pos = getPreferredProfilePosition();
         if (pos < 0 || pos >= getSize())
