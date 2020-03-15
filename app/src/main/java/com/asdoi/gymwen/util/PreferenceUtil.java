@@ -2,16 +2,12 @@ package com.asdoi.gymwen.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StyleRes;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
-import com.asdoi.gymwen.R;
 
 public class PreferenceUtil {
     @NonNull
@@ -221,7 +217,7 @@ public class PreferenceUtil {
         return sharedPref.getInt(key, defaultValue);
     }
 
-    @StyleRes
+    /*@StyleRes
     public static int getGeneralTheme() {
         Context context = ApplicationFeatures.getContext();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -254,8 +250,8 @@ public class PreferenceUtil {
                 return R.style.AppTheme_Light;
         }
     }
-
-    public static boolean isDark() {
+*/
+/*    public static boolean isDark() {
         int theme = getGeneralTheme();
         switch (theme) {
             case R.style.AppTheme_Dark:
@@ -265,7 +261,7 @@ public class PreferenceUtil {
             default:
                 return false;
         }
-    }
+    }*/
 
     public static void changeDesign(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);

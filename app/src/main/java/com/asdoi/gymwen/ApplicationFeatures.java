@@ -54,7 +54,7 @@ import com.asdoi.gymwen.ui.activities.SignInActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider;
 import com.asdoi.gymwen.widgets.SummaryWidget;
-import com.kabouzeid.appthemehelper.ThemeStore;
+import com.jaredrummler.cyanea.Cyanea;
 
 import org.acra.ACRA;
 import org.acra.annotation.AcraCore;
@@ -84,7 +84,7 @@ import java.util.Locale;
 @AcraMailSender(mailTo = "GymWenApp@t-online.de")
 @AcraDialog(resText = R.string.acra_dialog_text,
         resCommentPrompt = R.string.acra_dialog_content,
-        resTheme = R.style.AppTheme_Dark,
+        resTheme = R.style.Theme_Cyanea_Dark,
         resTitle = R.string.acra_dialog_title)
 //@AcraToast(resText = R.string.acra_toast)
 
@@ -120,12 +120,13 @@ public class ApplicationFeatures extends MultiDexApplication {
         super.onCreate();
 
         // default theme
-        if (!ThemeStore.isConfigured(this, 1)) {
+        Cyanea.init(this, getResources());
+/*        if (!ThemeStore.isConfigured(this, 1)) {
             ThemeStore.editTheme(this)
                     .primaryColorRes(R.color.colorPrimary)
                     .accentColorRes(R.color.colorAccent)
                     .commit();
-        }
+        }*/
 
         mContext = this;
         ACRA.init(this);
@@ -1042,15 +1043,15 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     //Colors
     public static int getTextColorPrimary(@NonNull Context context) {
-        return getThemeColor(android.R.attr.textColorPrimary, context);
+        return getThemeColor(R.attr.colorAccent, context);
     }
 
     public static int getTextColorSecondary(@NonNull Context context) {
-        return getThemeColor(android.R.attr.textColorSecondary, context);
+        return getThemeColor(R.attr.colorAccent, context);
     }
 
     public static int getBackgroundColor(@NonNull Context context) {
-        return getThemeColor(android.R.attr.windowBackground, context);
+        return getThemeColor(R.attr.backgroundColor, context);
     }
 
     public static int getWebPageBackgroundColor(@NonNull Context context) {

@@ -26,6 +26,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_Cyanea_Light_NoActionBar);
         setContentView(R.layout.activity_settings);
         getSupportFragmentManager()
                 .beginTransaction()
