@@ -370,25 +370,32 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     private void teacherSearch(String query) {
-        try {
-            ApplicationFeatures.downloadTeacherlistDoc();
-            createTeacherView(Teacherlist.getTeacher(query));
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            if (!Teacherlist.isDownloaded()) {
-                ChocoBar.builder().setActivity(getActivity())
-                        .setText(getString(R.string.noInternet))
-                        .setDuration(ChocoBar.LENGTH_LONG)
-                        .orange()
-                        .show();
-            } else {
-                ChocoBar.builder().setActivity(getActivity())
-                        .setText(getString(R.string.teacher_no_teacher_found))
-                        .setDuration(ChocoBar.LENGTH_LONG)
-                        .red()
-                        .show();
+
+        new Thread(() -> {
+            try {
+                ApplicationFeatures.downloadTeacherlistDoc();
+                if (Teacherlist.liste() == null)
+                    throw new Exception();
+                getActivity().runOnUiThread(() -> createTeacherView(Teacherlist.getTeacher(query)));
+            } catch (Exception e) {
+                e.printStackTrace();
+                getActivity().runOnUiThread(() -> {
+                    if (!Teacherlist.isDownloaded()) {
+                        ChocoBar.builder().setActivity(getActivity())
+                                .setText(getString(R.string.noInternet))
+                                .setDuration(ChocoBar.LENGTH_LONG)
+                                .orange()
+                                .show();
+                    } else {
+                        ChocoBar.builder().setActivity(getActivity())
+                                .setText(getString(R.string.teacher_no_teacher_found))
+                                .setDuration(ChocoBar.LENGTH_LONG)
+                                .red()
+                                .show();
+                    }
+                });
             }
-        }
+        }).start();
     }
 
     private void createTeacherView(@NonNull String[] teacher) {

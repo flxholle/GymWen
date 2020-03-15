@@ -39,7 +39,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
     override fun onCreate() {
         contentList = mutableListOf()
 
-        if (!ProfileManagement.isLoaded())
+        if (ProfileManagement.isUninit())
             ProfileManagement.reload()
 
         var noInternet = false

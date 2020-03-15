@@ -11,7 +11,6 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
-import com.asdoi.gymwen.util.PreferenceUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileActivity extends ActivityFeatures {
@@ -43,7 +42,7 @@ public class ProfileActivity extends ActivityFeatures {
     public void onBackPressed() {
         ApplicationFeatures.resetSelectedProfile();
         ProfileManagement.save(true);
-        PreferenceUtil.checkPreferredProfile(getContext());
+        ProfileManagement.checkPreferredProfile();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();

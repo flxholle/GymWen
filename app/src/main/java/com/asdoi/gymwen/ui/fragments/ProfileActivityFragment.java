@@ -24,7 +24,6 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
-import com.asdoi.gymwen.util.PreferenceUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,7 +44,7 @@ public class ProfileActivityFragment extends Fragment {
 
         root.findViewById(R.id.profile_add_button).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
         root.findViewById(R.id.profile_add_button).setOnClickListener((View v) -> openAddDialog());
-        PreferenceUtil.getPreferredProfilePosition(getContext());
+        ProfileManagement.getPreferredProfilePosition();
         return root;
     }
 
@@ -222,7 +221,7 @@ public class ProfileActivityFragment extends Fragment {
         if (position == preferredProfilePos)
             return;
 
-        PreferenceUtil.setPreferredProfilePosition(getContext(), position);
+        ProfileManagement.setPreferredProfilePosition(position);
         preferredProfilePos = position;
         adapter.notifyDataSetChanged();
     }

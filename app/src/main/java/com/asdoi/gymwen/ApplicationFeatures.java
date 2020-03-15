@@ -465,7 +465,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         protected void onPostExecute(Void v) {
             try {
                 downloadSubstitutionplanDocs(false, false);
-                if (!ProfileManagement.isLoaded())
+                if (ProfileManagement.isUninit())
                     ProfileManagement.reload();
                 if (!coursesCheck(false))
                     return;
@@ -708,7 +708,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         @Override
         protected void onPostExecute(Void v) {
             try {
-                if (!ProfileManagement.isLoaded())
+                if (ProfileManagement.isUninit())
                     ProfileManagement.reload();
                 if (!coursesCheck(false))
                     return;
@@ -1106,7 +1106,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         Document[] oldDocs = SubstitutionPlanFeatures.getDocs();
 
         downloadSubstitutionplanDocs(false, false);
-        if (!ProfileManagement.isLoaded())
+        if (ProfileManagement.isUninit())
             ProfileManagement.reload();
         if (!coursesCheck(false))
             return;
@@ -1117,7 +1117,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
         Document[] newDocs = SubstitutionPlanFeatures.getDocs();
 
-        Profile preferredProfile = PreferenceUtil.getPreferredProfile(getContext());
+        Profile preferredProfile = ProfileManagement.getPreferredProfile();
         if (preferredProfile != null) {
             int whichDocIsToday = -1;
 
@@ -1152,7 +1152,9 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     private static void sendMainNotif() {
-        Profile preferredProfile = PreferenceUtil.getPreferredProfile(getContext());
+        if (ProfileManagement.isUninit())
+            ProfileManagement.reload();
+        Profile preferredProfile = ProfileManagement.getPreferredProfile();
         if (preferredProfile != null) {
             int whichDayIsToday = -1;
 

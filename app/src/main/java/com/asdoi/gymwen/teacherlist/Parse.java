@@ -86,6 +86,8 @@ abstract class Parse {
      */
     @Nullable
     static String[] getTeacher(String search, @NonNull String[][] listString) {
+        if (listString == null)
+            return null;
         for (String[] s : listString) {
             for (String s1 : s) {
                 if (s1.equalsIgnoreCase(search)) {

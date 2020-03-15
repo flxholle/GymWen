@@ -69,7 +69,7 @@ class SummaryWidget : AppWidgetProvider() {
         var today = 0
         var tomorrow = 0
 
-        if (!ProfileManagement.isLoaded())
+        if (ProfileManagement.isUninit())
             ProfileManagement.reload()
         val profileList = ProfileManagement.getProfileList()
         for (p in profileList) {

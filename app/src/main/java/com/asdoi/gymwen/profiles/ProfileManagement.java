@@ -14,7 +14,7 @@ public abstract class ProfileManagement {
     @NonNull
     private static ArrayList<Profile> profileList = new ArrayList<>();
     private final static char splitChar = '%';
-    private int preferredProfile;
+    private static int preferredProfile;
 
     public static Profile getProfile(int pos) {
         return profileList.get(pos);
@@ -56,6 +56,11 @@ public abstract class ProfileManagement {
                 e.printStackTrace();
             }
         }
+        preferredProfile = sharedPref.getInt("preferred_position", 0);
+    }
+
+    public static boolean isUninit() {
+        return getProfileListNames() == null;
     }
 
     public static boolean isLoaded() {
@@ -71,6 +76,7 @@ public abstract class ProfileManagement {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("profiles", all.toString());
+        editor.putInt("preferred_position", preferredProfile);
         if (apply)
             editor.apply();
         else
@@ -118,5 +124,28 @@ public abstract class ProfileManagement {
             }
         }
         return false;
+    }
+
+    public static void setPreferredProfilePosition(int value) {
+        preferredProfile = value;
+    }
+
+    public static boolean checkPreferredProfile() {
+        if (preferredProfile < 0 || preferredProfile >= getSize()) {
+            setPreferredProfilePosition(0);
+            return false;
+        }
+        return true;
+    }
+
+    public static int getPreferredProfilePosition() {
+        return preferredProfile;
+    }
+
+    public static Profile getPreferredProfile() {
+        int pos = getPreferredProfilePosition();
+        if (pos < 0 || pos >= getSize())
+            return null;
+        return getProfile(pos);
     }
 }
