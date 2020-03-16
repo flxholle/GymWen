@@ -30,7 +30,7 @@ class RefreshWidget : AppWidgetProvider() {
         thread(true) {
 //            setColors(getThemeInt(context), context)
             ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true)
-            ApplicationFeatures.sendNotification()
+            ApplicationFeatures.sendNotifications()
             for (appWidgetId in appWidgetIds) {
                 updateAppWidget(context, appWidgetManager, appWidgetId)
             }

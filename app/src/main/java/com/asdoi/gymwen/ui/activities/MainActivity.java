@@ -122,7 +122,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return;
         }
 
-        ApplicationFeatures.sendNotification();
+        ApplicationFeatures.sendNotifications();
 
         initSpinner();
 

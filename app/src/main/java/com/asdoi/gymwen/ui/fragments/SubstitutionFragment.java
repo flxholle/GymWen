@@ -1045,7 +1045,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         TextView course = view.findViewById(R.id.substitution_specific_entry_textViewClass);
         if (senior) {
-            course.setText(entry.getSubject());
+            course.setText(entry.getCourse());
         } else {
             course.setText(entry.getCourse());
             //Only useful for senior with more than one course

@@ -41,4 +41,10 @@
     <color name="nothing_text">@android:color/black</color>
 
     <color name="nothing_background_light">#99FF0000</color>
+
+    <!-- Notification -->
+    <color name="notification_icon_text_omitted">@android:color/white</color>
+    <color name="notification_icon_text_substitution">@android:color/white</color>
+    <color name="notification_icon_background_omitted">#FF0000</color>
+    <color name="notification_icon_background_substitution">#FFC107</color>
 </resources>

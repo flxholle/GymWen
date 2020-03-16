@@ -46,7 +46,7 @@ public class NotificationTileService extends TileService {
         editor.putBoolean("showNotification", showNotifNew);
         if (showNotifNew) {
             editor.commit();
-            ApplicationFeatures.sendNotification();
+            ApplicationFeatures.sendNotifications();
         } else {
             editor.apply();
             Intent intent = new Intent(this, NotificationDismissButtonReceiver.class);

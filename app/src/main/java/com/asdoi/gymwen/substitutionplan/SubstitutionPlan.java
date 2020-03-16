@@ -122,7 +122,7 @@ public class SubstitutionPlan {
      */
     @NonNull
     public String getTitleString(boolean today) {
-        SubstitutionTitle s = getTitle(true);
+        SubstitutionTitle s = getTitle(today);
         return s.getNoInternet() ? noInternet() : s.toString();
     }
 

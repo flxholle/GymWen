@@ -1,9 +1,6 @@
 package com.asdoi.gymwen;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -33,9 +30,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.multidex.MultiDexApplication;
@@ -45,7 +39,6 @@ import com.ahmedjazzar.rosetta.LanguageSwitcher;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.CheckSubstitutionPlanReceiver;
-import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionEntry;
 import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
@@ -54,7 +47,6 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
-import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.activities.SignInActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider;
@@ -81,7 +73,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 import saschpe.android.customtabs.CustomTabsActivityLifecycleCallbacks;
 
@@ -472,15 +463,10 @@ public class ApplicationFeatures extends MultiDexApplication {
     //Notification
     final public static int NOTIFICATION_INFO_ID = 1;
     final public static int NOTIFICATION_INFO_ID_2 = 2;
-    final public static int NOTIFICATION_MAIN_ID = 3;
-    final public static String NOTIFICATION_CHANNEL_ID = "Substitutionplan_01";
-
-    public static void sendNotification() {
-        sendSummaryNotif();
-    }
+    final public static String NOTIFICATION_SUMMARY_CHANNEL_ID = "Substitutionplan_01";
 
     //Check if sth has changed -> Send Notification
-    public static void checkSubstitutionPlan() {
+    public static void checkSubstitutionPlan(boolean alert) {
         if (SubstitutionPlanFeatures.isUninit())
             SubstitutionPlanFeatures.reloadDocs();
         Document[] oldDocs = SubstitutionPlanFeatures.getDocs();
@@ -514,7 +500,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
                     //Send Main Notif only if day sth has changed today for the preferred profile, else -> summaryNotif
                     temp.setTodayDoc(newDocs[whichDocIsToday]);
-                    sendMainNotif(temp.getTitleString(true), temp.getDay(true));
+                    sendMainNotif(temp.getTitleString(true), temp.getDay(true), alert);
                 }
             }
         }
@@ -531,9 +517,14 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
-    private static void sendMainNotif() {
+    //Send notifications
+    public static void sendNotifications(boolean alert) {
         if (ProfileManagement.isUninit())
             ProfileManagement.reload();
+
+        //Send main notif for preferred Profile
+        int daySendInSummaryNotif = 0;
+
         Profile preferredProfile = ProfileManagement.getPreferredProfile();
         if (preferredProfile != null) {
             int whichDayIsToday = -1;
@@ -550,28 +541,46 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             switch (whichDayIsToday) {
                 case 0:
-                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitleString(), temp.getDay(true));
+                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitleString(), temp.getDay(true), alert);
+                    daySendInSummaryNotif = 1;
                     break;
                 case 1:
-                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitleString(), temp.getDay(false));
+                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitleString(), temp.getDay(false), alert);
+                    daySendInSummaryNotif = 0;
                     break;
+                default:
+                    daySendInSummaryNotif = -1;
             }
         }
+
+        sendSummaryNotif();
     }
 
-    private static void sendMainNotif(String title, SubstitutionList content) {
-        new ApplicationFeaturesUtils.Companion.CreateMainNotification(title, content).execute(true, false);
+    //Private methods
+    private static void sendMainNotif(String title, SubstitutionList content, boolean alert) {
+        if (content.getNoInternet())
+            return;
+        new ApplicationFeaturesUtils.Companion.CreateMainNotification(title, content, alert).execute(true, false);
     }
 
-    public static void sendSummaryNotif() {
+    private static void sendSummaryNotif(String[] titles, Profile[] profiles, SubstitutionList[] sendFromMain) {
 //        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
 //            new CreateInfoNotification().execute(true, false);
 //        }
-        sendMainNotif("title", SubstitutionPlanFeatures.getToday());
+//        sendMainNotif("title", SubstitutionPlanFeatures.getToday(), true);
     }
 
     private static class CreateInfoNotification extends DownloadSubstitutionplanDocsTask {
         boolean summarize = PreferenceUtil.isSummarizeUp();
+        SubstitutionTitle[] titles;
+        Profile[] profiles;
+        SubstitutionList[] sendFromMain;
+
+        CreateInfoNotification(SubstitutionTitle[] titles, Profile[] profiles, SubstitutionList[] sendFromMain) {
+            this.titles = titles;
+            this.profiles = profiles;
+            this.sendFromMain = sendFromMain;
+        }
 
         @Override
         protected void onPostExecute(Void v) {
@@ -600,10 +609,12 @@ public class ApplicationFeatures extends MultiDexApplication {
         private void notificationMessageOneNotif() {
             StringBuilder messageToday = new StringBuilder();
             StringBuilder messageTomorrow = new StringBuilder();
-            SubstitutionTitle titleTodayArray = SubstitutionPlanFeatures.getTodayTitle();
-            SubstitutionTitle titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitle();
+
+            SubstitutionTitle titleTodayArray = titles[0];
+            SubstitutionTitle titleTomorrowArray = titles[1];
             String titleToday = titleTodayArray.getDate() + ", " + titleTodayArray.getDayOfWeek() + ":";
             String titleTomorrow = titleTomorrowArray.getDate() + ", " + titleTomorrowArray.getDayOfWeek() + ":";
+
             boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
 
             boolean[] isNo = new boolean[]{true, true};
@@ -748,85 +759,6 @@ public class ApplicationFeatures extends MultiDexApplication {
                 }
             }
             return message.toString();
-        }
-
-        private void createNotification(String body, String title, int notification_id) {
-            Context context = getContext();
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
-                return;
-
-            try {
-                String[] lines = body.split("\n");
-
-                //Intent
-                // Create an Intent for the activity you want to start
-                Intent resultIntent = new Intent(getContext(), MainActivity.class);
-                // Create the TaskStackBuilder and add the intent, which inflates the backgroundShape stack
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                stackBuilder.addNextIntentWithParentStack(resultIntent);
-                // Get the PendingIntent containing the entire backgroundShape stack
-                PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                //Create an Intent for the BroadcastReceiver
-                Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
-                buttonIntent.setAction("com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver");
-                buttonIntent.putExtra("EXTRA_NOTIFICATION_ID", notification_id);
-                PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, UUID.randomUUID().hashCode(), buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-                //Build notification
-                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
-
-                NotificationCompat.InboxStyle notifStyle = new NotificationCompat.InboxStyle();
-                for (String s : lines) {
-                    notifStyle.addLine(s);
-                }
-                if (lines.length > 7) {
-                    notifStyle.setSummaryText("+" + (lines.length - 7) + " " + context.getString(R.string.more));
-                }
-
-                createNotificationChannel(context);
-
-                notificationBuilder
-                        .setAutoCancel(true)
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setWhen(System.currentTimeMillis())
-                        .setStyle(notifStyle)
-                        .setContentTitle(title)
-                        .setContentIntent(resultPendingIntent)
-                        .setSmallIcon(R.drawable.ic_assignment_black_24dp)
-                        .setPriority(Notification.PRIORITY_LOW);
-
-                if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("alwaysNotification", true)) {
-                    notificationBuilder.setOngoing(true);
-                    notificationBuilder.addAction(R.drawable.ic_close_black_24dp, getContext().getString(R.string.notif_dismiss), btPendingIntent);
-                }
-
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-                // notificationId is a unique int for each notification that you must define
-                notificationManager.notify(notification_id, notificationBuilder.build());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                //Known Icon Error
-            }
-        }
-
-        private void createNotificationChannel(Context context) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_LOW);
-
-                // Configure the notification channel.
-                notificationChannel.setDescription(context.getString(R.string.notification_channel_description));
-                notificationChannel.enableLights(false);
-//                    notificationChannel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
-                notificationChannel.enableVibration(false);
-                notificationChannel.setSound(null, null);
-                notificationManager.createNotificationChannel(notificationChannel);
-                notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
         }
     }
 
