@@ -16,7 +16,7 @@ class CheckSubstitutionPlanReceiver : BroadcastReceiver() {
 //                //@see AlarmReceiver
 //
 //            }
-        ApplicationFeatures.checkSubstitutionPlan()
+        ApplicationFeatures.checkSubstitutionPlan(true)
         val time = getNextTime()
         ApplicationFeatures.setAlarm(context!!, CheckSubstitutionPlanReceiver::class.java, time[0], time[1], time[2])
     }

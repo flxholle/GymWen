@@ -500,7 +500,8 @@ public class ApplicationFeatures extends MultiDexApplication {
                 if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
                     //Send Main Notif only if day sth has changed today for the preferred profile, else -> summaryNotif
                     temp.setTodayDoc(newDocs[whichDocIsToday]);
-                    sendMainNotif(temp.getTitleString(true), temp.getDay(true), alert);
+//                    sendMainNotif(temp.getTitleString(true), temp.getDay(true), alert);
+                    sendNotifications(alert);
                 }
             }
         }
@@ -511,7 +512,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             if (temp.hasSthChanged(oldDocs, newDocs)) {
                 //Sth has changed since last download of substitutionplan
-                sendSummaryNotif();
+                sendNotifications(false);
                 break;
             }
         }
@@ -519,44 +520,45 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     //Send notifications
     public static void sendNotifications() {
+        sendNotifications(true);
     }
 
     public static void sendNotifications(boolean alert) {
-        if (ProfileManagement.isUninit())
-            ProfileManagement.reload();
+//        if (ProfileManagement.isUninit())
+//            ProfileManagement.reload();
+//
+//        //Send main notif for preferred Profile
+//        int daySendInSummaryNotif = 0;
+//
+//        Profile preferredProfile = ProfileManagement.getPreferredProfile();
+//        if (preferredProfile != null) {
+//            int whichDayIsToday = -1;
+//
+//            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
+//            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
+//
+//            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
+//                whichDayIsToday = 0;
+//            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
+//                whichDayIsToday = 1;
+//
+//            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
+//
+//            switch (whichDayIsToday) {
+//                case 0:
+//                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitleString(), temp.getDay(true), alert);
+//                    daySendInSummaryNotif = 1;
+//                    break;
+//                case 1:
+//                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitleString(), temp.getDay(false), alert);
+//                    daySendInSummaryNotif = 0;
+//                    break;
+//                default:
+//                    daySendInSummaryNotif = -1;
+//            }
+//        }
 
-        //Send main notif for preferred Profile
-        int daySendInSummaryNotif = 0;
-
-        Profile preferredProfile = ProfileManagement.getPreferredProfile();
-        if (preferredProfile != null) {
-            int whichDayIsToday = -1;
-
-            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
-            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
-
-            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
-                whichDayIsToday = 0;
-            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
-                whichDayIsToday = 1;
-
-            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
-
-            switch (whichDayIsToday) {
-                case 0:
-                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitleString(), temp.getDay(true), alert);
-                    daySendInSummaryNotif = 1;
-                    break;
-                case 1:
-                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitleString(), temp.getDay(false), alert);
-                    daySendInSummaryNotif = 0;
-                    break;
-                default:
-                    daySendInSummaryNotif = -1;
-            }
-        }
-
-        sendSummaryNotif();
+        new ApplicationFeaturesUtils.Companion.CreateNotification(alert).execute();
     }
 
     //Private methods
@@ -568,6 +570,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     private static void sendSummaryNotif() {
     }
+
     private static void sendSummaryNotif(String[] titles, Profile[] profiles, SubstitutionList[] sendFromMain) {
 //        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
 //            new CreateInfoNotification().execute(true, false);
@@ -630,7 +633,6 @@ public class ApplicationFeatures extends MultiDexApplication {
                 Profile p = ProfileManagement.getProfile(i);
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
                 SubstitutionList content = summarize ? temp.getDay(true).summarizeUp(("-")) : temp.getDay(true);
-                temp.getDay(true);
                 try {
                     count.append(content.size());
                     count.append("|");

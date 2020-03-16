@@ -135,12 +135,12 @@ public abstract class SubstitutionPlanFeatures {
         return substitutionPlan.getTitleString(false);
     }
 
-    @Nullable
+    @NonNull
     public static SubstitutionTitle getTodayTitle() {
         return substitutionPlan.getTitle(true);
     }
 
-    @Nullable
+    @NonNull
     public static SubstitutionTitle getTomorrowTitle() {
         return substitutionPlan.getTitle(false);
     }

@@ -109,7 +109,7 @@ public class SubstitutionPlan {
      * @see Parse#getTitle
      */
     //DayArrays
-    @Nullable
+    @NonNull
     public SubstitutionTitle getTitle(boolean today) {
         return Parse.getTitle(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay(), pastCode, todayCode, tomorrowCode, futureCode);
     }
