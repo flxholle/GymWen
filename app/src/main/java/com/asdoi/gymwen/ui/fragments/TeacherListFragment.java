@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.teacherlist.Teacherlist;
+import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -65,7 +65,7 @@ public class TeacherListFragment extends Fragment {
 
         new Thread(() -> {
             ApplicationFeatures.downloadTeacherlistDoc();
-            teacherList = Teacherlist.liste();
+            teacherList = TeacherlistFeatures.liste();
             createLayout();
         }).start();
     }
@@ -137,9 +137,9 @@ public class TeacherListFragment extends Fragment {
             public void onTextChanged(@NonNull CharSequence charSequence, int i, int i1, int i2) {
                 if (!charSequence.toString().equals(before)) {
                     if (charSequence.length() > 0) {
-                        teacherList = Teacherlist.getTeachers("" + charSequence);
+                        teacherList = TeacherlistFeatures.getTeachers("" + charSequence);
                     } else {
-                        teacherList = Teacherlist.liste();
+                        teacherList = TeacherlistFeatures.liste();
                     }
                     before = charSequence.toString();
                     ((BaseAdapter) teacherListView.getAdapter()).notifyDataSetChanged();

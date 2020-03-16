@@ -19,7 +19,7 @@ import org.jsoup.nodes.Document;
  * Array with length for, with content of new String[]{Kürzel, Nachname, Vorname, Sprechstunde}
  */
 
-public abstract class Teacherlist {
+public abstract class TeacherlistFeatures {
     private static Document list;
 
     /**
@@ -28,7 +28,7 @@ public abstract class Teacherlist {
      * new String[]{Kürzel, Nachname, Vorname, Sprechstunde}
      */
     @Nullable
-    public static String[][] liste() {
+    public static TeacherList liste() {
         if (list == null) {
             return null;
         }
@@ -44,7 +44,7 @@ public abstract class Teacherlist {
      * @see Parse#getTeacher
      */
     @Nullable
-    public static String[] getTeacher(String search) {
+    public static TeacherListEntry getTeacher(String search) {
         return Parse.getTeacher(search, liste());
     }
 
@@ -55,7 +55,7 @@ public abstract class Teacherlist {
      * @see Parse#getTeachers
      */
     @NonNull
-    public static String[][] getTeachers(@NonNull String search) {
+    public static TeacherList getTeachers(@NonNull String search) {
         return Parse.getTeachers(search, liste());
     }
 

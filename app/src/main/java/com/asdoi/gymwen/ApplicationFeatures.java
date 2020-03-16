@@ -51,7 +51,7 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
-import com.asdoi.gymwen.teacherlist.Teacherlist;
+import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.activities.MainActivity;
@@ -175,15 +175,15 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static void deleteOfflineTeacherlistDoc() {
-        Teacherlist.setDoc(null);
+        TeacherlistFeatures.setDoc(null);
     }
 
     public static void downloadTeacherlistDoc() {
-        if (!Teacherlist.isDownloaded()) {
+        if (!TeacherlistFeatures.isDownloaded()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
-                Teacherlist.setDoc(downloadDoc(PreferenceUtil.getTeacherlistURL(getContext())));
+                TeacherlistFeatures.setDoc(downloadDoc(PreferenceUtil.getTeacherlistURL(getContext())));
             } else if (PreferenceUtil.isOfflineMode()) {
-                Teacherlist.reloadDoc();
+                TeacherlistFeatures.reloadDoc();
             }
         }
     }

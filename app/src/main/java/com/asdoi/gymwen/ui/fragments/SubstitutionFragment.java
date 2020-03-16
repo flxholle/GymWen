@@ -41,7 +41,7 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
-import com.asdoi.gymwen.teacherlist.Teacherlist;
+import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.pd.chocobar.ChocoBar;
@@ -311,7 +311,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     //TeacherSearch
     private void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean showBorders, boolean fullNames) {
-        if (SubstitutionPlanFeatures.isNothing(teacherQuery) || Teacherlist.isAOL(teacherQuery))
+        if (SubstitutionPlanFeatures.isNothing(teacherQuery) || TeacherlistFeatures.isAOL(teacherQuery))
             return;
         int padding = 0;
         if (showBorders) {
@@ -378,13 +378,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         new Thread(() -> {
             try {
                 ApplicationFeatures.downloadTeacherlistDoc();
-                if (Teacherlist.liste() == null)
+                if (TeacherlistFeatures.liste() == null)
                     throw new Exception();
-                getActivity().runOnUiThread(() -> createTeacherView(Teacherlist.getTeacher(query)));
+                getActivity().runOnUiThread(() -> createTeacherView(TeacherlistFeatures.getTeacher(query)));
             } catch (Exception e) {
                 e.printStackTrace();
                 getActivity().runOnUiThread(() -> {
-                    if (!Teacherlist.isDownloaded()) {
+                    if (!TeacherlistFeatures.isDownloaded()) {
                         ChocoBar.builder().setActivity(getActivity())
                                 .setText(getString(R.string.noInternet))
                                 .setDuration(ChocoBar.LENGTH_LONG)
@@ -440,7 +440,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         String teacher = null;
         try {
             ApplicationFeatures.downloadTeacherlistDoc();
-            String[] response = Teacherlist.getTeacher(query);
+            String[] response = TeacherlistFeatures.getTeacher(query);
             teacher = response[1];
         } catch (NullPointerException e) {
             e.printStackTrace();

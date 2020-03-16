@@ -3,10 +3,10 @@ package com.asdoi.gymwen.teacherlist;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -16,10 +16,10 @@ abstract class Parse {
     /**
      * @param doc raw HTML-Document (Jsoup), which will be analyzed
      * @return an two-dimensal String-Array with all teachers in it, one teacher entry is like this: String[]{Kürzel, Nachname, Vorname, Sprechstunde}
-     * @see Teacherlist
+     * @see TeacherlistFeatures
      */
-    @Nullable
-    static String[][] getList(@Nullable Document doc) {
+    @NotNull
+    static TeacherList getList(@Nullable Document doc) {
         if (doc == null) {
             System.out.println("Document is null");
             return null;
@@ -51,7 +51,8 @@ abstract class Parse {
             //Kürzel - Nachname - Vorname - Sprechstunde
 
             String[][] content = new String[lines.length][4];
-            for (int i = 0; i < content.length; i++) {
+            TeacherList teacherList = new TeacherList();
+            for (int i = 0; i < lines.length; i++) {
                 String line = lines[i];
                 //Kürzel
                 content[i][0] = line.substring(0, 3);
@@ -70,12 +71,13 @@ abstract class Parse {
 
                 //Sprechstunde
                 content[i][3] = line.substring(indexNextWhiteSpace + 1);
+                teacherList.add(new TeacherListEntry(content[i][0], content[i][1], content[i][2], content[i][3]));
             }
 
-            return content;
+            return teacherList;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new TeacherList(true);
         }
     }
 
@@ -85,17 +87,21 @@ abstract class Parse {
      * @return if no match is found: null  |  else: the first match
      */
     @Nullable
-    static String[] getTeacher(String search, @NonNull String[][] listString) {
-        if (listString == null)
+    static TeacherListEntry getTeacher(String search, @NonNull TeacherList listString) {
+        if (listString.getNoInternet())
             return null;
-        for (String[] s : listString) {
-            for (String s1 : s) {
-                if (s1.equalsIgnoreCase(search)) {
-                    return s;
-                }
-            }
+        for (TeacherListEntry s : listString.getEntries()) {
+            if (search.equalsIgnoreCase(s.getShort()))
+                return s;
+            else if (search.equalsIgnoreCase(s.getName()))
+                return s;
+            else if (search.equalsIgnoreCase(s.getFirst_name()))
+                return s;
+            else if (search.equalsIgnoreCase(s.getMeeting()))
+                return s;
         }
 
+        //If not found
         return null;
     }
 
@@ -103,26 +109,34 @@ abstract class Parse {
      * @param search     String that should be found in the listString (normally a part of the teacher-array, like the Kürzel)
      * @param listString The list in which it should search for the query (normally the teacherlist)
      * @return if no match is found: null  |  else: all matches in array
-     * @see Teacherlist
+     * @see TeacherlistFeatures
      */
     @NonNull
-    static String[][] getTeachers(@NonNull String search, @NonNull String[][] listString) {
-        ArrayList<String[]> list = new ArrayList<>();
-        for (String[] s : listString) {
-            for (int i = 0; i < 3; i++) {
-                String s1 = s[i].toUpperCase(Locale.getDefault());
-                if (s1.contains(search.toUpperCase(Locale.getDefault()))) {
-                    list.add(s);
-                    break;
-                }
+    static TeacherList getTeachers(@NonNull String search, @NonNull TeacherList listString) {
+        TeacherList list = new TeacherList();
+        for (TeacherListEntry s : listString.getEntries()) {
+
+            String s1 = s.getShort().toUpperCase(Locale.getDefault());
+            if (s1.contains(search.toUpperCase(Locale.getDefault()))) {
+                list.add(s);
+                break;
             }
+
+            s1 = s.getName().toUpperCase(Locale.getDefault());
+            if (s1.contains(search.toUpperCase(Locale.getDefault()))) {
+                list.add(s);
+                break;
+            }
+
+            s1 = s.getFirst_name().toUpperCase(Locale.getDefault());
+            if (s1.contains(search.toUpperCase(Locale.getDefault()))) {
+                list.add(s);
+                break;
+            }
+
         }
 
-        String[][] returnValue = new String[list.size()][];
-        for (int i = 0; i < returnValue.length; i++) {
-            returnValue[i] = list.get(i);
-        }
-        return returnValue;
+        return list;
     }
 
 
@@ -131,7 +145,7 @@ abstract class Parse {
      * @see #getTeachers
      */
     @Nullable
-    protected static String[] getTeacher(String search, Document doc) {
+    protected static TeacherListEntry getTeacher(String search, Document doc) {
         return getTeacher(search, getList(doc));
     }
 }

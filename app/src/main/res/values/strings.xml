@@ -262,7 +262,7 @@
     <string name="permission_ok_button">Gewähren\u2026</string>
     <string name="permission_cancel_button">Abbrechen</string>
 
-    <!-- Teacherlist -->
+    <!-- TeacherlistFeatures -->
     <string name="no_email_app">Du hast keine E-Mail App installiert.</string>
     <string name="teacher_no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
     <string name="teacher_search_teacher_list">Durchsuchen\u2026</string>

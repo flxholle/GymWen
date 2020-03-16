@@ -180,7 +180,7 @@ public class PreferenceUtil {
         return getBooleanSettings("offline_mode", true);
     }
 
-    //Teacherlist
+    //TeacherlistFeatures
     @Nullable
     public static String getTeacherlistURL(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);

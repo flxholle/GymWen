@@ -66,7 +66,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private Menu menu;
 
     public static int substitutionFragmentState;
-    private static int lastLoaded; // 0 = Substitution, 1 = Tabs, 2 = Teacherlist
+    private static int lastLoaded; // 0 = Substitution, 1 = Tabs, 2 = TeacherlistFeatures
     private static final int lastLoadedSubstitution = 0;
     private static final int lastLoadedTabs = 1;
     private static final int lastLoadedTeacherlist = 2;

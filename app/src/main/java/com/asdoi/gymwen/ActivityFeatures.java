@@ -47,7 +47,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
-import com.asdoi.gymwen.teacherlist.Teacherlist;
+import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
@@ -606,7 +606,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     //Save Documents
     protected void saveDocs() {
         SubstitutionPlanFeatures.saveDocs();
-        Teacherlist.saveDoc();
+        TeacherlistFeatures.saveDoc();
     }
 
 
