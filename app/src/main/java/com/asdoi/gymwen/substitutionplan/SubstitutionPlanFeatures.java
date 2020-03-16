@@ -85,44 +85,44 @@ public abstract class SubstitutionPlanFeatures {
         return substitutionPlan == null;
     }
 
-    @Nullable
-    public static String[][] getTodayArray() {
+    @NonNull
+    public static SubstitutionList getToday() {
         return substitutionPlan.getDay(true);
     }
 
-    @Nullable
-    public static String[][] getTomorrowArray() {
+    @NonNull
+    public static SubstitutionList getTomorrow() {
         return substitutionPlan.getDay(false);
     }
 
-    @Nullable
-    public static String[][] getTodayArraySummarized() {
-        return SubstitutionPlan.summarizeArray(getTodayArray(), 1, "-");
+    @NonNull
+    public static SubstitutionList getTodaySummarized() {
+        return getToday().summarizeUp("-");
     }
 
     @Nullable
-    public static String[][] getTomorrowArraySummarized() {
-        return SubstitutionPlan.summarizeArray(getTomorrowArray(), 1, "-");
+    public static SubstitutionList getTomorrowSummarized() {
+        return getTomorrow().summarizeUp("-");
     }
 
     @Nullable
-    public static String[][] getTodayArrayAll() {
+    public static SubstitutionList getTodayAll() {
         return substitutionPlan.getAll(true);
     }
 
     @Nullable
-    public static String[][] getTomorrowArrayAll() {
+    public static SubstitutionList getTomorrowAll() {
         return substitutionPlan.getAll(false);
     }
 
     @Nullable
-    public static String[][] getTodayArrayAllSummarized() {
-        return SubstitutionPlan.summarizeArray(getTodayArrayAll(), 1, "-");
+    public static SubstitutionList getTodayAllSummarized() {
+        return getTodayAll().summarizeUp("-");
     }
 
     @Nullable
-    public static String[][] getTomorrowArrayAllSummarized() {
-        return SubstitutionPlan.summarizeArray(getTomorrowArrayAll(), 1, "-");
+    public static SubstitutionList getTomorrowAllSummarized() {
+        return getTomorrowAll().summarizeUp("-");
     }
 
     @NonNull

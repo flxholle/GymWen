@@ -21,6 +21,7 @@ import java.util.Locale;
 abstract class Parse {
 
     //Title
+    //Internal parse methods
 
     /**
      * @param doc raw HTML-Document (Jsoup), which will be analyzed
@@ -71,9 +72,6 @@ abstract class Parse {
         try {
             String[] dayTitle = Parse.getTitleArrayUnsorted(doc);
             StringBuilder returnValue = new StringBuilder();
-            if (dayTitle == null || dayTitle.equals("")) {
-                return null;
-            }
             for (String s : dayTitle) {
                 returnValue.append(s).append(" ");
             }
@@ -211,6 +209,8 @@ abstract class Parse {
         }
     }
 
+
+    //Methods that should be used
     @NonNull
     static SubstitutionTitle getTitle(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
         SubstitutionTitle day = getTitleWithoutCode(doc, showWeekdates, today, tomorrow, laterDay);
@@ -289,12 +289,12 @@ abstract class Parse {
      * @return an tow-dimensional String array with every entry of the plan in the html-doc. An entry has the same order like the plan in the doc. My one looks like this: new String[]{class, hour, subject, sit-in, room, moreInformation}
      */
     //All
-    @Nullable
-    static String[][] getSubstitutionList(@Nullable Document doc) {
+    @NonNull
+    static SubstitutionList getSubstitutionListUnfiltered(@Nullable Document doc) {
 
         if (doc == null) {
             System.out.println("Document is null");
-            return null;
+            return new SubstitutionList(true);
         }
 
         Elements values = doc.select("tr");
@@ -337,7 +337,13 @@ abstract class Parse {
             }
         }
 
-        return content;
+        SubstitutionList substitutionList = new SubstitutionList();
+        for (String[] con : content) {
+            SubstitutionEntry entry = new SubstitutionEntry(con[0], con[1], con[2], con[3], con[4], con[5]);
+            substitutionList.add(entry);
+        }
+
+        return substitutionList;
     }
 
     /**
@@ -345,13 +351,13 @@ abstract class Parse {
      * @param senior     boolean: if active the returned List will sorted differently, like this new String[]{Hours, class, sit-in, room, information, subject}  |  else new String[]{hours, subject, sit-in, room, information, class}
      * @param classNames List: The class names, which the substiution plan should be searched for
      * @return a filtered List of the Subsitution, with only matching classes
-     * @see #getSubstitutionList
+     * @see #getSubstitutionListUnfiltered
      */
     //specific
-    @Nullable
-    static String[][] getSubstitutionList(@Nullable Document doc, boolean senior, @Nullable ArrayList<String> classNames) {
+    @NonNull
+    static SubstitutionList getSubstitutionListFiltered(@Nullable Document doc, boolean senior, @Nullable ArrayList<String> classNames) {
         if (doc == null || classNames == null) {
-            return null;
+            return new SubstitutionList(true);
         }
 
         Elements values = doc.select("tr");
@@ -443,16 +449,19 @@ abstract class Parse {
         }
 
         if (j == 0) {
-            return new String[0][columNr];
+            return new SubstitutionList();
         }
 
         String[][] trimmedContent = new String[j][columNr];
         System.arraycopy(yourContent, 0, trimmedContent, 0, j);
 
+        SubstitutionList substitutionList = new SubstitutionList();
+        for (String[] con : trimmedContent) {
+            SubstitutionEntry entry = new SubstitutionEntry(con[0], con[1], con[2], con[3], con[4], con[5]);
+            substitutionList.add(entry);
+        }
 
-        return trimmedContent;
-
-
+        return substitutionList;
     }
 
     /**

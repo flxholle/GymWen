@@ -40,7 +40,7 @@ public class SubstitutionPlan {
     /**
      * @param hours   boolean if it should show the matching hours, like a 1 will be converted to 8:10
      * @param courses The class names, which the substiution plan should be searched for
-     * @see #getMatchingTime
+     * @see SubstitutionList
      * @see #reCreate
      */
     public SubstitutionPlan(boolean hours, String... courses) {
@@ -50,7 +50,7 @@ public class SubstitutionPlan {
     /**
      * @param hours   boolean if it should show the matching hours, like a 1 will be converted to 8:10
      * @param courses The class names, which the substiution plan should be searched for
-     * @see #getMatchingTime
+     * @see SubstitutionList
      */
     public void reCreate(boolean hours, @NonNull String... courses) {
         this.senior = courses.length > 1;
@@ -133,66 +133,23 @@ public class SubstitutionPlan {
      * @see #getAll
      */
     //Substitution plan
-    @Nullable
-    public String[][] getDay(boolean today) {
-        try {
-            String[][] content = null;
+    @NonNull
+    public SubstitutionList getDay(boolean today) {
+        SubstitutionList content;
 
-            if (today) {
-                content = Parse.getSubstitutionList(todayDoc, senior, courses);
-            } else {
-                content = Parse.getSubstitutionList(tomorrowDoc, senior, courses);
-            }
-
-            if (content != null) {
-                try {
-                    content = sortArray(content);
-                } catch (Exception e) {
-                    e.getStackTrace();
-                }
-            }
-
-            if (hours) {
-                content = changeToTime(content);
-            }
-
-            return content;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        if (today) {
+            content = Parse.getSubstitutionListFiltered(todayDoc, senior, courses);
+        } else {
+            content = Parse.getSubstitutionListFiltered(tomorrowDoc, senior, courses);
         }
-    }
 
-    @Nullable
-    public String getDayString(boolean today) {
-        try {
-            String[][] content = getDay(today);
+        content.sortList();
 
-            if (content == null) {
-                return noSubstitution();
-            }
-
-            StringBuilder todayString = new StringBuilder();
-
-            //System.out.println verarbeitung
-            String[] spalten = new String[content.length];
-            for (int i = 0; i < content.length; i++) {
-                spalten[i] = "";
-                for (int j = 0; j < 5; j++) {
-                    spalten[i] += content[i][j] + " ";
-                    todayString.append(content[i][j]).append(" ");
-                }
-                todayString.append("\n");
-            }
-            for (String s : spalten) {
-                System.out.println(s);
-            }
-
-            return todayString.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        if (hours) {
+            content.changeHourToTime();
         }
+
+        return content;
     }
 
 
@@ -201,186 +158,31 @@ public class SubstitutionPlan {
      * @return an tow-dimensional String array with every entry of the plan. An entry has the same order like the plan online. My one looks like this: new String[]{class, hour, subject, sit-in, room, moreInformation}
      */
     @Nullable
-    public String[][] getAll(boolean today) {
+    public SubstitutionList getAll(boolean today) {
         try {
-            String[][] content = null;
+            SubstitutionList content;
 
 
             if (today) {
-                content = Parse.getSubstitutionList(todayDoc);
+                content = Parse.getSubstitutionListUnfiltered(todayDoc);
             } else {
-                content = Parse.getSubstitutionList(tomorrowDoc);
+                content = Parse.getSubstitutionListUnfiltered(tomorrowDoc);
             }
 
             if (hours) {
-                content = changeToTime(content);
+                content.changeHourToTime();
             }
 
             return content;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Nullable
-    public String getAllString(boolean today) {
-        try {
-            String[][] content = getAll(today);
-
-            if (content == null) {
-                return noSubstitutionAll();
-            }
-
-            StringBuilder todayString = new StringBuilder();
-            String[] spalten = new String[content.length];
-            for (int i = 0; i < content.length; i++) {
-                spalten[i] = "";
-                for (int j = 0; j < 5; j++) {
-                    spalten[i] += content[i][j] + " ";
-                    todayString.append(content[i][j]).append(" ");
-                }
-                todayString.append("\n");
-            }
-            for (String s : spalten) {
-                System.out.println(s);
-            }
-
-            return todayString.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @NonNull
-    private String[][] sortArray(@NonNull String[][] value) {
-        int[] numbers = new int[value.length];
-        for (int i = 0; i < value.length; i++) {
-            numbers[i] = Integer.parseInt(value[i][1]);
-        }
-        Arrays.sort(numbers);
-
-        String[][] returnValue = new String[value.length][value[0].length];
-        int j = 0;
-        while (j < numbers.length) {
-            for (int i = 0; i < value.length; i++) {
-                if (j < numbers.length) {
-                    if (("" + numbers[j]).equals(value[i][1])) {
-
-                        returnValue[j] = value[i];
-                        j++;
-                    }
-                }
-            }
-        }
-
-        return returnValue;
-    }
-
-
-    /**
-     * @param value a substitution plan array with hours as the second entry
-     * @return a plan array with all hours replaced with their matching times
-     */
-    //Times
-    @Nullable
-    private String[][] changeToTime(@Nullable String[][] value) {
-        if (value == null)
-            return null;
-
-        for (int i = 0; i < value.length; i++) {
-            try {
-                value[i][1] = getMatchingTime(Integer.parseInt(value[i][1]));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return value;
-    }
-
-    /**
-     * @param lesson the lesson
-     * @return the matching time
-     */
-    @NonNull
-    private String getMatchingTime(int lesson) {
-        switch (lesson) {
-            case 1:
-                return "8:10";
-            case 2:
-                return "8:55";
-            case 3:
-                return "9:55";
-            case 4:
-                return "10:40";
-            case 5:
-                return "11:40";
-            case 6:
-                return "12:25";
-            case 7:
-                return "13:15";
-            case 8:
-                return "14:00";
-            case 9:
-                return "14:45";
-            case 10:
-                return "15:30";
-            case 11:
-                return "16:15";
-            default:
-                //Breaks are excluded
-                return ("" + (((45 * lesson) + (8 * 60) + 10) / 60)).replaceAll(",", ".");
+            return new SubstitutionList(true);
         }
     }
 
 
     public boolean getSenior() {
         return senior;
-    }
-
-    @Nullable
-    public static String[][] summarizeArray(@Nullable String[][] value, int index, @NonNull String separator) {
-        if (value == null || value.length <= 0)
-            return value;
-
-        ArrayList<String[]> newValuesList = new ArrayList<>();
-        for (int i = 0; i < value.length; i++) {
-            if (newValuesList.size() == 0) {
-                newValuesList.add(value[i]);
-                continue;
-            }
-
-            String[] before = newValuesList.get(newValuesList.size() - 1);
-            boolean check = checkArrays(before, value[i], index);
-
-
-            if (check) {
-                int valuesAddedToBefore = before[index].indexOf(separator);
-                before[index] = before[index].substring(0, valuesAddedToBefore > 0 ? valuesAddedToBefore : before[index].length()) + separator + value[i][index];
-                newValuesList.set(newValuesList.size() - 1, before);
-            } else {
-                newValuesList.add(value[i]);
-            }
-        }
-
-        String[][] returnValue = new String[newValuesList.size()][value[0].length];
-        for (int i = 0; i < returnValue.length; i++) {
-            returnValue[i] = newValuesList.get(i);
-        }
-        return returnValue;
-    }
-
-    private static boolean checkArrays(@NonNull String[] value1, String[] value2, int index) {
-        boolean check = true;
-        for (int j = 0; j < value1.length; j++) {
-            if (j != index && !value1[j].equals(value2[j])) {
-                check = false;
-                break;
-            }
-        }
-        return check;
     }
 
     //Documents
@@ -470,18 +272,18 @@ public class SubstitutionPlan {
             return false;
         //Old
         setDocs(old[0], old[1]);
-        String[][] oldFilteredToday = getDay(true);
-        String[][] oldFilteredTomorrow = getDay(false);
+        SubstitutionList oldFilteredToday = getDay(true);
+        SubstitutionList oldFilteredTomorrow = getDay(false);
 
         //Now
         setDocs(now[0], now[1]);
-        String[][] nowFilteredToday = getDay(true);
-        String[][] nowFilteredTomorrow = getDay(false);
+        SubstitutionList nowFilteredToday = getDay(true);
+        SubstitutionList nowFilteredTomorrow = getDay(false);
 
-        if (oldFilteredToday == null || oldFilteredTomorrow == null || nowFilteredToday == null || nowFilteredTomorrow == null)
+        if (oldFilteredToday.getNoInternet() || oldFilteredTomorrow.getNoInternet() || nowFilteredToday.getNoInternet() || nowFilteredTomorrow.getNoInternet())
             return false; //No internet
 
-        return !(!PlanUtils.Companion.areArraysEqual(oldFilteredToday, nowFilteredTomorrow) || !PlanUtils.Companion.areArraysEqual(oldFilteredTomorrow, nowFilteredTomorrow));
+        return !(!SubstitutionList.Companion.areListsEqual(oldFilteredToday, nowFilteredTomorrow) || !SubstitutionList.Companion.areListsEqual(oldFilteredTomorrow, nowFilteredTomorrow));
     }
 
     public boolean hasSthChanged(Document old, Document now) {
@@ -493,17 +295,17 @@ public class SubstitutionPlan {
             setTodayDoc(old);
         else
             setTomorrowDoc(old);
-        String[][] oldFiltered = getDay(today);
+        SubstitutionList oldFiltered = getDay(today);
 
         if (today)
             setTodayDoc(now);
         else
             setTomorrowDoc(now);
-        String[][] nowFiltered = getDay(today);
+        SubstitutionList nowFiltered = getDay(today);
 
-        if (oldFiltered == null || nowFiltered == null)
+        if (oldFiltered.getNoInternet() || nowFiltered.getNoInternet())
             return false; //no internet
 
-        return !PlanUtils.Companion.areArraysEqual(oldFiltered, nowFiltered);
+        return !SubstitutionList.Companion.areListsEqual(oldFiltered, nowFiltered);
     }
 }
