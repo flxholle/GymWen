@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.teacherlist.TeacherList;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TeacherListFragment extends Fragment {
     @Nullable
-    private static String[][] teacherList;
+    private static TeacherList teacherList;
     private ViewGroup base;
     @Nullable
     private ListView teacherListView;
@@ -170,12 +171,12 @@ public class TeacherListFragment extends Fragment {
                 convertView = getLayoutInflater().inflate(R.layout.list_teacherlist_entry, null);
             }
 
-            return ((ActivityFeatures) getActivity()).getTeacherView(convertView, teacherList[position]);
+            return ((ActivityFeatures) getActivity()).getTeacherView(convertView, teacherList.getEntries().get(position));
         }
 
         @Override
         public int getCount() {
-            return teacherList.length;
+            return teacherList.size();
         }
     }
 

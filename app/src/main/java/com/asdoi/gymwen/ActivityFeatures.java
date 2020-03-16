@@ -47,6 +47,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
+import com.asdoi.gymwen.teacherlist.TeacherListEntry;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.External_Const;
@@ -333,21 +334,21 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     }
 
     @NonNull
-    public View getTeacherView(@NonNull View view, String[] entry) {
+    public View getTeacherView(@NonNull View view, TeacherListEntry entry) {
         TextView kuerzel = view.findViewById(R.id.teacher_kürzel);
-        kuerzel.setText(entry[0]);
+        kuerzel.setText(entry.getShort());
 
         TextView nname = view.findViewById(R.id.teacher_nname);
-        nname.setText(entry[1]);
+        nname.setText(entry.getName());
 
         TextView vname = view.findViewById(R.id.teacher_vname);
-        vname.setText(" " + entry[2]);
+        vname.setText(" " + entry.getFirst_name());
 
         vname.setTextIsSelectable(false);
         nname.setTextIsSelectable(false);
 
         TextView hour = view.findViewById(R.id.teacher_hour);
-        hour.setText(entry[3]);
+        hour.setText(entry.getMeeting());
         hour.setVisibility(View.GONE);
 
         LinearLayout hideLayout = view.findViewById(R.id.teacher_list_linear);
@@ -358,7 +359,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         Button mailButton = view.findViewById(R.id.teacher_mail);
         mailButton.setOnClickListener((View v) -> {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-            emailIntent.setData(Uri.parse("mailto:" + entry[0] + External_Const.MAIL_ENDING));
+            emailIntent.setData(Uri.parse("mailto:" + entry.getShort() + External_Const.MAIL_ENDING));
             try {
                 startActivity(emailIntent);
             } catch (Exception e) {

@@ -41,6 +41,7 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
+import com.asdoi.gymwen.teacherlist.TeacherListEntry;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
@@ -49,7 +50,6 @@ import com.pd.chocobar.ChocoBar;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SubstitutionFragment extends Fragment implements View.OnClickListener {
     private View root;
@@ -402,7 +402,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }).start();
     }
 
-    private void createTeacherView(@NonNull String[] teacher) {
+    private void createTeacherView(@NonNull TeacherListEntry teacher) {
         LinearLayout base = new LinearLayout(context);
         base.setOrientation(LinearLayout.VERTICAL);
         base.setGravity(Gravity.CENTER);
@@ -440,8 +440,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         String teacher = null;
         try {
             ApplicationFeatures.downloadTeacherlistDoc();
-            String[] response = TeacherlistFeatures.getTeacher(query);
-            teacher = response[1];
+            TeacherListEntry response = TeacherlistFeatures.getTeacher(query);
+            teacher = response.getName();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -601,7 +601,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                     bgColor = ContextCompat.getColor(getContext(), R.color.future);
                     textColor = ContextCompat.getColor(getContext(), R.color.future_text);
                 } else {
-                    bgColor = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.past);
+                    bgColor = ContextCompat.getColor(getContext(), R.color.past);
                     textColor = ContextCompat.getColor(getContext(), R.color.past_text);
                 }
                 ViewGroup titleView = createTitleLayoutNewDesign(titleObject.getDayOfWeek(), titleObject.getDate() + ", " + titleObject.getWeek(), bgColor, textColor);
