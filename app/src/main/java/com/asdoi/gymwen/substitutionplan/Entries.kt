@@ -138,6 +138,13 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
         return check
     }
 
+    fun replaceAll(regex: String, replacement: String): SubstitutionList {
+        for (i in entries.indices) {
+            entries[i] = entries[i].replaceAll(regex, replacement)
+        }
+        return this
+    }
+
     companion object {
         fun areListsEqual(list1: SubstitutionList, list2: SubstitutionList): Boolean {
             if (list1.entries.size != list1.entries.size)
@@ -148,7 +155,17 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
     }
 }
 
-class SubstitutionEntry(val course: String, var hour: String, val subject: String, val teacher: String, val room: String, val moreInformation: String)
+class SubstitutionEntry(var course: String, var hour: String, var subject: String, var teacher: String, var room: String, var moreInformation: String) {
+    fun replaceAll(regex: String, replacement: String): SubstitutionEntry {
+        course = course.replace(regex, replacement)
+        hour = hour.replace(regex, replacement)
+        subject = subject.replace(regex, replacement)
+        teacher = teacher.replace(regex, replacement)
+        moreInformation = moreInformation.replace(regex, replacement)
+
+        return this
+    }
+}
 
 class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var week: String = "", var titleCode: Int = -1) {
     private var noInternet: Boolean = false
