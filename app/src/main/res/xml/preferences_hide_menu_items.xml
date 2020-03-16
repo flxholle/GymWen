@@ -9,6 +9,12 @@
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
+        android:key="intelligent_hide"
+        android:summary="@string/set_desc_intelligent_hide"
+        android:title="@string/set_intelligent_hide"
+        app:iconSpaceReserved="false" />
+    <SwitchPreference
+        android:defaultValue="true"
         android:key="show_days"
         android:title="@string/set_single_days"
         app:iconSpaceReserved="false" />

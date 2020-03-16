@@ -480,24 +480,28 @@ public class ApplicationFeatures extends MultiDexApplication {
 
         Document[] newDocs = SubstitutionPlanFeatures.getDocs();
 
-        Profile preferredProfile = ProfileManagement.getPreferredProfile();
-        if (preferredProfile != null) {
-            int whichDocIsToday = -1;
+        boolean alertForAllProfiles = PreferenceUtil.isMainNotifForAllProfiles();
 
-            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
-            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
+        if (!alertForAllProfiles) {
+            Profile preferredProfile = ProfileManagement.getPreferredProfile();
+            if (preferredProfile != null) {
+                int whichDocIsToday = -1;
 
-            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
-                whichDocIsToday = 0;
-            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
-                whichDocIsToday = 1;
+                int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
+                int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
 
-            if (whichDocIsToday >= 0) {
-                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
-                if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
-                    //Send Main Notif only if day sth has changed today for the preferred profile, else -> summaryNotif
-                    temp.setTodayDoc(newDocs[whichDocIsToday]);
-                    sendNotifications(alert);
+                if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
+                    whichDocIsToday = 0;
+                else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
+                    whichDocIsToday = 1;
+
+                if (whichDocIsToday >= 0) {
+                    SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
+                    if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
+                        //Send Main Notif only if day sth has changed today for the preferred profile, else -> summaryNotif
+                        temp.setTodayDoc(newDocs[whichDocIsToday]);
+                        sendNotifications(alert);
+                    }
                 }
             }
         }
@@ -508,7 +512,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             if (temp.hasSthChanged(oldDocs, newDocs)) {
                 //Sth has changed since last download of substitutionplan
-                sendNotifications();
+                sendNotifications(alertForAllProfiles);
                 break;
             }
         }

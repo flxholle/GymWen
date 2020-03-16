@@ -137,17 +137,20 @@ public class PreferenceUtil {
         return getBooleanSettings("summarize_old", true);
     }
 
-    //No settings button, yet
-    public static boolean isIntelligentHide() {
-        return getBooleanSettings("intelligent_hide", true);
-    }
-
     public static boolean isSwipeToRefresh() {
         return getBooleanSettings("swipe_to_refresh", true);
     }
 
     public static boolean isSwipeToRefreshFiltered() {
         return getBooleanSettings("swipe_to_refresh_filtered", false);
+    }
+
+    public static boolean isIntelligentHide() {
+        return getBooleanSettings("intelligent_hide", true);
+    }
+
+    public static boolean isMainNotifForAllProfiles() {
+        return getBooleanSettings("main_notif_for_all", false);
     }
 
 

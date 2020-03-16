@@ -88,6 +88,7 @@
     <string name="set_design_no_sections">Gefiltert \u0026 Gesamt zusammen anzeigen</string>
     <string name="set_swipe_to_refresh">Herunterziehen zum Aktualisieren</string>
     <string name="set_at_filtered_plan">Auch beim gefilterten Plan</string>
+    <string name="set_intelligent_hide">Intelligentes Ausblenden</string>
 
 
     <!-- SubstitutionPlan -->
@@ -457,6 +458,7 @@
     <string name="set_desc_offline_mode">Bestimmte Dinge lokal speichern, damit die App ohne Internet funktioniert</string>
 
     <string name="set_desc_both">Wird, auch falls deaktiviert, immer beim ersten App-Start geladen!</string>
+    <string name="set_desc_intelligent_hide">Vergangene oder nicht mehr relevante Tage werden ausgeblendet.</string>
 
 
     <!-- widget -->
