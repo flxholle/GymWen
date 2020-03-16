@@ -87,7 +87,7 @@ abstract class Parse {
      * @return if no match is found: null  |  else: the first match
      */
     @Nullable
-    static TeacherListEntry getTeacher(String search, @NonNull TeacherList listString) {
+    static TeacherListEntry getTeacher(@NonNull String search, @NonNull TeacherList listString) {
         if (listString.getNoInternet())
             return null;
         for (TeacherListEntry s : listString.getEntries()) {
@@ -145,7 +145,7 @@ abstract class Parse {
      * @see #getTeachers
      */
     @Nullable
-    protected static TeacherListEntry getTeacher(String search, Document doc) {
+    protected static TeacherListEntry getTeacher(@NonNull String search, Document doc) {
         return getTeacher(search, getList(doc));
     }
 }

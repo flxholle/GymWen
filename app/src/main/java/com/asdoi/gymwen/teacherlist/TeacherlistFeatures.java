@@ -44,7 +44,7 @@ public abstract class TeacherlistFeatures {
      * @see Parse#getTeacher
      */
     @Nullable
-    public static TeacherListEntry getTeacher(String search) {
+    public static TeacherListEntry getTeacher(@NonNull String search) {
         return Parse.getTeacher(search, liste());
     }
 

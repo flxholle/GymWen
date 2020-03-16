@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 public class NotificationDismissButtonReceiver extends BroadcastReceiver {
     public static final String EXTRA_NOTIFICATION_ID = "EXTRA_NOTIFICATION_ID";
     @Override
-    public void onReceive(@NonNull Context context, Intent intent) {
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         // if you want cancel notification
         int notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0);
 

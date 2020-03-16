@@ -334,7 +334,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     }
 
     @NonNull
-    public View getTeacherView(@NonNull View view, TeacherListEntry entry) {
+    public View getTeacherView(@NonNull View view, @NonNull TeacherListEntry entry) {
         TextView kuerzel = view.findViewById(R.id.teacher_kürzel);
         kuerzel.setText(entry.getShort());
 

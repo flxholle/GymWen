@@ -880,7 +880,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @NonNull
-    private View getEntryAll(@NonNull View view, SubstitutionEntry entry, boolean miscellaneous) {
+    private View getEntryAll(@NonNull View view, @NonNull SubstitutionEntry entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_all_entry_textViewCourse);
         course.setText(entry.getCourse());
         course.setOnClickListener((View v) -> showAddPopup(course, entry.getCourse()));
@@ -984,7 +984,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @NonNull
-    private View getEntrySpecific(@NonNull View view, SubstitutionEntry entry, boolean senior, boolean miscellaneous) {
+    private View getEntrySpecific(@NonNull View view, @NonNull SubstitutionEntry entry, boolean senior, boolean miscellaneous) {
         TextView hour = view.findViewById(R.id.substitution_specific_entry_textViewHour);
         hour.setText(entry.getHour());
         hour.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
@@ -1058,7 +1058,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @NonNull
-    private View getEntrySpecificNewDesign(@NonNull View view, SubstitutionEntry entry, boolean miscellaneous) {
+    private View getEntrySpecificNewDesign(@NonNull View view, @NonNull SubstitutionEntry entry, boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_card_entry_textViewClass);
         course.setText(entry.getCourse());
         course.setOnClickListener((View v) -> showRemovePopup(course, entry.getCourse()));

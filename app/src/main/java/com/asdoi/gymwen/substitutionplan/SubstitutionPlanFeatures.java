@@ -177,6 +177,7 @@ public abstract class SubstitutionPlanFeatures {
         return substitutionPlan.getDoc(false);
     }
 
+    @NonNull
     public static Document[] getDocs() {
         return new Document[]{getTodayDoc(), getTomorrowDoc()};
     }

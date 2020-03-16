@@ -263,11 +263,11 @@ public class SubstitutionPlan {
 
 
     //Check if sth has changed in filtered
-    public boolean hasSthChanged(Document[] old) {
+    public boolean hasSthChanged(@NonNull Document[] old) {
         return hasSthChanged(old, new Document[]{todayDoc, tomorrowDoc});
     }
 
-    public boolean hasSthChanged(Document[] old, Document[] now) {
+    public boolean hasSthChanged(@NonNull Document[] old, @NonNull Document[] now) {
         if (old.length < 2 || now.length < 2)
             return false;
         //Old

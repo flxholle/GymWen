@@ -3,6 +3,7 @@ package com.asdoi.gymwen.profiles;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -151,6 +152,7 @@ public abstract class ProfileManagement {
         return preferredProfile;
     }
 
+    @Nullable
     public static Profile getPreferredProfile() {
         int pos = getPreferredProfilePosition();
         if (pos < 0 || pos >= getSize())
