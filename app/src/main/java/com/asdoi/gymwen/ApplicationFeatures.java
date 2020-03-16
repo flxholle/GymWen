@@ -561,10 +561,10 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static void sendSummaryNotif() {
-        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
-            new CreateInfoNotification().execute(true, false);
-        }
-//        sendMainNotif("title", new String[][]{});
+//        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
+//            new CreateInfoNotification().execute(true, false);
+//        }
+        sendMainNotif("title", new String[][]{});
     }
 
     private static class CreateInfoNotification extends DownloadSubstitutionplanDocsTask {

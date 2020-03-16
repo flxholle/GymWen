@@ -4,13 +4,15 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
-import androidx.core.graphics.drawable.IconCompat
 import com.asdoi.gymwen.profiles.ProfileManagement
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
+import com.github.stephenvinouze.shapetextdrawable.ShapeForm
+import com.github.stephenvinouze.shapetextdrawable.ShapeTextDrawable
 
 
 class ApplicationFeaturesUtils {
@@ -37,22 +39,20 @@ class ApplicationFeaturesUtils {
             fun sendNotification() {
                 val context = ApplicationFeatures.getContext()
 
-                val person = Person.Builder().setName("1.Stunde").setIcon(IconCompat.createWithResource(context, R.drawable.ic_looks_one_black_24dp)).build()
-                var message1 = NotificationCompat.MessagingStyle.Message("entfältt", 0, person)
-                val person2 = Person.Builder().setName("2. Stunde").setIcon(IconCompat.createWithResource(context, R.drawable.ic_looks_two_black_24dp)).build()
-                var message2 = NotificationCompat.MessagingStyle.Message("HEM, 109", 0, person2)
+                val style = NotificationCompat.MessagingStyle(Person.Builder().setName("me").build())
+                style.conversationTitle = title
 
-                var builder = NotificationCompat.Builder(context, ApplicationFeatures.NOTIFICATION_CHANNEL_ID)
+                for (con in content) {
+                    val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con[1], textSize = 32, textBold = true, color = Color.RED)
+//                    val person = Person.Builder().setName("$s. Stunde entfällt").setIcon(IconCompat.createWithBitmap(drawable.toBitmap(48, 48))).build()
+//                    val message1 = NotificationCompat.MessagingStyle.Message("e Sportkurs", s.toLong(), person)
+//                    style.addMessage(message1)
+                }
+
+
+                val builder = NotificationCompat.Builder(context, ApplicationFeatures.NOTIFICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_assignment_late)
-//                        .setStyle(NotificationCompat.MessagingStyle(person)
-//                                .setConversationTitle("Vertretung heute:")
-//                                .addMessage(message1)
-//                                .addMessage(message2))
-                        .setStyle(NotificationCompat.InboxStyle()
-                                .addLine("1. Stunde entfällt")
-                                .addLine("2. stunde bei HEM")
-                                .setBigContentTitle("Heute, 2020")
-                                .setSummaryText("+2 more"))
+                        .setStyle(style)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
                 createNotificationChannel(context)
