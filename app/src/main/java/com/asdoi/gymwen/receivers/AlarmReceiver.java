@@ -23,6 +23,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         //Trigger the notification
-        ApplicationFeatures.sendNotifications();
+        ApplicationFeatures.sendNotifications(true);
     }
 }

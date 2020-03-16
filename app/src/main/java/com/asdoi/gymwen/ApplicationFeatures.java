@@ -39,11 +39,8 @@ import com.ahmedjazzar.rosetta.LanguageSwitcher;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.CheckSubstitutionPlanReceiver;
-import com.asdoi.gymwen.substitutionplan.SubstitutionEntry;
-import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
-import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
@@ -500,7 +497,6 @@ public class ApplicationFeatures extends MultiDexApplication {
                 if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
                     //Send Main Notif only if day sth has changed today for the preferred profile, else -> summaryNotif
                     temp.setTodayDoc(newDocs[whichDocIsToday]);
-//                    sendMainNotif(temp.getTitleString(true), temp.getDay(true), alert);
                     sendNotifications(alert);
                 }
             }
@@ -512,7 +508,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             if (temp.hasSthChanged(oldDocs, newDocs)) {
                 //Sth has changed since last download of substitutionplan
-                sendNotifications(false);
+                sendNotifications();
                 break;
             }
         }
@@ -520,255 +516,12 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     //Send notifications
     public static void sendNotifications() {
-        sendNotifications(true);
+        sendNotifications(false);
     }
 
     public static void sendNotifications(boolean alert) {
-//        if (ProfileManagement.isUninit())
-//            ProfileManagement.reload();
-//
-//        //Send main notif for preferred Profile
-//        int daySendInSummaryNotif = 0;
-//
-//        Profile preferredProfile = ProfileManagement.getPreferredProfile();
-//        if (preferredProfile != null) {
-//            int whichDayIsToday = -1;
-//
-//            int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
-//            int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
-//
-//            if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
-//                whichDayIsToday = 0;
-//            else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
-//                whichDayIsToday = 1;
-//
-//            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
-//
-//            switch (whichDayIsToday) {
-//                case 0:
-//                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitleString(), temp.getDay(true), alert);
-//                    daySendInSummaryNotif = 1;
-//                    break;
-//                case 1:
-//                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitleString(), temp.getDay(false), alert);
-//                    daySendInSummaryNotif = 0;
-//                    break;
-//                default:
-//                    daySendInSummaryNotif = -1;
-//            }
-//        }
-
         new NotificationUtils.Companion.CreateNotification(alert).execute();
     }
-
-    //Private methods
-    private static void sendMainNotif(String title, SubstitutionList content, boolean alert) {
-        if (content.getNoInternet())
-            return;
-//        new ApplicationFeaturesUtils.Companion.CreateMainNotification(title, content, alert).execute(true, false);
-    }
-
-    private static void sendSummaryNotif() {
-    }
-
-    private static void sendSummaryNotif(String[] titles, Profile[] profiles, SubstitutionList[] sendFromMain) {
-//        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
-//            new CreateInfoNotification().execute(true, false);
-//        }
-//        sendMainNotif("title", SubstitutionPlanFeatures.getToday(), true);
-    }
-
-    private static class CreateInfoNotification extends DownloadSubstitutionplanDocsTask {
-        boolean summarize = PreferenceUtil.isSummarizeUp();
-        SubstitutionTitle[] titles;
-        Profile[] profiles;
-        SubstitutionList[] sendFromMain;
-
-        CreateInfoNotification(SubstitutionTitle[] titles, Profile[] profiles, SubstitutionList[] sendFromMain) {
-            this.titles = titles;
-            this.profiles = profiles;
-            this.sendFromMain = sendFromMain;
-        }
-
-        @Override
-        protected void onPostExecute(Void v) {
-            super.onPostExecute(v);
-            try {
-                if (ProfileManagement.isUninit())
-                    ProfileManagement.reload();
-                if (!coursesCheck(false))
-                    return;
-                if (SubstitutionPlanFeatures.getTodayTitleString().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
-                    return;
-                }
-                sendNotification();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void sendNotification() {
-            if (PreferenceUtil.isTwoNotifications())
-                notificationMessageTwoNotifs();
-            else
-                notificationMessageOneNotif();
-        }
-
-        private void notificationMessageOneNotif() {
-            StringBuilder messageToday = new StringBuilder();
-            StringBuilder messageTomorrow = new StringBuilder();
-
-            SubstitutionTitle titleTodayArray = titles[0];
-            SubstitutionTitle titleTomorrowArray = titles[1];
-            String titleToday = titleTodayArray.getDate() + ", " + titleTodayArray.getDayOfWeek() + ":";
-            String titleTomorrow = titleTomorrowArray.getDate() + ", " + titleTomorrowArray.getDayOfWeek() + ":";
-
-            boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
-
-            boolean[] isNo = new boolean[]{true, true};
-
-            StringBuilder count = new StringBuilder();
-
-            for (int i = 0; i < ProfileManagement.getSize(); i++) {
-                Profile p = ProfileManagement.getProfile(i);
-                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
-                SubstitutionList content = summarize ? temp.getDay(true).summarizeUp(("-")) : temp.getDay(true);
-                try {
-                    count.append(content.size());
-                    count.append("|");
-                    if (content.size() != 0) {
-                        if (isMoreThanOneProfile) {
-                            messageToday.append(ProfileManagement.getProfile(i).getName());
-                            messageToday.append(":\n");
-                        }
-                        messageToday.append(notifMessageContent(content, temp));
-                        isNo[0] = false;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                content = summarize ? temp.getDay(false).summarizeUp(("-")) : temp.getDay(false);
-                try {
-                    count.append(content.size());
-                    count.append(", ");
-                    if (content.size() != 0) {
-                        if (isMoreThanOneProfile) {
-                            messageTomorrow.append(ProfileManagement.getProfile(i).getName());
-                            messageTomorrow.append(":\n");
-                        }
-                        messageTomorrow.append(notifMessageContent(content, temp));
-                        isNo[1] = false;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-            count.deleteCharAt(count.lastIndexOf(", "));
-
-            messageToday = new StringBuilder(isNo[0] ? getContext().getString(R.string.notif_nothing) + "\n" : messageToday);
-            messageTomorrow = new StringBuilder(isNo[1] ? getContext().getString(R.string.notif_nothing) + "\n" : messageTomorrow);
-
-            StringBuilder message = new StringBuilder(titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow);
-            message.delete(message.length() - 1, message.length());
-
-//            createNotification(message.toString(), getContext().getString(R.string.notif_content_title) + " " + count, NOTIFICATION_INFO_ID);
-        }
-
-        private void notificationMessageTwoNotifs() {
-            StringBuilder messageToday = new StringBuilder();
-            StringBuilder messageTomorrow = new StringBuilder();
-            SubstitutionTitle titleTodayArray = SubstitutionPlanFeatures.getTodayTitle();
-            SubstitutionTitle titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitle();
-            String titleToday = titleTodayArray.getDate() + ", " + titleTodayArray.getDayOfWeek() + ":";
-            String titleTomorrow = titleTomorrowArray.getDate() + ", " + titleTomorrowArray.getDayOfWeek() + ":";
-
-            boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
-            boolean[] isNo = new boolean[]{true, true};
-
-            StringBuilder count1 = new StringBuilder();
-            StringBuilder count2 = new StringBuilder();
-
-            for (int i = 0; i < ProfileManagement.getSize(); i++) {
-                Profile p = ProfileManagement.getProfile(i);
-                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
-                SubstitutionList content = summarize ? temp.getDay(true).summarizeUp(("-")) : temp.getDay(true);
-                try {
-                    count1.append(content.getEntries().size());
-                    count1.append(", ");
-                    if (content.size() != 0) {
-                        if (isMoreThanOneProfile) {
-                            messageToday.append(ProfileManagement.getProfile(i).getName());
-                            messageToday.append(":\n");
-                        }
-                        messageToday.append(notifMessageContent(content, temp));
-                        isNo[0] = false;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                content = summarize ? temp.getDay(false).summarizeUp(("-")) : temp.getDay(false);
-                try {
-                    count2.append(content.size());
-                    count2.append(", ");
-                    if (content.size() != 0) {
-                        if (isMoreThanOneProfile) {
-                            messageTomorrow.append(ProfileManagement.getProfile(i).getName());
-                            messageTomorrow.append(":\n");
-                        }
-                        messageTomorrow.append(notifMessageContent(content, temp));
-                        isNo[1] = false;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-            count1.deleteCharAt(count1.lastIndexOf(", "));
-            count2.deleteCharAt(count2.lastIndexOf(", "));
-
-            String messageTo = isNo[0] ? getContext().getString(R.string.notif_nothing) + "\n" : messageToday.toString();
-            String messageTom = isNo[1] ? getContext().getString(R.string.notif_nothing) + "\n" : messageTomorrow.toString();
-
-            messageTo = messageTo.substring(0, messageTo.length() - 1);
-            messageTom = messageTom.substring(0, messageTom.length() - 1);
-//            createNotification(messageTom, titleTomorrow + " " + count2.toString(), NOTIFICATION_INFO_ID_2);
-//            createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_INFO_ID);
-        }
-
-        @NonNull
-        String notifMessageContent(@Nullable SubstitutionList content, @NonNull SubstitutionPlan vp) {
-            StringBuilder message = new StringBuilder();
-            if (content == null || content.getNoInternet()) {
-                return "";
-            }
-            if (content.size() == 0) {
-                message.append(getContext().getString(R.string.notif_nothing)).append("\n");
-            } else {
-                if (vp.getSenior()) {
-                    for (SubstitutionEntry line : content.getEntries()) {
-                        if (SubstitutionPlanFeatures.isNothing(line.getTeacher())) {
-                            message.append(line.getHour()).append(". Stunde entfällt\n");
-                        } else {
-                            message.append(line.getHour()).append(". Stunde, ").append(line.getCourse()).append(", ").append(line.getRoom()).append(", ").append(line.getTeacher()).append(" ").append(line.getMoreInformation()).append("\n");
-                        }
-                    }
-                } else {
-                    for (SubstitutionEntry line : content.getEntries()) {
-                        if (SubstitutionPlanFeatures.isNothing(line.getTeacher())) {
-                            message.append(line.getHour()).append(". Stunde entfällt\n");
-                        } else {
-                            message.append(line.getHour()).append(". Stunde ").append(line.getSubject()).append(" bei ").append(line.getTeacher()).append(", ").append(line.getRoom()).append(" ").append(line.getMoreInformation()).append("\n");
-                        }
-                    }
-                }
-            }
-            return message.toString();
-        }
-    }
-
 
     //Others
     public static int frequencyOfSubString(@NonNull String str, @NonNull String findStr) {

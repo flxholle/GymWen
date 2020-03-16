@@ -593,6 +593,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
                         break;
                 }
+                ApplicationFeatures.sendNotifications();
                 break;
             case refreshFragment:
                 switch (lastLoaded) {
