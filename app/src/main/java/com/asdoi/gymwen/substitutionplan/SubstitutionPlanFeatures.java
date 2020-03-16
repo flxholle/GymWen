@@ -52,11 +52,6 @@ public abstract class SubstitutionPlanFeatures {
             {ApplicationFeatures.getContext().getString(R.string.additum), ApplicationFeatures.getContext().getString(R.string.additumShort)}
     };
 
-    public static final int pastCode = 0;
-    public static final int todayCode = 1;
-    public static final int tomorrowCode = 2;
-    public static final int futureCode = 3;
-
     @NonNull
     private static SubstitutionPlan substitutionPlan = new SubstitutionPlan();
 
@@ -131,31 +126,31 @@ public abstract class SubstitutionPlanFeatures {
     }
 
     @NonNull
-    public static String getTodayTitle() {
+    public static String getTodayTitleString() {
         return substitutionPlan.getTitleString(true);
     }
 
     @NonNull
-    public static String getTomorrowTitle() {
+    public static String getTomorrowTitleString() {
         return substitutionPlan.getTitleString(false);
     }
 
     @Nullable
-    public static String[] getTodayTitleArray() {
-        return substitutionPlan.getTitleArray(true);
+    public static SubstitutionTitle getTodayTitle() {
+        return substitutionPlan.getTitle(true);
     }
 
     @Nullable
-    public static String[] getTomorrowTitleArray() {
-        return substitutionPlan.getTitleArray(false);
+    public static SubstitutionTitle getTomorrowTitle() {
+        return substitutionPlan.getTitle(false);
     }
 
     public static int getTodayTitleCode() {
-        return substitutionPlan.getTitleCodeValue(true, pastCode, todayCode, tomorrowCode, futureCode);
+        return substitutionPlan.getTitle(true).getTitleCode();
     }
 
     public static int getTomorrowTitleCode() {
-        return substitutionPlan.getTitleCodeValue(false, pastCode, todayCode, tomorrowCode, futureCode);
+        return substitutionPlan.getTitle(false).getTitleCode();
     }
 
     public static boolean getSenior() {
@@ -254,8 +249,8 @@ public abstract class SubstitutionPlanFeatures {
     }
 
     public static boolean isTitleCodeInPast(int titleCode) {
-        boolean isPast = titleCode == pastCode;
-        if (!isPast && titleCode == todayCode) {
+        boolean isPast = titleCode == SubstitutionPlan.pastCode;
+        if (!isPast && titleCode == SubstitutionPlan.todayCode) {
             try {
                 String string1 = PreferenceUtil.hideDayAfterTime;
                 Date mydate = removeDate(new SimpleDateFormat("HH:mm:ss").parse(string1));
@@ -289,7 +284,7 @@ public abstract class SubstitutionPlanFeatures {
     public static boolean isTitleCodeToday(int titleCode) {
         boolean isPast = isTitleCodeInPast(titleCode);
         if (!isPast) {
-            return titleCode != futureCode;
+            return titleCode != SubstitutionPlan.futureCode;
         }
         return false;
     }

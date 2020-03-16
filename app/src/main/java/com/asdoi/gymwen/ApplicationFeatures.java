@@ -48,6 +48,7 @@ import com.asdoi.gymwen.receivers.CheckSubstitutionPlanReceiver;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
+import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
 import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
@@ -487,7 +488,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             ProfileManagement.reload();
         if (!coursesCheck(false))
             return;
-        if (SubstitutionPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+        if (SubstitutionPlanFeatures.getTodayTitleString().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
             //No Internet
             return;
         }
@@ -547,10 +548,10 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             switch (whichDayIsToday) {
                 case 0:
-                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitle(), temp.getDay(true));
+                    sendMainNotif(SubstitutionPlanFeatures.getTodayTitleString(), temp.getDay(true));
                     break;
                 case 1:
-                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitle(), temp.getDay(false));
+                    sendMainNotif(SubstitutionPlanFeatures.getTomorrowTitleString(), temp.getDay(false));
                     break;
             }
         }
@@ -578,7 +579,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                     ProfileManagement.reload();
                 if (!coursesCheck(false))
                     return;
-                if (SubstitutionPlanFeatures.getTodayTitle().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+                if (SubstitutionPlanFeatures.getTodayTitleString().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
                     return;
                 }
                 sendNotification();
@@ -597,10 +598,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         private void notificationMessageOneNotif() {
             StringBuilder messageToday = new StringBuilder();
             StringBuilder messageTomorrow = new StringBuilder();
-            String[] titleTodayArray = SubstitutionPlanFeatures.getTodayTitleArray();
-            String[] titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
-            String titleToday = titleTodayArray[0] + ", " + titleTodayArray[1] + ":";
-            String titleTomorrow = titleTomorrowArray[0] + ", " + titleTomorrowArray[1] + ":";
+            SubstitutionTitle titleTodayArray = SubstitutionPlanFeatures.getTodayTitle();
+            SubstitutionTitle titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitle();
+            String titleToday = titleTodayArray.getDate() + ", " + titleTodayArray.getDayOfWeek() + ":";
+            String titleTomorrow = titleTomorrowArray.getDate() + ", " + titleTomorrowArray.getDayOfWeek() + ":";
             boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
 
             boolean[] isNo = new boolean[]{true, true};
@@ -658,10 +659,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         private void notificationMessageTwoNotifs() {
             StringBuilder messageToday = new StringBuilder();
             StringBuilder messageTomorrow = new StringBuilder();
-            String[] titleTodayArray = SubstitutionPlanFeatures.getTodayTitleArray();
-            String[] titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
-            String titleToday = titleTodayArray[0] + ", " + titleTodayArray[1] + ":";
-            String titleTomorrow = titleTomorrowArray[0] + ", " + titleTomorrowArray[1] + ":";
+            SubstitutionTitle titleTodayArray = SubstitutionPlanFeatures.getTodayTitle();
+            SubstitutionTitle titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitle();
+            String titleToday = titleTodayArray.getDate() + ", " + titleTodayArray.getDayOfWeek() + ":";
+            String titleTomorrow = titleTomorrowArray.getDate() + ", " + titleTomorrowArray.getDayOfWeek() + ":";
 
             boolean isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile();
             boolean[] isNo = new boolean[]{true, true};

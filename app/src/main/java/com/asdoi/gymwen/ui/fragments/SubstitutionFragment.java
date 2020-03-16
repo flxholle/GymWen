@@ -36,7 +36,9 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
+import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
 import com.asdoi.gymwen.teacherlist.Teacherlist;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
@@ -176,19 +178,19 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             try {
                 getActivity().runOnUiThread(() -> {
                     try {
-                        String[] todayTitleArray = SubstitutionPlanFeatures.getTodayTitleArray();
-                        String[] tomorrowTitleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+                        SubstitutionTitle todayTitle = SubstitutionPlanFeatures.getTodayTitle();
+                        SubstitutionTitle tomorrowTitle = SubstitutionPlanFeatures.getTomorrowTitle();
 
                         if (!changedSectionsPagerAdapterTitles && SubstitutionPlanFeatures.areDocsDownloaded() && changeViewPagerTitles) {
                             MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
-                            spa.setTitles(todayTitleArray[1], tomorrowTitleArray[1]);
+                            spa.setTitles(todayTitle.getDayOfWeek(), tomorrowTitle.getDayOfWeek());
                             spa.notifyDataSetChanged();
                             changedSectionsPagerAdapterTitles = true;
                         }
                         //Update menu Items for days
-                        if (!todayTitleArray[1].trim().isEmpty()) {
-                            ((MainActivity) getActivity()).setTodayMenuItemTitle(todayTitleArray[1] + ", " + todayTitleArray[0]);
-                            ((MainActivity) getActivity()).setTomorrowMenuItemTitle(tomorrowTitleArray[1] + ", " + tomorrowTitleArray[0]);
+                        if (!todayTitle.getDayOfWeek().trim().isEmpty()) {
+                            ((MainActivity) getActivity()).setTodayMenuItemTitle(todayTitle.getDayOfWeek() + ", " + todayTitle.getDate());
+                            ((MainActivity) getActivity()).setTomorrowMenuItemTitle(tomorrowTitle.getDayOfWeek() + ", " + tomorrowTitle.getDate());
                         }
 
                     } catch (Exception e) {
@@ -225,7 +227,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         String footprint = getString(R.string.footprint);
         message += footprint;
 
-        if (SubstitutionPlanFeatures.getTodayTitle().equals("Keine Internetverbindung!")) {
+        if (SubstitutionPlanFeatures.getTodayTitleString().equals("Keine Internetverbindung!")) {
             //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
             ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.noInternet)).setDuration(ChocoBar.LENGTH_LONG).orange().show();
             return;
@@ -246,10 +248,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         if (today) {
             content = SubstitutionPlanFeatures.getTodayArray();
-            title = SubstitutionPlanFeatures.getTodayTitle();
+            title = SubstitutionPlanFeatures.getTodayTitleString();
         } else {
             content = SubstitutionPlanFeatures.getTomorrowArray();
-            title = SubstitutionPlanFeatures.getTomorrowTitle();
+            title = SubstitutionPlanFeatures.getTomorrowTitleString();
         }
         StringBuilder classes = new StringBuilder();
 
@@ -453,7 +455,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private String title;
     @Nullable
     private
-    String[] titleArray;
+    SubstitutionTitle titleObject;
     private int titleCode;
     private boolean miscellaneous;
 
@@ -476,7 +478,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             boolean showTomorrow = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.isTitleCodeInPast(titleCodeTomorrow);
 
             if (!showToday && !showTomorrow) {
-                if (titleCodeToday == SubstitutionPlanFeatures.todayCode)
+                if (titleCodeToday == SubstitutionPlan.todayCode)
                     showToday = true;
                 else
                     showTomorrow = true;
@@ -485,8 +487,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             if (showToday) {
                 titleCode = titleCodeToday;
                 content = summarize ? SubstitutionPlanFeatures.getTodayArraySummarized() : SubstitutionPlanFeatures.getTodayArray();
-                title = SubstitutionPlanFeatures.getTodayTitle();
-                titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
+                title = SubstitutionPlanFeatures.getTodayTitleString();
+                titleObject = SubstitutionPlanFeatures.getTodayTitle();
                 miscellaneous = isMiscellaneous(content);
                 generateTop(base, oldTitle);
                 generateTableSpecific(base, old);
@@ -494,8 +496,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             if ((!showToday || content != null) && showTomorrow) {
                 titleCode = titleCodeTomorrow;
                 content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
-                title = SubstitutionPlanFeatures.getTomorrowTitle();
-                titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+                title = SubstitutionPlanFeatures.getTomorrowTitleString();
+                titleObject = SubstitutionPlanFeatures.getTomorrowTitle();
                 miscellaneous = isMiscellaneous(content);
                 generateTop(base, oldTitle);
                 generateTableSpecific(base, old);
@@ -503,13 +505,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         } else if (all) {
             if (today) {
                 content = summarize ? SubstitutionPlanFeatures.getTodayArrayAllSummarized() : SubstitutionPlanFeatures.getTodayArrayAll();
-                title = SubstitutionPlanFeatures.getTodayTitle();
-                titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
+                title = SubstitutionPlanFeatures.getTodayTitleString();
+                titleObject = SubstitutionPlanFeatures.getTodayTitle();
                 titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
                 content = summarize ? SubstitutionPlanFeatures.getTomorrowArrayAllSummarized() : SubstitutionPlanFeatures.getTomorrowArrayAll();
-                title = SubstitutionPlanFeatures.getTomorrowTitle();
-                titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+                title = SubstitutionPlanFeatures.getTomorrowTitleString();
+                titleObject = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
             }
             String missing_short = getString(R.string.missing_short);
@@ -522,13 +524,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         } else {
             if (today) {
                 content = summarize ? SubstitutionPlanFeatures.getTodayArraySummarized() : SubstitutionPlanFeatures.getTodayArray();
-                title = SubstitutionPlanFeatures.getTodayTitle();
-                titleArray = SubstitutionPlanFeatures.getTodayTitleArray();
+                title = SubstitutionPlanFeatures.getTodayTitleString();
+                titleObject = SubstitutionPlanFeatures.getTodayTitle();
                 titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
                 content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
-                title = SubstitutionPlanFeatures.getTomorrowTitle();
-                titleArray = SubstitutionPlanFeatures.getTomorrowTitleArray();
+                title = SubstitutionPlanFeatures.getTomorrowTitleString();
+                titleObject = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
             }
             miscellaneous = isMiscellaneous(content);
@@ -587,20 +589,20 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             } else {
                 int bgColor;
                 int textColor;
-                if (titleCode == SubstitutionPlanFeatures.todayCode) {
+                if (titleCode == SubstitutionPlan.todayCode) {
                     bgColor = ContextCompat.getColor(getContext(), R.color.today);
                     textColor = ContextCompat.getColor(getContext(), R.color.today_text);
-                } else if (titleCode == SubstitutionPlanFeatures.tomorrowCode) {
+                } else if (titleCode == SubstitutionPlan.tomorrowCode) {
                     bgColor = ContextCompat.getColor(getContext(), R.color.tomorrow);
                     textColor = ContextCompat.getColor(getContext(), R.color.tomorrow_text);
-                } else if (titleCode == SubstitutionPlanFeatures.futureCode) {
+                } else if (titleCode == SubstitutionPlan.futureCode) {
                     bgColor = ContextCompat.getColor(getContext(), R.color.future);
                     textColor = ContextCompat.getColor(getContext(), R.color.future_text);
                 } else {
                     bgColor = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.past);
                     textColor = ContextCompat.getColor(getContext(), R.color.past_text);
                 }
-                ViewGroup titleView = createTitleLayoutNewDesign(titleArray[1], titleArray[0] + (titleArray.length > 2 ? ", " + titleArray[2] : ""), bgColor, textColor);
+                ViewGroup titleView = createTitleLayoutNewDesign(titleObject.getDayOfWeek(), titleObject.getDate() + ", " + titleObject.getWeek(), bgColor, textColor);
                 base.addView(titleView);
 
                 if (content.length == 0) {

@@ -21,6 +21,11 @@ import java.util.Arrays;
  */
 public class SubstitutionPlan {
 
+    public static final int pastCode = 0;
+    public static final int todayCode = 1;
+    public static final int tomorrowCode = 2;
+    public static final int futureCode = 3;
+
     private boolean senior;
     @Nullable
     private
@@ -101,32 +106,24 @@ public class SubstitutionPlan {
     /**
      * @param today: boolean if the title of today or tomorrow should be analyzed
      * @return an sorted Array of all title information, with the length 3. Like this: new String[]{Date, DateName (Weekday), WeekNr}  |  If day is in the past it returns an array of length 2, like this new String[]{Date, DateName (Weekday)}
-     * @see Parse#getTitleDayCode
+     * @see Parse#getTitle
      */
     //DayArrays
     @Nullable
-    public String[] getTitleArray(boolean today) {
-        String[] s = Parse.getTitleArraySorted(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay());
-        if (s == null) {
-            return new String[]{"", "", ""};
-        }
-        return s;
-    }
-
-    public int getTitleCodeValue(boolean today, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
-        return Parse.getTitleDayCode(today ? todayDoc : tomorrowDoc, pastCode, todayCode, tomorrowCode, futureCode);
+    public SubstitutionTitle getTitle(boolean today) {
+        return Parse.getTitle(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay(), pastCode, todayCode, tomorrowCode, futureCode);
     }
 
     /**
      * @param today: boolean if the title of today or tomorrow should be analyzed
      * @return an sorted String with all the analyzed information separated by " "
-     * @see Parse#getTitleStringSorted
-     * @see #getTitleArray
+     * @see Parse#getTitle
+     * @see #getTitle
      */
     @NonNull
     public String getTitleString(boolean today) {
-        String s = Parse.getTitleStringSorted(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay());
-        return s == null ? noInternet() : s;
+        SubstitutionTitle s = getTitle(true);
+        return s.getNoInternet() ? noInternet() : s.toString();
     }
 
 

@@ -11,7 +11,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -98,15 +97,15 @@ abstract class Parse {
      * @see #getTitleArrayUnsorted
      */
     //Date, DateName, WeekNr
-    @Nullable
-    static String[] getTitleArraySorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
+    @NonNull
+    private static SubstitutionTitle getTitleWithoutCode(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
         try {
-            String[] day = new String[3];
-            Arrays.fill(day, "");
+            SubstitutionTitle day = new SubstitutionTitle();
 
             String dayString = getTitleAsStringUnsorted(doc);
-            if (dayString == null)
-                return null;
+            if (dayString == null) {
+                return new SubstitutionTitle(true);
+            }
             char[] dayArray = dayString.toCharArray();
 
             //Date
@@ -119,7 +118,7 @@ abstract class Parse {
                 }
             }
             if (start < 0 || start == dayArray.length - 1)
-                return null;
+                return new SubstitutionTitle(true);
 
             for (int i = start + 1; i < dayArray.length; i++) {
                 if (!Character.isDigit(dayArray[i]) && dayArray[i] != '.') {
@@ -128,7 +127,7 @@ abstract class Parse {
                 }
             }
 
-            day[0] = dayString.substring(start, end);
+            day.setDate(dayString.substring(start, end));
 
 
             //Weekday
@@ -136,18 +135,18 @@ abstract class Parse {
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
                 SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
 
-                Date startDate = removeTime(df.parse(day[0]));
+                Date startDate = removeTime(df.parse(day.getDate()));
 
-                day[1] = simpleDateformat.format(startDate);
+                day.setDayOfWeek(simpleDateformat.format(startDate));
                 Date currentDate = removeTime(new Date());
 
                 if (currentDate.after(startDate)) {
                     //If date is in past
 //                    return new String[]{day[0], showWeekdates ? day[1] + " " + laterDay : laterDay};
-                    day[1] = showWeekdates ? day[1] + " " + laterDay : laterDay;
+                    day.setDayOfWeek(showWeekdates ? day.getDayOfWeek() + " " + laterDay : laterDay);
                 } else if (currentDate.equals(startDate)) {
                     //If date is today
-                    day[1] = showWeekdates ? day[1] + " (" + today + ")" : today;
+                    day.setDayOfWeek(showWeekdates ? day.getDayOfWeek() + " (" + today + ")" : today);
                 } else {
                     //If date is tomorrow
                     //Set current date to one day in the future
@@ -161,12 +160,12 @@ abstract class Parse {
                     //Check if currentdate equals date -> Tomorrow
                     currentDate = cal.getTime();
                     if (currentDate.equals(startDate)) {
-                        day[1] = showWeekdates ? day[1] + " (" + tomorrow + ")" : tomorrow;
+                        day.setDayOfWeek(showWeekdates ? day.getDayOfWeek() + " (" + tomorrow + ")" : tomorrow);
                     }
                 }
 
             } catch (ParseException e) {
-                day[1] = dayString.substring(0, start - 1);
+                day.setDayOfWeek(dayString.substring(0, start - 1));
             }
 
 
@@ -192,7 +191,7 @@ abstract class Parse {
 
             try {
                 end = start + 1;
-                day[2] = dayString.substring(start, end);
+                day.setWeek(dayString.substring(start, end));
             } catch (
                     Exception e) {
                 end = -1;
@@ -202,36 +201,39 @@ abstract class Parse {
                         break;
                     }
                 }
-                day[2] = dayString.substring(start, end);
+                day.setWeek(dayString.substring(start, end));
             }
 
             return day;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new SubstitutionTitle(true);
         }
     }
 
-    static int getTitleDayCode(Document doc, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
+    @NonNull
+    static SubstitutionTitle getTitle(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
+        SubstitutionTitle day = getTitleWithoutCode(doc, showWeekdates, today, tomorrow, laterDay);
         try {
             //Weekday
             try {
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
                 SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
 
-                String[] day = getTitleArraySorted(doc, false, "", "", "");
-                Date startDate = removeTime(df.parse(day[0]));
+                Date startDate = removeTime(df.parse(day.getDate()));
 
-                day[1] = simpleDateformat.format(startDate);
+                day.setDayOfWeek(simpleDateformat.format(startDate));
                 Date currentDate = removeTime(new Date());
 
                 if (currentDate.after(startDate)) {
                     //If date is in past
 //                    return new String[]{day[0], showWeekdates ? day[1] + " " + laterDay : laterDay};
-                    return pastCode;
+                    day.setTitleCode(pastCode);
+                    return day;
                 } else if (currentDate.equals(startDate)) {
                     //If date is today
-                    return todayCode;
+                    day.setTitleCode(todayCode);
+                    return day;
                 } else {
                     //If date is tomorrow
                     //Set current date to one day in the future
@@ -245,57 +247,23 @@ abstract class Parse {
                     //Check if currentdate equals date -> Tomorrow
                     currentDate = cal.getTime();
                     if (currentDate.equals(startDate)) {
-                        return tomorrowCode;
+                        day.setTitleCode(tomorrowCode);
+                        return day;
                     }
                 }
 
             } catch (ParseException e) {
-                return futureCode;
+                day.setTitleCode(futureCode);
+                return day;
             }
-            return futureCode;
+            day.setTitleCode(futureCode);
         } catch (Exception e) {
             e.printStackTrace();
-            return pastCode;
+            day.setTitleCode(pastCode);
+            return day;
         }
-    }
-
-    /**
-     * @param doc           raw HTML-Document (Jsoup), which will be analyzed
-     * @param showWeekdates boolean: if the specific day should also be shown, if the date is in the past
-     * @param today         The name of today in the specific language
-     * @param tomorrow      The name of tomorrow in the specific language
-     * @param laterDay      The name of "day is in the past" in the specific language
-     * @return an sorted String with all the analyzed information separated by " "
-     * @see #getTitleDayCode
-     */
-    @Nullable
-    static String getTitleStringSorted(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
-        try {
-            String[] dayTitle = getTitleArraySorted(doc, showWeekdates, today, tomorrow, laterDay);
-            if (dayTitle == null || dayTitle.equals("") || dayTitle.length <= 0) {
-                return null;
-            }
-
-            StringBuilder returnValue = new StringBuilder(dayTitle[0]);
-            switch (dayTitle.length) {
-                default:
-                case 3:
-                    for (int i = 1; i < dayTitle.length; i++) {
-                        returnValue.append(", ").append(dayTitle[i]);
-                    }
-                    break;
-                case 2:
-                    returnValue = new StringBuilder(dayTitle[1] + " " + dayTitle[0]);
-            }
-
-            if ((returnValue.length() == 0) || returnValue.toString().replace(" ", "").isEmpty())
-                return null;
-
-            return returnValue.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        day.setTitleCode(pastCode);
+        return day;
     }
 
     /**

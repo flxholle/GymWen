@@ -27,7 +27,7 @@ class ApplicationFeaturesUtils {
                         ProfileManagement.reload()
                     if (!ApplicationFeatures.coursesCheck(false))
                         return
-                    if (SubstitutionPlanFeatures.getTodayTitle() == ApplicationFeatures.getContext().getString(R.string.noInternetConnection)) {
+                    if (SubstitutionPlanFeatures.getTodayTitleString() == ApplicationFeatures.getContext().getString(R.string.noInternetConnection)) {
                         return
                     }
                     sendNotification()
