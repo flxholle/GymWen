@@ -567,7 +567,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 //        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
 //            new CreateInfoNotification().execute(true, false);
 //        }
-        sendMainNotif("title", new SubstitutionList());
+        sendMainNotif("title", SubstitutionPlanFeatures.getToday());
     }
 
     private static class CreateInfoNotification extends DownloadSubstitutionplanDocsTask {
@@ -723,7 +723,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         @NonNull
         String notifMessageContent(@Nullable SubstitutionList content, @NonNull SubstitutionPlan vp) {
             StringBuilder message = new StringBuilder();
-            if (content == null) {
+            if (content == null || content.getNoInternet()) {
                 return "";
             }
             if (content.size() == 0) {

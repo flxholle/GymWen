@@ -9,7 +9,11 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.IconCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.asdoi.gymwen.profiles.ProfileManagement
+import com.asdoi.gymwen.substitutionplan.SubstitutionEntry
 import com.asdoi.gymwen.substitutionplan.SubstitutionList
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
 import com.github.stephenvinouze.shapetextdrawable.ShapeForm
@@ -44,22 +48,38 @@ class ApplicationFeaturesUtils {
                 style.conversationTitle = title
 
                 for (con in content.entries) {
-                    val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = 32, textBold = true, color = Color.RED)
-//                    val person = Person.Builder().setName("$s. Stunde entfällt").setIcon(IconCompat.createWithBitmap(drawable.toBitmap(48, 48))).build()
-//                    val message1 = NotificationCompat.MessagingStyle.Message("e Sportkurs", s.toLong(), person)
-//                    style.addMessage(message1)
+                    var color = 0
+                    if (SubstitutionPlanFeatures.isNothing(con.teacher))
+                        color = Color.RED
+                    else
+                        color = ContextCompat.getColor(context, R.color.md_orange_500)
+                    val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = 32, textBold = true, color = color)
+                    val list = createMessage(con)
+                    val person = Person.Builder().setName(list[0]).setIcon(IconCompat.createWithBitmap(drawable.toBitmap(48, 48))).build()
+                    val message1 = NotificationCompat.MessagingStyle.Message(list[1], 0.toLong(), person)
+                    style.addMessage(message1)
                 }
 
 
                 val builder = NotificationCompat.Builder(context, ApplicationFeatures.NOTIFICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_assignment_late)
                         .setStyle(style)
+                        .setContentText(title)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
                 createNotificationChannel(context)
                 with(NotificationManagerCompat.from(context)) {
                     // notificationId is a unique int for each notification that you must define
                     notify(0, builder.build())
+                }
+
+            }
+
+            fun createMessage(entry: SubstitutionEntry): List<String> {
+                if (SubstitutionPlanFeatures.isNothing(entry.teacher)) {
+                    return listOf("${entry.hour}. Stunde entfällt", entry.moreInformation)
+                } else {
+                    return listOf("${entry.hour}. Stunde in ${entry.room} bei ${entry.teacher}", "${entry.moreInformation} (${entry.course})")
                 }
 
             }
