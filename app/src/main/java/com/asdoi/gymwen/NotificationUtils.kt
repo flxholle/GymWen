@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -33,7 +34,7 @@ const val NOTIFICATION_MAIN_ID = 3
 const val NOTIFICATION_SUMMARY_ID_1 = 4
 const val NOTIFICATION_SUMMARY_ID_2 = 5
 
-class ApplicationFeaturesUtils {
+class NotificationUtils {
 
     companion object {
         class CreateNotification(val alert: Boolean) : ApplicationFeatures.DownloadSubstitutionplanDocsTask() {
@@ -143,7 +144,7 @@ class ApplicationFeaturesUtils {
                         countToday.append(content.entries.size)
                         countToday.append(", ")
                         countTotal.append(content.entries.size)
-                        countTotal.append(" ")
+                        countTotal.append("|")
                         if (content.size() != 0) {
                             if (isMoreThanOneProfile) {
                                 messageToday.append(ProfileManagement.getProfile(i).name)
@@ -165,6 +166,8 @@ class ApplicationFeaturesUtils {
                     try {
                         countTomorrow.append(content.entries.size)
                         countTomorrow.append(", ")
+                        countTotal.append(content.entries.size)
+                        countTotal.append(", ")
                         if (content.size() != 0) {
                             if (isMoreThanOneProfile) {
                                 messageTomorrow.append(ProfileManagement.getProfile(i).name)
@@ -181,7 +184,7 @@ class ApplicationFeaturesUtils {
 
                 countToday.deleteCharAt(countToday.lastIndexOf(", "))
                 countTomorrow.deleteCharAt(countTomorrow.lastIndexOf(", "))
-                countTotal.deleteCharAt(countTotal.lastIndexOf(" "))
+                countTotal.deleteCharAt(countTotal.lastIndexOf(", "))
 
                 if (isNoToday) messageToday = StringBuilder("${ApplicationFeatures.getContext().getString(R.string.notif_nothing)}\n")
                 if (isNoTomorrow) messageTomorrow = StringBuilder("${ApplicationFeatures.getContext().getString(R.string.notif_nothing)}\n")
@@ -190,11 +193,11 @@ class ApplicationFeaturesUtils {
 
                 if (!isMoreThanOneProfile) {
                     if (daySendInSummaryNotif == 0) {
-                        titleToday = "$titleToday: $countToday"
+                        titleToday = "$titleToday $countToday"
                         SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
                         return
                     } else if (daySendInSummaryNotif == 1) {
-                        titleTomorrow = "$titleTomorrow: $countTomorrow"
+                        titleTomorrow = "$titleTomorrow $countTomorrow"
                         SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray())
                         return
                     }
@@ -207,8 +210,8 @@ class ApplicationFeaturesUtils {
                     SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray(), NOTIFICATION_SUMMARY_ID_2)
                 } else {
                     val title = "${ApplicationFeatures.getContext().getString(R.string.notif_content_title)} $countTotal"
-                    messageToday.append(messageTomorrow)
-                    SummaryNotification(title, messageToday.split("\n").toTypedArray())
+                    val content = titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow
+                    SummaryNotification(title, content.split("\n").toTypedArray())
                 }
             }
 
@@ -242,8 +245,14 @@ class ApplicationFeaturesUtils {
             }
         }
 
-        class MainNotification(val title: String, val content: SubstitutionList, val alert: Boolean, val id: Int = NOTIFICATION_MAIN_ID) {
+        private class MainNotification(val title: String, val content: SubstitutionList, var alert: Boolean, val id: Int = NOTIFICATION_MAIN_ID) {
+            var nothing: Boolean = false
+
             init {
+                if (content.entries.size == 0) {
+                    alert = false
+                    nothing = true
+                }
                 sendNotification()
             }
 
@@ -264,10 +273,17 @@ class ApplicationFeaturesUtils {
                     else
                         ContextCompat.getColor(context, R.color.notification_icon_text_substitution)
 
-                    val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = 32, textBold = true, color = color, textColor = textColor)
+                    val textSize = if (con.hour.length > 1) 32 else 36
+
+                    val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = textSize, textBold = true, color = color, textColor = textColor)
                     val list = createMessage(con)
                     val person = Person.Builder().setName(list[0]).setIcon(IconCompat.createWithBitmap(drawable.toBitmap(48, 48))).build()
                     val message1 = NotificationCompat.MessagingStyle.Message(list[1], 0.toLong(), person)
+                    style.addMessage(message1)
+                }
+                if (nothing) {
+                    val person = Person.Builder().setName(context.getString(R.string.notif_nothing)).setIcon(IconCompat.createWithBitmap(ApplicationFeatures.vectorToBitmap(R.drawable.ic_check))).build()
+                    val message1 = NotificationCompat.MessagingStyle.Message("", 0.toLong(), person)
                     style.addMessage(message1)
                 }
 
@@ -282,25 +298,27 @@ class ApplicationFeaturesUtils {
                 //Dismiss button intent
                 val buttonIntent = Intent(context, NotificationDismissButtonReceiver::class.java)
                 buttonIntent.action = "com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver"
-                buttonIntent.putExtra("EXTRA_NOTIFICATION_ID", id)
+                buttonIntent.putExtra(NotificationDismissButtonReceiver.EXTRA_NOTIFICATION_ID, id)
                 val btPendingIntent = PendingIntent.getBroadcast(context, UUID.randomUUID().hashCode(), buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-
-                val builder = NotificationCompat.Builder(context, NOTIFICATION_MAIN_CHANNEL_ID)
+                val builder = NotificationCompat.Builder(context, if (alert) NOTIFICATION_MAIN_CHANNEL_ID else NOTIFICATION_SUMMARY_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_assignment_late)
                         .setStyle(style)
                         .setContentText(title)
                         .setContentIntent(resultPendingIntent)
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setPriority(if (alert) NotificationCompat.PRIORITY_HIGH else NotificationCompat.PRIORITY_DEFAULT)
                         .setAutoCancel(true)
-                        .setOnlyAlertOnce(alert)
+                        .setOnlyAlertOnce(!alert)
 
                 if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("alwaysNotification", true)) {
                     builder.setOngoing(true)
                     builder.addAction(R.drawable.ic_close_black_24dp, ApplicationFeatures.getContext().getString(R.string.notif_dismiss), btPendingIntent)
                 }
 
-                createNotificationChannel(context)
+                if (alert)
+                    createNotificationChannel(context)
+                else
+                    SummaryNotification.createNotificationChannel(context)
                 with(NotificationManagerCompat.from(context)) {
                     // notificationId is a unique int for each notification that you must define
                     notify(id, builder.build())
@@ -321,16 +339,14 @@ class ApplicationFeaturesUtils {
             private fun createNotificationChannel(context: Context) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    val notificationChannel = NotificationChannel(NOTIFICATION_MAIN_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_HIGH)
+                    val notificationChannel = NotificationChannel(NOTIFICATION_MAIN_CHANNEL_ID, context.getString(R.string.notification_main_channel_title), NotificationManager.IMPORTANCE_HIGH)
 
                     // Configure the notification channel.
-                    notificationChannel.description = context.getString(R.string.notification_channel_description)
-                    if (alert) {
-                        notificationChannel.enableLights(true)
-                        notificationChannel.lightColor = ContextCompat.getColor(context, R.color.colorAccent)
-                        notificationChannel.enableVibration(true)
-//                        notificationChannel.setSound(true, null)
-                    }
+                    notificationChannel.description = context.getString(R.string.notification_main_channel_description)
+                    notificationChannel.enableLights(true)
+                    notificationChannel.lightColor = ContextCompat.getColor(context, R.color.colorAccent)
+                    notificationChannel.enableVibration(true)
+                    notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null)
                     notificationManager.createNotificationChannel(notificationChannel)
                     notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
                     notificationManager.createNotificationChannel(notificationChannel)
@@ -339,13 +355,15 @@ class ApplicationFeaturesUtils {
         }
 
         class SummaryNotification(val title: String, var content: Array<String>, val id: Int = NOTIFICATION_SUMMARY_ID_1) {
-
             init {
                 val contentList = mutableListOf<String>()
                 for (s in content) {
                     if (!s.trim().isEmpty())
                         contentList.add(s)
                 }
+                if (contentList.size == 0)
+                    contentList.add(ApplicationFeatures.getContext().getString(R.string.notif_nothing))
+
                 content = contentList.toTypedArray()
                 sendNotification()
             }
@@ -363,7 +381,7 @@ class ApplicationFeaturesUtils {
                 //Dismiss button intent
                 val buttonIntent = Intent(context, NotificationDismissButtonReceiver::class.java)
                 buttonIntent.action = "com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver"
-                buttonIntent.putExtra("EXTRA_NOTIFICATION_ID", id)
+                buttonIntent.putExtra(NotificationDismissButtonReceiver.EXTRA_NOTIFICATION_ID, id)
                 val btPendingIntent = PendingIntent.getBroadcast(context, UUID.randomUUID().hashCode(), buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
 
@@ -401,19 +419,21 @@ class ApplicationFeaturesUtils {
                 }
             }
 
-            private fun createNotificationChannel(context: Context) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    val notificationChannel = NotificationChannel(NOTIFICATION_SUMMARY_CHANNEL_ID, context.getString(R.string.notification_channel_title), NotificationManager.IMPORTANCE_DEFAULT)
+            companion object {
+                fun createNotificationChannel(context: Context) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                        val notificationChannel = NotificationChannel(NOTIFICATION_SUMMARY_CHANNEL_ID, context.getString(R.string.notification_summary_channel_title), NotificationManager.IMPORTANCE_LOW)
 
-                    // Configure the notification channel.
-                    notificationChannel.description = context.getString(R.string.notification_channel_description)
-                    notificationChannel.enableLights(false)
-                    notificationChannel.enableVibration(false)
-                    notificationChannel.setSound(null, null)
-                    notificationManager.createNotificationChannel(notificationChannel)
-                    notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-                    notificationManager.createNotificationChannel(notificationChannel)
+                        // Configure the notification channel.
+                        notificationChannel.description = context.getString(R.string.notification_summary_channel_description)
+                        notificationChannel.enableLights(false)
+                        notificationChannel.enableVibration(false)
+                        notificationChannel.setSound(null, null)
+                        notificationManager.createNotificationChannel(notificationChannel)
+                        notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                        notificationManager.createNotificationChannel(notificationChannel)
+                    }
                 }
             }
         }

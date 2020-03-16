@@ -225,8 +225,10 @@
     <string name="click_picture">Bild anklicken</string>
 
     <!-- Notification-->
-    <string name="notification_channel_title">Vertretungsplan</string>
-    <string name="notification_channel_description">Vertretungsplan</string>
+    <string name="notification_summary_channel_title">Vertretungsplan</string>
+    <string name="notification_summary_channel_description">Eine zusammenfassende Benachrichtigung über den Vertretungsplan</string>
+    <string name="notification_main_channel_title">Vertretungsplan Wichtig</string>
+    <string name="notification_main_channel_description">Eine Benachrichtigung die dir deine aktuellen Vertretungen sendet</string>
     <string name="notif_content_title">Vertretung:</string>
     <string name="notif_dismiss">Verbergen</string>
     <string name="notif_nothing">Keine Vertretung</string>
@@ -277,7 +279,8 @@
         <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-    ]]>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        ]]>
     </string>
 
     <!-- Imprint -->

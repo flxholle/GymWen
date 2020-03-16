@@ -558,7 +558,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 //            }
 //        }
 
-        new ApplicationFeaturesUtils.Companion.CreateNotification(alert).execute();
+        new NotificationUtils.Companion.CreateNotification(alert).execute();
     }
 
     //Private methods

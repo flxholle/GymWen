@@ -154,8 +154,8 @@
     <string name="share_link">Share link with\u2026</string>
 
 
-    <string name="notification_channel_title">Cover plan</string>
-    <string name="notification_channel_description">Cover plan</string>
+    <string name="notification_summary_channel_title">Cover plan</string>
+    <string name="notification_summary_channel_description">Cover plan</string>
     <string name="notif_content_title">Stand-in:</string>
     <string name="notif_dismiss">Hide</string>
 
