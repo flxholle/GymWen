@@ -218,11 +218,8 @@ abstract class Parse {
             //Weekday
             try {
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-                SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
-
                 Date startDate = removeTime(df.parse(day.getDate()));
 
-                day.setDayOfWeek(simpleDateformat.format(startDate));
                 Date currentDate = removeTime(new Date());
 
                 if (currentDate.after(startDate)) {
