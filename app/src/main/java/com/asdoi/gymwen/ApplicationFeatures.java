@@ -518,6 +518,9 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     //Send notifications
+    public static void sendNotifications() {
+    }
+
     public static void sendNotifications(boolean alert) {
         if (ProfileManagement.isUninit())
             ProfileManagement.reload();
@@ -560,9 +563,11 @@ public class ApplicationFeatures extends MultiDexApplication {
     private static void sendMainNotif(String title, SubstitutionList content, boolean alert) {
         if (content.getNoInternet())
             return;
-        new ApplicationFeaturesUtils.Companion.CreateMainNotification(title, content, alert).execute(true, false);
+//        new ApplicationFeaturesUtils.Companion.CreateMainNotification(title, content, alert).execute(true, false);
     }
 
+    private static void sendSummaryNotif() {
+    }
     private static void sendSummaryNotif(String[] titles, Profile[] profiles, SubstitutionList[] sendFromMain) {
 //        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
 //            new CreateInfoNotification().execute(true, false);
@@ -666,7 +671,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             StringBuilder message = new StringBuilder(titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow);
             message.delete(message.length() - 1, message.length());
 
-            createNotification(message.toString(), getContext().getString(R.string.notif_content_title) + " " + count, NOTIFICATION_INFO_ID);
+//            createNotification(message.toString(), getContext().getString(R.string.notif_content_title) + " " + count, NOTIFICATION_INFO_ID);
         }
 
         private void notificationMessageTwoNotifs() {
@@ -727,8 +732,8 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             messageTo = messageTo.substring(0, messageTo.length() - 1);
             messageTom = messageTom.substring(0, messageTom.length() - 1);
-            createNotification(messageTom, titleTomorrow + " " + count2.toString(), NOTIFICATION_INFO_ID_2);
-            createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_INFO_ID);
+//            createNotification(messageTom, titleTomorrow + " " + count2.toString(), NOTIFICATION_INFO_ID_2);
+//            createNotification(messageTo, titleToday + " " + count1.toString(), NOTIFICATION_INFO_ID);
         }
 
         @NonNull
@@ -920,7 +925,11 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static boolean addCourseToSelectedProfile(@NonNull String course) {
-        return addCourseToProfile(getSelectedProfilePosition(), course);
+        if (addCourseToProfile(getSelectedProfilePosition(), course)) {
+            PreferenceUtil.updateCourses();
+            return true;
+        }
+        return false;
     }
 
     private static boolean addCourseToProfile(int position, @NonNull String course) {
@@ -928,7 +937,11 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static boolean removeFromSelectedProfile(@NonNull String course) {
-        return removeFromProfile(getSelectedProfilePosition(), course);
+        if (removeFromProfile(getSelectedProfilePosition(), course)) {
+            PreferenceUtil.updateCourses();
+            return true;
+        }
+        return false;
     }
 
     private static boolean removeFromProfile(int position, String course) {

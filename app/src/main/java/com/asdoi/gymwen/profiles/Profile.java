@@ -33,11 +33,11 @@ public class Profile {
         this.courses = courses.trim();
     }
 
-    public void addCourse(@NonNull String course) {
+    void addCourse(@NonNull String course) {
         courses = courses + coursesSeparator + course.trim();
     }
 
-    public void removeCourse(String course) {
+    void removeCourse(String course) {
         ArrayList<String> courses = new ArrayList<>(Arrays.asList(getCoursesArray()));
         courses.remove(course);
         StringBuilder newCourses = new StringBuilder();

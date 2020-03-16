@@ -278,4 +278,10 @@ public class PreferenceUtil {
         editor.commit();
     }
 
+    public static void updateCourses() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("courses", ApplicationFeatures.getSelectedProfile().getCourses());
+        editor.commit();
+    }
 }
