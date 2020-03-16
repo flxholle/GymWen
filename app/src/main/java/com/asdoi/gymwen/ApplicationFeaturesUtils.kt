@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
 import com.asdoi.gymwen.profiles.ProfileManagement
+import com.asdoi.gymwen.substitutionplan.SubstitutionList
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
 import com.github.stephenvinouze.shapetextdrawable.ShapeForm
 import com.github.stephenvinouze.shapetextdrawable.ShapeTextDrawable
@@ -18,7 +19,7 @@ import com.github.stephenvinouze.shapetextdrawable.ShapeTextDrawable
 class ApplicationFeaturesUtils {
 
     companion object {
-        class CreateMainNotification(val title: String, val content: Array<Array<String>>) : ApplicationFeatures.DownloadSubstitutionplanDocsTask() {
+        class CreateMainNotification(val title: String, val content: SubstitutionList) : ApplicationFeatures.DownloadSubstitutionplanDocsTask() {
 
             override fun onPostExecute(v: Void?) {
                 super.onPostExecute(v)
@@ -42,8 +43,8 @@ class ApplicationFeaturesUtils {
                 val style = NotificationCompat.MessagingStyle(Person.Builder().setName("me").build())
                 style.conversationTitle = title
 
-                for (con in content) {
-                    val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con[1], textSize = 32, textBold = true, color = Color.RED)
+                for (con in content.entries) {
+                    val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = 32, textBold = true, color = Color.RED)
 //                    val person = Person.Builder().setName("$s. Stunde entfällt").setIcon(IconCompat.createWithBitmap(drawable.toBitmap(48, 48))).build()
 //                    val message1 = NotificationCompat.MessagingStyle.Message("e Sportkurs", s.toLong(), person)
 //                    style.addMessage(message1)

@@ -17,6 +17,10 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
         return noInternet
     }
 
+    fun size(): Int {
+        return entries.size
+    }
+
     fun isEmpty(): Boolean {
         return entries.isEmpty()
     }

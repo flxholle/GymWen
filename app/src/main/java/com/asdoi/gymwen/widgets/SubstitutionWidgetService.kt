@@ -13,7 +13,8 @@ import androidx.core.content.ContextCompat
 import com.asdoi.gymwen.R
 import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlan
+import com.asdoi.gymwen.substitutionplan.SubstitutionEntry
+import com.asdoi.gymwen.substitutionplan.SubstitutionList
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment
 import com.asdoi.gymwen.util.PreferenceUtil
@@ -56,8 +57,8 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
             //Today
             today = tempSubstitutionplan.getTitleString(true)
             var todayList = tempSubstitutionplan.getDay(true)
-            if (summarize) todayList = SubstitutionPlan.summarizeArray(todayList, 1, "-")
-            if (todayList == null) {
+            if (summarize) todayList = todayList.summarizeUp("-")
+            if (todayList.getNoInternet()) {
                 noInternet = true
                 break
             }
@@ -67,8 +68,8 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
             //Tomorrow
             tomorrow = tempSubstitutionplan.getTitleString(false)
             var tomorrowList = tempSubstitutionplan.getDay(false)
-            if (summarize) tomorrowList = SubstitutionPlan.summarizeArray(tomorrowList, 1, "-")
-            if (tomorrowList == null) {
+            if (summarize) tomorrowList = tomorrowList.summarizeUp("-")
+            if (tomorrowList.getNoInternet()) {
                 noInternet = true
                 break
             }
@@ -76,29 +77,29 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
         }
 
         if (noInternet) {
-            contentList = mutableListOf(EntryHelper(arrayOf(), internet))
+            contentList = mutableListOf(EntryHelper(code = internet))
             return
         }
 
-        contentList.add(EntryHelper(arrayOf(today), day))
+        contentList.add(EntryHelper(title = today, code = day))
         contentList.addAll(todayEntryList)
-        contentList.add(EntryHelper(arrayOf(tomorrow), day))
+        contentList.add(EntryHelper(title = tomorrow, code = day))
         contentList.addAll(tomorrowEntryList)
 
     }
 
-    private fun getEntryListForProfile(dayList: Array<Array<String>>, name: String? = null, senior: Boolean): List<EntryHelper> {
+    private fun getEntryListForProfile(dayList: SubstitutionList, name: String? = null, senior: Boolean): List<EntryHelper> {
         val entryList = mutableListOf<EntryHelper>()
-        if (name != null) entryList.add(EntryHelper(arrayOf(name), profile))
+        if (name != null) entryList.add(EntryHelper(title = name, code = profile))
 
         val miscellaneous: Boolean
         if (dayList.isEmpty())
-            entryList.add(EntryHelper(arrayOf(), nothing))
+            entryList.add(EntryHelper(code = nothing))
         else {
             miscellaneous = SubstitutionFragment.isMiscellaneous(dayList)
-            entryList.add(EntryHelper(generateHeadline(context, true, senior), headline, miscellaneous, senior))
-            for (string in dayList) {
-                entryList.add(EntryHelper(string, content, miscellaneous))
+            entryList.add(EntryHelper(headline = generateHeadline(context, true, senior), code = headline, miscellaneous = miscellaneous, senior = senior))
+            for (entry in dayList.entries) {
+                entryList.add(EntryHelper(entry, content, miscellaneous))
             }
         }
         return entryList
@@ -114,10 +115,10 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
     override fun getViewAt(position: Int): RemoteViews {
         val entry: EntryHelper = contentList[position]
         val view = when (entry.code) {
-            day -> getTitleText(context, entry.entry[0])
-            profile -> getTitleText(context, entry.entry[0])
+            day -> getTitleText(context, entry.title)
+            profile -> getTitleText(context, entry.title)
             nothing -> getNothing(context, context.getString(R.string.nothing))
-            headline -> getHeadline(entry.entry, entry.miscellaneous)
+            headline -> getHeadline(entry.headline, entry.miscellaneous)
             content -> getEntrySpecific(entry.entry, entry.senior, entry.miscellaneous)
             internet -> getTitleText(context, context.getString(R.string.noInternetConnection))
             else -> getTitleText(context, context.getString(R.string.noInternetConnection))
@@ -150,7 +151,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
         onCreate()
     }
 
-    class EntryHelper(val entry: Array<String>, val code: Int = nothing, val miscellaneous: Boolean = false, val senior: Boolean = false)
+    class EntryHelper(val entry: SubstitutionEntry = SubstitutionEntry("", "", "", "", "", ""), val code: Int = nothing, val miscellaneous: Boolean = false, val senior: Boolean = false, val title: String = "", val headline: Array<String> = arrayOf())
 
 
     //View creators
@@ -191,18 +192,18 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
         return view
     }
 
-    private fun getEntrySpecific(entry: Array<String>, senior: Boolean, miscellaneous: Boolean): RemoteViews {
+    private fun getEntrySpecific(entry: SubstitutionEntry, senior: Boolean, miscellaneous: Boolean): RemoteViews {
         val view = getRemoteViews(context)
-        view.setTextViewText(R.id.substitution_specific_entry_textViewHour, entry[1])
-        view.setTextViewText(R.id.substitution_specific_entry_textViewSubject, if (senior) entry[0] else entry[2])
-        if (!SubstitutionPlanFeatures.isNothing(entry[3])) {
-            view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, entry[3])
+        view.setTextViewText(R.id.substitution_specific_entry_textViewHour, entry.hour)
+        view.setTextViewText(R.id.substitution_specific_entry_textViewSubject, if (senior) entry.course else entry.subject)
+        if (!SubstitutionPlanFeatures.isNothing(entry.teacher)) {
+            view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, entry.teacher)
             view.setViewVisibility(R.id.substitution_specific_entry_textViewRoom, View.VISIBLE)
-            val content = SpannableString(entry[4])
+            val content = SpannableString(entry.room)
             content.setSpan(UnderlineSpan(), 0, content.length, 0)
             view.setTextViewText(R.id.substitution_specific_entry_textViewRoom, content)
         } else {
-            val content = SpannableString(entry[3])
+            val content = SpannableString(entry.room)
             content.setSpan(UnderlineSpan(), 0, content.length, 0)
             view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, content)
             //            view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 20);
@@ -210,8 +211,8 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
             //            view.setViewVisibility(R.id.vertretung_specific_entry_textViewRoom, View.GONE);
         }
         view.setViewVisibility(R.id.substitution_specific_entry_textViewOther, if (miscellaneous) View.VISIBLE else View.GONE)
-        view.setTextViewText(R.id.substitution_specific_entry_textViewOther, entry[5])
-        view.setTextViewText(R.id.substitution_specific_entry_textViewClass, if (senior) entry[2] else entry[0])
+        view.setTextViewText(R.id.substitution_specific_entry_textViewOther, entry.moreInformation)
+        view.setTextViewText(R.id.substitution_specific_entry_textViewClass, if (senior) entry.subject else entry.course)
         //        view.setOnClickPendingIntent(R.id.widget_entry_linear, SubstitutionWidgetProvider.getPendingSelfIntent(context, SubstitutionWidgetProvider.WIDGET_ON_CLICK));
         return view
     }

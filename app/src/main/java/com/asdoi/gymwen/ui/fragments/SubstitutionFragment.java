@@ -36,6 +36,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
@@ -243,19 +244,19 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     @NonNull
     private String shareMessage(boolean withCourses) {
         StringBuilder message = new StringBuilder();
-        String[][] content = null;
+        SubstitutionList content = null;
         String title = "";
 
         if (today) {
-            content = SubstitutionPlanFeatures.getTodayArray();
+            content = SubstitutionPlanFeatures.getToday();
             title = SubstitutionPlanFeatures.getTodayTitleString();
         } else {
-            content = SubstitutionPlanFeatures.getTomorrowArray();
+            content = SubstitutionPlanFeatures.getTomorrow();
             title = SubstitutionPlanFeatures.getTomorrowTitleString();
         }
         StringBuilder classes = new StringBuilder();
 
-        if (content == null) {
+        if (content.getNoInternet()) {
             return "";
         }
 
@@ -486,7 +487,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
             if (showToday) {
                 titleCode = titleCodeToday;
-                content = summarize ? SubstitutionPlanFeatures.getTodayArraySummarized() : SubstitutionPlanFeatures.getTodayArray();
+                content = summarize ? SubstitutionPlanFeatures.getTodaySummarized() : SubstitutionPlanFeatures.getToday();
                 title = SubstitutionPlanFeatures.getTodayTitleString();
                 titleObject = SubstitutionPlanFeatures.getTodayTitle();
                 miscellaneous = isMiscellaneous(content);
@@ -495,7 +496,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
             if ((!showToday || content != null) && showTomorrow) {
                 titleCode = titleCodeTomorrow;
-                content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
+                content = summarize ? SubstitutionPlanFeatures.getTomorrowSummarized() : SubstitutionPlanFeatures.getTomorrow();
                 title = SubstitutionPlanFeatures.getTomorrowTitleString();
                 titleObject = SubstitutionPlanFeatures.getTomorrowTitle();
                 miscellaneous = isMiscellaneous(content);
@@ -504,12 +505,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
         } else if (all) {
             if (today) {
-                content = summarize ? SubstitutionPlanFeatures.getTodayArrayAllSummarized() : SubstitutionPlanFeatures.getTodayArrayAll();
+                content = summarize ? SubstitutionPlanFeatures.getTodayAllSummarized() : SubstitutionPlanFeatures.getTodayAll();
                 title = SubstitutionPlanFeatures.getTodayTitleString();
                 titleObject = SubstitutionPlanFeatures.getTodayTitle();
                 titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
-                content = summarize ? SubstitutionPlanFeatures.getTomorrowArrayAllSummarized() : SubstitutionPlanFeatures.getTomorrowArrayAll();
+                content = summarize ? SubstitutionPlanFeatures.getTomorrowAllSummarized() : SubstitutionPlanFeatures.getTomorrowAll();
                 title = SubstitutionPlanFeatures.getTomorrowTitleString();
                 titleObject = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
@@ -523,12 +524,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             generateTableAll(base);
         } else {
             if (today) {
-                content = summarize ? SubstitutionPlanFeatures.getTodayArraySummarized() : SubstitutionPlanFeatures.getTodayArray();
+                content = summarize ? SubstitutionPlanFeatures.getTodaySummarized() : SubstitutionPlanFeatures.getToday();
                 title = SubstitutionPlanFeatures.getTodayTitleString();
                 titleObject = SubstitutionPlanFeatures.getTodayTitle();
                 titleCode = SubstitutionPlanFeatures.getTodayTitleCode();
             } else {
-                content = summarize ? SubstitutionPlanFeatures.getTomorrowArraySummarized() : SubstitutionPlanFeatures.getTomorrowArray();
+                content = summarize ? SubstitutionPlanFeatures.getTomorrowSummarized() : SubstitutionPlanFeatures.getTomorrow();
                 title = SubstitutionPlanFeatures.getTomorrowTitleString();
                 titleObject = SubstitutionPlanFeatures.getTomorrowTitle();
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
@@ -650,11 +651,11 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Other functions important for displaying headline
-    public static boolean isMiscellaneous(@Nullable String[][] content) {
+    public static boolean isMiscellaneous(@Nullable SubstitutionList content) {
         if (content == null)
             return false;
-        for (int i = 0; i < content.length; i++) {
-            if (!content[i][5].trim().isEmpty()) {
+        for (int i = 0; i < content.getEntries().size(); i++) {
+            if (!content.getEntries().get(i).getMoreInformation().trim().isEmpty()) {
                 return true;
             }
         }

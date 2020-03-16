@@ -46,6 +46,8 @@ import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.CheckSubstitutionPlanReceiver;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
+import com.asdoi.gymwen.substitutionplan.SubstitutionEntry;
+import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
@@ -557,7 +559,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
-    private static void sendMainNotif(String title, String[][] content) {
+    private static void sendMainNotif(String title, SubstitutionList content) {
         new ApplicationFeaturesUtils.Companion.CreateMainNotification(title, content).execute(true, false);
     }
 
@@ -565,7 +567,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 //        if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", false)) {
 //            new CreateInfoNotification().execute(true, false);
 //        }
-        sendMainNotif("title", new String[][]{});
+        sendMainNotif("title", new SubstitutionList());
     }
 
     private static class CreateInfoNotification extends DownloadSubstitutionplanDocsTask {
@@ -611,12 +613,12 @@ public class ApplicationFeatures extends MultiDexApplication {
             for (int i = 0; i < ProfileManagement.getSize(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
-                String[][] content = summarize ? SubstitutionPlan.summarizeArray(temp.getDay(true), 1, "-") : temp.getDay(true);
+                SubstitutionList content = summarize ? temp.getDay(true).summarizeUp(("-")) : temp.getDay(true);
                 temp.getDay(true);
                 try {
-                    count.append(content.length);
+                    count.append(content.size());
                     count.append("|");
-                    if (content.length != 0) {
+                    if (content.size() != 0) {
                         if (isMoreThanOneProfile) {
                             messageToday.append(ProfileManagement.getProfile(i).getName());
                             messageToday.append(":\n");
@@ -628,11 +630,11 @@ public class ApplicationFeatures extends MultiDexApplication {
                     e.printStackTrace();
                 }
 
-                content = summarize ? SubstitutionPlan.summarizeArray(temp.getDay(false), 1, "-") : temp.getDay(false);
+                content = summarize ? temp.getDay(false).summarizeUp(("-")) : temp.getDay(false);
                 try {
-                    count.append(content.length);
+                    count.append(content.size());
                     count.append(", ");
-                    if (content.length != 0) {
+                    if (content.size() != 0) {
                         if (isMoreThanOneProfile) {
                             messageTomorrow.append(ProfileManagement.getProfile(i).getName());
                             messageTomorrow.append(":\n");
@@ -673,11 +675,11 @@ public class ApplicationFeatures extends MultiDexApplication {
             for (int i = 0; i < ProfileManagement.getSize(); i++) {
                 Profile p = ProfileManagement.getProfile(i);
                 SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
-                String[][] content = summarize ? SubstitutionPlan.summarizeArray(temp.getDay(true), 1, "-") : temp.getDay(true);
+                SubstitutionList content = summarize ? temp.getDay(true).summarizeUp(("-")) : temp.getDay(true);
                 try {
-                    count1.append(content.length);
+                    count1.append(content.getEntries().size());
                     count1.append(", ");
-                    if (content.length != 0) {
+                    if (content.size() != 0) {
                         if (isMoreThanOneProfile) {
                             messageToday.append(ProfileManagement.getProfile(i).getName());
                             messageToday.append(":\n");
@@ -689,11 +691,11 @@ public class ApplicationFeatures extends MultiDexApplication {
                     e.printStackTrace();
                 }
 
-                content = summarize ? SubstitutionPlan.summarizeArray(temp.getDay(false), 1, "-") : temp.getDay(false);
+                content = summarize ? temp.getDay(false).summarizeUp(("-")) : temp.getDay(false);
                 try {
-                    count2.append(content.length);
+                    count2.append(content.size());
                     count2.append(", ");
-                    if (content.length != 0) {
+                    if (content.size() != 0) {
                         if (isMoreThanOneProfile) {
                             messageTomorrow.append(ProfileManagement.getProfile(i).getName());
                             messageTomorrow.append(":\n");
@@ -719,28 +721,28 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
 
         @NonNull
-        String notifMessageContent(@Nullable String[][] content, @NonNull SubstitutionPlan vp) {
+        String notifMessageContent(@Nullable SubstitutionList content, @NonNull SubstitutionPlan vp) {
             StringBuilder message = new StringBuilder();
             if (content == null) {
                 return "";
             }
-            if (content.length == 0) {
+            if (content.size() == 0) {
                 message.append(getContext().getString(R.string.notif_nothing)).append("\n");
             } else {
                 if (vp.getSenior()) {
-                    for (String[] line : content) {
-                        if (SubstitutionPlanFeatures.isNothing(line[3])) {
-                            message.append(line[1]).append(". Stunde entfällt\n");
+                    for (SubstitutionEntry line : content.getEntries()) {
+                        if (SubstitutionPlanFeatures.isNothing(line.getTeacher())) {
+                            message.append(line.getHour()).append(". Stunde entfällt\n");
                         } else {
-                            message.append(line[1]).append(". Stunde, ").append(line[0]).append(", ").append(line[4]).append(", ").append(line[3]).append(" ").append(line[5]).append("\n");
+                            message.append(line.getHour()).append(". Stunde, ").append(line.getCourse()).append(", ").append(line.getRoom()).append(", ").append(line.getTeacher()).append(" ").append(line.getMoreInformation()).append("\n");
                         }
                     }
                 } else {
-                    for (String[] line : content) {
-                        if (SubstitutionPlanFeatures.isNothing(line[3])) {
-                            message.append(line[1]).append(". Stunde entfällt\n");
+                    for (SubstitutionEntry line : content.getEntries()) {
+                        if (SubstitutionPlanFeatures.isNothing(line.getTeacher())) {
+                            message.append(line.getHour()).append(". Stunde entfällt\n");
                         } else {
-                            message.append(line[1]).append(". Stunde ").append(line[2]).append(" bei ").append(line[3]).append(", ").append(line[4]).append(" ").append(line[5]).append("\n");
+                            message.append(line.getHour()).append(". Stunde ").append(line.getSubject()).append(" bei ").append(line.getTeacher()).append(", ").append(line.getRoom()).append(" ").append(line.getMoreInformation()).append("\n");
                         }
                     }
                 }
