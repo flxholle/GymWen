@@ -220,14 +220,21 @@ class NotificationUtils {
                 if (isNoToday) messageToday = StringBuilder("${ApplicationFeatures.getContext().getString(R.string.notif_nothing)}\n")
                 if (isNoTomorrow) messageTomorrow = StringBuilder("${ApplicationFeatures.getContext().getString(R.string.notif_nothing)}\n")
 
+
+                //Send Notifications
+
                 val twoNotifs = PreferenceUtil.isTwoNotifications()
 
+                //Hide days in the past and today after 18 o'clock
+                val showToday = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.isTitleCodeInPast(titleTodayArray.titleCode)
+                val showTomorrow = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.isTitleCodeInPast(titleTomorrowArray.titleCode)
+
                 if (!isMoreThanOneProfile || alertForAllProfiles) {
-                    if (daySendInSummaryNotif == today) {
+                    if (daySendInSummaryNotif == today && showToday) {
                         titleToday = "$titleToday $countToday"
                         SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
                         return
-                    } else if (daySendInSummaryNotif == tomorrow) {
+                    } else if (daySendInSummaryNotif == tomorrow && showTomorrow) {
                         titleTomorrow = "$titleTomorrow $countTomorrow"
                         SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray())
                         return
@@ -237,13 +244,24 @@ class NotificationUtils {
                 if (twoNotifs) {
                     titleToday = "$titleToday $countToday"
                     titleTomorrow = "$titleTomorrow $countTomorrow"
-                    SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
-                    SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray(), NOTIFICATION_SUMMARY_ID_2)
+                    if (showToday) SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
+                    if (showTomorrow) SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray(), NOTIFICATION_SUMMARY_ID_2)
                 } else {
                     //Sort notification
-                    val title = "${ApplicationFeatures.getContext().getString(R.string.notif_content_title)} $countTotal"
-                    val content = titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow
-                    SummaryNotification(title, content.split("\n").toTypedArray())
+                    var title = ""
+                    var content = ""
+
+                    if (showToday && showTomorrow) {
+                        title = "${ApplicationFeatures.getContext().getString(R.string.notif_content_title)} $countTotal"
+                        content = titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow
+                        SummaryNotification(title, content.split("\n").toTypedArray())
+                    } else if (showToday && !(alertForAllProfiles && daySendInSummaryNotif != today)) {
+                        titleToday = "$titleToday $countToday"
+                        SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
+                    } else if (showTomorrow && !(alertForAllProfiles && daySendInSummaryNotif != tomorrow)) {
+                        titleTomorrow = "$titleTomorrow $countTomorrow"
+                        SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray())
+                    }
                 }
 
             }

@@ -259,7 +259,6 @@ abstract class Parse {
             day.setTitleCode(pastCode);
             return day;
         }
-        day.setTitleCode(pastCode);
         return day;
     }
 
