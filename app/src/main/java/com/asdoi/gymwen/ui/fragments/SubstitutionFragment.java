@@ -785,7 +785,11 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         base.setOrientation(LinearLayout.HORIZONTAL);
         base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_hour));
+        LinearLayout.LayoutParams params;
+        if (PreferenceUtil.isSummarizeOld())
+            params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_hour_summary));
+        else
+            params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_hour));
         params.setMargins(3, 3, 3, 3);
         TextView hour = createBlankTextView();
         hour.setLayoutParams(params);
@@ -805,6 +809,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         } else {
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_hour)));
             subject.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_subject)));
+        }
+        if (PreferenceUtil.isSummarizeOld()) {
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_hour_summary)));
         }
 
         params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_teacher));
@@ -881,7 +888,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @NonNull
-    private View getEntryAll(@NonNull View view, @NonNull SubstitutionEntry entry, boolean miscellaneous) {
+    private View getEntryAll(@NonNull View view, @NonNull SubstitutionEntry entry,
+                             boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_all_entry_textViewCourse);
         course.setText(entry.getCourse());
         course.setOnClickListener((View v) -> showAddPopup(course, entry.getCourse()));
@@ -985,7 +993,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @NonNull
-    private View getEntrySpecific(@NonNull View view, @NonNull SubstitutionEntry entry, boolean senior, boolean miscellaneous) {
+    private View getEntrySpecific(@NonNull View view, @NonNull SubstitutionEntry entry,
+                                  boolean senior, boolean miscellaneous) {
         TextView hour = view.findViewById(R.id.substitution_specific_entry_textViewHour);
         hour.setText(entry.getHour());
         hour.setBackgroundColor(ApplicationFeatures.getAccentColor(context));
@@ -1006,6 +1015,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_hour)));
             subject.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_subject)));
             hour.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
+        }
+        if (PreferenceUtil.isSummarizeOld()) {
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_hour_summary)));
         }
 
         TextView teacher = view.findViewById(R.id.substitution_specific_entry_textViewTeacher);
@@ -1059,7 +1071,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @NonNull
-    private View getEntrySpecificNewDesign(@NonNull View view, @NonNull SubstitutionEntry entry, boolean miscellaneous) {
+    private View getEntrySpecificNewDesign(@NonNull View view, @NonNull SubstitutionEntry entry,
+                                           boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_card_entry_textViewClass);
         course.setText(entry.getCourse());
         course.setOnClickListener((View v) -> showRemovePopup(course, entry.getCourse()));

@@ -10,6 +10,7 @@
 
     <integer name="substitution_specific_entry_hour_long">4</integer>
     <integer name="substitution_specific_entry_subject_long">3</integer>
+    <integer name="substitution_specific_entry_hour_summary">4</integer>
 
     <!--    substitutionplan All entry-->
     <integer name="substitution_all_hour">1</integer>
