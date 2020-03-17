@@ -150,7 +150,7 @@ public class PreferenceUtil {
     }
 
     public static boolean isMainNotifForAllProfiles() {
-        return getBooleanSettings("main_notif_for_all", false);
+        return getBooleanSettings("main_notif_for_all", true);
     }
 
     public static boolean isDontChangeSummary() {

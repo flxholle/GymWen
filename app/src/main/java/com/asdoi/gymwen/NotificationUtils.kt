@@ -72,8 +72,10 @@ class NotificationUtils {
 
                 val titleTodayArray = SubstitutionPlanFeatures.getTodayTitle()
                 val titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitle()
-                var titleToday = titleTodayArray.date + ", " + titleTodayArray.dayOfWeek + ":"
-                var titleTomorrow = titleTomorrowArray.date + ", " + titleTomorrowArray.dayOfWeek + ":"
+                var titleToday = "${titleTodayArray.dayOfWeek}, ${titleTodayArray.date}:"
+                var titleTomorrow = "${titleTomorrowArray.dayOfWeek}, ${titleTomorrowArray.date}:"
+
+                val isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile()
 
                 //Send main notif for preferred Profile
                 var daySendInSummaryNotif = none //1 = today; 2 = tomorrow
@@ -100,19 +102,17 @@ class NotificationUtils {
                         val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), checkProfileList.get(p).coursesArray)
                         daySendInSummaryNotif = when (whichDayIsToday) {
                             today -> {
-                                MainNotification(SubstitutionPlanFeatures.getTodayTitleString(), temp.getDay(true), alert, p)
+                                MainNotification(SubstitutionPlanFeatures.getTodayTitleString(), temp.getDay(true), if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList.get(p).name; else "", alert, p)
                                 tomorrow
                             }
                             tomorrow -> {
-                                MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), temp.getDay(false), alert, p)
+                                MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), temp.getDay(false), if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList.get(p).name; else "", alert, p)
                                 today
                             }
                             else -> none
                         }
                     }
                 }
-
-                val isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile()
 
                 //Both
                 val countTotal = StringBuilder()
@@ -176,6 +176,10 @@ class NotificationUtils {
 
 
                     if (i == preferredProfilePos && daySendInSummaryNotif != none && !dontChangeSummary) {
+                        if (!dontChangeSummary) {
+                            countTotal.deleteCharAt(countTotal.lastIndexOf("|"))
+                            countTotal.append(", ")
+                        }
                         continue
                     }
 
@@ -274,7 +278,7 @@ class NotificationUtils {
             }
         }
 
-        private class MainNotification(val title: String, val content: SubstitutionList, var alert: Boolean, val id: Int = NOTIFICATION_MAIN_ID) {
+        private class MainNotification(var title: String, val content: SubstitutionList, val profileName: String, var alert: Boolean, val id: Int = NOTIFICATION_MAIN_ID) {
             var nothing: Boolean = false
 
             init {
@@ -307,14 +311,16 @@ class NotificationUtils {
                     val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = textSize, textBold = true, color = color, textColor = textColor)
                     val list = createMessage(con)
                     val person = Person.Builder().setName(list[0]).setIcon(IconCompat.createWithBitmap(drawable.toBitmap(48, 48))).build()
-                    val message1 = NotificationCompat.MessagingStyle.Message(list[1], 0.toLong(), person)
+                    val message1 = NotificationCompat.MessagingStyle.Message("${list[1]} ${if (!profileName.trim().isEmpty()) " ($profileName)"; else ""}", 0.toLong(), person)
                     style.addMessage(message1)
                 }
                 if (nothing) {
                     val person = Person.Builder().setName(context.getString(R.string.notif_nothing)).setIcon(IconCompat.createWithBitmap(ApplicationFeatures.vectorToBitmap(R.drawable.ic_check))).build()
-                    val message1 = NotificationCompat.MessagingStyle.Message("", 0.toLong(), person)
+                    val message1 = NotificationCompat.MessagingStyle.Message(if (!profileName.trim().isEmpty()) " ($profileName)"; else "", 0.toLong(), person)
                     style.addMessage(message1)
-                }
+                } /*else {
+                    title = "$title ($profileName)"
+                }*/
 
 
                 //Intent
