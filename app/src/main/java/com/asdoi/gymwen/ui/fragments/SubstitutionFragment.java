@@ -247,12 +247,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         StringBuilder message = new StringBuilder();
         SubstitutionList content = null;
         String title = "";
+        boolean summarize = PreferenceUtil.isSummarizeUp();
 
         if (today) {
-            content = SubstitutionPlanFeatures.getToday();
+            content = summarize ? SubstitutionPlanFeatures.getTodaySummarized() : SubstitutionPlanFeatures.getToday();
             title = SubstitutionPlanFeatures.getTodayTitleString();
         } else {
-            content = SubstitutionPlanFeatures.getTomorrow();
+            content = summarize ? SubstitutionPlanFeatures.getTomorrowSummarized() : SubstitutionPlanFeatures.getTomorrow();
             title = SubstitutionPlanFeatures.getTomorrowTitleString();
         }
         StringBuilder classes = new StringBuilder();
@@ -291,7 +292,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 if (SubstitutionPlanFeatures.isNothing(line.getTeacher())) {
                     message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_nothing_hour_senior)).append(" ").append(line.getCourse()).append("\n");
                 } else {
-                    message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_hour_senior)).append(" ").append(line.getHour()).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.getRoom()).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.getTeacher()).append(", ").append(line.getMoreInformation()).append("\n");
+                    message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_hour_senior)).append(" ").append(line.getCourse()).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.getRoom()).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.getTeacher()).append(", ").append(line.getMoreInformation()).append("\n");
                 }
             }
         } else {
@@ -299,7 +300,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 if (SubstitutionPlanFeatures.isNothing(line.getTeacher())) {
                     message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_nothing_hour)).append("\n");
                 } else {
-                    message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_hour)).append(" ").append(line.getCourse()).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.getRoom()).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.getTeacher()).append(", ").append(line.getMoreInformation()).append("\n");
+                    message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_hour)).append(" ").append(line.getSubject()).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.getRoom()).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.getTeacher()).append(", ").append(line.getMoreInformation()).append("\n");
                 }
             }
         }
@@ -373,7 +374,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         view.setOnClickListener(null);
     }
 
-    private void teacherSearch(String query) {
+    private void teacherSearch(@NonNull String query) {
 
         new Thread(() -> {
             try {
@@ -436,7 +437,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     @Nullable
-    private String getMatchingTeacher(String query) {
+    private String getMatchingTeacher(@NonNull String query) {
         String teacher = null;
         try {
             ApplicationFeatures.downloadTeacherlistDoc();
@@ -991,7 +992,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         TextView subject = view.findViewById(R.id.substitution_specific_entry_textViewSubject);
         if (senior) {
-            subject.setText(entry.getHour());
+            subject.setText(entry.getCourse());
             subject.setOnClickListener((View v) -> showRemovePopup(subject, entry.getHour()));
         } else {
             subject.setText(entry.getSubject());

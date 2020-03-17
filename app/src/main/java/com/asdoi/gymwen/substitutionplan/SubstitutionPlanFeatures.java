@@ -100,7 +100,7 @@ public abstract class SubstitutionPlanFeatures {
         return getToday().summarizeUp("-");
     }
 
-    @Nullable
+    @NonNull
     public static SubstitutionList getTomorrowSummarized() {
         return getTomorrow().summarizeUp("-");
     }
@@ -115,12 +115,12 @@ public abstract class SubstitutionPlanFeatures {
         return substitutionPlan.getAll(false);
     }
 
-    @Nullable
+    @NonNull
     public static SubstitutionList getTodayAllSummarized() {
         return getTodayAll().summarizeUp("-");
     }
 
-    @Nullable
+    @NonNull
     public static SubstitutionList getTomorrowAllSummarized() {
         return getTomorrowAll().summarizeUp("-");
     }

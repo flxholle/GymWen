@@ -266,9 +266,10 @@ class NotificationUtils {
 
             }
 
-            private fun notifMessageContent(content: SubstitutionList?, vp: SubstitutionPlan): String {
+            private fun notifMessageContent(content: SubstitutionList, vp: SubstitutionPlan): String {
                 val message = java.lang.StringBuilder()
-                if (content == null || content.getNoInternet()) {
+                val context = ApplicationFeatures.getContext()
+                if (content.getNoInternet()) {
                     return ""
                 }
                 if (content.size() == 0) {
@@ -277,17 +278,17 @@ class NotificationUtils {
                     if (vp.senior) {
                         for (line in content.entries) {
                             if (SubstitutionPlanFeatures.isNothing(line.teacher)) {
-                                message.append(line.hour).append(". Stunde entfällt\n")
+                                message.append(line.hour).append(". ").append(context.getString(R.string.share_msg_nothing_hour_senior)).append(" ").append(line.course).append("\n")
                             } else {
-                                message.append(line.hour).append(". Stunde, ").append(line.course).append(", ").append(line.room).append(", ").append(line.teacher).append(" ").append(line.moreInformation).append("\n")
+                                message.append(line.hour).append(". ").append(context.getString(R.string.share_msg_hour_senior)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")
                             }
                         }
                     } else {
                         for (line in content.entries) {
                             if (SubstitutionPlanFeatures.isNothing(line.teacher)) {
-                                message.append(line.hour).append(". Stunde entfällt\n")
+                                message.append(line.hour).append(". ").append(context.getString(R.string.share_msg_nothing_hour)).append("\n")
                             } else {
-                                message.append(line.hour).append(". Stunde ").append(line.subject).append(" bei ").append(line.teacher).append(", ").append(line.room).append(" ").append(line.moreInformation).append("\n")
+                                message.append(line.hour).append(". ").append(context.getString(R.string.share_msg_hour)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")
                             }
                         }
                     }
