@@ -45,6 +45,7 @@ class NotificationUtils {
         class CreateNotification(val alert: Boolean) : ApplicationFeatures.DownloadSubstitutionplanDocsTask() {
             private val summarize = PreferenceUtil.isSummarizeUp()
             private val alertForAllProfiles = PreferenceUtil.isMainNotifForAllProfiles()
+            private val dontChangeSummary = PreferenceUtil.isDontChangeSummary()
 
             override fun onPostExecute(v: Void?) {
                 super.onPostExecute(v)
@@ -63,7 +64,7 @@ class NotificationUtils {
 
             }
 
-            fun createNotification() {
+            private fun createNotification() {
                 if (ProfileManagement.isUninit())
                     ProfileManagement.reload()
 
@@ -129,15 +130,16 @@ class NotificationUtils {
                 for (i in profileList.indices) {
                     val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), profileList.get(i).coursesArray)
 
-                    if ((alertForAllProfiles || i == preferredProfilePos) && daySendInSummaryNotif != none) {
+                    if (i == preferredProfilePos && daySendInSummaryNotif != none && !dontChangeSummary) {
                         if (daySendInSummaryNotif == tomorrow) {
                             //Tomorrow
-                            val content = if (summarize) temp.getDay(false).summarizeUp("-") else temp.getDay(false)
+                            var content = temp.getDay(false)
                             try {
                                 countTomorrow.append(content.entries.size)
                                 countTomorrow.append(", ")
                                 countTotal.append(content.entries.size)
                                 countTotal.append(", ")
+                                content = if (summarize) temp.getDay(false).summarizeUp("-") else content
                                 if (content.size() != 0) {
                                     if (isMoreThanOneProfile) {
                                         messageTomorrow.append(ProfileManagement.getProfile(i).name)
@@ -153,12 +155,13 @@ class NotificationUtils {
                     }
 
                     //Today
-                    var content = if (summarize) temp.getDay(true).summarizeUp("-") else temp.getDay(true)
+                    var content = temp.getDay(true)
                     try {
                         countToday.append(content.entries.size)
                         countToday.append(", ")
                         countTotal.append(content.entries.size)
                         countTotal.append("|")
+                        content = if (summarize) temp.getDay(true).summarizeUp("-") else content
                         if (content.size() != 0) {
                             if (isMoreThanOneProfile) {
                                 messageToday.append(ProfileManagement.getProfile(i).name)
@@ -172,19 +175,18 @@ class NotificationUtils {
                     }
 
 
-                    if ((alertForAllProfiles || i == preferredProfilePos) && daySendInSummaryNotif != none) {
-                        countTotal.deleteCharAt(countTotal.lastIndexOf("|"))
-                        countTotal.append(", ")
+                    if (i == preferredProfilePos && daySendInSummaryNotif != none && !dontChangeSummary) {
                         continue
                     }
 
                     //Tomorrow
-                    content = if (summarize) temp.getDay(false).summarizeUp("-") else temp.getDay(false)
+                    content = temp.getDay(false)
                     try {
                         countTomorrow.append(content.entries.size)
                         countTomorrow.append(", ")
                         countTotal.append(content.entries.size)
                         countTotal.append(", ")
+                        content = if (summarize) temp.getDay(false).summarizeUp("-") else content
                         if (content.size() != 0) {
                             if (isMoreThanOneProfile) {
                                 messageTomorrow.append(ProfileManagement.getProfile(i).name)
@@ -234,6 +236,7 @@ class NotificationUtils {
                     SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
                     SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray(), NOTIFICATION_SUMMARY_ID_2)
                 } else {
+                    //Sort notification
                     val title = "${ApplicationFeatures.getContext().getString(R.string.notif_content_title)} $countTotal"
                     val content = titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow
                     SummaryNotification(title, content.split("\n").toTypedArray())
@@ -241,7 +244,7 @@ class NotificationUtils {
 
             }
 
-            fun notifMessageContent(content: SubstitutionList?, vp: SubstitutionPlan): String {
+            private fun notifMessageContent(content: SubstitutionList?, vp: SubstitutionPlan): String {
                 val message = java.lang.StringBuilder()
                 if (content == null || content.getNoInternet()) {
                     return ""
@@ -334,6 +337,7 @@ class NotificationUtils {
                         .setContentIntent(resultPendingIntent)
                         .setPriority(if (alert) NotificationCompat.PRIORITY_HIGH else NotificationCompat.PRIORITY_DEFAULT)
                         .setAutoCancel(true)
+                        .setWhen(System.currentTimeMillis())
                         .setOnlyAlertOnce(!alert)
 
                 if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("alwaysNotification", true)) {

@@ -153,6 +153,10 @@ public class PreferenceUtil {
         return getBooleanSettings("main_notif_for_all", false);
     }
 
+    public static boolean isDontChangeSummary() {
+        return getBooleanSettings("summary_notif_as_usual", false);
+    }
+
 
     //SubstitutionPlan
     @Nullable
