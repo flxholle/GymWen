@@ -89,6 +89,9 @@
     <string name="set_swipe_to_refresh">Herunterziehen zum Aktualisieren</string>
     <string name="set_at_filtered_plan">Auch beim gefilterten Plan</string>
     <string name="set_intelligent_hide">Intelligentes Ausblenden</string>
+    <string name="set_show_summary_notif_title">Zusammenfassende Benachrichtigung anzeigen</string>
+    <string name="set_show_summary_usual_title">Alle Profile in der zusammenfassenden Benachrichtigung anzeigen</string>
+    <string name="set_main_notif_for_all_title">Die prägnante Benachrichtigung für alle Profile senden</string>
 
 
     <!-- SubstitutionPlan -->
@@ -449,6 +452,9 @@
     <string name="set_desc_alwaysNotification">Die Benachrichtigung kann nur noch manuell ausgeblendet werden</string>
     <string name="set_desc_two_notifs">Für jeden Tag eine eigene Benachrichtigung anzeigen</string>
     <string name="set_desc_alarm">Die Benachrichtigung zu einer bestimmten Uhrzeit anzeigen</string>
+    <string name="set_main_notif_for_all_desc">Man kann in der Profil-Bearbeiten Ansicht ein Profil mit einem Stern auswählen. Normalerweise wird nur für dieses einzelne Profil eine prägnante Benachrichtigung gesendet. Ist gar keines ausgewählt wird auch keine prägnante Benachrichtigung gesendet.</string>
+    <string name="set_show_summary_usual_desc">Normalerweise werden die Profile die in der prägnanten Benachrichtigung sind, nicht in der zusammenfassenden gesendet</string>
+
 
     <string name="set_desc_substitution_fragment">Spezifische Einstellungen für den Vertretungsplan</string>
     <string name="set_desc_design_fragment">Einstellungen zur Veränderung der Darstellung</string>

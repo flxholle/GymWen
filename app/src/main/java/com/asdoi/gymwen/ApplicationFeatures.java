@@ -524,7 +524,8 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static void sendNotifications(boolean alert) {
-        new NotificationUtils.Companion.CreateNotification(alert).execute();
+        if (PreferenceUtil.isNotification())
+            new NotificationUtils.Companion.CreateNotification(alert).execute();
     }
 
     //Others

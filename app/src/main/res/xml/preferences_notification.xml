@@ -18,6 +18,23 @@
         android:title="@string/set_two_notifications"
         app:iconSpaceReserved="false"
         android:summary="@string/set_desc_two_notifs" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="main_notif_for_all"
+        android:title="@string/set_main_notif_for_all_title"
+        app:iconSpaceReserved="false"
+        android:summary="@string/set_main_notif_for_all_desc" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="showSummaryNotification"
+        android:title="@string/set_show_summary_notif_title"
+        app:iconSpaceReserved="false" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="summary_notif_as_usual"
+        android:title="@string/set_show_summary_usual_title"
+        app:iconSpaceReserved="true"
+        android:summary="@string/set_show_summary_usual_desc" />
     <Preference
         android:key="alarm"
         android:title="@string/set_notification_alarm"

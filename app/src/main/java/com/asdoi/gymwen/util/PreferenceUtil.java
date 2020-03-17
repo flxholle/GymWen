@@ -149,11 +149,23 @@ public class PreferenceUtil {
     }
 
     public static boolean isMainNotifForAllProfiles() {
-        return getBooleanSettings("main_notif_for_all", true);
+        return getBooleanSettings("main_notif_for_all", false);
     }
 
     public static boolean isDontChangeSummary() {
         return getBooleanSettings("summary_notif_as_usual", false);
+    }
+
+    public static boolean isNotification() {
+        return getBooleanSettings("showNotification", true);
+    }
+
+    public static boolean isAlwaysNotification() {
+        return getBooleanSettings("alwaysNotification", true);
+    }
+
+    public static boolean isSummaryNotification() {
+        return getBooleanSettings("showSummaryNotification", true);
     }
 
 

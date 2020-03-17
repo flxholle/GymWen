@@ -15,7 +15,6 @@ import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.graphics.drawable.toBitmap
-import androidx.preference.PreferenceManager
 import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver
@@ -365,7 +364,7 @@ class NotificationUtils {
                         .setWhen(System.currentTimeMillis())
                         .setOnlyAlertOnce(!alert)
 
-                if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("alwaysNotification", true)) {
+                if (PreferenceUtil.isAlwaysNotification()) {
                     builder.setOngoing(true)
                     builder.addAction(R.drawable.ic_close_black_24dp, ApplicationFeatures.getContext().getString(R.string.notif_dismiss), btPendingIntent)
                 }
@@ -424,6 +423,9 @@ class NotificationUtils {
             }
 
             private fun sendNotification() {
+                if (!PreferenceUtil.isSummaryNotification())
+                    return
+
                 val context = ApplicationFeatures.getContext()
 
                 //Intent
@@ -454,6 +456,7 @@ class NotificationUtils {
 
                 val builder = NotificationCompat.Builder(context, NOTIFICATION_SUMMARY_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_assignment_black_24dp)
+//                        .setLargeIcon(ApplicationFeatures.vectorToBitmap(R.mipmap.gymlogo))
                         .setStyle(style)
                         .setContentTitle(title)
                         .setContentIntent(resultPendingIntent)
@@ -465,7 +468,7 @@ class NotificationUtils {
                         .setPriority(Notification.PRIORITY_LOW)
                         .setOnlyAlertOnce(true)
 
-                if (PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("alwaysNotification", true)) {
+                if (PreferenceUtil.isAlwaysNotification()) {
                     builder.setOngoing(true)
                     builder.addAction(R.drawable.ic_close_black_24dp, ApplicationFeatures.getContext().getString(R.string.notif_dismiss), btPendingIntent)
                 }

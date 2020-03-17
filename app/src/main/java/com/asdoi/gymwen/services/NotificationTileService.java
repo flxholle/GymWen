@@ -14,6 +14,7 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
+import com.asdoi.gymwen.util.PreferenceUtil;
 
 @TargetApi(24)
 public class NotificationTileService extends TileService {
@@ -21,7 +22,7 @@ public class NotificationTileService extends TileService {
     @Override
     public void onStartListening() {
         Tile tile = getQsTile();
-        if (ApplicationFeatures.getBooleanSettings("showNotification", true)) {
+        if (PreferenceUtil.isNotification()) {
             tile.setIcon(Icon.createWithResource(this, R.drawable.ic_notifications_black_24dp));
             tile.setState(Tile.STATE_ACTIVE);
             tile.setContentDescription(getString(R.string.on));
@@ -41,7 +42,7 @@ public class NotificationTileService extends TileService {
             return;
         }
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
-        boolean showNotifNew = !sharedPreferences.getBoolean("showNotification", true);
+        boolean showNotifNew = !PreferenceUtil.isNotification();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("showNotification", showNotifNew);
         if (showNotifNew) {
