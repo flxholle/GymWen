@@ -446,8 +446,6 @@
     <string name="set_desc_show_borders">Alle Lehrerkürzel, die angeklickt werden können, umranden</string>
     <string name="set_desc_old_substitution">Altes Aussehen des Vertretungsplans (kann auch über die Farbpalette in der Titelleiste geändert werden)</string>
     <string name="set_desc_old_title">Die Überschrift im alten Design anzeigen.</string>
-    <string name="set_desc_swipe_to_refresh"></string>
-    <string name="set_desc_swipe_to_refresh_filtered"></string>
 
     <string name="set_desc_alwaysNotification">Die Benachrichtigung kann nur noch manuell ausgeblendet werden</string>
     <string name="set_desc_two_notifs">Für jeden Tag eine eigene Benachrichtigung anzeigen</string>
