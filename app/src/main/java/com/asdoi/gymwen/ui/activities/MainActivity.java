@@ -150,7 +150,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         checkRegistration();
 
         if (!PreferenceUtil.isAlarmOn(this)) {
-            ApplicationFeatures.cancelAlarm(getContext(), AlarmReceiver.class);
+            ApplicationFeatures.cancelAlarm(getContext(), AlarmReceiver.class, AlarmReceiver.AlarmReceiverID);
         }
         setupMenuItems(navigationView);
 

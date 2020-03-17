@@ -599,7 +599,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
     @Override
     public void onTimeSet(@NonNull TimePickerDialog view, int hourOfDay, int minute, int second) {
         PreferenceUtil.setAlarmTime(hourOfDay, minute, second);
-        ApplicationFeatures.setAlarm(this, AlarmReceiver.class, hourOfDay, minute, second);
+        ApplicationFeatures.setAlarm(this, AlarmReceiver.class, hourOfDay, minute, second, AlarmReceiver.AlarmReceiverID);
         view.dismiss();
     }
 

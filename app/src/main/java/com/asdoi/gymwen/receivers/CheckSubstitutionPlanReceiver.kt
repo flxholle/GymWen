@@ -7,6 +7,7 @@ import android.content.Intent
 import com.asdoi.gymwen.ApplicationFeatures
 import java.util.*
 
+
 class CheckSubstitutionPlanReceiver : BroadcastReceiver() {
 
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
@@ -20,6 +21,7 @@ class CheckSubstitutionPlanReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        const val CheckSubstitutionPlanReceiverID = 250
         private val times = listOf(listOf(6, 30, 0),
                 listOf(6, 50, 0),
                 listOf(7, 10, 0),

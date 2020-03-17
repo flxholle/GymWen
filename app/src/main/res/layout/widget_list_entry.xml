@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
-        android:layout_weight="@integer/substitution_specific_entry_hour"
+        android:layout_weight="@integer/substitution_specific_entry_hour_summary"
         android:background="@color/colorAccent"
         android:gravity="center"
         android:paddingStart="5dp"

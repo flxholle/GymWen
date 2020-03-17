@@ -203,7 +203,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
             content.setSpan(UnderlineSpan(), 0, content.length, 0)
             view.setTextViewText(R.id.substitution_specific_entry_textViewRoom, content)
         } else {
-            val content = SpannableString(entry.room)
+            val content = SpannableString(entry.teacher)
             content.setSpan(UnderlineSpan(), 0, content.length, 0)
             view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, content)
             //            view.setTextViewTextSize(R.id.vertretung_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 20);

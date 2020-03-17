@@ -70,7 +70,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 import saschpe.android.customtabs.CustomTabsActivityLifecycleCallbacks;
 
@@ -151,7 +150,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static void initSubstitutionPlanReceiver() {
         //Setup CheckSubstitutionPlanReceiver
         List<Integer> time = CheckSubstitutionPlanReceiver.Companion.getNextTime();
-        ApplicationFeatures.setAlarm(getContext(), CheckSubstitutionPlanReceiver.class, time.get(0), time.get(1), time.get(2));
+        ApplicationFeatures.setAlarm(getContext(), CheckSubstitutionPlanReceiver.class, time.get(0), time.get(1), time.get(2), CheckSubstitutionPlanReceiver.CheckSubstitutionPlanReceiverID);
     }
 
     //Download Doc
@@ -599,13 +598,14 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Schedule and TimePicker
-    public static void setAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second) {
+    public static void setAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second, int id) {
         // cancel already scheduled reminders
-        cancelAlarm(context, cls);
+        cancelAlarm(context, cls, id);
 
         Calendar currentCalendar = Calendar.getInstance();
 
         Calendar customCalendar = Calendar.getInstance();
+        customCalendar.setTimeInMillis(System.currentTimeMillis());
         customCalendar.set(Calendar.HOUR_OF_DAY, hour);
         customCalendar.set(Calendar.MINUTE, min);
         customCalendar.set(Calendar.SECOND, second);
@@ -622,25 +622,29 @@ public class ApplicationFeatures extends MultiDexApplication {
                 PackageManager.DONT_KILL_APP);
 
 
-        Intent intent1 = new Intent(context, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(ApplicationFeatures.getContext(), UUID.randomUUID().hashCode(), intent1, 0);
+        Intent intent = new Intent(context, cls);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), id, intent, 0);
 
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, customCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        long startTime = customCalendar.getTimeInMillis();
+        if (Build.VERSION.SDK_INT < 23) {
+            if (Build.VERSION.SDK_INT >= 19) {
+                if (System.currentTimeMillis() < startTime)
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
+            } else {
+                if (System.currentTimeMillis() < startTime)
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
+            }
+        } else {
+            if (System.currentTimeMillis() < startTime)
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
+        }
     }
 
-    public static void cancelAlarm(@NonNull Context context, @NonNull Class<?> cls) {
-        // Disable a receiver
-        ComponentName receiver = new ComponentName(context, cls);
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);
-
-        Intent intent1 = new Intent(context, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, UUID.randomUUID().hashCode(), intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+    public static void cancelAlarm(@NonNull Context context, @NonNull Class<?> cls, int id) {
+        Intent intent = new Intent(context, cls);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.cancel(pendingIntent);
         pendingIntent.cancel();

@@ -238,6 +238,7 @@ class NotificationUtils {
                         SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray())
                         return
                     }
+                    return
                 }
 
                 if (twoNotifs) {

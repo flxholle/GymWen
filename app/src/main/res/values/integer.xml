@@ -5,7 +5,7 @@
     <integer name="substitution_specific_entry_subject">3</integer>
     <integer name="substitution_specific_entry_teacher">2</integer>
     <integer name="substitution_specific_entry_room">3</integer>
-    <integer name="substitution_specific_entry_other">4</integer>
+    <integer name="substitution_specific_entry_other">3</integer>
     <integer name="substitution_specific_entry_course">1</integer>
 
     <integer name="substitution_specific_entry_hour_long">4</integer>

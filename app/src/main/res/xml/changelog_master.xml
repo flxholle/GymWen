@@ -3,8 +3,10 @@
     <release
         version="1.2.0"
         versioncode="120">
+        <change>Neue Benachrichtigung (und passende Einstellungen)</change>
         <change>Startbildschirm-Shortcuts hinzugefügt</change>
-        <change>Herunterwischen zum Aktualisieren (nur beim ungefilterten Plan)</change>
+        <change>Herunterwischen zum Aktualisieren (nur beim ungefilterten Plan -> Einstellungen)
+        </change>
     </release>
     <release
         version="1.1.3"
