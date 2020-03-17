@@ -38,6 +38,10 @@ const val NOTIFICATION_SUMMARY_ID_2 = -50
 class NotificationUtils {
 
     companion object {
+        const val today = 1
+        const val tomorrow = 2
+        const val none = -1
+
         class CreateNotification(val alert: Boolean) : ApplicationFeatures.DownloadSubstitutionplanDocsTask() {
             private val summarize = PreferenceUtil.isSummarizeUp()
             private val alertForAllProfiles = PreferenceUtil.isMainNotifForAllProfiles()
@@ -71,19 +75,19 @@ class NotificationUtils {
                 var titleTomorrow = titleTomorrowArray.date + ", " + titleTomorrowArray.dayOfWeek + ":"
 
                 //Send main notif for preferred Profile
-                var daySendInSummaryNotif = -1 //1 = today; 2 = tomorrow
+                var daySendInSummaryNotif = none //1 = today; 2 = tomorrow
 
                 val preferredProfile = ProfileManagement.getPreferredProfile()
                 val preferredProfilePos = if (alertForAllProfiles) -5 else ProfileManagement.getPreferredProfilePosition()
 
                 if (preferredProfile != null || alertForAllProfiles) {
-                    var whichDayIsToday = -1
+                    var whichDayIsToday = none
                     val titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode()
                     val titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode()
                     if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
-                        whichDayIsToday = 1
+                        whichDayIsToday = today
                     else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
-                        whichDayIsToday = 2
+                        whichDayIsToday = tomorrow
 
                     var checkProfileList = mutableListOf<Profile>()
                     if (!alertForAllProfiles && preferredProfile != null)
@@ -94,15 +98,15 @@ class NotificationUtils {
                     for (p in checkProfileList.indices) {
                         val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), checkProfileList.get(p).coursesArray)
                         daySendInSummaryNotif = when (whichDayIsToday) {
-                            1 -> {
+                            today -> {
                                 MainNotification(SubstitutionPlanFeatures.getTodayTitleString(), temp.getDay(true), alert, p)
-                                2
+                                tomorrow
                             }
-                            2 -> {
+                            tomorrow -> {
                                 MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), temp.getDay(false), alert, p)
-                                1
+                                today
                             }
-                            else -> -1
+                            else -> none
                         }
                     }
                 }
@@ -125,8 +129,8 @@ class NotificationUtils {
                 for (i in profileList.indices) {
                     val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), profileList.get(i).coursesArray)
 
-                    if ((alertForAllProfiles || i == preferredProfilePos) && daySendInSummaryNotif > 0) {
-                        if (daySendInSummaryNotif == 2) {
+                    if ((alertForAllProfiles || i == preferredProfilePos) && daySendInSummaryNotif != none) {
+                        if (daySendInSummaryNotif == tomorrow) {
                             //Tomorrow
                             val content = if (summarize) temp.getDay(false).summarizeUp("-") else temp.getDay(false)
                             try {
@@ -153,13 +157,8 @@ class NotificationUtils {
                     try {
                         countToday.append(content.entries.size)
                         countToday.append(", ")
-                        if (alertForAllProfiles) {
-                            countTotal.append(content.entries.size)
-                            countTotal.append(", ")
-                        } else {
-                            countTotal.append(content.entries.size)
-                            countTotal.append("|")
-                        }
+                        countTotal.append(content.entries.size)
+                        countTotal.append("|")
                         if (content.size() != 0) {
                             if (isMoreThanOneProfile) {
                                 messageToday.append(ProfileManagement.getProfile(i).name)
@@ -172,11 +171,11 @@ class NotificationUtils {
                         e.printStackTrace()
                     }
 
-                    if ((alertForAllProfiles || i == preferredProfilePos) && daySendInSummaryNotif > 0) {
-                        if (alertForAllProfiles)
-                            continue
-                        else
-                            break
+
+                    if ((alertForAllProfiles || i == preferredProfilePos) && daySendInSummaryNotif != none) {
+                        countTotal.deleteCharAt(countTotal.lastIndexOf("|"))
+                        countTotal.append(", ")
+                        continue
                     }
 
                     //Tomorrow
@@ -217,12 +216,12 @@ class NotificationUtils {
 
                 val twoNotifs = PreferenceUtil.isTwoNotifications()
 
-                if (!isMoreThanOneProfile) {
-                    if (daySendInSummaryNotif == 1) {
+                if (!isMoreThanOneProfile || alertForAllProfiles) {
+                    if (daySendInSummaryNotif == today) {
                         titleToday = "$titleToday $countToday"
                         SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
                         return
-                    } else if (daySendInSummaryNotif == 2) {
+                    } else if (daySendInSummaryNotif == tomorrow) {
                         titleTomorrow = "$titleTomorrow $countTomorrow"
                         SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray())
                         return
@@ -232,16 +231,14 @@ class NotificationUtils {
                 if (twoNotifs) {
                     titleToday = "$titleToday $countToday"
                     titleTomorrow = "$titleTomorrow $countTomorrow"
-                    if (!(isNoToday && daySendInSummaryNotif == 1 && alertForAllProfiles))
-                        SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
-                    if (!(isNoTomorrow && daySendInSummaryNotif == 2 && alertForAllProfiles)) {
-                        SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray(), NOTIFICATION_SUMMARY_ID_2)
-                    }
+                    SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
+                    SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray(), NOTIFICATION_SUMMARY_ID_2)
                 } else {
                     val title = "${ApplicationFeatures.getContext().getString(R.string.notif_content_title)} $countTotal"
                     val content = titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow
                     SummaryNotification(title, content.split("\n").toTypedArray())
                 }
+
             }
 
             fun notifMessageContent(content: SubstitutionList?, vp: SubstitutionPlan): String {
@@ -357,10 +354,10 @@ class NotificationUtils {
 
             fun createMessage(entry: SubstitutionEntry): List<String> {
                 val context = ApplicationFeatures.getContext()
-                if (SubstitutionPlanFeatures.isNothing(entry.teacher)) {
-                    return listOf("${entry.hour}. ${context.getString(R.string.share_msg_nothing_hour)}", entry.moreInformation)
+                return if (SubstitutionPlanFeatures.isNothing(entry.teacher)) {
+                    listOf("${entry.hour}. ${context.getString(R.string.share_msg_nothing_hour)}", entry.moreInformation)
                 } else {
-                    return listOf("${entry.hour}. ${context.getString(R.string.share_msg_hour)} ${context.getString(R.string.share_msg_in_room)} ${entry.room} ${context.getString(R.string.with_teacher)} ${entry.teacher}", "${entry.moreInformation} (${entry.course})")
+                    listOf("${entry.hour}. ${context.getString(R.string.share_msg_hour)} ${context.getString(R.string.share_msg_in_room)} ${entry.room} ${context.getString(R.string.with_teacher)} ${entry.teacher}", "${entry.moreInformation} (${entry.course})")
                 }
 
             }
@@ -419,8 +416,11 @@ class NotificationUtils {
                 for (s in content) {
                     style.addLine(s)
                 }
-                if (content.size > 7) {
-                    style.setSummaryText("+" + (content.size - 7) + " " + context.getString(R.string.more))
+
+                val maxLineSize = 6
+
+                if (content.size > maxLineSize) {
+                    style.setSummaryText("+" + (content.size - maxLineSize) + " " + context.getString(R.string.more))
                 }
 
                 val builder = NotificationCompat.Builder(context, NOTIFICATION_SUMMARY_CHANNEL_ID)
