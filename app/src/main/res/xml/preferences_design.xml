@@ -57,13 +57,11 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="swipe_to_refresh"
-            android:summary="@string/set_desc_swipe_to_refresh"
             android:title="@string/set_swipe_to_refresh"
             app:iconSpaceReserved="false" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="swipe_to_refresh_filtered"
-            android:summary="@string/set_desc_swipe_to_refresh_filtered"
             android:title="@string/set_at_filtered_plan"
             app:iconSpaceReserved="true" />
     </PreferenceCategory>

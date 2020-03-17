@@ -15,25 +15,27 @@ import kotlin.concurrent.thread
 /**
  * Implementation of App Widget functionality.
  */
+const val WIDGET_REFRESH_KEY = "mywidgetrefreshid"
+
 class RefreshWidget : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent!!.hasExtra(WIDGET_REFRESH_KEY)) {
             val ids = intent.extras!!.getIntArray(WIDGET_REFRESH_KEY)
-            onUpdate(context!!, AppWidgetManager.getInstance(context), ids!!)
+            thread(true) {
+                ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true)
+                ApplicationFeatures.sendNotifications(true)
+                onUpdate(context!!, AppWidgetManager.getInstance(context), ids!!)
+            }
+
         } else
             super.onReceive(context, intent)
     }
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
-        thread(true) {
-//            setColors(getThemeInt(context), context)
-            ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true)
-            ApplicationFeatures.sendNotifications(true)
-            for (appWidgetId in appWidgetIds) {
-                updateAppWidget(context, appWidgetManager, appWidgetId)
-            }
+        for (appWidgetId in appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId)
         }
     }
 
@@ -63,10 +65,6 @@ class RefreshWidget : AppWidgetProvider() {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
-    }
-
-    companion object {
-        const val WIDGET_REFRESH_KEY = "mywidgetrefreshid"
     }
 }
 
