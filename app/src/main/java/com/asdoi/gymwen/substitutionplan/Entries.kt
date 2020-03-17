@@ -56,7 +56,6 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
     }
 
     /**
-     * @param value a substitution plan array with hours as the second entry
      * @return a plan array with all hours replaced with their matching times
      */
     //Times

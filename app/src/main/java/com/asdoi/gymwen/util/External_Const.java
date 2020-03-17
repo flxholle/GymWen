@@ -4,7 +4,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 
 /**
- * Class that saves constants the can change in the future
+ * Class that saves constants that can change in the future
  */
 public abstract class External_Const {
 

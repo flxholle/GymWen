@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
@@ -159,25 +158,25 @@ public class PreferenceUtil {
 
 
     //SubstitutionPlan
-    @Nullable
+    @NonNull
     public static String getUsername(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("username", "");
     }
 
-    @Nullable
+    @NonNull
     public static String getPassword(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("password", "");
     }
 
-    @Nullable
+    @NonNull
     public static String getTodayURL(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("today_url", External_Const.todayURL);
     }
 
-    @Nullable
+    @NonNull
     public static String getTomorrowURL(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("tomorrow_url", External_Const.tomorrowURL);
@@ -188,7 +187,7 @@ public class PreferenceUtil {
     }
 
     //TeacherlistFeatures
-    @Nullable
+    @NonNull
     public static String getTeacherlistURL(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString("teacherlist_url", External_Const.teacherlistUrl);

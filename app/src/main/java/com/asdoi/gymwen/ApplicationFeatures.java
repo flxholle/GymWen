@@ -70,6 +70,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import saschpe.android.customtabs.CustomTabsActivityLifecycleCallbacks;
 
@@ -128,10 +129,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         ACRA.init(this);
         initRosetta();
         ProfileManagement.reload();
-
-        //Setup CheckSubstitutionPlanReceiver
-        List<Integer> time = CheckSubstitutionPlanReceiver.Companion.getNextTime();
-        ApplicationFeatures.setAlarm(getContext(), CheckSubstitutionPlanReceiver.class, time.get(0), time.get(1), time.get(2));
+        initSubstitutionPlanReceiver();
 
         // Preload custom tabs service for improved performance
         // This is optional but recommended
@@ -148,6 +146,12 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     public static Context getContext() {
         return mContext;
+    }
+
+    public static void initSubstitutionPlanReceiver() {
+        //Setup CheckSubstitutionPlanReceiver
+        List<Integer> time = CheckSubstitutionPlanReceiver.Companion.getNextTime();
+        ApplicationFeatures.setAlarm(getContext(), CheckSubstitutionPlanReceiver.class, time.get(0), time.get(1), time.get(2));
     }
 
     //Download Doc
@@ -458,10 +462,6 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Notification
-    final public static int NOTIFICATION_INFO_ID = 1;
-    final public static int NOTIFICATION_INFO_ID_2 = 2;
-    final public static String NOTIFICATION_SUMMARY_CHANNEL_ID = "Substitutionplan_01";
-
     //Check if sth has changed -> Send Notification
     public static void checkSubstitutionPlan(boolean alert) {
         if (SubstitutionPlanFeatures.isUninit())
@@ -622,7 +622,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
         Intent intent1 = new Intent(context, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(ApplicationFeatures.getContext(), 0, intent1, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ApplicationFeatures.getContext(), UUID.randomUUID().hashCode(), intent1, 0);
 
 
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
@@ -639,7 +639,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 PackageManager.DONT_KILL_APP);
 
         Intent intent1 = new Intent(context, cls);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, UUID.randomUUID().hashCode(), intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.cancel(pendingIntent);
         pendingIntent.cancel();

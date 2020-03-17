@@ -755,7 +755,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     //after the user has selected a location you get an uri where you can write your data to:
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SOME_INTEGER && resultCode == Activity.RESULT_OK) {
             Uri uri = data.getData();

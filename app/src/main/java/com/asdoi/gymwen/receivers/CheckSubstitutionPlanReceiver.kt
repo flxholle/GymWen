@@ -11,14 +11,12 @@ class CheckSubstitutionPlanReceiver : BroadcastReceiver() {
 
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context?, intent: Intent?) {
-//            when (intent?.action) {
-////                Intent.ACTION_LOCKED_BOOT_COMPLETED -> sendNotif()
-//                //@see AlarmReceiver
-//
-//            }
+        ApplicationFeatures.initSubstitutionPlanReceiver()
+        when (intent?.action) {
+            Intent.ACTION_LOCKED_BOOT_COMPLETED ->
+                return
+        }
         ApplicationFeatures.checkSubstitutionPlan(true)
-        val time = getNextTime()
-        ApplicationFeatures.setAlarm(context!!, CheckSubstitutionPlanReceiver::class.java, time[0], time[1], time[2])
     }
 
     companion object {

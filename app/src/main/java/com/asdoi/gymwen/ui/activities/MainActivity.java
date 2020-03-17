@@ -124,6 +124,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         ApplicationFeatures.sendNotifications();
 
+        ApplicationFeatures.initSubstitutionPlanReceiver();
+
         initSpinner();
 
         if (!SubstitutionPlanFeatures.isUninit()) {
