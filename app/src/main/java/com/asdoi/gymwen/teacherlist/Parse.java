@@ -119,19 +119,19 @@ abstract class Parse {
             String s1 = s.getShort().toUpperCase(Locale.getDefault());
             if (s1.contains(search.toUpperCase(Locale.getDefault()))) {
                 list.add(s);
-                break;
+                continue;
             }
 
             s1 = s.getName().toUpperCase(Locale.getDefault());
             if (s1.contains(search.toUpperCase(Locale.getDefault()))) {
                 list.add(s);
-                break;
+                continue;
             }
 
             s1 = s.getFirst_name().toUpperCase(Locale.getDefault());
             if (s1.contains(search.toUpperCase(Locale.getDefault()))) {
                 list.add(s);
-                break;
+                continue;
             }
 
         }

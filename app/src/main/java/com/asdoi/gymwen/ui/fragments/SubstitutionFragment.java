@@ -375,7 +375,6 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     private void teacherSearch(@NonNull String query) {
-
         new Thread(() -> {
             try {
                 ApplicationFeatures.downloadTeacherlistDoc();
