@@ -17,7 +17,9 @@ class CheckSubstitutionPlanReceiver : BroadcastReceiver() {
             Intent.ACTION_LOCKED_BOOT_COMPLETED ->
                 return
         }
-        ApplicationFeatures.checkSubstitutionPlan(true)
+        Thread {
+            ApplicationFeatures.checkSubstitutionPlan(true)
+        }.start()
     }
 
     companion object {

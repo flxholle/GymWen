@@ -459,9 +459,13 @@ public class ApplicationFeatures extends MultiDexApplication {
         return url;
     }
 
-
     //Notification
-    //Check if sth has changed -> Send Notification
+
+    /**
+     * @param alert show Notification with sound or without sound
+     *              Check if sth has changed -> Send Notification
+     *              WatchOut: Network on Main Thread -> Always run this method inside a non-main thread
+     */
     public static void checkSubstitutionPlan(boolean alert) {
         if (SubstitutionPlanFeatures.isUninit())
             SubstitutionPlanFeatures.reloadDocs();
