@@ -122,6 +122,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return;
         }
 
+        PreferenceUtil.setMainNotifForAllProfiles(PreferenceUtil.isParents());
+
         ApplicationFeatures.sendNotifications();
 
         ApplicationFeatures.initSubstitutionPlanReceiver();
@@ -130,7 +132,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         if (!SubstitutionPlanFeatures.isUninit()) {
             onNavigationItemSelected(R.id.nav_at_one_glance);
-//            navigationView.getMenu().getItem(0).setChecked(true);
         }
         toggle.syncState();
 
@@ -249,12 +250,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsDisable.add(menu.findItem(R.id.nav_mebis));
             itemsDisable.add(menu.findItem(R.id.nav_timetable));
             itemsDisable.add(menu.findItem(R.id.nav_grades));
+            itemsDisable.add(menu.findItem(R.id.nav_colorush));
         } else {
             itemsDisable.add(menu.findItem(R.id.nav_claxss));
             itemsDisable.add(menu.findItem(R.id.nav_forms));
             itemsEnable.add(menu.findItem(R.id.nav_mebis));
             itemsEnable.add(menu.findItem(R.id.nav_timetable));
             itemsEnable.add(menu.findItem(R.id.nav_grades));
+            itemsEnable.add(menu.findItem(R.id.nav_colorush));
         }
 
         if (PreferenceUtil.isAtOneGlanceMenu()) {
@@ -302,6 +305,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         else
             itemsDisable.add(menu.findItem(R.id.nav_mensa));
 
+        //Enable items
         try {
             for (MenuItem i : itemsEnable) {
                 i.setEnabled(true);
@@ -312,6 +316,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             e.printStackTrace();
         }
 
+        //Disable items
         try {
             for (MenuItem i : itemsDisable) {
                 i.setEnabled(false);

@@ -152,6 +152,10 @@ public class PreferenceUtil {
         return getBooleanSettings("main_notif_for_all", false);
     }
 
+    public static void setMainNotifForAllProfiles(boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putBoolean("main_notif_for_all", value).apply();
+    }
+
     public static boolean isDontChangeSummary() {
         return getBooleanSettings("summary_notif_as_usual", false);
     }
