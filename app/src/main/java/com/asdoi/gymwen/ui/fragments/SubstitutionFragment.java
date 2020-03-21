@@ -1002,7 +1002,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         TextView subject = view.findViewById(R.id.substitution_specific_entry_textViewSubject);
         if (senior) {
             subject.setText(entry.getCourse());
-            subject.setOnClickListener((View v) -> showRemovePopup(subject, entry.getHour()));
+            subject.setOnClickListener((View v) -> showRemovePopup(subject, entry.getCourse()));
         } else {
             subject.setText(entry.getSubject());
         }
@@ -1058,7 +1058,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         TextView course = view.findViewById(R.id.substitution_specific_entry_textViewClass);
         if (senior) {
-            course.setText(entry.getCourse());
+            course.setText(entry.getSubject());
         } else {
             course.setText(entry.getCourse());
             //Only useful for senior with more than one course
