@@ -59,13 +59,13 @@
                     android:icon="@drawable/ic_graduate_cap"
                     android:title="@string/menu_mebis" />
                 <item
-                    android:id="@+id/nav_mensa"
-                    android:icon="@drawable/ic_restaurant"
-                    android:title="@string/menu_mensa" />
-                <item
                     android:id="@+id/nav_claxss"
                     android:icon="@drawable/ic_domain"
                     android:title="@string/menu_claxss" />
+                <item
+                    android:id="@+id/nav_mensa"
+                    android:icon="@drawable/ic_restaurant"
+                    android:title="@string/menu_mensa" />
                 <item
                     android:id="@+id/nav_shop"
                     android:icon="@drawable/ic_t_shirt"

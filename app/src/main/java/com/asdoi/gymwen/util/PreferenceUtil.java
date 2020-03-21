@@ -141,7 +141,7 @@ public class PreferenceUtil {
     }
 
     public static boolean isSwipeToRefreshFiltered() {
-        return getBooleanSettings("swipe_to_refresh_filtered", false);
+        return getBooleanSettings("swipe_to_refresh_filtered", true);
     }
 
     public static boolean isIntelligentHide() {
@@ -166,6 +166,10 @@ public class PreferenceUtil {
 
     public static boolean isSummaryNotification() {
         return getBooleanSettings("showSummaryNotification", true);
+    }
+
+    public static boolean isMensa() {
+        return getBooleanSettings("menu_mensa", true);
     }
 
 

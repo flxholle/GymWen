@@ -297,6 +297,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         else
             itemsDisable.add(menu.findItem(R.id.nav_navigation));
 
+        if (PreferenceUtil.isMensa())
+            itemsEnable.add(menu.findItem(R.id.nav_mensa));
+        else
+            itemsDisable.add(menu.findItem(R.id.nav_mensa));
+
         try {
             for (MenuItem i : itemsEnable) {
                 i.setEnabled(true);

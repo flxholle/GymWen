@@ -12,7 +12,7 @@
         android:key="intelligent_hide"
         android:summary="@string/set_desc_intelligent_hide"
         android:title="@string/set_intelligent_hide"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="true" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="show_days"
@@ -42,6 +42,11 @@
         android:defaultValue="true"
         android:key="menu_news"
         android:title="@string/menu_news"
+        app:iconSpaceReserved="false" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="menu_mensa"
+        android:title="@string/menu_mensa"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="false"
