@@ -124,8 +124,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         PreferenceUtil.setMainNotifForAllProfiles(PreferenceUtil.isParents());
 
-        ApplicationFeatures.sendNotifications();
-
         ApplicationFeatures.initSubstitutionPlanReceiver();
 
         initSpinner();
@@ -185,6 +183,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     public void onStart() {
         super.onStart();
+
+        ApplicationFeatures.sendNotifications();
+
         //Apply Shortcut functions
         Intent i = getIntent();
         if (i != null && i.getAction() != null) {

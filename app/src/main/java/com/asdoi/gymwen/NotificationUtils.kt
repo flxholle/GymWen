@@ -298,6 +298,7 @@ class NotificationUtils {
 
         private class MainNotification(var title: String, val content: SubstitutionList, val senior: Boolean, val profileName: String, var alert: Boolean, val id: Int = NOTIFICATION_MAIN_ID) {
             var nothing: Boolean = false
+            var isOmitted: Boolean = false
 
             init {
                 if (content.entries.size == 0) {
@@ -315,10 +316,13 @@ class NotificationUtils {
 
                 var j = 0
                 for (con in content.entries) {
-                    val color = if (SubstitutionPlanFeatures.isNothing(con.teacher))
-                        ContextCompat.getColor(context, R.color.notification_icon_background_omitted)
-                    else
-                        ContextCompat.getColor(context, R.color.notification_icon_background_substitution)
+                    var color: Int
+                    if (SubstitutionPlanFeatures.isNothing(con.teacher)) {
+                        color = ContextCompat.getColor(context, R.color.notification_icon_background_omitted)
+                        isOmitted = true
+                    } else {
+                        color = ContextCompat.getColor(context, R.color.notification_icon_background_substitution)
+                    }
 
                     val textColor = if (SubstitutionPlanFeatures.isNothing(con.teacher))
                         ContextCompat.getColor(context, R.color.notification_icon_text_omitted)
@@ -339,9 +343,7 @@ class NotificationUtils {
                     val person = Person.Builder().setName(context.getString(R.string.notif_nothing)).setIcon(IconCompat.createWithBitmap(ApplicationFeatures.vectorToBitmap(R.drawable.ic_check))).build()
                     val message1 = NotificationCompat.MessagingStyle.Message(if (!profileName.trim().isEmpty()) " ($profileName)"; else "", 0.toLong(), person)
                     style.addMessage(message1)
-                } /*else {
-                    title = "$title ($profileName)"
-                }*/
+                }
 
 
                 //Intent
@@ -364,8 +366,15 @@ class NotificationUtils {
                         .setContentIntent(resultPendingIntent)
                         .setPriority(if (alert) NotificationCompat.PRIORITY_HIGH else NotificationCompat.PRIORITY_DEFAULT)
                         .setAutoCancel(true)
-                        .setWhen(System.currentTimeMillis())
+                        .setShowWhen(false)
                         .setOnlyAlertOnce(!alert)
+
+                if (nothing)
+                    builder.color = ContextCompat.getColor(context, R.color.notification_icon_nothing_background)
+                else if (isOmitted)
+                    builder.color = ContextCompat.getColor(context, R.color.notification_icon_background_omitted)
+                else
+                    builder.color = ContextCompat.getColor(context, R.color.notification_icon_background_substitution)
 
                 if (PreferenceUtil.isAlwaysNotification()) {
                     builder.setOngoing(true)
@@ -393,25 +402,27 @@ class NotificationUtils {
 
             }
 
-            private fun createNotificationChannel(context: Context) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    val notificationChannel = NotificationChannel(NOTIFICATION_MAIN_CHANNEL_ID, context.getString(R.string.notification_main_channel_title), NotificationManager.IMPORTANCE_HIGH)
+            companion object {
+                private fun createNotificationChannel(context: Context) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                        val notificationChannel = NotificationChannel(NOTIFICATION_MAIN_CHANNEL_ID, context.getString(R.string.notification_main_channel_title), NotificationManager.IMPORTANCE_HIGH)
 
-                    // Configure the notification channel.
-                    notificationChannel.description = context.getString(R.string.notification_main_channel_description)
-                    notificationChannel.enableLights(true)
-                    notificationChannel.lightColor = ContextCompat.getColor(context, R.color.colorAccent)
-                    notificationChannel.enableVibration(true)
-                    notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null)
-                    notificationManager.createNotificationChannel(notificationChannel)
-                    notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-                    notificationManager.createNotificationChannel(notificationChannel)
+                        // Configure the notification channel.
+                        notificationChannel.description = context.getString(R.string.notification_main_channel_description)
+                        notificationChannel.enableLights(true)
+                        notificationChannel.lightColor = ContextCompat.getColor(context, R.color.colorAccent)
+                        notificationChannel.enableVibration(true)
+                        notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null)
+                        notificationManager.createNotificationChannel(notificationChannel)
+                        notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                        notificationManager.createNotificationChannel(notificationChannel)
+                    }
                 }
             }
         }
 
-        class SummaryNotification(val title: String, var content: Array<String>, val id: Int = NOTIFICATION_SUMMARY_ID_1) {
+        private class SummaryNotification(val title: String, var content: Array<String>, val id: Int = NOTIFICATION_SUMMARY_ID_1) {
             init {
                 val contentList = mutableListOf<String>()
                 for (s in content) {
@@ -459,7 +470,7 @@ class NotificationUtils {
 
                 val builder = NotificationCompat.Builder(context, NOTIFICATION_SUMMARY_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_assignment_black_24dp)
-//                        .setLargeIcon(ApplicationFeatures.vectorToBitmap(R.mipmap.gymlogo))
+                        .setShowWhen(false)
                         .setStyle(style)
                         .setContentTitle(title)
                         .setContentIntent(resultPendingIntent)
@@ -467,7 +478,6 @@ class NotificationUtils {
                         .setAutoCancel(true)
                         .setOnlyAlertOnce(true)
                         .setDefaults(Notification.DEFAULT_ALL)
-                        .setWhen(System.currentTimeMillis())
                         .setPriority(Notification.PRIORITY_LOW)
                         .setOnlyAlertOnce(true)
 

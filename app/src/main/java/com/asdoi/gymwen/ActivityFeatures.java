@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
 import android.graphics.Color;
@@ -201,10 +200,8 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                     .addDefaultShareMenuItem()
                     .setToolbarColor(ApplicationFeatures.getPrimaryColor(this))
                     .setShowTitle(true)
-                    .setCloseButtonIcon(BitmapFactory.decodeResource(context.getResources(), R.attr.colorPrimary))
                     .build();
 
-//            customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             // This is optional but recommended
             CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
 
@@ -249,6 +246,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
                         }
                     })*/
                     .setIcon(R.drawable.ic_system_update_black_24dp)
+                    .showEvery(3)
                     .showAppUpdated(showUpdated);
             appUpdater.start();
         } catch (Exception e) {
