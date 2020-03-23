@@ -77,7 +77,7 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
 
     private void setBorder() {
         boolean showBorder = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_borders", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        findPreference("show_border_specific").setEnabled(showBorder);
+        findPreference("show_border_specific").setVisible(showBorder);
     }
 
     private String getThemeName() {
@@ -104,6 +104,6 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
 
     private void setSwipeSpecific() {
         boolean showSpecific = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("swipe_to_refresh", true);
-        findPreference("swipe_to_refresh_filtered").setEnabled(showSpecific);
+        findPreference("swipe_to_refresh_filtered").setVisible(showSpecific);
     }
 }

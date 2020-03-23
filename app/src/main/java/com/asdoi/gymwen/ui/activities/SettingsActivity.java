@@ -100,6 +100,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 break;
             case R.string.color_primary:
                 editor.putInt("colorPrimary", selectedColor);
+                recreate();
                 break;
         }
         editor.apply();

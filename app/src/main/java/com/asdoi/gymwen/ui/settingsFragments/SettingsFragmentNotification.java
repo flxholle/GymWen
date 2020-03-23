@@ -44,16 +44,16 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
 
     private void setNotif() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", true);
-        findPreference("alwaysNotification").setEnabled(showNotif);
-        findPreference("alarm").setEnabled(showNotif);
-        findPreference("two_notifs").setEnabled(showNotif);
-        findPreference("main_notif_for_all").setEnabled(showNotif);
-        findPreference("showSummaryNotification").setEnabled(showNotif);
-        findPreference("summary_notif_as_usual").setEnabled(showNotif);
+        findPreference("alwaysNotification").setVisible(showNotif);
+        findPreference("alarm").setVisible(showNotif);
+        findPreference("two_notifs").setVisible(showNotif);
+        findPreference("main_notif_for_all").setVisible(showNotif);
+        findPreference("showSummaryNotification").setVisible(showNotif);
+        findPreference("summary_notif_as_usual").setVisible(showNotif);
     }
 
     private void setSummary() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showSummaryNotification", true);
-        findPreference("summary_notif_as_usual").setEnabled(showNotif);
+        findPreference("summary_notif_as_usual").setVisible(showNotif);
     }
 }
