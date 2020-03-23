@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
     private Button signInButton;
     private String username;
     private String password;
+    private boolean autoUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         try {
             username = ((EditText) findViewById(R.id.signin_username)).getText().toString();
             password = ((EditText) findViewById(R.id.signin_password)).getText().toString();
+            autoUpdate = ((CheckBox) findViewById(R.id.auto_update_check_box)).isChecked();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,7 +109,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         runOnUiThread(() -> {
             loading.setVisibility(View.INVISIBLE);
             Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
-            setSettings(username, password);
+            setSettings(username, password, autoUpdate);
         });
         Intent intent = new Intent(this, ChoiceActivity.class);
         startActivity(intent);
@@ -123,13 +126,14 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         });
     }
 
-    private void setSettings(String username, String password) {
+    private void setSettings(String username, String password, boolean autoUpdate) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.putString("username", username);
         editor.putString("password", password);
         editor.putBoolean("signed", true);
+        editor.putBoolean("auto_update", autoUpdate);
         editor.apply();
     }
 

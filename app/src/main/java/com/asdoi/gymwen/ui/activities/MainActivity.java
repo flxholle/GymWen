@@ -144,7 +144,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     .show();
         }
 
-        checkUpdates(Display.DIALOG, false);
+        if (PreferenceUtil.isBackgroundUpdateCheck())
+            checkUpdates(Display.DIALOG, false);
+
         showChangelogCK(true);
         checkRegistration();
 

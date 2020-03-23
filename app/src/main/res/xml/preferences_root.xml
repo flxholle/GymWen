@@ -49,6 +49,12 @@
             app:iconSpaceReserved="false"
             android:summary="@string/set_desc_updates" />
         <SwitchPreference
+            android:defaultValue="true"
+            android:key="auto_update"
+            android:title="@string/menu_auto_update_check"
+            android:summary="@string/set_desc_check_background_updates"
+            app:iconSpaceReserved="true" />
+        <SwitchPreference
             android:defaultValue="false"
             android:key="beta_features"
             android:title="@string/set_beta_features"

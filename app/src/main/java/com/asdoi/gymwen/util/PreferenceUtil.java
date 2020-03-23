@@ -178,6 +178,10 @@ public class PreferenceUtil {
         return getBooleanSettings("menu_mensa", true);
     }
 
+    public static boolean isBackgroundUpdateCheck() {
+        return getBooleanSettings("auto_update", true);
+    }
+
 
     //SubstitutionPlan
     @NonNull

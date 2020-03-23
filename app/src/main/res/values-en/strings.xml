@@ -383,5 +383,7 @@
     <string name="set_show_summary_notif_title">Show summary notification</string>
     <string name="set_show_summary_usual_title">Show all profiles in the summary notification</string>
     <string name="set_main_notif_for_all_title">Send the concise notification for all profiles</string>
+    <string name="menu_auto_update_check">Check in Background</string>
+    <string name="set_desc_check_background_updates">Check automatically in background for app updates</string>
 
 </resources>
