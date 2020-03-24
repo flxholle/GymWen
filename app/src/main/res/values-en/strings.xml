@@ -54,7 +54,6 @@
 
 
     <string name="nothing">No sit-ins for you</string>
-    <string name="nothing_all">Nothing has changed for the entire day.</string>
     <string name="back_button">Press again to exit</string>
     <string name="downloading">Loading\u2026</string>
     <string name="footprint">Generated with the GymWenApp: https://asdoi.gitlab.io/</string>
@@ -200,8 +199,6 @@
     <string name="menu_language">Language</string>
     <string name="set_notification_alarm">On fixed time</string>
     <string name="time_picker_title">Pick a time</string>
-    <string name="reloaded_docs">Restored data from the last session.
-        \nPerhaps not up to date!</string>
     <string name="menu_filtered">Filtered</string>
     <string name="menu_unfiltered">Unfiltered</string>
     <string name="set_design_show_sections">Show filtered \u0026 unfiltered representation plan seperatly</string>
@@ -353,9 +350,6 @@
     <string name="set_desc_two_notifs">Show a separate notification for each day</string>
     <string name="set_desc_alarm">Show the notification at a specific time</string>
 
-    <string name="set_desc_substitution_fragment">Specific settings for the cover plan</string>
-    <string name="set_desc_design_fragment">Settings for changing the display</string>
-    <string name="set_desc_notification_fragment">Notification settings</string>
     <string name="set_desc_parents">Activate certain functions, especially are useful for parents, e.g. ClaXss</string>
     <string name="set_desc_updates">Check for updates</string>
     <string name="set_desc_offline_mode">Store certain things locally so that the app works without the internet</string>
@@ -377,7 +371,6 @@
     <string name="notification_main_channel_description">A notification that sends you your current representatives</string>
     <string name="more">more</string>
     <string name="set_desc_intelligent_hide">Past or no longer relevant days are hidden.</string>
-    <string name="no_navi">You have no navigation app installed.</string>
     <string name="set_main_notif_for_all_desc">You can select a profile with an asterisk in the edit profile view. Usually, a concise notification is only sent for this individual profile. If none is selected, no concise notification is sent.</string>
     <string name="set_show_summary_usual_desc">Usually the profiles that are in the concise notification are not sent in the summary</string>
     <string name="set_show_summary_notif_title">Show summary notification</string>

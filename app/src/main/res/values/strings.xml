@@ -97,7 +97,6 @@
 
     <!-- SubstitutionPlan -->
     <string name="nothing">Keine Vertretung für dich.</string>
-    <string name="nothing_all">Es gibt keine Vertretungen am gesamten Tag.</string>
     <string name="back_button">Erneut drücken zum Beenden</string>
     <string name="downloading">Lädt\u2026</string>
     <string name="footprint">Mit der GymWen App erzeugt: https://asdoi.gitlab.io/</string>
@@ -305,8 +304,6 @@
     <string name="time_picker_title">Uhrzeit auswählen</string>
 
     <!-- Reload & Save Docs-->
-    <string name="reloaded_docs">Dateien vom letzten Mal wiederhergestellt.
-        \nEventuell nicht aktuell!</string>
 
     <!-- Profiles -->
     <string name="title_activity_profile">Profile</string>
@@ -456,9 +453,6 @@
     <string name="set_show_summary_usual_desc">Normalerweise werden die Profile die in der prägnanten Benachrichtigung sind, nicht in der zusammenfassenden gesendet</string>
 
 
-    <string name="set_desc_substitution_fragment">Spezifische Einstellungen für den Vertretungsplan</string>
-    <string name="set_desc_design_fragment">Einstellungen zur Veränderung der Darstellung</string>
-    <string name="set_desc_notification_fragment">Einstellungen für die Benachrichtigung</string>
     <string name="set_desc_parents">Bestimmte Funktionen aktivieren, die v.a. für Eltern nützlich sind, z.B. ClaXss</string>
     <string name="set_desc_updates">Auf Aktualisierungen überprüfen</string>
     <string name="set_desc_check_background_updates">Automatisch im Hintergrund auf Aktualisierungen prüfen</string>
@@ -482,5 +476,4 @@
 
 
     <!-- Maps -->
-    <string name="no_navi">Du hast keine Navigations App installiert.</string>
 </resources>

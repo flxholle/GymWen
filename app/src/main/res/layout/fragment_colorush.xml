@@ -100,7 +100,6 @@
 
         <com.ritesh.ratiolayout.RatioRelativeLayout
             android:layout_gravity="center"
-            android:id="@+id/activity_main_ratio_layout"
             android:layout_width="@dimen/colorush_image_width"
             android:layout_height="match_parent"
             app:fixed_attribute="WIDTH"
