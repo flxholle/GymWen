@@ -1,6 +1,6 @@
 package com.asdoi.gymwen.ui.activities
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.SharedPreferences
@@ -24,7 +24,7 @@ class WidgetSelectProfileActivity : ActivityFeatures() {
         super.onCreate(icicle)
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if they press the back button.
-        setResult(Activity.RESULT_CANCELED)
+        setResult(AppCompatActivity.RESULT_CANCELED)
         // Set the view layout resource to use.
 //        setContentView(R.layout.appwidget_configure)
         // Find the EditText

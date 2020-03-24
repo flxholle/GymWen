@@ -24,7 +24,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/gymlogo"
+                app:srcCompat="@mipmap/gymlogo"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
             android:orientation="horizontal"
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
             android:orientation="horizontal"
@@ -150,7 +150,7 @@
 
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
 
@@ -183,7 +183,7 @@
 
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:minHeight="@dimen/about_listitem_height"
 

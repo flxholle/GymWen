@@ -13,7 +13,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="webPageBackground">@color/web_background_homepages</item>
-        <item name="android:windowActionBarOverlay">true</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="md_dark_theme">false</item>
         <item name="cardBackgroundColor">@android:color/white</item>
