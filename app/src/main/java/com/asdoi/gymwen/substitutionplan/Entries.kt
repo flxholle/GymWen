@@ -1,5 +1,6 @@
 package com.asdoi.gymwen.substitutionplan
 
+import com.asdoi.gymwen.util.External_Const
 import java.util.*
 
 class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableListOf<SubstitutionEntry>()) {
@@ -164,6 +165,17 @@ class SubstitutionEntry(var course: String, var hour: String, var subject: Strin
 
         return this
     }
+
+    /**
+     * @return boolean if the subject equals the specific value for the hour is omitted
+     */
+    fun isNothing(): Boolean {
+        for (s in External_Const.nothing) {
+            if (s.equals(teacher, ignoreCase = true))
+                return true
+        }
+        return false
+    }
 }
 
 class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var week: String = "", var titleCode: Int = -1) {
@@ -179,5 +191,13 @@ class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var w
 
     fun getNoInternet(): Boolean {
         return noInternet
+    }
+
+    fun isTitleCodeInPast(): Boolean {
+        return true
+    }
+
+    fun isTitleCodeToday(): Boolean {
+        return true
     }
 }

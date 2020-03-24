@@ -276,7 +276,7 @@ class NotificationUtils {
                 } else {
                     if (vp.senior) {
                         for (line in content.entries) {
-                            if (SubstitutionPlanFeatures.isNothing(line.teacher)) {
+                            if (line.isNothing()) {
                                 message.append(line.hour).append(". ").append(context.getString(R.string.share_msg_nothing_hour_senior)).append(" ").append(line.course).append("\n")
                             } else {
                                 message.append(line.hour).append(". ").append(context.getString(R.string.share_msg_hour_senior)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")

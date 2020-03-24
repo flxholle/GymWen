@@ -15,10 +15,7 @@ import com.asdoi.gymwen.util.PreferenceUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * An abstract class which organizes the substitution plan object for easier access, not necessary
@@ -87,70 +84,70 @@ public abstract class SubstitutionPlanFeatures {
 
     @NonNull
     public static SubstitutionList getToday() {
-        return substitutionPlan.getDay(true);
+        return substitutionPlan.getToday();
     }
 
     @NonNull
     public static SubstitutionList getTomorrow() {
-        return substitutionPlan.getDay(false);
+        return substitutionPlan.getTomorrow();
     }
 
     @NonNull
     public static SubstitutionList getTodaySummarized() {
-        return getToday().summarizeUp("-");
+        return substitutionPlan.getTodaySummarized();
     }
 
     @NonNull
     public static SubstitutionList getTomorrowSummarized() {
-        return getTomorrow().summarizeUp("-");
+        return substitutionPlan.getTomorrowSummarized();
     }
 
     @Nullable
     public static SubstitutionList getTodayAll() {
-        return substitutionPlan.getAll(true);
+        return substitutionPlan.getTodayAll();
     }
 
     @Nullable
     public static SubstitutionList getTomorrowAll() {
-        return substitutionPlan.getAll(false);
+        return substitutionPlan.getTomorrowAll();
     }
 
     @NonNull
     public static SubstitutionList getTodayAllSummarized() {
-        return getTodayAll().summarizeUp("-");
+        return substitutionPlan.getTodayAllSummarized();
     }
 
     @NonNull
     public static SubstitutionList getTomorrowAllSummarized() {
-        return getTomorrowAll().summarizeUp("-");
+        return substitutionPlan.getTomorrowAllSummarized();
     }
 
     @NonNull
     public static String getTodayTitleString() {
-        return substitutionPlan.getTitleString(true);
+        return substitutionPlan.getTodayTitleString();
     }
 
     @NonNull
     public static String getTomorrowTitleString() {
-        return substitutionPlan.getTitleString(false);
+        return substitutionPlan.getTomorrowTitleString();
     }
 
     @NonNull
     public static SubstitutionTitle getTodayTitle() {
-        return substitutionPlan.getTitle(true);
+        return substitutionPlan.getTodayTitle();
     }
 
     @NonNull
     public static SubstitutionTitle getTomorrowTitle() {
-        return substitutionPlan.getTitle(false);
+        return substitutionPlan.getTomorrowTitle();
     }
 
     public static int getTodayTitleCode() {
-        return substitutionPlan.getTitle(true).getTitleCode();
+        return substitutionPlan.getTodayTitleCode();
     }
 
     public static int getTomorrowTitleCode() {
-        return substitutionPlan.getTitle(false).getTitleCode();
+        return substitutionPlan.getTomorrowTitleCode();
     }
 
     public static boolean getSenior() {
@@ -170,11 +167,11 @@ public abstract class SubstitutionPlanFeatures {
     }
 
     public static Document getTodayDoc() {
-        return substitutionPlan.getDoc(true);
+        return substitutionPlan.getTodayDoc();
     }
 
     public static Document getTomorrowDoc() {
-        return substitutionPlan.getDoc(false);
+        return substitutionPlan.getTomorrowDoc();
     }
 
     @NonNull
@@ -250,43 +247,10 @@ public abstract class SubstitutionPlanFeatures {
     }
 
     public static boolean isTitleCodeInPast(int titleCode) {
-        boolean isPast = titleCode == SubstitutionPlan.pastCode;
-        if (!isPast && titleCode == SubstitutionPlan.todayCode) {
-            try {
-                String string1 = PreferenceUtil.hideDayAfterTime;
-                Date mydate = removeDate(new SimpleDateFormat("HH:mm:ss").parse(string1));
-
-                Date now = removeDate(new Date());
-
-                if (now.after(mydate)) {
-                    isPast = true;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return isPast;
-    }
-
-    /**
-     * @param date Date
-     * @return param Date with removed time (only the day).
-     */
-    @NonNull
-    private static Date removeDate(@NonNull Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.YEAR, 0);
-        cal.set(Calendar.MONTH, 0);
-        cal.set(Calendar.DATE, 0);
-        return cal.getTime();
+        return SubstitutionPlan.isTitleCodeInPast(titleCode);
     }
 
     public static boolean isTitleCodeToday(int titleCode) {
-        boolean isPast = isTitleCodeInPast(titleCode);
-        if (!isPast) {
-            return titleCode != SubstitutionPlan.futureCode;
-        }
-        return false;
+        return SubstitutionPlan.isTitleCodeToday(titleCode);
     }
 }

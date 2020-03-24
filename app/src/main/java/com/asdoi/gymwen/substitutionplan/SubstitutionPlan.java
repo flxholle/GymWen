@@ -11,8 +11,11 @@ import com.asdoi.gymwen.util.PreferenceUtil;
 
 import org.jsoup.nodes.Document;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * An object which filters the substitution plan and creates easier access to the methods of the parse-class
@@ -114,6 +117,66 @@ public class SubstitutionPlan {
         return Parse.getTitle(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay(), pastCode, todayCode, tomorrowCode, futureCode);
     }
 
+    public SubstitutionTitle getTodayTitle() {
+        return getTitle(true);
+    }
+
+    public SubstitutionTitle getTomorrowTitle() {
+        return getTitle(false);
+    }
+
+    public int getTodayTitleCode() {
+        return getTodayTitle().getTitleCode();
+    }
+
+    public int getTomorrowTitleCode() {
+        return getTomorrowTitle().getTitleCode();
+    }
+
+
+    public static boolean isTitleCodeInPast(int titleCode) {
+        boolean isPast = titleCode == SubstitutionPlan.pastCode;
+        if (!isPast && titleCode == SubstitutionPlan.todayCode) {
+            try {
+                String string1 = PreferenceUtil.hideDayAfterTime;
+                Date mydate = removeDate(new SimpleDateFormat("HH:mm:ss").parse(string1));
+
+                Date now = removeDate(new Date());
+
+                if (now.after(mydate)) {
+                    isPast = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isPast;
+    }
+
+    /**
+     * @param date Date
+     * @return param Date with removed time (only the day).
+     */
+    @NonNull
+    private static Date removeDate(@NonNull Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.YEAR, 0);
+        cal.set(Calendar.MONTH, 0);
+        cal.set(Calendar.DATE, 0);
+        return cal.getTime();
+    }
+
+    public static boolean isTitleCodeToday(int titleCode) {
+        boolean isPast = isTitleCodeInPast(titleCode);
+        if (!isPast) {
+            return titleCode != SubstitutionPlan.futureCode;
+        }
+        return false;
+    }
+
+
+
     /**
      * @param today: boolean if the title of today or tomorrow should be analyzed
      * @return an sorted String with all the analyzed information separated by " "
@@ -124,6 +187,14 @@ public class SubstitutionPlan {
     public String getTitleString(boolean today) {
         SubstitutionTitle s = getTitle(today);
         return s.getNoInternet() ? noInternet() : s.toString();
+    }
+
+    public String getTodayTitleString() {
+        return getTitleString(true);
+    }
+
+    public String getTomorrowTitleString() {
+        return getTitleString(false);
     }
 
 
@@ -150,6 +221,22 @@ public class SubstitutionPlan {
         }
 
         return content;
+    }
+
+    public SubstitutionList getToday() {
+        return getDay(true);
+    }
+
+    public SubstitutionList getTomorrow() {
+        return getDay(false);
+    }
+
+    public SubstitutionList getTodaySummarized() {
+        return getToday().summarizeUp("-");
+    }
+
+    public SubstitutionList getTomorrowSummarized() {
+        return getTomorrow().summarizeUp("-");
     }
 
 
@@ -180,6 +267,24 @@ public class SubstitutionPlan {
         }
     }
 
+    public SubstitutionList getTodayAll() {
+        return getAll(true);
+    }
+
+    public SubstitutionList getTomorrowAll() {
+        return getAll(false);
+    }
+
+    @NonNull
+    public SubstitutionList getTodayAllSummarized() {
+        return getTodayAll().summarizeUp("-");
+    }
+
+    @NonNull
+    public SubstitutionList getTomorrowAllSummarized() {
+        return getTomorrowAll().summarizeUp("-");
+    }
+
 
     public boolean getSenior() {
         return senior;
@@ -208,6 +313,14 @@ public class SubstitutionPlan {
             return todayDoc;
         else
             return tomorrowDoc;
+    }
+
+    public Document getTodayDoc() {
+        return todayDoc;
+    }
+
+    public Document getTomorrowDoc() {
+        return tomorrowDoc;
     }
 
     /**
