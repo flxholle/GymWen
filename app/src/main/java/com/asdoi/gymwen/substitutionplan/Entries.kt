@@ -5,7 +5,7 @@ import com.asdoi.gymwen.util.PreferenceUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableListOf<SubstitutionEntry>()) {
+class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableListOf()) {
     private var noInternet: Boolean = false
 
     constructor(noInternet: Boolean) : this() {

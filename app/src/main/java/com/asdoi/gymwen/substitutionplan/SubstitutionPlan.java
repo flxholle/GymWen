@@ -74,16 +74,6 @@ public class SubstitutionPlan {
     }
 
     @NonNull
-    private static String noSubstitutionAll() {
-        return context.getString(R.string.nothing_all);
-    }
-
-    @NonNull
-    private static String noSubstitution() {
-        return context.getString(R.string.nothing);
-    }
-
-    @NonNull
     private static String noInternet() {
         return context.getString(R.string.noInternetConnection);
     }
@@ -114,10 +104,12 @@ public class SubstitutionPlan {
         return Parse.getTitle(today ? todayDoc : tomorrowDoc, showWeekDate(), today(), tomorrow(), laterDay(), pastCode, todayCode, tomorrowCode, futureCode);
     }
 
+    @NonNull
     public SubstitutionTitle getTodayTitle() {
         return getTitle(true);
     }
 
+    @NonNull
     public SubstitutionTitle getTomorrowTitle() {
         return getTitle(false);
     }
@@ -143,10 +135,12 @@ public class SubstitutionPlan {
         return s.getNoInternet() ? noInternet() : s.toString();
     }
 
+    @NonNull
     public String getTodayTitleString() {
         return getTitleString(true);
     }
 
+    @NonNull
     public String getTomorrowTitleString() {
         return getTitleString(false);
     }
@@ -177,18 +171,22 @@ public class SubstitutionPlan {
         return content;
     }
 
+    @NonNull
     public SubstitutionList getToday() {
         return getDay(true);
     }
 
+    @NonNull
     public SubstitutionList getTomorrow() {
         return getDay(false);
     }
 
+    @NonNull
     public SubstitutionList getTodaySummarized() {
         return getToday().summarizeUp("-");
     }
 
+    @NonNull
     public SubstitutionList getTomorrowSummarized() {
         return getTomorrow().summarizeUp("-");
     }
@@ -221,10 +219,12 @@ public class SubstitutionPlan {
         }
     }
 
+    @Nullable
     public SubstitutionList getTodayAll() {
         return getAll(true);
     }
 
+    @Nullable
     public SubstitutionList getTomorrowAll() {
         return getAll(false);
     }
