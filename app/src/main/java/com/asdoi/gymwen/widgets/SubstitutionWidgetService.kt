@@ -196,7 +196,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
         val view = getRemoteViews(context)
         view.setTextViewText(R.id.substitution_specific_entry_textViewHour, entry.hour)
         view.setTextViewText(R.id.substitution_specific_entry_textViewSubject, if (senior) entry.course else entry.subject)
-        if (!SubstitutionPlanFeatures.isNothing(entry.teacher)) {
+        if (!entry.isNothing()) {
             view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, entry.teacher)
             view.setViewVisibility(R.id.substitution_specific_entry_textViewRoom, View.VISIBLE)
             val content = SpannableString(entry.room)

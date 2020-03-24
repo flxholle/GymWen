@@ -490,12 +490,9 @@ public class ApplicationFeatures extends MultiDexApplication {
             if (preferredProfile != null) {
                 int whichDocIsToday = -1;
 
-                int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
-                int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
-
-                if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
+                if (SubstitutionPlanFeatures.getTodayTitle().isTitleCodeToday())
                     whichDocIsToday = 0;
-                else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
+                else if (SubstitutionPlanFeatures.getTomorrowTitle().isTitleCodeToday())
                     whichDocIsToday = 1;
 
                 if (whichDocIsToday >= 0) {

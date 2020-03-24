@@ -9,7 +9,6 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 
 import org.jsoup.Jsoup;
@@ -227,30 +226,5 @@ public abstract class SubstitutionPlanFeatures {
     @Nullable
     public static ArrayList<String> getNames() {
         return substitutionPlan.getCourses();
-    }
-
-    /**
-     * @param query The subject of the substitution plan
-     * @return boolean if the subject equals the specific value for the hour is omitted
-     */
-    public static boolean isNothing(String query) {
-        for (String s : External_Const.nothing) {
-            if (s.equalsIgnoreCase(query))
-                return true;
-        }
-        return false;
-    }
-
-    @NonNull
-    public static String[] getNothing() {
-        return External_Const.nothing;
-    }
-
-    public static boolean isTitleCodeInPast(int titleCode) {
-        return SubstitutionPlan.isTitleCodeInPast(titleCode);
-    }
-
-    public static boolean isTitleCodeToday(int titleCode) {
-        return SubstitutionPlan.isTitleCodeToday(titleCode);
     }
 }

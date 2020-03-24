@@ -11,11 +11,8 @@ import com.asdoi.gymwen.util.PreferenceUtil;
 
 import org.jsoup.nodes.Document;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * An object which filters the substitution plan and creates easier access to the methods of the parse-class
@@ -132,49 +129,6 @@ public class SubstitutionPlan {
     public int getTomorrowTitleCode() {
         return getTomorrowTitle().getTitleCode();
     }
-
-
-    public static boolean isTitleCodeInPast(int titleCode) {
-        boolean isPast = titleCode == SubstitutionPlan.pastCode;
-        if (!isPast && titleCode == SubstitutionPlan.todayCode) {
-            try {
-                String string1 = PreferenceUtil.hideDayAfterTime;
-                Date mydate = removeDate(new SimpleDateFormat("HH:mm:ss").parse(string1));
-
-                Date now = removeDate(new Date());
-
-                if (now.after(mydate)) {
-                    isPast = true;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return isPast;
-    }
-
-    /**
-     * @param date Date
-     * @return param Date with removed time (only the day).
-     */
-    @NonNull
-    private static Date removeDate(@NonNull Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.YEAR, 0);
-        cal.set(Calendar.MONTH, 0);
-        cal.set(Calendar.DATE, 0);
-        return cal.getTime();
-    }
-
-    public static boolean isTitleCodeToday(int titleCode) {
-        boolean isPast = isTitleCodeInPast(titleCode);
-        if (!isPast) {
-            return titleCode != SubstitutionPlan.futureCode;
-        }
-        return false;
-    }
-
 
 
     /**

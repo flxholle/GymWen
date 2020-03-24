@@ -84,11 +84,9 @@ class NotificationUtils {
 
                 if (preferredProfile != null || alertForAllProfiles) {
                     var whichDayIsToday = none
-                    val titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode()
-                    val titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode()
-                    if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeToday))
+                    if (titleTodayArray.isTitleCodeToday())
                         whichDayIsToday = today
-                    else if (SubstitutionPlanFeatures.isTitleCodeToday(titleCodeTomorrow))
+                    else if (titleTomorrowArray.isTitleCodeToday())
                         whichDayIsToday = tomorrow
 
                     var checkProfileList = mutableListOf<Profile>()
@@ -225,8 +223,8 @@ class NotificationUtils {
                 val twoNotifs = PreferenceUtil.isTwoNotifications()
 
                 //Hide days in the past and today after 18 o'clock
-                val showToday = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.isTitleCodeInPast(titleTodayArray.titleCode)
-                val showTomorrow = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.isTitleCodeInPast(titleTomorrowArray.titleCode)
+                val showToday = !PreferenceUtil.isIntelligentHide() || !titleTodayArray.isTitleCodeInPast()
+                val showTomorrow = !PreferenceUtil.isIntelligentHide() || !titleTomorrowArray.isTitleCodeInPast()
 
                 if (!isMoreThanOneProfile || alertForAllProfiles) {
                     if (daySendInSummaryNotif == today && showToday) {
@@ -284,7 +282,7 @@ class NotificationUtils {
                         }
                     } else {
                         for (line in content.entries) {
-                            if (SubstitutionPlanFeatures.isNothing(line.teacher)) {
+                            if (line.isNothing()) {
                                 message.append(line.hour).append(". ").append(context.getString(R.string.share_msg_nothing_hour)).append("\n")
                             } else {
                                 message.append(line.hour).append(". ").append(context.getString(R.string.share_msg_hour)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")
@@ -317,14 +315,14 @@ class NotificationUtils {
                 var j = 0
                 for (con in content.entries) {
                     var color: Int
-                    if (SubstitutionPlanFeatures.isNothing(con.teacher)) {
+                    if (con.isNothing()) {
                         color = ContextCompat.getColor(context, R.color.notification_icon_background_omitted)
                         isOmitted = true
                     } else {
                         color = ContextCompat.getColor(context, R.color.notification_icon_background_substitution)
                     }
 
-                    val textColor = if (SubstitutionPlanFeatures.isNothing(con.teacher))
+                    val textColor = if (con.isNothing())
                         ContextCompat.getColor(context, R.color.notification_icon_text_omitted)
                     else
                         ContextCompat.getColor(context, R.color.notification_icon_text_substitution)
@@ -394,7 +392,7 @@ class NotificationUtils {
 
             fun createMessage(entry: SubstitutionEntry): List<String> {
                 val context = ApplicationFeatures.getContext()
-                return if (SubstitutionPlanFeatures.isNothing(entry.teacher)) {
+                return if (entry.isNothing()) {
                     listOf("${entry.hour}. ${context.getString(R.string.share_msg_nothing_hour)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
                 } else {
                     listOf("${entry.hour}. ${context.getString(R.string.share_msg_hour)} ${context.getString(R.string.share_msg_in_room)} ${entry.room} ${context.getString(R.string.with_teacher)} ${entry.teacher}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")

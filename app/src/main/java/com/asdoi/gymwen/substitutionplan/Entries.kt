@@ -1,6 +1,8 @@
 package com.asdoi.gymwen.substitutionplan
 
 import com.asdoi.gymwen.util.External_Const
+import com.asdoi.gymwen.util.PreferenceUtil
+import java.text.SimpleDateFormat
 import java.util.*
 
 class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableListOf<SubstitutionEntry>()) {
@@ -194,10 +196,39 @@ class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var w
     }
 
     fun isTitleCodeInPast(): Boolean {
-        return true
+        var isPast = titleCode == SubstitutionPlan.pastCode
+        if (!isPast && titleCode == SubstitutionPlan.todayCode) {
+            try {
+                val string1 = PreferenceUtil.hideDayAfterTime
+                val mydate = removeDate(SimpleDateFormat("HH:mm:ss").parse(string1))
+                val now = removeDate(Date())
+                if (now.after(mydate)) {
+                    isPast = true
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+        return isPast
     }
 
     fun isTitleCodeToday(): Boolean {
-        return true
+        val isPast = isTitleCodeInPast()
+        return if (!isPast) {
+            titleCode != SubstitutionPlan.futureCode
+        } else false
+    }
+
+    /**
+     * @param date Date
+     * @return param Date with removed time (only the day).
+     */
+    private fun removeDate(date: Date): Date {
+        val cal = Calendar.getInstance()
+        cal.time = date
+        cal[Calendar.YEAR] = 0
+        cal[Calendar.MONTH] = 0
+        cal[Calendar.DATE] = 0
+        return cal.time
     }
 }

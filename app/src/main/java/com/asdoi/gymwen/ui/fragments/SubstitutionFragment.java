@@ -44,6 +44,7 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
 import com.asdoi.gymwen.teacherlist.TeacherListEntry;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.MainActivity;
+import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.pd.chocobar.ChocoBar;
 
@@ -289,7 +290,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         String freespace = "    ";
         if (SubstitutionPlanFeatures.getSenior()) {
             for (SubstitutionEntry line : content.getEntries()) {
-                if (SubstitutionPlanFeatures.isNothing(line.getTeacher())) {
+                if (line.isNothing()) {
                     message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_nothing_hour_senior)).append(" ").append(line.getCourse()).append("\n");
                 } else {
                     message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_hour_senior)).append(" ").append(line.getCourse()).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.getRoom()).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.getTeacher()).append(", ").append(line.getMoreInformation()).append("\n");
@@ -297,7 +298,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
         } else {
             for (SubstitutionEntry line : content.getEntries()) {
-                if (SubstitutionPlanFeatures.isNothing(line.getTeacher())) {
+                if (line.isNothing()) {
                     message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_nothing_hour)).append("\n");
                 } else {
                     message.append(freespace).append(line.getHour()).append(". ").append(context.getString(R.string.share_msg_hour)).append(" ").append(line.getSubject()).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.getRoom()).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.getTeacher()).append(", ").append(line.getMoreInformation()).append("\n");
@@ -312,7 +313,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     //TeacherSearch
     private void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean showBorders, boolean fullNames) {
-        if (SubstitutionPlanFeatures.isNothing(teacherQuery) || TeacherlistFeatures.isAOL(teacherQuery))
+        if (TeacherlistFeatures.isAOL(teacherQuery))
             return;
         int padding = 0;
         if (showBorders) {
@@ -476,8 +477,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             int titleCodeToday = SubstitutionPlanFeatures.getTodayTitleCode();
             int titleCodeTomorrow = SubstitutionPlanFeatures.getTomorrowTitleCode();
             //Hide days in the past and today after 18 o'clock
-            boolean showToday = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.isTitleCodeInPast(titleCodeToday);
-            boolean showTomorrow = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.isTitleCodeInPast(titleCodeTomorrow);
+            boolean showToday = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.getTodayTitle().isTitleCodeInPast();
+            boolean showTomorrow = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.getTomorrowTitle().isTitleCodeInPast();
 
             if (!showToday && !showTomorrow) {
                 if (titleCodeToday == SubstitutionPlan.todayCode)
@@ -517,7 +518,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 titleCode = SubstitutionPlanFeatures.getTomorrowTitleCode();
             }
             String missing_short = getString(R.string.missing_short);
-            for (String s : SubstitutionPlanFeatures.getNothing()) {
+            for (String s : External_Const.nothing) {
                 content = content.replaceAll(s, missing_short);
             }
             miscellaneous = isMiscellaneous(content);
@@ -911,7 +912,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         teacher.setText(entry.getTeacher());
 
         removeTeacherClick(teacher);
-        if (!SubstitutionPlanFeatures.isNothing(entry.getTeacher()))
+        if (!entry.isNothing())
             teacherClick(teacher, entry.getTeacher(), !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false), !PreferenceUtil.isFullTeacherNamesSpecific() && PreferenceUtil.isFullTeacherNames());
         else
             teacher.setText(entry.getTeacher());
@@ -1025,7 +1026,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         room.setTextColor(ApplicationFeatures.getAccentColor(context));
 
 
-        if (!SubstitutionPlanFeatures.isNothing(entry.getTeacher())) {
+        if (!entry.isNothing()) {
             teacher.setGravity(Gravity.CENTER);
             teacher.setTextColor(subject.getTextColors());
             teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_teacher)));
@@ -1097,7 +1098,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         CardView card = view.findViewById(R.id.list_substituion_widget_card);
 
-        if (!SubstitutionPlanFeatures.isNothing(entry.getTeacher())) {
+        if (!entry.isNothing()) {
             card.setBackgroundColor(card.getCardBackgroundColor().getDefaultColor());
             if (!entry.getSubject().trim().isEmpty()) {
                 teacher.setVisibility(View.VISIBLE);
