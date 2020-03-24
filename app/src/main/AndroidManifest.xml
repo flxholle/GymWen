@@ -48,7 +48,7 @@
 
             <meta-data
                 android:name="android.app.shortcuts"
-                android:resource="@xml/shortcut_website" />
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".ui.activities.SignInActivity"

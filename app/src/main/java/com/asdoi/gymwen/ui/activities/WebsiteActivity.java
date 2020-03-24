@@ -3,6 +3,7 @@ package com.asdoi.gymwen.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 
@@ -71,6 +73,9 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     public void setupColors() {
         setToolbar(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.ic_clear_black_24dp);
+        }
     }
 
     @Override
@@ -494,7 +499,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Toast.makeText(this, getString(R.string.click_picture), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.tap_picture), Toast.LENGTH_SHORT).show();
             return;
         }
 

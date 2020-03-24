@@ -59,6 +59,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static final String SHORTCUT_ACTION_CALL_OFFICE = "com.asdoi.gymwen.ui.activities.MainActivity.CallOffice";
     public static final String SHORTCUT_ACTION_NAVIGATION = "com.asdoi.gymwen.ui.activities.MainActivity.Navigation";
     public static final String SHORTCUT_ACTION_NEWSPAPER = "com.asdoi.gymwen.ui.activities.MainActivity.News";
+    public static final String SHORTCUT_ACTION_MEBIS = "com.asdoi.gymwen.ui.activities.MainActivity.Mebis";
+    public static final String SHORTCUT_ACTION_MENSA = "com.asdoi.gymwen.ui.activities.MainActivity.Mensa";
+    public static final String SHORTCUT_ACTION_TEACHER_LIST = "com.asdoi.gymwen.ui.activities.MainActivity.TeacherList";
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -200,6 +203,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     break;
                 case SHORTCUT_ACTION_NEWSPAPER:
                     onNavigationItemSelected(R.id.nav_news);
+                    break;
+                case SHORTCUT_ACTION_MEBIS:
+                    onNavigationItemSelected(R.id.nav_mebis);
+                    break;
+                case SHORTCUT_ACTION_MENSA:
+                    onNavigationItemSelected(R.id.nav_mensa);
+                    break;
+                case SHORTCUT_ACTION_TEACHER_LIST:
+                    onNavigationItemSelected(R.id.nav_teacherlist);
                     break;
             }
             setIntent(null);
