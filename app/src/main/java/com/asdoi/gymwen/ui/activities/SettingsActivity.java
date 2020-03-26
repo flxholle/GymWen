@@ -18,9 +18,12 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSignIn;
 import com.github.javiersantos.appupdater.enums.Display;
 
 public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+    public static final String SIGN_IN_SETTINGS = "SignInSettings";
+
     public int loadedFragments = 0;
 
     @Override
@@ -36,6 +39,23 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
 
     public void setupColors() {
         setToolbar(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Intent i = getIntent();
+        if (i != null && i.getAction() != null) {
+            switch (i.getAction()) {
+                case SIGN_IN_SETTINGS:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.settings, new SettingsFragmentSignIn())
+                            .commit();
+                    break;
+            }
+        }
     }
 
     @Override

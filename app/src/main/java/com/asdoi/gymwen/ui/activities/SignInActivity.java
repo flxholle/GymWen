@@ -44,6 +44,12 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
             startActivity(intent);
             finish();
         }
+
+        findViewById(R.id.signin_url_settings_button).setOnClickListener((View v) -> {
+            Intent i = new Intent(this, SettingsActivity.class);
+            i.setAction(SettingsActivity.SIGN_IN_SETTINGS);
+            startActivity(i);
+        });
     }
 
     public void setupColors() {
@@ -55,7 +61,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         try {
             username = ((EditText) findViewById(R.id.signin_username)).getText().toString();
             password = ((EditText) findViewById(R.id.signin_password)).getText().toString();
-            autoUpdate = ((CheckBox) findViewById(R.id.auto_update_check_box)).isChecked();
+            autoUpdate = ((CheckBox) findViewById(R.id.signin_auto_update_check_box)).isChecked();
         } catch (Exception e) {
             e.printStackTrace();
         }
