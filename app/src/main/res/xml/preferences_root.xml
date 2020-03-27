@@ -38,36 +38,44 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="parents"
+            android:summary="@string/set_desc_parents"
             android:title="@string/set_parents"
-            app:iconSpaceReserved="false"
-            android:summary="@string/set_desc_parents" />
+            app:iconSpaceReserved="false" />
         <Preference
             android:key="language"
             android:title="@string/menu_language"
             app:iconSpaceReserved="false" />
         <Preference
             android:key="updates"
+            android:summary="@string/set_desc_updates"
             android:title="@string/menu_update"
-            app:iconSpaceReserved="false"
-            android:summary="@string/set_desc_updates" />
+            app:iconSpaceReserved="false" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="auto_update"
-            android:title="@string/menu_auto_update_check"
             android:summary="@string/set_desc_check_background_updates"
+            android:title="@string/menu_auto_update_check"
             app:iconSpaceReserved="true" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="beta_features"
             android:title="@string/set_beta_features"
-            app:isPreferenceVisible="false"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:isPreferenceVisible="false" />
+        <MultiSelectListPreference
+            android:defaultValue="@array/shortcuts_array_values_default"
+            android:entries="@array/shortcuts_array"
+            android:entryValues="@array/shortcuts_array_values"
+            android:iconSpaceReserved="false"
+            android:key="shortcuts_array"
+            android:title="Shortcuts"
+            app:isPreferenceVisible="false" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="offline_mode"
+            android:summary="@string/set_desc_offline_mode"
             android:title="@string/set_offline_mode"
-            app:iconSpaceReserved="false"
-            android:summary="@string/set_desc_offline_mode" />
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
 </PreferenceScreen>

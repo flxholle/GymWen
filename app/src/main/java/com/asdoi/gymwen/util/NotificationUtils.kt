@@ -16,7 +16,7 @@
  *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.asdoi.gymwen
+package com.asdoi.gymwen.util
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -33,6 +33,8 @@ import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.asdoi.gymwen.ApplicationFeatures
+import com.asdoi.gymwen.R
 import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver
@@ -41,7 +43,6 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionList
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
 import com.asdoi.gymwen.ui.activities.MainActivity
-import com.asdoi.gymwen.util.PreferenceUtil
 import com.github.stephenvinouze.shapetextdrawable.ShapeForm
 import com.github.stephenvinouze.shapetextdrawable.ShapeTextDrawable
 import java.util.*

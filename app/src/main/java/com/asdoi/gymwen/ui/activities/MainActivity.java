@@ -80,6 +80,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static final String SHORTCUT_ACTION_MEBIS = "com.asdoi.gymwen.ui.activities.MainActivity.Mebis";
     public static final String SHORTCUT_ACTION_MENSA = "com.asdoi.gymwen.ui.activities.MainActivity.Mensa";
     public static final String SHORTCUT_ACTION_TEACHER_LIST = "com.asdoi.gymwen.ui.activities.MainActivity.TeacherList";
+    public static final String SHORTCUT_ACTION_GRADES_MANAGEMENT = "com.asdoi.gymwen.ui.activities.MainActivity.GradesManagement";
+    public static final String SHORTCUT_ACTION_CLAXSS = "com.asdoi.gymwen.ui.activities.MainActivity.ClaXss";
+    public static final String SHORTCUT_ACTION_FORMS = "com.asdoi.gymwen.ui.activities.MainActivity.Forms";
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -230,6 +233,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     break;
                 case SHORTCUT_ACTION_TEACHER_LIST:
                     onNavigationItemSelected(R.id.nav_teacherlist);
+                    break;
+                case SHORTCUT_ACTION_GRADES_MANAGEMENT:
+                    onNavigationItemSelected(R.id.nav_grades);
+                    break;
+                case SHORTCUT_ACTION_CLAXSS:
+                    onNavigationItemSelected(R.id.nav_claxss);
+                    break;
+                case SHORTCUT_ACTION_FORMS:
+                    onNavigationItemSelected(R.id.nav_forms);
                     break;
             }
             setIntent(null);

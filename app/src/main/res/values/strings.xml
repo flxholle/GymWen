@@ -491,6 +491,9 @@
     <string name="shortcut_mebis" translatable="false">Mebis</string>
     <string name="shortcut_mensa">Mensa</string>
     <string name="shortcut_teacher_list">Lehrerliste</string>
+    <string name="shortcut_grades_management">Noten</string>
+    <string name="shortcut_claxss">ClaXss</string>
+    <string name="shortcut_forms">Formulare</string>
 
 
     <!-- Maps -->

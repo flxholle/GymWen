@@ -63,6 +63,7 @@ import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.activities.SignInActivity;
+import com.asdoi.gymwen.util.NotificationUtils;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider;
 import com.asdoi.gymwen.widgets.SummaryWidget;
@@ -147,6 +148,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         initRosetta();
         ProfileManagement.reload();
         initSubstitutionPlanReceiver();
+//        ShortcutUtils.Companion.createShortcuts();
 
         // Preload custom tabs service for improved performance
         // This is optional but recommended

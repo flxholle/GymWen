@@ -37,4 +37,37 @@
         <item>@string/colorush_screen3</item>
         <item>@string/colorush_screen4</item>
     </string-array>
+
+    <string-array name="shortcuts_array">
+        <item>@string/shortcut_website</item>
+        <item>@string/shortcut_mebis</item>
+        <item>@string/shortcut_mensa</item>
+        <item>@string/shortcut_grades_management</item>
+        <item>@string/shortcut_call_office</item>
+        <item>@string/shortcut_navigation</item>
+        <item>@string/shortcut_claxss</item>
+        <item>@string/shortcut_forms</item>
+        <item>@string/shortcut_newspaper</item>
+        <item>@string/shortcut_teacher_list</item>
+    </string-array>
+
+    <string-array name="shortcuts_array_values">
+        <item>website</item>
+        <item>mebis</item>
+        <item>mensa</item>
+        <item>grades_management</item>
+        <item>call_office</item>
+        <item>navigation</item>
+        <item>claxss</item>
+        <item>forms</item>
+        <item>newspaper</item>
+        <item>teacherlist</item>
+    </string-array>
+
+    <string-array name="shortcuts_array_values_default">
+        <item>website</item>
+        <item>mebis</item>
+        <item>mensa</item>
+        <item>grades_management</item>
+    </string-array>
 </resources>
