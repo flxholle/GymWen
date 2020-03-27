@@ -259,7 +259,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                return;
+//                return;
             }
         }
         SubstitutionPlanFeatures.setDocs(doc[0], doc[1]);

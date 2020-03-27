@@ -94,7 +94,7 @@ public class TeacherListFragment extends Fragment {
         getActivity().runOnUiThread(() -> {
             clear();
 
-            if (teacherList == null) {
+            if (teacherList.getNoInternet()) {
                 TextView title = createTitleLayout();
                 title.setText(context.getString(R.string.noInternetConnection));
                 return;

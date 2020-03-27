@@ -248,7 +248,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         String footprint = getString(R.string.footprint);
         message += footprint;
 
-        if (SubstitutionPlanFeatures.getTodayTitleString().equals("Keine Internetverbindung!")) {
+        if (SubstitutionPlanFeatures.getTodayTitle().getNoInternet()) {
             //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
             ChocoBar.builder().setActivity(getActivity()).setText(getString(R.string.noInternet)).setDuration(ChocoBar.LENGTH_LONG).orange().show();
             return;
@@ -397,7 +397,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         new Thread(() -> {
             try {
                 ApplicationFeatures.downloadTeacherlistDoc();
-                if (TeacherlistFeatures.liste() == null)
+                if (TeacherlistFeatures.liste().getNoInternet())
                     throw new Exception();
                 getActivity().runOnUiThread(() -> createTeacherView(TeacherlistFeatures.getTeacher(query)));
             } catch (Exception e) {
@@ -514,7 +514,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 generateTop(base, oldTitle);
                 generateTableSpecific(base, old);
             }
-            if ((!showToday || content != null) && showTomorrow) {
+            if ((!showToday || !content.getNoInternet()) && showTomorrow) {
                 titleCode = titleCodeTomorrow;
                 content = summarize ? SubstitutionPlanFeatures.getTomorrowSummarized() : SubstitutionPlanFeatures.getTomorrow();
                 title = SubstitutionPlanFeatures.getTomorrowTitleString();
@@ -566,27 +566,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         base.removeAllViews();
     }
 
-    @Nullable
-    private String[][] replaceAll(@Nullable String[][] value, String regex, String replace) {
-        if (value == null) {
-            return value;
-        }
-        for (int i = 0; i < value.length; i++) {
-            for (int j = 0; j < value[i].length; j++) {
-                if (value[i][j].equals(regex))
-                    value[i][j] = replace;
-            }
-        }
-        return value;
-    }
-
     //Top (Date or noInternet, etc.)
     private void generateTop(@NonNull ViewGroup base, boolean old) {
 
         if (old) {
             TextView titleView = createTitleLayout();
             base.addView(titleView);
-            if (content == null) {
+            if (content.getNoInternet()) {
                 titleView.setText(context.getString(R.string.noInternetConnection));
                 return;
             } else
@@ -603,7 +589,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
 
         } else {
-            if (content == null) {
+            if (content.getNoInternet()) {
                 ViewGroup titleView = createTitleLayoutNewDesign(context.getString(R.string.noInternetConnection), "", Color.GRAY, Color.WHITE);
                 base.addView(titleView);
                 return;
@@ -638,7 +624,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Title Layouts
-    @Nullable
+    @NonNull
     private TextView createTitleLayout() {
         TextView textView = new TextView(context);
         textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
@@ -671,8 +657,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     //Other functions important for displaying headline
-    public static boolean isMiscellaneous(@Nullable SubstitutionList content) {
-        if (content == null)
+    public static boolean isMiscellaneous(@NonNull SubstitutionList content) {
+        if (content.getNoInternet())
             return false;
         for (int i = 0; i < content.getEntries().size(); i++) {
             if (!content.getEntries().get(i).getMoreInformation().trim().isEmpty()) {
@@ -700,7 +686,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     //Body
     private void generateTableAll(@NonNull ViewGroup base) {
 
-        if (content != null && content.size() > 0) {
+        if (!content.getNoInternet() && content.size() > 0) {
             //Overview
             base.addView(generateOverviewAll());
 
@@ -720,7 +706,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    @Nullable
+    @NonNull
     private View generateOverviewAll() {
         String[] headline = generateHeadline(context, miscellaneous, senior, true);
         LinearLayout base = new LinearLayout(context);
@@ -771,7 +757,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     private void generateTableSpecific(@NonNull ViewGroup base, boolean old) {
-        if (content != null && content.size() > 0) {
+        if (!content.getNoInternet() && content.size() > 0) {
             //Content
             substitutionListView = new ListView(context);
             substitutionListView.setAdapter(new SubstitutionListAdapterSpecific(context, 0, content, miscellaneous, old));
@@ -795,7 +781,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    @Nullable
+    @NonNull
     private View generateOverviewSpecific() {
         String[] headline = generateHeadline(context, miscellaneous, senior, false);
 
@@ -866,7 +852,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return base;
     }
 
-    @Nullable
+    @NonNull
     private TextView createBlankTextView() {
         TextView hour = new TextView(context);
         hour.setTypeface(hour.getTypeface(), Typeface.BOLD);

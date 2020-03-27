@@ -45,10 +45,10 @@ public abstract class TeacherlistFeatures {
      * @see Parse#getList
      * new String[]{Kürzel, Nachname, Vorname, Sprechstunde}
      */
-    @Nullable
+    @NonNull
     public static TeacherList liste() {
         if (list == null) {
-            return null;
+            return new TeacherList(true);
         }
 
         return Parse.getList(list);
