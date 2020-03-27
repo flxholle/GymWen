@@ -20,19 +20,20 @@ package com.asdoi.gymwen.ui.activities
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.Toast
+import android.view.ViewGroup
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.asdoi.gymwen.ActivityFeatures
 import com.asdoi.gymwen.R
+import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
 
-class WidgetProfileSelectionActivity : ActivityFeatures() {
+class TestActivity : ActivityFeatures() {
     var appWidgetId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,5 +94,52 @@ class WidgetProfileSelectionActivity : ActivityFeatures() {
         }
         setResult(Activity.RESULT_OK, resultValue)
         finish()
+    }
+
+    private class ProfileListAdapter internal constructor(con: Context, resource: Int) : ArrayAdapter<List<Profile>>(con, resource) {
+        lateinit var layoutinflater: LayoutInflater
+
+        constructor(con: Context, resource: Int, li: LayoutInflater) : this(con, resource) {
+            layoutinflater = li
+        }
+
+        override fun getView(position: Int, cv: View?, parent: ViewGroup): View {
+            var convertView = cv
+
+            if (convertView == null) {
+                convertView = layoutinflater.inflate(R.layout.list_profiles_entry, null)
+            }
+
+            return generateView(convertView!!, position)
+        }
+
+        override fun getCount(): Int {
+            return ProfileManagement.getSize()
+        }
+
+        private fun generateView(base: View, position: Int): View {
+            val p = ProfileManagement.getProfile(position)
+            val name = base.findViewById<TextView>(R.id.profilelist_name)
+            name.text = p.name
+
+            val courses = base.findViewById<TextView>(R.id.profilelist_courses)
+            courses.text = p.courses
+
+            val edit = base.findViewById<ImageButton>(R.id.profilelist_edit)
+            edit.visibility = View.GONE
+
+//            val delete = base.findViewById<ImageButton>(R.id.profilelist_delete)
+//            delete.setOnClickListener { v: View? -> openDeleteDialog(position) }
+//
+//            val star = base.findViewById<ImageButton>(R.id.profilelist_preferred)
+//            if (position == preferredProfilePos) {
+//                star.setImageResource(R.drawable.ic_star_black_24dp)
+//            } else {
+//                star.setImageResource(R.drawable.ic_star_border_black_24dp)
+//            }
+//
+//            star.setOnClickListener { v: View? -> setPreferredProfile(position) }
+            return base
+        }
     }
 }

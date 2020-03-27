@@ -39,10 +39,18 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.MainActivity;
+import com.asdoi.gymwen.ui.activities.WidgetProfileSelectionActivity;
+
+import java.util.ArrayList;
 
 public class SubstitutionWidgetProvider extends AppWidgetProvider {
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
     public static final String OPEN_APP = "openapp";
+    public static final String PROFILES = "profiles";
+
+    public static final char divider = '%';
+    public static final String PREF_PREFIX_KEY = "prefix_";
+
     @ColorInt
     protected static int textColorSecondary = Color.GRAY;
     @ColorInt
@@ -81,12 +89,24 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         }).start();
     }
 
-    private void updateWidget(@NonNull Context context, @NonNull AppWidgetManager appWidgetManager, int appWidgetId, @NonNull RemoteViews remoteViews) {
+    public static void updateWidget(@NonNull Context context, @NonNull AppWidgetManager appWidgetManager, int appWidgetId, @NonNull RemoteViews remoteViews) {
         remoteViews.setInt(R.id.widget_substitution_frame, "setBackgroundColor", backgroundColor);
 
         //Setup listview
         Intent intent = new Intent(context, SubstitutionWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+
+        ArrayList<Integer> arrayList = WidgetProfileSelectionActivity.loadPref(context, appWidgetId);
+        if (arrayList.size() == 0)
+            arrayList.add(0);
+        int[] array = new int[arrayList.size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = arrayList.get(i);
+        }
+
+        intent.putExtra(PROFILES, array);
+
+
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         remoteViews.setRemoteAdapter(R.id.widget_substitution_listview, intent);
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_substitution_listview);

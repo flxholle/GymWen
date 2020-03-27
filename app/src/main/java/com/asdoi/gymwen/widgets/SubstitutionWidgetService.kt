@@ -47,19 +47,36 @@ private const val internet = -6
 
 class SubstitutionWidgetService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
-        return SubstitutionWidgetFactory(this.applicationContext)
+        var profiles = mutableListOf<Profile>()
+        if (ProfileManagement.isUninit())
+            ProfileManagement.reload()
+
+        if (intent.hasExtra(SubstitutionWidgetProvider.PROFILES)) {
+            val profilesPos = intent.getIntArrayExtra(SubstitutionWidgetProvider.PROFILES)
+            if (profilesPos != null && profilesPos.size > 0) {
+                for (i in profilesPos) {
+                    if (i < ProfileManagement.getSize()) {
+                        profiles.add(ProfileManagement.getProfile(i))
+                    }
+                }
+            }
+
+            if (profiles.size == 0)
+                profiles = ProfileManagement.getProfileList()
+        } else {
+            profiles = ProfileManagement.getProfileList()
+        }
+
+        return SubstitutionWidgetFactory(this.applicationContext, profiles)
     }
 }
 
 
-class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.RemoteViewsFactory {
+class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile>) : RemoteViewsService.RemoteViewsFactory {
     private var contentList: MutableList<EntryHelper> = mutableListOf()
 
     override fun onCreate() {
         contentList = mutableListOf()
-
-        if (ProfileManagement.isUninit())
-            ProfileManagement.reload()
 
         var noInternet = false
         val summarize = PreferenceUtil.isSummarizeUp() && PreferenceUtil.isSummarizeOld()
@@ -69,7 +86,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
         var today = ""
         var tomorrow = ""
 
-        for (p in ProfileManagement.getProfileList()) {
+        for (p in profiles) {
             val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
 
             //Today
@@ -80,7 +97,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
                 noInternet = true
                 break
             }
-            todayEntryList.addAll(getEntryListForProfile(todayList, if (ProfileManagement.getSize() == 1) null else p.name, tempSubstitutionplan.senior))
+            todayEntryList.addAll(getEntryListForProfile(todayList, if (profiles.size == 1) null else p.name, tempSubstitutionplan.senior))
 
 
             //Tomorrow
@@ -91,7 +108,7 @@ class SubstitutionWidgetFactory(val context: Context) : RemoteViewsService.Remot
                 noInternet = true
                 break
             }
-            tomorrowEntryList.addAll(getEntryListForProfile(tomorrowList, if (ProfileManagement.getSize() == 1) null else p.name, tempSubstitutionplan.senior))
+            tomorrowEntryList.addAll(getEntryListForProfile(tomorrowList, if (profiles.size == 1) null else p.name, tempSubstitutionplan.senior))
         }
 
         if (noInternet) {
