@@ -65,44 +65,61 @@ class SummaryWidget : AppWidgetProvider() {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-        val remoteViews = RemoteViews(context.packageName, R.layout.widget_summary)
-
-
-        //Set OnClick intent
-        val intent = Intent(context, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-        remoteViews.setOnClickPendingIntent(R.id.widget_summary_layout, pendingIntent)
-
-        //Set Button Image
-        remoteViews.setImageViewBitmap(R.id.widget_summary_image, ApplicationFeatures.vectorToBitmap(R.drawable.ic_assignment_late))
-
-        remoteViews.setTextViewText(R.id.widget_summary_count, generateText())
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
-    }
-
-    private fun generateText(): String {
-        var today = 0
-        var tomorrow = 0
-
-        if (ProfileManagement.isUninit())
-            ProfileManagement.reload()
-        val profileList = ProfileManagement.getProfileList()
-        for (p in profileList) {
-            val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
-            val todayList = tempSubstitutionplan.getDay(true)
-            todayList //No Internet
-            today += todayList.entries.size
-            val tomorrowList = tempSubstitutionplan.getDay(false)
-            tomorrow += tomorrowList.entries.size
-        }
-        return "$today|$tomorrow"
-    }
-
     companion object {
         const val SUMMARY_WIDGET_ID_KEY = "summarywidget"
+
+        fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+            val remoteViews = RemoteViews(context.packageName, R.layout.widget_summary)
+
+            val profilesPos = SubstitutionWidgetActivity.loadPref(context, appWidgetId)
+            if (profilesPos.size == 0)
+                profilesPos.add(0)
+
+            var profiles = mutableListOf<Profile>()
+
+            if (ProfileManagement.isUninit())
+                ProfileManagement.reload()
+
+            if (profilesPos != null && profilesPos.size > 0) {
+                for (i in profilesPos) {
+                    if (i < ProfileManagement.getSize()) {
+                        profiles.add(ProfileManagement.getProfile(i))
+                    }
+                }
+            }
+
+            if (profiles.size == 0)
+                profiles = ProfileManagement.getProfileList()
+
+
+            //Set OnClick intent
+            val intent = Intent(context, MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            remoteViews.setOnClickPendingIntent(R.id.widget_summary_layout, pendingIntent)
+
+            //Set Button Image
+            remoteViews.setImageViewBitmap(R.id.widget_summary_image, ApplicationFeatures.vectorToBitmap(R.drawable.ic_assignment_late))
+
+            remoteViews.setTextViewText(R.id.widget_summary_count, generateText(profiles))
+
+            // Instruct the widget manager to update the widget
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+        }
+
+        private fun generateText(profileList: List<Profile>): String {
+            var today = 0
+            var tomorrow = 0
+
+            for (p in profileList) {
+                val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
+                val todayList = tempSubstitutionplan.getDay(true)
+                todayList //No Internet
+                today += todayList.entries.size
+                val tomorrowList = tempSubstitutionplan.getDay(false)
+                tomorrow += tomorrowList.entries.size
+            }
+            return "$today|$tomorrow"
+        }
     }
 }
 

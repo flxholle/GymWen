@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Felix Hollederer
   ~     This file is part of GymWenApp.
   ~
@@ -18,6 +17,7 @@
   -->
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.asdoi.gymwen.widgets.SummaryWidgetActivity"
     android:initialKeyguardLayout="@layout/widget_summary"
     android:initialLayout="@layout/widget_summary"
     android:minWidth="40dp"

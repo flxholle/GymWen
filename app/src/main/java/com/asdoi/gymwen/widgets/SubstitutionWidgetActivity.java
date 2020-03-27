@@ -16,7 +16,7 @@
  *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.asdoi.gymwen.ui.activities;
+package com.asdoi.gymwen.widgets;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -35,18 +35,23 @@ import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
-import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class WidgetProfileSelectionActivity extends ActivityFeatures {
-    private int appWidgetId;
-    private ArrayList<Integer> selectedProfiles;
+public class SubstitutionWidgetActivity extends ActivityFeatures {
+    public static final String PROFILES = "profiles";
+    public static final char divider = '%';
+    public static final String PREF_PREFIX_KEY = "prefix_";
+
+
+    public int appWidgetId;
+    public ArrayList<Integer> selectedProfiles;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -78,19 +83,26 @@ public class WidgetProfileSelectionActivity extends ActivityFeatures {
 
         ListView listView = findViewById(R.id.widget_creation_profile_list);
         listView.setAdapter(new ProfileListAdapter(getContext(), 0));
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         findViewById(R.id.fab).setOnClickListener((View v) -> {
             savePref();
 
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getContext());
-            RemoteViews views = new RemoteViews(getContext().getPackageName(), R.layout.widget_substitution);
-            SubstitutionWidgetProvider.updateWidget(getContext(), appWidgetManager, appWidgetId, views);
-            appWidgetManager.updateAppWidget(appWidgetId, views);
+            new Thread(() -> {
+                ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getContext());
+                RemoteViews views = new RemoteViews(getContext().getPackageName(), R.layout.widget_substitution);
+                SubstitutionWidgetProvider.updateWidget(getContext(), appWidgetManager, appWidgetId, views);
+                appWidgetManager.updateAppWidget(appWidgetId, views);
 
-            Intent resultValue = new Intent();
-            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            setResult(RESULT_OK, resultValue);
-            finish();
+                Intent resultValue = new Intent();
+                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+                setResult(RESULT_OK, resultValue);
+                finish();
+            }).start();
         });
     }
 
@@ -98,7 +110,7 @@ public class WidgetProfileSelectionActivity extends ActivityFeatures {
         setToolbar(true);
     }
 
-    private void savePref() {
+    public void savePref() {
         if (selectedProfiles.size() == 0) {
             for (int i = 0; i < ProfileManagement.getProfileList().size(); i++) {
                 selectedProfiles.add(i);
@@ -108,22 +120,22 @@ public class WidgetProfileSelectionActivity extends ActivityFeatures {
         StringBuilder s = new StringBuilder();
         for (int i : selectedProfiles) {
             s.append(i);
-            s.append(SubstitutionWidgetProvider.divider);
+            s.append(divider);
         }
         s.deleteCharAt(s.length() - 1);
 
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putString(SubstitutionWidgetProvider.PREF_PREFIX_KEY + appWidgetId, s.toString())
+                .putString(PREF_PREFIX_KEY + appWidgetId, s.toString())
                 .commit();
     }
 
     public static ArrayList<Integer> loadPref(Context context, int appWidgetId) {
-        String s = PreferenceManager.getDefaultSharedPreferences(context).getString(SubstitutionWidgetProvider.PREF_PREFIX_KEY + appWidgetId, null);
+        String s = PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_PREFIX_KEY + appWidgetId, null);
         if (s == null)
             return new ArrayList<>(0);
         else {
             ArrayList<Integer> arrayList = new ArrayList<>(0);
-            String[] profiles = s.split(SubstitutionWidgetProvider.divider + "");
+            String[] profiles = s.split(divider + "");
             for (String s1 : profiles) {
                 arrayList.add(Integer.parseInt(s1));
             }
@@ -131,7 +143,7 @@ public class WidgetProfileSelectionActivity extends ActivityFeatures {
         }
     }
 
-    private class ProfileListAdapter extends ArrayAdapter<String[]> {
+    class ProfileListAdapter extends ArrayAdapter<String[]> {
 
         ProfileListAdapter(@NonNull Context con, int resource) {
             super(con, resource);

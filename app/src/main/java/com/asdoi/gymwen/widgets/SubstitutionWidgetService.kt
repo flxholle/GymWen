@@ -51,8 +51,8 @@ class SubstitutionWidgetService : RemoteViewsService() {
         if (ProfileManagement.isUninit())
             ProfileManagement.reload()
 
-        if (intent.hasExtra(SubstitutionWidgetProvider.PROFILES)) {
-            val profilesPos = intent.getIntArrayExtra(SubstitutionWidgetProvider.PROFILES)
+        if (intent.hasExtra(SubstitutionWidgetActivity.PROFILES)) {
+            val profilesPos = intent.getIntArrayExtra(SubstitutionWidgetActivity.PROFILES)
             if (profilesPos != null && profilesPos.size > 0) {
                 for (i in profilesPos) {
                     if (i < ProfileManagement.getSize()) {

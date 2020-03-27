@@ -18,7 +18,7 @@
   -->
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="com.asdoi.gymwen.ui.activities.WidgetProfileSelectionActivity"
+    android:configure="com.asdoi.gymwen.widgets.SubstitutionWidgetActivity"
     android:initialKeyguardLayout="@layout/widget_substitution"
     android:initialLayout="@layout/widget_substitution"
     android:minWidth="266dp"

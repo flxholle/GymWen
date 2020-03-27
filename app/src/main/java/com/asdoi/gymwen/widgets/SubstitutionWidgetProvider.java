@@ -39,17 +39,12 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.MainActivity;
-import com.asdoi.gymwen.ui.activities.WidgetProfileSelectionActivity;
 
 import java.util.ArrayList;
 
 public class SubstitutionWidgetProvider extends AppWidgetProvider {
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
     public static final String OPEN_APP = "openapp";
-    public static final String PROFILES = "profiles";
-
-    public static final char divider = '%';
-    public static final String PREF_PREFIX_KEY = "prefix_";
 
     @ColorInt
     protected static int textColorSecondary = Color.GRAY;
@@ -96,7 +91,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         Intent intent = new Intent(context, SubstitutionWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 
-        ArrayList<Integer> arrayList = WidgetProfileSelectionActivity.loadPref(context, appWidgetId);
+        ArrayList<Integer> arrayList = SubstitutionWidgetActivity.loadPref(context, appWidgetId);
         if (arrayList.size() == 0)
             arrayList.add(0);
         int[] array = new int[arrayList.size()];
@@ -104,7 +99,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
             array[i] = arrayList.get(i);
         }
 
-        intent.putExtra(PROFILES, array);
+        intent.putExtra(SubstitutionWidgetActivity.PROFILES, array);
 
 
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
