@@ -700,6 +700,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 SwipeRefreshLayout swipeRefreshLayout = new SwipeRefreshLayout(context);
                 swipeRefreshLayout.setOnRefreshListener(() -> ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh));
                 swipeRefreshLayout.addView(substitutionListView);
+                swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.YELLOW, Color.BLUE);
                 base.addView(swipeRefreshLayout);
             } else
                 base.addView(substitutionListView);
@@ -775,6 +776,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 SwipeRefreshLayout swipeRefreshLayout = new SwipeRefreshLayout(context);
                 swipeRefreshLayout.setOnRefreshListener(() -> ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh));
                 swipeRefreshLayout.addView(substitutionListView);
+                swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.YELLOW, Color.BLUE);
                 base.addView(swipeRefreshLayout);
             } else
                 base.addView(substitutionListView);

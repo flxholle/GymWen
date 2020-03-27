@@ -23,7 +23,9 @@
         versioncode="120">
         <change>Neue Benachrichtigung (und passende Einstellungen)</change>
         <change>Startbildschirm-Shortcuts hinzugefügt</change>
+        <change>Wendelsteiner Welle hinzugefügt (Deaktiviert -> Einstellungen)</change>
         <change>Herunterwischen zum Aktualisieren</change>
+        <change>Einstellungen für Home-Screen Widgets hinzugefügt</change>
         <change>Einstellung für den automatischen Update-Check hinzugefügt</change>
         <change>Neue Icons</change>
     </release>
