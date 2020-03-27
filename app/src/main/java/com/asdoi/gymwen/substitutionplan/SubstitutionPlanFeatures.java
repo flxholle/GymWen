@@ -48,11 +48,7 @@ public abstract class SubstitutionPlanFeatures {
     }
 
     public static void setup(boolean hours, String... courses) {
-        if (substitutionPlan == null) {
-            substitutionPlan = new SubstitutionPlan(hours, courses);
-        } else {
-            substitutionPlan.reCreate(hours, courses);
-        }
+        substitutionPlan.reCreate(hours, courses);
     }
 
     @NonNull
@@ -70,7 +66,7 @@ public abstract class SubstitutionPlanFeatures {
     }
 
     public static boolean isUninit() {
-        return substitutionPlan == null;
+        return substitutionPlan.getTodayDoc() == null && substitutionPlan.getTomorrowDoc() == null;
     }
 
     @NonNull

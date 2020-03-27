@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Felix Hollederer
   ~     This file is part of GymWenApp.
   ~
@@ -88,6 +87,11 @@
                     android:id="@+id/nav_shop"
                     android:icon="@drawable/ic_t_shirt"
                     android:title="@string/menu_shop"
+                    android:visible="false" />
+                <item
+                    android:id="@+id/nav_podcast"
+                    android:icon="@drawable/ic_podcast"
+                    android:title="@string/menu_podcast"
                     android:visible="false" />
                 <item
                     android:id="@+id/nav_call_office"

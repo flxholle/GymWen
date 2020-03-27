@@ -200,6 +200,10 @@ public class PreferenceUtil {
         return getBooleanSettings("auto_update", true);
     }
 
+    public static boolean isPodcast() {
+        return getBooleanSettings("menu_podcast", false);
+    }
+
 
     //SubstitutionPlan
     @NonNull

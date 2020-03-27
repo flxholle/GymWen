@@ -42,8 +42,10 @@ public abstract class External_Const {
     public final static String cafeteria_Link = "https://www.kitafino.de/sys_k2/index.php?action=bestellen";
     public final static String shop_Link = "http://shop.apromote-werbemittel.de/";
     public final static String claxss_Link = "https://gym-wendelstein.schule-eltern.info/infoline/claxss";
-    public static final String colorush_online = "https://asdoi.gitlab.io/colorushweb/";
     public static final String news_Link = "http://schuelerzeitung-gym-wen.de/";
+    public static final String podcast_Link = "https://www.machdeinradio.de/kanal/wendelsteiner-welle/";
+
+    public static final String colorush_online = "https://asdoi.gitlab.io/colorushweb/";
 
 
     //Download Apps

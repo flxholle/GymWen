@@ -350,6 +350,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         else
             itemsDisable.add(menu.findItem(R.id.nav_mensa));
 
+        if (PreferenceUtil.isPodcast())
+            itemsEnable.add(menu.findItem(R.id.nav_podcast));
+        else
+            itemsDisable.add(menu.findItem(R.id.nav_podcast));
+
         //Enable items
         try {
             for (MenuItem i : itemsEnable) {
@@ -735,6 +740,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_navigation:
                 Uri gymwenOnMap = Uri.parse(External_Const.location);
                 showMap(gymwenOnMap);
+                return;
+            case R.id.nav_podcast:
+                tabIntent(External_Const.podcast_Link);
                 return;
         }
 
