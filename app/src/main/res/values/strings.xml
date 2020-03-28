@@ -60,6 +60,7 @@
     <string name="menu_navigation">Navigation</string>
     <string name="menu_backup">Backup</string>
     <string name="menu_podcast" translatable="false">Wendelsteiner Welle</string>
+    <string name="room_plan">Raumplan</string>
 
     <!-- Main -->
     <string name="action_share">Teilen</string>
@@ -304,6 +305,7 @@
         <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div>Icons made by <a href="https://www.flaticon.com/authors/srip" title="srip">srip</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/ddara" title="dDara">dDara</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         ]]>
     </string>
 
@@ -498,9 +500,6 @@
     <string name="shortcut_claxss">ClaXss</string>
     <string name="shortcut_forms">Formulare</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
-    <!-- Maps -->
+    <!-- Room plan -->
+    <string name="not_found">nicht gefunden</string>
 </resources>

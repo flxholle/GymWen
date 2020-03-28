@@ -29,10 +29,12 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.onlylemi.mapview.library.MapView;
 import com.onlylemi.mapview.library.MapViewListener;
 import com.onlylemi.mapview.library.layer.MarkLayer;
+import com.pd.chocobar.ChocoBar;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -40,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RoomPlanFragment extends Fragment {
+    private View root;
     private MapView mapView;
     private Map<String, PointF> roomMarks;
 
@@ -50,7 +53,7 @@ public class RoomPlanFragment extends Fragment {
     public static RoomPlanFragment newInstance(String selectRoom) {
 
         Bundle args = new Bundle();
-        args.putString(selectRoom, selectRoom);
+        args.putString(SELECT_ROOM, selectRoom);
 
         RoomPlanFragment fragment = new RoomPlanFragment();
         fragment.setArguments(args);
@@ -62,64 +65,92 @@ public class RoomPlanFragment extends Fragment {
         super.onCreate(savedInstanceState);
         try {
             generateMarks();
-            selectRoom = savedInstanceState.getString(SELECT_ROOM);
+            selectRoom = getArguments().getString(SELECT_ROOM);
             if (selectRoom != null && !selectRoom.trim().isEmpty()) {
                 if (getMarksName().contains(selectRoom))
                     shouldSelectRoom = true;
+                else
+                    ChocoBar.builder().setActivity(getActivity())
+                            .setActionText(getString(R.string.ok))
+                            .setText(getString(R.string.room) + " " + selectRoom + " " + getString(R.string.not_found))
+                            .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                            .orange()
+                            .show();
             }
         } catch (Exception e) {
+            e.printStackTrace();
+
             //No Arguments set
             shouldSelectRoom = false;
         }
+        generateMarks();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_room_plan, container, false);
+        root = inflater.inflate(R.layout.fragment_room_plan, container, false);
 
         mapView = root.findViewById(R.id.mapview);
+        mapView.setVisibility(View.GONE);
+        ((ActivityFeatures) getActivity()).createLoadingPanel((ViewGroup) root);
 
-        Bitmap bitmap = null;
-        try {
-            bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.roomplan);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        mapView.loadMap(bitmap);
-        mapView.setMapViewListener(new MapViewListener() {
-            @Override
-            public void onMapLoadSuccess() {
-                List<PointF> marks = getMarks();
-                List<String> marksName = getMarksName();
-
-                MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
-                markLayer.setMarkIsClickListener(num -> Toast.makeText(getContext(), marksName.get(num), Toast.LENGTH_LONG).show());
-
-                if (shouldSelectRoom)
-                    markLayer.setNum(marksName.indexOf(selectRoom));
-                mapView.addLayer(markLayer);
-                mapView.setCurrentRotateDegrees(0);
-                mapView.refresh();
-
-            }
-
-            @Override
-            public void onMapLoadFail() {
-            }
-
-        });
-
-
+        loadMap();
         return root;
+    }
+
+    public void loadMap() {
+
+        new Thread(() -> {
+            Bitmap bitmap = null;
+            try {
+                bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.roomplan);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Bitmap finalBitmap = bitmap;
+            getActivity().runOnUiThread(() -> {
+                ((ViewGroup) root).removeView(root.findViewWithTag("vertretung_loading"));
+                mapView.setVisibility(View.VISIBLE);
+                mapView.loadMap(finalBitmap);
+                mapView.setMapViewListener(new MapViewListener() {
+                    @Override
+                    public void onMapLoadSuccess() {
+                        List<PointF> marks = getMarks();
+                        List<String> marksName = getMarksName();
+
+                        MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
+
+                        markLayer.setMarkIsClickListener(num -> Toast.makeText(getContext(), getString(R.string.room) + " " + marksName.get(num), Toast.LENGTH_LONG).show());
+                        markLayer.setNum(0);
+
+                        mapView.addLayer(markLayer);
+                        mapView.setCurrentRotateDegrees(0);
+                        mapView.setRotateable(false);
+                        mapView.refresh();
+
+                    }
+
+                    @Override
+                    public void onMapLoadFail() {
+                    }
+
+                });
+            });
+        }).start();
     }
 
     private void generateMarks() {
         roomMarks = new HashMap<String, PointF>(0);
         roomMarks.put("109", new PointF(409, 720));
         roomMarks.put("E006", new PointF(200, 200));
+
+        if (shouldSelectRoom) {
+            PointF room = roomMarks.get(selectRoom);
+            roomMarks = new HashMap<>();
+            roomMarks.put(selectRoom, room);
+        }
     }
 
     private List<PointF> getMarks() {
@@ -137,10 +168,6 @@ public class RoomPlanFragment extends Fragment {
         if (roomMarks == null)
             generateMarks();
 
-        List<String> list = new LinkedList<>();
-        for (String key : roomMarks.keySet()) {
-            list.add("Raum " + key);
-        }
-        return list;
+        return new LinkedList<>(roomMarks.keySet());
     }
 }

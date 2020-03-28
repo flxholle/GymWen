@@ -95,6 +95,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private static final int lastLoadedSubstitution = 0;
     private static final int lastLoadedTabs = 1;
     private static final int lastLoadedTeacherlist = 2;
+    private static final int lastLoadedRoomPlan = 3;
 
     private static int lastLoadedInTabs;
     private static final int lastLoadedTabsSpecific = 10;
@@ -651,6 +652,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         ApplicationFeatures.deleteOfflineTeacherlistDoc();
                         fragment = new TeacherListFragment();
                         break;
+                    case lastLoadedRoomPlan:
+                        fragment = new RoomPlanFragment();
+                        break;
                     default:
                         ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
@@ -668,6 +672,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         break;
                     case lastLoadedTeacherlist:
                         fragment = new TeacherListFragment();
+                        break;
+                    case lastLoadedRoomPlan:
+                        fragment = new RoomPlanFragment();
                         break;
                     default:
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
@@ -736,10 +743,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 onNavigationItemSelected(refreshFragment);
                 return;
             case R.id.nav_news:
-//                tabIntent(External_Const.news_Link);
-//                return;
-                fragment = new RoomPlanFragment();
-                break;
+                tabIntent(External_Const.news_Link);
+                return;
             case R.id.nav_navigation:
                 Uri gymwenOnMap = Uri.parse(External_Const.location);
                 showMap(gymwenOnMap);
@@ -747,12 +752,17 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_podcast:
                 tabIntent(External_Const.podcast_Link);
                 return;
+            case R.id.nav_room_plan:
+                fragment = new RoomPlanFragment();
+                break;
         }
 
 
         if (fragment != null) {
             if (fragment instanceof TeacherListFragment)
                 lastLoaded = lastLoadedTeacherlist;
+            else if (fragment instanceof RoomPlanFragment)
+                lastLoaded = lastLoadedRoomPlan;
             else
                 lastLoaded = lastLoadedSubstitution;
 
