@@ -36,8 +36,8 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentRoot;
 import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSignIn;
-import com.github.javiersantos.appupdater.enums.Display;
 
 public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     public static final String SIGN_IN_SETTINGS = "SignInSettings";
@@ -50,7 +50,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         setContentView(R.layout.activity_settings);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.settings, new SettingsFragment())
+                .replace(R.id.settings, new SettingsFragmentRoot())
                 .commit();
         loadedFragments = 0;
     }
@@ -149,27 +149,5 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     @Override
     public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
         dialog.dismiss();
-    }
-
-    public static class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.preferences_root, rootKey);
-
-            ((SettingsActivity) getActivity()).loadedFragments++;
-
-            Preference myPref = findPreference("language");
-            myPref.setOnPreferenceClickListener((Preference p) -> {
-                ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(getActivity());
-                return true;
-            });
-            myPref.setSummary(ApplicationFeatures.getLanguageSwitcher().getCurrentLocale().toString());
-
-            myPref = findPreference("updates");
-            myPref.setOnPreferenceClickListener((Preference p) -> {
-                ((ActivityFeatures) getActivity()).checkUpdates(Display.DIALOG, true);
-                return true;
-            });
-        }
     }
 }

@@ -41,6 +41,15 @@
             android:summary="@string/set_desc_parents"
             android:title="@string/set_parents"
             app:iconSpaceReserved="false" />
+        <MultiSelectListPreference
+            android:defaultValue="@array/shortcuts_array_values_default"
+            android:entries="@array/shortcuts_array"
+            android:entryValues="@array/shortcuts_array_values"
+            android:key="shortcuts_array"
+            android:summary="@string/set_desc_shortcuts"
+            android:title="Shortcuts"
+            app:iconSpaceReserved="false"
+            app:isPreferenceVisible="true" />
         <Preference
             android:key="language"
             android:title="@string/menu_language"
@@ -62,15 +71,6 @@
             android:title="@string/set_beta_features"
             app:iconSpaceReserved="false"
             app:isPreferenceVisible="false" />
-        <MultiSelectListPreference
-            android:defaultValue="@array/shortcuts_array_values_default"
-            android:entries="@array/shortcuts_array"
-            android:entryValues="@array/shortcuts_array_values"
-            android:key="shortcuts_array"
-            android:summary="@string/set_desc_shortcuts"
-            android:title="Shortcuts"
-            app:iconSpaceReserved="false"
-            app:isPreferenceVisible="true" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="offline_mode"
