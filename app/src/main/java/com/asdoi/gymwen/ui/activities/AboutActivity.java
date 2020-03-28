@@ -30,7 +30,6 @@ import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -175,15 +174,6 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         libs.setOnClickListener(this);
         colorush.setOnClickListener(this);
         imprint.setOnClickListener(this);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private static String getCurrentVersionName(@NonNull final Context context) {

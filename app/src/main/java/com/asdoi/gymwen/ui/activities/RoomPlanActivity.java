@@ -18,7 +18,6 @@
 
 package com.asdoi.gymwen.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentManager;
@@ -58,8 +57,6 @@ public class RoomPlanActivity extends ActivityFeatures {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
         finish();
     }
 }

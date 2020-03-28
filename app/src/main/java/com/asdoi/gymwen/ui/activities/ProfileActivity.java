@@ -21,9 +21,6 @@ package com.asdoi.gymwen.ui.activities;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.view.MenuItem;
-
-import androidx.annotation.NonNull;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -45,15 +42,6 @@ public class ProfileActivity extends ActivityFeatures {
 
     public void setupColors() {
         setToolbar(true);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
