@@ -48,7 +48,7 @@ public class RoomPlanFragment extends Fragment {
 
     private String selectRoom;
     private boolean shouldSelectRoom = false;
-    private static String SELECT_ROOM = "selectroom";
+    public static String SELECT_ROOM = "selectroom";
 
     public static RoomPlanFragment newInstance(String selectRoom) {
 

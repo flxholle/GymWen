@@ -21,6 +21,7 @@ package com.asdoi.gymwen.ui.activities;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,6 +112,7 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
                 finish();
             }).start();
         });
+        findViewById(R.id.fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
     }
 
     public void setupColors() {

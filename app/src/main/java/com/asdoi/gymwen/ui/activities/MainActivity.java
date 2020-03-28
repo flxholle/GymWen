@@ -753,8 +753,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 tabIntent(External_Const.podcast_Link);
                 return;
             case R.id.nav_room_plan:
-                fragment = new RoomPlanFragment();
-                break;
+//                setVisibilitySpinner(false);
+//                fragment = new RoomPlanFragment();
+//                setDesignChangerVisibility(false);
+//                break;
+                intent = new Intent(this, RoomPlanActivity.class);
+                startActivity(intent);
+                finish();
+                return;
         }
 
 

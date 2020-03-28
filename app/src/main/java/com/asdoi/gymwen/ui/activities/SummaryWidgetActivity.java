@@ -20,6 +20,7 @@ package com.asdoi.gymwen.ui.activities;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.view.View;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -43,7 +44,7 @@ public class SummaryWidgetActivity extends SubstitutionWidgetActivity {
                 setResult(RESULT_OK, resultValue);
                 finish();
             }).start();
-
         });
+        findViewById(R.id.fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
     }
 }
