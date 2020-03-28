@@ -483,6 +483,8 @@
 
     <!-- widget -->
     <string name="loading">Lädt\u2026</string>
+    <string name="select_profile">Profile auswählen</string>
+    <string name="selected_all_profiles">Alle Profile ausgewählt</string>
 
     <!-- Shortcuts -->
     <string name="shortcut_website">Website</string>

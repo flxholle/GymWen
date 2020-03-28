@@ -16,7 +16,7 @@
  *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.asdoi.gymwen
+package com.asdoi.gymwen.util
 
 import android.content.Context
 import android.content.Intent
@@ -25,6 +25,8 @@ import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import androidx.annotation.RequiresApi
 import androidx.preference.PreferenceManager
+import com.asdoi.gymwen.ApplicationFeatures
+import com.asdoi.gymwen.R
 import com.asdoi.gymwen.ui.activities.MainActivity
 import com.asdoi.gymwen.ui.activities.WebsiteActivity
 

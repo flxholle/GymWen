@@ -17,7 +17,7 @@
   -->
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="com.asdoi.gymwen.widgets.SummaryWidgetActivity"
+    android:configure="com.asdoi.gymwen.ui.activities.SummaryWidgetActivity"
     android:initialKeyguardLayout="@layout/widget_summary"
     android:initialLayout="@layout/widget_summary"
     android:minWidth="40dp"

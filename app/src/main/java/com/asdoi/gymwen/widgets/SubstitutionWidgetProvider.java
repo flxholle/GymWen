@@ -39,6 +39,7 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.MainActivity;
+import com.asdoi.gymwen.ui.activities.SubstitutionWidgetActivity;
 
 import java.util.ArrayList;
 

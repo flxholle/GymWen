@@ -34,6 +34,7 @@ import com.asdoi.gymwen.profiles.ProfileManagement
 import com.asdoi.gymwen.substitutionplan.SubstitutionEntry
 import com.asdoi.gymwen.substitutionplan.SubstitutionList
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
+import com.asdoi.gymwen.ui.activities.SubstitutionWidgetActivity
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment
 import com.asdoi.gymwen.util.PreferenceUtil
 

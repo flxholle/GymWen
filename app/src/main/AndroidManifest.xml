@@ -40,12 +40,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".widgets.SubstitutionWidgetActivity">
+        <activity android:name=".ui.activities.SubstitutionWidgetActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name=".widgets.SummaryWidgetActivity">
+        <activity android:name=".ui.activities.SummaryWidgetActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

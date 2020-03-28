@@ -30,6 +30,7 @@ import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
 import com.asdoi.gymwen.ui.activities.MainActivity
+import com.asdoi.gymwen.ui.activities.SubstitutionWidgetActivity
 import com.asdoi.gymwen.util.PreferenceUtil
 import kotlin.concurrent.thread
 

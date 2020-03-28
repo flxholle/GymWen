@@ -16,7 +16,7 @@
  *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.asdoi.gymwen.widgets;
+package com.asdoi.gymwen.ui.activities;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +40,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -63,6 +65,11 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
 
         // Set the view layout resource to use.
         setContentView(R.layout.activity_widget_profile_selection);
+
+        if (!ApplicationFeatures.initSettings(false, true)) {
+            finish();
+            return;
+        }
 
         selectedProfiles = loadPref(getContext(), appWidgetId);
 
@@ -107,7 +114,7 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
     }
 
     public void setupColors() {
-        setToolbar(true);
+//        setToolbar(true);
     }
 
     public void savePref() {
@@ -115,6 +122,9 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
             for (int i = 0; i < ProfileManagement.getProfileList().size(); i++) {
                 selectedProfiles.add(i);
             }
+            runOnUiThread(() -> {
+                Toast.makeText(getContext(), R.string.selected_all_profiles, Toast.LENGTH_SHORT).show();
+            });
         }
 
         StringBuilder s = new StringBuilder();
