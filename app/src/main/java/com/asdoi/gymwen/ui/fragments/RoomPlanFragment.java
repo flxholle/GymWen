@@ -20,7 +20,9 @@ package com.asdoi.gymwen.ui.fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PointF;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,7 +110,7 @@ public class RoomPlanFragment extends Fragment {
             try {
                 bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.roomplan);
                 if (shouldSelectRoom)
-                    bmp = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.pin);
+                    bmp = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.mark_touch);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -131,6 +133,14 @@ public class RoomPlanFragment extends Fragment {
                             bitmapLayer.setLocation(getMarks().get(0));
                             bitmapLayer.setOnBitmapClickListener(layer -> Toast.makeText(getContext(), getString(R.string.room) + " " + marksName.get(0), Toast.LENGTH_LONG).show());
                             mapView.addLayer(bitmapLayer);
+                            ChocoBar.builder().setActivity(getActivity())
+                                    .setText(getString(R.string.room) + " " + selectRoom)
+                                    .setTextTypefaceStyle(Typeface.BOLD)
+                                    .setIcon(R.mipmap.mark_touch)
+                                    .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                                    .setBackgroundColor(Color.GRAY)
+                                    .build()
+                                    .show();
                         } else {
                             MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
                             markLayer.setMarkIsClickListener(num -> Toast.makeText(getContext(), getString(R.string.room) + " " + marksName.get(num), Toast.LENGTH_LONG).show());

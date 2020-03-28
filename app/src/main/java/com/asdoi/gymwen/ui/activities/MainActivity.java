@@ -129,7 +129,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         SubstitutionPlanFeatures.setContext(this);
 
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), false, new String[]{getString(R.string.today), getString(R.string.tomorrow)});
+        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), true, true, new String[]{getString(R.string.today), getString(R.string.tomorrow)});
         SubstitutionFragment.changedSectionsPagerAdapterTitles = false;
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
