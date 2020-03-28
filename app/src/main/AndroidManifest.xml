@@ -55,6 +55,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.RoomPlanActivity"
+            android:label="@string/room_plan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.AboutActivity"

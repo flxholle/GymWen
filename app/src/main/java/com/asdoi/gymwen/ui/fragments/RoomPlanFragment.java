@@ -33,6 +33,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.onlylemi.mapview.library.MapView;
 import com.onlylemi.mapview.library.MapViewListener;
+import com.onlylemi.mapview.library.layer.BitmapLayer;
 import com.onlylemi.mapview.library.layer.MarkLayer;
 import com.pd.chocobar.ChocoBar;
 
@@ -103,13 +104,18 @@ public class RoomPlanFragment extends Fragment {
 
         new Thread(() -> {
             Bitmap bitmap = null;
+            Bitmap bmp = null;
             try {
                 bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.roomplan);
+                if (shouldSelectRoom)
+                    bmp = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.pin);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             Bitmap finalBitmap = bitmap;
+            Bitmap finalBmp = bmp;
+
             getActivity().runOnUiThread(() -> {
                 ((ViewGroup) root).removeView(root.findViewWithTag("vertretung_loading"));
                 mapView.setVisibility(View.VISIBLE);
@@ -120,12 +126,18 @@ public class RoomPlanFragment extends Fragment {
                         List<PointF> marks = getMarks();
                         List<String> marksName = getMarksName();
 
-                        MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
+                        if (shouldSelectRoom) {
+                            BitmapLayer bitmapLayer = new BitmapLayer(mapView, finalBmp);
+                            bitmapLayer.setLocation(getMarks().get(0));
+                            bitmapLayer.setOnBitmapClickListener(layer -> Toast.makeText(getContext(), getString(R.string.room) + " " + marksName.get(0), Toast.LENGTH_LONG).show());
+                            mapView.addLayer(bitmapLayer);
+                        } else {
+                            MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
+                            markLayer.setMarkIsClickListener(num -> Toast.makeText(getContext(), getString(R.string.room) + " " + marksName.get(num), Toast.LENGTH_LONG).show());
+                            markLayer.setNum(0);
+                            mapView.addLayer(markLayer);
+                        }
 
-                        markLayer.setMarkIsClickListener(num -> Toast.makeText(getContext(), getString(R.string.room) + " " + marksName.get(num), Toast.LENGTH_LONG).show());
-                        markLayer.setNum(0);
-
-                        mapView.addLayer(markLayer);
                         mapView.setCurrentRotateDegrees(0);
                         mapView.setRotateable(false);
                         mapView.refresh();

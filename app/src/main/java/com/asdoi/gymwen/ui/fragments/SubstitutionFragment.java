@@ -62,6 +62,7 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
 import com.asdoi.gymwen.teacherlist.TeacherListEntry;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.MainActivity;
+import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.pd.chocobar.ChocoBar;
@@ -925,6 +926,11 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         TextView room = view.findViewById(R.id.substitution_all_entry_textViewRoom);
         room.setText(entry.getRoom());
+        room.setOnClickListener((View v) -> {
+            Intent intent = new Intent(getContext(), RoomPlanActivity.class);
+            intent.putExtra(RoomPlanFragment.SELECT_ROOM, entry.getRoom());
+            startActivity(intent);
+        });
 
         TextView other = view.findViewById(R.id.substitution_all_entry_textViewOther);
         other.setVisibility(View.VISIBLE);
@@ -1030,6 +1036,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         TextView room = view.findViewById(R.id.substitution_specific_entry_textViewRoom);
         room.setTextColor(ApplicationFeatures.getAccentColor(context));
+        room.setOnClickListener(null);
 
 
         if (!entry.isNothing()) {
@@ -1045,6 +1052,11 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             SpannableString content = new SpannableString(entry.getRoom());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             room.setText(content);
+            room.setOnClickListener((View v) -> {
+                Intent intent = new Intent(getContext(), RoomPlanActivity.class);
+                intent.putExtra(RoomPlanFragment.SELECT_ROOM, entry.getRoom());
+                startActivity(intent);
+            });
         } else {
             removeTeacherClick(teacher);
             teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_teacher) + context.getResources().getInteger(R.integer.substitution_specific_entry_room)));
@@ -1122,8 +1134,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 SpannableString content = new SpannableString("in " + entry.getRoom());
                 content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                 room.setText(content);
+                room.setOnClickListener((View v) -> {
+                    Intent intent = new Intent(getContext(), RoomPlanActivity.class);
+                    intent.putExtra(RoomPlanFragment.SELECT_ROOM, entry.getRoom());
+                    startActivity(intent);
+                });
             } else {
                 room.setVisibility(View.GONE);
+                room.setOnClickListener(null);
             }
         } else {
             if (PreferenceUtil.getGeneralTheme() == R.style.AppTheme_Light) {
