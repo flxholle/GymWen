@@ -72,4 +72,7 @@ public abstract class External_Const {
     public static final String UPDATER_JSON = "https://gitlab.com/asdoi/gymwenreleases/raw/master/UpdaterFile.json";
     public static final String APK_DOWNLOAD = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
     public static final String APK_DOWNLOAD_PAGE = "https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk";
+
+    //App Registration (User census)
+    public static final String REGISTER_URL = "https://asdoi.gitlab.io/hit_counter.html";
 }

@@ -114,8 +114,8 @@ dependencies {
     implementation 'com.github.Pradyuman7:ChocoBar:V1.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.ritesh:ratiolayout:1.0.0'
-    implementation 'com.github.mehrdadsafari:ZadakNotification:0.0.2'
     implementation 'com.github.stephenvinouze:shapetextdrawable:1.0.0'
+    implementation 'com.github.onlylemi:mapview:v1.0'
 
     //Image Slider (see ColoRushFragment)
     implementation 'com.squareup.picasso:picasso:2.3.2'

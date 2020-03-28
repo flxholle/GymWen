@@ -736,13 +736,11 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     }
 
-    private static final String register_url = "https://asdoi.gitlab.io/hit_counter.html";
-
     private void register(@NonNull Context context) {
         try {
             WebView wv = new WebView(this);
             wv.getSettings().setJavaScriptEnabled(true);
-            wv.loadUrl(register_url);
+            wv.loadUrl(External_Const.REGISTER_URL);
         } catch (Exception e) {
             Toast.makeText(this, R.string.noInternetConnection, Toast.LENGTH_SHORT).show();
             return;

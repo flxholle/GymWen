@@ -55,6 +55,7 @@ import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
+import com.asdoi.gymwen.ui.fragments.RoomPlanFragment;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.ui.fragments.TeacherListFragment;
 import com.asdoi.gymwen.util.External_Const;
@@ -744,8 +745,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 onNavigationItemSelected(refreshFragment);
                 return;
             case R.id.nav_news:
-                tabIntent(External_Const.news_Link);
-                return;
+//                tabIntent(External_Const.news_Link);
+//                return;
+                fragment = new RoomPlanFragment();
+                break;
             case R.id.nav_navigation:
                 Uri gymwenOnMap = Uri.parse(External_Const.location);
                 showMap(gymwenOnMap);
