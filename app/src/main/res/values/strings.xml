@@ -471,11 +471,11 @@
     <string name="set_main_notif_for_all_desc">Man kann in der Profil-Bearbeiten Ansicht ein Profil mit einem Stern auswählen. Normalerweise wird nur für dieses einzelne Profil eine prägnante Benachrichtigung gesendet. Ist gar keines ausgewählt wird auch keine prägnante Benachrichtigung gesendet.</string>
     <string name="set_show_summary_usual_desc">Normalerweise werden die Profile die in der prägnanten Benachrichtigung sind, nicht in der zusammenfassenden gesendet</string>
 
-
     <string name="set_desc_parents">Bestimmte Funktionen aktivieren, die v.a. für Eltern nützlich sind, z.B. ClaXss</string>
     <string name="set_desc_updates">Auf Aktualisierungen überprüfen</string>
     <string name="set_desc_check_background_updates">Automatisch im Hintergrund auf Aktualisierungen prüfen</string>
     <string name="set_desc_offline_mode">Bestimmte Dinge lokal speichern, damit die App ohne Internet funktioniert</string>
+    <string name="set_desc_shortcuts">Shortcuts, die über einen langen Klick auf das App-Icon erzeugt werden können. Bitte maximal 4 auswählen!</string>
 
     <string name="set_desc_both">Wird, auch falls deaktiviert, immer beim ersten App-Start geladen!</string>
     <string name="set_desc_intelligent_hide">Vergangene oder nicht mehr relevante Tage werden ausgeblendet.</string>

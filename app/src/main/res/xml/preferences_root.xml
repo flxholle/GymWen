@@ -66,10 +66,11 @@
             android:defaultValue="@array/shortcuts_array_values_default"
             android:entries="@array/shortcuts_array"
             android:entryValues="@array/shortcuts_array_values"
-            android:iconSpaceReserved="false"
             android:key="shortcuts_array"
+            android:summary="@string/set_desc_shortcuts"
             android:title="Shortcuts"
-            app:isPreferenceVisible="false" />
+            app:iconSpaceReserved="false"
+            app:isPreferenceVisible="true" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="offline_mode"

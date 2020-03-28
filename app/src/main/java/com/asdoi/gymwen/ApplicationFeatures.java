@@ -148,7 +148,6 @@ public class ApplicationFeatures extends MultiDexApplication {
         initRosetta();
         ProfileManagement.reload();
         initSubstitutionPlanReceiver();
-//        ShortcutUtils.Companion.createShortcuts();
 
         // Preload custom tabs service for improved performance
         // This is optional but recommended
