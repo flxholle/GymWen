@@ -60,7 +60,6 @@ import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.ui.fragments.TeacherListFragment;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
-import com.asdoi.gymwen.util.ShortcutUtils;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -194,14 +193,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             startActivity(intent);
             drawer.closeDrawer(GravityCompat.START);
         });
-
-        if (Build.VERSION.SDK_INT >= 25) {
-            try {
-                ShortcutUtils.Companion.createShortcuts();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void setupColors() {

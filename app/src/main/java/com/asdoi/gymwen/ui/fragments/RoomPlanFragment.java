@@ -20,28 +20,64 @@ package com.asdoi.gymwen.ui.fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PointF;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.R;
 import com.onlylemi.mapview.library.MapView;
 import com.onlylemi.mapview.library.MapViewListener;
+import com.onlylemi.mapview.library.layer.MarkLayer;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class RoomPlanFragment extends Fragment {
     private MapView mapView;
-    private View root;
-    private static final String TAG = "MapLayerTestActivity";
+    private Map<String, PointF> roomMarks;
+
+    private String selectRoom;
+    private boolean shouldSelectRoom = false;
+    private static String SELECT_ROOM = "selectroom";
+
+    public static RoomPlanFragment newInstance(String selectRoom) {
+
+        Bundle args = new Bundle();
+        args.putString(selectRoom, selectRoom);
+
+        RoomPlanFragment fragment = new RoomPlanFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try {
+            generateMarks();
+            selectRoom = savedInstanceState.getString(SELECT_ROOM);
+            if (selectRoom != null && !selectRoom.trim().isEmpty()) {
+                if (getMarksName().contains(selectRoom))
+                    shouldSelectRoom = true;
+            }
+        } catch (Exception e) {
+            //No Arguments set
+            shouldSelectRoom = false;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_room_plan, container, false);
+        View root = inflater.inflate(R.layout.fragment_room_plan, container, false);
 
         mapView = root.findViewById(R.id.mapview);
 
@@ -56,18 +92,55 @@ public class RoomPlanFragment extends Fragment {
         mapView.setMapViewListener(new MapViewListener() {
             @Override
             public void onMapLoadSuccess() {
-                Log.i(TAG, "onMapLoadSuccess");
-                //mapView.setCurrentRotateDegrees(60);
+                List<PointF> marks = getMarks();
+                List<String> marksName = getMarksName();
+
+                MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
+                markLayer.setMarkIsClickListener(num -> Toast.makeText(getContext(), marksName.get(num), Toast.LENGTH_LONG).show());
+
+                if (shouldSelectRoom)
+                    markLayer.setNum(marksName.indexOf(selectRoom));
+                mapView.addLayer(markLayer);
+                mapView.setCurrentRotateDegrees(0);
+                mapView.refresh();
+
             }
 
             @Override
             public void onMapLoadFail() {
-                Log.i(TAG, "onMapLoadFail");
             }
 
         });
 
 
         return root;
+    }
+
+    private void generateMarks() {
+        roomMarks = new HashMap<String, PointF>(0);
+        roomMarks.put("109", new PointF(409, 720));
+        roomMarks.put("E006", new PointF(200, 200));
+    }
+
+    private List<PointF> getMarks() {
+        if (roomMarks == null)
+            generateMarks();
+
+        List<PointF> list = new LinkedList<>();
+        for (String key : roomMarks.keySet()) {
+            list.add(roomMarks.get(key));
+        }
+        return list;
+    }
+
+    private List<String> getMarksName() {
+        if (roomMarks == null)
+            generateMarks();
+
+        List<String> list = new LinkedList<>();
+        for (String key : roomMarks.keySet()) {
+            list.add("Raum " + key);
+        }
+        return list;
     }
 }

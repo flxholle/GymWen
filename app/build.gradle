@@ -116,6 +116,7 @@ dependencies {
     implementation 'com.ritesh:ratiolayout:1.0.0'
     implementation 'com.github.stephenvinouze:shapetextdrawable:1.0.0'
     implementation 'com.github.onlylemi:mapview:v1.0'
+//    implementation 'com.github.ninepatch:IndoorMapView:Tag'
 
     //Image Slider (see ColoRushFragment)
     implementation 'com.squareup.picasso:picasso:2.3.2'

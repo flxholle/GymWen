@@ -21,6 +21,7 @@ package com.asdoi.gymwen.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.ColorInt;
@@ -38,6 +39,7 @@ import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentRoot;
 import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSignIn;
+import com.asdoi.gymwen.util.ShortcutUtils;
 
 public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     public static final String SIGN_IN_SETTINGS = "SignInSettings";
@@ -90,6 +92,15 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
             p.setCourses(PreferenceManager.getDefaultSharedPreferences(this).getString("courses", p.getCourses()));
             ProfileManagement.editProfile(ApplicationFeatures.getSelectedProfilePosition(), p);
             ProfileManagement.save(true);
+
+            if (Build.VERSION.SDK_INT >= 25) {
+                try {
+                    ShortcutUtils.Companion.createShortcuts();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
