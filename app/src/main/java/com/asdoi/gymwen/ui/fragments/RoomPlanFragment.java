@@ -44,14 +44,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import indoormaps.ninepatch.com.library.IndoorMapsView;
+import indoormaps.ninepatch.com.library.Marker;
+import indoormaps.ninepatch.com.library.callback.OnMapViewInizializate;
+import indoormaps.ninepatch.com.library.zoom.ZOOM;
+
 public class RoomPlanFragment extends Fragment {
     private View root;
-    private MapView mapView;
     private Map<String, PointF> roomMarks;
 
     private String selectRoom;
     private boolean shouldSelectRoom = false;
     public static String SELECT_ROOM = "selectroom";
+
+    private MapView mapView;
+    private IndoorMapsView indoorMapsView;
 
     public static RoomPlanFragment newInstance(String selectRoom) {
 
@@ -96,10 +103,78 @@ public class RoomPlanFragment extends Fragment {
 
         mapView = root.findViewById(R.id.mapview);
         mapView.setVisibility(View.GONE);
+
+        indoorMapsView = (IndoorMapsView) root.findViewById(R.id.indorMaps);
+        indoorMapsView.setVisibility(View.GONE);
+
         ((ActivityFeatures) getActivity()).createLoadingPanel((ViewGroup) root);
 
         loadMap();
+//        loadMap2();
         return root;
+    }
+
+    public void loadMap2() {
+        indoorMapsView.setVisibility(View.VISIBLE);
+        indoorMapsView.getIndoorViewListener().setOnMapViewInizializate(new OnMapViewInizializate() {
+            @Override
+            public void onMapLoading() {
+                //show progress
+            }
+
+            @Override
+            public void onMapinizializate() {
+                ((ActivityFeatures) getActivity()).removeLoadingPanel((ViewGroup) root);
+                List<PointF> marks = getMarks();
+                List<String> marksName = getMarksName();
+
+                if (shouldSelectRoom) {
+                    Marker marker = new Marker(getContext());
+                    marker.setId(0);
+                    marker.setLat(36.8271);
+                    marker.setLon(32.9731);
+                    marker.setName(/*getString(R.string.room) + " " + selectRoom*/"");
+                    marker.setImageLink("pointer.png");//from assets
+
+                    indoorMapsView.addMarker(marker);
+
+                    ChocoBar.builder().setActivity(getActivity())
+                            .setText(getString(R.string.room) + " " + selectRoom)
+                            .setTextTypefaceStyle(Typeface.BOLD)
+                            .setIcon(R.mipmap.mark_touch)
+                            .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                            .setBackgroundColor(Color.GRAY)
+                            .build()
+                            .show();
+                } else {
+                    for (int i = 0; i < marksName.size(); i++) {
+                        Marker marker = new Marker(getContext());
+                        marker.setId(i);
+                        marker.setLat(marks.get(i).x);
+                        marker.setLon(marks.get(i).y);
+                        marker.setName("");
+                        marker.setImageLink("mark.png");//from assets
+
+                        indoorMapsView.addMarker(marker);
+                    }
+                    indoorMapsView.getIndoorViewListener().setOnMarkerTapListener((Marker marker) -> {
+                        getActivity().runOnUiThread(() -> {
+                            ChocoBar.builder().setActivity(getActivity())
+                                    .setText(getString(R.string.room) + " " + getMarksName().get(marker.getId()))
+                                    .setTextTypefaceStyle(Typeface.BOLD)
+                                    .setIcon(R.mipmap.mark_touch)
+                                    .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                                    .setBackgroundColor(Color.GRAY)
+                                    .build()
+                                    .show();
+                        });
+                    });
+                }
+
+                indoorMapsView.init("roomplan.webp", ZOOM.LEVEL1); //image from assets
+                indoorMapsView.setBackgroundColorRes(android.R.color.white);
+            }
+        });
     }
 
     public void loadMap() {
@@ -119,7 +194,7 @@ public class RoomPlanFragment extends Fragment {
             Bitmap finalBmp = bmp;
 
             getActivity().runOnUiThread(() -> {
-                ((ViewGroup) root).removeView(root.findViewWithTag("vertretung_loading"));
+                ((ActivityFeatures) getActivity()).removeLoadingPanel((ViewGroup) root);
                 mapView.setVisibility(View.VISIBLE);
                 mapView.loadMap(finalBitmap);
                 mapView.setMapViewListener(new MapViewListener() {
@@ -167,6 +242,7 @@ public class RoomPlanFragment extends Fragment {
         roomMarks = new HashMap<String, PointF>(0);
         roomMarks.put("109", new PointF(409, 720));
         roomMarks.put("E006", new PointF(200, 200));
+        roomMarks.put("108", new PointF(800, 500));
 
         if (shouldSelectRoom) {
             PointF room = roomMarks.get(selectRoom);

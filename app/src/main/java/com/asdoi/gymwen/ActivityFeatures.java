@@ -359,6 +359,10 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         view.addView(base);
     }
 
+    public void removeLoadingPanel(@NonNull ViewGroup view) {
+        view.removeView(view.findViewWithTag("vertretung_loading"));
+    }
+
     @NonNull
     public View getTeacherView(@NonNull View view, @NonNull TeacherListEntry entry) {
         TextView kuerzel = view.findViewById(R.id.teacher_kürzel);

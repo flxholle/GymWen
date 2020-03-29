@@ -562,7 +562,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     }
 
     private void clear() {
-        ((ViewGroup) root.findViewById(R.id.substitution_frame)).removeView(root.findViewWithTag("vertretung_loading"));
+        ((ActivityFeatures) getActivity()).removeLoadingPanel((ViewGroup) root);
+//        ((ViewGroup) root.findViewById(R.id.substitution_frame)).removeView(root.findViewWithTag("vertretung_loading"));
         LinearLayout base = root.findViewById(R.id.substitution_linear_layout_layer1);
         base.removeAllViews();
     }
