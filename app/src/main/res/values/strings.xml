@@ -499,6 +499,7 @@
     <string name="shortcut_grades_management">Noten</string>
     <string name="shortcut_claxss">ClaXss</string>
     <string name="shortcut_forms">Formulare</string>
+    <string name="shortcut_room_plan">Raumplan</string>
 
     <!-- Room plan -->
     <string name="not_found">nicht gefunden</string>

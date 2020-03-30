@@ -28,6 +28,7 @@ import androidx.preference.PreferenceManager
 import com.asdoi.gymwen.ApplicationFeatures
 import com.asdoi.gymwen.R
 import com.asdoi.gymwen.ui.activities.MainActivity
+import com.asdoi.gymwen.ui.activities.RoomPlanActivity
 import com.asdoi.gymwen.ui.activities.WebsiteActivity
 
 
@@ -70,6 +71,7 @@ class ShortcutUtils {
                     "forms" -> shortcutList.add(createFormsShortcut())
                     "newspaper" -> shortcutList.add(createNewsShortcut())
                     "teacherlist" -> shortcutList.add(createTeacherListShortcut())
+                    "roomplan" -> shortcutList.add(createRoomPlanShortcut())
                 }
             }
 
@@ -123,6 +125,10 @@ class ShortcutUtils {
 
         fun createFormsShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
             return createShortcut("forms", context.getString(R.string.shortcut_forms), Icon.createWithResource(context, R.drawable.ic_consent), Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_FORMS))
+        }
+
+        fun createRoomPlanShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
+            return createShortcut("room_plan", context.getString(R.string.shortcut_room_plan), Icon.createWithResource(context, R.drawable.ic_house_plan), Intent(context, RoomPlanActivity::class.java).setAction(Intent.ACTION_VIEW))
         }
     }
 }
