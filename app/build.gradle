@@ -116,7 +116,6 @@ dependencies {
     implementation 'com.ritesh:ratiolayout:1.0.0'
     implementation 'com.github.stephenvinouze:shapetextdrawable:1.0.0'
     implementation 'com.github.AbdAllahAbdElFattah13:MapView:master-SNAPSHOT'
-    implementation 'com.github.quwepiro:IndoorMapView:0cf78dcbd1'
 
     //Image Slider (see ColoRushFragment)
     implementation 'com.squareup.picasso:picasso:2.3.2'
