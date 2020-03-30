@@ -18,18 +18,22 @@
 
 package com.asdoi.gymwen.ui.activities;
 
+import android.content.Context;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.fragments.RoomPlanFragment;
 import com.asdoi.gymwen.ui.fragments.RoomPlanSearchFragment;
+import com.pd.chocobar.ChocoBar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +41,9 @@ import java.util.Map;
 public class RoomPlanActivity extends ActivityFeatures {
 
     public static String SELECT_ROOM = "selectroom";
+    public static String SEARCH = "search";
+
+    private boolean search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +51,27 @@ public class RoomPlanActivity extends ActivityFeatures {
 
         setContentView(R.layout.activity_room_plan);
 
-        RoomPlanFragment roomPlanFragment;
-
         Bundle extras = getIntent().getExtras();
         String room = null;
+
         if (extras != null) {
             room = extras.getString(SELECT_ROOM, null);
+            search = extras.getBoolean(SEARCH, false);
         }
-        if (room != null) {
-            roomPlanFragment = RoomPlanFragment.newInstance(room);
-        } else
-            roomPlanFragment = new RoomPlanFragment();
+        Fragment fragment = null;
+
+        if (search) {
+            fragment = new RoomPlanSearchFragment();
+        } else {
+            if (room != null) {
+                fragment = RoomPlanFragment.newInstance(room);
+            } else
+                fragment = new RoomPlanFragment();
+        }
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.room_plan_frame, new RoomPlanSearchFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.room_plan_frame, fragment).commit();
     }
 
     public void setupColors() {
@@ -74,24 +87,33 @@ public class RoomPlanActivity extends ActivityFeatures {
     }
 
     public static String getMatchingFloor(String roomName) {
+        Context context = ApplicationFeatures.getContext();
         if (roomName.length() < 2)
             return "";
 
-        int level = 0;
+        int level;
         if (Character.isDigit(roomName.charAt(0))) {
             level = Integer.parseInt("" + roomName.charAt(0));
         } else if (Character.isDigit(roomName.charAt(1))) {
             level = Integer.parseInt("" + roomName.charAt(1));
         } else {
-            return "";
+            return context.getString(R.string.gym);
         }
 
         switch (level) {
             case 0:
-                return "Erdgeschoss";
+                return context.getString(R.string.main_floor);
             default:
-                return level + ". Stock";
+                return level + ". " + context.getString(R.string.floor);
         }
+    }
+
+    public void showRoom(String room) {
+        Fragment fragment = RoomPlanFragment.newInstance(room);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.room_plan_frame, fragment).commit();
+        search = false;
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -103,13 +125,27 @@ public class RoomPlanActivity extends ActivityFeatures {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_room_plan, menu);
+        menu.findItem(R.id.action_room_search).setVisible(!search);
+        menu.findItem(R.id.action_room_plan).setVisible(search);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_room_search) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        switch (item.getItemId()) {
+            case R.id.action_room_search:
+                fragmentManager.beginTransaction().replace(R.id.room_plan_frame, new RoomPlanSearchFragment()).commit();
+                search = true;
+                break;
+            case R.id.action_room_plan:
+                fragmentManager.beginTransaction().replace(R.id.room_plan_frame, new RoomPlanFragment()).commit();
+                search = false;
+                break;
         }
+        //Hide all Snackbars from other fragment
+        ChocoBar.builder().setActivity(this).setBackgroundColor(ApplicationFeatures.getBackgroundColor(this)).setDuration(ChocoBar.LENGTH_SHORT).build().show();
+        invalidateOptionsMenu();
         return super.onOptionsItemSelected(item);
     }
 }

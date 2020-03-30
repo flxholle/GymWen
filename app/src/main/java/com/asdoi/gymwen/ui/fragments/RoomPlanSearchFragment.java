@@ -19,7 +19,6 @@
 package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.text.Editable;
@@ -133,17 +132,11 @@ public class RoomPlanSearchFragment extends Fragment {
 
         private View createView(View base, int position) {
             base.setOnClickListener((View v) -> {
-                Intent intent = new Intent(getActivity(), RoomPlanActivity.class);
-                intent.putExtra(RoomPlanActivity.SELECT_ROOM, contentKeys[position]);
-                startActivity(intent);
-                getActivity().finish();
+                ((RoomPlanActivity) getActivity()).showRoom(contentKeys[position]);
             });
 
             base.findViewById(R.id.room_search_button).setOnClickListener((View v) -> {
-                Intent intent = new Intent(getActivity(), RoomPlanActivity.class);
-                intent.putExtra(RoomPlanActivity.SELECT_ROOM, contentKeys[position]);
-                startActivity(intent);
-                getActivity().finish();
+                ((RoomPlanActivity) getActivity()).showRoom(contentKeys[position]);
             });
 
             TextView room = base.findViewById(R.id.room_search_room);

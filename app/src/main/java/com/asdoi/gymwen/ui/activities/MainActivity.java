@@ -746,7 +746,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 return;
             case R.id.nav_room_plan:
                 intent = new Intent(this, RoomPlanActivity.class);
-                intent.putExtra(RoomPlanActivity.SELECT_ROOM, "107");
                 startActivity(intent);
                 return;
         }

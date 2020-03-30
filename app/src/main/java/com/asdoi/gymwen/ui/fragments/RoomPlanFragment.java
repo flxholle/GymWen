@@ -151,7 +151,7 @@ public class RoomPlanFragment extends Fragment {
                                 bitmapLayer.setLocation(location);
                                 mapView.addLayer(bitmapLayer);
                                 ChocoBar.builder().setActivity(getActivity())
-                                        .setText(getString(R.string.room) + " " + selectRoom)
+                                        .setText(getString(R.string.room) + " " + selectRoom + " (" + RoomPlanActivity.getMatchingFloor(selectRoom) + ")")
                                         .setTextTypefaceStyle(Typeface.BOLD)
                                         .setIcon(R.mipmap.mark_touch)
                                         .setDuration(ChocoBar.LENGTH_INDEFINITE)
@@ -162,7 +162,7 @@ public class RoomPlanFragment extends Fragment {
                                 MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
                                 markLayer.setMarkIsClickListener((int num) -> getActivity().runOnUiThread(() ->
                                         ChocoBar.builder().setActivity(getActivity())
-                                                .setText(getString(R.string.room) + " " + getMarksName().get(num))
+                                                .setText(getString(R.string.room) + " " + getMarksName().get(num) + " (" + RoomPlanActivity.getMatchingFloor(getMarksName().get(num)) + ")")
                                                 .setTextTypefaceStyle(Typeface.BOLD)
                                                 .setIcon(R.mipmap.mark_touch)
                                                 .setDuration(ChocoBar.LENGTH_INDEFINITE)

@@ -406,5 +406,10 @@
     <string name="shortcut_claxss">ClaXss</string>
     <string name="shortcut_forms">Forms</string>
     <string name="not_found">not found</string>
+    <string name="cannot_load_room_plan">Could not load house plan</string>
+    <string name="action_search">Search</string>
+    <string name="main_floor">Ground floor</string>
+    <string name="floor">Floor</string>
+    <string name="gym">Gym</string>
 
 </resources>
