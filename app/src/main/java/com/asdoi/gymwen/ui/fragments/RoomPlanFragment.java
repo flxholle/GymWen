@@ -27,12 +27,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
 import com.onlylemi.mapview.library.MapView;
 import com.onlylemi.mapview.library.MapViewListener;
 import com.onlylemi.mapview.library.layer.BitmapLayer;
@@ -45,19 +46,22 @@ import java.util.List;
 import java.util.Map;
 
 public class RoomPlanFragment extends Fragment {
+    private static Bitmap roomPlanBitmap;
+    private static Bitmap markerBitmap;
+
     private View root;
     private Map<String, PointF> roomMarks;
 
     private String selectRoom;
     private boolean shouldSelectRoom = false;
-    public static String SELECT_ROOM = "selectroom";
 
     private MapView mapView;
 
+    @NonNull
     public static RoomPlanFragment newInstance(String selectRoom) {
 
         Bundle args = new Bundle();
-        args.putString(SELECT_ROOM, selectRoom);
+        args.putString(RoomPlanActivity.SELECT_ROOM, selectRoom);
 
         RoomPlanFragment fragment = new RoomPlanFragment();
         fragment.setArguments(args);
@@ -69,7 +73,7 @@ public class RoomPlanFragment extends Fragment {
         super.onCreate(savedInstanceState);
         try {
             generateMarks();
-            selectRoom = getArguments().getString(SELECT_ROOM);
+            selectRoom = getArguments().getString(RoomPlanActivity.SELECT_ROOM);
             if (selectRoom != null && !selectRoom.trim().isEmpty()) {
                 if (getMarksName().contains(selectRoom))
                     shouldSelectRoom = true;
@@ -91,7 +95,7 @@ public class RoomPlanFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_room_plan, container, false);
 
@@ -104,73 +108,97 @@ public class RoomPlanFragment extends Fragment {
         return root;
     }
 
-    public void loadMap() {
+    private void loadMap() {
 
         new Thread(() -> {
-            Bitmap bitmap = null;
-            Bitmap bmp = null;
+            //Load Bitmaps
+            Bitmap roomPlan = roomPlanBitmap;
+            Bitmap marker = markerBitmap;
             try {
-                bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.roomplan);
-                if (shouldSelectRoom)
-                    bmp = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.mark_touch);
+                if (roomPlan == null)
+                    roomPlan = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.roomplan);
+                if (shouldSelectRoom && marker == null)
+                    marker = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.mark_touch);
+
+                roomPlanBitmap = roomPlan;
+                markerBitmap = marker;
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            Bitmap finalBitmap = bitmap;
-            Bitmap finalBmp = bmp;
+            Bitmap finalRoomPlanBitmap = roomPlanBitmap;
+            Bitmap finalMarkerBitmap = markerBitmap;
 
+            //Load Indoor Map
             getActivity().runOnUiThread(() -> {
                 ((ActivityFeatures) getActivity()).removeLoadingPanel((ViewGroup) root);
                 mapView.setVisibility(View.VISIBLE);
-                mapView.loadMap(finalBitmap);
+                mapView.loadMap(finalRoomPlanBitmap);
                 mapView.setMapViewListener(new MapViewListener() {
                     @Override
                     public void onMapLoadSuccess() {
                         List<PointF> marks = getMarks();
                         List<String> marksName = getMarksName();
 
-                        if (shouldSelectRoom) {
-                            BitmapLayer bitmapLayer = new BitmapLayer(mapView, finalBmp);
-                            bitmapLayer.setLocation(getMarks().get(0));
-                            bitmapLayer.setOnBitmapClickListener(layer -> Toast.makeText(getContext(), getString(R.string.room) + " " + marksName.get(0), Toast.LENGTH_LONG).show());
-                            mapView.addLayer(bitmapLayer);
-                            ChocoBar.builder().setActivity(getActivity())
-                                    .setText(getString(R.string.room) + " " + selectRoom)
-                                    .setTextTypefaceStyle(Typeface.BOLD)
-                                    .setIcon(R.mipmap.mark_touch)
-                                    .setDuration(ChocoBar.LENGTH_INDEFINITE)
-                                    .setBackgroundColor(Color.GRAY)
-                                    .build()
-                                    .show();
-                        } else {
-                            MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
-                            markLayer.setMarkIsClickListener(num -> Toast.makeText(getContext(), getString(R.string.room) + " " + marksName.get(num), Toast.LENGTH_LONG).show());
-                            markLayer.setNum(0);
-                            mapView.addLayer(markLayer);
-                        }
+                        getActivity().runOnUiThread(() -> {
+                            if (shouldSelectRoom) {
+                                //Because Bitmap location is going from center of image
+                                PointF location = marks.get(0);
+                                location.x -= 5;
+                                location.y -= 30;
 
-                        mapView.setCurrentRotateDegrees(0);
-                        mapView.setRotateable(false);
-                        mapView.refresh();
-                        mapView.performClick();
+                                BitmapLayer bitmapLayer = new BitmapLayer(mapView, finalMarkerBitmap);
+                                bitmapLayer.setLocation(location);
+                                mapView.addLayer(bitmapLayer);
+                                ChocoBar.builder().setActivity(getActivity())
+                                        .setText(getString(R.string.room) + " " + selectRoom)
+                                        .setTextTypefaceStyle(Typeface.BOLD)
+                                        .setIcon(R.mipmap.mark_touch)
+                                        .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                                        .setBackgroundColor(Color.GRAY)
+                                        .build()
+                                        .show();
+                            } else {
+                                MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
+                                markLayer.setMarkIsClickListener((int num) -> getActivity().runOnUiThread(() ->
+                                        ChocoBar.builder().setActivity(getActivity())
+                                                .setText(getString(R.string.room) + " " + getMarksName().get(num))
+                                                .setTextTypefaceStyle(Typeface.BOLD)
+                                                .setIcon(R.mipmap.mark_touch)
+                                                .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                                                .setBackgroundColor(Color.GRAY)
+                                                .build()
+                                                .show()));
 
+                                markLayer.setNum(0);
+                                mapView.addLayer(markLayer);
+                            }
+                            mapView.setCurrentRotateDegrees(0);
+                            mapView.setRotateable(false);
+                            mapView.refresh();
+                            mapView.performClick();
+                        });
                     }
 
                     @Override
                     public void onMapLoadFail() {
+                        getActivity().runOnUiThread(() -> {
+                            ChocoBar.builder().setActivity(getActivity())
+                                    .setText(R.string.cannot_load_room_plan)
+                                    .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                                    .setActionText(R.string.ok)
+                                    .setActionClickListener((View v) -> getActivity().finish())
+                                    .red()
+                                    .show();
+                        });
                     }
-
                 });
             });
         }).start();
     }
 
     private void generateMarks() {
-        roomMarks = new HashMap<String, PointF>(0);
-        roomMarks.put("109", new PointF(409, 720));
-        roomMarks.put("E006", new PointF(200, 200));
-        roomMarks.put("108", new PointF(800, 500));
+        roomMarks = RoomPlanActivity.getRoomMarkers();
 
         if (shouldSelectRoom) {
             PointF room = roomMarks.get(selectRoom);

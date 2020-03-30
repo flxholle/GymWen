@@ -55,7 +55,6 @@ import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
-import com.asdoi.gymwen.ui.fragments.RoomPlanFragment;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.ui.fragments.TeacherListFragment;
 import com.asdoi.gymwen.util.External_Const;
@@ -95,7 +94,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private static final int lastLoadedSubstitution = 0;
     private static final int lastLoadedTabs = 1;
     private static final int lastLoadedTeacherlist = 2;
-    private static final int lastLoadedRoomPlan = 3;
 
     private static int lastLoadedInTabs;
     private static final int lastLoadedTabsSpecific = 10;
@@ -652,9 +650,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         ApplicationFeatures.deleteOfflineTeacherlistDoc();
                         fragment = new TeacherListFragment();
                         break;
-                    case lastLoadedRoomPlan:
-                        fragment = new RoomPlanFragment();
-                        break;
                     default:
                         ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
@@ -672,9 +667,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         break;
                     case lastLoadedTeacherlist:
                         fragment = new TeacherListFragment();
-                        break;
-                    case lastLoadedRoomPlan:
-                        fragment = new RoomPlanFragment();
                         break;
                     default:
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
@@ -753,22 +745,16 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 tabIntent(External_Const.podcast_Link);
                 return;
             case R.id.nav_room_plan:
-                setVisibilitySpinner(false);
-                fragment = new RoomPlanFragment();
-                setDesignChangerVisibility(false);
-                break;
-//                intent = new Intent(this, RoomPlanActivity.class);
-//                intent.putExtra(RoomPlanFragment.SELECT_ROOM,"107");
-//                startActivity(intent);
-//                return;
+                intent = new Intent(this, RoomPlanActivity.class);
+                intent.putExtra(RoomPlanActivity.SELECT_ROOM, "107");
+                startActivity(intent);
+                return;
         }
 
 
         if (fragment != null) {
             if (fragment instanceof TeacherListFragment)
                 lastLoaded = lastLoadedTeacherlist;
-            else if (fragment instanceof RoomPlanFragment)
-                lastLoaded = lastLoadedRoomPlan;
             else
                 lastLoaded = lastLoadedSubstitution;
 

@@ -16,16 +16,29 @@
   ~     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.RoomPlanFragment">
+    android:orientation="vertical"
+    tools:context=".ui.fragments.RoomPlanSearchFragment">
 
-    <com.onlylemi.mapview.library.MapView
-        android:id="@+id/mapview"
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/room_plan_search_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/teacher_search_teacher_list" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ListView
+        android:id="@+id/room_plan_search_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
-
-</FrameLayout>
+        android:layout_margin="8dp" />
+</LinearLayout>

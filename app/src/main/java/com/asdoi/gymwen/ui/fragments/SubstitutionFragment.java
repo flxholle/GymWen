@@ -929,7 +929,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         room.setText(entry.getRoom());
         room.setOnClickListener((View v) -> {
             Intent intent = new Intent(getContext(), RoomPlanActivity.class);
-            intent.putExtra(RoomPlanFragment.SELECT_ROOM, entry.getRoom());
+            intent.putExtra(RoomPlanActivity.SELECT_ROOM, entry.getRoom());
             startActivity(intent);
         });
 
@@ -1055,7 +1055,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             room.setText(content);
             room.setOnClickListener((View v) -> {
                 Intent intent = new Intent(getContext(), RoomPlanActivity.class);
-                intent.putExtra(RoomPlanFragment.SELECT_ROOM, entry.getRoom());
+                intent.putExtra(RoomPlanActivity.SELECT_ROOM, entry.getRoom());
                 startActivity(intent);
             });
         } else {
@@ -1137,7 +1137,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 room.setText(content);
                 room.setOnClickListener((View v) -> {
                     Intent intent = new Intent(getContext(), RoomPlanActivity.class);
-                    intent.putExtra(RoomPlanFragment.SELECT_ROOM, entry.getRoom());
+                    intent.putExtra(RoomPlanActivity.SELECT_ROOM, entry.getRoom());
                     startActivity(intent);
                 });
             } else {
