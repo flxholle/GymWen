@@ -135,7 +135,6 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         bundle.putBoolean(ALL, all);
         bundle.putBoolean(ATONEGLANCE, both);
         bundle.putBoolean(VIEWPAGERTITLES, viewPagerTitles);
-        MainActivity.substitutionFragmentState = state;
         fragment.setArguments(bundle);
         return fragment;
     }

@@ -89,7 +89,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private ActionBarDrawerToggle toggle;
     private Menu menu;
 
-    public static int substitutionFragmentState;
     private static int lastLoaded; // 0 = Substitution, 1 = Tabs, 2 = TeacherlistFeatures
     private static final int lastLoadedSubstitution = 0;
     private static final int lastLoadedTabs = 1;
@@ -507,7 +506,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 setVisibilitySpinner(true);
                 fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
                 setDesignChangerVisibility(true);
-//                fragment = new WidgetFragment();
                 break;
             case R.id.nav_filtered_days:
                 setVisibilitySpinner(true);
@@ -638,10 +636,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.action_refresh2:
             case R.id.action_refresh:
                 switch (lastLoaded) {
-                    case lastLoadedSubstitution:
-                        ApplicationFeatures.deleteOfflineSubstitutionDocs();
-                        fragment = SubstitutionFragment.newInstance(substitutionFragmentState);
-                        break;
                     case lastLoadedTabs:
                         ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         sectionsPagerAdapter.notifyDataSetChanged();
@@ -650,6 +644,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         ApplicationFeatures.deleteOfflineTeacherlistDoc();
                         fragment = new TeacherListFragment();
                         break;
+                    case lastLoadedSubstitution:
                     default:
                         ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
@@ -659,15 +654,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 break;
             case refreshFragment:
                 switch (lastLoaded) {
-                    case lastLoadedSubstitution:
-                        fragment = SubstitutionFragment.newInstance(substitutionFragmentState);
-                        break;
                     case lastLoadedTabs:
                         sectionsPagerAdapter.notifyDataSetChanged();
                         break;
                     case lastLoadedTeacherlist:
                         fragment = new TeacherListFragment();
                         break;
+                    case lastLoadedSubstitution:
                     default:
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
                         break;
