@@ -19,7 +19,6 @@
 package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -66,7 +66,8 @@ public class WebsiteSearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_search_template, container, false);
-
+        listView = root.findViewById(R.id.search_template_list);
+        listView.setVisibility(View.GONE);
         return root;
     }
 
@@ -76,7 +77,10 @@ public class WebsiteSearchFragment extends Fragment {
         ((ActivityFeatures) getActivity()).createLoadingPanel((ViewGroup) root);
 
         new Thread(() -> {
-            content = getLinks();
+            if (contentAll == null)
+                content = getLinks();
+            else
+                content = contentAll;
             contentAll = content;
             getActivity().runOnUiThread(() -> {
                 createLayout(root);
@@ -85,7 +89,8 @@ public class WebsiteSearchFragment extends Fragment {
     }
 
     private void createLayout(View root) {
-        listView = root.findViewById(R.id.search_template_list);
+        ((ActivityFeatures) getActivity()).removeLoadingPanel((ViewGroup) root);
+        listView.setVisibility(View.VISIBLE);
         listView.setAdapter(new SearchListAdapter(getContext(), 0));
 
         ((EditText) root.findViewById(R.id.search_template_input)).addTextChangedListener(new TextWatcher() {
@@ -194,6 +199,9 @@ public class WebsiteSearchFragment extends Fragment {
             view.findViewById(R.id.website_search_level2).setVisibility(View.GONE);
             view.findViewById(R.id.website_search_level3).setVisibility(View.GONE);
 
+            ImageButton button = view.findViewById(R.id.website_search_tab_intent);
+            button.setVisibility(View.GONE);
+
             TextView usedView;
             switch (link.getLevel()) {
                 case 1:
@@ -201,6 +209,7 @@ public class WebsiteSearchFragment extends Fragment {
                     break;
                 case 2:
                     usedView = view.findViewById(R.id.website_search_level2);
+                    button.setVisibility(View.VISIBLE);
                     break;
                 default:
                 case 3:
@@ -213,15 +222,16 @@ public class WebsiteSearchFragment extends Fragment {
 
             if (link.getLink() != null) {
                 usedView.setOnClickListener((View v) -> {
-                    //Start Website Activity
-                    Intent intent = new Intent(getActivity(), WebsiteActivity.class);
-                    intent.putExtra(WebsiteActivity.LOADURL, link.getLink());
-                    startActivity(intent);
-                    getActivity().finish();
+                    ((WebsiteActivity) getActivity()).loadPage(link.getLink());
+                    getActivity().invalidateOptionsMenu();
                 });
                 TypedValue outValue = new TypedValue();
                 getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
                 usedView.setBackgroundResource(outValue.resourceId);
+
+                button.setOnClickListener((View v) -> {
+                    ((ActivityFeatures) getActivity()).tabIntent(link.getLink());
+                });
             }
 
             return view;

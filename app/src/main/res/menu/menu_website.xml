@@ -32,8 +32,14 @@
         android:icon="@drawable/ic_share_white_24dp"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_share2"
-        android:orderInCategory="100"
-        android:title="@string/action_share"
-        app:showAsAction="never" />
+        android:id="@+id/action_website_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_website"
+        android:icon="@drawable/ic_compass"
+        android:title="@string/menu_website"
+        app:iconTint="@android:color/white"
+        app:showAsAction="ifRoom" />
 </menu>

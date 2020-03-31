@@ -53,13 +53,16 @@ import java.util.List;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     public static String LOADURL = "url";
+    public static String SEARCH = "search";
+
+    private boolean search = false;
 
     @Nullable
     public ArrayList<String> history = new ArrayList<>();
 
     private static String[][] con;
     private Document doc;
-    private boolean intentActivationEnabled = true;
+
     @NonNull
     private final List<String> homeOfPagesIndexes = Arrays.asList("http://www.gym-wen.de/schulleben/",
             "http://www.gym-wen.de/schulleben/projekte/",
@@ -100,21 +103,11 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     }
 
     @Override
-    public void onSaveInstanceState(@NotNull Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        ApplicationFeatures.websiteHistorySaveInstance = history;
-    }
-
-    @Override
-    public void onRestoreInstanceState(@NotNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        history = ApplicationFeatures.websiteHistorySaveInstance;
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_website, menu);
+        menu.findItem(R.id.action_website_search).setVisible(!search);
+        menu.findItem(R.id.action_website).setVisible(search);
         return true;
     }
 
@@ -142,15 +135,23 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         }
 
         try {
-            String intentURL = getIntent().getStringExtra(LOADURL);
-            if (intentURL == null) {
-                Uri data = getIntent().getData();
-                intentURL = data.getHost() + data.getPath();
-            }
-            if (intentURL != null && intentActivationEnabled) {
-                loadPage(intentURL);
-                intentActivationEnabled = false;
-                return;
+            if (getIntent() != null) {
+                if (getIntent().hasExtra(LOADURL)) {
+                    String intentURL = getIntent().getStringExtra(LOADURL);
+                    if (intentURL == null) {
+                        Uri data = getIntent().getData();
+                        intentURL = data.getHost() + data.getPath();
+                        loadPage(intentURL);
+                        setIntent(null);
+                        return;
+                    }
+                } else if (getIntent().hasExtra(SEARCH)) {
+                    search = true;
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
+                    invalidateOptionsMenu();
+                    return;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -168,31 +169,134 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     }
 
+    public void loadPage(@NonNull String url) {
+        search = false;
+        if (!url.trim().isEmpty()) {
+
+            final String formattedUrl = ApplicationFeatures.urlToRightFormat(url);
+            final Context context = this;
+            if (ApplicationFeatures.isURLValid(formattedUrl) && formattedUrl.contains("http://www.gym-wen.de/")) {
+                (new Thread(() -> {
+                    boolean isHTML = false;
+                    try {
+                        doc = Jsoup.connect(formattedUrl).get();
+                        isHTML = true;
+                    } catch (Exception e) {
+                        e.getStackTrace();
+                        isHTML = false;
+                    }
+
+
+                    if (isHTML) {
+                        history.add(formattedUrl);
+                        setWebsiteTitle(doc);
+                        //Check Site
+                        if (homeOfPagesIndexes.contains(formattedUrl)) {
+                            HomeOfPages(formattedUrl);
+                        } else {
+                            ContentPagesMixed(formattedUrl);
+                        }
+                    } else {
+                        try {
+                            openInTabIntent(formattedUrl);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })).start();
+            } else {
+                openInTabIntent(formattedUrl);
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_open_in_browser) {
-            /*String url = history.get(history.size()-1);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            startActivity(intent);*/
-            try {
-                openInTabIntent(history.get(history.size() - 1));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (item.getItemId() == R.id.action_share || item.getItemId() == R.id.action_share2) {
-            Intent i = new Intent();
-            i.setAction(Intent.ACTION_SEND);
-            i.putExtra(Intent.EXTRA_TEXT, history.get(history.size() - 1));
-            i.setType("text/plan");
-            startActivity(Intent.createChooser(i, getString(R.string.share_link)));
+        switch (item.getItemId()) {
+            case R.id.action_open_in_browser:
+                try {
+                    openInTabIntent(history.get(history.size() - 1));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.action_share:
+                Intent i = new Intent();
+                i.setAction(Intent.ACTION_SEND);
+                i.putExtra(Intent.EXTRA_TEXT, history.get(history.size() - 1));
+                i.setType("text/plan");
+                startActivity(Intent.createChooser(i, getString(R.string.share_link)));
+                break;
+            case R.id.action_website_search:
+                getSupportFragmentManager().beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
+                search = true;
+                invalidateOptionsMenu();
+                break;
+            case R.id.action_website:
+                HomepageLoad();
+                invalidateOptionsMenu();
+                search = false;
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+
+
+        // Check if the key event was the Back button and if there's history
+
+        //If image is expanded
+        if (WebsiteActivityFragment.isExpanded) {
+            try {
+                //Not working
+                WebsiteActivityFragment.expandImage.performClick();
+                WebsiteActivityFragment.expandImage.callOnClick();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, getString(R.string.tap_picture), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (history.size() >= 2) {
+            String url = history.get(history.size() - 2);
+            //Remove last two Sites, because the side that will be loaded will also be added by loadSite()
+            history.remove(history.size() - 1);
+            history.remove(history.size() - 1);
+            loadPage(url);
+        } else {
+            onSupportNavigateUp();
+            super.onBackPressed();
+        }
+
+    }
+
+    @Override
+    public void onClick(@NonNull View view) {
+        int id = view.getId();
+        if (id < con.length && id > 0) {
+            loadPage(con[id][3]);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NotNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        ApplicationFeatures.websiteHistorySaveInstance = history;
+    }
+
+    @Override
+    public void onRestoreInstanceState(@NotNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        history = ApplicationFeatures.websiteHistorySaveInstance;
+    }
+
+
+    //Loading pages
     private void HomepageLoad() {
         loadPage("http://www.gym-wen.de/startseite/");
-//        loadPage("http://www.gym-wen.de/information/unsere-schule/schulzweige/");
     }
 
     private void HomeOfPages(String url) {
@@ -505,38 +609,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         return link;
     }
 
-    @Override
-    public void onBackPressed() {
-
-
-        // Check if the key event was the Back button and if there's history
-
-        //If image is expanded
-        if (WebsiteActivityFragment.isExpanded) {
-            try {
-                //Not working
-                WebsiteActivityFragment.expandImage.performClick();
-                WebsiteActivityFragment.expandImage.callOnClick();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Toast.makeText(this, getString(R.string.tap_picture), Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (history.size() >= 2) {
-            String url = history.get(history.size() - 2);
-            //Remove last two Sites, because the side that will be loaded will also be added by loadSite()
-            history.remove(history.size() - 1);
-            history.remove(history.size() - 1);
-            loadPage(url);
-        } else {
-            onSupportNavigateUp();
-            super.onBackPressed();
-        }
-
-    }
-
     private void setWebsiteTitle(@NonNull Document doc) {
         String whole = doc.select("head").select("title").toString();
         final String title = HtmlCompat.fromHtml(whole, 0).toString().replaceAll("\n", "");
@@ -548,7 +620,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         try {
             WebsiteActivityFragment f = new WebsiteActivityFragment(con, pageCode);
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.website_host, f).commit();
         } catch (Exception e) {
             runOnUiThread(() -> Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show());
             startActivity(new Intent(this, MainActivity.class));
@@ -558,54 +630,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     private void overwriteContent(String[][] c) {
         con = c;
-    }
-
-    @Override
-    public void onClick(@NonNull View view) {
-        int id = view.getId();
-        if (id < con.length && id > 0) {
-            loadPage(con[id][3]);
-        }
-    }
-
-    public void loadPage(@NonNull String url) {
-        if (!url.trim().isEmpty()) {
-
-            final String formattedUrl = ApplicationFeatures.urlToRightFormat(url);
-            final Context context = this;
-            if (ApplicationFeatures.isURLValid(formattedUrl) && formattedUrl.contains("http://www.gym-wen.de/")) {
-                (new Thread(() -> {
-                    boolean isHTML = false;
-                    try {
-                        doc = Jsoup.connect(formattedUrl).get();
-                        isHTML = true;
-                    } catch (Exception e) {
-                        e.getStackTrace();
-                        isHTML = false;
-                    }
-
-
-                    if (isHTML) {
-                        history.add(formattedUrl);
-                        setWebsiteTitle(doc);
-                        //Check Site
-                        if (homeOfPagesIndexes.contains(formattedUrl)) {
-                            HomeOfPages(formattedUrl);
-                        } else {
-                            ContentPagesMixed(formattedUrl);
-                        }
-                    } else {
-                        try {
-                            openInTabIntent(formattedUrl);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                })).start();
-            } else {
-                openInTabIntent(formattedUrl);
-            }
-        }
     }
 
     private void openInTabIntent(@NonNull String url) {

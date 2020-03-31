@@ -17,36 +17,52 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/website_search_level1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center|start"
-        android:text="Schulleben"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/website_search_level2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Projekte"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="20sp" />
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/website_search_level3"
+        <TextView
+            android:id="@+id/website_search_level1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|start"
+            android:text="Schulleben"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/website_search_level2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Projekte"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/website_search_level3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:gravity="start|center"
+            android:text="SoR"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/website_search_tab_intent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:gravity="start|center"
-        android:text="SoR"
-        android:textSize="18sp" />
+        android:layout_weight="8"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_open_in_browser_white_24dp" />
 
 </LinearLayout>
