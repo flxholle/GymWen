@@ -183,7 +183,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     //Download Doc
     @Nullable
-    private static Document downloadDoc(String url) {
+    public static Document downloadDoc(String url) {
         try {
             return Jsoup.connect(url).get();
 

@@ -38,6 +38,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.fragments.WebsiteActivityFragment;
+import com.asdoi.gymwen.ui.fragments.WebsiteSearchFragment;
 import com.pd.chocobar.ChocoBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -51,6 +52,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
+    public static String LOADURL = "url";
+
     @Nullable
     public ArrayList<String> history = new ArrayList<>();
 
@@ -139,7 +142,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         }
 
         try {
-            String intentURL = getIntent().getStringExtra("url");
+            String intentURL = getIntent().getStringExtra(LOADURL);
             if (intentURL == null) {
                 Uri data = getIntent().getData();
                 intentURL = data.getHost() + data.getPath();
@@ -545,7 +548,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         try {
             WebsiteActivityFragment f = new WebsiteActivityFragment(con, pageCode);
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.website_host, f).commit();
+            fragmentManager.beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
         } catch (Exception e) {
             runOnUiThread(() -> Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show());
             startActivity(new Intent(this, MainActivity.class));

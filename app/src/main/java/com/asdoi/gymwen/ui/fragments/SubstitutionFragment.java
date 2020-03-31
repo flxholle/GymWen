@@ -345,7 +345,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             view.setBackground(drawable);
             padding = 7;
         } else {
-            view.setBackgroundResource(android.R.drawable.list_selector_background);
+            TypedValue outValue = new TypedValue();
+            getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            view.setBackgroundResource(outValue.resourceId);
         }
         view.setPadding(padding, padding, padding, padding);
 

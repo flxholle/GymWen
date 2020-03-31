@@ -23,6 +23,7 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,15 +58,15 @@ public class RoomPlanSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_room_plan_search, container, false);
+        View root = inflater.inflate(R.layout.fragment_search_template, container, false);
 
         content = RoomPlanActivity.getRoomMarkers();
         contentKeys = content.keySet().toArray(new String[]{});
 
-        listView = root.findViewById(R.id.room_plan_search_list);
+        listView = root.findViewById(R.id.search_template_list);
         listView.setAdapter(new SearchListAdapter(getContext(), 0));
 
-        ((EditText) root.findViewById(R.id.room_plan_search_input)).addTextChangedListener(new TextWatcher() {
+        ((EditText) root.findViewById(R.id.search_template_input)).addTextChangedListener(new TextWatcher() {
             @NonNull
             String before = "";
 
@@ -134,6 +135,9 @@ public class RoomPlanSearchFragment extends Fragment {
             base.setOnClickListener((View v) -> {
                 ((RoomPlanActivity) getActivity()).showRoom(contentKeys[position]);
             });
+            TypedValue outValue = new TypedValue();
+            getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            base.setBackgroundResource(outValue.resourceId);
 
             base.findViewById(R.id.room_search_button).setOnClickListener((View v) -> {
                 ((RoomPlanActivity) getActivity()).showRoom(contentKeys[position]);

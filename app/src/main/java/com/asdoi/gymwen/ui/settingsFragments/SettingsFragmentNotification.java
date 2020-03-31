@@ -38,6 +38,9 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
 
         ((SettingsActivity) getActivity()).loadedFragments++;
 
+        if (ProfileManagement.isUninit())
+            ProfileManagement.reload();
+
         setNotif();
 
         Preference myPref = findPreference("showNotification");
@@ -61,8 +64,9 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
         });
 
         myPref = findPreference("main_notif_for_all");
-        if (ProfileManagement.isUninit())
-            ProfileManagement.reload();
+        myPref.setVisible(ProfileManagement.isMoreThanOneProfile());
+
+        myPref = findPreference("summary_notif_as_usual");
         myPref.setVisible(ProfileManagement.isMoreThanOneProfile());
     }
 
@@ -71,13 +75,13 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
         findPreference("alwaysNotification").setVisible(showNotif);
         findPreference("alarm").setVisible(showNotif);
         findPreference("two_notifs").setVisible(showNotif);
-        findPreference("main_notif_for_all").setVisible(showNotif);
+        findPreference("main_notif_for_all").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
         findPreference("showSummaryNotification").setVisible(showNotif);
-        findPreference("summary_notif_as_usual").setVisible(showNotif);
+        findPreference("summary_notif_as_usual").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
     }
 
     private void setSummary() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showSummaryNotification", true);
-        findPreference("summary_notif_as_usual").setVisible(showNotif);
+        findPreference("summary_notif_as_usual").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
     }
 }
