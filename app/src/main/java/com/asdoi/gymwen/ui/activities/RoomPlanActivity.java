@@ -35,7 +35,7 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.fragments.RoomPlanFragment;
 import com.asdoi.gymwen.ui.fragments.RoomPlanSearchFragment;
 import com.asdoi.gymwen.util.External_Const;
-import com.pd.chocobar.ChocoBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -49,6 +49,8 @@ public class RoomPlanActivity extends ActivityFeatures {
     public static String SEARCH = "search";
 
     private boolean search;
+
+    public static Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,14 +88,15 @@ public class RoomPlanActivity extends ActivityFeatures {
     public static List<Room> getRoomMarkers() {
         Context context = ApplicationFeatures.getContext();
         List<Room> rooms = new ArrayList<>(0);
-        rooms.add(new Room("109", "Mehrzweckraum", new PointF(1125, 1195)));
-        rooms.add(new Room("221", "Informatik", new PointF(540, 570)));
+        rooms.add(new Room("109", new PointF(1125, 1195)));
+        rooms.add(new Room("221", context.getString(R.string.programming), new PointF(540, 570)));
         rooms.add(new Room("H1", null, context.getString(R.string.gym), new PointF(1920, 1440)));
         rooms.add(new Room("H2", null, context.getString(R.string.gym), new PointF(2080, 1480)));
         rooms.add(new Room("Aula", null, context.getString(R.string.main_floor), new PointF(1350, 1790)));
-        rooms.add(new Room("040", "Musik", new PointF(1260, 1550)));
-        rooms.add(new Room("041", "Musik", new PointF(1520, 1600)));
+        rooms.add(new Room("040", context.getString(R.string.music), new PointF(1260, 1550)));
+        rooms.add(new Room("041", context.getString(R.string.music), new PointF(1520, 1600)));
         rooms.add(new Room("205", new PointF(1280, 800)));
+        rooms.add(new Room("E103", new PointF(150, 880)));
         return sortRooms(rooms);
     }
 
@@ -182,7 +185,8 @@ public class RoomPlanActivity extends ActivityFeatures {
                 fragmentManager.beginTransaction().replace(R.id.room_plan_frame, new RoomPlanSearchFragment()).commit();
                 search = true;
                 //Hide all Snackbars from other fragment
-                ChocoBar.builder().setActivity(this).setBackgroundColor(ApplicationFeatures.getBackgroundColor(this)).setDuration(ChocoBar.LENGTH_SHORT).build().show();
+                if (snackbar != null)
+                    snackbar.dismiss();
                 break;
             case R.id.action_room_plan:
                 fragmentManager.beginTransaction().replace(R.id.room_plan_frame, new RoomPlanFragment()).commit();

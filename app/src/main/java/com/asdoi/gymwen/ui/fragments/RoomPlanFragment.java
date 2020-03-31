@@ -83,12 +83,12 @@ public class RoomPlanFragment extends Fragment {
                 }
 
                 if (!shouldSelectRoom)
-                    ChocoBar.builder().setActivity(getActivity())
+                    RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
                             .setActionText(getString(R.string.ok))
                             .setText(getString(R.string.room) + " " + selectRoom + " " + getString(R.string.not_found))
                             .setDuration(ChocoBar.LENGTH_INDEFINITE)
-                            .orange()
-                            .show();
+                            .orange();
+                RoomPlanActivity.snackbar.show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,25 +151,26 @@ public class RoomPlanFragment extends Fragment {
                                 BitmapLayer bitmapLayer = new BitmapLayer(mapView, finalMarkerBitmap);
                                 bitmapLayer.setLocation(marks.get(0));
                                 mapView.addLayer(bitmapLayer);
-                                ChocoBar.builder().setActivity(getActivity())
+                                RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
                                         .setText(getString(R.string.room) + " " + selectRoom.getName() + " (" + selectRoom.getFloor() + (selectRoom.hasDescription() ? ", " + selectRoom.getDescription() : "") + ")")
                                         .setTextTypefaceStyle(Typeface.BOLD)
                                         .setIcon(R.mipmap.mark_touch)
                                         .setDuration(ChocoBar.LENGTH_INDEFINITE)
                                         .setBackgroundColor(Color.GRAY)
-                                        .build()
-                                        .show();
+                                        .build();
+                                RoomPlanActivity.snackbar.show();
                             } else {
                                 MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
-                                markLayer.setMarkIsClickListener((int num) -> getActivity().runOnUiThread(() ->
-                                        ChocoBar.builder().setActivity(getActivity())
-                                                .setText(getString(R.string.room) + " " + getRoomNames().get(num) + " (" + getRooms().get(num).getFloor() + (getRooms().get(num).hasDescription() ? ", " + getRooms().get(num).getDescription() : "") + ")")
-                                                .setTextTypefaceStyle(Typeface.BOLD)
-                                                .setIcon(R.mipmap.mark_touch)
-                                                .setDuration(ChocoBar.LENGTH_INDEFINITE)
-                                                .setBackgroundColor(Color.GRAY)
-                                                .build()
-                                                .show()));
+                                markLayer.setMarkIsClickListener((int num) -> getActivity().runOnUiThread(() -> {
+                                    RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
+                                            .setText(getString(R.string.room) + " " + getRoomNames().get(num) + " (" + getRooms().get(num).getFloor() + (getRooms().get(num).hasDescription() ? ", " + getRooms().get(num).getDescription() : "") + ")")
+                                            .setTextTypefaceStyle(Typeface.BOLD)
+                                            .setIcon(R.mipmap.mark_touch)
+                                            .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                                            .setBackgroundColor(Color.GRAY)
+                                            .build();
+                                    RoomPlanActivity.snackbar.show();
+                                }));
 
                                 markLayer.setNum(0);
                                 mapView.addLayer(markLayer);
@@ -184,13 +185,13 @@ public class RoomPlanFragment extends Fragment {
                     @Override
                     public void onMapLoadFail() {
                         getActivity().runOnUiThread(() -> {
-                            ChocoBar.builder().setActivity(getActivity())
+                            RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
                                     .setText(R.string.cannot_load_room_plan)
                                     .setDuration(ChocoBar.LENGTH_INDEFINITE)
                                     .setActionText(R.string.ok)
                                     .setActionClickListener((View v) -> getActivity().finish())
-                                    .red()
-                                    .show();
+                                    .red();
+                            RoomPlanActivity.snackbar.show();
                         });
                     }
                 });
