@@ -37,8 +37,11 @@ import com.asdoi.gymwen.ui.fragments.RoomPlanSearchFragment;
 import com.asdoi.gymwen.util.External_Const;
 import com.pd.chocobar.ChocoBar;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class RoomPlanActivity extends ActivityFeatures {
 
@@ -80,15 +83,54 @@ public class RoomPlanActivity extends ActivityFeatures {
         setToolbar(true);
     }
 
-    public static Map<String, PointF> getRoomMarkers() {
-        Map<String, PointF> roomMarks = new HashMap<String, PointF>(0);
-        roomMarks.put("109", new PointF(409, 720));
-        roomMarks.put("E006", new PointF(200, 200));
-        roomMarks.put("108", new PointF(800, 500));
-        return roomMarks;
+    public static List<Room> getRoomMarkers() {
+        Context context = ApplicationFeatures.getContext();
+        List<Room> rooms = new ArrayList<>(0);
+        rooms.add(new Room("109", "Mehrzweckraum", new PointF(1125, 1195)));
+        rooms.add(new Room("221", "Informatik", new PointF(540, 570)));
+        rooms.add(new Room("H1", null, context.getString(R.string.gym), new PointF(1920, 1440)));
+        rooms.add(new Room("H2", null, context.getString(R.string.gym), new PointF(2080, 1480)));
+        rooms.add(new Room("Aula", null, context.getString(R.string.main_floor), new PointF(1350, 1790)));
+        rooms.add(new Room("040", "Musik", new PointF(1260, 1550)));
+        rooms.add(new Room("041", "Musik", new PointF(1520, 1600)));
+        rooms.add(new Room("205", new PointF(1280, 800)));
+        return sortRooms(rooms);
     }
 
-    public static String getMatchingFloor(String roomName) {
+    private static List<Room> sortRooms(List<Room> rooms) {
+        Map<Integer, Room> map = new TreeMap<Integer, Room>();
+        int failed = 0;
+        for (Room room : rooms) {
+            int roomNr;
+
+            try {
+                if (Character.isDigit(room.getName().charAt(0))) {
+                    roomNr = Integer.parseInt(room.getName());
+                } else if (Character.isDigit(room.getName().charAt(1))) {
+                    roomNr = Integer.parseInt(room.getName().substring(1));
+                } else {
+                    failed--;
+                    roomNr = failed;
+                    failed--;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                failed--;
+                roomNr = failed;
+            }
+
+            map.put(roomNr, room);
+        }
+
+        List<Room> sortedRooms = new LinkedList<>();
+        for (int i : map.keySet()) {
+            sortedRooms.add(map.get(i));
+        }
+
+        return sortedRooms;
+    }
+
+    private static String getMatchingFloor(String roomName) {
         Context context = ApplicationFeatures.getContext();
         if (roomName.length() < 2)
             return "";
@@ -153,5 +195,59 @@ public class RoomPlanActivity extends ActivityFeatures {
         }
         invalidateOptionsMenu();
         return super.onOptionsItemSelected(item);
+    }
+
+    public static class Room {
+        private String name;
+        private String description;
+        private PointF location;
+        private String floor;
+
+        Room(String name, PointF location) {
+            this.name = name;
+            this.description = "";
+            this.location = location;
+            floor = getMatchingFloor(name);
+        }
+
+        Room(String name, String description, PointF location) {
+            this.name = name;
+            if (description == null)
+                this.description = "";
+            else
+                this.description = description;
+            this.location = location;
+            floor = getMatchingFloor(name);
+        }
+
+        Room(String name, String description, String floor, PointF location) {
+            this.name = name;
+            if (description == null)
+                this.description = "";
+            else
+                this.description = description;
+            this.location = location;
+            this.floor = floor;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getFloor() {
+            return floor;
+        }
+
+        public PointF getLocation() {
+            return location;
+        }
+
+        public boolean hasDescription() {
+            return !description.trim().isEmpty();
+        }
     }
 }

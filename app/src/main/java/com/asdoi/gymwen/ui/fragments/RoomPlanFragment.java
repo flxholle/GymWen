@@ -40,19 +40,16 @@ import com.onlylemi.mapview.library.layer.BitmapLayer;
 import com.onlylemi.mapview.library.layer.MarkLayer;
 import com.pd.chocobar.ChocoBar;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class RoomPlanFragment extends Fragment {
     private static Bitmap roomPlanBitmap;
     private static Bitmap markerBitmap;
 
     private View root;
-    private Map<String, PointF> roomMarks;
 
-    private String selectRoom;
+    private RoomPlanActivity.Room selectRoom;
     private boolean shouldSelectRoom = false;
 
     private MapView mapView;
@@ -73,11 +70,19 @@ public class RoomPlanFragment extends Fragment {
         super.onCreate(savedInstanceState);
         try {
             generateMarks();
-            selectRoom = getArguments().getString(RoomPlanActivity.SELECT_ROOM);
-            if (selectRoom != null && !selectRoom.trim().isEmpty()) {
-                if (getMarksName().contains(selectRoom))
-                    shouldSelectRoom = true;
-                else
+            shouldSelectRoom = false;
+
+            String roomName = getArguments().getString(RoomPlanActivity.SELECT_ROOM);
+            if (roomName != null && !roomName.trim().isEmpty()) {
+                for (RoomPlanActivity.Room r : getRooms()) {
+                    if (r.getName().equalsIgnoreCase(roomName)) {
+                        selectRoom = r;
+                        shouldSelectRoom = true;
+                        break;
+                    }
+                }
+
+                if (!shouldSelectRoom)
                     ChocoBar.builder().setActivity(getActivity())
                             .setActionText(getString(R.string.ok))
                             .setText(getString(R.string.room) + " " + selectRoom + " " + getString(R.string.not_found))
@@ -95,7 +100,8 @@ public class RoomPlanFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_room_plan, container, false);
 
@@ -118,7 +124,7 @@ public class RoomPlanFragment extends Fragment {
                 if (roomPlan == null)
                     roomPlan = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.roomplan);
                 if (shouldSelectRoom && marker == null)
-                    marker = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.mark_touch);
+                    marker = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.marker_bitmap);
 
                 roomPlanBitmap = roomPlan;
                 markerBitmap = marker;
@@ -137,21 +143,16 @@ public class RoomPlanFragment extends Fragment {
                 mapView.setMapViewListener(new MapViewListener() {
                     @Override
                     public void onMapLoadSuccess() {
-                        List<PointF> marks = getMarks();
-                        List<String> marksName = getMarksName();
+                        List<PointF> marks = getRoomLocations();
+                        List<String> marksName = getRoomNames();
 
                         getActivity().runOnUiThread(() -> {
                             if (shouldSelectRoom) {
-                                //Because Bitmap location is going from center of image
-                                PointF location = marks.get(0);
-                                location.x -= 5;
-                                location.y -= 30;
-
                                 BitmapLayer bitmapLayer = new BitmapLayer(mapView, finalMarkerBitmap);
-                                bitmapLayer.setLocation(location);
+                                bitmapLayer.setLocation(marks.get(0));
                                 mapView.addLayer(bitmapLayer);
                                 ChocoBar.builder().setActivity(getActivity())
-                                        .setText(getString(R.string.room) + " " + selectRoom + " (" + RoomPlanActivity.getMatchingFloor(selectRoom) + ")")
+                                        .setText(getString(R.string.room) + " " + selectRoom.getName() + " (" + selectRoom.getFloor() + (selectRoom.hasDescription() ? ", " + selectRoom.getDescription() : "") + ")")
                                         .setTextTypefaceStyle(Typeface.BOLD)
                                         .setIcon(R.mipmap.mark_touch)
                                         .setDuration(ChocoBar.LENGTH_INDEFINITE)
@@ -162,7 +163,7 @@ public class RoomPlanFragment extends Fragment {
                                 MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
                                 markLayer.setMarkIsClickListener((int num) -> getActivity().runOnUiThread(() ->
                                         ChocoBar.builder().setActivity(getActivity())
-                                                .setText(getString(R.string.room) + " " + getMarksName().get(num) + " (" + RoomPlanActivity.getMatchingFloor(getMarksName().get(num)) + ")")
+                                                .setText(getString(R.string.room) + " " + getRoomNames().get(num) + " (" + getRooms().get(num).getFloor() + (getRooms().get(num).hasDescription() ? ", " + getRooms().get(num).getDescription() : "") + ")")
                                                 .setTextTypefaceStyle(Typeface.BOLD)
                                                 .setIcon(R.mipmap.mark_touch)
                                                 .setDuration(ChocoBar.LENGTH_INDEFINITE)
@@ -197,31 +198,37 @@ public class RoomPlanFragment extends Fragment {
         }).start();
     }
 
+    private List<RoomPlanActivity.Room> roomMarks;
+
     private void generateMarks() {
         roomMarks = RoomPlanActivity.getRoomMarkers();
 
         if (shouldSelectRoom) {
-            PointF room = roomMarks.get(selectRoom);
-            roomMarks = new HashMap<>();
-            roomMarks.put(selectRoom, room);
+            roomMarks = new ArrayList<>(0);
+            roomMarks.add(selectRoom);
         }
     }
 
-    private List<PointF> getMarks() {
+    private List<RoomPlanActivity.Room> getRooms() {
         if (roomMarks == null)
             generateMarks();
 
-        List<PointF> list = new LinkedList<>();
-        for (String key : roomMarks.keySet()) {
-            list.add(roomMarks.get(key));
-        }
-        return list;
+        return roomMarks;
     }
 
-    private List<String> getMarksName() {
-        if (roomMarks == null)
-            generateMarks();
+    private List<String> getRoomNames() {
+        List<String> names = new ArrayList<>(0);
+        for (RoomPlanActivity.Room r : getRooms()) {
+            names.add(r.getName());
+        }
+        return names;
+    }
 
-        return new LinkedList<>(roomMarks.keySet());
+    private List<PointF> getRoomLocations() {
+        List<PointF> locations = new ArrayList<>(0);
+        for (RoomPlanActivity.Room r : getRooms()) {
+            locations.add(r.getLocation());
+        }
+        return locations;
     }
 }

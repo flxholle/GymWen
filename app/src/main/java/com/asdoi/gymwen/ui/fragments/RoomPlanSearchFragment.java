@@ -19,7 +19,6 @@
 package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
-import android.graphics.PointF;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -42,13 +41,12 @@ import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoomPlanSearchFragment extends Fragment {
     private ListView listView;
-    private Map<String, PointF> content;
-    private String[] contentKeys;
+    private List<RoomPlanActivity.Room> content;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +59,6 @@ public class RoomPlanSearchFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_search_template, container, false);
 
         content = RoomPlanActivity.getRoomMarkers();
-        contentKeys = content.keySet().toArray(new String[]{});
 
         listView = root.findViewById(R.id.search_template_list);
         listView.setAdapter(new SearchListAdapter(getContext(), 0));
@@ -84,7 +81,6 @@ public class RoomPlanSearchFragment extends Fragment {
                         content = RoomPlanActivity.getRoomMarkers();
                     }
                     before = charSequence.toString();
-                    contentKeys = content.keySet().toArray(new String[]{});
                     ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
                 }
             }
@@ -100,12 +96,13 @@ public class RoomPlanSearchFragment extends Fragment {
     }
 
     private void search(String query) {
-        Map<String, PointF> all = RoomPlanActivity.getRoomMarkers();
-        Map<String, PointF> matches = new HashMap<>(0);
-        for (String n : all.keySet()) {
-            if (n.toUpperCase().contains(query.toUpperCase())) {
-                matches.put(n, all.get(n));
-            }
+        List<RoomPlanActivity.Room> all = RoomPlanActivity.getRoomMarkers();
+        List<RoomPlanActivity.Room> matches = new ArrayList<>(0);
+        for (RoomPlanActivity.Room n : all) {
+            if (n.getName().toUpperCase().contains(query.toUpperCase())) {
+                matches.add(n);
+            } else if (n.getDescription().toUpperCase().contains(query.toUpperCase()))
+                matches.add(n);
         }
         content = matches;
     }
@@ -132,22 +129,22 @@ public class RoomPlanSearchFragment extends Fragment {
         }
 
         private View createView(View base, int position) {
-            base.setOnClickListener((View v) -> {
-                ((RoomPlanActivity) getActivity()).showRoom(contentKeys[position]);
-            });
+            RoomPlanActivity.Room room = content.get(position);
+
+            base.setOnClickListener((View v) -> ((RoomPlanActivity) getActivity()).showRoom(room.getName()));
             TypedValue outValue = new TypedValue();
             getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             base.setBackgroundResource(outValue.resourceId);
 
             base.findViewById(R.id.room_search_button).setOnClickListener((View v) -> {
-                ((RoomPlanActivity) getActivity()).showRoom(contentKeys[position]);
+                ((RoomPlanActivity) getActivity()).showRoom(room.getName());
             });
 
-            TextView room = base.findViewById(R.id.room_search_room);
-            room.setText(contentKeys[position]);
+            TextView roomName = base.findViewById(R.id.room_search_room);
+            roomName.setText(room.getName());
 
             TextView level = base.findViewById(R.id.room_search_floor);
-            level.setText(RoomPlanActivity.getMatchingFloor(contentKeys[position]));
+            level.setText(room.getFloor() + (room.hasDescription() ? ", " + room.getDescription() : ""));
 
             return base;
         }

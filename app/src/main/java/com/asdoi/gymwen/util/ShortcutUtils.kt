@@ -128,7 +128,7 @@ class ShortcutUtils {
         }
 
         fun createRoomPlanShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("room_plan", context.getString(R.string.shortcut_room_plan), Icon.createWithResource(context, R.drawable.ic_house_plan), Intent(context, RoomPlanActivity::class.java).setAction(Intent.ACTION_VIEW))
+            return createShortcut("roomplan", context.getString(R.string.shortcut_room_plan), Icon.createWithResource(context, R.drawable.ic_house_plan), Intent(context, RoomPlanActivity::class.java).setAction(Intent.ACTION_VIEW))
         }
     }
 }

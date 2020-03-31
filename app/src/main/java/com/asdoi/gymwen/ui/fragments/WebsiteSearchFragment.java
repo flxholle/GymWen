@@ -77,7 +77,7 @@ public class WebsiteSearchFragment extends Fragment {
         ((ActivityFeatures) getActivity()).createLoadingPanel((ViewGroup) root);
 
         new Thread(() -> {
-            if (contentAll == null)
+            if (contentAll == null || contentAll.size() <= 0)
                 content = getLinks();
             else
                 content = contentAll;
