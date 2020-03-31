@@ -412,5 +412,6 @@
     <string name="floor">Floor</string>
     <string name="gym">Gym</string>
     <string name="shortcut_room_plan">House plan</string>
+    <string name="close">Close</string>
 
 </resources>

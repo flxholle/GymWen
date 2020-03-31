@@ -53,7 +53,7 @@ import java.util.List;
 public class WebsiteSearchFragment extends Fragment {
     private ListView listView;
     private List<WebsiteSearchLink> content;
-    private List<WebsiteSearchLink> contentAll;
+    private static List<WebsiteSearchLink> contentAll;
 
     private View root;
 

@@ -21,7 +21,6 @@ package com.asdoi.gymwen.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +29,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 
@@ -97,9 +95,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     public void setupColors() {
         setToolbar(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((Toolbar) findViewById(R.id.toolbar)).setNavigationIcon(R.drawable.ic_clear_black_24dp);
-        }
     }
 
     @Override
@@ -111,15 +106,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         return true;
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        ApplicationFeatures.websiteHistorySaveInstance = null;
-//        Intent i = new Intent(this, MainActivity.class);
-//        startActivity(i);
-        finish();
-        super.onSupportNavigateUp();
-        return true;
-    }
 
     public void start() {
 
@@ -239,14 +225,15 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                 invalidateOptionsMenu();
                 search = false;
                 break;
+            case R.id.website_close:
+                onSupportNavigateUp();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-
-
         // Check if the key event was the Back button and if there's history
 
         //If image is expanded
@@ -273,6 +260,13 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             super.onBackPressed();
         }
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        ApplicationFeatures.websiteHistorySaveInstance = null;
+        finish();
+        return super.onSupportNavigateUp();
     }
 
     @Override

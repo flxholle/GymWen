@@ -247,6 +247,7 @@
     <string name="share_link">Link teilen mit\u2026</string>
     <string name="error">Es ist ein Fehler aufgetreten.</string>
     <string name="tap_picture">Bild antippen</string>
+    <string name="close">Schließen</string>
 
     <!-- Notification-->
     <string name="notification_summary_channel_title">Vertretungsplan</string>
