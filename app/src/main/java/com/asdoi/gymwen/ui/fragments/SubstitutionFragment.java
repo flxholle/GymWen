@@ -933,6 +933,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             intent.putExtra(RoomPlanActivity.SELECT_ROOM, entry.getRoom());
             startActivity(intent);
         });
+        TypedValue outValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        room.setBackgroundResource(outValue.resourceId);
 
         TextView other = view.findViewById(R.id.substitution_all_entry_textViewOther);
         other.setVisibility(View.VISIBLE);
@@ -1059,6 +1062,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 intent.putExtra(RoomPlanActivity.SELECT_ROOM, entry.getRoom());
                 startActivity(intent);
             });
+            TypedValue outValue = new TypedValue();
+            getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            room.setBackgroundResource(outValue.resourceId);
         } else {
             removeTeacherClick(teacher);
             teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_teacher) + context.getResources().getInteger(R.integer.substitution_specific_entry_room)));
@@ -1141,6 +1147,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                     intent.putExtra(RoomPlanActivity.SELECT_ROOM, entry.getRoom());
                     startActivity(intent);
                 });
+                TypedValue outValue = new TypedValue();
+                getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+                room.setBackgroundResource(outValue.resourceId);
             } else {
                 room.setVisibility(View.GONE);
                 room.setOnClickListener(null);
