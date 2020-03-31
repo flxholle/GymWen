@@ -20,6 +20,7 @@ package com.asdoi.gymwen.ui.activities;
 
 import android.content.Context;
 import android.graphics.PointF;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.fragments.RoomPlanFragment;
 import com.asdoi.gymwen.ui.fragments.RoomPlanSearchFragment;
+import com.asdoi.gymwen.util.External_Const;
 import com.pd.chocobar.ChocoBar;
 
 import java.util.HashMap;
@@ -137,14 +139,18 @@ public class RoomPlanActivity extends ActivityFeatures {
             case R.id.action_room_search:
                 fragmentManager.beginTransaction().replace(R.id.room_plan_frame, new RoomPlanSearchFragment()).commit();
                 search = true;
+                //Hide all Snackbars from other fragment
+                ChocoBar.builder().setActivity(this).setBackgroundColor(ApplicationFeatures.getBackgroundColor(this)).setDuration(ChocoBar.LENGTH_SHORT).build().show();
                 break;
             case R.id.action_room_plan:
                 fragmentManager.beginTransaction().replace(R.id.room_plan_frame, new RoomPlanFragment()).commit();
                 search = false;
                 break;
+            case R.id.action_navigation:
+                Uri gymwenOnMap = Uri.parse(External_Const.location);
+                showMap(gymwenOnMap);
+                break;
         }
-        //Hide all Snackbars from other fragment
-        ChocoBar.builder().setActivity(this).setBackgroundColor(ApplicationFeatures.getBackgroundColor(this)).setDuration(ChocoBar.LENGTH_SHORT).build().show();
         invalidateOptionsMenu();
         return super.onOptionsItemSelected(item);
     }

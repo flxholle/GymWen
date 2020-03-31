@@ -33,4 +33,11 @@
         android:title="@string/room_plan"
         app:iconTint="@android:color/white"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_navigation"
+        android:icon="@drawable/ic_navigation_black_24dp"
+        android:title="@string/menu_navigation"
+        app:iconTint="@android:color/white"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
 </menu>
