@@ -72,6 +72,7 @@ class ShortcutUtils {
                     "newspaper" -> shortcutList.add(createNewsShortcut())
                     "teacherlist" -> shortcutList.add(createTeacherListShortcut())
                     "roomplan" -> shortcutList.add(createRoomPlanShortcut())
+                    "roomplan_search" -> shortcutList.add(createSearchRoomPlanShortcut())
                 }
             }
 
@@ -129,6 +130,10 @@ class ShortcutUtils {
 
         fun createRoomPlanShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
             return createShortcut("room_plan", context.getString(R.string.shortcut_room_plan), Icon.createWithResource(context, R.drawable.ic_house_plan), Intent(context, RoomPlanActivity::class.java).setAction(Intent.ACTION_VIEW))
+        }
+
+        fun createSearchRoomPlanShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
+            return createShortcut("search_room_plan", context.getString(R.string.shortcut_search_room_plan), Icon.createWithResource(context, R.drawable.ic_house_plan), Intent(context, RoomPlanActivity::class.java).setAction(RoomPlanActivity.SEARCH))
         }
     }
 }
