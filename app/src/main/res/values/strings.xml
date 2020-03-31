@@ -500,7 +500,6 @@
     <string name="shortcut_claxss">ClaXss</string>
     <string name="shortcut_forms">Formulare</string>
     <string name="shortcut_room_plan">Raumplan</string>
-    <string name="shortcut_search_room_plan">Raumplan durchsuchen</string>
 
     <!-- Room plan -->
     <string name="not_found">nicht gefunden</string>
