@@ -209,7 +209,7 @@ public class WebsiteSearchFragment extends Fragment {
                     break;
                 case 2:
                     usedView = view.findViewById(R.id.website_search_level2);
-                    button.setVisibility(View.VISIBLE);
+//                    button.setVisibility(View.VISIBLE);
                     break;
                 default:
                 case 3:

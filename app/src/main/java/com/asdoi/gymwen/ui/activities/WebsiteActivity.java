@@ -149,6 +149,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                     search = true;
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
+                    getSupportActionBar().setTitle(R.string.action_search);
                     invalidateOptionsMenu();
                     return;
                 }
@@ -230,6 +231,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             case R.id.action_website_search:
                 getSupportFragmentManager().beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
                 search = true;
+                getSupportActionBar().setTitle(R.string.action_search);
                 invalidateOptionsMenu();
                 break;
             case R.id.action_website:
