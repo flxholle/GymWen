@@ -82,13 +82,14 @@ public class RoomPlanFragment extends Fragment {
                     }
                 }
 
-                if (!shouldSelectRoom)
+                if (!shouldSelectRoom) {
                     RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
                             .setActionText(getString(R.string.ok))
-                            .setText(getString(R.string.room) + " " + selectRoom + " " + getString(R.string.not_found))
+                            .setText(getString(R.string.room) + " " + roomName + " " + getString(R.string.not_found))
                             .setDuration(ChocoBar.LENGTH_INDEFINITE)
                             .orange();
-                RoomPlanActivity.snackbar.show();
+                    RoomPlanActivity.snackbar.show();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,7 +153,7 @@ public class RoomPlanFragment extends Fragment {
                                 bitmapLayer.setLocation(marks.get(0));
                                 mapView.addLayer(bitmapLayer);
                                 RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
-                                        .setText(getString(R.string.room) + " " + selectRoom.getName() + " (" + selectRoom.getFloor() + (selectRoom.hasDescription() ? ", " + selectRoom.getDescription() : "") + ")")
+                                        .setText(/*getString(R.string.room) + " " + */selectRoom.getName() + " (" + selectRoom.getFloor() + (selectRoom.hasDescription() ? ", " + selectRoom.getDescription() : "") + ")")
                                         .setTextTypefaceStyle(Typeface.BOLD)
                                         .setIcon(R.mipmap.mark_touch)
                                         .setDuration(ChocoBar.LENGTH_INDEFINITE)
@@ -163,7 +164,7 @@ public class RoomPlanFragment extends Fragment {
                                 MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
                                 markLayer.setMarkIsClickListener((int num) -> getActivity().runOnUiThread(() -> {
                                     RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
-                                            .setText(getString(R.string.room) + " " + getRoomNames().get(num) + " (" + getRooms().get(num).getFloor() + (getRooms().get(num).hasDescription() ? ", " + getRooms().get(num).getDescription() : "") + ")")
+                                            .setText(/*getString(R.string.room) + " " + */getRoomNames().get(num) + " (" + getRooms().get(num).getFloor() + (getRooms().get(num).hasDescription() ? ", " + getRooms().get(num).getDescription() : "") + ")")
                                             .setTextTypefaceStyle(Typeface.BOLD)
                                             .setIcon(R.mipmap.mark_touch)
                                             .setDuration(ChocoBar.LENGTH_INDEFINITE)

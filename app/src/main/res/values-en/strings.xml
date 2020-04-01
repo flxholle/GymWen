@@ -413,5 +413,7 @@
     <string name="gym">Gym</string>
     <string name="shortcut_room_plan">House plan</string>
     <string name="close">Close</string>
+    <string name="shortcut_room_plan_search">Find room</string>
+    <string name="unkown_floor">undefined floor</string>
 
 </resources>

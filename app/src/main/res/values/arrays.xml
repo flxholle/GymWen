@@ -45,6 +45,7 @@
         <item>@string/shortcut_grades_management</item>
         <item>@string/shortcut_call_office</item>
         <item>@string/shortcut_room_plan</item>
+        <item>@string/shortcut_room_plan_search</item>
         <item>@string/shortcut_navigation</item>
         <item>@string/shortcut_claxss</item>
         <item>@string/shortcut_forms</item>
@@ -59,6 +60,7 @@
         <item>grades_management</item>
         <item>call_office</item>
         <item>roomplan</item>
+        <item>roomplan_search</item>
         <item>navigation</item>
         <item>claxss</item>
         <item>forms</item>

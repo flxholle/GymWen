@@ -501,6 +501,7 @@
     <string name="shortcut_claxss">ClaXss</string>
     <string name="shortcut_forms">Formulare</string>
     <string name="shortcut_room_plan">Raumplan</string>
+    <string name="shortcut_room_plan_search">Raum suchen</string>
 
     <!-- Room plan -->
     <string name="not_found">nicht gefunden</string>
@@ -508,5 +509,6 @@
     <string name="action_search">Suchen</string>
     <string name="main_floor">Erdgeschoss</string>
     <string name="floor">Stock</string>
+    <string name="unkown_floor">Unbekanntes Stockwerk</string>
     <string name="gym">Sporthalle</string>
 </resources>

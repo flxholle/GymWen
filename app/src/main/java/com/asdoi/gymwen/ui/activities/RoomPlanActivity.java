@@ -48,7 +48,7 @@ public class RoomPlanActivity extends ActivityFeatures {
     public static String SELECT_ROOM = "selectroom";
     public static String SEARCH = "search";
 
-    private boolean search;
+    private boolean search = false;
 
     public static Snackbar snackbar;
 
@@ -58,13 +58,21 @@ public class RoomPlanActivity extends ActivityFeatures {
 
         setContentView(R.layout.activity_room_plan);
 
-        Bundle extras = getIntent().getExtras();
         String room = null;
+        try {
+            Bundle extras = getIntent().getExtras();
 
-        if (extras != null) {
-            room = extras.getString(SELECT_ROOM, null);
-            search = extras.getBoolean(SEARCH, false);
+            if (extras != null)
+                room = extras.getString(SELECT_ROOM, null);
+
+            search = getIntent().getAction().equals(SEARCH);
+        } catch (NullPointerException e) {
+            //If intent is null
+            e.printStackTrace();
         }
+
+        setIntent(null);
+
         Fragment fragment = null;
 
         if (search) {
@@ -144,7 +152,7 @@ public class RoomPlanActivity extends ActivityFeatures {
         } else if (Character.isDigit(roomName.charAt(1))) {
             level = Integer.parseInt("" + roomName.charAt(1));
         } else {
-            return context.getString(R.string.gym);
+            return context.getString(R.string.unkown_floor);
         }
 
         switch (level) {

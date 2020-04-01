@@ -25,6 +25,7 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:orderInCategory="100"
         android:title="@string/action_search"
+        app:iconTint="@android:color/white"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_room_plan"
