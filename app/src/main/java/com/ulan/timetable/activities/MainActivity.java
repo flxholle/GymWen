@@ -4,10 +4,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -18,9 +21,13 @@ import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.kabouzeid.appthemehelper.ThemeStore;
+import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.adapters.FragmentsTabAdapter;
 import com.ulan.timetable.fragments.FridayFragment;
@@ -71,11 +78,32 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @Override
     public void setupColors() {
+        TabLayout tabs = findViewById(R.id.tabLayout);
+        tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
+        if (Build.VERSION.SDK_INT >= 21)
+            findViewById(R.id.fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
+        int accentColor = ThemeStore.accentColor(this);
+        NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
+        NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
+        ((Toolbar) findViewById(R.id.toolbar)).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
+        appBarLayout.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
     }
 
     private void initAll() {
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerview = navigationView.getHeaderView(0);
+        headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
+        TextView title = headerview.findViewById(R.id.nav_header_main_title);
+        title.setText(R.string.timetable);
+
+        TextView desc = headerview.findViewById(R.id.nav_header_main_desc);
+        desc.setText(R.string.timetable_credit);
+
         PreferenceManager.setDefaultValues(this, R.xml.timetable_settings, false);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

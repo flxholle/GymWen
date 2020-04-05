@@ -7,4 +7,9 @@
         android:icon="@drawable/baseline_view_week_black_18"
         android:title="@string/seven_days_of_the_week"
         android:summary="@string/sevendays_setting" />
+
+    <Preference
+        android:key="allprefs"
+        android:icon="@drawable/ic_open_in_browser_white_24dp"
+        android:title="Alle Einstellungen öffnen" />
 </PreferenceScreen>

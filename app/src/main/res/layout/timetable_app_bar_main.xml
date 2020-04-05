@@ -18,8 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/OptionsMenuBlack" />
+            app:popupTheme="?attr/popupMenuStyle" />
 
 
         <com.google.android.material.tabs.TabLayout
@@ -36,14 +35,7 @@
             app:tabIndicatorColor="?android:attr/textColorPrimary"
             app:tabMode="scrollable"
             app:tabPaddingEnd="20dp"
-            app:tabPaddingStart="20dp">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="asdf" />
-
-        </com.google.android.material.tabs.TabLayout>
+            app:tabPaddingStart="20dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

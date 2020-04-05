@@ -14,7 +14,7 @@ public class SettingsActivity extends ActivityFeatures {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timetable_activity_settings);
         getSupportFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new SettingsFragment())
+                .replace(R.id.settings, new SettingsFragment())
                 .commit();
     }
 
