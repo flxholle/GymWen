@@ -208,6 +208,59 @@
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
         </service>
+
+
+        <!-- Timetable -->
+        <activity
+            android:name="com.ulan.timetable.activities.MainActivity"
+            android:label="@string/timetable"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--        <meta-data
+                    android:name="preloaded_fonts"
+                    android:resource="@array/preloaded_fonts" />-->
+
+        <activity
+            android:name="com.ulan.timetable.activities.HomeworksActivity"
+            android:label="@string/homeworks" />
+
+        <activity
+            android:name="com.ulan.timetable.activities.NotesActivity"
+            android:label="@string/notes" />
+        <activity
+            android:name="com.ulan.timetable.activities.NoteInfoActivity"
+            android:label="@string/note"
+            android:parentActivityName="com.ulan.timetable.activities.NotesActivity" />
+        <activity
+            android:name="com.ulan.timetable.activities.SettingsActivity"
+            android:label="@string/menu_settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ulan.timetable.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.ulan.timetable.activities.ExamsActivity"
+            android:label="@string/exams" />
+
+        <receiver
+            android:name="com.ulan.timetable.utils.DailyReceiver"
+            android:enabled="true" />
+
+        <receiver
+            android:name="com.ulan.timetable.utils.WakeUpAlarmReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

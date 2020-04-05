@@ -67,6 +67,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.pd.chocobar.ChocoBar;
+import com.ulan.timetable.TimeTableBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -686,11 +687,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
                 return;
             case R.id.nav_timetable:
-                if (!startApp(External_Const.timetable_packageNames)) {
+                /*if (!startApp(External_Const.timetable_packageNames)) {
                     if (!openAppInStore(External_Const.timetable_packageNames))
                         //Open Browser to Download
                         tabIntent(External_Const.downloadApp_timetable);
-                }
+                }*/
+                new TimeTableBuilder("db").start(this);
                 return;
             case R.id.nav_grades:
                 checkGradesFile();

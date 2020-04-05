@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidStudioProjects-GymWen.iml" filepath="$PROJECT_DIR$/AndroidStudioProjects-GymWen.iml" group="GymWen" />
       <module fileurl="file://$PROJECT_DIR$/GymWen.iml" filepath="$PROJECT_DIR$/GymWen.iml" group="GymWen" />
-      <module fileurl="file://$PROJECT_DIR$/app/GymWen-app.iml" filepath="$PROJECT_DIR$/app/GymWen-app.iml" group="GymWen/app" />
-      <module fileurl="file://$PROJECT_DIR$/StudioProjects-GymWen.iml" filepath="$PROJECT_DIR$/StudioProjects-GymWen.iml" group="GymWen" />
-      <module fileurl="file://$PROJECT_DIR$/app/StudioProjects-GymWen-app.iml" filepath="$PROJECT_DIR$/app/StudioProjects-GymWen-app.iml" group="GymWen/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="GymWen/app" />
     </modules>
   </component>

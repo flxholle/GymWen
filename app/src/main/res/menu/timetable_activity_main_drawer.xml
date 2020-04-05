@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/menu_mid"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/exams"
+            android:icon="@drawable/baseline_school_black_18"
+            android:title="@string/exams" />
+
+        <item
+            android:id="@+id/homework"
+            android:icon="@drawable/baseline_book_black_18"
+            android:title="@string/homeworks" />
+        <item
+            android:id="@+id/notes"
+            android:icon="@drawable/baseline_event_note_black_18"
+            android:title="@string/notes" />
+    </group>
+
+    <group
+        android:id="@+id/menu_down"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/baseline_settings_black_18"
+            android:title="@string/action_settings" />
+    </group>
+
+</menu>
