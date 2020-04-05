@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 /**
  * Created by Ulan on 28.01.2019.
@@ -17,12 +16,12 @@ public class WakeUpAlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        if (Objects.equals(intent.getAction(), "android.intent.action.BOOT_COMPLETED")) {
+        if (Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(intent.getAction())) {
 
             Calendar calendar = Calendar.getInstance();
 
-            calendar.set(Calendar.HOUR_OF_DAY, 8);
-            calendar.set(Calendar.MINUTE, 30);
+            calendar.set(Calendar.HOUR_OF_DAY, 7);
+            calendar.set(Calendar.MINUTE, 50);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
 

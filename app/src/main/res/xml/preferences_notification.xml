@@ -22,7 +22,7 @@
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="showNotification"
-        android:title="@string/set_substitution_isOn"
+        android:title="@string/set_notification_isOn"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"

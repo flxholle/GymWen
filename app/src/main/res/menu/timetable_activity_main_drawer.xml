@@ -9,16 +9,16 @@
 
         <item
             android:id="@+id/exams"
-            android:icon="@drawable/baseline_school_black_18"
+            android:icon="@drawable/ic_school_black_24dp"
             android:title="@string/exams" />
 
         <item
             android:id="@+id/homework"
-            android:icon="@drawable/baseline_book_black_18"
+            android:icon="@drawable/ic_book_black_24dp"
             android:title="@string/homeworks" />
         <item
             android:id="@+id/notes"
-            android:icon="@drawable/baseline_event_note_black_18"
+            android:icon="@drawable/ic_event_note_black_24dp"
             android:title="@string/notes" />
     </group>
 
@@ -27,7 +27,7 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/settings"
-            android:icon="@drawable/baseline_settings_black_18"
+            android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/action_settings" />
     </group>
 

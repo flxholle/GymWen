@@ -250,15 +250,17 @@
 
         <receiver
             android:name="com.ulan.timetable.utils.DailyReceiver"
-            android:enabled="true" />
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name="com.ulan.timetable.utils.WakeUpAlarmReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
     </application>

@@ -77,7 +77,7 @@
     <string name="set_substitution_username">Benutzername</string>
     <string name="set_substitution_password">Passwort</string>
     <string name="set_notification_title">Benachrichtigung</string>
-    <string name="set_substitution_isOn">Benachrichtigung anzeigen</string>
+    <string name="set_notification_isOn">Benachrichtigung anzeigen</string>
     <string name="set_notification_showAlways">Dauerhaft anzeigen</string>
     <string name="set_hours">Uhrzeiten statt Stunden anzeigen</string>
     <string name="set_show_borders">Umranden der Lehrerkürzel</string>
@@ -525,15 +525,14 @@
     <string name="sunday">Sonntag</string>
     <string name="selected">Ausgewählt</string>
 
-
     <string name="timetable">Stundenplan</string>
     <string name="seven_days_of_the_week">7 Tage die Woche</string>
     <string name="field_error">Feld darf nicht leer sein!</string>
     <string name="time_error">Zeitfeld darf nicht leer sein!</string>
     <string name="delete">Löschen</string>
 
-    <string name="add_subject">Fach hinzufügen</string>
-    <string name="edit_subject">Fach bearbeiten</string>
+    <string name="add_subject">Stunde hinzufügen</string>
+    <string name="edit_subject">Stunde bearbeiten</string>
     <string name="time">Zeit</string>
     <string name="save">Speichern</string>
     <string name="time_from_dialog">Von:</string>
@@ -541,11 +540,10 @@
     <string name="subject_dialog">Fach:</string>
     <string name="teacher_dialog">Lehrer:</string>
     <string name="room_dialog">Zimmer:</string>
-    <string name="select_time">Zeit auswählen</string>
-    <string name="select_color">Farbe auswählen</string>
-    <string name="choose_time">Zeit auswählen</string>
-    <string name="choose_date">Datum auswählen</string>
-
+    <string name="select_time">Zeit</string>
+    <string name="select_color">Farbe</string>
+    <string name="choose_time">Zeit</string>
+    <string name="choose_date">Datum</string>
 
     <string name="homeworks">Hausaufgaben</string>
     <string name="select_date">Datum auswählen</string>
@@ -554,10 +552,9 @@
     <string name="desctiption">Beschreibung</string>
     <string name="date_error">Datumsfeld darf nicht leer sein!</string>
     <string name="edit_homework">Hausaufgabe bearbeiten</string>
-    <string name="add_homework">Hausaufgaben hinzufügen</string>
+    <string name="add_homework">Hausaufgabe hinzufügen</string>
     <string name="deadline_snackbar">Deadline-Feld darf nicht leer sein!</string>
     <string name="date">Datum</string>
-
 
     <string name="notes">Notizen</string>
     <string name="note">Notiz</string>
@@ -567,16 +564,14 @@
     <string name="title_error">Titelfeld darf nicht leer sein!</string>
     <string name="saved">Speichern</string>
 
-
     <string name="exams">Prüfungen</string>
     <string name="add_exam">Prüfung hinzufügen</string>
     <string name="date_dialog">Datum:</string>
     <string name="time_dialog">Zeit:</string>
 
     <string name="sevendays_setting">7 Tage pro Woche einstellen</string>
+    <string name="notification_title">Der heutige Unterricht:</string>
+    <string name="timetable_credit">Entstanden mit Hilfe von ulan17</string>
+    <string name="time_from">von</string>
 
-    <string name="notification_title">Der heutige Unterricht</string>
-    <string name="do_not_have_lessons">Du hast heute keinen Unterricht!</string>
-
-    <string name="timetable_credit">Mit Hilfe von ulan17</string>
 </resources>

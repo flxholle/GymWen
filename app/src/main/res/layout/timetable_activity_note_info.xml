@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="com.ulan.timetable.activities.NoteInfoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,6 +25,6 @@
         android:id="@+id/edittextNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="none"
-        android:background="@null" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:background="@null"
+        android:inputType="none" />
+</LinearLayout>

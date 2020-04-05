@@ -3,13 +3,25 @@
 
     <androidx.preference.SwitchPreferenceCompat
         android:defaultValue="false"
+        android:icon="@drawable/ic_view_week_black_24dp"
         android:key="sevendays"
-        android:icon="@drawable/baseline_view_week_black_18"
-        android:title="@string/seven_days_of_the_week"
-        android:summary="@string/sevendays_setting" />
+        android:summary="@string/sevendays_setting"
+        android:title="@string/seven_days_of_the_week" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_slideshow_black_24dp"
+        android:key="timetableNotif"
+        android:title="@string/set_notification_isOn" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="alwaysNotification"
+        android:summary="@string/set_desc_alwaysNotification"
+        android:title="@string/set_notification_showAlways" />
 
     <Preference
-        android:key="allprefs"
         android:icon="@drawable/ic_open_in_browser_white_24dp"
+        android:key="allprefs"
         android:title="Alle Einstellungen öffnen" />
 </PreferenceScreen>

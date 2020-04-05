@@ -68,6 +68,7 @@ import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.pd.chocobar.ChocoBar;
 import com.ulan.timetable.TimeTableBuilder;
+import com.ulan.timetable.activities.NotesActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -681,9 +682,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             case R.id.nav_notes:
                 //If app is not installed
                 if (!startApp(External_Const.notes_packageNames)) {
-                    if (!openAppInStore(External_Const.notes_packageNames))
+                   /* if (!openAppInStore(External_Const.notes_packageNames))
                         //Open Browser to Download
-                        tabIntent(External_Const.downloadApp_notes);
+                        tabIntent(External_Const.downloadApp_notes);*/
+                    new TimeTableBuilder(ApplicationFeatures.getSelectedProfilePosition()).start(this, NotesActivity.class);
                 }
                 return;
             case R.id.nav_timetable:
@@ -692,7 +694,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         //Open Browser to Download
                         tabIntent(External_Const.downloadApp_timetable);
                 }*/
-                new TimeTableBuilder("db").start(this);
+                new TimeTableBuilder(ApplicationFeatures.getSelectedProfilePosition()).start(this);
                 return;
             case R.id.nav_grades:
                 checkGradesFile();

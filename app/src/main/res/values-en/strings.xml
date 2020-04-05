@@ -61,7 +61,7 @@
     <string name="set_substitution_username">User name:</string>
     <string name="set_substitution_password">Password:</string>
     <string name="set_notification_title">Notification</string>
-    <string name="set_substitution_isOn">Show notification</string>
+    <string name="set_notification_isOn">Show notification</string>
     <string name="set_notification_showAlways">Show permanently</string>
     <string name="set_hours">Show times instead of hours</string>
     <string name="set_show_borders">Outline the teachers</string>

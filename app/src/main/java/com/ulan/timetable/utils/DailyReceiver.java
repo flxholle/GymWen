@@ -1,5 +1,7 @@
 package com.ulan.timetable.utils;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -7,21 +9,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
+import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.activities.MainActivity;
 
 import java.util.Calendar;
+import java.util.UUID;
 
 /**
  * Created by Ulan on 28.01.2019.
  */
 public class DailyReceiver extends BroadcastReceiver {
+    private static final String CHANNEL_ID = "timetable_notification";
 
     Context context;
     DbHelper db;
@@ -42,25 +48,60 @@ public class DailyReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
         db = new DbHelper(context);
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
 
         message = getLessons(day);
+        if (message == null || !PreferenceUtil.isTimeTableNotification())
+            return;
 
-        NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(
-                context, "").setSmallIcon(R.mipmap.gymlogo_round)
+        createNotificationChannel(context);
+        NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_assignment_black_24dp)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.gymlogo))
                 .setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(message).setSound(alarmSound)
-                .setAutoCancel(true).setWhen(when)
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setWhen(when)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
-                .setContentIntent(pendingIntent)
-                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
+                .setContentIntent(pendingIntent);
+
+
+        if (PreferenceUtil.isAlwaysNotification()) {
+            //Dismiss button intent
+            Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
+            buttonIntent.setAction("com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver");
+            buttonIntent.putExtra(NotificationDismissButtonReceiver.EXTRA_NOTIFICATION_ID, 5);
+            PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, UUID.randomUUID().hashCode(), buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            mNotifyBuilder.setOngoing(true);
+            mNotifyBuilder.addAction(R.drawable.ic_close_black_24dp, context.getString(R.string.notif_dismiss), btPendingIntent);
+        }
+
         if (notificationManager != null) {
             notificationManager.notify(5, mNotifyBuilder.build());
+        }
+    }
+
+    private void createNotificationChannel(Context context) {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "name";
+            String description = "Description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            channel.enableLights(true);
+            channel.setLightColor(ContextCompat.getColor(context, R.color.colorAccent));
+            channel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 
@@ -73,16 +114,20 @@ public class DailyReceiver extends BroadcastReceiver {
             if (week != null) {
                 lessons.append(week.getSubject())
                         .append(" ")
+                        .append(context.getString(R.string.time_from))
+                        .append(" ")
                         .append(week.getFromTime())
                         .append(" - ")
                         .append(week.getToTime())
+                        .append(" ")
+                        .append(context.getString(R.string.share_msg_in_room))
                         .append(" ")
                         .append(week.getRoom())
                         .append("\n");
             }
         });
 
-        return !lessons.toString().equals("") ? lessons.toString() : context.getString(R.string.do_not_have_lessons);
+        return !lessons.toString().equals("") ? lessons.toString() : null;
     }
 
     private String getCurrentDay(int day) {

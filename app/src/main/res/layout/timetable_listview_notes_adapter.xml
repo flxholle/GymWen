@@ -54,7 +54,7 @@
                 card_view:layout_constraintEnd_toEndOf="parent"
                 app:tint="?android:attr/textColorPrimary"
                 card_view:layout_constraintTop_toTopOf="@+id/titlenote"
-                card_view:srcCompat="@drawable/baseline_expand_more_black_24" />
+                card_view:srcCompat="@drawable/ic_expand_more_black_24dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

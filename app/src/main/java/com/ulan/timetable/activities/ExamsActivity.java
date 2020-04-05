@@ -1,5 +1,7 @@
 package com.ulan.timetable.activities;
 
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -13,6 +15,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.ulan.timetable.adapters.ExamsAdapter;
 import com.ulan.timetable.model.Exam;
@@ -38,6 +41,8 @@ public class ExamsActivity extends ActivityFeatures {
     @Override
     public void setupColors() {
         setToolbar(true);
+        if (Build.VERSION.SDK_INT >= 21)
+            findViewById(R.id.fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
     }
 
     private void initAll() {

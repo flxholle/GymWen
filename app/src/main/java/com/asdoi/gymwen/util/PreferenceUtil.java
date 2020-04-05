@@ -192,6 +192,10 @@ public class PreferenceUtil {
         return getBooleanSettings("showSummaryNotification", true);
     }
 
+    public static boolean isTimeTableNotification() {
+        return getBooleanSettings("timetableNotif", true);
+    }
+
     public static boolean isMensa() {
         return getBooleanSettings("menu_mensa", true);
     }

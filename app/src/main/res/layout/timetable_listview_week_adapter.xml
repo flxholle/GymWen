@@ -98,7 +98,7 @@
                 app:layout_constraintTop_toTopOf="@+id/room"
                 app:layout_constraintVertical_bias="0.263"
                 app:tint="?android:attr/textColorPrimary"
-                app:srcCompat="@drawable/baseline_room_black_24" />
+                app:srcCompat="@drawable/ic_room_black_24dp" />
 
             <ImageView
                 android:id="@+id/timeimage"
@@ -110,7 +110,7 @@
                 app:layout_constraintTop_toTopOf="@+id/time"
                 app:tint="?android:attr/textColorPrimary"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/baseline_access_time_black_24" />
+                app:srcCompat="@drawable/ic_access_time_black_24dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -145,7 +145,7 @@
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="@+id/subject"
                 app:tint="?android:attr/textColorPrimary"
-                card_view:srcCompat="@drawable/baseline_expand_more_black_24" />
+                card_view:srcCompat="@drawable/ic_expand_more_black_24dp" />
 
             <ImageView
                 android:id="@+id/teacherimage"
@@ -154,7 +154,7 @@
                 app:layout_constraintStart_toStartOf="@+id/line"
                 app:layout_constraintTop_toTopOf="@+id/teacher"
                 app:tint="?android:attr/textColorPrimary"
-                card_view:srcCompat="@drawable/baseline_person_black_24" />
+                card_view:srcCompat="@drawable/ic_person_black_24dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

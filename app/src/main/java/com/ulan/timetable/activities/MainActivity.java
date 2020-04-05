@@ -38,6 +38,7 @@ import com.ulan.timetable.fragments.ThursdayFragment;
 import com.ulan.timetable.fragments.TuesdayFragment;
 import com.ulan.timetable.fragments.WednesdayFragment;
 import com.ulan.timetable.utils.AlertDialogsHelper;
+import com.ulan.timetable.utils.DBUtil;
 import com.ulan.timetable.utils.DailyReceiver;
 
 import java.util.Calendar;
@@ -60,20 +61,17 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 if (themeId != -1) {
                     setTheme(themeId);
                 }
-
-                String dbName = getIntent().getExtras().getString(TimeTableBuilder.DB_NAME, null);
-                if (dbName != null) {
-                    this.dbName = dbName;
-                }
-            } else {
-                dbName = TimeTableBuilder.getDBName(this);
             }
-        } catch (Exception e) {
+            dbName = DBUtil.getDBName(this);
+        } catch (
+                Exception e) {
             e.printStackTrace();
         }
+
         setContentView(R.layout.timetable_activity_main);
 
         initAll();
+
     }
 
     @Override
@@ -184,8 +182,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         Intent myIntent = new Intent(this, DailyReceiver.class);
         int ALARM1_ID = 10000;
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this, ALARM1_ID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, ALARM1_ID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
         if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);

@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.model.Exam;
 import com.ulan.timetable.model.Homework;
 import com.ulan.timetable.model.Note;
@@ -63,11 +62,11 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String EXAMS_COLOR = "color";
 
     public DbHelper(Context context) {
-        super(context, TimeTableBuilder.getDBName(), null, DB_VERSION);
+        super(context, DBUtil.getDBNameFromSharedPreferences(), null, DB_VERSION);
     }
 
     public DbHelper(Activity context) {
-        super(context, TimeTableBuilder.getDBName(context), null, DB_VERSION);
+        super(context, DBUtil.getDBName(context), null, DB_VERSION);
     }
 
     public void onCreate(SQLiteDatabase db) {

@@ -22,4 +22,10 @@ public class SettingsActivity extends ActivityFeatures {
     public void setupColors() {
         setToolbar(true);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
