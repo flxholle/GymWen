@@ -22,7 +22,11 @@ import android.app.Activity;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
+import com.google.gson.Gson;
 import com.ulan.timetable.TimeTableBuilder;
+
+import org.jsoup.Jsoup;
 
 public class DBUtil {
     public static final String database_prefix = "db_profile_";
@@ -56,5 +60,45 @@ public class DBUtil {
         int pos = ProfileManagement.loadPreferredProfilePosition();
 
         return database_prefix + pos;
+    }
+
+    public static SubstitutionPlan getSubstitutionplanFromGSON(Activity activity) {
+        try {
+            String todayDoc = activity.getIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TODAY, null);
+            if (todayDoc == null)
+                todayDoc = activity.getParentActivityIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TODAY, null);
+
+            String tomorrowDoc = activity.getIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TOMORROW, null);
+            if (tomorrowDoc == null)
+                tomorrowDoc = activity.getParentActivityIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TOMORROW, null);
+
+            int pos = activity.getIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
+            if (pos == -1)
+                pos = activity.getParentActivityIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
+
+            if (todayDoc == null && tomorrowDoc == null || pos == -1) {
+                return null;
+            } else {
+                if (!ProfileManagement.isUninit())
+                    ProfileManagement.reload();
+
+                SubstitutionPlan plan = new SubstitutionPlan(false, ProfileManagement.getProfile(pos).getCoursesArray());
+                plan.setDocs(Jsoup.parse(todayDoc), Jsoup.parse(tomorrowDoc));
+
+                if (plan.getTitle(true).getNoInternet() && plan.getTitle(false).getNoInternet())
+                    return null;
+
+                return plan;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static SubstitutionPlan getSubstitutionplanFromGSON(String gsonString) {
+        Gson gson = new Gson();
+        return gson.fromJson(gsonString, SubstitutionPlan.class);
     }
 }

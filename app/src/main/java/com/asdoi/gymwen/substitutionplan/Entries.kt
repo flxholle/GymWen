@@ -91,28 +91,6 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
         return list
     }
 
-    /**
-     * @param lesson the lesson
-     * @return the matching time
-     */
-    private fun getMatchingTime(lesson: Int): String {
-        return when (lesson) {
-            1 -> "8:10"
-            2 -> "8:55"
-            3 -> "9:55"
-            4 -> "10:40"
-            5 -> "11:40"
-            6 -> "12:25"
-            7 -> "13:15"
-            8 -> "14:00"
-            9 -> "14:45"
-            10 -> "15:30"
-            11 -> "16:15"
-            else ->                 //Breaks are excluded
-                ("" + (45 * lesson + 8 * 60 + 10) / 60).replace(",".toRegex(), ".")
-        }
-    }
-
     fun summarizeUp(separator: String = "-"): SubstitutionList {
         if (noInternet)
             return this
@@ -172,6 +150,28 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
 
             return list1.entries == list2.entries
         }
+
+        /**
+         * @param lesson the lesson
+         * @return the matching time
+         */
+        fun getMatchingTime(lesson: Int): String {
+            return when (lesson) {
+                1 -> "8:10"
+                2 -> "8:55"
+                3 -> "9:55"
+                4 -> "10:40"
+                5 -> "11:40"
+                6 -> "12:25"
+                7 -> "13:15"
+                8 -> "14:00"
+                9 -> "14:45"
+                10 -> "15:30"
+                11 -> "16:15"
+                else ->                 //Breaks are excluded
+                    ("" + (45 * lesson + 8 * 60 + 10) / 60).replace(",".toRegex(), ".")
+            }
+        }
     }
 }
 
@@ -195,6 +195,24 @@ class SubstitutionEntry(var course: String, var hour: String, var subject: Strin
                 return true
         }
         return false
+    }
+
+    fun getMatchingBeginTime(): String {
+        try {
+            return SubstitutionList.getMatchingTime(Integer.parseInt(hour))
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return hour
+    }
+
+    fun getMatchingEndTime(): String {
+        try {
+            return SubstitutionList.getMatchingTime(Integer.parseInt(hour) + 1)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return hour
     }
 }
 
@@ -237,6 +255,30 @@ class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var w
         } else false
     }
 
+    fun getDayCode(): Int {
+        if (isTitleCodeInPast())
+            return -1
+
+        val df = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val startDate = removeTime(df.parse(date))
+
+        val c = Calendar.getInstance()
+        c.time = startDate // yourdate is an object of type Date
+        return c[Calendar.DAY_OF_WEEK] // this will for example return 3 for tuesday
+
+
+/*        return when (dayOfWeek) {
+            "Montag" -> SubstitutionPlan.monday
+            "Dienstag" -> SubstitutionPlan.tuesday
+            "Mittwoch" -> SubstitutionPlan.wednesday
+            "Donnerstag" -> SubstitutionPlan.thursday
+            "Freitag" -> SubstitutionPlan.friday
+            "Samstag" -> SubstitutionPlan.saturday
+            "Sonntag" -> SubstitutionPlan.sunday
+            else -> -1
+        }*/
+    }
+
     /**
      * @param date Date
      * @return param Date with removed time (only the day).
@@ -247,6 +289,20 @@ class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var w
         cal[Calendar.YEAR] = 0
         cal[Calendar.MONTH] = 0
         cal[Calendar.DATE] = 0
+        return cal.time
+    }
+
+    /**
+     * @param date Date
+     * @return param Date with removed time (only the day).
+     */
+    private fun removeTime(date: Date): Date {
+        val cal = Calendar.getInstance()
+        cal.time = date
+        cal[Calendar.HOUR_OF_DAY] = 0
+        cal[Calendar.MINUTE] = 0
+        cal[Calendar.SECOND] = 0
+        cal[Calendar.MILLISECOND] = 0
         return cal.time
     }
 }

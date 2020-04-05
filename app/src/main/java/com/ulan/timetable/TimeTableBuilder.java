@@ -3,15 +3,21 @@ package com.ulan.timetable;
 import android.content.Context;
 import android.content.Intent;
 
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.ulan.timetable.activities.MainActivity;
 import com.ulan.timetable.utils.DBUtil;
 
 public class TimeTableBuilder {
-    public static String CUSTOM_THEME = "customTheme";
-    public static String DB_NAME = "dbName";
+    public static final String CUSTOM_THEME = "customTheme";
+    public static final String DB_NAME = "dbName";
+    public static final String PROFILE_POS = "profilepos";
+    public static final String SUBSTITUTIONPLANDOC_TODAY = "substitutionplandoctoday";
+    public static final String SUBSTITUTIONPLANDOC_TOMORROW = "substitutionplandoctomorrow";
 
     private int customTheme = -1;
     private String dbName;
+    private SubstitutionPlan substitutionPlan;
+    private int profilePos;
 
 
     public TimeTableBuilder(int pos) {
@@ -25,6 +31,12 @@ public class TimeTableBuilder {
 
     public TimeTableBuilder setDBName(int value) {
         dbName = DBUtil.database_prefix + value;
+        profilePos = value;
+        return this;
+    }
+
+    public TimeTableBuilder setSubstitutionplan(SubstitutionPlan value) {
+        substitutionPlan = value;
         return this;
     }
 
@@ -37,6 +49,9 @@ public class TimeTableBuilder {
         Intent i = new Intent(context, cl);
         i.putExtra(CUSTOM_THEME, customTheme);
         i.putExtra(DB_NAME, dbName);
+        i.putExtra(PROFILE_POS, profilePos);
+        i.putExtra(SUBSTITUTIONPLANDOC_TODAY, substitutionPlan.getTodayDoc().toString());
+        i.putExtra(SUBSTITUTIONPLANDOC_TOMORROW, substitutionPlan.getTomorrowDoc().toString());
 
         return i;
     }
@@ -55,6 +70,4 @@ public class TimeTableBuilder {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(i);
     }
-
-
 }

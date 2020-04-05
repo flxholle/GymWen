@@ -10,6 +10,7 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.ulan.timetable.adapters.WeekAdapter;
 import com.ulan.timetable.utils.DbHelper;
 import com.ulan.timetable.utils.FragmentHelper;
@@ -22,6 +23,17 @@ public class MondayFragment extends Fragment {
     private ListView listView;
     private WeekAdapter adapter;
     private ImageView popup;
+
+    private SubstitutionList entries = null;
+
+    public MondayFragment(SubstitutionList entries) {
+        super();
+        this.entries = entries;
+    }
+
+    public MondayFragment() {
+        super();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

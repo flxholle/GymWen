@@ -44,6 +44,15 @@ public class SubstitutionPlan {
     public static final int tomorrowCode = 2;
     public static final int futureCode = 3;
 
+    public static final int monday = 10;
+    public static final int tuesday = 11;
+    public static final int wednesday = 12;
+    public static final int thursday = 13;
+    public static final int friday = 14;
+    public static final int saturday = 15;
+    public static final int sunday = 16;
+
+
     private boolean senior;
     @Nullable
     private
@@ -52,7 +61,7 @@ public class SubstitutionPlan {
     private Document todayDoc;
     private Document tomorrowDoc;
 
-    public SubstitutionPlan() {
+    SubstitutionPlan() {
     }
 
     /**

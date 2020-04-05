@@ -23,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -51,6 +52,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private boolean switchSevenDays;
 
     private String dbName = "";
+    private SubstitutionPlan substitutionPlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
             }
             dbName = DBUtil.getDBName(this);
+            substitutionPlan = DBUtil.getSubstitutionplanFromGSON(this);
         } catch (
                 Exception e) {
             e.printStackTrace();
@@ -127,11 +130,63 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        adapter.addFragment(new MondayFragment(), getResources().getString(R.string.monday));
-        adapter.addFragment(new TuesdayFragment(), getResources().getString(R.string.tuesday));
-        adapter.addFragment(new WednesdayFragment(), getResources().getString(R.string.wednesday));
-        adapter.addFragment(new ThursdayFragment(), getResources().getString(R.string.thursday));
-        adapter.addFragment(new FridayFragment(), getResources().getString(R.string.friday));
+
+        MondayFragment mondayFragment = new MondayFragment();
+        TuesdayFragment tuesdayFragment = new TuesdayFragment();
+        ThursdayFragment thursdayFragment = new ThursdayFragment();
+        WednesdayFragment wednesdayFragment = new WednesdayFragment();
+        FridayFragment fridayFragment = new FridayFragment();
+
+        int codeTod = -1;
+        int codeTom = -1;
+        if (substitutionPlan != null) {
+            codeTod = substitutionPlan.getTodayTitle().getDayCode();
+            codeTom = substitutionPlan.getTomorrowTitle().getDayCode();
+        }
+
+        switch (codeTod) {
+            case Calendar.MONDAY:
+                mondayFragment = new MondayFragment(substitutionPlan.getToday());
+                break;
+            case Calendar.TUESDAY:
+                tuesdayFragment = new TuesdayFragment(substitutionPlan.getToday());
+                break;
+            case Calendar.WEDNESDAY:
+                wednesdayFragment = new WednesdayFragment(substitutionPlan.getToday());
+                break;
+            case Calendar.THURSDAY:
+                thursdayFragment = new ThursdayFragment(substitutionPlan.getToday());
+                break;
+            case Calendar.FRIDAY:
+                fridayFragment = new FridayFragment(substitutionPlan.getToday(), true);
+                break;
+        }
+
+        switch (codeTom) {
+            case Calendar.MONDAY:
+                mondayFragment = new MondayFragment(substitutionPlan.getTomorrow());
+                break;
+            case Calendar.TUESDAY:
+                tuesdayFragment = new TuesdayFragment(substitutionPlan.getTomorrow());
+                break;
+            case Calendar.WEDNESDAY:
+                wednesdayFragment = new WednesdayFragment(substitutionPlan.getTomorrow());
+                break;
+            case Calendar.THURSDAY:
+                thursdayFragment = new ThursdayFragment(substitutionPlan.getTomorrow());
+                break;
+            case Calendar.FRIDAY:
+                fridayFragment = new FridayFragment(substitutionPlan.getTomorrow(), true);
+                break;
+        }
+
+        adapter.addFragment(mondayFragment, getResources().getString(R.string.monday));
+        adapter.addFragment(tuesdayFragment, getResources().getString(R.string.tuesday));
+        adapter.addFragment(wednesdayFragment, getResources().getString(R.string.wednesday));
+        adapter.addFragment(thursdayFragment, getResources().getString(R.string.thursday));
+        adapter.addFragment(fridayFragment, getResources().getString(R.string.friday));
+
+
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(day == 1 ? 6 : day - 2, true);
         tabLayout.setupWithViewPager(viewPager);

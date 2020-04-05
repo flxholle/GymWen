@@ -1,21 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Felix Hollederer
-  ~     This file is part of GymWenApp.
-  ~
-  ~     GymWenApp is free software: you can redistribute it and/or modify
-  ~     it under the terms of the GNU General Public License as published by
-  ~     the Free Software Foundation, either version 3 of the License, or
-  ~     (at your option) any later version.
-  ~
-  ~     GymWenApp is distributed in the hope that it will be useful,
-  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~     GNU General Public License for more details.
-  ~
-  ~     You should have received a copy of the GNU General Public License
-  ~     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.asdoi.gymwen">
@@ -40,6 +23,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".SubstitutionTimeTableActivity"
+            android:label="@string/timetable">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.activities.SubstitutionWidgetActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -72,15 +64,16 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
 
-            <!--            <meta-data-->
-            <!--                android:name="android.app.shortcuts"-->
-            <!--                android:resource="@xml/shortcuts" />-->
+            <!-- <meta-data -->
+            <!-- android:name="android.app.shortcuts" -->
+            <!-- android:resource="@xml/shortcuts" /> -->
         </activity>
         <activity
             android:name=".ui.activities.SignInActivity"
@@ -207,29 +200,19 @@
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
-        </service>
-
-
-        <!-- Timetable -->
+        </service> <!-- Timetable -->
         <activity
             android:name="com.ulan.timetable.activities.MainActivity"
             android:label="@string/timetable"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <!--        <meta-data
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!--
+        <meta-data
                     android:name="preloaded_fonts"
-                    android:resource="@array/preloaded_fonts" />-->
-
+                    android:resource="@array/preloaded_fonts" />
+        -->
         <activity
             android:name="com.ulan.timetable.activities.HomeworksActivity"
             android:label="@string/homeworks" />
-
         <activity
             android:name="com.ulan.timetable.activities.NotesActivity"
             android:label="@string/notes" />
@@ -255,7 +238,6 @@
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="com.ulan.timetable.utils.WakeUpAlarmReceiver"
             android:enabled="true">

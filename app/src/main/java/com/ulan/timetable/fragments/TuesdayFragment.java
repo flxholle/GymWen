@@ -9,6 +9,7 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.ulan.timetable.adapters.WeekAdapter;
 import com.ulan.timetable.utils.DbHelper;
 import com.ulan.timetable.utils.FragmentHelper;
@@ -20,6 +21,16 @@ public class TuesdayFragment extends Fragment {
     private ListView listView;
     private DbHelper db;
 
+    private SubstitutionList entries = null;
+
+    public TuesdayFragment(SubstitutionList entries) {
+        super();
+        this.entries = entries;
+    }
+
+    public TuesdayFragment() {
+        super();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
