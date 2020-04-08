@@ -49,8 +49,7 @@ private const val internet = -6
 class SubstitutionWidgetService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
         var profiles = mutableListOf<Profile>()
-        if (ProfileManagement.isUninit())
-            ProfileManagement.reload()
+        ProfileManagement.initProfiles();
 
         if (intent.hasExtra(SubstitutionWidgetActivity.PROFILES)) {
             val profilesPos = intent.getIntArrayExtra(SubstitutionWidgetActivity.PROFILES)

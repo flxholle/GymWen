@@ -23,10 +23,10 @@ import com.asdoi.gymwen.util.PreferenceUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableListOf()) {
+class SubstitutionList(var entries: MutableList<SubstitutionEntry>) {
     private var noInternet: Boolean = false
 
-    constructor(noInternet: Boolean) : this() {
+    constructor() : this(mutableListOf()) {
         this.noInternet = true
     }
 

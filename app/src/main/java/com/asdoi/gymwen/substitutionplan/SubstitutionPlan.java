@@ -242,7 +242,7 @@ public class SubstitutionPlan {
             return content;
         } catch (Exception e) {
             e.printStackTrace();
-            return new SubstitutionList(true);
+            return new SubstitutionList();
         }
     }
 

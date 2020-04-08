@@ -82,8 +82,9 @@ public abstract class ProfileManagement {
         return getProfileListNames() == null;
     }
 
-    public static boolean isLoaded() {
-        return getProfileListNames() != null;
+    public static void initProfiles() {
+        if (!isUninit())
+            reload();
     }
 
     public static void save(boolean apply) {

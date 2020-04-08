@@ -8,16 +8,19 @@ public class Week {
     private String subject, fragment, teacher, room, fromtime, totime, time;
     private int id, color;
 
+    private boolean editable = true;
+
     public Week() {
     }
 
-    public Week(String subject, String teacher, String room, String fromtime, String totime, int color) {
+    public Week(String subject, String teacher, String room, String fromtime, String totime, int color, boolean editable) {
         this.subject = subject;
         this.teacher = teacher;
         this.room = room;
         this.fromtime = fromtime;
         this.totime = totime;
         this.color = color;
+        this.editable = editable;
     }
 
     public int getId() {
@@ -94,5 +97,13 @@ public class Week {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean value) {
+        editable = value;
     }
 }

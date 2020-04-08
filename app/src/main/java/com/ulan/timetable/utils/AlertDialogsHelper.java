@@ -26,6 +26,7 @@ import com.ulan.timetable.adapters.FragmentsTabAdapter;
 import com.ulan.timetable.adapters.HomeworksAdapter;
 import com.ulan.timetable.adapters.NotesAdapter;
 import com.ulan.timetable.adapters.WeekAdapter;
+import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.model.Exam;
 import com.ulan.timetable.model.Homework;
 import com.ulan.timetable.model.Note;
@@ -35,8 +36,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
@@ -46,7 +45,7 @@ import petrov.kristiyan.colorpicker.ColorPicker;
  */
 public class AlertDialogsHelper {
 
-    public static void getEditSubjectDialog(final Activity activity, final View alertLayout, final ArrayList<Week> adapter, final ListView listView, int position) {
+    public static void getEditSubjectDialog(final Activity activity, final View alertLayout, final ListView listView, final Week week) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
@@ -57,7 +56,6 @@ public class AlertDialogsHelper {
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
-        final Week week = adapter.get(position);
 
         subject.setText(week.getSubject());
         teacher.setText(week.getTeacher());
@@ -292,10 +290,9 @@ public class AlertDialogsHelper {
                     Snackbar.make(alertLayout, R.string.time_error, Snackbar.LENGTH_LONG).show();
                 } else {
                     DbHelper dbHelper = new DbHelper(activity);
-                    Matcher fragment = Pattern.compile("(.*Fragment)").matcher(adapter.getItem(viewPager.getCurrentItem()).toString());
                     ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                     week.setSubject(subject.getText().toString());
-                    week.setFragment(fragment.find() ? fragment.group() : null);
+                    week.setFragment(((WeekdayFragment) adapter.getItem(viewPager.getCurrentItem())).getKey());
                     week.setTeacher(teacher.getText().toString());
                     week.setRoom(room.getText().toString());
                     week.setColor(buttonColor.getColor());

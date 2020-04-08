@@ -39,8 +39,7 @@ public class SubstitutionTimeTableActivity extends ActivityFeatures {
         super.onStart();
         createLoadingPanel(findViewById(R.id.substitution_time_frame));
 
-        if (!ProfileManagement.isUninit())
-            ProfileManagement.reload();
+        ProfileManagement.initProfiles();
 
         int pos = -1;
         if (getIntent().getExtras() != null) {

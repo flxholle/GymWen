@@ -33,13 +33,17 @@ public class DBUtil {
 
     //Get DB Names from outside of builder
     public static String getDBName(Activity activity) {
-        try {
-            String name = activity.getIntent().getExtras().getString(TimeTableBuilder.DB_NAME, null);
-            if (name == null)
-                name = activity.getParentActivityIntent().getExtras().getString(TimeTableBuilder.DB_NAME, null);
+        return database_prefix + getProfilePosition(activity);
+    }
 
-            if (name == null) {
-                return getDBNameFromSharedPreferences();
+    public static int getProfilePosition(Activity activity) {
+        try {
+            int name = activity.getIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
+            if (name == -1)
+                name = activity.getParentActivityIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
+
+            if (name == -1) {
+                return getProfilePositionFromSharedPreferences();
             } else {
                 return name;
             }
@@ -47,19 +51,19 @@ public class DBUtil {
             e.printStackTrace();
         }
 
-        return getDBNameFromSharedPreferences();
+        return getProfilePositionFromSharedPreferences();
     }
 
     public static String getDBNameFromSharedPreferences() {
+        return database_prefix + getProfilePositionFromSharedPreferences();
+    }
+
+    private static int getProfilePositionFromSharedPreferences() {
         if (!ApplicationFeatures.coursesCheck(true))
-            return "nullDatabase";
+            return -1;
 
-        if (!ProfileManagement.isUninit())
-            ProfileManagement.reload();
-
-        int pos = ProfileManagement.loadPreferredProfilePosition();
-
-        return database_prefix + pos;
+        ProfileManagement.initProfiles();
+        return ProfileManagement.loadPreferredProfilePosition();
     }
 
     public static SubstitutionPlan getSubstitutionplanFromGSON(Activity activity) {
@@ -72,15 +76,12 @@ public class DBUtil {
             if (tomorrowDoc == null)
                 tomorrowDoc = activity.getParentActivityIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TOMORROW, null);
 
-            int pos = activity.getIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
-            if (pos == -1)
-                pos = activity.getParentActivityIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
+            int pos = getProfilePosition(activity);
 
             if (todayDoc == null && tomorrowDoc == null || pos == -1) {
                 return null;
             } else {
-                if (!ProfileManagement.isUninit())
-                    ProfileManagement.reload();
+                ProfileManagement.initProfiles();
 
                 SubstitutionPlan plan = new SubstitutionPlan(false, ProfileManagement.getProfile(pos).getCoursesArray());
                 plan.setDocs(Jsoup.parse(todayDoc), Jsoup.parse(tomorrowDoc));

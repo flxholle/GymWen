@@ -64,9 +64,10 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         String time_from = Objects.requireNonNull(getItem(position)).getFromTime();
         String time_to = Objects.requireNonNull(getItem(position)).getToTime();
         String room = Objects.requireNonNull(getItem(position)).getRoom();
+        boolean edit = Objects.requireNonNull(getItem(position)).getEditable();
         int color = getItem(position).getColor();
 
-        week = new Week(subject, teacher, room, time_from, time_to, color);
+        week = new Week(subject, teacher, room, time_from, time_to, color, edit);
         final ViewHolder holder;
 
         if (convertView == null) {
@@ -107,7 +108,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
                             return true;
                         } else if (itemId == R.id.edit_popup) {
                             final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.timetable_dialog_add_subject, null);
-                            AlertDialogsHelper.getEditSubjectDialog(mActivity, alertLayout, weeklist, mListView, position);
+                            AlertDialogsHelper.getEditSubjectDialog(mActivity, alertLayout, mListView, weeklist.get(position));
                             notifyDataSetChanged();
                             return true;
                         }

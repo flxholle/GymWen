@@ -31,13 +31,7 @@ import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.adapters.FragmentsTabAdapter;
-import com.ulan.timetable.fragments.FridayFragment;
-import com.ulan.timetable.fragments.MondayFragment;
-import com.ulan.timetable.fragments.SaturdayFragment;
-import com.ulan.timetable.fragments.SundayFragment;
-import com.ulan.timetable.fragments.ThursdayFragment;
-import com.ulan.timetable.fragments.TuesdayFragment;
-import com.ulan.timetable.fragments.WednesdayFragment;
+import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.DBUtil;
 import com.ulan.timetable.utils.DailyReceiver;
@@ -51,7 +45,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private ViewPager viewPager;
     private boolean switchSevenDays;
 
-    private String dbName = "";
+    private int profilePos;
     private SubstitutionPlan substitutionPlan;
 
     @Override
@@ -64,7 +58,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     setTheme(themeId);
                 }
             }
-            dbName = DBUtil.getDBName(this);
+            profilePos = DBUtil.getProfilePosition(this);
             substitutionPlan = DBUtil.getSubstitutionplanFromGSON(this);
         } catch (
                 Exception e) {
@@ -131,11 +125,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
 
-        MondayFragment mondayFragment = new MondayFragment();
-        TuesdayFragment tuesdayFragment = new TuesdayFragment();
-        ThursdayFragment thursdayFragment = new ThursdayFragment();
-        WednesdayFragment wednesdayFragment = new WednesdayFragment();
-        FridayFragment fridayFragment = new FridayFragment();
+        WeekdayFragment mondayFragment = new WeekdayFragment(WeekdayFragment.KEY_MONDAY_FRAGMENT);
+        WeekdayFragment tuesdayFragment = new WeekdayFragment(WeekdayFragment.KEY_TUESDAY_FRAGMENT);
+        WeekdayFragment wednesdayFragment = new WeekdayFragment(WeekdayFragment.KEY_WEDNESDAY_FRAGMENT);
+        WeekdayFragment thursdayFragment = new WeekdayFragment(WeekdayFragment.KEY_THURSDAY_FRAGMENT);
+        WeekdayFragment fridayFragment = new WeekdayFragment(WeekdayFragment.KEY_FRIDAY_FRAGMENT);
 
         int codeTod = -1;
         int codeTom = -1;
@@ -146,37 +140,37 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         switch (codeTod) {
             case Calendar.MONDAY:
-                mondayFragment = new MondayFragment(substitutionPlan.getToday());
+                mondayFragment = new WeekdayFragment(substitutionPlan.getTodaySummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_MONDAY_FRAGMENT);
                 break;
             case Calendar.TUESDAY:
-                tuesdayFragment = new TuesdayFragment(substitutionPlan.getToday());
+                tuesdayFragment = new WeekdayFragment(substitutionPlan.getTodaySummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_TUESDAY_FRAGMENT);
                 break;
             case Calendar.WEDNESDAY:
-                wednesdayFragment = new WednesdayFragment(substitutionPlan.getToday());
+                wednesdayFragment = new WeekdayFragment(substitutionPlan.getTodaySummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_WEDNESDAY_FRAGMENT);
                 break;
             case Calendar.THURSDAY:
-                thursdayFragment = new ThursdayFragment(substitutionPlan.getToday());
+                thursdayFragment = new WeekdayFragment(substitutionPlan.getTodaySummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_THURSDAY_FRAGMENT);
                 break;
             case Calendar.FRIDAY:
-                fridayFragment = new FridayFragment(substitutionPlan.getToday(), true);
+                fridayFragment = new WeekdayFragment(substitutionPlan.getTodaySummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_FRIDAY_FRAGMENT);
                 break;
         }
 
         switch (codeTom) {
             case Calendar.MONDAY:
-                mondayFragment = new MondayFragment(substitutionPlan.getTomorrow());
+                mondayFragment = new WeekdayFragment(substitutionPlan.getTomorrowSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_MONDAY_FRAGMENT);
                 break;
             case Calendar.TUESDAY:
-                tuesdayFragment = new TuesdayFragment(substitutionPlan.getTomorrow());
+                tuesdayFragment = new WeekdayFragment(substitutionPlan.getTomorrowSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_TUESDAY_FRAGMENT);
                 break;
             case Calendar.WEDNESDAY:
-                wednesdayFragment = new WednesdayFragment(substitutionPlan.getTomorrow());
+                wednesdayFragment = new WeekdayFragment(substitutionPlan.getTomorrowSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_WEDNESDAY_FRAGMENT);
                 break;
             case Calendar.THURSDAY:
-                thursdayFragment = new ThursdayFragment(substitutionPlan.getTomorrow());
+                thursdayFragment = new WeekdayFragment(substitutionPlan.getTomorrowSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_THURSDAY_FRAGMENT);
                 break;
             case Calendar.FRIDAY:
-                fridayFragment = new FridayFragment(substitutionPlan.getTomorrow(), true);
+                fridayFragment = new WeekdayFragment(substitutionPlan.getTomorrowSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_FRIDAY_FRAGMENT);
                 break;
         }
 
@@ -197,15 +191,15 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             TabLayout tabLayout = findViewById(R.id.tabLayout);
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_WEEK);
-            adapter.addFragment(new SaturdayFragment(), getResources().getString(R.string.saturday));
-            adapter.addFragment(new SundayFragment(), getResources().getString(R.string.sunday));
+            adapter.addFragment(new WeekdayFragment(WeekdayFragment.KEY_SATURDAY_FRAGMENT), getResources().getString(R.string.saturday));
+            adapter.addFragment(new WeekdayFragment(WeekdayFragment.KEY_SUNDAY_FRAGMENT), getResources().getString(R.string.sunday));
             viewPager.setAdapter(adapter);
             viewPager.setCurrentItem(day == 1 ? 6 : day - 2, true);
             tabLayout.setupWithViewPager(viewPager);
         } else {
             if (adapter.getFragmentList().size() > 5) {
-                adapter.removeFragment(new SaturdayFragment(), 5);
-                adapter.removeFragment(new SundayFragment(), 5);
+                adapter.removeFragment(new WeekdayFragment(WeekdayFragment.KEY_SATURDAY_FRAGMENT), 5);
+                adapter.removeFragment(new WeekdayFragment(WeekdayFragment.KEY_SUNDAY_FRAGMENT), 5);
             }
         }
         adapter.notifyDataSetChanged();
@@ -278,17 +272,17 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         int itemId = item.getItemId();
         if (itemId == R.id.exams) {
             Intent exams = new Intent(MainActivity.this, ExamsActivity.class);
-            exams.putExtra(TimeTableBuilder.DB_NAME, dbName);
+            exams.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
             startActivity(exams);
             return true;
         } else if (itemId == R.id.homework) {
             Intent homework = new Intent(MainActivity.this, HomeworksActivity.class);
-            homework.putExtra(TimeTableBuilder.DB_NAME, dbName);
+            homework.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
             startActivity(homework);
             return true;
         } else if (itemId == R.id.notes) {
             Intent note = new Intent(MainActivity.this, NotesActivity.class);
-            note.putExtra(TimeTableBuilder.DB_NAME, dbName);
+            note.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
             startActivity(note);
             return true;
         } else if (itemId == R.id.settings) {

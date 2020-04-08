@@ -308,7 +308,7 @@ abstract class Parse {
 
         if (doc == null) {
             System.out.println("Document is null");
-            return new SubstitutionList(true);
+            return new SubstitutionList();
         }
 
         Elements values = doc.select("tr");
@@ -371,7 +371,7 @@ abstract class Parse {
     @NonNull
     static SubstitutionList getSubstitutionListFiltered(@Nullable Document doc, boolean senior, @Nullable ArrayList<String> classNames) {
         if (doc == null || classNames == null) {
-            return new SubstitutionList(true);
+            return new SubstitutionList();
         }
 
         Elements values = doc.select("tr");

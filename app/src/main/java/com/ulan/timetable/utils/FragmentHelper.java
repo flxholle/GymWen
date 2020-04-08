@@ -36,10 +36,8 @@ public class FragmentHelper {
                     SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
                     for (int i = 0; i < checkedItems.size(); i++) {
                         int key = checkedItems.keyAt(i);
-                        if (checkedItems.get(key)) {
-                            db.deleteWeekById(adapter.getItem(key));
-                            removelist.add(adapter.getWeekList().get(key));
-                        }
+                        db.deleteWeekById(adapter.getItem(key));
+                        removelist.add(adapter.getWeekList().get(key));
                     }
                     adapter.getWeekList().removeAll(removelist);
                     db.updateWeek(adapter.getWeek());

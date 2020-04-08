@@ -158,12 +158,16 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public void deleteWeekById(Week week) {
+        if (!week.getEditable())
+            return;
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TIMETABLE, WEEK_ID + " = ? ", new String[]{String.valueOf(week.getId())});
         db.close();
     }
 
     public void updateWeek(Week week) {
+        if (!week.getEditable())
+            return;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(WEEK_SUBJECT, week.getSubject());

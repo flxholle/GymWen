@@ -68,8 +68,7 @@ class NotificationUtils {
             override fun onPostExecute(v: Void?) {
                 super.onPostExecute(v)
                 try {
-                    if (ProfileManagement.isUninit())
-                        ProfileManagement.reload()
+                    ProfileManagement.initProfiles();
                     if (!ApplicationFeatures.coursesCheck(false))
                         return
                     if (SubstitutionPlanFeatures.getTodayTitleString() == ApplicationFeatures.getContext().getString(R.string.noInternetConnection)) {
@@ -83,8 +82,7 @@ class NotificationUtils {
             }
 
             private fun createNotification() {
-                if (ProfileManagement.isUninit())
-                    ProfileManagement.reload()
+                ProfileManagement.initProfiles();
 
                 val profileList = ProfileManagement.getProfileList()
 

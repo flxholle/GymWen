@@ -500,8 +500,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         Document[] oldDocs = SubstitutionPlanFeatures.getDocs();
 
         downloadSubstitutionplanDocs(false, false);
-        if (ProfileManagement.isUninit())
-            ProfileManagement.reload();
+        ProfileManagement.initProfiles();
         if (!coursesCheck(false))
             return;
         if (SubstitutionPlanFeatures.getTodayTitleString().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {

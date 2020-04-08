@@ -80,8 +80,8 @@ public class FridayFragment extends Fragment {
                         end = week.getFromTime();
                     weeks.remove(i);
                 }
-                weekEntry = new Week(subject, teacher, room, begin, end, color);
-                weeks.add(i, weekEntry);
+          /*      weekEntry = new Week(subject, teacher, room, begin, end, color);
+                weeks.add(i, weekEntry);*/
             }
         }
 

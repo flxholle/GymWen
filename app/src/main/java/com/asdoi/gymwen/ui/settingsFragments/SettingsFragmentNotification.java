@@ -38,8 +38,7 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
 
         ((SettingsActivity) getActivity()).loadedFragments++;
 
-        if (ProfileManagement.isUninit())
-            ProfileManagement.reload();
+        ProfileManagement.initProfiles();
 
         setNotif();
 
