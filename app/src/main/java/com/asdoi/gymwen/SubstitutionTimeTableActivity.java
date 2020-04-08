@@ -54,11 +54,15 @@ public class SubstitutionTimeTableActivity extends ActivityFeatures {
         final int finalPos = pos;
         new Thread(() -> {
             ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
-            SubstitutionPlan substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(finalPos).getCoursesArray());
-            runOnUiThread(() -> {
-                new TimeTableBuilder(finalPos).setSubstitutionplan(substitutionPlan).start(this);
-                finish();
-            });
+            if (finalPos >= ProfileManagement.getSize()) {
+                runOnUiThread(() -> finish());
+            } else {
+                SubstitutionPlan substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(finalPos).getCoursesArray());
+                runOnUiThread(() -> {
+                    new TimeTableBuilder(finalPos, substitutionPlan).start(this);
+                    finish();
+                });
+            }
         }).start();
     }
 

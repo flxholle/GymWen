@@ -22,16 +22,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.substitutionplan.SubstitutionEntry;
 import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.ulan.timetable.adapters.WeekAdapter;
+import com.ulan.timetable.model.Week;
 import com.ulan.timetable.utils.DbHelper;
 import com.ulan.timetable.utils.FragmentHelper;
+
+import java.util.ArrayList;
 
 public class WeekdayFragment extends Fragment {
     public static final String KEY_MONDAY_FRAGMENT = "Monday";
@@ -45,7 +50,7 @@ public class WeekdayFragment extends Fragment {
     private DbHelper db;
     private ListView listView;
     private WeekAdapter adapter;
-    private ImageView popup;
+    private View view;
 
     private SubstitutionList entries;
     private boolean senior;
@@ -61,23 +66,107 @@ public class WeekdayFragment extends Fragment {
     public WeekdayFragment(String key) {
         this.key = key;
         senior = false;
-        entries = new SubstitutionList();
+        entries = new SubstitutionList(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.timetable_fragment_thursday, container, false);
+        view = inflater.inflate(R.layout.timetable_fragment_weekday, container, false);
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         setupAdapter(view);
         setupListViewMultiSelect();
-        return view;
     }
 
     private void setupAdapter(View view) {
         db = new DbHelper(getActivity());
-        listView = view.findViewById(R.id.thursdaylist);
-        adapter = new WeekAdapter(getActivity(), listView, R.layout.timetable_listview_week_adapter, db.getWeek(key));
+        listView = view.findViewById(R.id.timetable_daylist);
+        adapter = new WeekAdapter((ActivityFeatures) getActivity(), listView, R.layout.timetable_listview_week_adapter, setupWeekList(db.getWeek(key)));
         listView.setAdapter(adapter);
+    }
+
+    private ArrayList<Week> setupWeekList(ArrayList<Week> weeks) {
+        boolean empty = weeks.isEmpty();
+        if (!entries.getNoInternet()) {
+            for (int i = 0; i < entries.getEntries().size(); i++) {
+                SubstitutionEntry entry = entries.getEntries().get(i);
+                int color = ContextCompat.getColor(getContext(), entry.isNothing() ? R.color.notification_icon_background_omitted : R.color.notification_icon_background_substitution);
+                String subject = senior ? entry.getCourse() : entry.getSubject();
+                String teacher = entry.getTeacher();
+                String room = entry.getRoom();
+                String begin = entry.getMatchingBeginTime("-");
+                if (begin.length() < 5)
+                    begin = "0" + begin;
+
+                String end = entry.getMatchingEndTime("-");
+                if (end.length() < 5)
+                    end = "0" + end;
+
+                Week weekEntry = new Week(subject, teacher, room, begin, end, color, false);
+                weekEntry.setMoreInfos(entry.getMoreInformation());
+//                if (!entry.getMoreInformation().trim().isEmpty())
+//                    subject = subject + " (" + entry.getMoreInformation() + ")";
+
+                if (empty) {
+                    weeks.add(weekEntry);
+                } else {
+                    for (int j = 0; j < weeks.size(); j++) {
+                        Week week = weeks.get(j);
+
+                        if (begin.equalsIgnoreCase(week.getFromTime())) {
+                            if (end.equalsIgnoreCase(week.getToTime())) {
+                                //Same times
+                                weeks.remove(j);
+                                weeks.add(j, weekEntry);
+                            } else {
+                                if (end.compareToIgnoreCase(week.getToTime()) < 0) {
+                                    //Start same, ends ago
+                                    week.setFromTime(end);
+//                                    week.setEditable(false);
+                                    weeks.set(j, week);
+                                    weeks.add(j, weekEntry);
+                                } else {
+                                    //Start same, Ends after
+                                    weeks.remove(j);
+                                    weeks.add(j, weekEntry);
+                                }
+                            }
+                        } else if (begin.compareToIgnoreCase(week.getFromTime()) <= 0) {
+                            //Starts Ago -> Add before
+                            if (end.compareToIgnoreCase(week.getToTime()) < 0) {
+                                //Starts ago, ends ago
+                                week.setFromTime(end);
+                                week.setEditable(false);
+                                weeks.set(j, week);
+                                weeks.add(j, weekEntry);
+                            } else {
+                                //Starts ago, ends after or same
+                                weeks.remove(j);
+                                weeks.add(j, weekEntry);
+                            }
+                        } else if (end.compareToIgnoreCase(week.getToTime()) < 0 || begin.compareToIgnoreCase(week.getToTime()) < 0) {
+                            //Starts after (but between), Ends ago, same, after
+                            week.setToTime(begin);
+//                            week.setEditable(false);
+                            weeks.set(j, week);
+                            weeks.add(j + 1, weekEntry);
+                        } else if (j == weeks.size() - 1) {
+                            //End of weeks
+                            weeks.add(weekEntry);
+                        } else {
+                            continue;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        return weeks;
     }
 
     private void setupListViewMultiSelect() {

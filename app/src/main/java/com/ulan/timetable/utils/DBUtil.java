@@ -37,13 +37,14 @@ public class DBUtil {
     }
 
     public static int getProfilePosition(Activity activity) {
+        int sharedPref = getProfilePositionFromSharedPreferences();
         try {
             int name = activity.getIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
             if (name == -1)
                 name = activity.getParentActivityIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
 
-            if (name == -1) {
-                return getProfilePositionFromSharedPreferences();
+            if (name == -1 && sharedPref > 0) {
+                return sharedPref;
             } else {
                 return name;
             }
@@ -51,7 +52,12 @@ public class DBUtil {
             e.printStackTrace();
         }
 
-        return getProfilePositionFromSharedPreferences();
+        if (sharedPref > 0)
+            return sharedPref;
+        else {
+            activity.finish();
+            return sharedPref;
+        }
     }
 
     public static String getDBNameFromSharedPreferences() {

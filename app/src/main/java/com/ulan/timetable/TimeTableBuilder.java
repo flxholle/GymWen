@@ -17,8 +17,9 @@ public class TimeTableBuilder {
     private int profilePos;
 
 
-    public TimeTableBuilder(int pos) {
+    public TimeTableBuilder(int pos, SubstitutionPlan substitutionPlan) {
         setProfilePos(pos);
+        setSubstitutionplan(substitutionPlan);
     }
 
     public TimeTableBuilder withActivityTheme(int theme) {

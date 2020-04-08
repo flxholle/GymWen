@@ -9,6 +9,7 @@ public class Week {
     private int id, color;
 
     private boolean editable = true;
+    private String moreInfos;
 
     public Week() {
     }
@@ -21,6 +22,14 @@ public class Week {
         this.totime = totime;
         this.color = color;
         this.editable = editable;
+    }
+
+    public void setMoreInfos(String value) {
+        moreInfos = value;
+    }
+
+    public String getMoreInfos() {
+        return moreInfos;
     }
 
     public int getId() {

@@ -22,7 +22,7 @@
 
     <item android:title="@string/menu_category_substitution">
         <menu>
-            <group>
+            <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_at_one_glance"
                     android:icon="@drawable/ic_today_tomorrow_black_24dp"
@@ -48,13 +48,17 @@
                     android:id="@+id/nav_unfiltered_days"
                     android:icon="@drawable/ic_today_tomorrow_black_24dp"
                     android:title="@string/menu_unfiltered" />
+                <item
+                    android:id="@+id/nav_timetable"
+                    android:icon="@drawable/ic_timetable"
+                    android:title="@string/menu_timetable" />
             </group>
         </menu>
     </item>
 
     <item android:title="@string/menu_category_school">
         <menu>
-            <group>
+            <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/nav_website"
                     android:icon="@drawable/ic_compass"
@@ -83,6 +87,30 @@
                     android:id="@+id/nav_mensa"
                     android:icon="@drawable/ic_restaurant"
                     android:title="@string/menu_mensa" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/menu_from_this_developer">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_colorush"
+                    android:icon="@drawable/ic_colorush2"
+                    android:title="@string/menu_colorush" />
+                <item
+                    android:id="@+id/nav_grades"
+                    android:checkable="false"
+                    android:icon="@drawable/ic_exam"
+                    android:title="@string/menu_grades" />
+            </group>
+        </menu>
+    </item>
+
+
+    <item android:title="@string/menu_category_other">
+        <menu>
+            <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/nav_news"
                     android:icon="@drawable/ic_news"
@@ -109,47 +137,6 @@
                     android:icon="@drawable/ic_cloud_download_black_24dp"
                     android:title="@string/menu_backup"
                     android:visible="false" />
-            </group>
-        </menu>
-    </item>
-
-    <item android:title="@string/menu_from_this_developer">
-        <menu>
-            <group>
-                <item
-                    android:id="@+id/nav_colorush"
-                    android:icon="@drawable/ic_colorush2"
-                    android:title="@string/menu_colorush" />
-                <item
-                    android:id="@+id/nav_grades"
-                    android:icon="@drawable/ic_exam"
-                    android:title="@string/menu_grades" />
-            </group>
-        </menu>
-    </item>
-
-    <item android:title="@string/menu_category_settings">
-        <menu>
-            <group android:title="@string/menu_category_settings">
-                <item
-                    android:id="@+id/nav_imprint"
-                    android:icon="@drawable/ic_help_outline_black_24dp"
-                    android:title="@string/menu_impressum" />
-                <item
-                    android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_settings_black_24dp"
-                    android:title="@string/menu_settings" />
-            </group>
-        </menu>
-    </item>
-
-    <item android:title="@string/menu_category_other">
-        <menu>
-            <group>
-                <item
-                    android:id="@+id/nav_timetable"
-                    android:icon="@drawable/ic_timetable"
-                    android:title="@string/menu_timetable" />
                 <item
                     android:id="@+id/nav_public_transport"
                     android:icon="@drawable/ic_directions_transit_black_24dp"
@@ -161,4 +148,22 @@
             </group>
         </menu>
     </item>
+
+
+    <!--    <item android:title="@string/menu_category_settings">-->
+    <!--        <menu>-->
+    <group
+        android:checkableBehavior="none"
+        android:title="@string/menu_category_settings">
+        <item
+            android:id="@+id/nav_imprint"
+            android:icon="@drawable/ic_help_outline_black_24dp"
+            android:title="@string/menu_impressum" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/menu_settings" />
+    </group>
+    <!--        </menu>-->
+    <!--    </item>-->
 </menu>

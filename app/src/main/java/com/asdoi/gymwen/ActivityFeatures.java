@@ -43,6 +43,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -361,6 +362,39 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
 
     public void removeLoadingPanel(@NonNull ViewGroup view) {
         view.removeView(view.findViewWithTag("vertretung_loading"));
+    }
+
+    public ViewGroup createTeacherView(@NonNull TeacherListEntry teacher) {
+        LinearLayout base = new LinearLayout(this);
+        base.setOrientation(LinearLayout.VERTICAL);
+        base.setGravity(Gravity.CENTER);
+        base.setBackgroundColor(ApplicationFeatures.getTextColorSecondary(this));
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        base.setLayoutParams(params);
+        base.setId(ApplicationFeatures.substitution_teacher_view_id);
+        base.setOnClickListener((View v) -> {
+            try {
+                ((ViewGroup) v.getParent()).removeView(v);
+            } catch (NullPointerException e) {
+                v.setVisibility(View.GONE);
+            }
+        });
+
+        ViewGroup teacherEntry = new LinearLayout(this);
+        ViewStub viewStub = new ViewStub(this);
+        viewStub.setLayoutResource(R.layout.list_teacherlist_entry);
+        teacherEntry.addView(viewStub);
+        viewStub.inflate();
+        teacherEntry = (ViewGroup) getTeacherView(teacherEntry, teacher);
+
+        LinearLayout background = new LinearLayout(this);
+        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        background.setLayoutParams(params);
+        background.setBackgroundColor(ApplicationFeatures.getBackgroundColor(this));
+
+        background.addView(teacherEntry);
+        base.addView(background);
+        return base;
     }
 
     @NonNull

@@ -45,7 +45,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private ViewPager viewPager;
     private boolean switchSevenDays;
 
-    private int profilePos;
+    private int profilePos = -1;
     private SubstitutionPlan substitutionPlan;
 
     @Override
@@ -268,7 +268,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        final NavigationView navigationView = findViewById(R.id.nav_view);
         int itemId = item.getItemId();
         if (itemId == R.id.exams) {
             Intent exams = new Intent(MainActivity.this, ExamsActivity.class);

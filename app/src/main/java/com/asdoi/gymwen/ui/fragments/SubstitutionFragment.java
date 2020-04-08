@@ -34,7 +34,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -401,7 +400,9 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 ApplicationFeatures.downloadTeacherlistDoc();
                 if (TeacherlistFeatures.liste().getNoInternet())
                     throw new Exception();
-                getActivity().runOnUiThread(() -> createTeacherView(TeacherlistFeatures.getTeacher(query)));
+                getActivity().runOnUiThread(() -> {
+                    ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(((ActivityFeatures) getActivity()).createTeacherView(TeacherlistFeatures.getTeacher(query)));
+                });
             } catch (Exception e) {
                 e.printStackTrace();
                 getActivity().runOnUiThread(() -> {
@@ -423,41 +424,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }).start();
     }
 
-    private void createTeacherView(@NonNull TeacherListEntry teacher) {
-        LinearLayout base = new LinearLayout(context);
-        base.setOrientation(LinearLayout.VERTICAL);
-        base.setGravity(Gravity.CENTER);
-        base.setBackgroundColor(ApplicationFeatures.getTextColorSecondary(context));
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        base.setLayoutParams(params);
-        base.setId(ApplicationFeatures.substitution_teacher_view_id);
-        base.setOnClickListener((View v) -> {
-            try {
-                ((ViewGroup) v.getParent()).removeView(v);
-            } catch (NullPointerException e) {
-                v.setVisibility(View.GONE);
-            }
-        });
-
-        ViewGroup teacherEntry = new LinearLayout(context);
-        ViewStub viewStub = new ViewStub(context);
-        viewStub.setLayoutResource(R.layout.list_teacherlist_entry);
-        teacherEntry.addView(viewStub);
-        viewStub.inflate();
-        teacherEntry = (ViewGroup) ((MainActivity) getActivity()).getTeacherView(teacherEntry, teacher);
-
-        LinearLayout background = new LinearLayout(context);
-        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        background.setLayoutParams(params);
-        background.setBackgroundColor(ApplicationFeatures.getBackgroundColor(context));
-
-        background.addView(teacherEntry);
-        base.addView(background);
-        ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(base);
-    }
-
     @Nullable
-    private String getMatchingTeacher(@NonNull String query) {
+    public static String getMatchingTeacher(@NonNull String query) {
         String teacher = null;
         try {
             ApplicationFeatures.downloadTeacherlistDoc();

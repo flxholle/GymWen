@@ -23,10 +23,10 @@ import com.asdoi.gymwen.util.PreferenceUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SubstitutionList(var entries: MutableList<SubstitutionEntry>) {
+class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableListOf()) {
     private var noInternet: Boolean = false
 
-    constructor() : this(mutableListOf()) {
+    constructor(notInternet: Boolean) : this() {
         this.noInternet = true
     }
 
@@ -83,7 +83,7 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry>) {
     fun changeToTime(list: MutableList<SubstitutionEntry>): MutableList<SubstitutionEntry> {
         for (i in list.indices) {
             try {
-                list[i].hour = getMatchingTime(list[i].hour.toInt())
+                list[i].hour = getMatchingStartTime(list[i].hour.toInt())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -155,7 +155,7 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry>) {
          * @param lesson the lesson
          * @return the matching time
          */
-        fun getMatchingTime(lesson: Int): String {
+        fun getMatchingStartTime(lesson: Int): String {
             return when (lesson) {
                 1 -> "8:10"
                 2 -> "8:55"
@@ -170,6 +170,28 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry>) {
                 11 -> "16:15"
                 else ->                 //Breaks are excluded
                     ("" + (45 * lesson + 8 * 60 + 10) / 60).replace(",".toRegex(), ".")
+            }
+        }
+
+        /**
+         * @param lesson the lesson
+         * @return the matching time
+         */
+        fun getMatchingEndTime(lesson: Int): String {
+            return when (lesson) {
+                1 -> "8:55"
+                2 -> "9:40"
+                3 -> "10:40"
+                4 -> "11:25"
+                5 -> "12:25"
+                6 -> "13:10"
+                7 -> "14:00"
+                8 -> "14:45"
+                9 -> "15:30"
+                10 -> "16:15"
+                11 -> "17:00"
+                else ->                 //Breaks are excluded
+                    ("" + (45 * (lesson + 1) + 8 * 60 + 10) / 60).replace(",".toRegex(), ".")
             }
         }
     }
@@ -197,18 +219,28 @@ class SubstitutionEntry(var course: String, var hour: String, var subject: Strin
         return false
     }
 
-    fun getMatchingBeginTime(): String {
+    fun getMatchingBeginTime(separator: String = "-"): String {
         try {
-            return SubstitutionList.getMatchingTime(Integer.parseInt(hour))
+            val time =
+                    if (hour.contains(separator))
+                        hour.substring(0, hour.indexOf("-"))
+                    else
+                        hour
+            return SubstitutionList.getMatchingStartTime(Integer.parseInt(time))
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
         return hour
     }
 
-    fun getMatchingEndTime(): String {
+    fun getMatchingEndTime(separator: String = "-"): String {
         try {
-            return SubstitutionList.getMatchingTime(Integer.parseInt(hour) + 1)
+            val time =
+                    if (hour.contains(separator))
+                        hour.substring(hour.indexOf("-") + 1)
+                    else
+                        hour
+            return SubstitutionList.getMatchingEndTime(Integer.parseInt(time))
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
