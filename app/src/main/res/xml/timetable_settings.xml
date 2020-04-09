@@ -20,6 +20,20 @@
         android:summary="@string/set_desc_alwaysNotification"
         android:title="@string/set_notification_showAlways" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_assignment_late_black_24dp"
+        android:key="timetable_subs"
+        android:summary="@string/integrate_substitution_in_timetable_desc"
+        android:title="@string/integrate_substitution_in_timetable" />
+
+    <EditTextPreference
+        android:key="courses"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/set_desc_courses"
+        android:title="@string/set_courses_title" />
+
     <Preference
         android:icon="@drawable/ic_open_in_browser_white_24dp"
         android:key="allprefs"

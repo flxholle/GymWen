@@ -574,4 +574,7 @@
     <string name="timetable_credit">Entstanden mit Hilfe von ulan17</string>
     <string name="time_from">von</string>
 
+    <string name="integrate_substitution_in_timetable">Vertretungen im Stundenplan anzeigen</string>
+    <string name="integrate_substitution_in_timetable_desc">Zum Editieren des Stundenplans besser ausschalten</string>
+
 </resources>

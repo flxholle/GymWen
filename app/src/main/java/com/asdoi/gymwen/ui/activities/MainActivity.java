@@ -155,6 +155,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         if (!SubstitutionPlanFeatures.isUninit()) {
             onNavigationItemSelected(R.id.nav_at_one_glance);
+            navigationView.setCheckedItem(R.id.nav_at_one_glance);
         }
         toggle.syncState();
 

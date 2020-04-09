@@ -89,9 +89,12 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         super.onBackPressed();
         if (loadedFragments == 1) {
             Profile p = ApplicationFeatures.getSelectedProfile();
-            p.setCourses(PreferenceManager.getDefaultSharedPreferences(this).getString("courses", p.getCourses()));
-            ProfileManagement.editProfile(ApplicationFeatures.getSelectedProfilePosition(), p);
-            ProfileManagement.save(true);
+            String newCourses = PreferenceManager.getDefaultSharedPreferences(this).getString("courses", p.getCourses());
+            if (!newCourses.trim().isEmpty()) {
+                p.setCourses(newCourses);
+                ProfileManagement.editProfile(ApplicationFeatures.getSelectedProfilePosition(), p);
+                ProfileManagement.save(true);
+            }
 
             if (Build.VERSION.SDK_INT >= 25) {
                 try {

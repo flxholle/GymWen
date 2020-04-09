@@ -35,8 +35,10 @@ import com.ulan.timetable.adapters.WeekAdapter;
 import com.ulan.timetable.model.Week;
 import com.ulan.timetable.utils.DbHelper;
 import com.ulan.timetable.utils.FragmentHelper;
+import com.ulan.timetable.utils.PreferenceUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class WeekdayFragment extends Fragment {
     public static final String KEY_MONDAY_FRAGMENT = "Monday";
@@ -64,7 +66,15 @@ public class WeekdayFragment extends Fragment {
     }
 
     public WeekdayFragment(String key) {
+        super();
         this.key = key;
+        senior = false;
+        entries = new SubstitutionList(true);
+    }
+
+    public WeekdayFragment() {
+        super();
+        this.key = KEY_MONDAY_FRAGMENT;
         senior = false;
         entries = new SubstitutionList(true);
     }
@@ -86,11 +96,15 @@ public class WeekdayFragment extends Fragment {
     private void setupAdapter(View view) {
         db = new DbHelper(getActivity());
         listView = view.findViewById(R.id.timetable_daylist);
-        adapter = new WeekAdapter((ActivityFeatures) getActivity(), listView, R.layout.timetable_listview_week_adapter, setupWeekList(db.getWeek(key)));
+        ArrayList<Week> weeks = db.getWeek(key);
+        if (PreferenceUtil.isTimeTableSubstitution() && !entries.getNoInternet()) {
+            weeks = setupWeekList(weeks);
+        }
+        adapter = new WeekAdapter((ActivityFeatures) getActivity(), listView, R.layout.timetable_listview_week_adapter, weeks);
         listView.setAdapter(adapter);
     }
 
-    private ArrayList<Week> setupWeekList(ArrayList<Week> weeks) {
+    public ArrayList<Week> setupWeekList(ArrayList<Week> weeks) {
         boolean empty = weeks.isEmpty();
         if (!entries.getNoInternet()) {
             for (int i = 0; i < entries.getEntries().size(); i++) {
@@ -117,55 +131,133 @@ public class WeekdayFragment extends Fragment {
                 } else {
                     for (int j = 0; j < weeks.size(); j++) {
                         Week week = weeks.get(j);
+                        boolean beginIsBeforeFrom = begin.compareToIgnoreCase(week.getFromTime()) < 0;
+                        boolean beginIsFrom = begin.equalsIgnoreCase(week.getFromTime());
+                        boolean beginIsBeforeTo = begin.compareToIgnoreCase(week.getToTime()) < 0;
 
-                        if (begin.equalsIgnoreCase(week.getFromTime())) {
-                            if (end.equalsIgnoreCase(week.getToTime())) {
-                                //Same times
-                                weeks.remove(j);
-                                weeks.add(j, weekEntry);
-                            } else {
-                                if (end.compareToIgnoreCase(week.getToTime()) < 0) {
-                                    //Start same, ends ago
-                                    week.setFromTime(end);
-//                                    week.setEditable(false);
-                                    weeks.set(j, week);
-                                    weeks.add(j, weekEntry);
+                        boolean endIsAfterFrom = end.compareToIgnoreCase(week.getFromTime()) > 0;
+                        boolean endIsTo = end.equalsIgnoreCase(week.getToTime());
+                        boolean endIsAfterTo = end.compareToIgnoreCase(week.getToTime()) > 0;
+
+                        if (beginIsBeforeFrom) {
+                            if (endIsAfterFrom) {
+                                if (endIsAfterTo) {
+                                    //Check next, remove
+                                    checkNext(weeks, begin, end, weekEntry, j);
                                 } else {
-                                    //Start same, Ends after
-                                    weeks.remove(j);
-                                    weeks.add(j, weekEntry);
+                                    if (endIsTo) {
+                                        //replace
+                                        weeks.remove(j);
+                                        weeks.add(j, weekEntry);
+                                    } else {
+                                        //split
+                                        split(weeks, begin, end, weekEntry, j, week, beginIsFrom);
+                                    }
+                                }
+                            } else {
+                                //add before
+                                weeks.add(j, weekEntry);
+                            }
+                        } else {
+                            if (beginIsFrom) {
+                                if (endIsAfterTo) {
+                                    //Check next, remove
+                                    checkNext(weeks, begin, end, weekEntry, j);
+                                } else {
+                                    if (endIsTo) {
+                                        //replace
+                                        weeks.remove(j);
+                                        weeks.add(j, weekEntry);
+                                    } else {
+                                        //split
+                                        split(weeks, begin, end, weekEntry, j, week, true);
+                                    }
+                                }
+                            } else {
+                                if (beginIsBeforeTo) {
+                                    if (endIsAfterTo) {
+                                        //check next, split
+                                        checkNext(weeks, begin, end, weekEntry, j);
+
+                                        week.setToTime(begin);
+//                                        week.setEditable(false);
+                                        weeks.set(j, week);
+                                    } else {
+                                        if (endIsTo) {
+                                            //split
+                                            split(weeks, begin, end, weekEntry, j, week, false);
+                                        } else {
+                                            //split3
+                                            Week week2 = new Week(week.getSubject(), week.getTeacher(), week.getRoom(), week.getFromTime(), week.getToTime(), week.getColor(), false);
+                                            week.setToTime(begin);
+                                            week2.setFromTime(end);
+
+                                            weeks.set(j, week);
+                                            weeks.add(j + 1, weekEntry);
+                                            weeks.add(j + 2, week2);
+                                        }
+                                    }
+                                } else {
+                                    //check next
+                                    if (j >= weeks.size() - 1) {
+                                        weeks.add(weekEntry);
+                                        break;
+                                    }
+                                    continue;
                                 }
                             }
-                        } else if (begin.compareToIgnoreCase(week.getFromTime()) <= 0) {
-                            //Starts Ago -> Add before
-                            if (end.compareToIgnoreCase(week.getToTime()) < 0) {
-                                //Starts ago, ends ago
-                                week.setFromTime(end);
-                                week.setEditable(false);
-                                weeks.set(j, week);
-                                weeks.add(j, weekEntry);
-                            } else {
-                                //Starts ago, ends after or same
-                                weeks.remove(j);
-                                weeks.add(j, weekEntry);
-                            }
-                        } else if (end.compareToIgnoreCase(week.getToTime()) < 0 || begin.compareToIgnoreCase(week.getToTime()) < 0) {
-                            //Starts after (but between), Ends ago, same, after
-                            week.setToTime(begin);
-//                            week.setEditable(false);
-                            weeks.set(j, week);
-                            weeks.add(j + 1, weekEntry);
-                        } else if (j == weeks.size() - 1) {
-                            //End of weeks
-                            weeks.add(weekEntry);
-                        } else {
-                            continue;
                         }
                         break;
                     }
                 }
             }
         }
+        return sortWeekList(weeks);
+    }
+
+    private static void split(ArrayList<Week> weeks, String begin, String end, Week weekEntry, int j, Week week, boolean beginIsFrom) {
+        if (beginIsFrom) {
+            week.setFromTime(end);
+//            week.setEditable(false);
+            weeks.set(j, weekEntry);
+            weeks.add(j + 1, week);
+        } else {
+            week.setToTime(begin);
+//            week.setEditable(false);
+            weeks.set(j, week);
+            weeks.add(j + 1, weekEntry);
+        }
+    }
+
+    private static void checkNext(ArrayList<Week> weeks, String begin, String end, Week weekEntry, int j) {
+        for (int j2 = j; j2 < weeks.size(); j2++) {
+            Week week = weeks.get(j2);
+            boolean endIsAfterFrom = end.compareToIgnoreCase(week.getFromTime()) > 0;
+            boolean endIsBeforeTo = end.compareToIgnoreCase(week.getFromTime()) < 0;
+
+            if (j2 >= weeks.size() - 1) {
+                weeks.add(weekEntry);
+                break;
+            }
+
+            if (endIsAfterFrom) {
+                if (endIsBeforeTo) {
+                    split(weeks, begin, end, weekEntry, j, week, true);
+                } else {
+                    //check next, remove
+                    weeks.remove(j2);
+                    continue;
+                }
+            } else {
+                //add before
+                weeks.add(j2, weekEntry);
+            }
+            break;
+        }
+    }
+
+    public ArrayList<Week> sortWeekList(ArrayList<Week> weeks) {
+        Collections.sort(weeks, (o1, o2) -> o1.getFromTime().compareToIgnoreCase(o2.getFromTime()));
         return weeks;
     }
 

@@ -463,7 +463,7 @@ abstract class Parse {
         }
 
         if (j == 0) {
-            return new SubstitutionList(true);
+            return new SubstitutionList();
         }
 
         String[][] trimmedContent = new String[j][columNr];

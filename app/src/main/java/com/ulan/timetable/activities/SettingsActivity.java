@@ -2,8 +2,13 @@ package com.ulan.timetable.activities;
 
 import android.os.Bundle;
 
+import androidx.preference.PreferenceManager;
+
 import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.profiles.Profile;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.ulan.timetable.fragments.SettingsFragment;
 
 public class SettingsActivity extends ActivityFeatures {
@@ -27,5 +32,12 @@ public class SettingsActivity extends ActivityFeatures {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Profile p = ApplicationFeatures.getSelectedProfile();
+        String newCourses = PreferenceManager.getDefaultSharedPreferences(this).getString("courses", p.getCourses());
+        if (!newCourses.trim().isEmpty()) {
+            p.setCourses(newCourses);
+            ProfileManagement.editProfile(ApplicationFeatures.getSelectedProfilePosition(), p);
+            ProfileManagement.save(true);
+        }
     }
 }

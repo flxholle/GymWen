@@ -50,6 +50,7 @@
                     android:title="@string/menu_unfiltered" />
                 <item
                     android:id="@+id/nav_timetable"
+                    android:checkable="false"
                     android:icon="@drawable/ic_timetable"
                     android:title="@string/menu_timetable" />
             </group>
@@ -112,6 +113,10 @@
         <menu>
             <group android:checkableBehavior="none">
                 <item
+                    android:id="@+id/nav_public_transport"
+                    android:icon="@drawable/ic_directions_transit_black_24dp"
+                    android:title="@string/menu_public_transport" />
+                <item
                     android:id="@+id/nav_news"
                     android:icon="@drawable/ic_news"
                     android:title="@string/menu_news" />
@@ -137,10 +142,6 @@
                     android:icon="@drawable/ic_cloud_download_black_24dp"
                     android:title="@string/menu_backup"
                     android:visible="false" />
-                <item
-                    android:id="@+id/nav_public_transport"
-                    android:icon="@drawable/ic_directions_transit_black_24dp"
-                    android:title="@string/menu_public_transport" />
                 <item
                     android:id="@+id/nav_notes"
                     android:icon="@drawable/ic_writing"

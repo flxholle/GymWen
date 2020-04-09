@@ -35,6 +35,7 @@ import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.DBUtil;
 import com.ulan.timetable.utils.DailyReceiver;
+import com.ulan.timetable.utils.PreferenceUtil;
 
 import java.util.Calendar;
 
@@ -262,6 +263,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settings);
             return true;
+        } else if (item.getItemId() == R.id.action_substitutionIntegration) {
+            PreferenceUtil.setTimeTableSubstitution(getContext(), !PreferenceUtil.isTimeTableSubstitution());
+            recreate();
         }
         return super.onOptionsItemSelected(item);
     }
