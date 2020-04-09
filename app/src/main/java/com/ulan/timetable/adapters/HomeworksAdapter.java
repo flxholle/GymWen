@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.model.Homework;
@@ -111,6 +112,8 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         });
 
         hidePopUpMenu(holder);
+
+        convertView.findViewById(R.id.line).setBackgroundColor(ApplicationFeatures.getTextColorPrimary(getContext()));
 
         return convertView;
     }

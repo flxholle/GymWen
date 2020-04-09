@@ -1,6 +1,8 @@
 package com.ulan.timetable.adapters;
 
+import android.content.Intent;
 import android.util.SparseBooleanArray;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,13 +19,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
+import com.asdoi.gymwen.ui.activities.TeacherlistActivity;
+import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.model.Exam;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.DbHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -84,8 +91,22 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.subject.setText(exam.getSubject());
+
+        TeacherlistActivity.removeTeacherClick(holder.teacher, getContext());
         holder.teacher.setText(exam.getTeacher());
+        if (!Arrays.asList(External_Const.nothing).contains(exam.getTeacher()))
+            TeacherlistActivity.teacherClick(holder.teacher, exam.getTeacher(), PreferenceUtil.isFullTeacherNames(), mActivity);
+
         holder.room.setText(exam.getRoom());
+        holder.room.setOnClickListener((View v) -> {
+            Intent intent = new Intent(getContext(), RoomPlanActivity.class);
+            intent.putExtra(RoomPlanActivity.SELECT_ROOM, holder.room.getText());
+            mActivity.startActivity(intent);
+        });
+        TypedValue outValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        holder.room.setBackgroundResource(outValue.resourceId);
+
         holder.date.setText(exam.getDate());
         holder.time.setText(exam.getTime());
         holder.cardView.setCardBackgroundColor(exam.getColor());
@@ -119,6 +140,8 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
         });
 
         hidePopUpMenu(holder);
+
+        convertView.findViewById(R.id.line).setBackgroundColor(ApplicationFeatures.getTextColorPrimary(getContext()));
 
         return convertView;
     }

@@ -94,14 +94,13 @@
 
     <item android:title="@string/menu_from_this_developer">
         <menu>
-            <group android:checkableBehavior="single">
+            <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/nav_colorush"
                     android:icon="@drawable/ic_colorush2"
                     android:title="@string/menu_colorush" />
                 <item
                     android:id="@+id/nav_grades"
-                    android:checkable="false"
                     android:icon="@drawable/ic_exam"
                     android:title="@string/menu_grades" />
             </group>

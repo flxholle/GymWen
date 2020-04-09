@@ -49,7 +49,7 @@ public class RoomPlanActivity extends ActivityFeatures {
     @NonNull
     public static String SELECT_ROOM = "selectroom";
     @NonNull
-    public static String SEARCH = "search";
+    public static String SEARCH_ROOM = "searchroom";
 
     private boolean search = false;
 
@@ -68,7 +68,7 @@ public class RoomPlanActivity extends ActivityFeatures {
             if (extras != null)
                 room = extras.getString(SELECT_ROOM, null);
 
-            search = getIntent().getAction().equals(SEARCH);
+            search = getIntent().getAction().equals(SEARCH_ROOM);
         } catch (NullPointerException e) {
             //If intent is null
             e.printStackTrace();

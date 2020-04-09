@@ -18,14 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
-import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
+import com.asdoi.gymwen.ui.activities.TeacherlistActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.model.Week;
@@ -43,7 +41,6 @@ import java.util.Objects;
 public class WeekAdapter extends ArrayAdapter<Week> {
 
     private ActivityFeatures mActivity;
-    private int mResource;
     private ArrayList<Week> weeklist;
     private Week week;
     private ListView mListView;
@@ -60,7 +57,6 @@ public class WeekAdapter extends ArrayAdapter<Week> {
     public WeekAdapter(@NonNull ActivityFeatures activity, ListView listView, int resource, @NonNull ArrayList<Week> objects) {
         super(activity, resource, objects);
         mActivity = activity;
-        mResource = resource;
         weeklist = objects;
         mListView = listView;
     }
@@ -85,7 +81,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mActivity);
-            convertView = inflater.inflate(mResource, parent, false);
+            convertView = inflater.inflate(R.layout.timetable_listview_week_adapter, parent, false);
             holder = new ViewHolder();
             holder.subject = convertView.findViewById(R.id.subject);
             holder.teacher = convertView.findViewById(R.id.teacher);
@@ -100,10 +96,11 @@ public class WeekAdapter extends ArrayAdapter<Week> {
 
         holder.subject.setText(week.getSubject());
 
-        removeTeacherClick(holder.teacher);
+        TeacherlistActivity.removeTeacherClick(holder.teacher, getContext());
         holder.teacher.setText(week.getTeacher());
         if (!Arrays.asList(External_Const.nothing).contains(week.getTeacher()))
-            teacherClick(holder.teacher, week.getTeacher(), PreferenceUtil.isFullTeacherNames());
+            TeacherlistActivity.teacherClick(holder.teacher, week.getTeacher(), PreferenceUtil.isFullTeacherNames(), mActivity);
+
         if (week.getMoreInfos() != null && !getWeek().getMoreInfos().trim().isEmpty()) {
             holder.teacher.setText(holder.teacher.getText() + " (" + week.getMoreInfos() + ")");
         }
@@ -154,6 +151,8 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         if (!week.getEditable())
             holder.popup.setVisibility(View.INVISIBLE);
 
+        convertView.findViewById(R.id.line).setBackgroundColor(ApplicationFeatures.getTextColorPrimary(getContext()));
+
         return convertView;
     }
 
@@ -179,43 +178,4 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         }
     }
 
-    private void removeTeacherClick(@NonNull View view) {
-        view.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
-        view.setBackgroundResource(0);
-        view.setClickable(false);
-        view.setOnClickListener(null);
-    }
-
-    //TeacherSearch
-    private void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean fullNames) {
-        if (TeacherlistFeatures.isAOL(teacherQuery))
-            return;
-        TypedValue outValue = new TypedValue();
-        getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
-        view.setBackgroundResource(outValue.resourceId);
-
-
-        if (fullNames) {
-            new Thread(() -> {
-                ApplicationFeatures.downloadTeacherlistDoc();
-                try {
-                    mActivity.runOnUiThread(() -> {
-                        String match = SubstitutionFragment.getMatchingTeacher(teacherQuery);
-                        if (match != null)
-                            view.setText(match);
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }).start();
-        } else {
-            view.setText(teacherQuery);
-        }
-
-
-        view.setClickable(true);
-        view.setOnClickListener((View v) -> {
-            //TeacherList Activity
-        });
-    }
 }

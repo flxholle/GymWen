@@ -45,6 +45,8 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.teacherlist.TeacherList;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
+import com.asdoi.gymwen.ui.activities.TeacherlistActivity;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -60,6 +62,16 @@ public class TeacherListFragment extends Fragment {
     @Nullable
     private Context context;
 
+    private String teacherQuery;
+
+    public static TeacherListFragment newInstance(String searchTeacher) {
+        Bundle args = new Bundle();
+        args.putString(TeacherlistActivity.SEARCH_TEACHER, searchTeacher);
+
+        TeacherListFragment fragment = new TeacherListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public TeacherListFragment() {
         // Required empty public constructor
@@ -74,6 +86,7 @@ public class TeacherListFragment extends Fragment {
 
         base = root.findViewById(R.id.teacher_list_base);
         context = getContext();
+
         return root;
     }
 
@@ -81,6 +94,10 @@ public class TeacherListFragment extends Fragment {
     public void onStart() {
         super.onStart();
         ((ActivityFeatures) getActivity()).createLoadingPanel(base);
+        try {
+            teacherQuery = getArguments().getString(TeacherlistActivity.SEARCH_TEACHER, null);
+        } catch (Exception e) {
+        }
 
         new Thread(() -> {
             ApplicationFeatures.downloadTeacherlistDoc();
@@ -104,7 +121,13 @@ public class TeacherListFragment extends Fragment {
             base2.setOrientation(LinearLayout.VERTICAL);
             base2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            base2.addView(createSearchLayout(), 0);
+            TextInputLayout searchInput = createSearchLayout(null);
+            if (teacherQuery != null && !teacherQuery.trim().isEmpty()) {
+                teacherList = TeacherlistFeatures.getTeachers(teacherQuery);
+                searchInput = createSearchLayout(teacherQuery);
+            }
+
+            base2.addView(searchInput, 0);
             base.addView(base2);
 
             teacherListView = new ListView(context);
@@ -132,13 +155,16 @@ public class TeacherListFragment extends Fragment {
     }
 
     @NonNull
-    private com.google.android.material.textfield.TextInputLayout createSearchLayout() {
+    private com.google.android.material.textfield.TextInputLayout createSearchLayout(String query) {
         com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         inputLayout.setLayoutParams(params);
 
         EditText inputText = new EditText(context);
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        if (query != null && !query.trim().isEmpty()) {
+            inputText.setText(query);
+        }
         inputText.setLayoutParams(params);
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
         inputText.setTextColor(ApplicationFeatures.getTextColorSecondary(context));

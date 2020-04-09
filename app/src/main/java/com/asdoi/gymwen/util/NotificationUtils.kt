@@ -223,12 +223,10 @@ class NotificationUtils {
                     countToday.deleteCharAt(countToday.lastIndexOf(", "))
                     countTomorrow.deleteCharAt(countTomorrow.lastIndexOf(", "))
                 } catch (e: java.lang.Exception) {
-                    e.printStackTrace()
                 }
                 try {
                     countTotal.deleteCharAt(countTotal.lastIndexOf(", "))
                 } catch (e: java.lang.Exception) {
-                    e.printStackTrace()
                 }
 
                 if (isNoToday) messageToday = StringBuilder("${ApplicationFeatures.getContext().getString(R.string.notif_nothing)}\n")
@@ -269,10 +267,10 @@ class NotificationUtils {
                         title = "${ApplicationFeatures.getContext().getString(R.string.notif_content_title)} $countTotal"
                         content = titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow
                         SummaryNotification(title, content.split("\n").toTypedArray())
-                    } else if (showToday && !(alertForAllProfiles && daySendInSummaryNotif != today)) {
+                    } else if (showToday && daySendInSummaryNotif == today) {
                         titleToday = "$titleToday $countToday"
                         SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
-                    } else if (showTomorrow && !(alertForAllProfiles && daySendInSummaryNotif != tomorrow)) {
+                    } else if (showTomorrow && daySendInSummaryNotif == tomorrow) {
                         titleTomorrow = "$titleTomorrow $countTomorrow"
                         SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray())
                     }

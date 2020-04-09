@@ -72,7 +72,7 @@ public class RoomPlanFragment extends Fragment {
             generateMarks();
             shouldSelectRoom = false;
 
-            String roomName = getArguments().getString(RoomPlanActivity.SELECT_ROOM);
+            String roomName = getArguments().getString(RoomPlanActivity.SELECT_ROOM, null);
             if (roomName != null && !roomName.trim().isEmpty()) {
                 for (RoomPlanActivity.Room r : getRooms()) {
                     if (r.getName().equalsIgnoreCase(roomName)) {

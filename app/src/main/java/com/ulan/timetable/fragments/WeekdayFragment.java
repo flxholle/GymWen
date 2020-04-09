@@ -26,6 +26,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -104,7 +105,7 @@ public class WeekdayFragment extends Fragment {
         if (PreferenceUtil.isTimeTableSubstitution() && !entries.getNoInternet()) {
             weeks = setupWeekList(weeks);
         }
-        adapter = new WeekAdapter((ActivityFeatures) getActivity(), listView, R.layout.timetable_listview_week_adapter, weeks);
+        adapter = new WeekAdapter((ActivityFeatures) getActivity(), listView, 0, weeks);
         listView.setAdapter(adapter);
     }
 
@@ -269,7 +270,7 @@ public class WeekdayFragment extends Fragment {
 
     private void setupListViewMultiSelect() {
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(FragmentHelper.setupListViewMultiSelect(getActivity(), listView, adapter, db));
+        listView.setMultiChoiceModeListener(FragmentHelper.setupListViewMultiSelect((AppCompatActivity) getActivity(), listView, adapter, db));
     }
 
     public String getKey() {
