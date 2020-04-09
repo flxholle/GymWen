@@ -23,7 +23,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
-import com.asdoi.gymwen.ui.activities.TeacherlistActivity;
+import com.asdoi.gymwen.ui.activities.TeacherListActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.model.Week;
@@ -96,10 +96,10 @@ public class WeekAdapter extends ArrayAdapter<Week> {
 
         holder.subject.setText(week.getSubject());
 
-        TeacherlistActivity.removeTeacherClick(holder.teacher, getContext());
+        TeacherListActivity.removeTeacherClick(holder.teacher, getContext());
         holder.teacher.setText(week.getTeacher());
         if (!Arrays.asList(External_Const.nothing).contains(week.getTeacher()))
-            TeacherlistActivity.teacherClick(holder.teacher, week.getTeacher(), PreferenceUtil.isFullTeacherNames(), mActivity);
+            TeacherListActivity.teacherClick(holder.teacher, week.getTeacher(), PreferenceUtil.isFullTeacherNames(), mActivity);
 
         if (week.getMoreInfos() != null && !getWeek().getMoreInfos().trim().isEmpty()) {
             holder.teacher.setText(holder.teacher.getText() + " (" + week.getMoreInfos() + ")");

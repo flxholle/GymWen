@@ -100,8 +100,10 @@
             android:id="@+id/from_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:text="@string/select_time"
+            android:layout_weight=".7"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/select_start_time"
             android:textAllCaps="true"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
@@ -127,8 +129,10 @@
             android:id="@+id/to_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:text="@string/select_time"
+            android:layout_weight=".7"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/select_end_time"
             android:textAllCaps="true"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
@@ -145,10 +149,10 @@
             android:id="@+id/select_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="50dp"
             android:layout_marginStart="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/white"
             android:text="@string/select_color"
             android:textAlignment="center"
@@ -163,20 +167,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:text="@string/cancel"
-            android:layout_weight="1"
+            android:id="@+id/cancel"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cancel"
-            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog" />
+            android:layout_weight="1"
+            android:text="@string/cancel" />
 
         <Button
-            android:text="@string/save"
-            android:layout_weight="1"
+            android:id="@+id/save"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/save"
-            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog" />
+            android:layout_weight="1"
+            android:text="@string/save" />
 
     </LinearLayout>
 

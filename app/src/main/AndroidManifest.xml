@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.activities.TeacherlistActivity"
+            android:name=".ui.activities.TeacherListActivity"
             android:label="@string/menu_teacher_list" />
         <activity
             android:name=".SubstitutionTimeTableActivity"

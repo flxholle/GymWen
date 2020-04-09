@@ -40,7 +40,7 @@ import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.ui.fragments.TeacherListFragment;
 
-public class TeacherlistActivity extends ActivityFeatures {
+public class TeacherListActivity extends ActivityFeatures {
     @NonNull
     public static String SEARCH_TEACHER = "searchteacher";
 
@@ -80,7 +80,7 @@ public class TeacherlistActivity extends ActivityFeatures {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_teacherlist, menu);
         return true;
     }
 
@@ -131,7 +131,7 @@ public class TeacherlistActivity extends ActivityFeatures {
         view.setClickable(true);
         view.setOnClickListener((View v) -> {
             //TeacherList Activity
-            Intent i = new Intent(activity, TeacherlistActivity.class);
+            Intent i = new Intent(activity, TeacherListActivity.class);
             i.putExtra(SEARCH_TEACHER, teacherQuery);
             activity.startActivity(i);
         });

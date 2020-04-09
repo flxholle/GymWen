@@ -22,7 +22,7 @@ import androidx.cardview.widget.CardView;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
-import com.asdoi.gymwen.ui.activities.TeacherlistActivity;
+import com.asdoi.gymwen.ui.activities.TeacherListActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.model.Exam;
@@ -92,10 +92,10 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
         }
         holder.subject.setText(exam.getSubject());
 
-        TeacherlistActivity.removeTeacherClick(holder.teacher, getContext());
+        TeacherListActivity.removeTeacherClick(holder.teacher, getContext());
         holder.teacher.setText(exam.getTeacher());
         if (!Arrays.asList(External_Const.nothing).contains(exam.getTeacher()))
-            TeacherlistActivity.teacherClick(holder.teacher, exam.getTeacher(), PreferenceUtil.isFullTeacherNames(), mActivity);
+            TeacherListActivity.teacherClick(holder.teacher, exam.getTeacher(), PreferenceUtil.isFullTeacherNames(), mActivity);
 
         holder.room.setText(exam.getRoom());
         holder.room.setOnClickListener((View v) -> {

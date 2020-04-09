@@ -302,8 +302,8 @@ public class AlertDialogsHelper {
                     subject.getText().clear();
                     teacher.getText().clear();
                     room.getText().clear();
-                    from_time.setText(R.string.select_time);
-                    to_time.setText(R.string.select_time);
+                    from_time.setText(R.string.select_end_time);
+                    to_time.setText(R.string.select_end_time);
                     select_color.setBackgroundColor(Color.WHITE);
                     subject.requestFocus();
                     dialog.dismiss();

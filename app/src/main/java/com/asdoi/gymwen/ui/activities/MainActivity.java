@@ -56,7 +56,6 @@ import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
-import com.asdoi.gymwen.ui.fragments.TeacherListFragment;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.github.javiersantos.appupdater.enums.Display;
@@ -81,7 +80,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static final String SHORTCUT_ACTION_NEWSPAPER = "com.asdoi.gymwen.ui.activities.MainActivity.News";
     public static final String SHORTCUT_ACTION_MEBIS = "com.asdoi.gymwen.ui.activities.MainActivity.Mebis";
     public static final String SHORTCUT_ACTION_MENSA = "com.asdoi.gymwen.ui.activities.MainActivity.Mensa";
-    public static final String SHORTCUT_ACTION_TEACHER_LIST = "com.asdoi.gymwen.ui.activities.MainActivity.TeacherList";
     public static final String SHORTCUT_ACTION_GRADES_MANAGEMENT = "com.asdoi.gymwen.ui.activities.MainActivity.GradesManagement";
     public static final String SHORTCUT_ACTION_CLAXSS = "com.asdoi.gymwen.ui.activities.MainActivity.ClaXss";
     public static final String SHORTCUT_ACTION_FORMS = "com.asdoi.gymwen.ui.activities.MainActivity.Forms";
@@ -94,7 +92,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private static int lastLoaded; // 0 = Substitution, 1 = Tabs, 2 = TeacherlistFeatures
     private static final int lastLoadedSubstitution = 0;
     private static final int lastLoadedTabs = 1;
-    private static final int lastLoadedTeacherlist = 2;
 
     private static int lastLoadedInTabs;
     private static final int lastLoadedTabsSpecific = 10;
@@ -232,9 +229,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     break;
                 case SHORTCUT_ACTION_MENSA:
                     onNavigationItemSelected(R.id.nav_mensa);
-                    break;
-                case SHORTCUT_ACTION_TEACHER_LIST:
-                    onNavigationItemSelected(R.id.nav_teacherlist);
                     break;
                 case SHORTCUT_ACTION_GRADES_MANAGEMENT:
                     onNavigationItemSelected(R.id.nav_grades);
@@ -643,10 +637,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         sectionsPagerAdapter.notifyDataSetChanged();
                         break;
-                    case lastLoadedTeacherlist:
-                        ApplicationFeatures.deleteOfflineTeacherlistDoc();
-                        fragment = new TeacherListFragment();
-                        break;
                     case lastLoadedSubstitution:
                     default:
                         ApplicationFeatures.deleteOfflineSubstitutionDocs();
@@ -659,9 +649,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 switch (lastLoaded) {
                     case lastLoadedTabs:
                         sectionsPagerAdapter.notifyDataSetChanged();
-                        break;
-                    case lastLoadedTeacherlist:
-                        fragment = new TeacherListFragment();
                         break;
                     case lastLoadedSubstitution:
                     default:
@@ -676,10 +663,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 showChangelogCK(false);
                 return;
             case R.id.nav_teacherlist:
-                setVisibilitySpinner(false);
-                fragment = new TeacherListFragment();
-                setDesignChangerVisibility(false);
-                break;
+                intent = new Intent(this, TeacherListActivity.class);
+                startActivity(intent);
+                return;
             case R.id.nav_notes:
                 //If app is not installed
                 if (!startApp(External_Const.notes_packageNames)) {
@@ -750,10 +736,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
 
         if (fragment != null) {
-            if (fragment instanceof TeacherListFragment)
-                lastLoaded = lastLoadedTeacherlist;
-            else
-                lastLoaded = lastLoadedSubstitution;
+            lastLoaded = lastLoadedSubstitution;
 
             //Display NavHost Fragment
             findViewById(R.id.view_pager).setVisibility(View.GONE);

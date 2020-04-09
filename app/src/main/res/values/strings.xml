@@ -540,13 +540,15 @@
     <string name="subject_dialog">Fach:</string>
     <string name="teacher_dialog">Lehrer:</string>
     <string name="room_dialog">Zimmer:</string>
-    <string name="select_time">Zeit</string>
+    <string name="select_time">Uhrzeit</string>
+    <string name="select_start_time">Beginn</string>
+    <string name="select_end_time">Ende</string>
     <string name="select_color">Farbe</string>
     <string name="choose_time">Zeit</string>
     <string name="choose_date">Datum</string>
 
     <string name="homeworks">Hausaufgaben</string>
-    <string name="select_date">Datum auswählen</string>
+    <string name="select_date">Datum</string>
     <string name="deadline_dialog">Deadline:</string>
     <string name="description_dialog">Beschreibung:</string>
     <string name="desctiption">Beschreibung</string>

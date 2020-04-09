@@ -22,7 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activities.TeacherlistActivity">
+    tools:context=".ui.activities.TeacherListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

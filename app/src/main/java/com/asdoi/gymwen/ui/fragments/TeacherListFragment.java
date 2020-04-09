@@ -45,7 +45,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.teacherlist.TeacherList;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
-import com.asdoi.gymwen.ui.activities.TeacherlistActivity;
+import com.asdoi.gymwen.ui.activities.TeacherListActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
@@ -66,7 +66,7 @@ public class TeacherListFragment extends Fragment {
 
     public static TeacherListFragment newInstance(String searchTeacher) {
         Bundle args = new Bundle();
-        args.putString(TeacherlistActivity.SEARCH_TEACHER, searchTeacher);
+        args.putString(TeacherListActivity.SEARCH_TEACHER, searchTeacher);
 
         TeacherListFragment fragment = new TeacherListFragment();
         fragment.setArguments(args);
@@ -95,7 +95,7 @@ public class TeacherListFragment extends Fragment {
         super.onStart();
         ((ActivityFeatures) getActivity()).createLoadingPanel(base);
         try {
-            teacherQuery = getArguments().getString(TeacherlistActivity.SEARCH_TEACHER, null);
+            teacherQuery = getArguments().getString(TeacherListActivity.SEARCH_TEACHER, null);
         } catch (Exception e) {
         }
 
