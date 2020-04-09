@@ -20,9 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.adapters.NotesAdapter;
 import com.ulan.timetable.model.Note;
 import com.ulan.timetable.utils.AlertDialogsHelper;
+import com.ulan.timetable.utils.DBUtil;
 import com.ulan.timetable.utils.DbHelper;
 
 import java.util.ArrayList;
@@ -62,10 +64,12 @@ public class NotesActivity extends ActivityFeatures {
         listView = findViewById(R.id.notelist);
         adapter = new NotesAdapter(NotesActivity.this, listView, R.layout.timetable_listview_notes_adapter, db.getNote());
         listView.setAdapter(adapter);
+        int profilePos = DBUtil.getProfilePosition(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, NoteInfoActivity.class);
+                intent.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
                 intent.putExtra(KEY_NOTE, adapter.getNoteList().get(position));
                 startActivity(intent);
             }

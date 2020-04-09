@@ -19,6 +19,7 @@
 package com.asdoi.gymwen.ui.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -39,6 +40,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -46,6 +48,7 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.teacherlist.TeacherList;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.TeacherListActivity;
+import com.asdoi.gymwen.util.PreferenceUtil;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
@@ -129,11 +132,18 @@ public class TeacherListFragment extends Fragment {
 
             base2.addView(searchInput, 0);
             base.addView(base2);
-
             teacherListView = new ListView(context);
             teacherListView.setAdapter(new TeacherListAdapter(context, 0));
             teacherListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            base.addView(teacherListView);
+
+            if (PreferenceUtil.isSwipeToRefresh()) {
+                SwipeRefreshLayout swipeRefreshLayout = new SwipeRefreshLayout(context);
+                swipeRefreshLayout.setOnRefreshListener(() -> ((TeacherListActivity) getActivity()).onOptionsItemSelected(R.id.action_refresh));
+                swipeRefreshLayout.addView(teacherListView);
+                swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.YELLOW, Color.BLUE);
+                base.addView(swipeRefreshLayout);
+            } else
+                base.addView(teacherListView);
 
         });
     }
@@ -155,7 +165,8 @@ public class TeacherListFragment extends Fragment {
     }
 
     @NonNull
-    private com.google.android.material.textfield.TextInputLayout createSearchLayout(String query) {
+    private com.google.android.material.textfield.TextInputLayout createSearchLayout(String
+                                                                                             query) {
         com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         inputLayout.setLayoutParams(params);

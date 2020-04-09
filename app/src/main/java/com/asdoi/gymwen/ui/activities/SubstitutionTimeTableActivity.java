@@ -16,12 +16,15 @@
  *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.asdoi.gymwen;
+package com.asdoi.gymwen.ui.activities;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;

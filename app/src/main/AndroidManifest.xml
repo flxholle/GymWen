@@ -27,7 +27,7 @@
             android:name=".ui.activities.TeacherListActivity"
             android:label="@string/menu_teacher_list" />
         <activity
-            android:name=".SubstitutionTimeTableActivity"
+            android:name=".ui.activities.SubstitutionTimeTableActivity"
             android:label="@string/timetable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

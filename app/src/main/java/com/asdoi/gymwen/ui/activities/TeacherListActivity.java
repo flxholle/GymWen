@@ -86,12 +86,16 @@ public class TeacherListActivity extends ActivityFeatures {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_refresh) {
+        onOptionsItemSelected(item.getItemId());
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void onOptionsItemSelected(int id) {
+        if (id == R.id.action_refresh) {
             ApplicationFeatures.deleteOfflineTeacherlistDoc();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.teacherlist_frame, new TeacherListFragment()).commit();
         }
-        return super.onOptionsItemSelected(item);
     }
 
     public static void removeTeacherClick(@NonNull View view, Context context) {
