@@ -17,10 +17,11 @@ public class FragmentsTabAdapter extends FragmentStatePagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public FragmentsTabAdapter(FragmentManager fm) {
+    public FragmentsTabAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         return mFragmentList.get(position);
@@ -47,6 +48,7 @@ public class FragmentsTabAdapter extends FragmentStatePagerAdapter {
         return POSITION_NONE;
     }
 
+    @NonNull
     public List<Fragment> getFragmentList() {
         return mFragmentList;
     }

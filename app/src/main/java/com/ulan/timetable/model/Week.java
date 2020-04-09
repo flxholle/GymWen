@@ -1,5 +1,7 @@
 package com.ulan.timetable.model;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by Ulan on 07.09.2018.
  */
@@ -88,6 +90,7 @@ public class Week {
         this.teacher = teacher;
     }
 
+    @NonNull
     public String toString() {
         return subject;
     }

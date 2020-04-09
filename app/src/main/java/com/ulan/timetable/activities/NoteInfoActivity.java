@@ -5,6 +5,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
 import com.ulan.timetable.model.Note;
@@ -13,6 +16,7 @@ import com.ulan.timetable.utils.DbHelper;
 public class NoteInfoActivity extends ActivityFeatures {
 
     private DbHelper db;
+    @Nullable
     private Note note;
     private EditText text;
 
@@ -46,7 +50,7 @@ public class NoteInfoActivity extends ActivityFeatures {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 note.setText(text.getText().toString());

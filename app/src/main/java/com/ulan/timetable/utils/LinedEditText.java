@@ -8,6 +8,8 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+
 import com.asdoi.gymwen.R;
 
 /**
@@ -29,7 +31,7 @@ public class LinedEditText extends EditText {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
 
         int height = getHeight();
         int line_height = getLineHeight();

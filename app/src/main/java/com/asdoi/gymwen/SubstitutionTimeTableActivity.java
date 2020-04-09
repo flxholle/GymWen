@@ -20,12 +20,15 @@ package com.asdoi.gymwen;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.ulan.timetable.TimeTableBuilder;
 
 public class SubstitutionTimeTableActivity extends ActivityFeatures {
+    @NonNull
     public static String PROFILE_POSITION = "profilepos";
 
     @Override

@@ -18,7 +18,9 @@
 
 package com.ulan.timetable.utils;
 
-import android.app.Activity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.profiles.ProfileManagement;
@@ -32,11 +34,12 @@ public class DBUtil {
     public static final String database_prefix = "db_profile_";
 
     //Get DB Names from outside of builder
-    public static String getDBName(Activity activity) {
+    @NonNull
+    public static String getDBName(@NonNull AppCompatActivity activity) {
         return database_prefix + getProfilePosition(activity);
     }
 
-    public static int getProfilePosition(Activity activity) {
+    public static int getProfilePosition(@NonNull AppCompatActivity activity) {
         int sharedPref = getProfilePositionFromSharedPreferences();
         try {
             int name = activity.getIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
@@ -60,6 +63,7 @@ public class DBUtil {
         }
     }
 
+    @NonNull
     public static String getDBNameFromSharedPreferences() {
         return database_prefix + getProfilePositionFromSharedPreferences();
     }
@@ -72,7 +76,8 @@ public class DBUtil {
         return ProfileManagement.loadPreferredProfilePosition();
     }
 
-    public static SubstitutionPlan getSubstitutionplanFromGSON(Activity activity) {
+    @Nullable
+    public static SubstitutionPlan getSubstitutionplanFromGSON(@NonNull AppCompatActivity activity) {
         try {
             String todayDoc = activity.getIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TODAY, null);
             if (todayDoc == null)

@@ -50,7 +50,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
+    @NonNull
     public static String LOADURL = "url";
+    @NonNull
     public static String SEARCH = "search";
 
     private boolean search = false;
@@ -98,7 +100,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_website, menu);
         menu.findItem(R.id.action_website_search).setVisible(!search);

@@ -1,6 +1,5 @@
 package com.ulan.timetable.adapters;
 
-import android.app.Activity;
 import android.util.SparseBooleanArray;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -13,6 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 
@@ -30,7 +31,7 @@ import java.util.Objects;
  */
 public class HomeworksAdapter extends ArrayAdapter<Homework> {
 
-    private Activity mActivity;
+    private AppCompatActivity mActivity;
     private int mResource;
     private ArrayList<Homework> homeworklist;
     private Homework homework;
@@ -44,7 +45,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         ImageView popup;
     }
 
-    public HomeworksAdapter(Activity activity, ListView listView, int resource, ArrayList<Homework> objects) {
+    public HomeworksAdapter(@NonNull AppCompatActivity activity, ListView listView, int resource, @NonNull ArrayList<Homework> objects) {
         super(activity, resource, objects);
         mActivity = activity;
         mListView = listView;
@@ -54,7 +55,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
 
     @NonNull
     @Override
-    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String subject = Objects.requireNonNull(getItem(position)).getSubject();
         String description = Objects.requireNonNull(getItem(position)).getDescription();
         String date = Objects.requireNonNull(getItem(position)).getDate();
@@ -88,7 +89,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
                 final DbHelper db = new DbHelper(mActivity);
                 popup.getMenuInflater().inflate(R.menu.timetable_popup_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
+                    public boolean onMenuItemClick(@NonNull MenuItem item) {
                         int itemId = item.getItemId();
                         if (itemId == R.id.delete_popup) {
                             db.deleteHomeworkById(getItem(position));
@@ -127,7 +128,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         return homework;
     }
 
-    private void hidePopUpMenu(ViewHolder holder) {
+    private void hidePopUpMenu(@NonNull ViewHolder holder) {
         SparseBooleanArray checkedItems = mListView.getCheckedItemPositions();
         if (checkedItems.size() > 0) {
             for (int i = 0; i < checkedItems.size(); i++) {

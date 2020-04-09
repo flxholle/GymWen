@@ -218,6 +218,7 @@ public class RoomPlanFragment extends Fragment {
         return roomMarks;
     }
 
+    @NonNull
     private List<String> getRoomNames() {
         List<String> names = new ArrayList<>(0);
         for (RoomPlanActivity.Room r : getRooms()) {
@@ -226,6 +227,7 @@ public class RoomPlanFragment extends Fragment {
         return names;
     }
 
+    @NonNull
     private List<PointF> getRoomLocations() {
         List<PointF> locations = new ArrayList<>(0);
         for (RoomPlanActivity.Room r : getRooms()) {

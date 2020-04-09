@@ -11,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
@@ -34,7 +36,7 @@ public class DailyReceiver extends BroadcastReceiver {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(@NonNull Context context, Intent intent) {
         this.context = context;
 
         String message;
@@ -84,7 +86,7 @@ public class DailyReceiver extends BroadcastReceiver {
         }
     }
 
-    private void createNotificationChannel(Context context) {
+    private void createNotificationChannel(@NonNull Context context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -105,6 +107,7 @@ public class DailyReceiver extends BroadcastReceiver {
         }
     }
 
+    @Nullable
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String getLessons(int day) {
         StringBuilder lessons = new StringBuilder("");
@@ -130,6 +133,7 @@ public class DailyReceiver extends BroadcastReceiver {
         return !lessons.toString().equals("") ? lessons.toString() : null;
     }
 
+    @Nullable
     private String getCurrentDay(int day) {
         String currentDay = null;
         switch (day) {

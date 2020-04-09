@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -47,6 +48,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private boolean switchSevenDays;
 
     private int profilePos = -1;
+    @Nullable
     private SubstitutionPlan substitutionPlan;
 
     @Override
@@ -258,7 +260,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_settings) {
             Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settings);

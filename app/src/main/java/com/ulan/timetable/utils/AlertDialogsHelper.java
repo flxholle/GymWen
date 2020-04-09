@@ -1,6 +1,5 @@
 package com.ulan.timetable.utils;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
@@ -14,7 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -45,7 +46,7 @@ import petrov.kristiyan.colorpicker.ColorPicker;
  */
 public class AlertDialogsHelper {
 
-    public static void getEditSubjectDialog(final Activity activity, final View alertLayout, final ListView listView, final Week week) {
+    public static void getEditSubjectDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ListView listView, @NonNull final Week week) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
@@ -175,7 +176,7 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getAddSubjectDialog(final Activity activity, final View alertLayout, final FragmentsTabAdapter adapter, final ViewPager viewPager) {
+    public static void getAddSubjectDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final FragmentsTabAdapter adapter, @NonNull final ViewPager viewPager) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
@@ -311,7 +312,7 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getEditHomeworkDialog(final Activity activity, final View alertLayout, final ArrayList<Homework> adapter, final ListView listView, int listposition) {
+    public static void getEditHomeworkDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ArrayList<Homework> adapter, @NonNull final ListView listView, int listposition) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
@@ -410,7 +411,7 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getAddHomeworkDialog(final Activity activity, final View alertLayout, final HomeworksAdapter adapter) {
+    public static void getAddHomeworkDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final HomeworksAdapter adapter) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
@@ -518,7 +519,7 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getEditNoteDialog(final Activity activity, final View alertLayout, final ArrayList<Note> adapter, final ListView listView, int listposition) {
+    public static void getEditNoteDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ArrayList<Note> adapter, @NonNull final ListView listView, int listposition) {
         final EditText title = alertLayout.findViewById(R.id.titlenote);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
         final Note note = adapter.get(listposition);
@@ -584,7 +585,7 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getAddNoteDialog(final Activity activity, final View alertLayout, final NotesAdapter adapter) {
+    public static void getAddNoteDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final NotesAdapter adapter) {
         final EditText title = alertLayout.findViewById(R.id.titlenote);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
         final Note note = new Note();
@@ -658,7 +659,7 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getEditExamDialog(final Activity activity, final View alertLayout, final ArrayList<Exam> adapter, final ListView listView, int listposition) {
+    public static void getEditExamDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ArrayList<Exam> adapter, @NonNull final ListView listView, int listposition) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjectexam_dialog);
         editTextHashs.put(R.string.subject, subject);
@@ -791,7 +792,7 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getAddExamDialog(final Activity activity, final View alertLayout, final ExamsAdapter adapter) {
+    public static void getAddExamDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ExamsAdapter adapter) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjectexam_dialog);
         editTextHashs.put(R.string.subject, subject);

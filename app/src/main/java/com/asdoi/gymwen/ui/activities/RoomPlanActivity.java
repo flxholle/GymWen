@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -45,7 +46,9 @@ import java.util.TreeMap;
 
 public class RoomPlanActivity extends ActivityFeatures {
 
+    @NonNull
     public static String SELECT_ROOM = "selectroom";
+    @NonNull
     public static String SEARCH = "search";
 
     private boolean search = false;
@@ -93,6 +96,7 @@ public class RoomPlanActivity extends ActivityFeatures {
         setToolbar(true);
     }
 
+    @NonNull
     public static List<Room> getRoomMarkers() {
         Context context = ApplicationFeatures.getContext();
         List<Room> rooms = new ArrayList<>(0);
@@ -108,7 +112,8 @@ public class RoomPlanActivity extends ActivityFeatures {
         return sortRooms(rooms);
     }
 
-    private static List<Room> sortRooms(List<Room> rooms) {
+    @NonNull
+    private static List<Room> sortRooms(@NonNull List<Room> rooms) {
         Map<Integer, Room> map = new TreeMap<Integer, Room>();
         int failed = 0;
         for (Room room : rooms) {
@@ -141,7 +146,8 @@ public class RoomPlanActivity extends ActivityFeatures {
         return sortedRooms;
     }
 
-    private static String getMatchingFloor(String roomName) {
+    @NonNull
+    private static String getMatchingFloor(@NonNull String roomName) {
         Context context = ApplicationFeatures.getContext();
         if (roomName.length() < 2)
             return "";
@@ -177,7 +183,7 @@ public class RoomPlanActivity extends ActivityFeatures {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_room_plan, menu);
         menu.findItem(R.id.action_room_search).setVisible(!search);
@@ -211,18 +217,19 @@ public class RoomPlanActivity extends ActivityFeatures {
 
     public static class Room {
         private String name;
+        @Nullable
         private String description;
         private PointF location;
         private String floor;
 
-        Room(String name, PointF location) {
+        Room(@NonNull String name, PointF location) {
             this.name = name;
             this.description = "";
             this.location = location;
             floor = getMatchingFloor(name);
         }
 
-        Room(String name, String description, PointF location) {
+        Room(@NonNull String name, @Nullable String description, PointF location) {
             this.name = name;
             if (description == null)
                 this.description = "";
@@ -232,7 +239,7 @@ public class RoomPlanActivity extends ActivityFeatures {
             floor = getMatchingFloor(name);
         }
 
-        Room(String name, String description, String floor, PointF location) {
+        Room(String name, @Nullable String description, String floor, PointF location) {
             this.name = name;
             if (description == null)
                 this.description = "";
@@ -246,6 +253,7 @@ public class RoomPlanActivity extends ActivityFeatures {
             return name;
         }
 
+        @Nullable
         public String getDescription() {
             return description;
         }

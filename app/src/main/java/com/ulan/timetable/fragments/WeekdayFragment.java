@@ -24,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -49,8 +51,10 @@ public class WeekdayFragment extends Fragment {
     public static final String KEY_SATURDAY_FRAGMENT = "Saturday";
     public static final String KEY_SUNDAY_FRAGMENT = "Sunday";
 
+    @Nullable
     private DbHelper db;
     private ListView listView;
+    @Nullable
     private WeekAdapter adapter;
     private View view;
 
@@ -80,7 +84,7 @@ public class WeekdayFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.timetable_fragment_weekday, container, false);
         return view;
@@ -93,7 +97,7 @@ public class WeekdayFragment extends Fragment {
         setupListViewMultiSelect();
     }
 
-    private void setupAdapter(View view) {
+    private void setupAdapter(@NonNull View view) {
         db = new DbHelper(getActivity());
         listView = view.findViewById(R.id.timetable_daylist);
         ArrayList<Week> weeks = db.getWeek(key);
@@ -104,7 +108,8 @@ public class WeekdayFragment extends Fragment {
         listView.setAdapter(adapter);
     }
 
-    public ArrayList<Week> setupWeekList(ArrayList<Week> weeks) {
+    @NonNull
+    public ArrayList<Week> setupWeekList(@NonNull ArrayList<Week> weeks) {
         boolean empty = weeks.isEmpty();
         if (!entries.getNoInternet()) {
             for (int i = 0; i < entries.getEntries().size(); i++) {
@@ -215,7 +220,7 @@ public class WeekdayFragment extends Fragment {
         return sortWeekList(weeks);
     }
 
-    private static void split(ArrayList<Week> weeks, String begin, String end, Week weekEntry, int j, Week week, boolean beginIsFrom) {
+    private static void split(@NonNull ArrayList<Week> weeks, String begin, String end, Week weekEntry, int j, @NonNull Week week, boolean beginIsFrom) {
         if (beginIsFrom) {
             week.setFromTime(end);
 //            week.setEditable(false);
@@ -229,7 +234,7 @@ public class WeekdayFragment extends Fragment {
         }
     }
 
-    private static void checkNext(ArrayList<Week> weeks, String begin, String end, Week weekEntry, int j) {
+    private static void checkNext(@NonNull ArrayList<Week> weeks, String begin, @NonNull String end, Week weekEntry, int j) {
         for (int j2 = j; j2 < weeks.size(); j2++) {
             Week week = weeks.get(j2);
             boolean endIsAfterFrom = end.compareToIgnoreCase(week.getFromTime()) > 0;
@@ -256,7 +261,8 @@ public class WeekdayFragment extends Fragment {
         }
     }
 
-    public ArrayList<Week> sortWeekList(ArrayList<Week> weeks) {
+    @NonNull
+    public ArrayList<Week> sortWeekList(@NonNull ArrayList<Week> weeks) {
         Collections.sort(weeks, (o1, o2) -> o1.getFromTime().compareToIgnoreCase(o2.getFromTime()));
         return weeks;
     }

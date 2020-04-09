@@ -3,6 +3,8 @@ package com.ulan.timetable;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.ulan.timetable.activities.MainActivity;
 
@@ -22,16 +24,19 @@ public class TimeTableBuilder {
         setSubstitutionplan(substitutionPlan);
     }
 
+    @NonNull
     public TimeTableBuilder withActivityTheme(int theme) {
         customTheme = theme;
         return this;
     }
 
+    @NonNull
     public TimeTableBuilder setProfilePos(int value) {
         profilePos = value;
         return this;
     }
 
+    @NonNull
     public TimeTableBuilder setSubstitutionplan(SubstitutionPlan value) {
         substitutionPlan = value;
         return this;
@@ -42,6 +47,7 @@ public class TimeTableBuilder {
      *
      * @return the intent to start the activity
      */
+    @NonNull
     public Intent intent(Context context, Class cl) {
         Intent i = new Intent(context, cl);
         i.putExtra(CUSTOM_THEME, customTheme);
@@ -55,13 +61,13 @@ public class TimeTableBuilder {
     /**
      * start() method to start the application
      */
-    public void start(Context ctx) {
+    public void start(@NonNull Context ctx) {
         Intent i = intent(ctx, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(i);
     }
 
-    public void start(Context ctx, Class cls) {
+    public void start(@NonNull Context ctx, Class cls) {
         Intent i = intent(ctx, cls);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(i);

@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 import java.util.Calendar;
 
 /**
@@ -14,7 +16,7 @@ import java.util.Calendar;
 public class WakeUpAlarmReceiver extends BroadcastReceiver {
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
 
         if (Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(intent.getAction())) {
 

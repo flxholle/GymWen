@@ -14,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.asdoi.gymwen.ActivityFeatures;
@@ -28,7 +29,9 @@ import java.util.ArrayList;
 
 public class NotesActivity extends ActivityFeatures {
 
+    @NonNull
     public static String KEY_NOTE = "note";
+    @NonNull
     private AppCompatActivity context = this;
     private ListView listView;
     private DbHelper db;
@@ -73,14 +76,14 @@ public class NotesActivity extends ActivityFeatures {
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+            public void onItemCheckedStateChanged(@NonNull ActionMode mode, int position, long id, boolean checked) {
                 final int checkedCount = listView.getCheckedItemCount();
                 mode.setTitle(checkedCount + " " + getResources().getString(R.string.selected));
                 if (checkedCount == 0) mode.finish();
             }
 
             @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            public boolean onCreateActionMode(@NonNull ActionMode mode, Menu menu) {
                 MenuInflater menuInflater = mode.getMenuInflater();
                 menuInflater.inflate(R.menu.timetable_toolbar_action_mode, menu);
                 return true;
@@ -92,7 +95,7 @@ public class NotesActivity extends ActivityFeatures {
             }
 
             @Override
-            public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
+            public boolean onActionItemClicked(@NonNull final ActionMode mode, @NonNull MenuItem item) {
                 if (item.getItemId() == R.id.action_delete) {
                     ArrayList<Note> removelist = new ArrayList<>();
                     SparseBooleanArray checkedItems = listView.getCheckedItemPositions();

@@ -53,7 +53,7 @@ public class RoomPlanSearchFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_search_template, container, false);
@@ -95,7 +95,7 @@ public class RoomPlanSearchFragment extends Fragment {
         return root;
     }
 
-    private void search(String query) {
+    private void search(@NonNull String query) {
         List<RoomPlanActivity.Room> all = RoomPlanActivity.getRoomMarkers();
         List<RoomPlanActivity.Room> matches = new ArrayList<>(0);
         for (RoomPlanActivity.Room n : all) {
@@ -128,7 +128,8 @@ public class RoomPlanSearchFragment extends Fragment {
             return content.size();
         }
 
-        private View createView(View base, int position) {
+        @NonNull
+        private View createView(@NonNull View base, int position) {
             RoomPlanActivity.Room room = content.get(position);
 
             base.setOnClickListener((View v) -> ((RoomPlanActivity) getActivity()).showRoom(room.getName()));

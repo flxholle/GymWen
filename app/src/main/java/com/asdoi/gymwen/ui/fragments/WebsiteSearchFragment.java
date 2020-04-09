@@ -62,7 +62,7 @@ public class WebsiteSearchFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_search_template, container, false);
@@ -88,7 +88,7 @@ public class WebsiteSearchFragment extends Fragment {
         }).start();
     }
 
-    private void createLayout(View root) {
+    private void createLayout(@NonNull View root) {
         ((ActivityFeatures) getActivity()).removeLoadingPanel((ViewGroup) root);
         listView.setVisibility(View.VISIBLE);
         listView.setAdapter(new SearchListAdapter(getContext(), 0));
@@ -122,6 +122,7 @@ public class WebsiteSearchFragment extends Fragment {
         });
     }
 
+    @NonNull
     private List<WebsiteSearchLink> getLinks() {
         String url = "http://www.gym-wen.de/startseite/navigation/";
         Document doc = ApplicationFeatures.downloadDoc(url);
@@ -160,7 +161,7 @@ public class WebsiteSearchFragment extends Fragment {
         }
     }
 
-    private void search(String query) {
+    private void search(@NonNull String query) {
         List<WebsiteSearchLink> all = contentAll;
         List<WebsiteSearchLink> matches = new ArrayList<>(0);
         for (WebsiteSearchLink n : all) {
@@ -192,7 +193,8 @@ public class WebsiteSearchFragment extends Fragment {
             return content.size();
         }
 
-        private View createView(View view, int position) {
+        @NonNull
+        private View createView(@NonNull View view, int position) {
             WebsiteSearchLink link = content.get(position);
 
             view.findViewById(R.id.website_search_level1).setVisibility(View.GONE);

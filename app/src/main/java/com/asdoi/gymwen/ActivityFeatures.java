@@ -364,6 +364,7 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         view.removeView(view.findViewWithTag("vertretung_loading"));
     }
 
+    @NonNull
     public ViewGroup createTeacherView(@NonNull TeacherListEntry teacher) {
         LinearLayout base = new LinearLayout(this);
         base.setOrientation(LinearLayout.VERTICAL);

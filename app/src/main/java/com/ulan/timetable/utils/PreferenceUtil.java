@@ -21,6 +21,7 @@ package com.ulan.timetable.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -31,7 +32,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("timetable_subs", true);
     }
 
-    public static void setTimeTableSubstitution(Context context, boolean value) {
+    public static void setTimeTableSubstitution(@NonNull Context context, boolean value) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("timetable_subs", value);
         editor.commit();

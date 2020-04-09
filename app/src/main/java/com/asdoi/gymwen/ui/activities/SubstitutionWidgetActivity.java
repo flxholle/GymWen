@@ -140,7 +140,8 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
                 .commit();
     }
 
-    public static ArrayList<Integer> loadPref(Context context, int appWidgetId) {
+    @NonNull
+    public static ArrayList<Integer> loadPref(@NonNull Context context, int appWidgetId) {
         String s = PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_PREFIX_KEY + appWidgetId, null);
         if (s == null)
             return new ArrayList<>(0);

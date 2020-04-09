@@ -1,6 +1,5 @@
 package com.ulan.timetable.utils;
 
-import android.app.Activity;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -8,6 +7,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.asdoi.gymwen.R;
 import com.ulan.timetable.adapters.WeekAdapter;
@@ -20,17 +22,18 @@ import java.util.ArrayList;
  */
 public class FragmentHelper {
 
-    public static AbsListView.MultiChoiceModeListener setupListViewMultiSelect(final Activity activity, final ListView listView, final WeekAdapter adapter, final DbHelper db) {
+    @NonNull
+    public static AbsListView.MultiChoiceModeListener setupListViewMultiSelect(@NonNull final AppCompatActivity activity, @NonNull final ListView listView, @NonNull final WeekAdapter adapter, @NonNull final DbHelper db) {
         return new AbsListView.MultiChoiceModeListener() {
             @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+            public void onItemCheckedStateChanged(@NonNull ActionMode mode, int position, long id, boolean checked) {
                 final int checkedCount = listView.getCheckedItemCount();
                 mode.setTitle(checkedCount + " " + activity.getResources().getString(R.string.selected));
                 if (checkedCount == 0) mode.finish();
             }
 
             @Override
-            public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
+            public boolean onActionItemClicked(@NonNull final ActionMode mode, @NonNull MenuItem item) {
                 if (item.getItemId() == R.id.action_delete) {
                     ArrayList<Week> removelist = new ArrayList<>();
                     SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
@@ -49,7 +52,7 @@ public class FragmentHelper {
             }
 
             @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            public boolean onCreateActionMode(@NonNull ActionMode mode, Menu menu) {
                 MenuInflater menuInflater = mode.getMenuInflater();
                 menuInflater.inflate(R.menu.timetable_toolbar_action_mode, menu);
                 return true;
