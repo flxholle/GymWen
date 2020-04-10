@@ -28,6 +28,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
+import com.asdoi.gymwen.util.PreferenceUtil;
 import com.github.javiersantos.appupdater.enums.Display;
 
 public class SettingsFragmentRoot extends PreferenceFragmentCompat {
@@ -51,9 +52,11 @@ public class SettingsFragmentRoot extends PreferenceFragmentCompat {
         });
 
         myPref = findPreference("shortcuts_array");
-        if (Build.VERSION.SDK_INT >= 25)
+        if (Build.VERSION.SDK_INT >= 25) {
             myPref.setVisible(true);
-        else
+            String[] defaultValues = PreferenceUtil.isParents() ? getContext().getResources().getStringArray(R.array.shortcuts_array_values_default_parent_mode) : getContext().getResources().getStringArray(R.array.shortcuts_array_values_default);
+            myPref.setDefaultValue(defaultValues);
+        } else
             myPref.setVisible(false);
     }
 }

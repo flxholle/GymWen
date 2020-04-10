@@ -116,11 +116,11 @@ class NotificationUtils {
                         val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), checkProfileList[p].coursesArray)
                         daySendInSummaryNotif = when (whichDayIsToday) {
                             today -> {
-                                MainNotification(SubstitutionPlanFeatures.getTodayTitleString(), if (summarize) temp.getDay(true).summarizeUp("-") else temp.getDay(true), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
+                                MainNotification(SubstitutionPlanFeatures.getTodayTitleString(), if (summarize) temp.todaySummarized else temp.getDay(true), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
                                 tomorrow
                             }
                             tomorrow -> {
-                                MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), if (summarize) temp.getDay(false).summarizeUp("-") else temp.getDay(false), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
+                                MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), if (summarize) temp.tomorrowSummarized else temp.getDay(false), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
                                 today
                             }
                             else -> none
@@ -153,7 +153,7 @@ class NotificationUtils {
                                 countTomorrow.append(", ")
                                 countTotal.append(content.entries.size)
                                 countTotal.append(", ")
-                                content = if (summarize) temp.getDay(false).summarizeUp("-") else content
+                                content = if (summarize) temp.tomorrowSummarized else content
                                 if (content.size() != 0) {
                                     if (isMoreThanOneProfile) {
                                         messageTomorrow.append(ProfileManagement.getProfile(i).name)
@@ -175,7 +175,7 @@ class NotificationUtils {
                         countToday.append(", ")
                         countTotal.append(content.entries.size)
                         countTotal.append("|")
-                        content = if (summarize) temp.getDay(true).summarizeUp("-") else content
+                        content = if (summarize) temp.todaySummarized else content
                         if (content.size() != 0) {
                             if (isMoreThanOneProfile) {
                                 messageToday.append(ProfileManagement.getProfile(i).name)
@@ -204,7 +204,7 @@ class NotificationUtils {
                         countTomorrow.append(", ")
                         countTotal.append(content.entries.size)
                         countTotal.append(", ")
-                        content = if (summarize) temp.getDay(false).summarizeUp("-") else content
+                        content = if (summarize) temp.tomorrowSummarized else content
                         if (content.size() != 0) {
                             if (isMoreThanOneProfile) {
                                 messageTomorrow.append(ProfileManagement.getProfile(i).name)

@@ -36,6 +36,7 @@ public class SubstitutionTimeTableActivity extends ActivityFeatures {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_substitution_time_table);
     }

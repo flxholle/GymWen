@@ -43,7 +43,7 @@ class ShortcutUtils {
             val shortcutList = mutableListOf<ShortcutInfo>()
             var shortcuts: Array<String>
 
-            val default = context.resources.getStringArray(R.array.shortcuts_array_values_default)
+            val default = if (PreferenceUtil.isParents()) context.resources.getStringArray(R.array.shortcuts_array_values_default_parent_mode) else context.resources.getStringArray(R.array.shortcuts_array_values_default)
 
             val shortcutsPreference = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getStringSet("shortcuts_array", null)
             shortcuts = shortcutsPreference?.toTypedArray() ?: default

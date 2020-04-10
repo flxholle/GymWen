@@ -74,4 +74,11 @@
         <item>mensa</item>
         <item>grades_management</item>
     </string-array>
+
+    <string-array name="shortcuts_array_values_default_parent_mode">
+        <item>website</item>
+        <item>claxss</item>
+        <item>forms</item>
+        <item>roomplan_search</item>
+    </string-array>
 </resources>

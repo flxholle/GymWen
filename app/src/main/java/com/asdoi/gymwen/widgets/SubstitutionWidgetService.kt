@@ -99,8 +99,8 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
             //Today
             if (showToday) {
                 today = tempSubstitutionplan.getTitleString(true)
-                var todayList = tempSubstitutionplan.getDay(true)
-                if (summarize) todayList = todayList.summarizeUp("-")
+                var todayList = tempSubstitutionplan.today
+                if (summarize) todayList = tempSubstitutionplan.todaySummarized
                 if (todayList.getNoInternet()) {
                     noInternet = true
                     break
@@ -111,8 +111,8 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
             //Tomorrow
             if (showTomorrow) {
                 tomorrow = tempSubstitutionplan.getTitleString(false)
-                var tomorrowList = tempSubstitutionplan.getDay(false)
-                if (summarize) tomorrowList = tomorrowList.summarizeUp("-")
+                var tomorrowList = tempSubstitutionplan.tomorrow
+                if (summarize) tomorrowList = tempSubstitutionplan.tomorrowSummarized
                 if (tomorrowList.getNoInternet()) {
                     noInternet = true
                     break

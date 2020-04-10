@@ -172,7 +172,7 @@ public class SubstitutionPlan {
      */
     //Substitution plan
     @NonNull
-    public SubstitutionList getDay(boolean today) {
+    private SubstitutionList getDay(boolean today, boolean hours) {
         SubstitutionList content;
 
         if (today) {
@@ -191,6 +191,11 @@ public class SubstitutionPlan {
     }
 
     @NonNull
+    public SubstitutionList getDay(boolean today) {
+        return getDay(today, hours);
+    }
+
+    @NonNull
     public SubstitutionList getToday() {
         return getDay(true);
     }
@@ -201,13 +206,18 @@ public class SubstitutionPlan {
     }
 
     @NonNull
+    public SubstitutionList getDaySummarized(boolean today) {
+        return getDay(today, false).summarizeUp("-", hours);
+    }
+
+    @NonNull
     public SubstitutionList getTodaySummarized() {
-        return getToday().summarizeUp("-");
+        return getDay(true, false).summarizeUp("-", hours);
     }
 
     @NonNull
     public SubstitutionList getTomorrowSummarized() {
-        return getTomorrow().summarizeUp("-");
+        return getDay(false, false).summarizeUp("-", hours);
     }
 
 
@@ -215,8 +225,8 @@ public class SubstitutionPlan {
      * @param today: boolean if the plan of today or tomorrow should be analyzed
      * @return an tow-dimensional String array with every entry of the plan. An entry has the same order like the plan online. My one looks like this: new String[]{class, hour, subject, sit-in, room, moreInformation}
      */
-    @Nullable
-    public SubstitutionList getAll(boolean today) {
+    @NonNull
+    private SubstitutionList getAll(boolean today, boolean hours) {
         try {
             SubstitutionList content;
 
@@ -238,6 +248,10 @@ public class SubstitutionPlan {
         }
     }
 
+    public SubstitutionList getAll(boolean today) {
+        return getAll(today, hours);
+    }
+
     @Nullable
     public SubstitutionList getTodayAll() {
         return getAll(true);
@@ -250,12 +264,12 @@ public class SubstitutionPlan {
 
     @NonNull
     public SubstitutionList getTodayAllSummarized() {
-        return getTodayAll().summarizeUp("-");
+        return getAll(true, false).summarizeUp("-", hours);
     }
 
     @NonNull
     public SubstitutionList getTomorrowAllSummarized() {
-        return getTomorrowAll().summarizeUp("-");
+        return getAll(false, false).summarizeUp("-", hours);
     }
 
 

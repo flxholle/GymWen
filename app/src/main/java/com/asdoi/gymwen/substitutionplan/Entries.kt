@@ -72,7 +72,7 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
         return returnValue
     }
 
-    fun changeHourToTime() {
+    protected fun changeHourToTime() {
         entries = changeToTime(entries)
     }
 
@@ -91,7 +91,7 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
         return list
     }
 
-    fun summarizeUp(separator: String = "-"): SubstitutionList {
+    protected fun summarizeUp(separator: String = "-", hours: Boolean = PreferenceUtil.isHour()): SubstitutionList {
         if (noInternet)
             return this
         val newList = mutableListOf<SubstitutionEntry>()
@@ -115,6 +115,26 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
         }
 
         entries = newList
+
+        if (hours) {
+            try {
+                for (entry in entries) {
+                    val separatorIndex = entry.hour.indexOf(separator)
+                    if (separatorIndex > 0) {
+                        var begin = entry.hour.substring(0, separatorIndex)
+                        var end = entry.hour.substring(separatorIndex + 1)
+                        begin = getMatchingStartTime(begin.toInt())
+                        end = getMatchingEndTime(end.toInt())
+                        entry.hour = begin + separator + end
+                    } else {
+                        entry.hour = getMatchingStartTime(entry.hour.toInt())
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         return this
     }
 
