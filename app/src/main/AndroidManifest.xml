@@ -29,7 +29,7 @@
         <activity
             android:name=".ui.activities.SubstitutionTimeTableActivity"
             android:label="@string/timetable"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashThemeTimeTable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,7 +60,7 @@
             android:name=".ui.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashThemeMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
