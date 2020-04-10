@@ -68,6 +68,7 @@ import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.util.ShortcutUtils;
 import com.asdoi.gymwen.widgets.SubstitutionWidgetProvider;
 import com.asdoi.gymwen.widgets.SummaryWidget;
+import com.kabouzeid.appthemehelper.ThemeStore;
 
 import org.acra.ACRA;
 import org.acra.annotation.AcraCore;
@@ -134,6 +135,14 @@ public class ApplicationFeatures extends MultiDexApplication {
 
         // Support vector drawable support for pre-Lollipop devices
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
+        // default theme
+        if (!ThemeStore.isConfigured(this, 1)) {
+            ThemeStore.editTheme(this)
+                    .primaryColorRes(R.color.colorPrimary)
+                    .accentColorRes(R.color.colorAccent)
+                    .commit();
+        }
 
         mContext = this;
         ACRA.init(this);

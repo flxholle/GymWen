@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 
-import com.afollestad.appthemeengine.ATE;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
@@ -88,8 +87,6 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
             holder.cardView = convertView.findViewById(R.id.exams_cardview);
             holder.popup = convertView.findViewById(R.id.popupbtn);
             convertView.setTag(holder);
-            // Only apply the first time the view is created
-            ATE.apply(convertView.getContext(), convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }

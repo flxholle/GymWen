@@ -49,7 +49,6 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.afollestad.appthemeengine.ATE;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -856,8 +855,6 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_substitution_all_entry, null);
-                // Only apply the first time the view is created
-                ATE.apply(convertView.getContext(), convertView);
             }
             return getEntryAll(convertView, content.getEntries().get(position), sons);
         }
@@ -964,15 +961,11 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             if (old) {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_substitution_specific_entry, null);
-                    // Only apply the first time the view is created
-                    ATE.apply(convertView.getContext(), convertView);
                 }
                 return getEntrySpecific(convertView, content.getEntries().get(position), senior, sons);
             } else {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.list_substitution_specific_card, null);
-                    // Only apply the first time the view is created
-                    ATE.apply(convertView.getContext(), convertView);
                 }
                 return getEntrySpecificNewDesign(convertView, content.getEntries().get(position), !content.getEntries().get(position).getMoreInformation().trim().isEmpty());
             }

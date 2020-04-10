@@ -34,6 +34,8 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.kabouzeid.appthemehelper.ThemeStore;
+import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.adapters.FragmentsTabAdapter;
 import com.ulan.timetable.fragments.WeekdayFragment;
@@ -88,6 +90,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
         if (Build.VERSION.SDK_INT >= 21)
             findViewById(R.id.fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
+        int accentColor = ThemeStore.accentColor(this);
+        NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
+        NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
         ((Toolbar) findViewById(R.id.toolbar)).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
         appBarLayout.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));

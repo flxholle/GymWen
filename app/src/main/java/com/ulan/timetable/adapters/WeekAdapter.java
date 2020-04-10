@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 
-import com.afollestad.appthemeengine.ATE;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -91,8 +90,6 @@ public class WeekAdapter extends ArrayAdapter<Week> {
             holder.popup = convertView.findViewById(R.id.popupbtn);
             holder.cardView = convertView.findViewById(R.id.week_cardview);
             convertView.setTag(holder);
-            // Only apply the first time the view is created
-            ATE.apply(convertView.getContext(), convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }

@@ -36,7 +36,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.afollestad.appthemeengine.ATE;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -77,8 +76,6 @@ public class ProfileActivityFragment extends Fragment {
         public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_profiles_entry, null);
-                // Only apply the first time the view is created
-                ATE.apply(convertView.getContext(), convertView);
             }
 
             return generateView(convertView, position);

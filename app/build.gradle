@@ -108,7 +108,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
-    implementation 'com.github.tsili852:app-theme-engine:0.2.1'
+    implementation 'com.github.kabouzeid:app-theme-helper:1.3.10'
     implementation 'com.github.Pradyuman7:ChocoBar:V1.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.ritesh:ratiolayout:1.0.0'

@@ -30,6 +30,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -39,7 +40,6 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +54,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
@@ -61,8 +62,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.preference.PreferenceManager;
 
-import com.afollestad.appthemeengine.ATE;
-import com.afollestad.appthemeengine.ATEActivity;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.profiles.ProfileManagement;
@@ -78,6 +77,10 @@ import com.github.javiersantos.appupdater.enums.AppUpdaterError;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
+import com.kabouzeid.appthemehelper.ATH;
+import com.kabouzeid.appthemehelper.ThemeStore;
+import com.kabouzeid.appthemehelper.util.ColorUtil;
+import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.pd.chocobar.ChocoBar;
 
 import java.io.File;
@@ -98,7 +101,7 @@ import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
 
-public abstract class ActivityFeatures extends ATEActivity {
+public abstract class ActivityFeatures extends AppCompatActivity {
 
     @NonNull
     public Context getContext() {
@@ -112,15 +115,15 @@ public abstract class ActivityFeatures extends ATEActivity {
     @Override
     public void onStart() {
         super.onStart();
-//        setColorized();
         setupColors();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        setTheme(PreferenceUtil.getGeneralTheme());
-//        setColorized();
+        setTheme(PreferenceUtil.getGeneralTheme());
+        setStatusbarColorAuto();
         super.onCreate(savedInstanceState);
+        MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
     }
 
     @Override
@@ -134,33 +137,10 @@ public abstract class ActivityFeatures extends ATEActivity {
 
 
     //Colors
-    public void setColorized() {
-        // default theme
-//        if (!ATE.config(this).isConfigured()) {
-//            // Setup default options
-//            ATE.config(this) // context
-//                    .primaryColorRes(R.color.colorPrimary)
-//                    .primaryColorDarkRes(R.color.colorPrimaryDark)
-//                    .accentColorRes(R.color.colorAccent)
-//                    .coloredStatusBar(true)
-//                    .coloredActionBar(true)
-//                    .coloredNavigationBar(false)
-//                    .autoGeneratePrimaryDark(true)
-//                    .navigationViewThemed(true)
-//                    .apply(this); // activity, fragment, or view
-//        } else {
-        ATE.config(this) // context
-                .primaryColor(ApplicationFeatures.getPrimaryColor(getContext()))
-                .accentColor(ApplicationFeatures.getAccentColor(getContext()))
-                .coloredStatusBar(true)
-                .coloredActionBar(true)
-                .coloredNavigationBar(false)
-                .autoGeneratePrimaryDark(true)
-                .navigationViewThemed(true)
-                .apply(this); // activity, fragment, or view
-//        }
-    }
 
+    /**
+     * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
+     */
 
     protected abstract void setupColors();
 
@@ -179,12 +159,48 @@ public abstract class ActivityFeatures extends ATEActivity {
         }
     }
 
+    private void setNavigationbarColor(int color) {
+        if (ThemeStore.coloredNavigationBar(this)) {
+            ATH.setNavigationbarColor(this, color);
+        } else {
+            ATH.setNavigationbarColor(this, Color.BLACK);
+        }
+    }
 
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        // When the overflow menu opens, a tint is applied to the widget views inside
-//        ATE.applyMenu(findViewById(R.id.toolbar));
-        return super.onMenuOpened(featureId, menu);
+    public void setNavigationbarColorAuto() {
+//        setNavigationbarColor(ThemeStore.navigationBarColor(this));
+        setNavigationbarColor(ApplicationFeatures.getPrimaryColor(this));
+    }
+
+    private void setStatusbarColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            final View statusBar = /*getWindow().getDecorView().getRootView().findViewById(R.id.status_bar)*/ null;
+            if (statusBar != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    statusBar.setBackgroundColor(ColorUtil.darkenColor(color));
+                    setLightStatusbarAuto(color);
+                } else {
+                    statusBar.setBackgroundColor(color);
+                }
+            } else if (Build.VERSION.SDK_INT >= 21) {
+                getWindow().setStatusBarColor(ColorUtil.darkenColor(color));
+                setLightStatusbarAuto(color);
+            }
+        }
+    }
+
+    private void setStatusbarColorAuto() {
+        // we don't want to use statusbar color because we are doing the color darkening on our own to support KitKat
+//        setStatusbarColor(ThemeStore.primaryColor(this));
+        setStatusbarColor(ApplicationFeatures.getPrimaryColor(this));
+    }
+
+    private void setLightStatusbar(boolean enabled) {
+        ATH.setLightStatusbar(this, enabled);
+    }
+
+    private void setLightStatusbarAuto(int bgColor) {
+        setLightStatusbar(ColorUtil.isColorLight(bgColor));
     }
 
 
@@ -543,8 +559,7 @@ public abstract class ActivityFeatures extends ATEActivity {
     //DownloadManager
     private long downloadID;
 
-    private void startDownload(String url, String title, String description, String
-            dirType, String subPath, BroadcastReceiver onComplete) {
+    private void startDownload(String url, String title, String description, String dirType, String subPath, BroadcastReceiver onComplete) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -595,7 +610,8 @@ public abstract class ActivityFeatures extends ATEActivity {
     }
 
     @NonNull
-    private final BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
+    private final
+    BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
             Intent i = new Intent(getContext(), MainActivity.class);
             startActivity(i);
@@ -652,7 +668,8 @@ public abstract class ActivityFeatures extends ATEActivity {
     }
 
     @NonNull
-    private final BroadcastReceiver openGradesFile = new BroadcastReceiver() {
+    private final
+    BroadcastReceiver openGradesFile = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
             openGradesFile();
             unregisterReceiver(this);

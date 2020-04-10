@@ -37,7 +37,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
-import com.afollestad.appthemeengine.ATE;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -168,8 +167,6 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
         public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_profiles_entry, null);
-                // Only apply the first time the view is created
-                ATE.apply(convertView.getContext(), convertView);
             }
 
             return generateView(convertView, position);
