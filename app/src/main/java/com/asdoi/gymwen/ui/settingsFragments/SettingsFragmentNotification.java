@@ -18,16 +18,17 @@
 
 package com.asdoi.gymwen.ui.settingsFragments;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 
@@ -50,8 +51,14 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
 
         myPref = findPreference("alarm");
         myPref.setOnPreferenceClickListener((Preference p) -> {
-            PreferenceUtil.setAlarmTime(0);
-            ((ActivityFeatures) getActivity()).createTimePicker();
+            int[] times = PreferenceUtil.getAlarmTime();
+            TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                    (view, hourOfDay, minute) -> {
+                        PreferenceUtil.setAlarmTime(hourOfDay, minute, 0);
+                        ApplicationFeatures.setAlarm(getContext(), AlarmReceiver.class, hourOfDay, minute, 0, AlarmReceiver.AlarmReceiverID);
+                    }, times[0], times[1], true);
+            timePickerDialog.setTitle(R.string.choose_time);
+            timePickerDialog.show();
             return true;
         });
 

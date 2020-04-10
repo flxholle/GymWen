@@ -192,10 +192,6 @@ public class PreferenceUtil {
         return getBooleanSettings("showSummaryNotification", true);
     }
 
-    public static boolean isTimeTableNotification() {
-        return getBooleanSettings("timetableNotif", true);
-    }
-
     public static boolean isMensa() {
         return getBooleanSettings("menu_mensa", true);
     }
@@ -250,7 +246,7 @@ public class PreferenceUtil {
     @NonNull
     public static int[] getAlarmTime() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
-        return new int[]{sharedPref.getInt("Alarm_hour", -1), sharedPref.getInt("Alarm_minute", -1), sharedPref.getInt("Alarm_second", -1)};
+        return new int[]{sharedPref.getInt("Alarm_hour", 1), sharedPref.getInt("Alarm_minute", 1), sharedPref.getInt("Alarm_second", 0)};
     }
 
     public static void setAlarmTime(@NonNull int... times) {
@@ -270,7 +266,6 @@ public class PreferenceUtil {
         editor.putInt("Alarm_minute", times[1]);
         editor.putInt("Alarm_second", times[2]);
         editor.commit();
-
     }
 
     public static int getIntSettings(String key, int defaultValue) {

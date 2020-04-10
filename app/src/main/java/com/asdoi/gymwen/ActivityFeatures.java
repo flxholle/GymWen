@@ -64,7 +64,6 @@ import androidx.preference.PreferenceManager;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.profiles.ProfileManagement;
-import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.teacherlist.TeacherListEntry;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
@@ -82,7 +81,6 @@ import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.ColorUtil;
 import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.pd.chocobar.ChocoBar;
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,7 +88,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -103,7 +100,7 @@ import saschpe.android.customtabs.CustomTabsHelper;
 import saschpe.android.customtabs.WebViewFallback;
 
 
-public abstract class ActivityFeatures extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public abstract class ActivityFeatures extends AppCompatActivity {
 
     @NonNull
     public Context getContext() {
@@ -638,34 +635,6 @@ public abstract class ActivityFeatures extends AppCompatActivity implements Time
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + telNr));
         startActivity(intent);
-    }
-
-
-    //Time picker
-    public void createTimePicker() {
-        Calendar now = Calendar.getInstance();
-
-        TimePickerDialog tpd = TimePickerDialog.newInstance(
-                this,
-                now.get(Calendar.HOUR_OF_DAY),
-                now.get(Calendar.MINUTE),
-                true
-        );
-        tpd.setVersion(TimePickerDialog.Version.VERSION_2);
-        tpd.setTitle(ApplicationFeatures.getContext().getString(R.string.time_picker_title));
-        tpd.setAccentColor(ApplicationFeatures.getAccentColor(this));
-        tpd.setCancelColor(ApplicationFeatures.getAccentColor(this));
-        tpd.setOkColor(ApplicationFeatures.getAccentColor(this));
-        tpd.setThemeDark(PreferenceUtil.isDark());
-        tpd.vibrate(false);
-        tpd.show(this.getSupportFragmentManager(), "Timepickerdialog");
-    }
-
-    @Override
-    public void onTimeSet(@NonNull TimePickerDialog view, int hourOfDay, int minute, int second) {
-        PreferenceUtil.setAlarmTime(hourOfDay, minute, second);
-        ApplicationFeatures.setAlarm(this, AlarmReceiver.class, hourOfDay, minute, second, AlarmReceiver.AlarmReceiverID);
-        view.dismiss();
     }
 
 

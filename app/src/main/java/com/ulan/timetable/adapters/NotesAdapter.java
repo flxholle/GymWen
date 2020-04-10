@@ -86,10 +86,12 @@ public class NotesAdapter extends ArrayAdapter<Note> {
                     public boolean onMenuItemClick(@NonNull MenuItem item) {
                         int itemId = item.getItemId();
                         if (itemId == R.id.delete_popup) {
-                            db.deleteNoteById(getItem(position));
-                            db.updateNote(getItem(position));
-                            notelist.remove(position);
-                            notifyDataSetChanged();
+                            AlertDialogsHelper.getDeleteDialog(getContext(), () -> {
+                                db.deleteNoteById(getItem(position));
+                                db.updateNote(getItem(position));
+                                notelist.remove(position);
+                                notifyDataSetChanged();
+                            });
                             return true;
                         } else if (itemId == R.id.edit_popup) {
                             final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.timetable_dialog_add_note, null);
@@ -97,7 +99,9 @@ public class NotesAdapter extends ArrayAdapter<Note> {
                             notifyDataSetChanged();
                             return true;
                         }
-                        return onMenuItemClick(item);
+                        return
+
+                                onMenuItemClick(item);
                     }
                 });
                 popup.show();

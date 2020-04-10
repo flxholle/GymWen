@@ -13,14 +13,14 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
-import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.activities.MainActivity;
+import com.ulan.timetable.model.Week;
 
 import java.util.Calendar;
 import java.util.UUID;
@@ -30,15 +30,32 @@ import java.util.UUID;
  */
 public class DailyReceiver extends BroadcastReceiver {
     private static final String CHANNEL_ID = "timetable_notification";
+    public static int DailyReceiverID = 10000;
 
     Context context;
     DbHelper db;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onReceive(@NonNull Context context, Intent intent) {
         this.context = context;
 
+        if (intent.getAction() != null) {
+            if (intent.getAction().equalsIgnoreCase(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
+                // Set the alarm here.
+                int[] times = PreferenceUtil.getTimeTableAlarmTime();
+                ApplicationFeatures.setAlarm(context, DailyReceiver.class, times[0], times[1], times[2], DailyReceiverID);
+            }
+        }
+
+        if (!PreferenceUtil.isTimeTableAlarmOn(context)) {
+            ApplicationFeatures.cancelAlarm(context, DailyReceiver.class, DailyReceiverID);
+            return;
+        }
+
+        sendNotification(context);
+    }
+
+    private void sendNotification(@NonNull Context context) {
         String message;
 
         long when = System.currentTimeMillis();
@@ -70,7 +87,7 @@ public class DailyReceiver extends BroadcastReceiver {
                 .setContentIntent(pendingIntent);
 
 
-        if (PreferenceUtil.isAlwaysNotification()) {
+        if (com.asdoi.gymwen.util.PreferenceUtil.isAlwaysNotification()) {
             //Dismiss button intent
             Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
             buttonIntent.setAction("com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver");
@@ -108,12 +125,11 @@ public class DailyReceiver extends BroadcastReceiver {
     }
 
     @Nullable
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private String getLessons(int day) {
         StringBuilder lessons = new StringBuilder("");
         String currentDay = getCurrentDay(day);
 
-        db.getWeek(currentDay).forEach(week -> {
+        for (Week week : db.getWeek(currentDay)) {
             if (week != null) {
                 lessons.append(week.getSubject())
                         .append(" ")
@@ -128,7 +144,7 @@ public class DailyReceiver extends BroadcastReceiver {
                         .append(week.getRoom())
                         .append("\n");
             }
-        });
+        }
 
         return !lessons.toString().equals("") ? lessons.toString() : null;
     }

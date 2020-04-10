@@ -38,7 +38,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                 // Set the alarm here.
                 int[] times = PreferenceUtil.getAlarmTime();
                 ApplicationFeatures.setAlarm(context, AlarmReceiver.class, times[0], times[1], times[2], AlarmReceiverID);
-                return;
             }
         }
 

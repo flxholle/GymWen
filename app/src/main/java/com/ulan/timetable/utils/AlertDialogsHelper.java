@@ -2,6 +2,7 @@ package com.ulan.timetable.utils;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -302,7 +304,7 @@ public class AlertDialogsHelper {
                     subject.getText().clear();
                     teacher.getText().clear();
                     room.getText().clear();
-                    from_time.setText(R.string.select_end_time);
+                    from_time.setText(R.string.select_start_time);
                     to_time.setText(R.string.select_end_time);
                     select_color.setBackgroundColor(Color.WHITE);
                     subject.requestFocus();
@@ -930,5 +932,23 @@ public class AlertDialogsHelper {
                 }
             }
         });
+    }
+
+    public static void getDeleteDialog(Context context, Runnable runnable) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
+        builder.title(context.getString(R.string.profiles_delete_submit_heading));
+
+
+        builder.positiveText(context.getString(R.string.yes));
+        builder.onPositive((dialog, which) -> {
+            runnable.run();
+            dialog.dismiss();
+        });
+
+        builder.onNegative((dialog, which) -> dialog.dismiss());
+
+        builder.negativeText(context.getString(R.string.no));
+
+        builder.show();
     }
 }

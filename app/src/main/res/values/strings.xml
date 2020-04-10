@@ -578,5 +578,7 @@
 
     <string name="integrate_substitution_in_timetable">Vertretungen im Stundenplan anzeigen</string>
     <string name="integrate_substitution_in_timetable_desc">Zum Editieren des Stundenplans besser ausschalten</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="submit_delete">Wirklich löschen?</string>
 
 </resources>

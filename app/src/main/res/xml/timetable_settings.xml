@@ -19,6 +19,10 @@
         android:key="alwaysNotification"
         android:summary="@string/set_desc_alwaysNotification"
         android:title="@string/set_notification_showAlways" />
+    <Preference
+        android:key="timetable_alarm"
+        android:summary="@string/set_desc_alarm"
+        android:title="@string/set_notification_alarm" />
 
     <SwitchPreferenceCompat
         android:defaultValue="true"

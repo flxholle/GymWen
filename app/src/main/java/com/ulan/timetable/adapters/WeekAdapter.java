@@ -129,10 +129,12 @@ public class WeekAdapter extends ArrayAdapter<Week> {
                     public boolean onMenuItemClick(@NonNull MenuItem item) {
                         int itemId = item.getItemId();
                         if (itemId == R.id.delete_popup) {
-                            db.deleteWeekById(getItem(position));
-                            db.updateWeek(getItem(position));
-                            weeklist.remove(position);
-                            notifyDataSetChanged();
+                            AlertDialogsHelper.getDeleteDialog(getContext(), () -> {
+                                db.deleteWeekById(getItem(position));
+                                db.updateWeek(getItem(position));
+                                weeklist.remove(position);
+                                notifyDataSetChanged();
+                            });
                             return true;
                         } else if (itemId == R.id.edit_popup) {
                             final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.timetable_dialog_add_subject, null);

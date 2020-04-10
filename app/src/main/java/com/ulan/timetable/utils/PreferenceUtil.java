@@ -26,6 +26,8 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 
+import static com.asdoi.gymwen.util.PreferenceUtil.getBooleanSettings;
+
 public class PreferenceUtil {
 
     public static boolean isTimeTableSubstitution() {
@@ -36,5 +38,45 @@ public class PreferenceUtil {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("timetable_subs", value);
         editor.commit();
+    }
+
+    public static boolean isTimeTableNotification() {
+        return ApplicationFeatures.getBooleanSettings("timetableNotif", true);
+    }
+
+    public static void setTimeTableAlarmTime(@NonNull int... times) {
+        if (times.length != 3) {
+            if (times.length > 0 && times[0] == 0) {
+                setTimeTableAlarm(ApplicationFeatures.getContext(), false);
+            } else {
+                System.out.println("wrong parameters");
+            }
+            return;
+        }
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        setTimeTableAlarm(ApplicationFeatures.getContext(), true);
+        editor.putInt("Alarm_hour", times[0]);
+        editor.putInt("Alarm_minute", times[1]);
+        editor.putInt("Alarm_second", times[2]);
+        editor.commit();
+    }
+
+    @NonNull
+    public static int[] getTimeTableAlarmTime() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
+        return new int[]{sharedPref.getInt("Alarm_hour", 7), sharedPref.getInt("Alarm_minute", 55), sharedPref.getInt("Alarm_second", 0)};
+    }
+
+    private static void setTimeTableAlarm(@NonNull Context context, boolean value) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("timetable_alarm", value);
+        editor.commit();
+    }
+
+
+    public static boolean isTimeTableAlarmOn(@NonNull Context context) {
+        return getBooleanSettings("timetable_alarm", false, context);
     }
 }
