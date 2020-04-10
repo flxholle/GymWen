@@ -65,12 +65,8 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="SplashThemeMain" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splash_screen_main</item>
-    </style>
-
-    <style name="SplashThemeTimeTable" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splash_screen_timetable</item>
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
     <style name="AboutLibsTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
