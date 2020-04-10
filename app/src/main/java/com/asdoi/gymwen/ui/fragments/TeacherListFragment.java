@@ -43,6 +43,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.afollestad.appthemeengine.ATE;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -226,6 +227,8 @@ public class TeacherListFragment extends Fragment {
         public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_teacherlist_entry, null);
+                // Only apply the first time the view is created
+                ATE.apply(convertView.getContext(), convertView);
             }
 
             return ((ActivityFeatures) getActivity()).getTeacherView(convertView, teacherList.getEntries().get(position));

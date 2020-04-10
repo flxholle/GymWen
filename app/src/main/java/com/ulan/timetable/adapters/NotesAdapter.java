@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 
+import com.afollestad.appthemeengine.ATE;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.model.Note;
@@ -70,6 +71,8 @@ public class NotesAdapter extends ArrayAdapter<Note> {
             holder.popup = convertView.findViewById(R.id.popupbtn);
             holder.cardView = convertView.findViewById(R.id.notes_cardview);
             convertView.setTag(holder);
+            // Only apply the first time the view is created
+            ATE.apply(convertView.getContext(), convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }

@@ -39,6 +39,7 @@ import androidx.annotation.Nullable;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 
+import com.afollestad.appthemeengine.ATE;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -184,6 +185,8 @@ public class WebsiteSearchFragment extends Fragment {
         public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_website_search_entry, null);
+                // Only apply the first time the view is created
+                ATE.apply(convertView.getContext(), convertView);
             }
 
             return createView(convertView, position);

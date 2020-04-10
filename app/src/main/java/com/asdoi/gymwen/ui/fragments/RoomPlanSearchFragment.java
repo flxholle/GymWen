@@ -37,6 +37,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.afollestad.appthemeengine.ATE;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
 
@@ -122,6 +123,8 @@ public class RoomPlanSearchFragment extends Fragment {
         public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.list_room_search_entry, null);
+                // Only apply the first time the view is created
+                ATE.apply(convertView.getContext(), convertView);
             }
 
             return createView(convertView, position);

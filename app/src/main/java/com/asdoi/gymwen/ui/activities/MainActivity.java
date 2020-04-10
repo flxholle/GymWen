@@ -64,8 +64,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.kabouzeid.appthemehelper.ThemeStore;
-import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.pd.chocobar.ChocoBar;
 import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.activities.NotesActivity;
@@ -109,6 +107,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
+//        setColorized();
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -204,9 +203,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
         if (Build.VERSION.SDK_INT >= 21)
             findViewById(R.id.main_fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
-        int accentColor = ThemeStore.accentColor(this);
-        NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
-        NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
     }
 
     @Override
