@@ -200,7 +200,6 @@ public class DbHelper extends SQLiteOpenHelper {
             week.setColor(cursor.getInt(cursor.getColumnIndex(WEEK_COLOR)));
             weeklist.add(week);
         }
-        cursor.close();
         return weeklist;
     }
 

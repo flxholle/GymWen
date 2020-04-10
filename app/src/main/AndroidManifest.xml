@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
     <application
         android:name=".ApplicationFeatures"
@@ -28,7 +29,7 @@
             android:label="@string/menu_teacher_list" />
         <activity
             android:name=".ui.activities.SubstitutionTimeTableActivity"
-            android:label="@string/timetable"
+            android:label="@string/timetable_activity_title"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -208,15 +209,15 @@
         <!-- Timetable -->
         <activity
             android:name="com.ulan.timetable.activities.MainActivity"
-            android:label="@string/timetable"
+            android:label="@string/timetable_activity_title"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="com.ulan.timetable.activities.HomeworksActivity"
-            android:label="@string/homeworks" />
+            android:label="@string/homeworks_activity_title" />
         <activity
             android:name="com.ulan.timetable.activities.NotesActivity"
-            android:label="@string/notes" />
+            android:label="@string/notes_activity_title" />
         <activity
             android:name="com.ulan.timetable.activities.NoteInfoActivity"
             android:label="@string/note"
@@ -230,7 +231,7 @@
         </activity>
         <activity
             android:name="com.ulan.timetable.activities.ExamsActivity"
-            android:label="@string/exams" />
+            android:label="@string/exams_activity_title" />
 
         <receiver
             android:name="com.ulan.timetable.utils.DailyReceiver"
@@ -239,6 +240,16 @@
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name="com.ulan.timetable.utils.TurnOnReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.ulan.timetable.utils.TurnOffReceiver"
+            android:enabled="true"></receiver>
     </application>
 
 </manifest>

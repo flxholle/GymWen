@@ -411,7 +411,7 @@ public class AlertDialogsHelper {
 
                 subject.getText().clear();
                 description.getText().clear();
-                date.setText(R.string.select_date);
+                date.setText(R.string.choose_date);
                 select_color.setBackgroundColor(Color.WHITE);
                 subject.requestFocus();
                 dialog.dismiss();
@@ -741,7 +741,7 @@ public class AlertDialogsHelper {
                 subject.getText().clear();
                 teacher.getText().clear();
                 room.getText().clear();
-                date.setText(R.string.select_date);
+                date.setText(R.string.choose_date);
                 time.setText(R.string.select_time);
                 select_color.setBackgroundColor(Color.WHITE);
                 subject.requestFocus();

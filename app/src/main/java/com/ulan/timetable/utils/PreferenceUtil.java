@@ -77,6 +77,18 @@ public class PreferenceUtil {
 
 
     public static boolean isTimeTableAlarmOn(@NonNull Context context) {
-        return getBooleanSettings("timetable_alarm", false, context);
+        return getBooleanSettings("timetable_alarm", true, context);
+    }
+
+    public static boolean isDoNotDisturb() {
+        return ApplicationFeatures.getBooleanSettings("do_not_disturb", true);
+    }
+
+    public static boolean doNotDisturbDontAskAgain() {
+        return ApplicationFeatures.getBooleanSettings("do_not_disturb_dont_ask", false);
+    }
+
+    public static void setDoNotDisturbDontAskAgain(Context context, boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("do_not_disturb_dont_ask", value).apply();
     }
 }

@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:background="?android:attr/selectableItemBackground"
-            android:text="@string/select_date"
+            android:text="@string/choose_date"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="?android:attr/textColorPrimary"
