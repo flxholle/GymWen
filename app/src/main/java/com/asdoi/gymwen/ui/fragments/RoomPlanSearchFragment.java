@@ -26,6 +26,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -63,7 +64,8 @@ public class RoomPlanSearchFragment extends Fragment {
         listView = root.findViewById(R.id.search_template_list);
         listView.setAdapter(new SearchListAdapter(getContext(), 0));
 
-        ((EditText) root.findViewById(R.id.search_template_input)).addTextChangedListener(new TextWatcher() {
+        EditText editText = root.findViewById(R.id.search_template_input);
+        editText.addTextChangedListener(new TextWatcher() {
             @NonNull
             String before = "";
 
@@ -90,6 +92,8 @@ public class RoomPlanSearchFragment extends Fragment {
 
             }
         });
+
+        editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
 
 
         return root;

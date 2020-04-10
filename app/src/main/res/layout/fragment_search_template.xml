@@ -33,7 +33,8 @@
             android:id="@+id/search_template_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/teacher_search_teacher_list" />
+            android:hint="@string/teacher_search_teacher_list"
+            android:imeOptions="actionDone" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ListView

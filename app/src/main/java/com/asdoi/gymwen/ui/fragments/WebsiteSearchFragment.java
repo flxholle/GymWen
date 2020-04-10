@@ -26,6 +26,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -91,7 +92,9 @@ public class WebsiteSearchFragment extends Fragment {
         listView.setVisibility(View.VISIBLE);
         listView.setAdapter(new SearchListAdapter(getContext(), 0));
 
-        ((EditText) root.findViewById(R.id.search_template_input)).addTextChangedListener(new TextWatcher() {
+        EditText editText = root.findViewById(R.id.search_template_input);
+        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        editText.addTextChangedListener(new TextWatcher() {
             @NonNull
             String before = "";
 

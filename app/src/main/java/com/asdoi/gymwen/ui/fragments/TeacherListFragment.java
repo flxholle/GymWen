@@ -30,6 +30,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -207,6 +208,7 @@ public class TeacherListFragment extends Fragment {
 
             }
         });
+        inputText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         inputLayout.addView(inputText);
 

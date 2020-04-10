@@ -33,6 +33,7 @@ import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
 import com.asdoi.gymwen.substitutionplan.SubstitutionEntry
 import com.asdoi.gymwen.substitutionplan.SubstitutionList
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlan
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
 import com.asdoi.gymwen.ui.activities.SubstitutionWidgetActivity
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment
@@ -86,29 +87,38 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         var today = ""
         var tomorrow = ""
 
+        var showToday = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.getTodayTitle().isTitleCodeInPast()
+        var showTomorrow = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.getTomorrowTitle().isTitleCodeInPast()
+        if (!showToday && !showTomorrow) {
+            if (SubstitutionPlanFeatures.getTodayTitle().titleCode == SubstitutionPlan.todayCode) showToday = true else showTomorrow = true
+        }
+
         for (p in profiles) {
             val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
 
             //Today
-            today = tempSubstitutionplan.getTitleString(true)
-            var todayList = tempSubstitutionplan.getDay(true)
-            if (summarize) todayList = todayList.summarizeUp("-")
-            if (todayList.getNoInternet()) {
-                noInternet = true
-                break
+            if (showToday) {
+                today = tempSubstitutionplan.getTitleString(true)
+                var todayList = tempSubstitutionplan.getDay(true)
+                if (summarize) todayList = todayList.summarizeUp("-")
+                if (todayList.getNoInternet()) {
+                    noInternet = true
+                    break
+                }
+                todayEntryList.addAll(getEntryListForProfile(todayList, if (profiles.size == 1) null else p.name, tempSubstitutionplan.senior))
             }
-            todayEntryList.addAll(getEntryListForProfile(todayList, if (profiles.size == 1) null else p.name, tempSubstitutionplan.senior))
-
 
             //Tomorrow
-            tomorrow = tempSubstitutionplan.getTitleString(false)
-            var tomorrowList = tempSubstitutionplan.getDay(false)
-            if (summarize) tomorrowList = tomorrowList.summarizeUp("-")
-            if (tomorrowList.getNoInternet()) {
-                noInternet = true
-                break
+            if (showTomorrow) {
+                tomorrow = tempSubstitutionplan.getTitleString(false)
+                var tomorrowList = tempSubstitutionplan.getDay(false)
+                if (summarize) tomorrowList = tomorrowList.summarizeUp("-")
+                if (tomorrowList.getNoInternet()) {
+                    noInternet = true
+                    break
+                }
+                tomorrowEntryList.addAll(getEntryListForProfile(tomorrowList, if (profiles.size == 1) null else p.name, tempSubstitutionplan.senior))
             }
-            tomorrowEntryList.addAll(getEntryListForProfile(tomorrowList, if (profiles.size == 1) null else p.name, tempSubstitutionplan.senior))
         }
 
         if (noInternet) {
