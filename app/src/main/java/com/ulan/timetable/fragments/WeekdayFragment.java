@@ -59,9 +59,9 @@ public class WeekdayFragment extends Fragment {
     private WeekAdapter adapter;
     private View view;
 
-    private SubstitutionList entries;
-    private boolean senior;
-    private String key;
+    private final SubstitutionList entries;
+    private final boolean senior;
+    private final String key;
 
     public WeekdayFragment(SubstitutionList entries, boolean senior, String key) {
         super();

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class ExamsActivity extends ActivityFeatures {
 
     @NonNull
-    private AppCompatActivity context = this;
+    private final AppCompatActivity context = this;
     private ListView listView;
     private ExamsAdapter adapter;
     private DbHelper db;

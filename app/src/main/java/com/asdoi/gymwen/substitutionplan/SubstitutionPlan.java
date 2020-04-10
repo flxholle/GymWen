@@ -320,8 +320,7 @@ public class SubstitutionPlan {
 
     @NonNull
     private static ArrayList<String> generateSeniorCodes(@NonNull String[] courseNames) {
-        ArrayList<String> returnValue = new ArrayList<>();
-        returnValue.addAll(Arrays.asList(courseNames));
+        ArrayList<String> returnValue = new ArrayList<>(Arrays.asList(courseNames));
 
         return returnValue;
     }

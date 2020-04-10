@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 public class DailyReceiver extends BroadcastReceiver {
     private static final String CHANNEL_ID = "timetable_notification";
-    public static int DailyReceiverID = 10000;
+    public static final int DailyReceiverID = 10000;
 
     Context context;
     DbHelper db;

@@ -32,11 +32,11 @@ import java.util.Objects;
  */
 public class HomeworksAdapter extends ArrayAdapter<Homework> {
 
-    private AppCompatActivity mActivity;
-    private int mResource;
-    private ArrayList<Homework> homeworklist;
+    private final AppCompatActivity mActivity;
+    private final int mResource;
+    private final ArrayList<Homework> homeworklist;
     private Homework homework;
-    private ListView mListView;
+    private final ListView mListView;
 
     private static class ViewHolder {
         TextView subject;
@@ -82,33 +82,30 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         holder.description.setText(homework.getDescription());
         holder.date.setText(homework.getDate());
         holder.cardView.setCardBackgroundColor(homework.getColor());
-        holder.popup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContextThemeWrapper theme = new ContextThemeWrapper(mActivity, PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
-                final PopupMenu popup = new PopupMenu(theme, holder.popup);
-                final DbHelper db = new DbHelper(mActivity);
-                popup.getMenuInflater().inflate(R.menu.timetable_popup_menu, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(@NonNull MenuItem item) {
-                        int itemId = item.getItemId();
-                        if (itemId == R.id.delete_popup) {
-                            db.deleteHomeworkById(getItem(position));
-                            db.updateHomework(getItem(position));
-                            homeworklist.remove(position);
-                            notifyDataSetChanged();
-                            return true;
-                        } else if (itemId == R.id.edit_popup) {
-                            final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.timetable_dialog_add_homework, null);
-                            AlertDialogsHelper.getEditHomeworkDialog(mActivity, alertLayout, homeworklist, mListView, position);
-                            notifyDataSetChanged();
-                            return true;
-                        }
-                        return onMenuItemClick(item);
+        holder.popup.setOnClickListener(v -> {
+            ContextThemeWrapper theme = new ContextThemeWrapper(mActivity, PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
+            final PopupMenu popup = new PopupMenu(theme, holder.popup);
+            final DbHelper db = new DbHelper(mActivity);
+            popup.getMenuInflater().inflate(R.menu.timetable_popup_menu, popup.getMenu());
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(@NonNull MenuItem item) {
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.delete_popup) {
+                        db.deleteHomeworkById(getItem(position));
+                        db.updateHomework(getItem(position));
+                        homeworklist.remove(position);
+                        notifyDataSetChanged();
+                        return true;
+                    } else if (itemId == R.id.edit_popup) {
+                        final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.timetable_dialog_add_homework, null);
+                        AlertDialogsHelper.getEditHomeworkDialog(mActivity, alertLayout, homeworklist, mListView, position);
+                        notifyDataSetChanged();
+                        return true;
                     }
-                });
-                popup.show();
-            }
+                    return onMenuItemClick(item);
+                }
+            });
+            popup.show();
         });
 
         hidePopUpMenu(holder);

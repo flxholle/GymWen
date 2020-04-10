@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -32,9 +31,9 @@ import java.util.ArrayList;
 public class NotesActivity extends ActivityFeatures {
 
     @NonNull
-    public static String KEY_NOTE = "note";
+    public static final String KEY_NOTE = "note";
     @NonNull
-    private AppCompatActivity context = this;
+    private final AppCompatActivity context = this;
     private ListView listView;
     private DbHelper db;
     private NotesAdapter adapter;
@@ -65,14 +64,11 @@ public class NotesActivity extends ActivityFeatures {
         adapter = new NotesAdapter(NotesActivity.this, listView, R.layout.timetable_listview_notes_adapter, db.getNote());
         listView.setAdapter(adapter);
         int profilePos = DBUtil.getProfilePosition(this);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(context, NoteInfoActivity.class);
-                intent.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
-                intent.putExtra(KEY_NOTE, adapter.getNoteList().get(position));
-                startActivity(intent);
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(context, NoteInfoActivity.class);
+            intent.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
+            intent.putExtra(KEY_NOTE, adapter.getNoteList().get(position));
+            startActivity(intent);
         });
     }
 

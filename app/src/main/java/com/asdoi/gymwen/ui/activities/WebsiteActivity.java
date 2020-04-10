@@ -51,9 +51,9 @@ import java.util.List;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     @NonNull
-    public static String LOADURL = "url";
+    public static final String LOADURL = "url";
     @NonNull
-    public static String SEARCH = "search";
+    public static final String SEARCH = "search";
 
     private boolean search = false;
 
@@ -498,9 +498,9 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         //Trim content
         ArrayList<String[]> trimmedContentList = new ArrayList<>();
         trimmedContentList.add(new String[]{imgLink, "", "", ""});
-        for (int i = 0; i < content.length; i++) {
-            if (!content[i][0].isEmpty() || !content[i][1].isEmpty() || !content[i][2].isEmpty() || !content[i][3].isEmpty()) {
-                trimmedContentList.add(content[i]);
+        for (String[] strings : content) {
+            if (!strings[0].isEmpty() || !strings[1].isEmpty() || !strings[2].isEmpty() || !strings[3].isEmpty()) {
+                trimmedContentList.add(strings);
             }
         }
 

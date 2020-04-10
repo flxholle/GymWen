@@ -32,7 +32,7 @@ import com.ulan.timetable.TimeTableBuilder;
 
 public class SubstitutionTimeTableActivity extends ActivityFeatures {
     @NonNull
-    public static String PROFILE_POSITION = "profilepos";
+    public static final String PROFILE_POSITION = "profilepos";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class SubstitutionTimeTableActivity extends ActivityFeatures {
         new Thread(() -> {
             ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
             if (finalPos >= ProfileManagement.getSize()) {
-                runOnUiThread(() -> finish());
+                runOnUiThread(this::finish);
             } else {
                 SubstitutionPlan substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(finalPos).getCoursesArray());
                 runOnUiThread(() -> {

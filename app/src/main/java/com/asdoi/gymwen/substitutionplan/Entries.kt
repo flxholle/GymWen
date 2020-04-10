@@ -80,7 +80,7 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
      * @return a plan array with all hours replaced with their matching times
      */
     //Times
-    fun changeToTime(list: MutableList<SubstitutionEntry>): MutableList<SubstitutionEntry> {
+    private fun changeToTime(list: MutableList<SubstitutionEntry>): MutableList<SubstitutionEntry> {
         for (i in list.indices) {
             try {
                 list[i].hour = getMatchingStartTime(list[i].hour.toInt())
@@ -122,16 +122,15 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
         var check = true
 
         //Do not check hour
-        if (value1.course != value2.course) {
-            check = false
-        } else if (value1.subject != value2.subject)
-            check = false
-        else if (value1.teacher != value2.teacher)
-            check = false
-        else if (value1.room != value2.room)
-            check = false
-        else if (value1.moreInformation != value2.moreInformation)
-            check = false
+        when {
+            value1.course != value2.course -> {
+                check = false
+            }
+            value1.subject != value2.subject -> check = false
+            value1.teacher != value2.teacher -> check = false
+            value1.room != value2.room -> check = false
+            value1.moreInformation != value2.moreInformation -> check = false
+        }
 
         return check
     }

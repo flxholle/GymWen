@@ -82,9 +82,7 @@ public class WebsiteSearchFragment extends Fragment {
             else
                 content = contentAll;
             contentAll = content;
-            getActivity().runOnUiThread(() -> {
-                createLayout(root);
-            });
+            getActivity().runOnUiThread(() -> createLayout(root));
         }).start();
     }
 
@@ -130,7 +128,7 @@ public class WebsiteSearchFragment extends Fragment {
             return new ArrayList<>(0);
         }
         try {
-            ArrayList<WebsiteSearchLink> con = new ArrayList<WebsiteSearchLink>();
+            ArrayList<WebsiteSearchLink> con = new ArrayList<>();
             Elements values = doc.select("div.csc-sitemap").select("a[href]");
             for (int i = 0; i < values.size(); i++) {
                 String whole = values.get(i).toString();
@@ -231,19 +229,17 @@ public class WebsiteSearchFragment extends Fragment {
                 getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
                 usedView.setBackgroundResource(outValue.resourceId);
 
-                button.setOnClickListener((View v) -> {
-                    ((ActivityFeatures) getActivity()).tabIntent(link.getLink());
-                });
+                button.setOnClickListener((View v) -> ((ActivityFeatures) getActivity()).tabIntent(link.getLink()));
             }
 
             return view;
         }
     }
 
-    private class WebsiteSearchLink {
-        String name;
-        String link;
-        int level;
+    private static class WebsiteSearchLink {
+        final String name;
+        final String link;
+        final int level;
 
         WebsiteSearchLink(String name, String link, int level) {
             this.name = name;

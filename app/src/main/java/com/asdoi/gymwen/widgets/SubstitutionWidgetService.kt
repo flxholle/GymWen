@@ -49,11 +49,11 @@ private const val internet = -6
 class SubstitutionWidgetService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
         var profiles = mutableListOf<Profile>()
-        ProfileManagement.initProfiles();
+        ProfileManagement.initProfiles()
 
         if (intent.hasExtra(SubstitutionWidgetActivity.PROFILES)) {
             val profilesPos = intent.getIntArrayExtra(SubstitutionWidgetActivity.PROFILES)
-            if (profilesPos != null && profilesPos.size > 0) {
+            if (profilesPos != null && profilesPos.isNotEmpty()) {
                 for (i in profilesPos) {
                     if (i < ProfileManagement.getSize()) {
                         profiles.add(ProfileManagement.getProfile(i))
@@ -300,11 +300,10 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
     }
 
     private fun generateHeadline(context: Context, isShort: Boolean, senior: Boolean): Array<String> {
-        val headline: Array<String> = if (senior) {
+        return if (senior) {
             arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), if (isShort) context.getString(R.string.courses_short) else context.getString(R.string.courses), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), context.getString(R.string.subject))
         } else {
             arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), context.getString(R.string.subject), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), if (isShort) context.getString(R.string.classes_short) else context.getString(R.string.classes))
         }
-        return headline
     }
 }

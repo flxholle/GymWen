@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class HomeworksActivity extends ActivityFeatures {
 
     @NonNull
-    private AppCompatActivity context = this;
+    private final AppCompatActivity context = this;
     private ListView listView;
     private HomeworksAdapter adapter;
     private DbHelper db;

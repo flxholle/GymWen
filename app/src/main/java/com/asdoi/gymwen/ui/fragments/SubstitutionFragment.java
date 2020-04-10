@@ -400,9 +400,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 ApplicationFeatures.downloadTeacherlistDoc();
                 if (TeacherlistFeatures.liste().getNoInternet())
                     throw new Exception();
-                getActivity().runOnUiThread(() -> {
-                    ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(((ActivityFeatures) getActivity()).createTeacherView(TeacherlistFeatures.getTeacher(query)));
-                });
+                getActivity().runOnUiThread(() -> ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(((ActivityFeatures) getActivity()).createTeacherView(TeacherlistFeatures.getTeacher(query))));
             } catch (Exception e) {
                 e.printStackTrace();
                 getActivity().runOnUiThread(() -> {

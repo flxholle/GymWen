@@ -41,7 +41,7 @@ public abstract class SubstitutionPlanFeatures {
     public static String strPasword = "";
 
     @NonNull
-    private static SubstitutionPlan substitutionPlan = new SubstitutionPlan();
+    private static final SubstitutionPlan substitutionPlan = new SubstitutionPlan();
 
     public static void setContext(Context context) {
         substitutionPlan.setContext(context);

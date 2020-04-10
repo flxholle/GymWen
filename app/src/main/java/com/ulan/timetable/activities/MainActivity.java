@@ -93,9 +93,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerview = navigationView.getHeaderView(0);
-        headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> {
-            startActivity(new Intent(this, SettingsActivity.class));
-        });
+        headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> startActivity(new Intent(this, SettingsActivity.class)));
         TextView title = headerview.findViewById(R.id.nav_header_main_title);
         title.setText(R.string.timetable);
 
@@ -279,21 +277,17 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             Intent exams = new Intent(MainActivity.this, ExamsActivity.class);
             exams.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
             startActivity(exams);
-            return true;
         } else if (itemId == R.id.homework) {
             Intent homework = new Intent(MainActivity.this, HomeworksActivity.class);
             homework.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
             startActivity(homework);
-            return true;
         } else if (itemId == R.id.notes) {
             Intent note = new Intent(MainActivity.this, NotesActivity.class);
             note.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
             startActivity(note);
-            return true;
         } else if (itemId == R.id.settings) {
             Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settings);
-            return true;
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

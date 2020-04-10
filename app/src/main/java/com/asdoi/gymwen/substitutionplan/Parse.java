@@ -427,20 +427,20 @@ abstract class Parse {
 
         String[][] yourContent = new String[line.length][columNr];
         int j = 0;
-        for (int i = 0; i < content.length; i++) {
+        for (String[] strings : content) {
             if (senior) {
-                if (classNames.contains("" + content[i][0].trim())) {
-                    yourContent[j] = content[i];
+                if (classNames.contains("" + strings[0].trim())) {
+                    yourContent[j] = strings;
                     j++;
                 }
-            } else if (content[i][0].length() > 1) {
+            } else if (strings[0].length() > 1) {
                 //For courses like 10c
                 //System.out.println(content[i][0].charAt(1));
-                if (!Character.isLetter(content[i][0].charAt(1))) {
-                    if (classNames.contains("" + content[i][0].charAt(0) + content[i][0].charAt(1))) {
-                        for (int z = 2; z < content[i][0].length(); z++) {
-                            if (classNames.contains("" + content[i][0].charAt(z))) {
-                                yourContent[j] = content[i];
+                if (!Character.isLetter(strings[0].charAt(1))) {
+                    if (classNames.contains("" + strings[0].charAt(0) + strings[0].charAt(1))) {
+                        for (int z = 2; z < strings[0].length(); z++) {
+                            if (classNames.contains("" + strings[0].charAt(z))) {
+                                yourContent[j] = strings;
                                 j++;
                                 break;
                             }
@@ -449,10 +449,10 @@ abstract class Parse {
                 }
                 //For courses like 9b
                 else {
-                    if (classNames.contains("" + content[i][0].charAt(0))) {
-                        for (int z = 1; z < content[i][0].length(); z++) {
-                            if (classNames.contains("" + content[i][0].charAt(z))) {
-                                yourContent[j] = content[i];
+                    if (classNames.contains("" + strings[0].charAt(0))) {
+                        for (int z = 1; z < strings[0].length(); z++) {
+                            if (classNames.contains("" + strings[0].charAt(z))) {
+                                yourContent[j] = strings;
                                 j++;
                                 break;
                             }

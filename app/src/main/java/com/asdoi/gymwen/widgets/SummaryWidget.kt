@@ -78,7 +78,7 @@ class SummaryWidget : AppWidgetProvider() {
 
             var profiles = mutableListOf<Profile>()
 
-            ProfileManagement.initProfiles();
+            ProfileManagement.initProfiles()
 
             if (profilesPos != null && profilesPos.size > 0) {
                 for (i in profilesPos) {

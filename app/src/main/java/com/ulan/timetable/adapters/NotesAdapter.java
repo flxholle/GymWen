@@ -32,11 +32,11 @@ import java.util.Objects;
  */
 public class NotesAdapter extends ArrayAdapter<Note> {
 
-    private AppCompatActivity mActivity;
-    private int mResource;
-    private ArrayList<Note> notelist;
+    private final AppCompatActivity mActivity;
+    private final int mResource;
+    private final ArrayList<Note> notelist;
     private Note note;
-    private ListView mListView;
+    private final ListView mListView;
 
     private static class ViewHolder {
         TextView title;
@@ -75,37 +75,34 @@ public class NotesAdapter extends ArrayAdapter<Note> {
         }
         holder.title.setText(note.getTitle());
         holder.cardView.setCardBackgroundColor(note.getColor());
-        holder.popup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContextThemeWrapper theme = new ContextThemeWrapper(mActivity, PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
-                final PopupMenu popup = new PopupMenu(theme, holder.popup);
-                final DbHelper db = new DbHelper(mActivity);
-                popup.getMenuInflater().inflate(R.menu.timetable_popup_menu, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(@NonNull MenuItem item) {
-                        int itemId = item.getItemId();
-                        if (itemId == R.id.delete_popup) {
-                            AlertDialogsHelper.getDeleteDialog(getContext(), () -> {
-                                db.deleteNoteById(getItem(position));
-                                db.updateNote(getItem(position));
-                                notelist.remove(position);
-                                notifyDataSetChanged();
-                            });
-                            return true;
-                        } else if (itemId == R.id.edit_popup) {
-                            final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.timetable_dialog_add_note, null);
-                            AlertDialogsHelper.getEditNoteDialog(mActivity, alertLayout, notelist, mListView, position);
+        holder.popup.setOnClickListener(v -> {
+            ContextThemeWrapper theme = new ContextThemeWrapper(mActivity, PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
+            final PopupMenu popup = new PopupMenu(theme, holder.popup);
+            final DbHelper db = new DbHelper(mActivity);
+            popup.getMenuInflater().inflate(R.menu.timetable_popup_menu, popup.getMenu());
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(@NonNull MenuItem item) {
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.delete_popup) {
+                        AlertDialogsHelper.getDeleteDialog(getContext(), () -> {
+                            db.deleteNoteById(getItem(position));
+                            db.updateNote(getItem(position));
+                            notelist.remove(position);
                             notifyDataSetChanged();
-                            return true;
-                        }
-                        return
-
-                                onMenuItemClick(item);
+                        });
+                        return true;
+                    } else if (itemId == R.id.edit_popup) {
+                        final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.timetable_dialog_add_note, null);
+                        AlertDialogsHelper.getEditNoteDialog(mActivity, alertLayout, notelist, mListView, position);
+                        notifyDataSetChanged();
+                        return true;
                     }
-                });
-                popup.show();
-            }
+                    return
+
+                            onMenuItemClick(item);
+                }
+            });
+            popup.show();
         });
 
         hidePopUpMenu(holder);

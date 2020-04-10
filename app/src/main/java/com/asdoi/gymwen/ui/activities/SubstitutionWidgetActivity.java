@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +112,9 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
                 finish();
             }).start();
         });
-        findViewById(R.id.fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            findViewById(R.id.fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
+        }
     }
 
     public void setupColors() {
@@ -123,9 +126,7 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
             for (int i = 0; i < ProfileManagement.getProfileList().size(); i++) {
                 selectedProfiles.add(i);
             }
-            runOnUiThread(() -> {
-                Toast.makeText(getContext(), R.string.selected_all_profiles, Toast.LENGTH_SHORT).show();
-            });
+            runOnUiThread(() -> Toast.makeText(getContext(), R.string.selected_all_profiles, Toast.LENGTH_SHORT).show());
         }
 
         StringBuilder s = new StringBuilder();

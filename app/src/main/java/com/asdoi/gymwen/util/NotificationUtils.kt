@@ -60,7 +60,7 @@ class NotificationUtils {
         const val tomorrow = 2
         const val none = -1
 
-        class CreateNotification(val alert: Boolean) : ApplicationFeatures.DownloadSubstitutionplanDocsTask() {
+        class CreateNotification(private val alert: Boolean) : ApplicationFeatures.DownloadSubstitutionplanDocsTask() {
             private val summarize = PreferenceUtil.isSummarizeUp()
             private val alertForAllProfiles = PreferenceUtil.isMainNotifForAllProfiles()
             private val dontChangeSummary = PreferenceUtil.isDontChangeSummary()
@@ -68,7 +68,7 @@ class NotificationUtils {
             override fun onPostExecute(v: Void?) {
                 super.onPostExecute(v)
                 try {
-                    ProfileManagement.initProfiles();
+                    ProfileManagement.initProfiles()
                     if (!ApplicationFeatures.coursesCheck(false))
                         return
                     if (SubstitutionPlanFeatures.getTodayTitleString() == ApplicationFeatures.getContext().getString(R.string.noInternetConnection)) {
@@ -82,7 +82,7 @@ class NotificationUtils {
             }
 
             private fun createNotification() {
-                ProfileManagement.initProfiles();
+                ProfileManagement.initProfiles()
 
                 val profileList = ProfileManagement.getProfileList()
 
@@ -113,14 +113,14 @@ class NotificationUtils {
                         checkProfileList = ProfileManagement.getProfileList()
 
                     for (p in checkProfileList.indices) {
-                        val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), checkProfileList.get(p).coursesArray)
+                        val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), checkProfileList[p].coursesArray)
                         daySendInSummaryNotif = when (whichDayIsToday) {
                             today -> {
-                                MainNotification(SubstitutionPlanFeatures.getTodayTitleString(), if (summarize) temp.getDay(true).summarizeUp("-") else temp.getDay(true), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList.get(p).name; else "", alert, p)
+                                MainNotification(SubstitutionPlanFeatures.getTodayTitleString(), if (summarize) temp.getDay(true).summarizeUp("-") else temp.getDay(true), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
                                 tomorrow
                             }
                             tomorrow -> {
-                                MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), if (summarize) temp.getDay(false).summarizeUp("-") else temp.getDay(false), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList.get(p).name; else "", alert, p)
+                                MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), if (summarize) temp.getDay(false).summarizeUp("-") else temp.getDay(false), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
                                 today
                             }
                             else -> none
@@ -142,7 +142,7 @@ class NotificationUtils {
                 var isNoTomorrow = true
 
                 for (i in profileList.indices) {
-                    val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), profileList.get(i).coursesArray)
+                    val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), profileList[i].coursesArray)
 
                     if (i == preferredProfilePos && daySendInSummaryNotif != none && !dontChangeSummary) {
                         if (daySendInSummaryNotif == tomorrow) {
@@ -327,8 +327,7 @@ class NotificationUtils {
                 val style = NotificationCompat.MessagingStyle(Person.Builder().setName("me").build())
                 style.conversationTitle = title
 
-                var j = 0
-                for (con in content.entries) {
+                for ((j, con) in content.entries.withIndex()) {
                     var color: Int
                     if (con.isNothing()) {
                         color = ContextCompat.getColor(context, R.color.notification_icon_background_omitted)
@@ -347,14 +346,13 @@ class NotificationUtils {
                     val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = textSize, textBold = true, color = color, textColor = textColor)
                     val list = createMessage(con)
                     val person = Person.Builder().setName(list[0]).setIcon(IconCompat.createWithBitmap(drawable.toBitmap(48, 48))).build()
-                    val message = "${list[1]} ${if (!profileName.trim().isEmpty() && j == 0) " ($profileName)"; else ""}"
+                    val message = "${list[1]} ${if (profileName.trim().isNotEmpty() && j == 0) " ($profileName)"; else ""}"
                     val message1 = NotificationCompat.MessagingStyle.Message(message, 0.toLong(), person)
                     style.addMessage(message1)
-                    j++
                 }
                 if (nothing) {
                     val person = Person.Builder().setName(context.getString(R.string.notif_nothing)).setIcon(IconCompat.createWithBitmap(ApplicationFeatures.vectorToBitmap(R.drawable.ic_check))).build()
-                    val message1 = NotificationCompat.MessagingStyle.Message(if (!profileName.trim().isEmpty()) " ($profileName)"; else "", 0.toLong(), person)
+                    val message1 = NotificationCompat.MessagingStyle.Message(if (profileName.trim().isNotEmpty()) " ($profileName)"; else "", 0.toLong(), person)
                     style.addMessage(message1)
                 }
 
@@ -439,7 +437,7 @@ class NotificationUtils {
             init {
                 val contentList = mutableListOf<String>()
                 for (s in content) {
-                    if (!s.trim().isEmpty())
+                    if (s.trim().isNotEmpty())
                         contentList.add(s)
                 }
                 if (contentList.size == 0)

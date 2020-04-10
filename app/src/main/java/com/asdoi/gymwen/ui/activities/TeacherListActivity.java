@@ -42,7 +42,7 @@ import com.asdoi.gymwen.ui.fragments.TeacherListFragment;
 
 public class TeacherListActivity extends ActivityFeatures {
     @NonNull
-    public static String SEARCH_TEACHER = "searchteacher";
+    public static final String SEARCH_TEACHER = "searchteacher";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

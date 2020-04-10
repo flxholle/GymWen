@@ -47,9 +47,9 @@ import java.util.TreeMap;
 public class RoomPlanActivity extends ActivityFeatures {
 
     @NonNull
-    public static String SELECT_ROOM = "selectroom";
+    public static final String SELECT_ROOM = "selectroom";
     @NonNull
-    public static String SEARCH_ROOM = "searchroom";
+    public static final String SEARCH_ROOM = "searchroom";
 
     private boolean search = false;
 
@@ -114,7 +114,7 @@ public class RoomPlanActivity extends ActivityFeatures {
 
     @NonNull
     private static List<Room> sortRooms(@NonNull List<Room> rooms) {
-        Map<Integer, Room> map = new TreeMap<Integer, Room>();
+        Map<Integer, Room> map = new TreeMap<>();
         int failed = 0;
         for (Room room : rooms) {
             int roomNr;
@@ -216,11 +216,11 @@ public class RoomPlanActivity extends ActivityFeatures {
     }
 
     public static class Room {
-        private String name;
+        private final String name;
         @Nullable
-        private String description;
-        private PointF location;
-        private String floor;
+        private final String description;
+        private final PointF location;
+        private final String floor;
 
         Room(@NonNull String name, PointF location) {
             this.name = name;

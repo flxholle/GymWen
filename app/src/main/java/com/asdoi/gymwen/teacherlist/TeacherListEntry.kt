@@ -19,7 +19,7 @@
 package com.asdoi.gymwen.teacherlist
 
 
-class TeacherList(var entries: MutableList<TeacherListEntry> = mutableListOf<TeacherListEntry>()) {
+class TeacherList(var entries: MutableList<TeacherListEntry> = mutableListOf()) {
     private var noInternet: Boolean = false
 
     constructor(noInternet: Boolean) : this() {

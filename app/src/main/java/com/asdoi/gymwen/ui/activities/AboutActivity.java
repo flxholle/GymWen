@@ -344,11 +344,6 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         }
     }
 
-    private void showLicenseDialog() {
-
-//        startActivity(new Intent(this, OssLicensesMenuActivity.class));
-    }
-
     private void share() {
         String link = "https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk";
         String message = getString(R.string.share_app_message) + " " + link;

@@ -385,12 +385,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        noInternetDialog.onDestroy();
-    }
-
-    @Override
     public void onPause() {
         saveDocs();
         super.onPause();

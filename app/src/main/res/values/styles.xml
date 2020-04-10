@@ -32,7 +32,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="webPageBackground">@color/web_background_homepages</item>
         <item name="windowActionBarOverlay">true</item>
-        <item name="md_dark_theme">false</item>
         <item name="cardBackgroundColor">@android:color/white</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="popupMenuStyle">@style/ThemeOverlay.AppCompat.Light</item>
