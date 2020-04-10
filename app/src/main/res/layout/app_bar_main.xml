@@ -57,12 +57,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
-            android:background="?attr/colorPrimary"
             android:clipToPadding="false"
             android:theme="@style/AppTheme.AppBarOverlay"
             android:visibility="gone"
             app:tabGravity="fill"
-            app:tabIndicatorColor="?android:attr/textColorPrimary"
             app:tabPaddingEnd="20dp"
             app:tabPaddingStart="20dp" />
 

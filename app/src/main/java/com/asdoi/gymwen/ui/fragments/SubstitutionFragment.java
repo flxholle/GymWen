@@ -480,7 +480,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 titleObject = SubstitutionPlanFeatures.getTodayTitle();
                 miscellaneous = isMiscellaneous(content);
                 generateTop(base, oldTitle);
-                generateTableSpecific(base, old);
+                generateTableSpecific(base, old, false);
             }
             if ((!showToday || !content.getNoInternet()) && showTomorrow) {
                 titleCode = titleCodeTomorrow;
@@ -489,7 +489,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 titleObject = SubstitutionPlanFeatures.getTomorrowTitle();
                 miscellaneous = isMiscellaneous(content);
                 generateTop(base, oldTitle);
-                generateTableSpecific(base, old);
+                generateTableSpecific(base, old, false);
             }
         } else if (all) {
             if (today) {
@@ -524,7 +524,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
             miscellaneous = isMiscellaneous(content);
             generateTop(base, oldTitle);
-            generateTableSpecific(base, old);
+            generateTableSpecific(base, old, PreferenceUtil.isSwipeToRefresh() && PreferenceUtil.isSwipeToRefreshFiltered());
         }
     }
 
@@ -662,7 +662,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             //Content
             substitutionListView = new ListView(context);
             substitutionListView.setAdapter(new SubstitutionListAdapterAll(context, 0, content, miscellaneous));
-            substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             //Swipe to Refresh
             if (PreferenceUtil.isSwipeToRefresh()) {
@@ -670,6 +670,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 swipeRefreshLayout.setOnRefreshListener(() -> ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh));
                 swipeRefreshLayout.addView(substitutionListView);
                 swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.YELLOW, Color.BLUE);
+                swipeRefreshLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 base.addView(swipeRefreshLayout);
             } else
                 base.addView(substitutionListView);
@@ -726,12 +727,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         return base;
     }
 
-    private void generateTableSpecific(@NonNull ViewGroup base, boolean old) {
+    private void generateTableSpecific(@NonNull ViewGroup base, boolean old, boolean swipeRefresh) {
         if (!content.getNoInternet() && content.size() > 0) {
             //Content
             substitutionListView = new ListView(context);
             substitutionListView.setAdapter(new SubstitutionListAdapterSpecific(context, 0, content, miscellaneous, old));
-            substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            substitutionListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             if (!old) {
                 substitutionListView.setDivider(null);
@@ -741,14 +742,16 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
 
             //Swipe to Refresh
-            if (PreferenceUtil.isSwipeToRefresh() && PreferenceUtil.isSwipeToRefreshFiltered()) {
+            if (swipeRefresh) {
                 SwipeRefreshLayout swipeRefreshLayout = new SwipeRefreshLayout(context);
                 swipeRefreshLayout.setOnRefreshListener(() -> ((MainActivity) getActivity()).onNavigationItemSelected(R.id.action_refresh));
                 swipeRefreshLayout.addView(substitutionListView);
                 swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.YELLOW, Color.BLUE);
+                swipeRefreshLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 base.addView(swipeRefreshLayout);
             } else
                 base.addView(substitutionListView);
+
         }
     }
 

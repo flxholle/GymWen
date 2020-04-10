@@ -59,6 +59,7 @@ import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -150,9 +151,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         initSpinner();
 
-        if (!SubstitutionPlanFeatures.isUninit()) {
-            onNavigationItemSelected(R.id.nav_at_one_glance);
-        }
+        onNavigationItemSelected(R.id.nav_at_one_glance);
         navigationView.setCheckedItem(R.id.nav_at_one_glance);
 
         toggle.syncState();
@@ -195,7 +194,11 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     public void setupColors() {
+        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
+        appBarLayout.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+
         findViewById(R.id.main_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
