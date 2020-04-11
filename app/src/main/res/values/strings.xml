@@ -571,9 +571,11 @@
     <string name="time_dialog">Zeit:</string>
 
     <string name="sevendays_setting">7 Tage pro Woche einstellen</string>
-    <string name="notification_title">Der heutige Unterricht:</string>
+    <string name="timetable_notification_summary_title">Der heutige Unterricht:</string>
+    <string name="timetable_notification_next_week_title">Die nächste Stunde:</string>
     <string name="timetable_credit">Entstanden mit Hilfe von ulan17</string>
     <string name="time_from">von</string>
+    <string name="time_from_big">Von</string>
     <string name="integrate_substitution_in_timetable">Vertretungen im Stundenplan anzeigen</string>
     <string name="integrate_substitution_in_timetable_desc">Zum Editieren des Stundenplans besser ausschalten</string>
     <string name="edit">Bearbeiten</string>
@@ -584,5 +586,7 @@
     <string name="timetable_channel">Stundenplan</string>
     <string name="timetable_channel_desc">Eine Benachrichtigung mit deinen Fächern</string>
     <string name="do_not_disturb_permission_desc">Um automatisch in den Nicht-Stören Modus zu wechseln benötigt die App die entsprechende Berechtigung</string>
+    <string name="do_not_disturb_setting">Automatisches Stummschalten</string>
+    <string name="do_not_disturb_settings_desc">Automatisch während Fächern in den Nicht-Stören Modus wechseln und ihn danach wieder ausschalten</string>
 
 </resources>

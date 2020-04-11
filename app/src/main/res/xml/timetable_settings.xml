@@ -10,6 +10,13 @@
 
     <SwitchPreferenceCompat
         android:defaultValue="true"
+        android:icon="@drawable/ic_do_not_disturb_on_black_24dp"
+        android:key="automatic_do_not_disturb"
+        android:summary="@string/do_not_disturb_settings_desc"
+        android:title="@string/do_not_disturb_setting" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
         android:icon="@drawable/ic_slideshow_black_24dp"
         android:key="timetableNotif"
         android:title="@string/set_notification_isOn" />

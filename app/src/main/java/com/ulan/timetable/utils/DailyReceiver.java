@@ -33,7 +33,7 @@ public class DailyReceiver extends BroadcastReceiver {
             ApplicationFeatures.cancelAlarm(context, DailyReceiver.class, DailyReceiverID);
         }
 
-        NotificationUtil.sendNotification(context, true);
+        NotificationUtil.sendNotificationSummary(context, true);
     }
 
 }

@@ -61,7 +61,8 @@ class TurnOffReceiver : BroadcastReceiver() {
 
 
 fun setDoNotDisturb(context: Context, on: Boolean) {
-    if (!PreferenceUtil.isDoNotDisturb())
+    NotificationUtil.sendNotificationCurrentLesson(context, true)
+    if (!PreferenceUtil.isAutomaticDoNotDisturb())
         return
 
     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -75,9 +76,6 @@ fun setDoNotDisturb(context: Context, on: Boolean) {
 }
 
 fun setDoNotDisturbReceivers(context: Context) {
-    if (!PreferenceUtil.isDoNotDisturb())
-        return
-
     Thread(Runnable {
         val dbHelper = DbHelper(context)
 

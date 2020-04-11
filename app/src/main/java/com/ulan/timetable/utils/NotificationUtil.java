@@ -24,13 +24,19 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.Person;
 import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableKt;
+import androidx.core.graphics.drawable.IconCompat;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -40,6 +46,8 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.activities.SubstitutionTimeTableActivity;
+import com.github.stephenvinouze.shapetextdrawable.ShapeForm;
+import com.github.stephenvinouze.shapetextdrawable.ShapeTextDrawable;
 import com.ulan.timetable.model.Week;
 
 import java.util.ArrayList;
@@ -47,10 +55,11 @@ import java.util.Calendar;
 import java.util.UUID;
 
 public class NotificationUtil {
-    private static final int NOTIFICATION_ID = 9090;
+    private static final int NOTIFICATION_SUMMARY_ID = 9090;
+    private static final int NOTIFICATION_NEXT_WEEK_ID = 3030;
     private static final String CHANNEL_ID = "timetable_notification";
 
-    public static void sendNotification(@NonNull Context context, boolean alert) {
+    public static void sendNotificationSummary(@NonNull Context context, boolean alert) {
         new Thread(() -> {
             ProfileManagement.initProfiles();
             ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
@@ -70,13 +79,79 @@ public class NotificationUtil {
             DbHelper db = new DbHelper(context);
             ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))), substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior());
 
-            sendNotification(context, alert, weeks, context.getString(R.string.notification_title));
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_assignment_black_24dp)
+                    .setContentTitle(context.getString(R.string.timetable_notification_summary_title))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(getLessons(weeks, context)));
+
+            sendNotification(context, alert, builder, NOTIFICATION_SUMMARY_ID);
         }).start();
     }
 
-    public static void sendNotification(@NonNull Context context, boolean alert, ArrayList<Week> weeks, String title) {
-        String message = getLessons(weeks, context);
-        if (message == null || !PreferenceUtil.isTimeTableNotification())
+    public static void sendNotificationCurrentLesson(@NonNull Context context, boolean alert) {
+        new Thread(() -> {
+            ProfileManagement.initProfiles();
+            ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
+            SubstitutionPlan substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).getCoursesArray());
+
+            SubstitutionList substitutionlist;
+            if (!substitutionPlan.getToday().getNoInternet()) {
+                if (substitutionPlan.getTodayTitle().isTitleCodeToday())
+                    substitutionlist = substitutionPlan.getToday();
+                else if (substitutionPlan.getTomorrowTitle().isTitleCodeToday())
+                    substitutionlist = substitutionPlan.getTomorrow();
+                else
+                    substitutionlist = new SubstitutionList(true);
+            } else
+                substitutionlist = new SubstitutionList(true);
+
+            DbHelper db = new DbHelper(context);
+            ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))), substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior());
+            Week nextWeek = WeekUtils.getNextWeek(weeks);
+            if (nextWeek == null)
+                return;
+            weeks = new ArrayList<>();
+            weeks.add(nextWeek);
+
+            StringBuilder lesson = new StringBuilder()
+                    .append(context.getString(R.string.time_from_big))
+                    .append(" ")
+                    .append(nextWeek.getFromTime())
+                    .append(" - ")
+                    .append(nextWeek.getToTime())
+                    .append(" ")
+                    .append(context.getString(R.string.share_msg_in_room))
+                    .append(" ")
+                    .append(nextWeek.getRoom());
+            StringBuilder name = new StringBuilder()
+                    .append(nextWeek.getSubject())
+                    .append(" ")
+                    .append(context.getString(R.string.with_teacher))
+                    .append(" ")
+                    .append(nextWeek.getTeacher());
+
+
+            NotificationCompat.MessagingStyle style = new NotificationCompat.MessagingStyle(new Person.Builder().setName("me").build());
+            style.setConversationTitle(context.getString(R.string.timetable_notification_next_week_title));
+            int color = ContextCompat.getColor(context, R.color.notification_icon_background_substitution);
+            int textColor = ContextCompat.getColor(context, R.color.notification_icon_text_substitution);
+            int textSize = 25;
+            Drawable drawable = new ShapeTextDrawable(ShapeForm.ROUND, color, 10f, nextWeek.getRoom(), textColor, true, Typeface.create("sans-serif-light", Typeface.NORMAL), textSize, Color.TRANSPARENT, 0);
+            Person person = new Person.Builder().setName(name).setIcon(IconCompat.createWithBitmap(DrawableKt.toBitmap(drawable, 48, 48, null))).build();
+            style.addMessage(new NotificationCompat.MessagingStyle.Message(lesson, 0, person));
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setStyle(style)
+                    .setSmallIcon(R.drawable.ic_assignment_next_black_24dp)
+                    .setContentText(context.getString(R.string.timetable_notification_summary_title));
+
+
+            sendNotification(context, alert, builder, NOTIFICATION_NEXT_WEEK_ID);
+        }).start();
+    }
+
+    private static void sendNotification(@NonNull Context context, boolean alert, NotificationCompat.Builder notificationBuilder, int id) {
+        if (notificationBuilder == null || !PreferenceUtil.isTimeTableNotification())
             return;
 
 
@@ -89,15 +164,11 @@ public class NotificationUtil {
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         createNotificationChannel(context);
-        NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_assignment_black_24dp)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.gymlogo))
-                .setContentTitle(title)
-                .setContentText(message)
+        NotificationCompat.Builder mNotifyBuilder = notificationBuilder
+                .setChannelId(CHANNEL_ID)
                 .setAutoCancel(true)
                 .setWhen(when)
                 .setPriority(alert ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setOnlyAlertOnce(!alert)
                 .setContentIntent(pendingIntent);
 
@@ -106,7 +177,7 @@ public class NotificationUtil {
             //Dismiss button intent
             Intent buttonIntent = new Intent(context, NotificationDismissButtonReceiver.class);
             buttonIntent.setAction("com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver");
-            buttonIntent.putExtra(NotificationDismissButtonReceiver.EXTRA_NOTIFICATION_ID, NOTIFICATION_ID);
+            buttonIntent.putExtra(NotificationDismissButtonReceiver.EXTRA_NOTIFICATION_ID, id);
             PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, UUID.randomUUID().hashCode(), buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             mNotifyBuilder.setOngoing(true);
@@ -114,7 +185,7 @@ public class NotificationUtil {
         }
 
         if (notificationManager != null) {
-            notificationManager.notify(NOTIFICATION_ID, mNotifyBuilder.build());
+            notificationManager.notify(id, mNotifyBuilder.build());
         }
     }
 
@@ -147,6 +218,10 @@ public class NotificationUtil {
                         .append(week.getFromTime())
                         .append(" - ")
                         .append(week.getToTime())
+                        .append(" ")
+                        .append(context.getString(R.string.with_teacher))
+                        .append(" ")
+                        .append(week.getTeacher())
                         .append(" ")
                         .append(context.getString(R.string.share_msg_in_room))
                         .append(" ")

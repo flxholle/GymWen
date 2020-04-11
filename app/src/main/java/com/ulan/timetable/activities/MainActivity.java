@@ -80,7 +80,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         setDoNotDisturb();
         initAll();
-        NotificationUtil.sendNotification(getContext(), false);
+        NotificationUtil.sendNotificationCurrentLesson(getContext(), false);
     }
 
     @Override

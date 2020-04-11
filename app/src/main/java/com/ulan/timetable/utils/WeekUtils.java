@@ -29,6 +29,7 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.ulan.timetable.model.Week;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
 public class WeekUtils {
@@ -183,6 +184,26 @@ public class WeekUtils {
             }
             break;
         }
+    }
+
+    public static Week getNextWeek(ArrayList<Week> weeks) {
+        Calendar calendar = Calendar.getInstance();
+        String hour = "" + calendar.get(Calendar.HOUR_OF_DAY);
+        if (hour.length() < 2)
+            hour = "0" + hour;
+        String minutes = "" + calendar.get(Calendar.MINUTE);
+        if (minutes.length() < 2)
+            minutes = "0" + minutes;
+        String now = hour + ":" + minutes;
+
+        for (int i = 0; i < weeks.size(); i++) {
+            Week week = weeks.get(i);
+            if ((now.compareToIgnoreCase(week.getFromTime()) >= 0 && now.compareToIgnoreCase(week.getToTime()) <= 0) || now.compareToIgnoreCase(week.getToTime()) <= 0) {
+                return week;
+            } else if (i == weeks.size() - 1)
+                return week;
+        }
+        return null;
     }
 
     @NonNull
