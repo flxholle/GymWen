@@ -15,7 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -92,11 +91,10 @@ public class AlertDialogsHelper {
         });
 
         select_color.setOnClickListener(v -> {
-            int mSelectedColor = ContextCompat.getColor(activity, R.color.white);
-            select_color.setBackgroundColor(mSelectedColor);
-            int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
-
             ColorPicker colorPicker = new ColorPicker(activity);
+            colorPicker.setRoundColorButton(true);
+            colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
+            colorPicker.setColors(R.array.default_colors);
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
@@ -187,11 +185,10 @@ public class AlertDialogsHelper {
         });
 
         select_color.setOnClickListener(v -> {
-            int mSelectedColor = ContextCompat.getColor(activity, R.color.white);
-            select_color.setBackgroundColor(mSelectedColor);
-            int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
-
             ColorPicker colorPicker = new ColorPicker(activity);
+            colorPicker.setRoundColorButton(true);
+            colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
+            colorPicker.setColors(R.array.default_colors);
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
@@ -280,10 +277,10 @@ public class AlertDialogsHelper {
         });
 
         select_color.setOnClickListener(v -> {
-            int mSelectedColor = ContextCompat.getColor(activity, R.color.white);
-            select_color.setBackgroundColor(mSelectedColor);
-            int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
             ColorPicker colorPicker = new ColorPicker(activity);
+            colorPicker.setRoundColorButton(true);
+            colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
+            colorPicker.setColors(R.array.default_colors);
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
@@ -357,10 +354,10 @@ public class AlertDialogsHelper {
         });
 
         select_color.setOnClickListener(v -> {
-            int mSelectedColor = ContextCompat.getColor(activity, R.color.white);
-            select_color.setBackgroundColor(mSelectedColor);
-            int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
             ColorPicker colorPicker = new ColorPicker(activity);
+            colorPicker.setRoundColorButton(true);
+            colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
+            colorPicker.setColors(R.array.default_colors);
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
@@ -427,10 +424,10 @@ public class AlertDialogsHelper {
         select_color.setBackgroundColor(note.getColor() != 0 ? note.getColor() : Color.WHITE);
 
         select_color.setOnClickListener(v -> {
-            int mSelectedColor = ContextCompat.getColor(activity, R.color.white);
-            select_color.setBackgroundColor(mSelectedColor);
-            int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
             ColorPicker colorPicker = new ColorPicker(activity);
+            colorPicker.setRoundColorButton(true);
+            colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
+            colorPicker.setColors(R.array.default_colors);
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
@@ -480,10 +477,10 @@ public class AlertDialogsHelper {
         final Note note = new Note();
 
         select_color.setOnClickListener(v -> {
-            int mSelectedColor = ContextCompat.getColor(activity, R.color.white);
-            select_color.setBackgroundColor(mSelectedColor);
-            int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
             ColorPicker colorPicker = new ColorPicker(activity);
+            colorPicker.setRoundColorButton(true);
+            colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
+            colorPicker.setColors(R.array.default_colors);
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
@@ -580,11 +577,10 @@ public class AlertDialogsHelper {
 
 
         select_color.setOnClickListener(v -> {
-            int mSelectedColor = ContextCompat.getColor(activity, R.color.white);
-            select_color.setBackgroundColor(mSelectedColor);
-            int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
-
             ColorPicker colorPicker = new ColorPicker(activity);
+            colorPicker.setRoundColorButton(true);
+            colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
+            colorPicker.setColors(R.array.default_colors);
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
@@ -681,11 +677,10 @@ public class AlertDialogsHelper {
 
 
         select_color.setOnClickListener(v -> {
-            int mSelectedColor = ContextCompat.getColor(activity, R.color.white);
-            select_color.setBackgroundColor(mSelectedColor);
-            int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
-
             ColorPicker colorPicker = new ColorPicker(activity);
+            colorPicker.setRoundColorButton(true);
+            colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
+            colorPicker.setColors(R.array.default_colors);
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override

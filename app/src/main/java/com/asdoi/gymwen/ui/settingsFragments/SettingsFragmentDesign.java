@@ -64,7 +64,7 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
         myPref.setVisible(true);
         myPref.setOnPreferenceClickListener((Preference p) -> {
             new ColorChooserDialog.Builder(getContext(), R.string.color_accent)
-                    .accentMode(false)
+                    .accentMode(true)
                     .allowUserColorInput(true)
                     .allowUserColorInputAlpha(false)
                     .preselect(ApplicationFeatures.getAccentColor(getContext()))
