@@ -134,4 +134,8 @@ public class PreferenceUtil {
             }
         }
     }
+
+    public static boolean isDoNotDisturbTurnOff() {
+        return ApplicationFeatures.getBooleanSettings("do_not_disturb_turn_off", false);
+    }
 }

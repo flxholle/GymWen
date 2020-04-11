@@ -587,5 +587,6 @@
     <string name="do_not_disturb_permission_desc">Um automatisch in den Nicht-Stören Modus zu wechseln benötigt die App die entsprechende Berechtigung</string>
     <string name="do_not_disturb_setting">Automatisches Stummschalten</string>
     <string name="do_not_disturb_settings_desc">Automatisch während Fächern in den Nicht-Stören Modus wechseln und ihn danach wieder ausschalten</string>
+    <string name="do_not_disturb_turn_off">Auch wieder auf laut stellen</string>
 
 </resources>

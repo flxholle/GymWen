@@ -1,0 +1,400 @@
+[1mdiff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml[m
+[1mindex d14e6ac..f89ea8a 100755[m
+[1m--- a/app/src/main/res/values/strings.xml[m
+[1m+++ b/app/src/main/res/values/strings.xml[m
+[36m@@ -1 +1,19 @@[m
+[31m-<resources>[m
+[32m+[m[32m<!--[m
+[32m+[m[32m  ~ Copyright (c) 2020 Felix Hollederer[m
+[32m+[m[32m  ~     This file is part of GymWenApp.[m
+[32m+[m[32m  ~[m
+[32m+[m[32m  ~     GymWenApp is free software: you can redistribute it and/or modify[m
+[32m+[m[32m  ~     it under the terms of the GNU General Public License as published by[m
+[32m+[m[32m  ~     the Free Software Foundation, either version 3 of the License, or[m
+[32m+[m[32m  ~     (at your option) any later version.[m
+[32m+[m[32m  ~[m
+[32m+[m[32m  ~     GymWenApp is distributed in the hope that it will be useful,[m
+[32m+[m[32m  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of[m
+[32m+[m[32m  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the[m
+[32m+[m[32m  ~     GNU General Public License for more details.[m
+[32m+[m[32m  ~[m
+[32m+[m[32m  ~     You should have received a copy of the GNU General Public License[m
+[32m+[m[32m  ~     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.[m
+[32m+[m[32m  -->[m
+[32m+[m
+[32m+[m[32m<resources xmlns:tools="http://schemas.android.com/tools">[m
+[36m@@ -15,2 +33,2 @@[m
+[31m-    <string name="menu_mensa">Mensa (kitafino)</string>[m
+[31m-    <string name="menu_category_other">Diverse Apps</string>[m
+[32m+[m[32m    <string name="menu_mensa">Mensa (kitafino)</string>c[m
+[32m+[m[32m    <string name="menu_category_other">Diverses</string>[m
+[36m@@ -19,2 +37,2 @@[m
+[31m-    <string name="menu_category_vertretung">Vertretungsplan</string>[m
+[31m-    <string name="menu_both">Auf einen Blick!</string>[m
+[32m+[m[32m    <string name="menu_category_substitution">Vertretungsplan</string>[m
+[32m+[m[32m    <string name="menu_at_one_glance">Auf einen Blick!</string>[m
+[36m@@ -22,0 +41 @@[m
+[32m+[m[32m    <string name="menu_auto_update_check">Im Hintergrund prüfen</string>[m
+[36m@@ -38,0 +58,6 @@[m
+[32m+[m[32m    <string name="menu_from_this_developer">Auch von diesem Entwickler</string>[m
+[32m+[m[32m    <string name="menu_news">Schülerzeitung</string>[m
+[32m+[m[32m    <string name="menu_navigation">Navigation</string>[m
+[32m+[m[32m    <string name="menu_backup">Backup</string>[m
+[32m+[m[32m    <string name="menu_podcast" translatable="false">Wendelsteiner Welle</string>[m
+[32m+[m[32m    <string name="room_plan">Raumplan</string>[m
+[36m@@ -43,0 +69,2 @@[m
+[32m+[m[32m    <string name="open_app">App öffnen</string>[m
+[32m+[m[32m    <string name="switch_design">Design ändern</string>[m
+[36m@@ -47 +74 @@[m
+[31m-    <string name="set_vertretung_title">Vertretungsplan</string>[m
+[32m+[m[32m    <string name="set_substitution_title">Vertretungsplan</string>[m
+[36m@@ -49,4 +76,3 @@[m
+[31m-    <string name="set_courses_summary">Einzelne Kurse mit einem # zwischen den Kursen trennen, z.B. 1ph3#1d4#1bio2.</string>[m
+[31m-    <string name="set_vertretung_signin">Anmeldedaten</string>[m
+[31m-    <string name="set_vertretung_username">Benutzername:</string>[m
+[31m-    <string name="set_vertretung_password">Passwort:</string>[m
+[32m+[m[32m    <string name="set_substitution_signin">Anmeldedaten</string>[m
+[32m+[m[32m    <string name="set_substitution_username">Benutzername</string>[m
+[32m+[m[32m    <string name="set_substitution_password">Passwort</string>[m
+[36m@@ -54 +80 @@[m
+[31m-    <string name="set_notifiaction_isOn">Benachrichtigung anzeigen</string>[m
+[32m+[m[32m    <string name="set_notification_isOn">Benachrichtigung anzeigen</string>[m
+[36m@@ -59 +85 @@[m
+[31m-    <string name="set_other_title">Sonstiges</string>[m
+[32m+[m[32m    <string name="set_miscellaneous_title">Sonstiges</string>[m
+[36m@@ -61 +87 @@[m
+[31m-    <string name="set_old_vertretung">Altes Design</string>[m
+[32m+[m[32m    <string name="set_old_substitution">Altes Design</string>[m
+[36m@@ -64 +90 @@[m
+[31m-    <string name="set_show_weekdates">Wochentage immer anzeigen.</string>[m
+[32m+[m[32m    <string name="set_show_weekdates">Wochentage immer anzeigen</string>[m
+[36m@@ -71,0 +98,18 @@[m
+[32m+[m[32m    <string name="set_full_names">Echte Namen statt Kürzel anzeigen</string>[m
+[32m+[m[32m    <string name="set_full_names_specific">Nur beim gefilterten Plan</string>[m
+[32m+[m[32m    <string name="set_today_url">URL für den ersten Tag</string>[m
+[32m+[m[32m    <string name="set_tomorrow_url">URL für den zweiten Tag</string>[m
+[32m+[m[32m    <string name="set_offline_mode">Offlinemodus</string>[m
+[32m+[m[32m    <string name="set_teacherlist_url">URL für die Lehrerliste</string>[m
+[32m+[m[32m    <string name="set_substitution_category">Vertretungsplan</string>[m
+[32m+[m[32m    <string name="set_summarize">Gleiche Stunden zusammenfassen</string>[m
+[32m+[m[32m    <string name="also_at_old_design">Auch beim alten Design</string>[m
+[32m+[m[32m    <string name="set_single_days">Tage einzeln anzeigen</string>[m
+[32m+[m[32m    <string name="set_old_title">Alte Überschrift</string>[m
+[32m+[m[32m    <string name="set_design_no_sections">Gefiltert \u0026 Gesamt zusammen anzeigen</string>[m
+[32m+[m[32m    <string name="set_swipe_to_refresh">Herunterziehen zum Aktualisieren</string>[m
+[32m+[m[32m    <string name="set_at_filtered_plan">Auch beim gefilterten Plan</string>[m
+[32m+[m[32m    <string name="set_intelligent_hide">Intelligentes Ausblenden</string>[m
+[32m+[m[32m    <string name="set_show_summary_notif_title">Zusammenfassende Benachrichtigung anzeigen</string>[m
+[32m+[m[32m    <string name="set_show_summary_usual_title">Alle Profile in der zusammenfassenden Benachrichtigung anzeigen</string>[m
+[32m+[m[32m    <string name="set_main_notif_for_all_title">Die prägnante Benachrichtigung für alle Profile senden</string>[m
+[36m@@ -74,4 +118,3 @@[m
+[31m-    <!-- Vertretungsplan -->[m
+[31m-    <string name="nothing">Es entfällt nichts für dich.</string>[m
+[31m-    <string name="nothing_all">Es entfällt nichts für den gesamten Tag.</string>[m
+[31m-    <string name="back_button">Erneut drücken zum Beenden.</string>[m
+[32m+[m[32m    <!-- SubstitutionPlan -->[m
+[32m+[m[32m    <string name="nothing">Keine Vertretung für dich.</string>[m
+[32m+[m[32m    <string name="back_button">Erneut drücken zum Beenden</string>[m
+[36m@@ -79 +122 @@[m
+[31m-    <string name="footprint">Diese Nachricht wurde mit der GymWen App erzeugt.</string>[m
+[32m+[m[32m    <string name="footprint">Mit der GymWen App erzeugt: https://asdoi.gitlab.io/</string>[m
+[36m@@ -82 +125 @@[m
+[31m-    <string name="share_vertretung">Vertretung senden an\u2026</string>[m
+[32m+[m[32m    <string name="share_substitution_plan">Vertretung senden an\u2026</string>[m
+[36m@@ -83,0 +127,4 @@[m
+[32m+[m[32m    <string name="with_teacher">bei</string>[m
+[32m+[m[32m    <string name="missing_short" translatable="false">entf</string>[m
+[32m+[m[32m    <string name="add_to_my_courses">Zu meinen Kursen hinzufügen</string>[m
+[32m+[m[32m    <string name="remove_from_my_courses">Aus meinen Kursen entfernen</string>[m
+[36m@@ -86,0 +134 @@[m
+[32m+[m[32m    <string name="classes_short">K</string>[m
+[36m@@ -87,0 +136 @@[m
+[32m+[m[32m    <string name="courses_short">K</string>[m
+[36m@@ -96,2 +145,2 @@[m
+[31m-    <string name="other">Sonstiges</string>[m
+[31m-    <string name="other_short">Sons.</string>[m
+[32m+[m[32m    <string name="miscellaneous">Sonstiges</string>[m
+[32m+[m[32m    <string name="miscellaneous_short">Sons.</string>[m
+[36m@@ -112 +161 @@[m
+[31m-    <string name="choice_oberstufe">Oberstufe (Q11/Q12)</string>[m
+[32m+[m[32m    <string name="choice_senior">Oberstufe (Q11/Q12)</string>[m
+[36m@@ -122,2 +171,2 @@[m
+[31m-    <string name="choice_oberstufe_one">Jahrgang 1 (11. Klasse, bei 1d4 die 1)</string>[m
+[31m-    <string name="choice_oberstufe_two">Jahrgang 2 (12. Klasse, bei 2d4 die 2)</string>[m
+[32m+[m[32m    <string name="choice_senior_one">Jahrgang 1 (11. Klasse, bei 1d4 die 1)</string>[m
+[32m+[m[32m    <string name="choice_senior_two">Jahrgang 2 (12. Klasse, bei 2d4 die 2)</string>[m
+[36m@@ -129 +178 @@[m
+[31m-    <string name="oberstufe_empty">Bitte Kurse einfügen.</string>[m
+[32m+[m[32m    <string name="senior_empty">Bitte Kurse einfügen.</string>[m
+[36m@@ -154,0 +204 @@[m
+[32m+[m[32m    <string name="additum">Additum</string>[m
+[36m@@ -161 +211 @@[m
+[31m-    <string name="Religious_educationShort" translatable="false"></string>[m
+[32m+[m[32m    <string name="Religious_educationShort" translatable="false" />[m
+[36m@@ -176 +226 @@[m
+[31m-    <string name="profile_subjectShort" translatable="false"></string>[m
+[32m+[m[32m    <string name="profile_subjectShort" translatable="false" />[m
+[36m@@ -177,0 +228 @@[m
+[32m+[m[32m    <string name="additumShort" translatable="false">X_</string>[m
+[36m@@ -197,0 +249,2 @@[m
+[32m+[m[32m    <string name="tap_picture">Bild antippen</string>[m
+[32m+[m[32m    <string name="close">Schließen</string>[m
+[36m@@ -200,2 +253,4 @@[m
+[31m-    <string name="notification_channel_title">Vertretungsplan</string>[m
+[31m-    <string name="notification_channel_description">Vertretungsplan</string>[m
+[32m+[m[32m    <string name="notification_summary_channel_title">Vertretungsplan</string>[m
+[32m+[m[32m    <string name="notification_summary_channel_description">Eine zusammenfassende Benachrichtigung über den Vertretungsplan</string>[m
+[32m+[m[32m    <string name="notification_main_channel_title">Vertretungsplan Wichtig</string>[m
+[32m+[m[32m    <string name="notification_main_channel_description">Eine Benachrichtigung die dir deine aktuellen Vertretungen sendet</string>[m
+[36m@@ -204,0 +260 @@[m
+[32m+[m[32m    <string name="more">mehr</string>[m
+[36m@@ -222 +277,0 @@[m
+[31m-    <string name="acra_toast">Das hätte nicht passieren sollen.</string>[m
+[36m@@ -237 +292 @@[m
+[31m-    <!-- Lehrerliste -->[m
+[32m+[m[32m    <!-- TeacherlistFeatures -->[m
+[36m@@ -244,9 +299,12 @@[m
+[31m-    <string name="credits" translatable="false">https://pixabay.com/vectors/book-found-fun-icon-icons-reading-1294379/\n[m
+[31m-        https://pixabay.com/vectors/icons-books-learning-book-icon-3439190/\n[m
+[31m-        <div>Icons made by <a href="https://www.flaticon.com/authors/itim2101" title="itim2101">itim2101</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n[m
+[31m-        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n[m
+[31m-        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n[m
+[31m-        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n[m
+[31m-        <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n[m
+[31m-        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n[m
+[31m-        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>\n[m
+[32m+[m[32m    <string name="credits" translatable="false"><![CDATA[[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/itim2101" title="itim2101">itim2101</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/mavadee" title="mavadee">mavadee</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/srip" title="srip">srip</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        <div>Icons made by <a href="https://www.flaticon.com/authors/ddara" title="dDara">dDara</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>[m
+[32m+[m[32m        ]]>[m
+[36m@@ -254,0 +313,7 @@[m
+[32m+[m[32m    <!-- Imprint -->[m
+[32m+[m[32m    <string name="imprint_text" translatable="false"><![CDATA[[m
+[32m+[m[32m        <div>Impressum des Gymnasiums Wendelstein:<br>[m
+[32m+[m[32m        http://gym-wen.de/startseite/impressum/</div><br>[m
+[32m+[m[32m        <div>Impressum des App-Entwicklers:<br>[m
+[32m+[m[32m        https://asdoi.gitlab.io/imprint.html</div>]]></string>[m
+[32m+[m
+[36m@@ -264,2 +328,0 @@[m
+[31m-    <string name="reloaded_docs">Dateien vom letzten Mal wiederhergestellt.[m
+[31m-        \nEventuell nicht aktuell!</string>[m
+[36m@@ -292,0 +356,4 @@[m
+[32m+[m[32m    <string name="colorush_screen1">Boss-modus</string>[m
+[32m+[m[32m    <string name="colorush_screen2">Choosing-modus</string>[m
+[32m+[m[32m    <string name="colorush_screen3">Level 1</string>[m
+[32m+[m[32m    <string name="colorush_screen4">Hauptmenü</string>[m
+[36m@@ -301,2 +368,2 @@[m
+[31m-    <string name="licenses">Lizenzen</string>[m
+[31m-    <string name="author">Autor</string>[m
+[32m+[m[32m    <string name="licenses">Lizenz</string>[m
+[32m+[m[32m    <string name="author" tools:ignore="Typos">Autor</string>[m
+[36m@@ -315,0 +383,2 @@[m
+[32m+[m[32m    <string name="imprint">Impressum</string>[m
+[32m+[m[32m    <string name="version">Version</string>[m
+[36m@@ -325 +394 @@[m
+[31m-    <string name="intro_four_desc">Außerdem ist diese App auch für Eltern sehr nützlich.\nSo kann man verschiedene Profile für jedes Kind anlegen und bestimmte Funktionen, die besonders für Eltern nützlich sind, benutzen.</string>[m
+[32m+[m[32m    <string name="intro_four_desc">Außerdem ist diese App auch für Eltern sehr nützlich. So kann man verschiedene Profile für jedes Kind anlegen und bestimmte Funktionen, die besonders für Eltern nützlich sind, benutzen.</string>[m
+[36m@@ -327 +396,194 @@[m
+[31m-    <string name="intro_five_desc">Des Weiteren kannst du eine für Smartphones optimierte Version der Schulhomepage aufrufen sowie deine Noten und deinen Stundenplan verwalten.\nAußerdem gibt es noch viele weitere Dinge, für die hier leider kein Platz mehr ist.</string>[m
+[32m+[m[32m    <string name="intro_five_desc">Des Weiteren kannst du eine für Smartphones optimierte Version der Schulhomepage aufrufen sowie deine Noten und deinen Stundenplan verwalten. Außerdem gibt es noch viele weitere Dinge, für die hier leider kein Platz mehr ist.</string>[m
+[32m+[m
+[32m+[m[32m    <!-- Registration -->[m
+[32m+[m[32m    <string name="dont_show_again">Nicht wieder anzeigen</string>[m
+[32m+[m[32m    <string name="registration_dialog_title">Nutzerzählung</string>[m
+[32m+[m[32m    <string name="registration_dialog_content">Um herauszufinden, wie viele Personen diese App nutzen, möchte ich eine Nutzerzählung durchführen. Dabei werden (nur die) Metadaten deiner Internetverbdingung, wie die IP-Adresse oder die Uhrzeit gespeichert.\n[m
+[32m+[m[32m        Möchtest du daran teilnehmen?</string>[m
+[32m+[m
+[32m+[m[32m    <!-- Quick Settings Tile -->[m
+[32m+[m[32m    <string name="tile_name">Benachr. anzeigen</string>[m
+[32m+[m[32m    <string name="on">An</string>[m
+[32m+[m[32m    <string name="off">Aus</string>[m
+[32m+[m
+[32m+[m[32m    <!-- Share Message -->[m
+[32m+[m[32m    <string name="share_msg_nothing_at">Keine Vertretung am</string>[m
+[32m+[m[32m    <string name="share_msg_substitution_at">Vertretung am</string>[m
+[32m+[m[32m    <string name="share_msg_nothing_hour_senior">Stunde entfällt für Kurs</string>[m
+[32m+[m[32m    <string name="share_msg_hour_senior">Stunde für Kurs</string>[m
+[32m+[m[32m    <string name="share_msg_in_room">in Raum</string>[m
+[32m+[m[32m    <string name="share_msg_nothing_hour">Stunde entfällt</string>[m
+[32m+[m[32m    <string name="share_msg_hour">Stunde</string>[m
+[32m+[m[32m    <string name="share_msg_for_courses">für die Kurse</string>[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    <string name="gnu_license" tools:ignore="TypographyOther">[m
+[32m+[m[32m        <![CDATA[[m
+[32m+[m[32m        <strong>Diese Übersetzung ist kein rechtskräftiger Ersatz für die <a href="http://www.gnu.org/licenses/gpl.html">englischsprachige Originalversion</a>! </strong><br><p>[m
+[32m+[m[32m        <blockquote>[m
+[32m+[m[32m        <p><tt>[m
+[32m+[m[32m        Copyright (C) [2019-2020]&nbsp;&nbsp;[<i>Felix Hollederer</i>][m
+[32m+[m[32m        </tt></p>[m
+[32m+[m[32m        <p><tt>[m
+[32m+[m[32m        Dieses Programm ist freie Software. Sie können es unter den[m
+[32m+[m[32m        Bedingungen der GNU General Public License, wie von der Free[m
+[32m+[m[32m        Software Foundation veröffentlicht, weitergeben und/oder[m
+[32m+[m[32m        modifizieren, entweder gemäß Version 3 der Lizenz oder (nach[m
+[32m+[m[32m        Ihrer Option) jeder späteren Version.[m
+[32m+[m[32m        </tt></p>[m
+[32m+[m[32m        <p><tt>[m
+[32m+[m[32m        Die Veröffentlichung dieses Programms erfolgt in der Hoffnung,[m
+[32m+[m[32m        daß es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE,[m
+[32m+[m[32m        sogar ohne die implizite Garantie der MARKTREIFE oder der[m
+[32m+[m[32m        VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in[m
+[32m+[m[32m        der GNU General Public License.[m
+[32m+[m[32m        </tt></p>[m
+[32m+[m[32m        <p><tt>[m
+[32m+[m[32m        Sie sollten ein Exemplar der GNU General Public License zusammen[m
+[32m+[m[32m        mit diesem Programm erhalten haben. Falls nicht, siehe[m
+[32m+[m[32m        &lt;<a href="https://www.gnu.org/licenses/" >http://www.gnu.org/licenses/</a>&gt;.[m
+[32m+[m[32m        </tt></p>[m
+[32m+[m[32m        </blockquote>[m
+[32m+[m[32m        ]]></string>[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    <!-- Settings descriptions -->[m
+[32m+[m[32m    <string name="set_desc_courses">Einzelne Kurse mit einem # zwischen den Kursen trennen, z.B. 1ph3#1d4#1bio2</string>[m
+[32m+[m[32m    <string name="set_desc_hours">Die Stundenanzeige durch die jeweilige Uhrzeit ersetzen, z.B. 8:10 statt 1</string>[m
+[32m+[m[32m    <string name="set_desc_summarize">Einzelne Stunden mit demselben Inhalt zusammenfassen (Beipielsweise der Raumtausch einer Doppelstunde).</string>[m
+[32m+[m[32m    <string name="set_desc_week_dates">Immer den zum Datum gehörenden Wochentag anzeigen (auch wenn der Tag schon vergangen ist)</string>[m
+[32m+[m[32m    <string name="set_desc_show_full_names">Alle Lehrerkürzel durch den jeweiligen Nachnamen ersetzen</string>[m
+[32m+[m[32m    <string name="set_desc_credentials_fragment">Einstellungen für das Herunterladen des Vertretungsplans/Lehrerliste</string>[m
+[32m+[m
+[32m+[m[32m    <string name="set_desc_username">Der Benutzername für den Vertretungsplan</string>[m
+[32m+[m[32m    <string name="set_desc_password">Das Passwort für den Vertretungsplan</string>[m
+[32m+[m[32m    <string name="set_desc_today_url">Link zum ersten Tag (üblicherweise der heutige Tag)</string>[m
+[32m+[m[32m    <string name="set_desc_tomorrow_url">Link zum zweiten Tag (üblicherweise der morgige Tag)</string>[m
+[32m+[m[32m    <string name="set_desc_teacherlist_url">Link zur Lehrerliste</string>[m
+[32m+[m
+[32m+[m[32m    <string name="set_desc_accentColor">Die Farbe mit der Wichtiges hervorgehoben wird, z.B. die Stunden beim Vertretungsplan</string>[m
+[32m+[m[32m    <string name="set_desc_primaryColor">Die Farbe der Titelleiste</string>[m
+[32m+[m[32m    <string name="set_desc_menu_items_fragment">Bestimmte Einträge der Navigationsleiste verbergen oder anzeigen</string>[m
+[32m+[m[32m    <string name="set_desc_show_borders">Alle Lehrerkürzel, die angeklickt werden können, umranden</string>[m
+[32m+[m[32m    <string name="set_desc_old_substitution">Altes Aussehen des Vertretungsplans (kann auch über die Farbpalette in der Titelleiste geändert werden)</string>[m
+[32m+[m[32m    <string name="set_desc_old_title">Die Überschrift im alten Design anzeigen.</string>[m
+[32m+[m
+[32m+[m[32m    <string name="set_desc_alwaysNotification">Die Benachrichtigung kann nur noch manuell ausgeblendet werden</string>[m
+[32m+[m[32m    <string name="set_desc_two_notifs">Für jeden Tag eine eigene Benachrichtigung anzeigen</string>[m
+[32m+[m[32m    <string name="set_desc_alarm">Die Benachrichtigung zu einer bestimmten Uhrzeit anzeigen</string>[m
+[32m+[m[32m    <string name="set_main_notif_for_all_desc">Man kann in der Profil-Bearbeiten Ansicht ein Profil mit einem Stern auswählen. Normalerweise wird nur für dieses einzelne Profil eine prägnante Benachrichtigung gesendet. Ist gar keines ausgewählt wird auch keine prägnante Benachrichtigung gesendet.</string>[m
+[32m+[m[32m    <string name="set_show_summary_usual_desc">Normalerweise werden die Profile die in der prägnanten Benachrichtigung sind, nicht in der zusammenfassenden gesendet</string>[m
+[32m+[m
+[32m+[m[32m    <string name="set_desc_parents">Bestimmte Funktionen aktivieren, die v.a. für Eltern nützlich sind, z.B. ClaXss</string>[m
+[32m+[m[32m    <string name="set_desc_updates">Auf Aktualisierungen überprüfen</string>[m
+[32m+[m[32m    <string name="set_desc_check_background_updates">Automatisch im Hintergrund auf Aktualisierungen prüfen</string>[m
+[32m+[m[32m    <string name="set_desc_offline_mode">Bestimmte Dinge lokal speichern, damit die App ohne Internet funktioniert</string>[m
+[32m+[m[32m    <string name="set_desc_shortcuts">Shortcuts, die über einen langen Klick auf das App-Icon erzeugt werden können. Bitte maximal 4 auswählen!</string>[m
+[32m+[m
+[32m+[m[32m    <string name="set_desc_both">Wird, auch falls deaktiviert, immer beim ersten App-Start geladen!</string>[m
+[32m+[m[32m    <string name="set_desc_intelligent_hide">Vergangene oder nicht mehr relevante Tage werden ausgeblendet.</string>[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    <!-- widget -->[m
+[32m+[m[32m    <string name="loading">Lädt\u2026</string>[m
+[32m+[m[32m    <string name="select_profile">Profile auswählen</string>[m
+[32m+[m[32m    <string name="selected_all_profiles">Alle Profile ausgewählt</string>[m
+[32m+[m
+[32m+[m[32m    <!-- Shortcuts -->[m
+[32m+[m[32m    <string name="shortcut_website">Website</string>[m
+[32m+[m[32m    <string name="shortcut_navigation">Navigation</string>[m
+[32m+[m[32m    <string name="shortcut_call_office">Sekretariat</string>[m
+[32m+[m[32m    <string name="shortcut_newspaper">Zeitung</string>[m
+[32m+[m[32m    <string name="shortcut_mebis" translatable="false">Mebis</string>[m
+[32m+[m[32m    <string name="shortcut_mensa">Mensa</string>[m
+[32m+[m[32m    <string name="shortcut_teacher_list">Lehrerliste</string>[m
+[32m+[m[32m    <string name="shortcut_grades_management">Noten</string>[m
+[32m+[m[32m    <string name="shortcut_claxss">ClaXss</string>[m
+[32m+[m[32m    <string name="shortcut_forms">Formulare</string>[m
+[32m+[m[32m    <string name="shortcut_room_plan">Raumplan</string>[m
+[32m+[m[32m    <string name="shortcut_room_plan_search">Raum suchen</string>[m
+[32m+[m
+[32m+[m[32m    <!-- Room plan -->[m
+[32m+[m[32m    <string name="not_found">nicht gefunden</string>[m
+[32m+[m[32m    <string name="cannot_load_room_plan">Raumplan konnte nicht geladen werden</string>[m
+[32m+[m[32m    <string name="action_search">Suchen</string>[m
+[32m+[m[32m    <string name="main_floor">Erdgeschoss</string>[m
+[32m+[m[32m    <string name="floor">Stock</string>[m
+[32m+[m[32m    <string name="unkown_floor">Unbekanntes Stockwerk</string>[m
+[32m+[m[32m    <string name="gym">Sporthalle</string>[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    <!-- TimeTable -->[m
+[32m+[m[32m    <!-- Generated by Automatic String Resource Translation -->[m
+[32m+[m[32m    <!--          https://asrt.gluege.boerde.de             -->[m
+[32m+[m[32m    <string name="monday">Montag</string>[m
+[32m+[m[32m    <string name="tuesday">Dienstag</string>[m
+[32m+[m[32m    <string name="wednesday">Mittwoch</string>[m
+[32m+[m[32m    <string name="thursday">Donnerstag</string>[m
+[32m+[m[32m    <string name="friday">Freitag</string>[m
+[32m+[m[32m    <string name="saturday">Samstag</string>[m
+[32m+[m[32m    <string name="sunday">Sonntag</string>[m
+[32m+[m[32m    <string name="selected">Ausgewählt</string>[m
+[32m+[m
+[32m+[m[32m    <string name="timetable_activity_title">Stundenplan</string>[m
+[32m+[m[32m    <string name="seven_days_of_the_week">7 Tage die Woche</string>[m
+[32m+[m[32m    <string name="field_error">Feld darf nicht leer sein!</string>[m
+[32m+[m[32m    <string name="time_error">Zeitfeld darf nicht leer sein!</string>[m
+[32m+[m[32m    <string name="delete">Löschen</string>[m
+[32m+[m[32m    <string name="add_subject">Stunde hinzufügen</string>[m
+[32m+[m[32m    <string name="edit_subject">Stunde bearbeiten</string>[m
+[32m+[m[32m    <string name="time">Zeit</string>[m
+[32m+[m[32m    <string name="save">Speichern</string>[m
+[32m+[m[32m    <string name="time_from_dialog">Von:</string>[m
+[32m+[m[32m    <string name="time_to_dialog">Bis:</string>[m
+[32m+[m[32m    <string name="subject_dialog">Fach:</string>[m
+[32m+[m[32m    <string name="teacher_dialog">Lehrer:</string>[m
+[32m+[m[32m    <string name="room_dialog">Zimmer:</string>[m
+[32m+[m[32m    <string name="select_time">Uhrzeit</string>[m
+[32m+[m[32m    <string name="select_start_time">Beginn</string>[m
+[32m+[m[32m    <string name="select_end_time">Ende</string>[m
+[32m+[m[32m    <string name="select_color">Farbe</string>[m
+[32m+[m[32m    <string name="choose_color">Farbe auswählen</string>[m
+[32m+[m[32m    <string name="choose_time">Zeit</string>[m
+[32m+[m[32m    <string name="choose_date">Datum</string>[m
+[32m+[m
+[32m+[m[32m    <string name="homeworks_activity_title">Hausaufgaben</string>[m
+[32m+[m[32m    <string name="deadline_dialog">Deadline:</string>[m
+[32m+[m[32m    <string name="description_dialog">Beschreibung:</string>[m
+[32m+[m[32m    <string name="desctiption">Beschreibung</string>[m
+[32m+[m[32m    <string name="date_error">Datumsfeld darf nicht leer sein!</string>[m
+[32m+[m[32m    <string name="edit_homework">Hausaufgabe bearbeiten</string>[m
+[32m+[m[32m    <string name="add_homework">Hausaufgabe hinzufügen</string>[m
+[32m+[m[32m    <string name="deadline_snackbar">Deadline-Feld darf nicht leer sein!</string>[m
+[32m+[m[32m    <string name="date">Datum</string>[m
+[32m+[m
+[32m+[m[32m    <string name="notes_activity_title">Notizen</string>[m
+[32m+[m[32m    <string name="note">Notiz</string>[m
+[32m+[m[32m    <string name="title_dialog">Titel:</string>[m
+[32m+[m[32m    <string name="add_note">Notiz hinzufügen</string>[m
+[32m+[m[32m    <string name="edit_note">Notiz bearbeiten</string>[m
+[32m+[m[32m    <string name="title_error">Titelfeld darf nicht leer sein!</string>[m
+[32m+[m[32m    <string name="saved">Speichern</string>[m
+[32m+[m
+[32m+[m[32m    <string name="exams_activity_title">Prüfungen</string>[m
+[32m+[m[32m    <string name="add_exam">Prüfung hinzufügen</string>[m
+[32m+[m[32m    <string name="date_dialog">Datum:</string>[m
+[32m+[m[32m    <string name="time_dialog">Zeit:</string>[m
+[32m+[m
+[32m+[m[32m    <string name="sevendays_setting">7 Tage pro Woche einstellen</string>[m
+[32m+[m[32m    <string name="timetable_notification_summary_title">Der heutige Unterricht:</string>[m
+[32m+[m[32m    <string name="timetable_notification_next_week_title">Nächstes Fach:</string>[m
+[32m+[m[32m    <string name="timetable_credit">Entstanden mit Hilfe von ulan17</string>[m
+[32m+[m[32m    <string name="time_from">von</string>[m
+[32m+[m[32m    <string name="integrate_substitution_in_timetable">Vertretungen im Stundenplan anzeigen</string>[m
+[32m+[m[32m    <string name="integrate_substitution_in_timetable_desc">Zum Editieren des Stundenplans besser ausschalten</string>[m
+[32m+[m[32m    <string name="edit">Bearbeiten</string>[m
+[32m+[m[32m    <string name="submit_delete">Wirklich löschen?</string>[m
+[32m+[m[32m    <string name="automatic_update_check">Automatisch auf Updates prüfen</string>[m
+[32m+[m[32m    <string name="url" translatable="false">URL</string>[m
+[32m+[m
+[32m+[m[32m    <string name="timetable_channel">Stundenplan</string>[m
+[32m+[m[32m    <string name="timetable_channel_desc">Eine Benachrichtigung mit deinen Fächern</string>[m
+[32m+[m[32m    <string name="do_not_disturb_permission_desc">Um automatisch in den Nicht-Stören Modus zu wechseln benötigt die App die entsprechende Berechtigung</string>[m
+[32m+[m[32m    <string name="do_not_disturb_setting">Automatisches Stummschalten</string>[m
+[32m+[m[32m    <string name="do_not_disturb_settings_desc">Automatisch während Fächern in den Nicht-Stören Modus wechseln und ihn danach wieder ausschalten</string>[m

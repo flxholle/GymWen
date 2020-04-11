@@ -50,9 +50,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             return true;
         });
 
+        setTurnOff();
         myPref = findPreference("automatic_do_not_disturb");
         myPref.setOnPreferenceClickListener((Preference p) -> {
             PreferenceUtil.setDoNotDisturb(getActivity(), false);
+            setTurnOff();
             return true;
         });
     }
@@ -61,5 +63,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("timetableNotif", true);
         findPreference("alwaysNotification").setVisible(showNotif);
         findPreference("timetable_alarm").setVisible(showNotif);
+    }
+
+    private void setTurnOff() {
+        boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("automatic_do_not_disturb", true);
+        findPreference("do_not_disturb_turn_off").setVisible(showNotif);
     }
 }
