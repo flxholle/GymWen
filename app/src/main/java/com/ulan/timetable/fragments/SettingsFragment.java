@@ -49,6 +49,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             timePickerDialog.show();
             return true;
         });
+
+        myPref = findPreference("automatic_do_not_disturb");
+        myPref.setOnPreferenceClickListener((Preference p) -> {
+            PreferenceUtil.setDoNotDisturb(getActivity(), false);
+            return true;
+        });
     }
 
     private void setNotif() {

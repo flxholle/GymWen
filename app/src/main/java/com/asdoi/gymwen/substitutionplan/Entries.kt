@@ -162,14 +162,29 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
         return this
     }
 
-    companion object {
-        fun areListsEqual(list1: SubstitutionList, list2: SubstitutionList): Boolean {
-            if (list1.entries.size != list1.entries.size)
-                return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other)
+            return true
+        if (other == null || javaClass != other.javaClass)
+            return false
 
-            return list1.entries == list2.entries
+        val list2: SubstitutionList = other as SubstitutionList
+
+        if (entries.size != list2.entries.size)
+            return false
+
+        if (entries.size <= 0)
+            return true;
+
+        for (i in entries.indices) {
+            if (entries[i] != list2.entries[i])
+                return false
         }
 
+        return true
+    }
+
+    companion object {
         /**
          * @param lesson the lesson
          * @return the matching time
@@ -264,6 +279,15 @@ class SubstitutionEntry(var course: String, var hour: String, var subject: Strin
             e.printStackTrace()
         }
         return hour
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other)
+            return true
+        if (other == null || javaClass != other.javaClass)
+            return false
+        val entry: SubstitutionEntry = other as SubstitutionEntry
+        return course == entry.course && hour == entry.hour && subject == entry.subject && teacher == entry.teacher && room == entry.room && moreInformation == entry.moreInformation
     }
 }
 

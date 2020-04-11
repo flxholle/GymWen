@@ -1,13 +1,10 @@
 package com.ulan.timetable.activities;
 
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,14 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -42,7 +36,6 @@ import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.DBUtil;
 import com.ulan.timetable.utils.DailyReceiver;
-import com.ulan.timetable.utils.DoNotDisturbReceiversKt;
 import com.ulan.timetable.utils.NotificationUtil;
 import com.ulan.timetable.utils.PreferenceUtil;
 
@@ -78,7 +71,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         setContentView(R.layout.timetable_activity_main);
 
-        setDoNotDisturb();
+        PreferenceUtil.setDoNotDisturb(this, PreferenceUtil.doNotDisturbDontAskAgain());
         initAll();
         NotificationUtil.sendNotificationCurrentLesson(getContext(), false);
     }
@@ -248,41 +241,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         }
 
-    }
-
-    private void setDoNotDisturb() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Check if the notification policy access has been granted for the app.
-            if (!notificationManager.isNotificationPolicyAccessGranted() && !PreferenceUtil.doNotDisturbDontAskAgain()) {
-                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_do_not_disturb_on_black_24dp);
-                try {
-                    Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
-                    DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                new MaterialDialog.Builder(getContext())
-                        .title(R.string.permission_required)
-                        .content(R.string.do_not_disturb_permission_desc)
-                        .onPositive((dialog, which) -> {
-                            Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
-                            startActivity(intent);
-                            finish();
-                        })
-                        .positiveText(R.string.permission_ok_button)
-                        .negativeText(R.string.permission_cancel_button)
-                        .onNegative(((dialog, which) -> dialog.dismiss()))
-                        .icon(drawable)
-                        .onNeutral(((dialog, which) -> PreferenceUtil.setDoNotDisturbDontAskAgain(getContext(), true)))
-                        .neutralText(R.string.dont_show_again)
-                        .show();
-            } else {
-                DoNotDisturbReceiversKt.setDoNotDisturbReceivers(getContext());
-            }
-        }
     }
 
     @Override

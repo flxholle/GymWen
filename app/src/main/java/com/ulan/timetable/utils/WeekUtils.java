@@ -74,6 +74,7 @@ public class WeekUtils {
                                 if (endIsAfterTo) {
                                     //Check next, remove
                                     checkNext(weeks, begin, end, weekEntry, j);
+                                    weeks.remove(j);
                                 } else {
                                     if (endIsTo) {
                                         //replace
@@ -200,8 +201,7 @@ public class WeekUtils {
             Week week = weeks.get(i);
             if ((now.compareToIgnoreCase(week.getFromTime()) >= 0 && now.compareToIgnoreCase(week.getToTime()) <= 0) || now.compareToIgnoreCase(week.getToTime()) <= 0) {
                 return week;
-            } else if (i == weeks.size() - 1)
-                return week;
+            }
         }
         return null;
     }

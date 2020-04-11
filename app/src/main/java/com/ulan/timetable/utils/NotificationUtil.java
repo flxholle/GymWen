@@ -34,7 +34,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.Person;
 import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableKt;
 import androidx.core.graphics.drawable.IconCompat;
 
@@ -79,10 +78,14 @@ public class NotificationUtil {
             DbHelper db = new DbHelper(context);
             ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))), substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior());
 
+            String lessons = getLessons(weeks, context);
+            if (lessons == null)
+                return;
+
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_assignment_black_24dp)
                     .setContentTitle(context.getString(R.string.timetable_notification_summary_title))
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(getLessons(weeks, context)));
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(lessons));
 
             sendNotification(context, alert, builder, NOTIFICATION_SUMMARY_ID);
         }).start();
@@ -114,7 +117,8 @@ public class NotificationUtil {
             weeks.add(nextWeek);
 
             StringBuilder lesson = new StringBuilder()
-                    .append(context.getString(R.string.time_from_big))
+                    .append(context.getString(R.string.time_from).substring(0, 1).toUpperCase())
+                    .append(context.getString(R.string.time_from).substring(1))
                     .append(" ")
                     .append(nextWeek.getFromTime())
                     .append(" - ")
@@ -133,8 +137,8 @@ public class NotificationUtil {
 
             NotificationCompat.MessagingStyle style = new NotificationCompat.MessagingStyle(new Person.Builder().setName("me").build());
             style.setConversationTitle(context.getString(R.string.timetable_notification_next_week_title));
-            int color = ContextCompat.getColor(context, R.color.notification_icon_background_substitution);
-            int textColor = ContextCompat.getColor(context, R.color.notification_icon_text_substitution);
+            int color = nextWeek.getColor();
+            int textColor = ColorPalette.pickTextColorBasedOnBgColorSimple(nextWeek.getColor(), Color.WHITE, Color.BLACK);
             int textSize = 25;
             Drawable drawable = new ShapeTextDrawable(ShapeForm.ROUND, color, 10f, nextWeek.getRoom(), textColor, true, Typeface.create("sans-serif-light", Typeface.NORMAL), textSize, Color.TRANSPARENT, 0);
             Person person = new Person.Builder().setName(name).setIcon(IconCompat.createWithBitmap(DrawableKt.toBitmap(drawable, 48, 48, null))).build();
@@ -142,8 +146,7 @@ public class NotificationUtil {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setStyle(style)
-                    .setSmallIcon(R.drawable.ic_assignment_next_black_24dp)
-                    .setContentText(context.getString(R.string.timetable_notification_summary_title));
+                    .setSmallIcon(R.drawable.ic_assignment_next_black_24dp);
 
 
             sendNotification(context, alert, builder, NOTIFICATION_NEXT_WEEK_ID);
@@ -230,7 +233,7 @@ public class NotificationUtil {
             }
         }
 
-        return !lessons.toString().equals("") ? lessons.toString() : null;
+        return !lessons.toString().equals("") ? lessons.toString().substring(0, lessons.length() - 3) : null;
     }
 
     @Nullable

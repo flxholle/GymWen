@@ -18,13 +18,22 @@
 
 package com.ulan.timetable.utils;
 
+import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
+import com.asdoi.gymwen.R;
 
 import static com.asdoi.gymwen.util.PreferenceUtil.getBooleanSettings;
 
@@ -90,5 +99,39 @@ public class PreferenceUtil {
 
     public static boolean isAutomaticDoNotDisturb() {
         return ApplicationFeatures.getBooleanSettings("automatic_do_not_disturb", true);
+    }
+
+    public static void setDoNotDisturb(Activity activity, boolean dontAskAgain) {
+        NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Check if the notification policy access has been granted for the app.
+            if (!notificationManager.isNotificationPolicyAccessGranted() && !dontAskAgain) {
+                Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.ic_do_not_disturb_on_black_24dp);
+                try {
+                    Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                    DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(activity));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                new MaterialDialog.Builder(activity)
+                        .title(R.string.permission_required)
+                        .content(R.string.do_not_disturb_permission_desc)
+                        .onPositive((dialog, which) -> {
+                            Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                            activity.startActivity(intent);
+                        })
+                        .positiveText(R.string.permission_ok_button)
+                        .negativeText(R.string.permission_cancel_button)
+                        .onNegative(((dialog, which) -> dialog.dismiss()))
+                        .icon(drawable)
+                        .onNeutral(((dialog, which) -> setDoNotDisturbDontAskAgain(activity, true)))
+                        .neutralText(R.string.dont_show_again)
+                        .show();
+            } else {
+                DoNotDisturbReceiversKt.setDoNotDisturbReceivers(activity);
+            }
+        }
     }
 }

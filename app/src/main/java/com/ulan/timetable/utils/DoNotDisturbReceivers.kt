@@ -108,7 +108,8 @@ fun setDoNotDisturbReceivers(context: Context) {
             weekCalendarStart.set(Calendar.HOUR_OF_DAY, startHour)
             val startMinute = Integer.parseInt(week.fromTime.substring(week.fromTime.indexOf(":") + 1))
             weekCalendarStart.set(Calendar.MINUTE, startMinute)
-            if ((startHour >= calendar.get(Calendar.HOUR_OF_DAY) && startMinute >= calendar.get(Calendar.MINUTE)) && (startHour <= lastCalendar.get(Calendar.HOUR_OF_DAY) && startMinute <= lastCalendar.get(Calendar.MINUTE))) {
+
+            if (((startHour == calendar.get(Calendar.HOUR_OF_DAY) && startMinute >= calendar.get(Calendar.MINUTE)) || startHour > calendar.get(Calendar.HOUR_OF_DAY)) && ((startHour == lastCalendar.get(Calendar.HOUR_OF_DAY) && startMinute <= lastCalendar.get(Calendar.MINUTE)) || startHour < lastCalendar.get(Calendar.HOUR_OF_DAY))) {
                 lastCalendar = weekCalendarStart
                 on = true
             }
@@ -118,7 +119,8 @@ fun setDoNotDisturbReceivers(context: Context) {
             weekCalendarEnd.set(Calendar.HOUR_OF_DAY, endHour)
             val endMinute = Integer.parseInt(week.toTime.substring(week.toTime.indexOf(":") + 1))
             weekCalendarEnd.set(Calendar.MINUTE, endMinute)
-            if ((endHour >= calendar.get(Calendar.HOUR_OF_DAY) && endMinute > calendar.get(Calendar.MINUTE)) && (endHour <= lastCalendar.get(Calendar.HOUR_OF_DAY) && endMinute < lastCalendar.get(Calendar.MINUTE))) {
+
+            if (((endHour == calendar.get(Calendar.HOUR_OF_DAY) && endMinute > calendar.get(Calendar.MINUTE)) || endHour > calendar.get(Calendar.HOUR_OF_DAY)) && ((endHour == lastCalendar.get(Calendar.HOUR_OF_DAY) && endMinute < lastCalendar.get(Calendar.MINUTE)) || endHour < lastCalendar.get(Calendar.HOUR_OF_DAY))) {
                 lastCalendar = weekCalendarEnd
                 on = false
             }

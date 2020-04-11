@@ -382,7 +382,7 @@ public class SubstitutionPlan {
         if (oldFilteredToday.getNoInternet() || oldFilteredTomorrow.getNoInternet() || nowFilteredToday.getNoInternet() || nowFilteredTomorrow.getNoInternet())
             return false; //No internet
 
-        return !(!SubstitutionList.Companion.areListsEqual(oldFilteredToday, nowFilteredTomorrow) || !SubstitutionList.Companion.areListsEqual(oldFilteredTomorrow, nowFilteredTomorrow));
+        return !(!oldFilteredToday.equals(nowFilteredTomorrow) || !oldFilteredTomorrow.equals(nowFilteredTomorrow));
     }
 
     public boolean hasSthChanged(Document old, Document now) {
@@ -405,6 +405,6 @@ public class SubstitutionPlan {
         if (oldFiltered.getNoInternet() || nowFiltered.getNoInternet())
             return false; //no internet
 
-        return !SubstitutionList.Companion.areListsEqual(oldFiltered, nowFiltered);
+        return !oldFiltered.equals(nowFiltered);
     }
 }
