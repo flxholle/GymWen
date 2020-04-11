@@ -16,7 +16,7 @@
   ~     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- German -->
     <string name="app_name" translatable="false">GymWen</string>
     <string name="title" translatable="false">Gymnasium Wendelstein</string>
@@ -208,7 +208,7 @@
     <string name="historyShort" translatable="false">g</string>
     <string name="social_educationShort" translatable="false">sk</string>
     <string name="PEShort" translatable="false">spo</string>
-    <string name="Religious_educationShort" translatable="false"></string>
+    <string name="Religious_educationShort" translatable="false" />
     <string name="englishShort" translatable="false">e</string>
     <string name="franceShort" translatable="false">f</string>
     <string name="latinShort" translatable="false">l</string>
@@ -223,7 +223,7 @@
     <string name="musicShort" translatable="false">mu</string>
     <string name="W_SeminarShort" translatable="false">W_</string>
     <string name="P_SeminarShort" translatable="false">P_</string>
-    <string name="profile_subjectShort" translatable="false"></string>
+    <string name="profile_subjectShort" translatable="false" />
     <string name="anyShort" translatable="false">X</string>
     <string name="additumShort" translatable="false">X_</string>
 
@@ -366,7 +366,7 @@
     <string name="show_intro">Einführung</string>
     <string name="fork_on_gitlab">Fork auf GitLab</string>
     <string name="licenses">Lizenz</string>
-    <string name="author">Autor</string>
+    <string name="author" tools:ignore="Typos">Autor</string>
     <string name="author_name" translatable="false">Felix Hollederer</string>
     <string name="write_email">Mail schreiben</string>
     <string name="visit_website">Website besuchen</string>
@@ -417,7 +417,7 @@
     <string name="share_msg_for_courses">für die Kurse</string>
 
 
-    <string name="gnu_license">
+    <string name="gnu_license" tools:ignore="TypographyOther">
         <![CDATA[
         <strong>Diese Übersetzung ist kein rechtskräftiger Ersatz für die <a href="http://www.gnu.org/licenses/gpl.html">englischsprachige Originalversion</a>! </strong><br><p>
         <blockquote>
@@ -580,7 +580,7 @@
     <string name="edit">Bearbeiten</string>
     <string name="submit_delete">Wirklich löschen?</string>
     <string name="automatic_update_check">Automatisch auf Updates prüfen</string>
-    <string name="url">URL</string>
+    <string name="url" translatable="false">URL</string>
 
     <string name="timetable_channel">Stundenplan</string>
     <string name="timetable_channel_desc">Eine Benachrichtigung mit deinen Fächern</string>
