@@ -1,5 +1,6 @@
 package com.ulan.timetable.adapters;
 
+import android.graphics.Color;
 import android.util.SparseBooleanArray;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.model.Note;
 import com.ulan.timetable.utils.AlertDialogsHelper;
+import com.ulan.timetable.utils.ColorPalette;
 import com.ulan.timetable.utils.DbHelper;
 
 import java.util.ArrayList;
@@ -33,7 +35,6 @@ import java.util.Objects;
 public class NotesAdapter extends ArrayAdapter<Note> {
 
     private final AppCompatActivity mActivity;
-    private final int mResource;
     private final ArrayList<Note> notelist;
     private Note note;
     private final ListView mListView;
@@ -48,7 +49,6 @@ public class NotesAdapter extends ArrayAdapter<Note> {
         super(activity, resource, objects);
         mActivity = activity;
         mListView = listView;
-        mResource = resource;
         notelist = objects;
     }
 
@@ -64,7 +64,7 @@ public class NotesAdapter extends ArrayAdapter<Note> {
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mActivity);
-            convertView = inflater.inflate(mResource, parent, false);
+            convertView = inflater.inflate(R.layout.timetable_listview_notes_adapter, parent, false);
             holder = new ViewHolder();
             holder.title = convertView.findViewById(R.id.titlenote);
             holder.popup = convertView.findViewById(R.id.popupbtn);
@@ -73,6 +73,13 @@ public class NotesAdapter extends ArrayAdapter<Note> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        //Setup colors based on Background
+        int textColor = ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK);
+        holder.title.setTextColor(textColor);
+        ((ImageView) convertView.findViewById(R.id.popupbtn)).setColorFilter(textColor);
+
+
         holder.title.setText(note.getTitle());
         holder.cardView.setCardBackgroundColor(note.getColor());
         holder.popup.setOnClickListener(v -> {

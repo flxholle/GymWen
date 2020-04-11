@@ -30,7 +30,7 @@
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_website">Startseite</string>
     <string name="menu_mebis">Mebis</string>
-    <string name="menu_mensa">Mensa (kitafino)</string>
+    <string name="menu_mensa">Mensa (kitafino)</string>c
     <string name="menu_category_other">Diverses</string>
     <string name="menu_category_school">Gymnasium</string>
     <string name="menu_category_settings">Einstellungen</string>
@@ -543,6 +543,7 @@
     <string name="select_start_time">Beginn</string>
     <string name="select_end_time">Ende</string>
     <string name="select_color">Farbe</string>
+    <string name="choose_color">Farbe auswählen</string>
     <string name="choose_time">Zeit</string>
     <string name="choose_date">Datum</string>
 

@@ -56,6 +56,7 @@ public class AlertDialogsHelper {
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
+        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(week.getColor(), Color.WHITE, Color.BLACK));
 
         subject.setText(week.getSubject());
         teacher.setText(week.getTeacher());
@@ -94,12 +95,14 @@ public class AlertDialogsHelper {
             ColorPicker colorPicker = new ColorPicker(activity);
             colorPicker.setRoundColorButton(true);
             colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
-            colorPicker.setColors(R.array.default_colors);
+            colorPicker.setColors(ColorPalette.PRIMARY_COLORS);
+            colorPicker.setTitle(activity.getString(R.string.choose_color));
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
                     select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
                 }
 
                 @Override
@@ -156,6 +159,7 @@ public class AlertDialogsHelper {
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
+
         final Week week = new Week();
 
         from_time.setOnClickListener(v -> {
@@ -188,12 +192,14 @@ public class AlertDialogsHelper {
             ColorPicker colorPicker = new ColorPicker(activity);
             colorPicker.setRoundColorButton(true);
             colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
-            colorPicker.setColors(R.array.default_colors);
+            colorPicker.setColors(ColorPalette.PRIMARY_COLORS);
+            colorPicker.setTitle(activity.getString(R.string.choose_color));
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
                     select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
                 }
 
                 @Override
@@ -262,6 +268,7 @@ public class AlertDialogsHelper {
         description.setText(homework.getDescription());
         date.setText(homework.getDate());
         select_color.setBackgroundColor(homework.getColor() != 0 ? homework.getColor() : Color.WHITE);
+        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(homework.getColor(), Color.WHITE, Color.BLACK));
 
         date.setOnClickListener(v -> {
             final Calendar calendar = Calendar.getInstance();
@@ -280,12 +287,14 @@ public class AlertDialogsHelper {
             ColorPicker colorPicker = new ColorPicker(activity);
             colorPicker.setRoundColorButton(true);
             colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
-            colorPicker.setColors(R.array.default_colors);
+            colorPicker.setColors(ColorPalette.PRIMARY_COLORS);
+            colorPicker.setTitle(activity.getString(R.string.choose_color));
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
                     select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
                 }
 
                 @Override
@@ -357,12 +366,14 @@ public class AlertDialogsHelper {
             ColorPicker colorPicker = new ColorPicker(activity);
             colorPicker.setRoundColorButton(true);
             colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
-            colorPicker.setColors(R.array.default_colors);
+            colorPicker.setColors(ColorPalette.PRIMARY_COLORS);
+            colorPicker.setTitle(activity.getString(R.string.choose_color));
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
                     select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
                 }
 
                 @Override
@@ -422,17 +433,20 @@ public class AlertDialogsHelper {
         final Note note = adapter.get(listposition);
         title.setText(note.getTitle());
         select_color.setBackgroundColor(note.getColor() != 0 ? note.getColor() : Color.WHITE);
+        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(note.getColor(), Color.WHITE, Color.BLACK));
 
         select_color.setOnClickListener(v -> {
             ColorPicker colorPicker = new ColorPicker(activity);
             colorPicker.setRoundColorButton(true);
             colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
-            colorPicker.setColors(R.array.default_colors);
+            colorPicker.setColors(ColorPalette.PRIMARY_COLORS);
+            colorPicker.setTitle(activity.getString(R.string.choose_color));
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
                     select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
                 }
 
                 @Override
@@ -480,12 +494,14 @@ public class AlertDialogsHelper {
             ColorPicker colorPicker = new ColorPicker(activity);
             colorPicker.setRoundColorButton(true);
             colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
-            colorPicker.setColors(R.array.default_colors);
+            colorPicker.setColors(ColorPalette.PRIMARY_COLORS);
+            colorPicker.setTitle(activity.getString(R.string.choose_color));
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
                     select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
                 }
 
                 @Override
@@ -540,6 +556,7 @@ public class AlertDialogsHelper {
         final TextView date = alertLayout.findViewById(R.id.dateexam_dialog);
         final TextView time = alertLayout.findViewById(R.id.timeexam_dialog);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
+
         final Exam exam = adapter.get(listposition);
 
         subject.setText(exam.getSubject());
@@ -548,6 +565,7 @@ public class AlertDialogsHelper {
         date.setText(exam.getDate());
         time.setText(exam.getTime());
         select_color.setBackgroundColor(exam.getColor());
+        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(exam.getColor(), Color.WHITE, Color.BLACK));
 
         date.setOnClickListener(v -> {
             final Calendar calendar = Calendar.getInstance();
@@ -580,12 +598,14 @@ public class AlertDialogsHelper {
             ColorPicker colorPicker = new ColorPicker(activity);
             colorPicker.setRoundColorButton(true);
             colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
-            colorPicker.setColors(R.array.default_colors);
+            colorPicker.setColors(ColorPalette.PRIMARY_COLORS);
+            colorPicker.setTitle(activity.getString(R.string.choose_color));
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
                     select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
                 }
 
                 @Override
@@ -647,6 +667,7 @@ public class AlertDialogsHelper {
         final TextView date = alertLayout.findViewById(R.id.dateexam_dialog);
         final TextView time = alertLayout.findViewById(R.id.timeexam_dialog);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
+
         final Exam exam = new Exam();
 
         date.setOnClickListener(v -> {
@@ -680,12 +701,14 @@ public class AlertDialogsHelper {
             ColorPicker colorPicker = new ColorPicker(activity);
             colorPicker.setRoundColorButton(true);
             colorPicker.setDefaultColorButton(((ColorDrawable) select_color.getBackground()).getColor());
-            colorPicker.setColors(R.array.default_colors);
+            colorPicker.setColors(ColorPalette.PRIMARY_COLORS);
+            colorPicker.setTitle(activity.getString(R.string.choose_color));
             colorPicker.show();
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
                     select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
                 }
 
                 @Override

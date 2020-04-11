@@ -2,6 +2,7 @@ package com.ulan.timetable.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.SparseBooleanArray;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
@@ -20,7 +21,6 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 
 import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
 import com.asdoi.gymwen.ui.activities.TeacherListActivity;
@@ -28,6 +28,7 @@ import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.model.Week;
 import com.ulan.timetable.utils.AlertDialogsHelper;
+import com.ulan.timetable.utils.ColorPalette;
 import com.ulan.timetable.utils.DbHelper;
 
 import java.util.ArrayList;
@@ -94,6 +95,19 @@ public class WeekAdapter extends ArrayAdapter<Week> {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        //Setup colors based on Background
+        int textColor = ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK);
+        holder.subject.setTextColor(textColor);
+        holder.teacher.setTextColor(textColor);
+        holder.time.setTextColor(textColor);
+        holder.room.setTextColor(textColor);
+        ((ImageView) convertView.findViewById(R.id.roomimage)).setColorFilter(textColor);
+        ((ImageView) convertView.findViewById(R.id.teacherimage)).setColorFilter(textColor);
+        ((ImageView) convertView.findViewById(R.id.timeimage)).setColorFilter(textColor);
+        ((ImageView) convertView.findViewById(R.id.popupbtn)).setColorFilter(textColor);
+        convertView.findViewById(R.id.line).setBackgroundColor(textColor);
+
+
         holder.subject.setText(week.getSubject());
 
         TeacherListActivity.removeTeacherClick(holder.teacher, getContext());
@@ -150,7 +164,6 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         if (!week.getEditable())
             holder.popup.setVisibility(View.INVISIBLE);
 
-        convertView.findViewById(R.id.line).setBackgroundColor(ApplicationFeatures.getTextColorPrimary(getContext()));
 
         return convertView;
     }

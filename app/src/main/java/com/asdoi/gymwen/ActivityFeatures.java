@@ -30,7 +30,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -78,7 +77,6 @@ import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
 import com.kabouzeid.appthemehelper.ATH;
-import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.ColorUtil;
 import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.pd.chocobar.ChocoBar;
@@ -121,7 +119,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(PreferenceUtil.getGeneralTheme());
-        setStatusbarColorAuto();
+        setStatusbarColor();
         super.onCreate(savedInstanceState);
         MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
     }
@@ -136,11 +134,6 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     }
 
 
-    //Colors
-
-    /**
-     * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
-     */
 
     protected abstract void setupColors();
 
@@ -159,17 +152,15 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         }
     }
 
-    private void setNavigationbarColor(int color) {
-        if (ThemeStore.coloredNavigationBar(this)) {
-            ATH.setNavigationbarColor(this, color);
-        } else {
-            ATH.setNavigationbarColor(this, Color.BLACK);
-        }
-    }
 
-    public void setNavigationbarColorAuto() {
-//        setNavigationbarColor(ThemeStore.navigationBarColor(this));
-        setNavigationbarColor(ApplicationFeatures.getPrimaryColor(this));
+    //Colors
+
+    /**
+     * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
+     */
+    private void setStatusbarColor() {
+        // we don't want to use statusbar color because we are doing the color darkening on our own to support KitKat
+        setStatusbarColor(ApplicationFeatures.getPrimaryColor(this));
     }
 
     private void setStatusbarColor(int color) {
@@ -189,18 +180,12 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         }
     }
 
-    private void setStatusbarColorAuto() {
-        // we don't want to use statusbar color because we are doing the color darkening on our own to support KitKat
-//        setStatusbarColor(ThemeStore.primaryColor(this));
-        setStatusbarColor(ApplicationFeatures.getPrimaryColor(this));
+    private void setLightStatusbarAuto(int bgColor) {
+        setLightStatusbar(ColorUtil.isColorLight(bgColor));
     }
 
     private void setLightStatusbar(boolean enabled) {
         ATH.setLightStatusbar(this, enabled);
-    }
-
-    private void setLightStatusbarAuto(int bgColor) {
-        setLightStatusbar(ColorUtil.isColorLight(bgColor));
     }
 
 

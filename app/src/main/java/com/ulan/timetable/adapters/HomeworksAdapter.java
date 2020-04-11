@@ -1,5 +1,6 @@
 package com.ulan.timetable.adapters;
 
+import android.graphics.Color;
 import android.util.SparseBooleanArray;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -17,11 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 
-import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.model.Homework;
 import com.ulan.timetable.utils.AlertDialogsHelper;
+import com.ulan.timetable.utils.ColorPalette;
 import com.ulan.timetable.utils.DbHelper;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ import java.util.Objects;
 public class HomeworksAdapter extends ArrayAdapter<Homework> {
 
     private final AppCompatActivity mActivity;
-    private final int mResource;
     private final ArrayList<Homework> homeworklist;
     private Homework homework;
     private final ListView mListView;
@@ -50,7 +50,6 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         super(activity, resource, objects);
         mActivity = activity;
         mListView = listView;
-        mResource = resource;
         homeworklist = objects;
     }
 
@@ -67,7 +66,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mActivity);
-            convertView = inflater.inflate(mResource, parent, false);
+            convertView = inflater.inflate(R.layout.timetable_listview_homeworks_adapter, parent, false);
             holder = new ViewHolder();
             holder.subject = convertView.findViewById(R.id.subjecthomework);
             holder.description = convertView.findViewById(R.id.descriptionhomework);
@@ -78,6 +77,17 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        //Setup colors based on Background
+        int textColor = ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK);
+        holder.subject.setTextColor(textColor);
+        holder.description.setTextColor(textColor);
+        holder.date.setTextColor(textColor);
+        ((ImageView) convertView.findViewById(R.id.timeimage)).setColorFilter(textColor);
+        ((ImageView) convertView.findViewById(R.id.popupbtn)).setColorFilter(textColor);
+        convertView.findViewById(R.id.line).setBackgroundColor(textColor);
+
+
         holder.subject.setText(homework.getSubject());
         holder.description.setText(homework.getDescription());
         holder.date.setText(homework.getDate());
@@ -109,8 +119,6 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         });
 
         hidePopUpMenu(holder);
-
-        convertView.findViewById(R.id.line).setBackgroundColor(ApplicationFeatures.getTextColorPrimary(getContext()));
 
         return convertView;
     }

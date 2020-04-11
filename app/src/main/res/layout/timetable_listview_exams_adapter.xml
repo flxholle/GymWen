@@ -68,7 +68,7 @@
                 android:textSize="18sp"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.466"
-                card_view:layout_constraintStart_toEndOf="@+id/imageView2"
+                card_view:layout_constraintStart_toEndOf="@+id/teacherimage"
                 card_view:layout_constraintTop_toBottomOf="@+id/line" />
 
             <TextView
@@ -84,7 +84,7 @@
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="18sp"
                 card_view:layout_constraintEnd_toEndOf="@+id/teacherexams"
-                card_view:layout_constraintStart_toEndOf="@+id/imageView"
+                card_view:layout_constraintStart_toEndOf="@+id/roomimage"
                 card_view:layout_constraintTop_toBottomOf="@+id/teacherexams"
                 card_view:layout_constraintVertical_bias="1.0" />
 
@@ -102,7 +102,7 @@
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/roomexams"
                 card_view:layout_constraintEnd_toStartOf="@+id/guideline2"
-                card_view:layout_constraintStart_toEndOf="@+id/imageView3" />
+                card_view:layout_constraintStart_toEndOf="@+id/timeimage" />
 
             <TextView
                 android:id="@+id/timeexams"
@@ -138,7 +138,7 @@
                 card_view:srcCompat="@drawable/ic_expand_more_black_24dp" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/roomimage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -148,7 +148,7 @@
                 card_view:layout_constraintTop_toBottomOf="@+id/teacherexams" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/teacherimage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_person_black_24dp"
@@ -157,12 +157,12 @@
                 card_view:layout_constraintTop_toTopOf="@+id/teacherexams" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/timeimage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_access_time_black_24dp"
                 app:tint="?android:attr/textColorPrimary"
-                card_view:layout_constraintStart_toStartOf="@+id/imageView"
+                card_view:layout_constraintStart_toStartOf="@+id/roomimage"
                 card_view:layout_constraintTop_toTopOf="@+id/dateexams" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
