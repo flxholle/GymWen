@@ -90,7 +90,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         int accentColor = ThemeStore.accentColor(this);
         NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
         NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
-        ((Toolbar) findViewById(R.id.toolbar)).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        findViewById(R.id.toolbar).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
         appBarLayout.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
     }
@@ -116,9 +116,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        setupSevenDaysPref();
         setupFragments();
         setupCustomDialog();
-        setupSevenDaysPref();
 
         if (switchSevenDays) changeFragments(true);
 
@@ -129,8 +129,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         adapter = new FragmentsTabAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.viewPager);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_WEEK);
 
         WeekdayFragment mondayFragment = new WeekdayFragment(WeekdayFragment.KEY_MONDAY_FRAGMENT);
         WeekdayFragment tuesdayFragment = new WeekdayFragment(WeekdayFragment.KEY_TUESDAY_FRAGMENT);
@@ -187,17 +185,18 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         adapter.addFragment(thursdayFragment, getResources().getString(R.string.thursday));
         adapter.addFragment(fridayFragment, getResources().getString(R.string.friday));
 
-
         viewPager.setAdapter(adapter);
+
+        int day = getFragmentChoosingDay();
         viewPager.setCurrentItem(day == 1 ? 6 : day - 2, true);
+
         tabLayout.setupWithViewPager(viewPager);
     }
 
     private void changeFragments(boolean isChecked) {
         if (isChecked) {
             TabLayout tabLayout = findViewById(R.id.tabLayout);
-            Calendar calendar = Calendar.getInstance();
-            int day = calendar.get(Calendar.DAY_OF_WEEK);
+            int day = getFragmentChoosingDay();
             adapter.addFragment(new WeekdayFragment(WeekdayFragment.KEY_SATURDAY_FRAGMENT), getResources().getString(R.string.saturday));
             adapter.addFragment(new WeekdayFragment(WeekdayFragment.KEY_SUNDAY_FRAGMENT), getResources().getString(R.string.sunday));
             viewPager.setAdapter(adapter);
@@ -210,6 +209,24 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             }
         }
         adapter.notifyDataSetChanged();
+    }
+
+    private int getFragmentChoosingDay() {
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        //If its after 18 o'clock, show the next day
+        if (hour >= 18) {
+            day++;
+        }
+        if (day > 7) { //Calender.Saturday
+            day = day - 7; //1 = Calendar.Sunday, 2 = Calendar.Monday etc.
+        }
+        //If Saturday/Sunday are hidden, switch to Monday
+        if (!switchSevenDays && (day == Calendar.SUNDAY || day == Calendar.SATURDAY)) {
+            day = Calendar.MONDAY;
+        }
+        return day;
     }
 
     private void setupCustomDialog() {
