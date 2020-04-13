@@ -153,7 +153,6 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
 
     //Colors
-
     /**
      * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
      */
@@ -202,6 +201,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
     //TabIntent and UpdateCheck
     public void tabIntent(String url) {
@@ -257,7 +257,6 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                         }
                     })*/
                     .setIcon(R.drawable.ic_system_update_black_24dp)
-                    .showEvery(3)
                     .showAppUpdated(showUpdated);
             appUpdater.start();
         } catch (Exception e) {
@@ -582,12 +581,13 @@ public abstract class ActivityFeatures extends AppCompatActivity {
             this.subPath = subPath;
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void onReceive(Context ctxt, @NonNull Intent intent) {
             //Fetching the download id received with the broadcast
             long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
             if (downloadID == id) {
-//                installApk(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
+//                installApk(ctxt.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
                 installApk(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
                 unregisterReceiver(this);
             }
@@ -635,6 +635,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     private final static String gradesFileName = "Notenverwaltung.xlsx";
     private final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
 
+    @SuppressWarnings("deprecation")
     protected void checkGradesFile() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -661,6 +662,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         }
     };
 
+    @SuppressWarnings("deprecation")
     private void openGradesFile() {
 //        String path = this.getExternalFilesDir(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
         String path = Environment.getExternalStoragePublicDirectory(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS) + File.separator + gradesFileName;
