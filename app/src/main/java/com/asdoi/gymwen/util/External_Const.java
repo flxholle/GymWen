@@ -34,6 +34,7 @@ public abstract class External_Const {
     public final static String[] timetable_packageNames = new String[]{"juliushenke.smarttt"};
     public static final String[] coloRush_packageNames = new String[]{"com.JUF.ColoRush"};
     public static final String[] publicTransport_packageNames = new String[]{"de.schildbach.oeffi", "com.mdv.VGNCompanion", "de.hafas.android.db"};
+    public static final String[] excel_packageNames = new String[]{"com.microsoft.office.excel", "org.documentfoundation.libreoffice", "cn.wps.moffice_eng"};
 
 
     //Links
@@ -53,6 +54,7 @@ public abstract class External_Const {
     public final static String downloadApp_timetable = "https://apt.izzysoft.de/fdroid/index/apk/juliushenke.smarttt";
     public static final String downloadApp_colorush = "https://gitlab.com/asdoi/colorrush/blob/master/Apk/ColoRush.apk";
     public static final String downloadApp_publicTransport = "https://f-droid.org/de/packages/de.schildbach.oeffi/";
+    public static final String downloadApp_libreoffice = "https://f-droid.org/de/packages/org.documentfoundation.libreoffice/";
 
 
     //SubstitutionPlan

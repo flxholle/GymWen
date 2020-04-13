@@ -134,7 +134,6 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     }
 
 
-
     protected abstract void setupColors();
 
     public void setToolbar(boolean backButton) {
@@ -673,23 +672,10 @@ public abstract class ActivityFeatures extends AppCompatActivity {
             startActivity(intent);
         } else {
             Toast.makeText(this, this.getString(R.string.grades_no_app), Toast.LENGTH_LONG).show();
-            String packageNameMSExcel = "com.microsoft.office.excel";
-            String packageNameLibreOffice = "org.documentfoundation.libreoffice";
-            String packageNameWPS = "cn.wps.moffice_eng";
-
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameMSExcel)));
-            } catch (android.content.ActivityNotFoundException anfe) {
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameLibreOffice)));
-                } catch (android.content.ActivityNotFoundException a) {
-                    try {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageNameWPS)));
-                    } catch (android.content.ActivityNotFoundException a2) {
-                        //Open Browser to Download
-                        tabIntent("https://f-droid.org/de/packages/org.documentfoundation.libreoffice/");
-                    }
-                }
+            if (!startApp(External_Const.excel_packageNames)) {
+                if (!openAppInStore(External_Const.excel_packageNames))
+                    //Open Browser to Download
+                    tabIntent(External_Const.downloadApp_libreoffice);
             }
         }
     }
