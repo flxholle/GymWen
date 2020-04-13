@@ -250,7 +250,7 @@ public class NotificationUtil {
             }
         }
 
-        return !lessons.toString().equals("") ? lessons.toString().substring(0, lessons.length() - 3) : null;
+        return !lessons.toString().equals("") ? lessons.toString().substring(0, lessons.toString().length() - 1) : null;
     }
 
     @Nullable

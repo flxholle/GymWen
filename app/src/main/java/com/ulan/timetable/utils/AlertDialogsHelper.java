@@ -114,6 +114,51 @@ public class AlertDialogsHelper {
             });
         });
 
+
+        DbHelper dbHelper = new DbHelper(activity);
+        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
+
+        subject.setOnEditorActionListener(
+                (v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_DONE ||
+                            event != null &&
+                                    event.getAction() == KeyEvent.ACTION_DOWN &&
+                                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        if (event == null || !event.isShiftPressed()) {
+                            // the user is done typing.
+                            //AutoFill other fields
+                            for (Week w : alreadyInsertedWeeks) {
+                                if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
+                                    if (teacher.getText().toString().trim().isEmpty())
+                                        teacher.setText(w.getTeacher());
+                                    if (room.getText().toString().trim().isEmpty())
+                                        room.setText(w.getRoom());
+                                    select_color.setBackgroundColor(w.getColor());
+                                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+        );
+        subject.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                for (Week w : alreadyInsertedWeeks) {
+                    if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
+                        if (teacher.getText().toString().trim().isEmpty())
+                            teacher.setText(w.getTeacher());
+                        if (room.getText().toString().trim().isEmpty())
+                            room.setText(w.getRoom());
+                        select_color.setBackgroundColor(w.getColor());
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+                    }
+                }
+            }
+        });
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(R.string.edit_subject);
         alert.setCancelable(false);
@@ -374,6 +419,46 @@ public class AlertDialogsHelper {
             });
         });
 
+        DbHelper dbHelper = new DbHelper(activity);
+        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
+
+        subject.setOnEditorActionListener(
+                (v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_DONE ||
+                            event != null &&
+                                    event.getAction() == KeyEvent.ACTION_DOWN &&
+                                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        if (event == null || !event.isShiftPressed()) {
+                            // the user is done typing.
+                            //AutoFill other fields
+                            for (Week w : alreadyInsertedWeeks) {
+                                if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
+                                    select_color.setBackgroundColor(w.getColor());
+                                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+//                                    date.setText(DBUtil.getNextOccurenceOfSubject(dbHelper, w.getSubject()));
+//                                    homework.setDate(DBUtil.getNextOccurenceOfSubject(dbHelper, w.getSubject()));
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+        );
+        subject.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                for (Week w : alreadyInsertedWeeks) {
+                    if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
+                        select_color.setBackgroundColor(w.getColor());
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+//                                    date.setText(DBUtil.getNextOccurenceOfSubject(dbHelper, w.getSubject()));
+//                                    homework.setDate(DBUtil.getNextOccurenceOfSubject(dbHelper, w.getSubject()));
+                    }
+                }
+            }
+        });
+
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(R.string.edit_homework);
         alert.setCancelable(false);
@@ -402,7 +487,6 @@ public class AlertDialogsHelper {
             } /*else if (!date.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.deadline_snackbar, Snackbar.LENGTH_LONG).show();
             }*/ else {
-                DbHelper dbHelper = new DbHelper(activity);
                 HomeworksAdapter homeworksAdapter = (HomeworksAdapter) listView.getAdapter();
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 homework.setSubject(subject.getText().toString());
@@ -760,6 +844,51 @@ public class AlertDialogsHelper {
             });
         });
 
+
+        DbHelper dbHelper = new DbHelper(activity);
+        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
+
+        subject.setOnEditorActionListener(
+                (v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_DONE ||
+                            event != null &&
+                                    event.getAction() == KeyEvent.ACTION_DOWN &&
+                                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        if (event == null || !event.isShiftPressed()) {
+                            // the user is done typing.
+                            //AutoFill other fields
+                            for (Week w : alreadyInsertedWeeks) {
+                                if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
+                                    if (teacher.getText().toString().trim().isEmpty())
+                                        teacher.setText(w.getTeacher());
+                                    if (room.getText().toString().trim().isEmpty())
+                                        room.setText(w.getRoom());
+                                    select_color.setBackgroundColor(w.getColor());
+                                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+        );
+        subject.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                for (Week w : alreadyInsertedWeeks) {
+                    if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
+                        if (teacher.getText().toString().trim().isEmpty())
+                            teacher.setText(w.getTeacher());
+                        if (room.getText().toString().trim().isEmpty())
+                            room.setText(w.getRoom());
+                        select_color.setBackgroundColor(w.getColor());
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+                    }
+                }
+            }
+        });
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(activity.getResources().getString(R.string.add_exam));
         alert.setCancelable(false);
@@ -791,7 +920,6 @@ public class AlertDialogsHelper {
             } /*else if (!time.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.time_error, Snackbar.LENGTH_LONG).show();
             }*/ else {
-                DbHelper dbHelper = new DbHelper(activity);
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 exam.setSubject(subject.getText().toString());
                 exam.setTeacher(teacher.getText().toString());
