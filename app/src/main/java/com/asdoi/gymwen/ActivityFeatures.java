@@ -215,10 +215,10 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                     .build();
 
             // This is optional but recommended
-            CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent);
+            CustomTabsHelper.Companion.addKeepAliveExtra(context, customTabsIntent.intent);
 
             // This is where the magic happens...
-            CustomTabsHelper.openCustomTab(context, customTabsIntent,
+            CustomTabsHelper.Companion.openCustomTab(context, customTabsIntent,
                     Uri.parse(url),
                     new WebViewFallback());
         } catch (Exception e) {

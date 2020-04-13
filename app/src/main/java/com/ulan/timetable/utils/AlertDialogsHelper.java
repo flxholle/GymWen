@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -55,7 +54,6 @@ public class AlertDialogsHelper {
         final EditText teacher = alertLayout.findViewById(R.id.teacher_dialog);
 //        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
-        room.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 //        editTextHashs.put(R.string.room, room);
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
@@ -171,7 +169,6 @@ public class AlertDialogsHelper {
         final EditText teacher = alertLayout.findViewById(R.id.teacher_dialog);
 //        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
-        room.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 //        editTextHashs.put(R.string.room, room);
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
@@ -258,6 +255,20 @@ public class AlertDialogsHelper {
                     return false;
                 }
         );
+        subject.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                for (Week w : alreadyInsertedWeeks) {
+                    if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
+                        if (teacher.getText().toString().trim().isEmpty())
+                            teacher.setText(w.getTeacher());
+                        if (room.getText().toString().trim().isEmpty())
+                            room.setText(w.getRoom());
+                        select_color.setBackgroundColor(w.getColor());
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+                    }
+                }
+            }
+        });
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(R.string.add_subject);
@@ -481,6 +492,18 @@ public class AlertDialogsHelper {
                     return false;
                 }
         );
+        subject.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                for (Week w : alreadyInsertedWeeks) {
+                    if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
+                        select_color.setBackgroundColor(w.getColor());
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+//                                    date.setText(DBUtil.getNextOccurenceOfSubject(dbHelper, w.getSubject()));
+//                                    homework.setDate(DBUtil.getNextOccurenceOfSubject(dbHelper, w.getSubject()));
+                    }
+                }
+            }
+        });
 
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(R.string.add_homework);
@@ -675,7 +698,6 @@ public class AlertDialogsHelper {
         final EditText teacher = alertLayout.findViewById(R.id.teacherexam_dialog);
 //        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.roomexam_dialog);
-        room.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 //        editTextHashs.put(R.string.room, room);
         final TextView date = alertLayout.findViewById(R.id.dateexam_dialog);
         final TextView time = alertLayout.findViewById(R.id.timeexam_dialog);
@@ -799,7 +821,6 @@ public class AlertDialogsHelper {
         final EditText teacher = alertLayout.findViewById(R.id.teacherexam_dialog);
 //        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.roomexam_dialog);
-        room.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 //        editTextHashs.put(R.string.room, room);
         final TextView date = alertLayout.findViewById(R.id.dateexam_dialog);
         final TextView time = alertLayout.findViewById(R.id.timeexam_dialog);
@@ -885,6 +906,20 @@ public class AlertDialogsHelper {
                     return false;
                 }
         );
+        subject.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                for (Week w : alreadyInsertedWeeks) {
+                    if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
+                        if (teacher.getText().toString().trim().isEmpty())
+                            teacher.setText(w.getTeacher());
+                        if (room.getText().toString().trim().isEmpty())
+                            room.setText(w.getRoom());
+                        select_color.setBackgroundColor(w.getColor());
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+                    }
+                }
+            }
+        });
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(activity.getResources().getString(R.string.add_exam));

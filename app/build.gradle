@@ -89,8 +89,8 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'saschpe.android:customtabs:2.0.0'
-    implementation "com.mikepenz:aboutlibraries:7.0.4"
+    implementation 'saschpe.android:customtabs:3.0.2'
+    implementation "com.mikepenz:aboutlibraries:8.1.1"
     implementation 'com.github.javiersantos:AppUpdater:2.7'
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'apache-codec:commons-codec:1.2'
@@ -103,6 +103,7 @@ dependencies {
     implementation 'com.github.IamIsPra:Sheriff:1.0.0'
     implementation 'com.ahmedjazzar.rosetta:rosetta:1.01'
     implementation 'com.github.franmontiel:LocaleChanger:0.9.2'
+    //noinspection AnnotationProcessorOnCompilePath
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     //noinspection GradleDependency
@@ -118,6 +119,7 @@ dependencies {
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
 
     //Image Slider (see ColoRushFragment)
+    //noinspection GradleDependency,NewerVersionAvailable
     implementation 'com.squareup.picasso:picasso:2.3.2'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.daimajia.slider:library:1.1.5@aar'

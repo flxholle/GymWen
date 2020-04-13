@@ -140,6 +140,8 @@ public class NotificationUtil {
             int color = nextWeek.getColor();
             int textColor = ColorPalette.pickTextColorBasedOnBgColorSimple(nextWeek.getColor(), Color.WHITE, Color.BLACK);
             int textSize = 35 - 4 * nextWeek.getRoom().length();
+            if (textSize < 0)
+                textSize = 10;
             Drawable drawable = new ShapeTextDrawable(ShapeForm.ROUND, color, 10f, nextWeek.getRoom(), textColor, true, Typeface.create("sans-serif-light", Typeface.NORMAL), textSize, Color.TRANSPARENT, 0);
             Person person = new Person.Builder().setName(name).setIcon(IconCompat.createWithBitmap(DrawableKt.toBitmap(drawable, 48, 48, null))).build();
             style.addMessage(new NotificationCompat.MessagingStyle.Message(lesson, 0, person));

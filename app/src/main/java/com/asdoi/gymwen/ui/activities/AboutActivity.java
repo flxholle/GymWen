@@ -46,7 +46,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import butterknife.BindView;
@@ -297,19 +296,13 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .show();
 
         } else if (v == libs) {
-            Intent intent = new LibsBuilder()
+            new LibsBuilder()
                     .withActivityTitle(getString(R.string.impressum_AboutLibs_Title))
-                    .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                    .withFields(R.string.class.getFields())
-                    .withAutoDetect(true)
                     .withAboutIconShown(true)
                     .withLicenseShown(true)
                     .withAboutDescription(getString(R.string.subtitle))
                     .withAboutAppName(getString(R.string.app_name))
-                    .withActivityTheme(R.style.AboutLibsTheme)
-                    .intent(this);
-
-            startActivity(intent);
+                    .start(this);
         } else if (v == imprint) {
             String sources = getString(R.string.imprint_text);
 

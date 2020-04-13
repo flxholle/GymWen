@@ -341,7 +341,9 @@ class NotificationUtils {
                     else
                         ContextCompat.getColor(context, R.color.notification_icon_text_substitution)
 
-                    val textSize = 35 - 3 * con.hour.length
+                    var textSize = 35 - 3 * con.hour.length
+                    if (textSize < 0)
+                        textSize = 10
 
                     val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = textSize, textBold = true, color = color, textColor = textColor)
                     val list = createMessage(con)

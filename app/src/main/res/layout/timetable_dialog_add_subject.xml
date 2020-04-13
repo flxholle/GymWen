@@ -75,8 +75,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
+            android:inputType="textVisiblePassword"
             android:imeOptions="actionDone"
-            android:digits="@string/room_allowed_digits"
             android:singleLine="true"
             android:textColor="?android:attr/textColorPrimary" />
     </LinearLayout>

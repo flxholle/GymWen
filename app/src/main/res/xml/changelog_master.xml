@@ -20,9 +20,9 @@
     <release
         version="1.2.0"
         versioncode="120">
-        <change>Selbstprogrammierter Stundenplan mit integriertem Vertretungen</change>
+        <change>Selbstprogrammierter Stundenplan mit integrierten Vertretungen hinzugefügt</change>
         <change>Raumplan hinzugefügt</change>
-        <change>Neue Benachrichtigung (und passende Einstellungen)</change>
+        <change>Neue Benachrichtigungen (und passende Einstellungen)</change>
         <change>App-Icon-Shortcuts hinzugefügt</change>
         <change>Durchsuchen der Website hinzugefügt</change>
         <change>Wendelsteiner Welle hinzugefügt (Deaktiviert -> Einstellungen)</change>

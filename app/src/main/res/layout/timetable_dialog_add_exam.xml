@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:imeOptions="actionDone"
-            android:digits="@string/room_allowed_digits"
+            android:inputType="textVisiblePassword"
             android:singleLine="true" />
     </LinearLayout>
 
