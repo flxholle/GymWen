@@ -71,7 +71,7 @@ fun setDoNotDisturb(context: Context, on: Boolean) {
         // Check if the notification policy access has been granted for the app.
         if (notificationManager.isNotificationPolicyAccessGranted) {
             val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            mNotificationManager.setInterruptionFilter(if (on) NotificationManager.INTERRUPTION_FILTER_PRIORITY else NotificationManager.INTERRUPTION_FILTER_ALL)
+            mNotificationManager.setInterruptionFilter(if (on) NotificationManager.INTERRUPTION_FILTER_NONE else NotificationManager.INTERRUPTION_FILTER_ALL)
         }
     }
 }
@@ -124,6 +124,11 @@ fun setDoNotDisturbReceivers(context: Context) {
             if (((endHour == calendar.get(Calendar.HOUR_OF_DAY) && endMinute > calendar.get(Calendar.MINUTE)) || endHour > calendar.get(Calendar.HOUR_OF_DAY)) && ((endHour == lastCalendar.get(Calendar.HOUR_OF_DAY) && endMinute < lastCalendar.get(Calendar.MINUTE)) || endHour < lastCalendar.get(Calendar.HOUR_OF_DAY))) {
                 lastCalendar = weekCalendarEnd
                 on = false
+            }
+
+            if (((startHour == calendar.get(Calendar.HOUR_OF_DAY) && startMinute <= calendar.get(Calendar.MINUTE)) || startHour < calendar.get(Calendar.HOUR_OF_DAY)) && ((endHour == calendar.get(Calendar.HOUR_OF_DAY) && endMinute > calendar.get(Calendar.MINUTE)) || endHour > calendar.get(Calendar.HOUR_OF_DAY))) {
+                //Just in lesson
+                setDoNotDisturb(context, true);
             }
         }
 

@@ -341,7 +341,7 @@ class NotificationUtils {
                     else
                         ContextCompat.getColor(context, R.color.notification_icon_text_substitution)
 
-                    val textSize = if (con.hour.length > 1) 32 else 36
+                    val textSize = 35 - 4 * con.hour.length
 
                     val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = textSize, textBold = true, color = color, textColor = textColor)
                     val list = createMessage(con)
@@ -408,7 +408,7 @@ class NotificationUtils {
                 return if (entry.isNothing()) {
                     listOf("${entry.hour}. ${context.getString(R.string.share_msg_nothing_hour)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
                 } else {
-                    listOf("${entry.hour}. ${context.getString(R.string.share_msg_hour)} ${context.getString(R.string.share_msg_in_room)} ${entry.room} ${context.getString(R.string.with_teacher)} ${entry.teacher}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
+                    listOf("${entry.subject} ${context.getString(R.string.with_teacher)} ${entry.teacher} ${context.getString(R.string.share_msg_in_room)} ${entry.room}", "${entry.hour}. ${context.getString(R.string.share_msg_hour)} ${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
                 }
 
             }

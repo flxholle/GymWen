@@ -70,10 +70,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
 
         setContentView(R.layout.timetable_activity_main);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        NotificationUtil.sendNotificationCurrentLesson(getContext(), false);
         PreferenceUtil.setDoNotDisturb(this, PreferenceUtil.doNotDisturbDontAskAgain());
         initAll();
-        NotificationUtil.sendNotificationCurrentLesson(getContext(), false);
     }
 
     @Override
