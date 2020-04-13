@@ -18,6 +18,7 @@
 
 package com.asdoi.gymwen.ui.settingsFragments;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -58,5 +59,11 @@ public class SettingsFragmentRoot extends PreferenceFragmentCompat {
             myPref.setDefaultValue(defaultValues);
         } else
             myPref.setVisible(false);
+
+        myPref = findPreference("open_timetable_settings");
+        myPref.setOnPreferenceClickListener((Preference p) -> {
+            getActivity().startActivity(new Intent(getContext(), com.ulan.timetable.activities.SettingsActivity.class));
+            return true;
+        });
     }
 }

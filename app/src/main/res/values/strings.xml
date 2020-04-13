@@ -538,7 +538,7 @@
     <string name="time_to_dialog">Bis:</string>
     <string name="subject_dialog">Fach:</string>
     <string name="teacher_dialog">Lehrer:</string>
-    <string name="room_dialog">Zimmer:</string>
+    <string name="room_dialog">Raum:</string>
     <string name="select_time">Uhrzeit</string>
     <string name="select_start_time">Beginn</string>
     <string name="select_end_time">Ende</string>
@@ -588,5 +588,7 @@
     <string name="do_not_disturb_setting">Automatisches Stummschalten</string>
     <string name="do_not_disturb_settings_desc">Automatisch während Fächern in den Nicht-Stören-Modus wechseln und ihn danach wieder ausschalten</string>
     <string name="do_not_disturb_turn_off">Auch wieder auf laut stellen</string>
+
+    <string name="room_allowed_digits" translatable="false">0123456789eE</string>
 
 </resources>

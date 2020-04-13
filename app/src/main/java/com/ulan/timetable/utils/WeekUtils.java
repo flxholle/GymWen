@@ -189,6 +189,7 @@ public class WeekUtils {
 
     public static Week getNextWeek(ArrayList<Week> weeks) {
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 1);
         String hour = "" + calendar.get(Calendar.HOUR_OF_DAY);
         if (hour.length() < 2)
             hour = "0" + hour;

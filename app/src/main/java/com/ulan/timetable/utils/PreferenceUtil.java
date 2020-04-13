@@ -53,10 +53,6 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("timetableNotif", true);
     }
 
-    public static void setTimeTableNotification(Context context, boolean value) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("timetableNotif", value).apply();
-    }
-
     public static void setTimeTableAlarmTime(@NonNull int... times) {
         if (times.length != 3) {
             if (times.length > 0 && times[0] == 0) {

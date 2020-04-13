@@ -42,12 +42,12 @@ public class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
             return true;
         });
 
-        setSummarize();
+/*        setSummarize();
         myPref = findPreference("summarize");
         myPref.setOnPreferenceClickListener((Preference pref) -> {
             setSummarize();
             return true;
-        });
+        });*/
     }
 
     private void setFullNames() {

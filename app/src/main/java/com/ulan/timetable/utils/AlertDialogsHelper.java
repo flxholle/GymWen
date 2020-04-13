@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -50,9 +51,10 @@ public class AlertDialogsHelper {
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
         final EditText teacher = alertLayout.findViewById(R.id.teacher_dialog);
-        editTextHashs.put(R.string.teacher, teacher);
+//        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
-        editTextHashs.put(R.string.room, room);
+        room.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+//        editTextHashs.put(R.string.room, room);
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
@@ -101,8 +103,10 @@ public class AlertDialogsHelper {
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
-                    select_color.setBackgroundColor(color);
-                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    if (color != 0) {
+                        select_color.setBackgroundColor(color);
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    }
                 }
 
                 @Override
@@ -121,10 +125,19 @@ public class AlertDialogsHelper {
         final AlertDialog dialog = alert.create();
         dialog.show();
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> {
+            subject.getText().clear();
+            teacher.getText().clear();
+            room.getText().clear();
+            from_time.setText(R.string.select_start_time);
+            to_time.setText(R.string.select_end_time);
+            select_color.setBackgroundColor(Color.WHITE);
+            subject.requestFocus();
+            dialog.dismiss();
+        });
 
         save.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(subject.getText()) || TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())) {
+            if (TextUtils.isEmpty(subject.getText()) /*|| TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())*/) {
                 for (Map.Entry<Integer, EditText> entry : editTextHashs.entrySet()) {
                     if (TextUtils.isEmpty(entry.getValue().getText())) {
                         entry.getValue().setError(activity.getResources().getString(entry.getKey()) + " " + activity.getResources().getString(R.string.field_error));
@@ -153,9 +166,10 @@ public class AlertDialogsHelper {
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
         final EditText teacher = alertLayout.findViewById(R.id.teacher_dialog);
-        editTextHashs.put(R.string.teacher, teacher);
+//        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
-        editTextHashs.put(R.string.room, room);
+        room.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+//        editTextHashs.put(R.string.room, room);
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
@@ -198,8 +212,10 @@ public class AlertDialogsHelper {
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
-                    select_color.setBackgroundColor(color);
-                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    if (color != 0) {
+                        select_color.setBackgroundColor(color);
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    }
                 }
 
                 @Override
@@ -220,10 +236,19 @@ public class AlertDialogsHelper {
         FloatingActionButton fab = activity.findViewById(R.id.fab);
         fab.setOnClickListener(view -> dialog.show());
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> {
+            subject.getText().clear();
+            teacher.getText().clear();
+            room.getText().clear();
+            from_time.setText(R.string.select_start_time);
+            to_time.setText(R.string.select_end_time);
+            select_color.setBackgroundColor(Color.WHITE);
+            subject.requestFocus();
+            dialog.dismiss();
+        });
 
         submit.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(subject.getText()) || TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())) {
+            if (TextUtils.isEmpty(subject.getText()) /*|| TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())*/) {
                 for (Map.Entry<Integer, EditText> entry : editTextHashs.entrySet()) {
                     if (TextUtils.isEmpty(entry.getValue().getText())) {
                         entry.getValue().setError(activity.getResources().getString(entry.getKey()) + " " + activity.getResources().getString(R.string.field_error));
@@ -254,7 +279,9 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getEditHomeworkDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ArrayList<Homework> adapter, @NonNull final ListView listView, int listposition) {
+    public static void getEditHomeworkDialog(@NonNull final AppCompatActivity activity,
+                                             @NonNull final View alertLayout, @NonNull final ArrayList<Homework> adapter,
+                                             @NonNull final ListView listView, int listposition) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
@@ -293,8 +320,10 @@ public class AlertDialogsHelper {
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
-                    select_color.setBackgroundColor(color);
-                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    if (color != 0) {
+                        select_color.setBackgroundColor(color);
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    }
                 }
 
                 @Override
@@ -313,7 +342,13 @@ public class AlertDialogsHelper {
         final AlertDialog dialog = alert.create();
         dialog.show();
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> {
+            subject.getText().clear();
+            description.getText().clear();
+            select_color.setBackgroundColor(Color.WHITE);
+            subject.requestFocus();
+            dialog.dismiss();
+        });
 
         save.setOnClickListener(v -> {
             if (TextUtils.isEmpty(subject.getText()) || TextUtils.isEmpty(description.getText())) {
@@ -323,9 +358,9 @@ public class AlertDialogsHelper {
                         editText.getValue().requestFocus();
                     }
                 }
-            } else if (!date.getText().toString().matches(".*\\d+.*")) {
+            } /*else if (!date.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.deadline_snackbar, Snackbar.LENGTH_LONG).show();
-            } else {
+            }*/ else {
                 DbHelper dbHelper = new DbHelper(activity);
                 HomeworksAdapter homeworksAdapter = (HomeworksAdapter) listView.getAdapter();
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
@@ -339,7 +374,8 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getAddHomeworkDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final HomeworksAdapter adapter) {
+    public static void getAddHomeworkDialog(@NonNull final AppCompatActivity activity,
+                                            @NonNull final View alertLayout, @NonNull final HomeworksAdapter adapter) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
@@ -372,8 +408,10 @@ public class AlertDialogsHelper {
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
-                    select_color.setBackgroundColor(color);
-                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    if (color != 0) {
+                        select_color.setBackgroundColor(color);
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    }
                 }
 
                 @Override
@@ -393,7 +431,13 @@ public class AlertDialogsHelper {
         FloatingActionButton fab = activity.findViewById(R.id.fab);
         fab.setOnClickListener(view -> dialog.show());
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> {
+            subject.getText().clear();
+            description.getText().clear();
+            select_color.setBackgroundColor(Color.WHITE);
+            subject.requestFocus();
+            dialog.dismiss();
+        });
 
         save.setOnClickListener(v -> {
             if (TextUtils.isEmpty(subject.getText()) || TextUtils.isEmpty(description.getText())) {
@@ -403,9 +447,9 @@ public class AlertDialogsHelper {
                         editText.getValue().requestFocus();
                     }
                 }
-            } else if (!date.getText().toString().matches(".*\\d+.*")) {
+            }/* else if (!date.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.deadline_snackbar, Snackbar.LENGTH_LONG).show();
-            } else {
+            }*/ else {
                 DbHelper dbHelper = new DbHelper(activity);
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 homework.setSubject(subject.getText().toString());
@@ -427,7 +471,9 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getEditNoteDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ArrayList<Note> adapter, @NonNull final ListView listView, int listposition) {
+    public static void getEditNoteDialog(@NonNull final AppCompatActivity activity,
+                                         @NonNull final View alertLayout, @NonNull final ArrayList<Note> adapter,
+                                         @NonNull final ListView listView, int listposition) {
         final EditText title = alertLayout.findViewById(R.id.titlenote);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
         final Note note = adapter.get(listposition);
@@ -445,8 +491,10 @@ public class AlertDialogsHelper {
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
-                    select_color.setBackgroundColor(color);
-                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    if (color != 0) {
+                        select_color.setBackgroundColor(color);
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    }
                 }
 
                 @Override
@@ -465,7 +513,11 @@ public class AlertDialogsHelper {
         final AlertDialog dialog = alert.create();
         dialog.show();
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> {
+            title.getText().clear();
+            select_color.setBackgroundColor(Color.WHITE);
+            dialog.dismiss();
+        });
 
         save.setOnClickListener(v -> {
             if (TextUtils.isEmpty(title.getText())) {
@@ -485,7 +537,8 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getAddNoteDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final NotesAdapter adapter) {
+    public static void getAddNoteDialog(@NonNull final AppCompatActivity activity,
+                                        @NonNull final View alertLayout, @NonNull final NotesAdapter adapter) {
         final EditText title = alertLayout.findViewById(R.id.titlenote);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
         final Note note = new Note();
@@ -500,8 +553,10 @@ public class AlertDialogsHelper {
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
-                    select_color.setBackgroundColor(color);
-                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    if (color != 0) {
+                        select_color.setBackgroundColor(color);
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    }
                 }
 
                 @Override
@@ -521,7 +576,11 @@ public class AlertDialogsHelper {
         FloatingActionButton fab = activity.findViewById(R.id.fab);
         fab.setOnClickListener(view -> dialog.show());
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> {
+            title.getText().clear();
+            select_color.setBackgroundColor(Color.WHITE);
+            dialog.dismiss();
+        });
 
         save.setOnClickListener(v -> {
             if (TextUtils.isEmpty(title.getText())) {
@@ -545,14 +604,18 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getEditExamDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ArrayList<Exam> adapter, @NonNull final ListView listView, int listposition) {
+    public static void getEditExamDialog(
+            @NonNull final AppCompatActivity activity, @NonNull final View alertLayout,
+            @NonNull final ArrayList<Exam> adapter, @NonNull final ListView listView,
+            int listposition) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjectexam_dialog);
         editTextHashs.put(R.string.subject, subject);
         final EditText teacher = alertLayout.findViewById(R.id.teacherexam_dialog);
-        editTextHashs.put(R.string.teacher, teacher);
+//        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.roomexam_dialog);
-        editTextHashs.put(R.string.room, room);
+        room.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+//        editTextHashs.put(R.string.room, room);
         final TextView date = alertLayout.findViewById(R.id.dateexam_dialog);
         final TextView time = alertLayout.findViewById(R.id.timeexam_dialog);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
@@ -604,8 +667,10 @@ public class AlertDialogsHelper {
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
-                    select_color.setBackgroundColor(color);
-                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    if (color != 0) {
+                        select_color.setBackgroundColor(color);
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    }
                 }
 
                 @Override
@@ -624,10 +689,17 @@ public class AlertDialogsHelper {
         final AlertDialog dialog = alert.create();
         dialog.show();
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> {
+            subject.getText().clear();
+            teacher.getText().clear();
+            room.getText().clear();
+            select_color.setBackgroundColor(Color.WHITE);
+            subject.requestFocus();
+            dialog.dismiss();
+        });
 
         save.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(subject.getText()) || TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())) {
+            if (TextUtils.isEmpty(subject.getText())/* || TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())*/) {
                 for (Map.Entry<Integer, EditText> entry : editTextHashs.entrySet()) {
                     if (TextUtils.isEmpty(entry.getValue().getText())) {
                         entry.getValue().setError(activity.getResources().getString(entry.getKey()) + " " + activity.getResources().getString(R.string.field_error));
@@ -636,9 +708,9 @@ public class AlertDialogsHelper {
                 }
             } else if (!date.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.date_error, Snackbar.LENGTH_LONG).show();
-            } else if (!time.getText().toString().matches(".*\\d+.*")) {
+            } /*else if (!time.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.time_error, Snackbar.LENGTH_LONG).show();
-            } else {
+            }*/ else {
                 DbHelper dbHelper = new DbHelper(activity);
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 exam.setSubject(subject.getText().toString());
@@ -656,14 +728,17 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getAddExamDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ExamsAdapter adapter) {
+    public static void getAddExamDialog(
+            @NonNull final AppCompatActivity activity,
+            @NonNull final View alertLayout, @NonNull final ExamsAdapter adapter) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjectexam_dialog);
         editTextHashs.put(R.string.subject, subject);
         final EditText teacher = alertLayout.findViewById(R.id.teacherexam_dialog);
-        editTextHashs.put(R.string.teacher, teacher);
+//        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.roomexam_dialog);
-        editTextHashs.put(R.string.room, room);
+        room.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+//        editTextHashs.put(R.string.room, room);
         final TextView date = alertLayout.findViewById(R.id.dateexam_dialog);
         final TextView time = alertLayout.findViewById(R.id.timeexam_dialog);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
@@ -707,8 +782,10 @@ public class AlertDialogsHelper {
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
-                    select_color.setBackgroundColor(color);
-                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    if (color != 0) {
+                        select_color.setBackgroundColor(color);
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                    }
                 }
 
                 @Override
@@ -728,10 +805,17 @@ public class AlertDialogsHelper {
         FloatingActionButton fab = activity.findViewById(R.id.fab);
         fab.setOnClickListener(view -> dialog.show());
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> {
+            subject.getText().clear();
+            teacher.getText().clear();
+            room.getText().clear();
+            select_color.setBackgroundColor(Color.WHITE);
+            subject.requestFocus();
+            dialog.dismiss();
+        });
 
         save.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(subject.getText()) || TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())) {
+            if (TextUtils.isEmpty(subject.getText()) /*|| TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())*/) {
                 for (Map.Entry<Integer, EditText> entry : editTextHashs.entrySet()) {
                     if (TextUtils.isEmpty(entry.getValue().getText())) {
                         entry.getValue().setError(activity.getResources().getString(entry.getKey()) + " " + activity.getResources().getString(R.string.field_error));
@@ -740,9 +824,9 @@ public class AlertDialogsHelper {
                 }
             } else if (!date.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.date_error, Snackbar.LENGTH_LONG).show();
-            } else if (!time.getText().toString().matches(".*\\d+.*")) {
+            } /*else if (!time.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.time_error, Snackbar.LENGTH_LONG).show();
-            } else {
+            }*/ else {
                 DbHelper dbHelper = new DbHelper(activity);
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 exam.setSubject(subject.getText().toString());
@@ -768,7 +852,8 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getDeleteDialog(Context context, Runnable runnable) {
+    public static void getDeleteDialog(Context context, Runnable
+            runnable) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
         builder.title(context.getString(R.string.profiles_delete_submit_heading));
 

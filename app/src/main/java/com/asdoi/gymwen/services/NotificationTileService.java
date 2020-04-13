@@ -33,6 +33,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.util.PreferenceUtil;
+import com.ulan.timetable.utils.NotificationUtil;
 
 @TargetApi(24)
 public class NotificationTileService extends TileService {
@@ -63,9 +64,11 @@ public class NotificationTileService extends TileService {
         boolean showNotifNew = !PreferenceUtil.isNotification();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("showNotification", showNotifNew);
+        editor.putBoolean("timetableNotif", showNotifNew);
         if (showNotifNew) {
             editor.commit();
             ApplicationFeatures.sendNotifications();
+            NotificationUtil.sendNotificationSummary(ApplicationFeatures.getContext(), false);
         } else {
             editor.apply();
             Intent intent = new Intent(this, NotificationDismissButtonReceiver.class);
