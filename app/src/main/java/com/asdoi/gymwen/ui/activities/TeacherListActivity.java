@@ -98,7 +98,7 @@ public class TeacherListActivity extends ActivityFeatures {
         }
     }
 
-    public static void removeTeacherClick(@NonNull View view, Context context) {
+    public static void removeTeacherClick(@NonNull View view, @NonNull Context context) {
         view.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         view.setBackgroundResource(0);
         view.setClickable(false);
@@ -106,7 +106,7 @@ public class TeacherListActivity extends ActivityFeatures {
     }
 
     //TeacherSearch
-    public static void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean fullNames, Activity activity) {
+    public static void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean fullNames, @NonNull Activity activity) {
         if (TeacherlistFeatures.isAOL(teacherQuery))
             return;
         TypedValue outValue = new TypedValue();

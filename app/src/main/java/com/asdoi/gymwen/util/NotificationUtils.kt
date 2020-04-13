@@ -382,12 +382,11 @@ class NotificationUtils {
                         .setShowWhen(false)
                         .setOnlyAlertOnce(!alert)
 
-                if (nothing)
-                    builder.color = ContextCompat.getColor(context, R.color.notification_icon_nothing_background)
-                else if (isOmitted)
-                    builder.color = ContextCompat.getColor(context, R.color.notification_icon_background_omitted)
-                else
-                    builder.color = ContextCompat.getColor(context, R.color.notification_icon_background_substitution)
+                when {
+                    nothing -> builder.color = ContextCompat.getColor(context, R.color.notification_icon_nothing_background)
+                    isOmitted -> builder.color = ContextCompat.getColor(context, R.color.notification_icon_background_omitted)
+                    else -> builder.color = ContextCompat.getColor(context, R.color.notification_icon_background_substitution)
+                }
 
                 if (PreferenceUtil.isAlwaysNotification()) {
                     builder.setOngoing(true)

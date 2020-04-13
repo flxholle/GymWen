@@ -1102,7 +1102,7 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getDeleteDialog(Context context, Runnable
+    public static void getDeleteDialog(@NonNull Context context, @NonNull Runnable
             runnable) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
         builder.title(context.getString(R.string.profiles_delete_submit_heading));

@@ -18,6 +18,7 @@
   -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground">
@@ -33,7 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
             android:background="?android:attr/windowBackground"
-            android:text="A" />
+            android:text="A"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/choice_button_B"
@@ -41,7 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
             android:background="?android:attr/windowBackground"
-            android:text="B" />
+            android:text="B"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/choice_button_C"
@@ -49,7 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
             android:background="?android:attr/windowBackground"
-            android:text="C" />
+            android:text="C"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/choice_button_D"
@@ -57,7 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
             android:background="?android:attr/windowBackground"
-            android:text="D" />
+            android:text="D"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/choice_button_E"
@@ -65,7 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
             android:background="?android:attr/windowBackground"
-            android:text="E" />
+            android:text="E"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/choice_button_F"
@@ -73,7 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/choice_difference"
             android:background="?android:attr/windowBackground"
-            android:text="F" />
+            android:text="F"
+            tools:ignore="HardcodedText" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

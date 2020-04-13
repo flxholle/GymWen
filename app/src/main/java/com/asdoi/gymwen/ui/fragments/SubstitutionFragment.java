@@ -263,8 +263,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     @NonNull
     private String shareMessage(boolean withCourses) {
         StringBuilder message = new StringBuilder();
-        SubstitutionList content = null;
-        String title = "";
+        SubstitutionList content;
+        String title;
         boolean summarize = PreferenceUtil.isSummarizeUp();
 
         if (today) {
@@ -561,7 +561,6 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             if (content.getNoInternet()) {
                 ViewGroup titleView = createTitleLayoutNewDesign(context.getString(R.string.noInternetConnection), "", Color.GRAY, Color.WHITE);
                 base.addView(titleView);
-                return;
             } else {
                 int bgColor;
                 int textColor;
@@ -677,6 +676,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    @SuppressWarnings("DuplicateBranchesInSwitch")
     @NonNull
     private View generateOverviewAll() {
         String[] headline = generateHeadline(context, miscellaneous, senior, true);

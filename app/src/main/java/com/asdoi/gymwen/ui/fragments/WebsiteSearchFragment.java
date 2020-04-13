@@ -250,15 +250,15 @@ public class WebsiteSearchFragment extends Fragment {
             this.level = level;
         }
 
-        public String getName() {
+        String getName() {
             return name;
         }
 
-        public String getLink() {
+        String getLink() {
             return link;
         }
 
-        public int getLevel() {
+        int getLevel() {
             return level;
         }
     }

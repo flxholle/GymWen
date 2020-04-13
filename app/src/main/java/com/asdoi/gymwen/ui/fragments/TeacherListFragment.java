@@ -68,6 +68,7 @@ public class TeacherListFragment extends Fragment {
 
     private String teacherQuery;
 
+    @NonNull
     public static TeacherListFragment newInstance(String searchTeacher) {
         Bundle args = new Bundle();
         args.putString(TeacherListActivity.SEARCH_TEACHER, searchTeacher);
@@ -98,6 +99,7 @@ public class TeacherListFragment extends Fragment {
     public void onStart() {
         super.onStart();
         ((ActivityFeatures) getActivity()).createLoadingPanel(base);
+        //noinspection CatchMayIgnoreException
         try {
             teacherQuery = getArguments().getString(TeacherListActivity.SEARCH_TEACHER, null);
         } catch (Exception e) {
@@ -166,7 +168,7 @@ public class TeacherListFragment extends Fragment {
     }
 
     @NonNull
-    private com.google.android.material.textfield.TextInputLayout createSearchLayout(String
+    private com.google.android.material.textfield.TextInputLayout createSearchLayout(@Nullable String
                                                                                              query) {
         com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);

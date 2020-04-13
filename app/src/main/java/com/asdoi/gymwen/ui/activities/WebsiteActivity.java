@@ -51,9 +51,9 @@ import java.util.List;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     @NonNull
-    public static final String LOADURL = "url";
+    private static final String LOADURL = "url";
     @NonNull
-    public static final String SEARCH = "search";
+    private static final String SEARCH = "search";
 
     private boolean search = false;
 
@@ -109,7 +109,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     }
 
 
-    public void start() {
+    private void start() {
 
         if (!ApplicationFeatures.isNetworkAvailable()) {
             ChocoBar.builder().setActivity(this)
@@ -166,7 +166,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             final Context context = this;
             if (ApplicationFeatures.isURLValid(formattedUrl) && formattedUrl.contains("http://www.gym-wen.de/")) {
                 (new Thread(() -> {
-                    boolean isHTML = false;
+                    boolean isHTML;
                     try {
                         doc = Jsoup.connect(formattedUrl).get();
                         isHTML = true;
@@ -317,7 +317,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         }
 
         //Generate content
-        String whole = "";
+        String whole;
         for (int i = 0; i < content.length; i++) {
             Elements text = values.get(i).select("div.csc-textpic-text");
             if (text.size() > 0) {
@@ -411,7 +411,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         ArrayList<String[]> contentList = new ArrayList<>();
 
         //Generate content
-        String whole = "";
+        String whole;
         for (int i = 0; i < values.size(); i++) {
             Element text = values.get(i);
             String[] littleCon = new String[4];
@@ -532,7 +532,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         ArrayList<String[]> content = new ArrayList<>();
 
         //Generate content
-        String whole = "";
+        String whole;
         for (int i = 0; i < values.size(); i++) {
             Element currentValue = values.get(i);
             if (currentValue != null) {

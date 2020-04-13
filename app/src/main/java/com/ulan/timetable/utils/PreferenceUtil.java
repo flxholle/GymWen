@@ -93,7 +93,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("do_not_disturb_dont_ask", false);
     }
 
-    public static void setDoNotDisturbDontAskAgain(Context context, boolean value) {
+    private static void setDoNotDisturbDontAskAgain(@NonNull Context context, boolean value) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("do_not_disturb_dont_ask", value).apply();
     }
 
@@ -101,7 +101,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("automatic_do_not_disturb", true);
     }
 
-    public static void setDoNotDisturb(Activity activity, boolean dontAskAgain) {
+    public static void setDoNotDisturb(@NonNull Activity activity, boolean dontAskAgain) {
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

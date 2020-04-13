@@ -23,7 +23,7 @@ import com.asdoi.gymwen.util.PreferenceUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableListOf()) {
+open class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableListOf()) {
     private var noInternet: Boolean = false
 
     constructor(notInternet: Boolean) : this() {
@@ -174,7 +174,7 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
             return false
 
         if (entries.size <= 0)
-            return true;
+            return true
 
         for (i in entries.indices) {
             if (entries[i] != list2.entries[i])

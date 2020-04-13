@@ -334,7 +334,9 @@ public class ApplicationFeatures extends MultiDexApplication {
                 throw new Exception();
             }
         } catch (Exception e) {
+            @SuppressWarnings("deprecation")
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            //noinspection deprecation
             return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         }
     }

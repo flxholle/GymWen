@@ -493,7 +493,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public void onNavigationItemSelected(int id, @NonNull String title) {
         // Handle navigation view item clicks here.
         Fragment fragment = null;
-        Intent intent = null;
+        Intent intent;
 
         switch (id) {
             default:

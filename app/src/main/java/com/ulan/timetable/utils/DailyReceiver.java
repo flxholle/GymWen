@@ -14,12 +14,12 @@ import com.asdoi.gymwen.ApplicationFeatures;
  */
 public class DailyReceiver extends BroadcastReceiver {
 
-    public static final int DailyReceiverID = 10000;
+    private static final int DailyReceiverID = 10000;
 
-    Context context;
+    private Context context;
 
     @Override
-    public void onReceive(@NonNull Context context, Intent intent) {
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         this.context = context;
 
         if (intent.getAction() != null) {

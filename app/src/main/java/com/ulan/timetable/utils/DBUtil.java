@@ -30,7 +30,7 @@ import com.ulan.timetable.TimeTableBuilder;
 import org.jsoup.Jsoup;
 
 public class DBUtil {
-    public static final String database_prefix = "db_profile_";
+    private static final String database_prefix = "db_profile_";
 
     //Get DB Names from outside of builder
     @NonNull

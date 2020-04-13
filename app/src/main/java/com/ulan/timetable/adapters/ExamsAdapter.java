@@ -39,7 +39,9 @@ import java.util.Objects;
  */
 public class ExamsAdapter extends ArrayAdapter<Exam> {
 
+    @NonNull
     private final AppCompatActivity mActivity;
+    @NonNull
     private final ArrayList<Exam> examlist;
     private Exam exam;
     private final ListView mListView;
@@ -162,6 +164,7 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
         return super.getItemId(position);
     }
 
+    @NonNull
     public ArrayList<Exam> getExamList() {
         return examlist;
     }

@@ -128,7 +128,7 @@ fun setDoNotDisturbReceivers(context: Context) {
 
             if (((startHour == calendar.get(Calendar.HOUR_OF_DAY) && startMinute <= calendar.get(Calendar.MINUTE)) || startHour < calendar.get(Calendar.HOUR_OF_DAY)) && ((endHour == calendar.get(Calendar.HOUR_OF_DAY) && endMinute > calendar.get(Calendar.MINUTE)) || endHour > calendar.get(Calendar.HOUR_OF_DAY))) {
                 //Just in lesson
-                setDoNotDisturb(context, true);
+                setDoNotDisturb(context, true)
             }
         }
 

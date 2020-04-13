@@ -248,7 +248,8 @@ public class SubstitutionPlan {
         }
     }
 
-    public SubstitutionList getAll(boolean today) {
+    @NonNull
+    private SubstitutionList getAll(boolean today) {
         return getAll(today, hours);
     }
 
@@ -389,7 +390,7 @@ public class SubstitutionPlan {
         return hasSthChanged(old, now, true);
     }
 
-    public boolean hasSthChanged(Document old, Document now, boolean today) {
+    private boolean hasSthChanged(Document old, Document now, boolean today) {
         if (today)
             setTodayDoc(old);
         else

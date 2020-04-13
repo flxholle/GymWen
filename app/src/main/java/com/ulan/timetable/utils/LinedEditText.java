@@ -17,7 +17,9 @@ import com.asdoi.gymwen.R;
  */
 @SuppressLint("AppCompatCustomView")
 public class LinedEditText extends EditText {
+    @NonNull
     private final Rect mRect;
+    @NonNull
     private final Paint mPaint;
 
     @SuppressLint("ResourceAsColor")

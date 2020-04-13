@@ -33,7 +33,9 @@ import java.util.Objects;
  */
 public class HomeworksAdapter extends ArrayAdapter<Homework> {
 
+    @NonNull
     private final AppCompatActivity mActivity;
+    @NonNull
     private final ArrayList<Homework> homeworklist;
     private Homework homework;
     private final ListView mListView;
@@ -128,6 +130,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         return super.getItemId(position);
     }
 
+    @NonNull
     public ArrayList<Homework> getHomeworkList() {
         return homeworklist;
     }

@@ -50,12 +50,12 @@ import java.util.ArrayList;
 
 public class SubstitutionWidgetActivity extends ActivityFeatures {
     public static final String PROFILES = "profiles";
-    public static final char divider = '%';
-    public static final String PREF_PREFIX_KEY = "prefix_";
+    private static final char divider = '%';
+    private static final String PREF_PREFIX_KEY = "prefix_";
 
 
-    public int appWidgetId;
-    public ArrayList<Integer> selectedProfiles;
+    int appWidgetId;
+    private ArrayList<Integer> selectedProfiles;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -121,7 +121,7 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
 //        setToolbar(true);
     }
 
-    public void savePref() {
+    void savePref() {
         if (selectedProfiles.size() == 0) {
             for (int i = 0; i < ProfileManagement.getProfileList().size(); i++) {
                 selectedProfiles.add(i);

@@ -31,13 +31,13 @@ public class TimeTableBuilder {
     }
 
     @NonNull
-    public TimeTableBuilder setProfilePos(int value) {
+    private TimeTableBuilder setProfilePos(int value) {
         profilePos = value;
         return this;
     }
 
     @NonNull
-    public TimeTableBuilder setSubstitutionplan(SubstitutionPlan value) {
+    private TimeTableBuilder setSubstitutionplan(SubstitutionPlan value) {
         substitutionPlan = value;
         return this;
     }
@@ -48,7 +48,7 @@ public class TimeTableBuilder {
      * @return the intent to start the activity
      */
     @NonNull
-    public Intent intent(Context context, Class cl) {
+    private Intent intent(Context context, Class cl) {
         Intent i = new Intent(context, cl);
         i.putExtra(CUSTOM_THEME, customTheme);
         i.putExtra(PROFILE_POS, profilePos);

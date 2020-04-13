@@ -32,7 +32,7 @@ import com.ulan.timetable.TimeTableBuilder;
 
 public class SubstitutionTimeTableActivity extends ActivityFeatures {
     @NonNull
-    public static final String PROFILE_POSITION = "profilepos";
+    private static final String PROFILE_POSITION = "profilepos";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

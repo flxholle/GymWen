@@ -76,7 +76,7 @@ public class RoomPlanActivity extends ActivityFeatures {
 
         setIntent(null);
 
-        Fragment fragment = null;
+        Fragment fragment;
 
         if (search) {
             fragment = new RoomPlanSearchFragment();

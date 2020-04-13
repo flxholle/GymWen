@@ -21,6 +21,7 @@ package com.ulan.timetable.utils;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.asdoi.gymwen.R;
@@ -35,7 +36,7 @@ import java.util.Collections;
 
 public class WeekUtils {
     @NonNull
-    public static ArrayList<Week> compareSubstitutionAndWeeks(Context context, @NonNull ArrayList<Week> weeks, SubstitutionList entries, boolean senior, DbHelper dbHelper) {
+    public static ArrayList<Week> compareSubstitutionAndWeeks(@NonNull Context context, @NonNull ArrayList<Week> weeks, @NonNull SubstitutionList entries, boolean senior, @NonNull DbHelper dbHelper) {
         boolean empty = weeks.isEmpty();
         if (!entries.getNoInternet()) {
             for (int i = 0; i < entries.getEntries().size(); i++) {
@@ -194,7 +195,8 @@ public class WeekUtils {
         }
     }
 
-    public static Week getNextWeek(ArrayList<Week> weeks) {
+    @Nullable
+    public static Week getNextWeek(@NonNull ArrayList<Week> weeks) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 1);
         String hour = "" + calendar.get(Calendar.HOUR_OF_DAY);
@@ -215,12 +217,13 @@ public class WeekUtils {
     }
 
     @NonNull
-    public static ArrayList<Week> sortWeekList(@NonNull ArrayList<Week> weeks) {
+    private static ArrayList<Week> sortWeekList(@NonNull ArrayList<Week> weeks) {
         Collections.sort(weeks, (o1, o2) -> o1.getFromTime().compareToIgnoreCase(o2.getFromTime()));
         return weeks;
     }
 
-    public static ArrayList<Week> getAllWeeks(DbHelper dbHelper) {
+    @NonNull
+    public static ArrayList<Week> getAllWeeks(@NonNull DbHelper dbHelper) {
         return getWeeks(dbHelper, new String[]{WeekdayFragment.KEY_MONDAY_FRAGMENT,
                 WeekdayFragment.KEY_TUESDAY_FRAGMENT,
                 WeekdayFragment.KEY_WEDNESDAY_FRAGMENT,
@@ -230,7 +233,8 @@ public class WeekUtils {
                 WeekdayFragment.KEY_SUNDAY_FRAGMENT});
     }
 
-    public static ArrayList<Week> getWeeks(DbHelper dbHelper, String[] keys) {
+    @NonNull
+    private static ArrayList<Week> getWeeks(@NonNull DbHelper dbHelper, @NonNull String[] keys) {
         ArrayList<Week> weeks = new ArrayList<>();
         for (String key : keys) {
             weeks.addAll(dbHelper.getWeek(key));
@@ -238,6 +242,7 @@ public class WeekUtils {
         return weeks;
     }
 
+    @NonNull
     public static String getNextOccurenceOfSubject(DbHelper dbHelper, String subject) {
 /*        ArrayList<Week> weeks = new ArrayList<Week>();
 

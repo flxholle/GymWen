@@ -166,7 +166,7 @@ public class NotificationUtil {
         }).start();
     }
 
-    private static void sendNotification(@NonNull Context context, boolean alert, NotificationCompat.Builder notificationBuilder, int id) {
+    private static void sendNotification(@NonNull Context context, boolean alert, @Nullable NotificationCompat.Builder notificationBuilder, int id) {
         if (notificationBuilder == null || !PreferenceUtil.isTimeTableNotification())
             return;
 
@@ -223,8 +223,8 @@ public class NotificationUtil {
     }
 
     @Nullable
-    private static String getLessons(ArrayList<Week> weeks, Context context) {
-        StringBuilder lessons = new StringBuilder("");
+    private static String getLessons(@NonNull ArrayList<Week> weeks, @NonNull Context context) {
+        StringBuilder lessons = new StringBuilder();
         for (Week week : weeks) {
             if (week != null) {
                 lessons.append(week.getSubject())

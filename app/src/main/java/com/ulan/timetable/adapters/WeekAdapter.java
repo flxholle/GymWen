@@ -41,7 +41,9 @@ import java.util.Objects;
  */
 public class WeekAdapter extends ArrayAdapter<Week> {
 
+    @NonNull
     private final ActivityFeatures mActivity;
+    @NonNull
     private final ArrayList<Week> weeklist;
     private Week week;
     private final ListView mListView;
@@ -168,6 +170,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         return convertView;
     }
 
+    @NonNull
     public ArrayList<Week> getWeekList() {
         return weeklist;
     }

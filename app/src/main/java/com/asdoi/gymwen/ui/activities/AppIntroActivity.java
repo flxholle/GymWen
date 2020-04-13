@@ -39,11 +39,11 @@ public class AppIntroActivity extends AppIntro2 {
 
 //        setSlideOverAnimation();
         showSkipButton(false);
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_one_title), getString(R.string.intro_one_desc), R.mipmap.gymlogo, ContextCompat.getColor(this, R.color.intro_background_one)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_two_title), getString(R.string.intro_two_desc), R.drawable.intro_img_2, ContextCompat.getColor(this, R.color.intro_background_two)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_three_title), getString(R.string.intro_three_desc), R.drawable.intro_img_3, ContextCompat.getColor(this, R.color.intro_background_three)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_four_title), getString(R.string.intro_four_desc), R.drawable.intro_img_4, ContextCompat.getColor(this, R.color.intro_background_four)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_five_title), getString(R.string.intro_five_desc), R.drawable.intro_img_5, ContextCompat.getColor(this, R.color.intro_background_five)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_one_title), null, getString(R.string.intro_one_desc), null, R.mipmap.gymlogo, ContextCompat.getColor(this, R.color.intro_background_one), 0, 0));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_two_title), null, getString(R.string.intro_two_desc), null, R.drawable.intro_img_2, ContextCompat.getColor(this, R.color.intro_background_two), 0, 0));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_three_title), null, getString(R.string.intro_three_desc), null, R.drawable.intro_img_3, ContextCompat.getColor(this, R.color.intro_background_three), 0, 0));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_four_title), null, getString(R.string.intro_four_desc), null, R.drawable.intro_img_4, ContextCompat.getColor(this, R.color.intro_background_four), 0, 0));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_five_title), null, getString(R.string.intro_five_desc), null, R.drawable.intro_img_5, ContextCompat.getColor(this, R.color.intro_background_five), 0, 0));
 
     }
 

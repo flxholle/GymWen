@@ -34,7 +34,9 @@ import java.util.Objects;
  */
 public class NotesAdapter extends ArrayAdapter<Note> {
 
+    @NonNull
     private final AppCompatActivity mActivity;
+    @NonNull
     private final ArrayList<Note> notelist;
     private Note note;
     private final ListView mListView;
@@ -122,6 +124,7 @@ public class NotesAdapter extends ArrayAdapter<Note> {
         return super.getItemId(position);
     }
 
+    @NonNull
     public ArrayList<Note> getNoteList() {
         return notelist;
     }

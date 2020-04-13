@@ -33,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center|start"
-            android:text="Schulleben"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -44,7 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:textStyle="bold"
-            android:text="Projekte"
             android:textSize="20sp" />
 
         <TextView
@@ -54,7 +52,6 @@
             android:layout_marginStart="25dp"
             android:gravity="start|center"
             android:textColor="?android:attr/textColorPrimary"
-            android:text="SoR"
             android:textSize="18sp" />
     </LinearLayout>
 

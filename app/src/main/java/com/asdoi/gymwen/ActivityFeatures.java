@@ -89,6 +89,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 import de.cketti.library.changelog.ChangeLog;
 import info.isuru.sheriff.enums.SheriffPermission;
@@ -136,16 +137,15 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
     protected abstract void setupColors();
 
-    public void setToolbar(boolean backButton) {
+    protected void setToolbar(boolean backButton) {
         try {
             Toolbar toolbar = findViewById(R.id.toolbar);
             if (toolbar != null) {
                 toolbar.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
                 setSupportActionBar(toolbar);
             }
-            //noinspection ConstantConditions
             if (backButton)
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -319,6 +319,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
+            //noinspection deprecation
             bar.getIndeterminateDrawable().setColorFilter(ApplicationFeatures.getAccentColor(this), PorterDuff.Mode.SRC_ATOP);
         }
 
@@ -437,7 +438,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     }
 
     public boolean startApp(@NonNull String... packageNames) {
-        Intent intent = null;
+        Intent intent;
         for (String s : packageNames) {
             intent = getPackageManager().getLaunchIntentForPackage(s);
             if (intent != null) {

@@ -55,7 +55,6 @@ import butterknife.ButterKnife;
 /**
  * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
  */
-@SuppressWarnings("FieldCanBeLocal")
 public class AboutActivity extends ActivityFeatures implements View.OnClickListener {
 
     @NonNull
@@ -134,7 +133,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         setToolbar(true);
     }
 
-    public static class Fragment1 extends Fragment {
+    static class Fragment1 extends Fragment {
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
