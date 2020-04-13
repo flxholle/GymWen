@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -164,6 +166,7 @@ public class AlertDialogsHelper {
     public static void getAddSubjectDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final FragmentsTabAdapter adapter, @NonNull final ViewPager viewPager) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
+        subject.requestFocus();
         editTextHashs.put(R.string.subject, subject);
         final EditText teacher = alertLayout.findViewById(R.id.teacher_dialog);
 //        editTextHashs.put(R.string.teacher, teacher);
@@ -226,6 +229,36 @@ public class AlertDialogsHelper {
 
         });
 
+        DbHelper dbHelper = new DbHelper(activity);
+        ArrayList<Week> alreadyInsertedWeeks = DBUtil.getAllWeeks(dbHelper);
+
+        subject.setOnEditorActionListener(
+                (v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_DONE ||
+                            event != null &&
+                                    event.getAction() == KeyEvent.ACTION_DOWN &&
+                                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        if (event == null || !event.isShiftPressed()) {
+                            // the user is done typing.
+                            //AutoFill other fields
+                            for (Week w : alreadyInsertedWeeks) {
+                                if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
+                                    if (teacher.getText().toString().trim().isEmpty())
+                                        teacher.setText(w.getTeacher());
+                                    if (room.getText().toString().trim().isEmpty())
+                                        room.setText(w.getRoom());
+                                    select_color.setBackgroundColor(w.getColor());
+                                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+        );
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(R.string.add_subject);
         alert.setCancelable(false);
@@ -258,7 +291,6 @@ public class AlertDialogsHelper {
             } else if (!from_time.getText().toString().matches(".*\\d+.*") || !to_time.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.time_error, Snackbar.LENGTH_LONG).show();
             } else {
-                DbHelper dbHelper = new DbHelper(activity);
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 week.setSubject(subject.getText().toString());
                 week.setFragment(((WeekdayFragment) adapter.getItem(viewPager.getCurrentItem())).getKey());
@@ -379,6 +411,7 @@ public class AlertDialogsHelper {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
+        subject.requestFocus();
         final EditText description = alertLayout.findViewById(R.id.descriptionhomework);
         editTextHashs.put(R.string.description, description);
         final TextView date = alertLayout.findViewById(R.id.datehomework);
@@ -421,6 +454,34 @@ public class AlertDialogsHelper {
             });
         });
 
+        DbHelper dbHelper = new DbHelper(activity);
+        ArrayList<Week> alreadyInsertedWeeks = DBUtil.getAllWeeks(dbHelper);
+
+        subject.setOnEditorActionListener(
+                (v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_DONE ||
+                            event != null &&
+                                    event.getAction() == KeyEvent.ACTION_DOWN &&
+                                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        if (event == null || !event.isShiftPressed()) {
+                            // the user is done typing.
+                            //AutoFill other fields
+                            for (Week w : alreadyInsertedWeeks) {
+                                if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
+                                    select_color.setBackgroundColor(w.getColor());
+                                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+//                                    date.setText(DBUtil.getNextOccurenceOfSubject(dbHelper, w.getSubject()));
+//                                    homework.setDate(DBUtil.getNextOccurenceOfSubject(dbHelper, w.getSubject()));
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+        );
+
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(R.string.add_homework);
         final Button cancel = alertLayout.findViewById(R.id.cancel);
@@ -450,7 +511,6 @@ public class AlertDialogsHelper {
             }/* else if (!date.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.deadline_snackbar, Snackbar.LENGTH_LONG).show();
             }*/ else {
-                DbHelper dbHelper = new DbHelper(activity);
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 homework.setSubject(subject.getText().toString());
                 homework.setDescription(description.getText().toString());
@@ -540,6 +600,7 @@ public class AlertDialogsHelper {
     public static void getAddNoteDialog(@NonNull final AppCompatActivity activity,
                                         @NonNull final View alertLayout, @NonNull final NotesAdapter adapter) {
         final EditText title = alertLayout.findViewById(R.id.titlenote);
+        title.requestFocus();
         final Button select_color = alertLayout.findViewById(R.id.select_color);
         final Note note = new Note();
 
@@ -734,6 +795,7 @@ public class AlertDialogsHelper {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjectexam_dialog);
         editTextHashs.put(R.string.subject, subject);
+        subject.requestFocus();
         final EditText teacher = alertLayout.findViewById(R.id.teacherexam_dialog);
 //        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.roomexam_dialog);
@@ -771,7 +833,6 @@ public class AlertDialogsHelper {
             timePickerDialog.show();
         });
 
-
         select_color.setOnClickListener(v -> {
             ColorPicker colorPicker = new ColorPicker(activity);
             colorPicker.setRoundColorButton(true);
@@ -794,6 +855,36 @@ public class AlertDialogsHelper {
                 }
             });
         });
+
+        DbHelper dbHelper = new DbHelper(activity);
+        ArrayList<Week> alreadyInsertedWeeks = DBUtil.getAllWeeks(dbHelper);
+
+        subject.setOnEditorActionListener(
+                (v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_DONE ||
+                            event != null &&
+                                    event.getAction() == KeyEvent.ACTION_DOWN &&
+                                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        if (event == null || !event.isShiftPressed()) {
+                            // the user is done typing.
+                            //AutoFill other fields
+                            for (Week w : alreadyInsertedWeeks) {
+                                if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
+                                    if (teacher.getText().toString().trim().isEmpty())
+                                        teacher.setText(w.getTeacher());
+                                    if (room.getText().toString().trim().isEmpty())
+                                        room.setText(w.getRoom());
+                                    select_color.setBackgroundColor(w.getColor());
+                                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+        );
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(activity.getResources().getString(R.string.add_exam));
@@ -827,7 +918,6 @@ public class AlertDialogsHelper {
             } /*else if (!time.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.time_error, Snackbar.LENGTH_LONG).show();
             }*/ else {
-                DbHelper dbHelper = new DbHelper(activity);
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 exam.setSubject(subject.getText().toString());
                 exam.setTeacher(teacher.getText().toString());

@@ -71,7 +71,7 @@ fun setDoNotDisturb(context: Context, on: Boolean) {
         // Check if the notification policy access has been granted for the app.
         if (notificationManager.isNotificationPolicyAccessGranted) {
             val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            mNotificationManager.setInterruptionFilter(if (on) NotificationManager.INTERRUPTION_FILTER_NONE else NotificationManager.INTERRUPTION_FILTER_ALL)
+            mNotificationManager.setInterruptionFilter(if (on) NotificationManager.INTERRUPTION_FILTER_PRIORITY else NotificationManager.INTERRUPTION_FILTER_ALL)
         }
     }
 }
