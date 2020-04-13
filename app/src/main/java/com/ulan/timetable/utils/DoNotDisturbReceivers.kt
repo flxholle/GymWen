@@ -129,9 +129,9 @@ fun setDoNotDisturbReceivers(context: Context) {
 
         if (on != null) {
             if (on) {
-                ApplicationFeatures.setAlarm(context, TurnOnReceiver::class.java, lastCalendar.get(Calendar.HOUR_OF_DAY), lastCalendar.get(Calendar.MINUTE), 0, TurnOnReceiver.TurnOn_ID)
+                ApplicationFeatures.setOneTimeAlarm(context, TurnOnReceiver::class.java, lastCalendar.get(Calendar.HOUR_OF_DAY), lastCalendar.get(Calendar.MINUTE), 0, TurnOnReceiver.TurnOn_ID)
             } else {
-                ApplicationFeatures.setAlarm(context, TurnOffReceiver::class.java, lastCalendar.get(Calendar.HOUR_OF_DAY), lastCalendar.get(Calendar.MINUTE), 0, TurnOffReceiver.TurnOff_ID)
+                ApplicationFeatures.setOneTimeAlarm(context, TurnOffReceiver::class.java, lastCalendar.get(Calendar.HOUR_OF_DAY), lastCalendar.get(Calendar.MINUTE), 0, TurnOffReceiver.TurnOff_ID)
             }
         }
     }).start()

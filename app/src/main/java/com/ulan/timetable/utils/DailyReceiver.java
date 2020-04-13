@@ -1,5 +1,6 @@
 package com.ulan.timetable.utils;
 
+import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +26,7 @@ public class DailyReceiver extends BroadcastReceiver {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
                 // Set the alarm here.
                 int[] times = PreferenceUtil.getTimeTableAlarmTime();
-                ApplicationFeatures.setAlarm(context, DailyReceiver.class, times[0], times[1], times[2], DailyReceiverID);
+                ApplicationFeatures.setRepeatingAlarm(context, DailyReceiver.class, times[0], times[1], times[2], DailyReceiverID, AlarmManager.INTERVAL_DAY);
             }
         }
 

@@ -178,7 +178,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static void initSubstitutionPlanReceiver() {
         //Setup CheckSubstitutionPlanReceiver
         List<Integer> time = CheckSubstitutionPlanReceiver.Companion.getNextTime();
-        ApplicationFeatures.setAlarm(getContext(), CheckSubstitutionPlanReceiver.class, time.get(0), time.get(1), time.get(2), CheckSubstitutionPlanReceiver.CheckSubstitutionPlanReceiverID);
+        ApplicationFeatures.setOneTimeAlarm(getContext(), CheckSubstitutionPlanReceiver.class, time.get(0), time.get(1), time.get(2), CheckSubstitutionPlanReceiver.CheckSubstitutionPlanReceiverID);
     }
 
     //Download Doc
@@ -626,7 +626,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Schedule and TimePicker
-    public static void setAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second, int id) {
+    public static void setOneTimeAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second, int id) {
         // cancel already scheduled reminders
         cancelAlarm(context, cls, id);
 
@@ -654,6 +654,8 @@ public class ApplicationFeatures extends MultiDexApplication {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), id, intent, 0);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        if (alarmManager == null)
+            return;
 
         long startTime = customCalendar.getTimeInMillis();
         if (Build.VERSION.SDK_INT < 23) {
@@ -668,6 +670,41 @@ public class ApplicationFeatures extends MultiDexApplication {
             if (System.currentTimeMillis() < startTime)
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
         }
+    }
+
+    public static void setRepeatingAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second, int id, long interval) {
+        // cancel already scheduled reminders
+        cancelAlarm(context, cls, id);
+
+        Calendar currentCalendar = Calendar.getInstance();
+
+        Calendar customCalendar = Calendar.getInstance();
+        customCalendar.setTimeInMillis(System.currentTimeMillis());
+        customCalendar.set(Calendar.HOUR_OF_DAY, hour);
+        customCalendar.set(Calendar.MINUTE, min);
+        customCalendar.set(Calendar.SECOND, second);
+
+        if (customCalendar.before(currentCalendar))
+            customCalendar.add(Calendar.DATE, 1);
+
+        // Enable a receiver
+        ComponentName receiver = new ComponentName(context, cls);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
+
+        Intent intent = new Intent(context, cls);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), id, intent, 0);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        if (alarmManager == null)
+            return;
+
+        long startTime = customCalendar.getTimeInMillis();
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, startTime, interval, pendingIntent);
     }
 
     public static void cancelAlarm(@NonNull Context context, @NonNull Class<?> cls, int id) {

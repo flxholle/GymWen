@@ -259,7 +259,7 @@ public class AlertDialogsHelper {
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
         final EditText description = alertLayout.findViewById(R.id.descriptionhomework);
-        editTextHashs.put(R.string.desctiption, description);
+        editTextHashs.put(R.string.description, description);
         final TextView date = alertLayout.findViewById(R.id.datehomework);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
         final Homework homework = adapter.get(listposition);
@@ -344,7 +344,7 @@ public class AlertDialogsHelper {
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
         final EditText description = alertLayout.findViewById(R.id.descriptionhomework);
-        editTextHashs.put(R.string.desctiption, description);
+        editTextHashs.put(R.string.description, description);
         final TextView date = alertLayout.findViewById(R.id.datehomework);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
         final Homework homework = new Homework();

@@ -448,7 +448,7 @@
     <!-- Homeworks Activity strings -->
     <string name="deadline_dialog">Deadline:</string>
     <string name="description_dialog">Description:</string>
-    <string name="desctiption">Desctiption</string>
+    <string name="description">Desctiption</string>
     <string name="date_error">Date field can not be empty!</string>
     <string name="edit_homework">Edit homework</string>
     <string name="add_homework">Add homework</string>

@@ -18,6 +18,7 @@
 
 package com.asdoi.gymwen.receivers;
 
+import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +38,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
                 // Set the alarm here.
                 int[] times = PreferenceUtil.getAlarmTime();
-                ApplicationFeatures.setAlarm(context, AlarmReceiver.class, times[0], times[1], times[2], AlarmReceiverID);
+                ApplicationFeatures.setRepeatingAlarm(context, AlarmReceiver.class, times[0], times[1], times[2], AlarmReceiverID, AlarmManager.INTERVAL_DAY);
             }
         }
 

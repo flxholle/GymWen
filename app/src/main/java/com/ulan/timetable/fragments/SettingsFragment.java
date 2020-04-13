@@ -1,5 +1,6 @@
 package com.ulan.timetable.fragments;
 
+import android.app.AlarmManager;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +44,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                     (view, hourOfDay, minute) -> {
                         PreferenceUtil.setTimeTableAlarmTime(hourOfDay, minute, 0);
-                        ApplicationFeatures.setAlarm(getContext(), DailyReceiver.class, hourOfDay, minute, 0, AlarmReceiver.AlarmReceiverID);
+                        ApplicationFeatures.setRepeatingAlarm(getContext(), DailyReceiver.class, hourOfDay, minute, 0, AlarmReceiver.AlarmReceiverID, AlarmManager.INTERVAL_DAY);
                     }, oldTimes[0], oldTimes[1], true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();

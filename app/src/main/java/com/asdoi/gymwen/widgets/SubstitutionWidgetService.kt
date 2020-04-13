@@ -126,10 +126,14 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
             return
         }
 
-        contentList.add(EntryHelper(title = today, code = day))
-        contentList.addAll(todayEntryList)
-        contentList.add(EntryHelper(title = tomorrow, code = day))
-        contentList.addAll(tomorrowEntryList)
+        if (showToday) {
+            contentList.add(EntryHelper(title = today, code = day))
+            contentList.addAll(todayEntryList)
+        }
+        if (showTomorrow) {
+            contentList.add(EntryHelper(title = tomorrow, code = day))
+            contentList.addAll(tomorrowEntryList)
+        }
 
     }
 

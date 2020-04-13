@@ -53,6 +53,10 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("timetableNotif", true);
     }
 
+    public static void setTimeTableNotification(Context context, boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("timetableNotif", value).apply();
+    }
+
     public static void setTimeTableAlarmTime(@NonNull int... times) {
         if (times.length != 3) {
             if (times.length > 0 && times[0] == 0) {
@@ -66,16 +70,16 @@ public class PreferenceUtil {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         SharedPreferences.Editor editor = sharedPref.edit();
         setTimeTableAlarm(ApplicationFeatures.getContext(), true);
-        editor.putInt("Alarm_hour", times[0]);
-        editor.putInt("Alarm_minute", times[1]);
-        editor.putInt("Alarm_second", times[2]);
+        editor.putInt("timetable_Alarm_hour", times[0]);
+        editor.putInt("timetable_Alarm_minute", times[1]);
+        editor.putInt("timetable_Alarm_second", times[2]);
         editor.commit();
     }
 
     @NonNull
     public static int[] getTimeTableAlarmTime() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
-        return new int[]{sharedPref.getInt("Alarm_hour", 7), sharedPref.getInt("Alarm_minute", 55), sharedPref.getInt("Alarm_second", 0)};
+        return new int[]{sharedPref.getInt("timetable_Alarm_hour", 7), sharedPref.getInt("timetable_Alarm_minute", 55), sharedPref.getInt("timetable_Alarm_second", 0)};
     }
 
     private static void setTimeTableAlarm(@NonNull Context context, boolean value) {

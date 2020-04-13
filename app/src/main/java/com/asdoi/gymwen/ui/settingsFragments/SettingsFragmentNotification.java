@@ -18,6 +18,7 @@
 
 package com.asdoi.gymwen.ui.settingsFragments;
 
+import android.app.AlarmManager;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 
@@ -55,7 +56,7 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                     (view, hourOfDay, minute) -> {
                         PreferenceUtil.setAlarmTime(hourOfDay, minute, 0);
-                        ApplicationFeatures.setAlarm(getContext(), AlarmReceiver.class, hourOfDay, minute, 0, AlarmReceiver.AlarmReceiverID);
+                        ApplicationFeatures.setRepeatingAlarm(getContext(), AlarmReceiver.class, hourOfDay, minute, 0, AlarmReceiver.AlarmReceiverID, AlarmManager.INTERVAL_DAY);
                     }, times[0], times[1], true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
