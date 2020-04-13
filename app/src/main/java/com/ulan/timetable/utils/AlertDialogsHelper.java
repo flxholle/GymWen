@@ -68,9 +68,8 @@ public class AlertDialogsHelper {
         select_color.setBackgroundColor(week.getColor() != 0 ? week.getColor() : Color.WHITE);
 
         from_time.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            int mHour = c.get(Calendar.HOUR_OF_DAY);
-            int mMinute = c.get(Calendar.MINUTE);
+            int mHour = Integer.parseInt(week.getFromTime().substring(0, week.getFromTime().indexOf(":")));
+            int mMinute = Integer.parseInt(week.getFromTime().substring(week.getFromTime().indexOf(":") + 1));
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute) -> {
                         from_time.setText(String.format("%02d:%02d", hourOfDay, minute));
@@ -81,14 +80,13 @@ public class AlertDialogsHelper {
         });
 
         to_time.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
+            int mHour = Integer.parseInt(week.getToTime().substring(0, week.getToTime().indexOf(":")));
+            int mMinute = Integer.parseInt(week.getToTime().substring(week.getToTime().indexOf(":") + 1));
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute1) -> {
                         to_time.setText(String.format("%02d:%02d", hourOfDay, minute1));
                         week.setToTime(String.format("%02d:%02d", hourOfDay, minute1));
-                    }, hour, minute, true);
+                    }, mHour, mMinute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
         });
@@ -227,7 +225,7 @@ public class AlertDialogsHelper {
         });
 
         DbHelper dbHelper = new DbHelper(activity);
-        ArrayList<Week> alreadyInsertedWeeks = DBUtil.getAllWeeks(dbHelper);
+        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
 
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
@@ -466,7 +464,7 @@ public class AlertDialogsHelper {
         });
 
         DbHelper dbHelper = new DbHelper(activity);
-        ArrayList<Week> alreadyInsertedWeeks = DBUtil.getAllWeeks(dbHelper);
+        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
 
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
@@ -727,9 +725,8 @@ public class AlertDialogsHelper {
         });
 
         time.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            int mHour = c.get(Calendar.HOUR_OF_DAY);
-            int mMinute = c.get(Calendar.MINUTE);
+            int mHour = Integer.parseInt(exam.getTime().substring(0, exam.getTime().indexOf(":")));
+            int mMinute = Integer.parseInt(exam.getTime().substring(exam.getTime().indexOf(":") + 1));
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute) -> {
                         time.setText(String.format("%02d:%02d", hourOfDay, minute));
@@ -878,7 +875,7 @@ public class AlertDialogsHelper {
         });
 
         DbHelper dbHelper = new DbHelper(activity);
-        ArrayList<Week> alreadyInsertedWeeks = DBUtil.getAllWeeks(dbHelper);
+        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
 
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {

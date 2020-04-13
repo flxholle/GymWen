@@ -76,7 +76,7 @@ public class NotificationUtil {
                 substitutionlist = new SubstitutionList(true);
 
             DbHelper db = new DbHelper(context);
-            ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))), substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior());
+            ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))), substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
 
             String lessons = getLessons(weeks, context);
             if (lessons == null)
@@ -109,7 +109,7 @@ public class NotificationUtil {
                 substitutionlist = new SubstitutionList(true);
 
             DbHelper db = new DbHelper(context);
-            ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))), substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior());
+            ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))), substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
             Week nextWeek = WeekUtils.getNextWeek(weeks);
             if (nextWeek == null)
                 return;

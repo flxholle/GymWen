@@ -480,7 +480,7 @@
     <string name="note">Note</string>
     <string name="exams_activity_title">Exams</string>
     <string name="timetable_notification_summary_title">Today\'s lessons:</string>
-    <string name="timetable_notification_next_week_title">Next lesson:</string>
+    <string name="timetable_notification_next_week_title">Next lesson</string>
     <string name="timetable_credit">Credits go to ulan17</string>
     <string name="time_from">from</string>
     <string name="integrate_substitution_in_timetable" tools:ignore="Typos">Show sit-in in timetable</string>

@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.substitutionplan.SubstitutionEntry;
 import com.asdoi.gymwen.substitutionplan.SubstitutionList;
+import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.model.Week;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import java.util.Collections;
 
 public class WeekUtils {
     @NonNull
-    public static ArrayList<Week> compareSubstitutionAndWeeks(Context context, @NonNull ArrayList<Week> weeks, SubstitutionList entries, boolean senior) {
+    public static ArrayList<Week> compareSubstitutionAndWeeks(Context context, @NonNull ArrayList<Week> weeks, SubstitutionList entries, boolean senior, DbHelper dbHelper) {
         boolean empty = weeks.isEmpty();
         if (!entries.getNoInternet()) {
             for (int i = 0; i < entries.getEntries().size(); i++) {
@@ -51,10 +52,13 @@ public class WeekUtils {
                 if (end.length() < 5)
                     end = "0" + end;
 
+                for (Week w : getAllWeeks(dbHelper)) {
+                    if (w.getSubject().equalsIgnoreCase(subject))
+                        color = w.getColor();
+                }
+
                 Week weekEntry = new Week(subject, teacher, room, begin, end, color, false);
                 weekEntry.setMoreInfos(entry.getMoreInformation());
-//                if (!entry.getMoreInformation().trim().isEmpty())
-//                    subject = subject + " (" + entry.getMoreInformation() + ")";
 
                 if (empty) {
                     weeks.add(weekEntry);
@@ -73,8 +77,7 @@ public class WeekUtils {
                             if (endIsAfterFrom) {
                                 if (endIsAfterTo) {
                                     //Check next, remove
-                                    checkNext(weeks, begin, end, weekEntry, j);
-                                    weeks.remove(j);
+                                    checkNextAndRemove(weeks, begin, end, weekEntry, j);
                                 } else {
                                     if (endIsTo) {
                                         //replace
@@ -93,7 +96,7 @@ public class WeekUtils {
                             if (beginIsFrom) {
                                 if (endIsAfterTo) {
                                     //Check next, remove
-                                    checkNext(weeks, begin, end, weekEntry, j);
+                                    checkNextAndRemove(weeks, begin, end, weekEntry, j);
                                 } else {
                                     if (endIsTo) {
                                         //replace
@@ -108,7 +111,7 @@ public class WeekUtils {
                                 if (beginIsBeforeTo) {
                                     if (endIsAfterTo) {
                                         //check next, split
-                                        checkNext(weeks, begin, end, weekEntry, j);
+                                        checkNextAndRemove(weeks, begin, end, weekEntry, j);
 
                                         week.setToTime(begin);
 //                                        week.setEditable(false);
@@ -160,7 +163,7 @@ public class WeekUtils {
         }
     }
 
-    private static void checkNext(@NonNull ArrayList<Week> weeks, String begin, @NonNull String end, Week weekEntry, int j) {
+    private static void checkNextAndRemove(@NonNull ArrayList<Week> weeks, String begin, @NonNull String end, Week weekEntry, int j) {
         for (int j2 = j; j2 < weeks.size(); j2++) {
             Week week = weeks.get(j2);
             boolean endIsAfterFrom = end.compareToIgnoreCase(week.getFromTime()) > 0;
@@ -177,6 +180,10 @@ public class WeekUtils {
                 } else {
                     //check next, remove
                     weeks.remove(j2);
+                    if (j2 >= weeks.size() - 1) {
+                        weeks.add(weekEntry);
+                        break;
+                    }
                     continue;
                 }
             } else {
@@ -211,5 +218,48 @@ public class WeekUtils {
     public static ArrayList<Week> sortWeekList(@NonNull ArrayList<Week> weeks) {
         Collections.sort(weeks, (o1, o2) -> o1.getFromTime().compareToIgnoreCase(o2.getFromTime()));
         return weeks;
+    }
+
+    public static ArrayList<Week> getAllWeeks(DbHelper dbHelper) {
+        return getWeeks(dbHelper, new String[]{WeekdayFragment.KEY_MONDAY_FRAGMENT,
+                WeekdayFragment.KEY_TUESDAY_FRAGMENT,
+                WeekdayFragment.KEY_WEDNESDAY_FRAGMENT,
+                WeekdayFragment.KEY_THURSDAY_FRAGMENT,
+                WeekdayFragment.KEY_FRIDAY_FRAGMENT,
+                WeekdayFragment.KEY_SATURDAY_FRAGMENT,
+                WeekdayFragment.KEY_SUNDAY_FRAGMENT});
+    }
+
+    public static ArrayList<Week> getWeeks(DbHelper dbHelper, String[] keys) {
+        ArrayList<Week> weeks = new ArrayList<>();
+        for (String key : keys) {
+            weeks.addAll(dbHelper.getWeek(key));
+        }
+        return weeks;
+    }
+
+    public static String getNextOccurenceOfSubject(DbHelper dbHelper, String subject) {
+/*        ArrayList<Week> weeks = new ArrayList<Week>();
+
+        Calendar calendar = Calendar.getInstance();
+        switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+            case Calendar.MONDAY:
+                break;
+            case Calendar.TUESDAY:
+                break;
+            case Calendar.WEDNESDAY:
+                break;
+            case Calendar.THURSDAY:
+                break;
+            case Calendar.FRIDAY:
+                break;
+            case Calendar.SATURDAY:
+                break;
+            case Calendar.SUNDAY:
+                break;
+        }
+
+        String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth)*/
+        return ""; //TODO
     }
 }

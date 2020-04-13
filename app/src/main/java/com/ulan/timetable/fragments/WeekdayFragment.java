@@ -101,7 +101,7 @@ public class WeekdayFragment extends Fragment {
         listView = view.findViewById(R.id.timetable_daylist);
         ArrayList<Week> weeks = db.getWeek(key);
         if (PreferenceUtil.isTimeTableSubstitution() && !entries.getNoInternet()) {
-            weeks = WeekUtils.compareSubstitutionAndWeeks(getContext(), weeks, entries, senior);
+            weeks = WeekUtils.compareSubstitutionAndWeeks(getContext(), weeks, entries, senior, db);
         }
         adapter = new WeekAdapter((ActivityFeatures) getActivity(), listView, 0, weeks);
         listView.setAdapter(adapter);

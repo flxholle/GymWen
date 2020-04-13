@@ -63,7 +63,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 }
             }
             profilePos = DBUtil.getProfilePosition(this);
-            substitutionPlan = DBUtil.getSubstitutionplanFromGSON(this);
+            substitutionPlan = DBUtil.getSubstitutionPlanFromActivity(this);
         } catch (
                 Exception e) {
             e.printStackTrace();

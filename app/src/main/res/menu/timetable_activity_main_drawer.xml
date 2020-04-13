@@ -29,6 +29,10 @@
             android:id="@+id/settings"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/action_settings" />
+        <item
+            android:id="@+id/main_app"
+            android:icon="@mipmap/gymlogo"
+            android:title="@string/action_settings" />
     </group>
 
 </menu>

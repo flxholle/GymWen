@@ -25,14 +25,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
-import com.google.gson.Gson;
 import com.ulan.timetable.TimeTableBuilder;
-import com.ulan.timetable.fragments.WeekdayFragment;
-import com.ulan.timetable.model.Week;
 
 import org.jsoup.Jsoup;
-
-import java.util.ArrayList;
 
 public class DBUtil {
     public static final String database_prefix = "db_profile_";
@@ -81,7 +76,7 @@ public class DBUtil {
     }
 
     @Nullable
-    public static SubstitutionPlan getSubstitutionplanFromGSON(@NonNull AppCompatActivity activity) {
+    public static SubstitutionPlan getSubstitutionPlanFromActivity(@NonNull AppCompatActivity activity) {
         try {
             String todayDoc = activity.getIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TODAY, null);
             if (todayDoc == null)
@@ -113,51 +108,4 @@ public class DBUtil {
         return null;
     }
 
-    private static SubstitutionPlan getSubstitutionplanFromGSON(String gsonString) {
-        Gson gson = new Gson();
-        return gson.fromJson(gsonString, SubstitutionPlan.class);
-    }
-
-    public static ArrayList<Week> getAllWeeks(DbHelper dbHelper) {
-        return getWeeks(dbHelper, new String[]{WeekdayFragment.KEY_MONDAY_FRAGMENT,
-                WeekdayFragment.KEY_TUESDAY_FRAGMENT,
-                WeekdayFragment.KEY_WEDNESDAY_FRAGMENT,
-                WeekdayFragment.KEY_THURSDAY_FRAGMENT,
-                WeekdayFragment.KEY_FRIDAY_FRAGMENT,
-                WeekdayFragment.KEY_SATURDAY_FRAGMENT,
-                WeekdayFragment.KEY_SUNDAY_FRAGMENT});
-    }
-
-    public static ArrayList<Week> getWeeks(DbHelper dbHelper, String[] keys) {
-        ArrayList<Week> weeks = new ArrayList<>();
-        for (String key : keys) {
-            weeks.addAll(dbHelper.getWeek(key));
-        }
-        return weeks;
-    }
-
-    public static String getNextOccurenceOfSubject(DbHelper dbHelper, String subject) {
-/*        ArrayList<Week> weeks = new ArrayList<Week>();
-
-        Calendar calendar = Calendar.getInstance();
-        switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-            case Calendar.MONDAY:
-                break;
-            case Calendar.TUESDAY:
-                break;
-            case Calendar.WEDNESDAY:
-                break;
-            case Calendar.THURSDAY:
-                break;
-            case Calendar.FRIDAY:
-                break;
-            case Calendar.SATURDAY:
-                break;
-            case Calendar.SUNDAY:
-                break;
-        }
-
-        String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth)*/
-        return ""; //TODO
-    }
 }

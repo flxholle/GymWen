@@ -96,7 +96,7 @@ fun setDoNotDisturbReceivers(context: Context) {
                 } else
                     SubstitutionList(true)
 
-        val weeks = WeekUtils.compareSubstitutionAndWeeks(context, dbHelper.getWeek(currentDay), substitutionList, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior)
+        val weeks = WeekUtils.compareSubstitutionAndWeeks(context, dbHelper.getWeek(currentDay), substitutionList, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior, dbHelper)
 
         var lastCalendar = Calendar.getInstance()
         lastCalendar.set(Calendar.HOUR_OF_DAY, 23)
