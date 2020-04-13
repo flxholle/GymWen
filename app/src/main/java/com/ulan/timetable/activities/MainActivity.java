@@ -294,6 +294,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         } else if (itemId == R.id.settings) {
             Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settings);
+        } else if (itemId == R.id.menu_main_app) {
+            Intent settings = new Intent(MainActivity.this, com.asdoi.gymwen.ui.activities.MainActivity.class);
+            startActivity(settings);
+            finish();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -45,11 +45,13 @@ import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.activities.SubstitutionTimeTableActivity;
+import com.asdoi.gymwen.util.External_Const;
 import com.github.stephenvinouze.shapetextdrawable.ShapeForm;
 import com.github.stephenvinouze.shapetextdrawable.ShapeTextDrawable;
 import com.ulan.timetable.model.Week;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -122,17 +124,25 @@ public class NotificationUtil {
                     .append(" ")
                     .append(nextWeek.getFromTime())
                     .append(" - ")
-                    .append(nextWeek.getToTime())
-                    .append(" ")
-                    .append(context.getString(R.string.share_msg_in_room))
-                    .append(" ")
-                    .append(nextWeek.getRoom());
+                    .append(nextWeek.getToTime());
+
+            if (!Arrays.asList(External_Const.nothing).contains(nextWeek.getTeacher())) {
+                lesson.append(" ")
+                        .append(context.getString(R.string.share_msg_in_room))
+                        .append(" ")
+                        .append(nextWeek.getRoom());
+            }
+
             StringBuilder name = new StringBuilder()
                     .append(nextWeek.getSubject())
-                    .append(" ")
-                    .append(context.getString(R.string.with_teacher))
-                    .append(" ")
-                    .append(nextWeek.getTeacher());
+                    .append(" ");
+            if (Arrays.asList(External_Const.nothing).contains(nextWeek.getTeacher())) {
+                name.append(nextWeek.getTeacher());
+            } else {
+                name.append(context.getString(R.string.with_teacher))
+                        .append(" ")
+                        .append(nextWeek.getTeacher());
+            }
 
 
             NotificationCompat.MessagingStyle style = new NotificationCompat.MessagingStyle(new Person.Builder().setName("me").build());
@@ -224,15 +234,19 @@ public class NotificationUtil {
                         .append(week.getFromTime())
                         .append(" - ")
                         .append(week.getToTime())
-                        .append(" ")
-                        .append(context.getString(R.string.with_teacher))
-                        .append(" ")
-                        .append(week.getTeacher())
-                        .append(" ")
-                        .append(context.getString(R.string.share_msg_in_room))
-                        .append(" ")
-                        .append(week.getRoom())
-                        .append("\n");
+                        .append(" ");
+                if (Arrays.asList(External_Const.nothing).contains(week.getTeacher())) {
+                    lessons.append(week.getTeacher());
+                } else {
+                    lessons.append(context.getString(R.string.with_teacher))
+                            .append(" ")
+                            .append(week.getTeacher())
+                            .append(" ")
+                            .append(context.getString(R.string.share_msg_in_room))
+                            .append(" ")
+                            .append(week.getRoom());
+                }
+                lessons.append("\n");
             }
         }
 

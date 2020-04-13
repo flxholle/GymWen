@@ -494,5 +494,6 @@
     <string name="do_not_disturb_setting">Automatic Do not disturb</string>
     <string name="do_not_disturb_settings_desc">Automatically switch to do not disturb mode during subjects and then switch it off again</string>
     <string name="do_not_disturb_turn_off">Also turning off</string>
+    <string name="action_open_main_app">Main app</string>
 
 </resources>

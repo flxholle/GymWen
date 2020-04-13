@@ -584,11 +584,11 @@
 
     <string name="timetable_channel">Stundenplan</string>
     <string name="timetable_channel_desc">Eine Benachrichtigung mit deinen Fächern</string>
-    <string name="do_not_disturb_permission_desc">Um automatisch in den Nicht-Stören-Modus zu wechseln, benötigt die App die entsprechende Berechtigung</string>
+    <string name="do_not_disturb_permission_desc">Um automatisch in den Nicht-Stören-Modus zu wechseln, benötigt die App die entsprechende Berechtigung. Dies kann auch später noch in den Einstellungen geändert werden.</string>
     <string name="do_not_disturb_setting">Automatisches Stummschalten</string>
     <string name="do_not_disturb_settings_desc">Automatisch während Fächern in den Nicht-Stören-Modus wechseln und ihn danach wieder ausschalten</string>
     <string name="do_not_disturb_turn_off">Auch wieder auf laut stellen</string>
 
-    <string name="room_allowed_digits" translatable="false">0123456789eE</string>
+    <string name="action_open_main_app">Hauptapp</string>
 
 </resources>

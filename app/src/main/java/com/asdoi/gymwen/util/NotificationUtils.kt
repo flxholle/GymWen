@@ -410,7 +410,7 @@ class NotificationUtils {
                 return if (entry.isNothing()) {
                     listOf("${entry.hour}. ${context.getString(R.string.share_msg_nothing_hour)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
                 } else {
-                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} " else ""} ${context.getString(R.string.with_teacher)} ${entry.teacher} ${context.getString(R.string.share_msg_in_room)} ${entry.room}", "${entry.hour}. ${context.getString(R.string.share_msg_hour)}${if (!entry.moreInformation.isBlank()) ", ${entry.moreInformation} " else " "} ${if (senior) "(${entry.course})"; else ""}")
+                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} " else ""}${context.getString(R.string.with_teacher)} ${entry.teacher} ${context.getString(R.string.share_msg_in_room)} ${entry.room}", "${entry.hour}. ${context.getString(R.string.share_msg_hour)}${if (!entry.moreInformation.isBlank()) ", ${entry.moreInformation} " else " "} ${if (senior) "(${entry.course})"; else ""}")
                 }
 
             }
