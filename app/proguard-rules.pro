@@ -25,4 +25,4 @@
 }
 
 -keep class .R
--dontwarn org.apache.poi.**
+-keep public class org.apache.poi.** {*;}

@@ -3,10 +3,13 @@ package com.ulan.timetable.fragments;
 import android.app.AlarmManager;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -21,6 +24,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.timetable_settings, rootKey);
+
+        tintIcons(getPreferenceScreen(), ApplicationFeatures.getTextColorPrimary(getContext()));
 
         Preference allPrefs = findPreference("allprefs");
         allPrefs.setOnPreferenceClickListener((Preference p) -> {
@@ -80,5 +85,19 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private void setTurnOff() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("automatic_do_not_disturb", true);
         findPreference("do_not_disturb_turn_off").setVisible(showNotif);
+    }
+
+    private static void tintIcons(Preference preference, int color) {
+        if (preference instanceof PreferenceGroup) {
+            PreferenceGroup group = ((PreferenceGroup) preference);
+            for (int i = 0; i < group.getPreferenceCount(); i++) {
+                tintIcons(group.getPreference(i), color);
+            }
+        } else {
+            Drawable icon = preference.getIcon();
+            if (icon != null) {
+                DrawableCompat.setTint(icon, color);
+            }
+        }
     }
 }
