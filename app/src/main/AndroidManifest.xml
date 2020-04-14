@@ -28,44 +28,6 @@
         android:requestLegacyExternalStorage="true"
         tools:ignore="UnusedAttribute">
         <activity
-            android:name=".ui.activities.TeacherListActivity"
-            android:label="@string/menu_teacher_list" />
-        <activity
-            android:name=".ui.activities.SubstitutionTimeTableActivity"
-            android:label="@string/timetable_activity_title"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.activities.SubstitutionWidgetActivity">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.activities.SummaryWidgetActivity">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.activities.AppIntroActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activities.RoomPlanActivity"
-            android:label="@string/room_plan"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activities.AboutActivity"
-            android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activities.ProfileActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ui.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
@@ -78,13 +40,7 @@
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
-
         </activity>
-        <activity
-            android:name=".ui.activities.SignInActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/title_activity_sign_in"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.WebsiteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -101,6 +57,40 @@
                 <data android:host="www.gym-wen.de" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activities.SubstitutionTimeTableActivity"
+            android:label="@string/timetable_activity_title"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.TeacherListActivity"
+            android:label="@string/menu_teacher_list" />
+        <activity
+            android:name=".ui.activities.AppIntroActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activities.RoomPlanActivity"
+            android:label="@string/room_plan"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activities.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activities.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.activities.SignInActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_sign_in"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.ChoiceActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -125,6 +115,16 @@
                     </intent-filter>
                 </activity>
         -->
+        <activity android:name=".ui.activities.SubstitutionWidgetActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activities.SummaryWidgetActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
         <receiver android:name=".widgets.SubstitutionWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

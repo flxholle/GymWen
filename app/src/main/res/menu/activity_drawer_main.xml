@@ -22,38 +22,38 @@
 
     <!--    <item android:title="@string/menu_category_substitution">-->
     <!--        <menu>-->
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/nav_at_one_glance"
-                    android:icon="@drawable/ic_today_tomorrow_black_24dp"
-                    android:title="@string/menu_at_one_glance" />
-                <item
-                    android:id="@+id/nav_today_both"
-                    android:icon="@drawable/ic_today_black_24dp"
-                    android:title="@string/today" />
-                <item
-                    android:id="@+id/nav_tomorrow_both"
-                    android:icon="@drawable/ic_tomorrow_black_24dp"
-                    android:title="@string/tomorrow" />
-                <item
-                    android:id="@+id/nav_days"
-                    android:icon="@drawable/ic_today_tomorrow_black_24dp"
-                    android:title="@string/menu_days"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/nav_filtered_days"
-                    android:icon="@drawable/ic_today_tomorrow_black_24dp"
-                    android:title="@string/menu_filtered" />
-                <item
-                    android:id="@+id/nav_unfiltered_days"
-                    android:icon="@drawable/ic_today_tomorrow_black_24dp"
-                    android:title="@string/menu_unfiltered" />
-                <item
-                    android:id="@+id/nav_timetable"
-                    android:checkable="false"
-                    android:icon="@drawable/ic_timetable"
-                    android:title="@string/menu_timetable" />
-            </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_at_one_glance"
+            android:icon="@drawable/ic_today_tomorrow_black_24dp"
+            android:title="@string/menu_at_one_glance" />
+        <item
+            android:id="@+id/nav_today_both"
+            android:icon="@drawable/ic_today_black_24dp"
+            android:title="@string/today" />
+        <item
+            android:id="@+id/nav_tomorrow_both"
+            android:icon="@drawable/ic_tomorrow_black_24dp"
+            android:title="@string/tomorrow" />
+        <item
+            android:id="@+id/nav_days"
+            android:icon="@drawable/ic_today_tomorrow_black_24dp"
+            android:title="@string/menu_days"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_filtered_days"
+            android:icon="@drawable/ic_today_tomorrow_black_24dp"
+            android:title="@string/menu_filtered" />
+        <item
+            android:id="@+id/nav_unfiltered_days"
+            android:icon="@drawable/ic_today_tomorrow_black_24dp"
+            android:title="@string/menu_unfiltered" />
+        <item
+            android:id="@+id/nav_timetable"
+            android:checkable="false"
+            android:icon="@drawable/ic_timetable"
+            android:title="@string/menu_timetable" />
+    </group>
     <!--        </menu>-->
     <!--    </item>-->
 
@@ -152,9 +152,7 @@
 
     <!--    <item android:title="@string/menu_category_settings">-->
     <!--        <menu>-->
-    <group
-        android:checkableBehavior="none"
-        android:title="@string/menu_category_settings">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_imprint"
             android:icon="@drawable/ic_help_outline_black_24dp"

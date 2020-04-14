@@ -59,6 +59,7 @@
     <string name="menu_news">Schülerzeitung</string>
     <string name="menu_navigation">Navigation</string>
     <string name="menu_backup">Backup</string>
+    <string name="menu_import_backup">Importieren (Beta)</string>
     <string name="menu_podcast" translatable="false">Wendelsteiner Welle</string>
     <string name="room_plan">Raumplan</string>
 
@@ -590,5 +591,10 @@
     <string name="do_not_disturb_turn_off">Auch wieder auf laut stellen</string>
 
     <string name="action_open_main_app">Hauptapp</string>
+    <string name="backup_successful">Backup in Downloads gespeichert</string>
+    <string name="backup_failed">Backup fehlgeschlagen</string>
+    <string name="import_successful">Import erfolgreich</string>
+    <string name="import_failed">Import fehlgeschlagen</string>
+    <string name="no_backup_found_in_downloads">Kein Backup in Downloads gefunden</string>
 
 </resources>

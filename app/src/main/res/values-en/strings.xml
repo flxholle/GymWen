@@ -495,5 +495,11 @@
     <string name="do_not_disturb_settings_desc">Automatically switch to do not disturb mode during subjects and then switch it off again</string>
     <string name="do_not_disturb_turn_off">Also turning off</string>
     <string name="action_open_main_app">Main app</string>
+    <string name="backup_successful">Backup has been saved to Downloads</string>
+    <string name="backup_failed">Backup failed</string>
+    <string name="import_successful">Import succeeded</string>
+    <string name="import_failed">Import failed</string>
+    <string name="menu_import_backup">Import (Beta)</string>
+    <string name="no_backup_found_in_downloads">No Backup found in Downlaods</string>
 
 </resources>

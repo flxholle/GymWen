@@ -25,3 +25,4 @@
 }
 
 -keep class .R
+-dontwarn org.apache.poi.**

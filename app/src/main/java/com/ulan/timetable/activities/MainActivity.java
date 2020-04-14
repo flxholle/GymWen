@@ -1,5 +1,6 @@
 package com.ulan.timetable.activities;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -7,9 +8,13 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,15 +26,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.ajts.androidmads.library.ExcelToSQLite;
+import com.ajts.androidmads.library.SQLiteToExcel;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
+import com.asdoi.gymwen.ui.activities.ProfileActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
+import com.pd.chocobar.ChocoBar;
 import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.adapters.FragmentsTabAdapter;
 import com.ulan.timetable.fragments.WeekdayFragment;
@@ -39,7 +49,9 @@ import com.ulan.timetable.utils.DailyReceiver;
 import com.ulan.timetable.utils.NotificationUtil;
 import com.ulan.timetable.utils.PreferenceUtil;
 
+import java.io.File;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
@@ -64,8 +76,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             }
             profilePos = DBUtil.getProfilePosition(this);
             substitutionPlan = DBUtil.getSubstitutionPlanFromActivity(this);
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -78,10 +89,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         NotificationUtil.sendNotificationCurrentLesson(getContext(), false);
         PreferenceUtil.setDoNotDisturb(this, PreferenceUtil.doNotDisturbDontAskAgain());
         initAll();
+        initSpinner();
     }
 
     @Override
     public void setupColors() {
+        findViewById(R.id.main_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         TabLayout tabs = findViewById(R.id.tabLayout);
         tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
@@ -93,6 +106,52 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         findViewById(R.id.toolbar).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
         appBarLayout.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+    }
+
+    private boolean dontfire = true;
+
+    private void initSpinner() {
+        //Set Profiles
+        Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
+
+        if (ProfileManagement.isMoreThanOneProfile()) {
+            parentSpinner.setVisibility(View.VISIBLE);
+            parentSpinner.setEnabled(true);
+            List<String> list = ProfileManagement.getProfileListNames();
+            list.add(getString(R.string.profiles_edit));
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            parentSpinner.setAdapter(dataAdapter);
+            dontfire = true;
+            parentSpinner.setSelection(profilePos);
+            parentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(@NonNull AdapterView<?> parent, View view, int position, long id) {
+                    if (dontfire) {
+                        dontfire = false;
+                        return;
+                    }
+
+                    String item = parent.getItemAtPosition(position).toString();
+                    if (item.equals(getContext().getString(R.string.profiles_edit))) {
+                        Intent intent = new Intent(getContext(), ProfileActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        new TimeTableBuilder(position, substitutionPlan).start(getContext());
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        } else {
+            parentSpinner.setVisibility(View.GONE);
+            parentSpinner.setEnabled(false);
+        }
     }
 
     private void initAll() {
@@ -315,9 +374,93 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             Intent settings = new Intent(MainActivity.this, com.asdoi.gymwen.ui.activities.MainActivity.class);
             startActivity(settings);
             finish();
+        } else if (itemId == R.id.timetable_backup) {
+            backup();
+        } else if (itemId == R.id.timetable_import) {
+            importBackup();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private static final String filename = "Timetable_Backup.xls";
+
+    @SuppressWarnings("deprecation")
+    public void backup() {
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+//        SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyyMMdd");
+//        Date myDate = new Date();
+//        String filename = timeStampFormat.format(myDate);
+
+        Activity activity = this;
+
+        SQLiteToExcel sqliteToExcel = new SQLiteToExcel(this, DBUtil.getDBName(this), path);
+        sqliteToExcel.exportAllTables(filename, new SQLiteToExcel.ExportListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onCompleted(String filePath) {
+                runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
+                        .setText(getString(R.string.backup_successful))
+                        .setDuration(ChocoBar.LENGTH_LONG)
+                        .green()
+                        .show());
+            }
+
+            @Override
+            public void onError(Exception e) {
+                runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
+                        .setText(getString(R.string.backup_failed))
+                        .setDuration(ChocoBar.LENGTH_LONG)
+                        .red()
+                        .show());
+            }
+        });
+    }
+
+    @SuppressWarnings("deprecation")
+    public void importBackup() {
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + File.separator + filename;
+        File file = new File(path);
+        if (!file.exists()) {
+            ChocoBar.builder().setActivity(this)
+                    .setText(getString(R.string.no_backup_found_in_downloads))
+                    .setDuration(ChocoBar.LENGTH_LONG)
+                    .red()
+                    .show();
+            return;
+        }
+
+        Activity activity = this;
+
+        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), false);
+        excelToSQLite.importFromFile(path, new ExcelToSQLite.ImportListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onCompleted(String filePath) {
+                runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
+                        .setText(getString(R.string.import_successful))
+                        .setDuration(ChocoBar.LENGTH_LONG)
+                        .green()
+                        .show());
+            }
+
+            @Override
+            public void onError(Exception e) {
+                runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
+                        .setText(getString(R.string.import_failed))
+                        .setDuration(ChocoBar.LENGTH_LONG)
+                        .red()
+                        .show());
+            }
+        });
     }
 }
