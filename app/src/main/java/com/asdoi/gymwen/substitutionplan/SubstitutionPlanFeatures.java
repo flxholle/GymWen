@@ -153,11 +153,11 @@ public abstract class SubstitutionPlanFeatures {
         substitutionPlan.setDocs(today, tomorrow);
     }
 
-    private static Document getTodayDoc() {
+    public static Document getTodayDoc() {
         return substitutionPlan.getTodayDoc();
     }
 
-    private static Document getTomorrowDoc() {
+    public static Document getTomorrowDoc() {
         return substitutionPlan.getTomorrowDoc();
     }
 

@@ -93,7 +93,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("do_not_disturb_dont_ask", false);
     }
 
-    private static void setDoNotDisturbDontAskAgain(@NonNull Context context, boolean value) {
+    public static void setDoNotDisturbDontAskAgain(@NonNull Context context, boolean value) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("do_not_disturb_dont_ask", value).apply();
     }
 

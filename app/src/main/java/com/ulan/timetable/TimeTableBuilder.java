@@ -31,13 +31,13 @@ public class TimeTableBuilder {
     }
 
     @NonNull
-    private TimeTableBuilder setProfilePos(int value) {
+    public TimeTableBuilder setProfilePos(int value) {
         profilePos = value;
         return this;
     }
 
     @NonNull
-    private TimeTableBuilder setSubstitutionplan(SubstitutionPlan value) {
+    public TimeTableBuilder setSubstitutionplan(SubstitutionPlan value) {
         substitutionPlan = value;
         return this;
     }

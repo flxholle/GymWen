@@ -27,7 +27,7 @@ import androidx.preference.SwitchPreference;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 
-class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
+public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_hide_menu_items, rootKey);

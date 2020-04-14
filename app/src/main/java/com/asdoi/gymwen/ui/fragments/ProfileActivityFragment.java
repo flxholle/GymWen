@@ -45,7 +45,7 @@ import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 
 import org.jetbrains.annotations.NotNull;
 
-class ProfileActivityFragment extends Fragment {
+public class ProfileActivityFragment extends Fragment {
     private ProfileListAdapter adapter;
     private int preferredProfilePos = ProfileManagement.getPreferredProfilePosition();
 

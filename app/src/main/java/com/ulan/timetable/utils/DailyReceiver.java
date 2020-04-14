@@ -14,7 +14,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
  */
 public class DailyReceiver extends BroadcastReceiver {
 
-    private static final int DailyReceiverID = 10000;
+    public static final int DailyReceiverID = 10000;
 
     private Context context;
 

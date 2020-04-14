@@ -51,9 +51,9 @@ import java.util.List;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     @NonNull
-    private static final String LOADURL = "url";
+    public static final String LOADURL = "url";
     @NonNull
-    private static final String SEARCH = "search";
+    public static final String SEARCH = "search";
 
     private boolean search = false;
 

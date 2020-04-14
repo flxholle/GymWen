@@ -28,7 +28,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 
-class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
+public class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_substitutionplan, rootKey);

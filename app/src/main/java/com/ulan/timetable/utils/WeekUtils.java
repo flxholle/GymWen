@@ -217,7 +217,7 @@ public class WeekUtils {
     }
 
     @NonNull
-    private static ArrayList<Week> sortWeekList(@NonNull ArrayList<Week> weeks) {
+    public static ArrayList<Week> sortWeekList(@NonNull ArrayList<Week> weeks) {
         Collections.sort(weeks, (o1, o2) -> o1.getFromTime().compareToIgnoreCase(o2.getFromTime()));
         return weeks;
     }
@@ -234,7 +234,7 @@ public class WeekUtils {
     }
 
     @NonNull
-    private static ArrayList<Week> getWeeks(@NonNull DbHelper dbHelper, @NonNull String[] keys) {
+    public static ArrayList<Week> getWeeks(@NonNull DbHelper dbHelper, @NonNull String[] keys) {
         ArrayList<Week> weeks = new ArrayList<>();
         for (String key : keys) {
             weeks.addAll(dbHelper.getWeek(key));

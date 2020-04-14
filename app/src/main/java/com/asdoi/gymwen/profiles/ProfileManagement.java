@@ -78,7 +78,7 @@ public abstract class ProfileManagement {
         preferredProfile = sharedPref.getInt("preferred_position", 0);
     }
 
-    private static boolean isUninit() {
+    public static boolean isUninit() {
         return getProfileListNames() == null;
     }
 

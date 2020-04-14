@@ -33,7 +33,7 @@ import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 
-class SettingsFragmentNotification extends PreferenceFragmentCompat {
+public class SettingsFragmentNotification extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_notification, rootKey);

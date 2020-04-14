@@ -11,7 +11,6 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.ulan.timetable.utils.DailyReceiver;
 import com.ulan.timetable.utils.PreferenceUtil;
@@ -44,7 +43,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                     (view, hourOfDay, minute) -> {
                         PreferenceUtil.setTimeTableAlarmTime(hourOfDay, minute, 0);
-                        ApplicationFeatures.setRepeatingAlarm(getContext(), DailyReceiver.class, hourOfDay, minute, 0, AlarmReceiver.AlarmReceiverID, AlarmManager.INTERVAL_DAY);
+                        ApplicationFeatures.setRepeatingAlarm(getContext(), DailyReceiver.class, hourOfDay, minute, 0, DailyReceiver.DailyReceiverID, AlarmManager.INTERVAL_DAY);
                     }, oldTimes[0], oldTimes[1], true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
