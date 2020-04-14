@@ -3,6 +3,7 @@ package com.ulan.timetable.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 
@@ -66,7 +67,7 @@ public class SettingsActivity extends ActivityFeatures {
             return;
         }
 
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        String path = Environment.getExternalStoragePublicDirectory(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS).toString();
 //        SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyyMMdd");
 //        Date myDate = new Date();
 //        String filename = timeStampFormat.format(myDate);
@@ -83,7 +84,7 @@ public class SettingsActivity extends ActivityFeatures {
             @Override
             public void onCompleted(String filePath) {
                 runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
-                        .setText(getString(R.string.backup_successful))
+                        .setText(getString(R.string.backup_successful, Build.VERSION.SDK_INT >= 19 ? getString(R.string.Documents) : getString(R.string.Downloads)))
                         .setDuration(ChocoBar.LENGTH_LONG)
                         .green()
                         .show());
@@ -109,11 +110,11 @@ public class SettingsActivity extends ActivityFeatures {
             return;
         }
 
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + File.separator + filename;
+        String path = Environment.getExternalStoragePublicDirectory(Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS).toString() + File.separator + filename;
         File file = new File(path);
         if (!file.exists()) {
             ChocoBar.builder().setActivity(this)
-                    .setText(getString(R.string.no_backup_found_in_downloads))
+                    .setText(getString(R.string.no_backup_found_in_downloads, Build.VERSION.SDK_INT >= 19 ? getString(R.string.Documents) : getString(R.string.Downloads)))
                     .setDuration(ChocoBar.LENGTH_LONG)
                     .red()
                     .show();

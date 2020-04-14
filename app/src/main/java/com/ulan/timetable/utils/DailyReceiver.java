@@ -16,12 +16,8 @@ public class DailyReceiver extends BroadcastReceiver {
 
     public static final int DailyReceiverID = 10000;
 
-    private Context context;
-
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
-        this.context = context;
-
         if (intent.getAction() != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
                 // Set the alarm here.

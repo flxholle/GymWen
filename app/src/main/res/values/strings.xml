@@ -593,10 +593,12 @@
     <string name="do_not_disturb_turn_off">Auch wieder auf laut stellen</string>
 
     <string name="action_open_main_app">Hauptapp</string>
-    <string name="backup_successful">Backup in Downloads gespeichert</string>
     <string name="backup_failed">Backup fehlgeschlagen</string>
     <string name="import_successful">Wiederherstellen erfolgreich</string>
     <string name="import_failed">Wiederherstellen fehlgeschlagen</string>
-    <string name="no_backup_found_in_downloads">Kein Backup in Downloads gefunden</string>
+    <string name="backup_successful">Backup in %1$s gespeichert</string>
+    <string name="no_backup_found_in_downloads">Kein Backup in %1$s gefunden</string>
+    <string name="Documents">Dokumente</string>
+    <string name="Downloads">Downloads</string>
 
 </resources>
