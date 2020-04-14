@@ -33,7 +33,6 @@ import android.widget.RemoteViews;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -73,7 +72,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(@NonNull Context context, @NonNull AppWidgetManager appWidgetManager, @NonNull int[] appWidgetIds) {
-        setColors(getThemeInt(context), context);
+        setColors(getThemeInt(context));
         new Thread(() -> {
             ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true);
             for (int appWidgetId : appWidgetIds) {
@@ -134,23 +133,23 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         remoteViews.setViewVisibility(R.id.widget_substiution_loading, View.GONE);
     }
 
-    private static void setColors(int mode, @NonNull Context context) {
+    private static void setColors(int mode) {
         switch (mode) {
             default:
             case light:
+                backgroundColor = Color.parseColor("#D9FFFFFF");
                 textColorPrimary = Color.BLACK;
                 textColorSecondary = Color.GRAY;
-                backgroundColor = ContextCompat.getColor(context, R.color.widget_white);
                 break;
             case dark:
+                backgroundColor = Color.parseColor("#D9212121");
                 textColorPrimary = Color.WHITE;
                 textColorSecondary = Color.LTGRAY;
-                backgroundColor = ContextCompat.getColor(context, R.color.widget_dark);
                 break;
             case black:
+                backgroundColor = Color.parseColor("#D9000000");
                 textColorPrimary = Color.WHITE;
                 textColorSecondary = Color.LTGRAY;
-                backgroundColor = ContextCompat.getColor(context, R.color.widget_black);
                 break;
         }
     }

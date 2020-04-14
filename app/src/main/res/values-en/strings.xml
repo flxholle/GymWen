@@ -499,7 +499,7 @@
     <string name="backup_failed">Backup failed</string>
     <string name="import_successful">Restore succeeded</string>
     <string name="import_failed">Restore failed</string>
-    <string name="menu_import_backup">Restore (Beta)</string>
+    <string name="menu_import_backup">Restore</string>
     <string name="no_backup_found_in_downloads">No Backup found in Downloads</string>
     <string name="open_all_settings">Open all settings</string>
 
