@@ -105,8 +105,8 @@ import saschpe.android.customtabs.CustomTabsActivityLifecycleCallbacks;
 
 public class ApplicationFeatures extends MultiDexApplication {
     public static final int substitution_teacher_view_id = View.generateViewId();
-    public static final int old_design_substitution_view_id = View.generateViewId();
     private static Context mContext;
+
     @Nullable
     public static ArrayList<String> websiteHistorySaveInstance;
 
@@ -145,7 +145,6 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
 
         mContext = this;
-        ACRA.init(this);
         initRosetta();
         ProfileManagement.reload();
         initSubstitutionPlanReceiver();
@@ -168,6 +167,14 @@ public class ApplicationFeatures extends MultiDexApplication {
         super.onConfigurationChanged(newConfig);
 //        LocaleChanger.onConfigurationChanged();
         mContext = this;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        mContext = base;
+        // The following line triggers the initialization of ACRA
+        ACRA.init(this);
     }
 
 

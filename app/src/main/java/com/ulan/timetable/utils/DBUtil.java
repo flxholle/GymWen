@@ -31,6 +31,8 @@ import com.ulan.timetable.TimeTableBuilder;
 
 import org.jsoup.Jsoup;
 
+import java.util.Objects;
+
 public class DBUtil {
     private static final String database_prefix = "db_profile_";
 
@@ -43,11 +45,11 @@ public class DBUtil {
     public static int getProfilePosition(@NonNull Activity activity) {
         int sharedPref = getProfilePositionFromSharedPreferences();
         try {
-            int name = activity.getIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
+            int name = Objects.requireNonNull(activity.getIntent().getExtras()).getInt(TimeTableBuilder.PROFILE_POS, -1);
             if (name == -1)
-                name = activity.getParentActivityIntent().getExtras().getInt(TimeTableBuilder.PROFILE_POS, -1);
+                name = Objects.requireNonNull(Objects.requireNonNull(activity.getParentActivityIntent()).getExtras()).getInt(TimeTableBuilder.PROFILE_POS, -1);
 
-            if (name == -1 && sharedPref > 0) {
+            if (name == -1 && sharedPref >= 0) {
                 return sharedPref;
             } else {
                 return name;
