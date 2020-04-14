@@ -56,7 +56,7 @@ public class DBUtil {
             e.printStackTrace();
         }
 
-        if (sharedPref > 0)
+        if (sharedPref >= 0)
             return sharedPref;
         else {
             activity.finish();

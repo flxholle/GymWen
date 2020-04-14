@@ -34,18 +34,4 @@
             android:icon="@drawable/ic_open_in_browser_white_24dp"
             android:title="@string/action_open_main_app" />
     </group>
-
-    <group
-        android:id="@+id/menu_backup"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/timetable_backup"
-            android:icon="@drawable/ic_backup_black_24dp"
-            android:title="@string/menu_backup" />
-        <item
-            android:id="@+id/timetable_import"
-            android:icon="@drawable/ic_import_export_black_24dp"
-            android:title="@string/menu_import_backup" />
-    </group>
-
 </menu>

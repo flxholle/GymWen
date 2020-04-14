@@ -11,7 +11,7 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.ui.activities.SettingsActivity;
+import com.ulan.timetable.activities.SettingsActivity;
 import com.ulan.timetable.utils.DailyReceiver;
 import com.ulan.timetable.utils.PreferenceUtil;
 
@@ -24,7 +24,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         Preference allPrefs = findPreference("allprefs");
         allPrefs.setOnPreferenceClickListener((Preference p) -> {
-            startActivity(new Intent(getActivity(), SettingsActivity.class));
+            startActivity(new Intent(getActivity(), com.asdoi.gymwen.ui.activities.SettingsActivity.class));
             getActivity().finish();
             return true;
         });
@@ -55,6 +55,18 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         myPref.setOnPreferenceClickListener((Preference p) -> {
             PreferenceUtil.setDoNotDisturb(getActivity(), false);
             setTurnOff();
+            return true;
+        });
+
+        myPref = findPreference("timetable_backup");
+        myPref.setOnPreferenceClickListener((Preference p) -> {
+            ((SettingsActivity) getActivity()).backup();
+            return true;
+        });
+
+        myPref = findPreference("timetable_restore");
+        myPref.setOnPreferenceClickListener((Preference p) -> {
+            ((SettingsActivity) getActivity()).importBackup();
             return true;
         });
     }
