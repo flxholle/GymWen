@@ -166,7 +166,7 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         val view = when (entry.code) {
             day -> getTitleText(context, entry.title)
             profile -> getTitleText(context, entry.title)
-            nothing -> getNothing(context, context.getString(R.string.nothing))
+            nothing -> getTitleText(context, context.getString(R.string.nothing))
             headline -> getHeadline(entry.headline, entry.miscellaneous)
             content -> getEntrySpecific(entry.entry, entry.senior, entry.miscellaneous)
             internet -> getTitleText(context, context.getString(R.string.noInternetConnection))
@@ -269,20 +269,6 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
     private fun getRemoteViews(context: Context): RemoteViews {
         val view = RemoteViews(context.packageName, R.layout.widget_list_entry)
         resetView(view)
-        return view
-    }
-
-    private fun getNothing(context: Context, text: String): RemoteViews {
-        val view = getRemoteViews(context)
-        view.setViewVisibility(R.id.substitution_specific_entry_textViewHour, View.GONE)
-        view.setViewVisibility(R.id.substitution_specific_entry_textViewSubject, View.GONE)
-        view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, text)
-        view.setTextViewTextSize(R.id.substitution_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 21f)
-        view.setTextColor(R.id.substitution_specific_entry_textViewTeacher, SubstitutionWidgetProvider.textColorSecondary)
-        view.setViewVisibility(R.id.substitution_specific_entry_textViewRoom, View.GONE)
-        view.setViewVisibility(R.id.substitution_specific_entry_textViewOther, View.GONE)
-        view.setViewVisibility(R.id.substitution_specific_entry_textViewClass, View.GONE)
-        //        view.setOnClickPendingIntent(R.id.widget_entry_linear, SubstitutionWidgetProvider.getPendingSelfIntent(context, SubstitutionWidgetProvider.WIDGET_ON_CLICK));
         return view
     }
 

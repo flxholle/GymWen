@@ -72,7 +72,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(@NonNull SQLiteDatabase db) {
-        String CREATE_TIMETABLE = "CREATE TABLE " + TIMETABLE + "("
+        String CREATE_TIMETABLE = "CREATE TABLE IF NOT EXISTS " + TIMETABLE + "("
                 + WEEK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + WEEK_SUBJECT + " TEXT,"
                 + WEEK_FRAGMENT + " TEXT,"
@@ -82,20 +82,20 @@ public class DbHelper extends SQLiteOpenHelper {
                 + WEEK_TO_TIME + " TEXT,"
                 + WEEK_COLOR + " INTEGER" + ")";
 
-        String CREATE_HOMEWORKS = "CREATE TABLE " + HOMEWORKS + "("
+        String CREATE_HOMEWORKS = "CREATE TABLE IF NOT EXISTS " + HOMEWORKS + "("
                 + HOMEWORKS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + HOMEWORKS_SUBJECT + " TEXT,"
                 + HOMEWORKS_DESCRIPTION + " TEXT,"
                 + HOMEWORKS_DATE + " TEXT,"
                 + HOMEWORKS_COLOR + " INTEGER" + ")";
 
-        String CREATE_NOTES = "CREATE TABLE " + NOTES + "("
+        String CREATE_NOTES = "CREATE TABLE IF NOT EXISTS " + NOTES + "("
                 + NOTES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + NOTES_TITLE + " TEXT,"
                 + NOTES_TEXT + " TEXT,"
                 + NOTES_COLOR + " INTEGER" + ")";
 
-        String CREATE_TEACHERS = "CREATE TABLE " + TEACHERS + "("
+        String CREATE_TEACHERS = "CREATE TABLE IF NOT EXISTS " + TEACHERS + "("
                 + TEACHERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + TEACHERS_NAME + " TEXT,"
                 + TEACHERS_POST + " TEXT,"
@@ -103,7 +103,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 + TEACHERS_EMAIL + " TEXT,"
                 + TEACHERS_COLOR + " INTEGER" + ")";
 
-        String CREATE_EXAMS = "CREATE TABLE " + EXAMS + "("
+        String CREATE_EXAMS = "CREATE TABLE IF NOT EXISTS " + EXAMS + "("
                 + EXAMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + EXAMS_SUBJECT + " TEXT,"
                 + EXAMS_TEACHER + " TEXT,"

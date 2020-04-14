@@ -149,11 +149,11 @@ public class NotificationUtil {
             style.setConversationTitle(context.getString(R.string.timetable_notification_next_week_title));
             int color = nextWeek.getColor();
             int textColor = ColorPalette.pickTextColorBasedOnBgColorSimple(nextWeek.getColor(), Color.WHITE, Color.BLACK);
-            int textSize = 35 - 4 * nextWeek.getRoom().length();
-            if (textSize < 0)
-                textSize = 10;
+            int textSize = context.getResources().getInteger(R.integer.notification_max_text_size) - context.getResources().getInteger(R.integer.notification_text_size_timetable_factor) * nextWeek.getRoom().length();
+            if (textSize < context.getResources().getInteger(R.integer.notification_min_text_size))
+                textSize = context.getResources().getInteger(R.integer.notification_min_text_size);
             Drawable drawable = new ShapeTextDrawable(ShapeForm.ROUND, color, 10f, nextWeek.getRoom(), textColor, true, Typeface.create("sans-serif-light", Typeface.NORMAL), textSize, Color.TRANSPARENT, 0);
-            Person person = new Person.Builder().setName(name).setIcon(IconCompat.createWithBitmap(DrawableKt.toBitmap(drawable, 48, 48, null))).build();
+            Person person = new Person.Builder().setName(name).setIcon(IconCompat.createWithBitmap(DrawableKt.toBitmap(drawable, context.getResources().getInteger(R.integer.notification_bitmap_size), context.getResources().getInteger(R.integer.notification_bitmap_size), null))).build();
             style.addMessage(new NotificationCompat.MessagingStyle.Message(lesson, 0, person));
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)

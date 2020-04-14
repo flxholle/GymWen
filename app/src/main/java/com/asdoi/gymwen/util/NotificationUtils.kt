@@ -341,13 +341,13 @@ class NotificationUtils {
                     else
                         ContextCompat.getColor(context, R.color.notification_icon_text_substitution)
 
-                    var textSize = 35 - 3 * con.hour.length
-                    if (textSize < 0)
-                        textSize = 10
+                    var textSize = context.resources.getInteger(R.integer.notification_max_text_size) - context.resources.getInteger(R.integer.notification_text_size_substitution_factor) * con.hour.length
+                    if (textSize < context.resources.getInteger(R.integer.notification_min_text_size))
+                        textSize = context.resources.getInteger(R.integer.notification_min_text_size)
 
                     val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = con.hour, textSize = textSize, textBold = true, color = color, textColor = textColor)
                     val list = createMessage(con)
-                    val person = Person.Builder().setName(list[0]).setIcon(IconCompat.createWithBitmap(drawable.toBitmap(48, 48))).build()
+                    val person = Person.Builder().setName(list[0]).setIcon(IconCompat.createWithBitmap(drawable.toBitmap(context.resources.getInteger(R.integer.notification_bitmap_size), context.resources.getInteger(R.integer.notification_bitmap_size)))).build()
                     val message = "${list[1]} ${if (profileName.trim().isNotEmpty() && j == 0) " ($profileName)"; else ""}"
                     val message1 = NotificationCompat.MessagingStyle.Message(message, 0.toLong(), person)
                     style.addMessage(message1)

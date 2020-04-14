@@ -122,7 +122,7 @@ public class SettingsActivity extends ActivityFeatures {
 
         Activity activity = this;
 
-        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), false);
+        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), true);
         excelToSQLite.importFromFile(path, new ExcelToSQLite.ImportListener() {
             @Override
             public void onStart() {
