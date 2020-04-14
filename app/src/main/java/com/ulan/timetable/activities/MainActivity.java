@@ -1,10 +1,12 @@
 package com.ulan.timetable.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.preference.PreferenceManager;
@@ -52,6 +55,8 @@ import com.ulan.timetable.utils.PreferenceUtil;
 import java.io.File;
 import java.util.Calendar;
 import java.util.List;
+
+import info.isuru.sheriff.enums.SheriffPermission;
 
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
@@ -388,6 +393,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @SuppressWarnings("deprecation")
     public void backup() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermission(this::backup, SheriffPermission.STORAGE);
+            return;
+        }
+
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
 //        SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyyMMdd");
 //        Date myDate = new Date();
@@ -424,6 +436,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @SuppressWarnings("deprecation")
     public void importBackup() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermission(this::importBackup, SheriffPermission.STORAGE);
+            return;
+        }
+
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + File.separator + filename;
         File file = new File(path);
         if (!file.exists()) {

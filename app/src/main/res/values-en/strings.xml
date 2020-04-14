@@ -500,6 +500,6 @@
     <string name="import_successful">Import succeeded</string>
     <string name="import_failed">Import failed</string>
     <string name="menu_import_backup">Import (Beta)</string>
-    <string name="no_backup_found_in_downloads">No Backup found in Downlaods</string>
+    <string name="no_backup_found_in_downloads">No Backup found in Downloads</string>
 
 </resources>

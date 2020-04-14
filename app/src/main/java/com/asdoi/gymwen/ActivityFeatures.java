@@ -476,7 +476,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         sheriffPermission.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void requestPermission(Runnable runAfter, SheriffPermission... permissions) {
+    protected void requestPermission(Runnable runAfter, SheriffPermission... permissions) {
         PermissionListener pl = new MyPermissionListener(runAfter);
 
         sheriffPermission = Sheriff.Builder()
