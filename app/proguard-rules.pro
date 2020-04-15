@@ -21,4 +21,5 @@
 -renamesourcefileattribute SourceFile
 
 -keep class .R
--keep public class org.apache.poi.** {*;}
+-keep public class org.apache.poi.hssf.** {*;}
+-keep public class org.apache.poi.ss.** {*;}
