@@ -693,6 +693,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     public static boolean addCourseToSelectedProfile(@NonNull String course) {
         if (addCourseToProfile(getSelectedProfilePosition(), course)) {
+            initProfile(getSelectedProfilePosition(), true);
             PreferenceUtil.updateCourses();
             return true;
         }
@@ -705,6 +706,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     public static boolean removeFromSelectedProfile(@NonNull String course) {
         if (removeFromProfile(getSelectedProfilePosition(), course)) {
+            initProfile(getSelectedProfilePosition(), true);
             PreferenceUtil.updateCourses();
             return true;
         }

@@ -60,7 +60,8 @@
 
     <!-- Notification -->
     <color name="notification_icon_text_omitted">@android:color/black</color>
-    <color name="notification_icon_background_omitted">#BAFF0000</color>
+    <color name="notification_icon_background_omitted">#FF0000</color>
+    <!--    <color name="notification_icon_background_omitted">#BAFF0000</color>-->
     <!--    <color name="notification_icon_text_substitution">#525252</color>-->
     <color name="notification_icon_text_substitution">@android:color/black</color>
     <color name="notification_icon_background_substitution">#fbdd0d</color>
