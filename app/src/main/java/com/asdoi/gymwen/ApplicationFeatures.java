@@ -519,6 +519,9 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static void sendNotifications(boolean alert) {
+        if (Build.VERSION.SDK_INT < 21)
+            return;
+
         if (PreferenceUtil.isNotification())
             new NotificationUtils.Companion.CreateNotification(alert).execute();
     }

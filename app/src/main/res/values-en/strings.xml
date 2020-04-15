@@ -504,5 +504,6 @@
     <string name="open_all_settings">Open all settings</string>
     <string name="Documents">Documents</string>
     <string name="Downloads">Downloads</string>
+    <string name="menu_items">Menu items</string>
 
 </resources>

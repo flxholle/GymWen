@@ -1,5 +1,6 @@
 package com.ulan.timetable.adapters;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.util.SparseBooleanArray;
 import android.view.ContextThemeWrapper;
@@ -17,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
+import androidx.core.widget.ImageViewCompat;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.PreferenceUtil;
@@ -85,8 +87,8 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         holder.subject.setTextColor(textColor);
         holder.description.setTextColor(textColor);
         holder.date.setTextColor(textColor);
-        ((ImageView) convertView.findViewById(R.id.timeimage)).setColorFilter(textColor);
-        ((ImageView) convertView.findViewById(R.id.popupbtn)).setColorFilter(textColor);
+        ImageViewCompat.setImageTintList(convertView.findViewById(R.id.timeimage), ColorStateList.valueOf(textColor));
+        ImageViewCompat.setImageTintList(convertView.findViewById(R.id.popupbtn), ColorStateList.valueOf(textColor));
         convertView.findViewById(R.id.line).setBackgroundColor(textColor);
 
 

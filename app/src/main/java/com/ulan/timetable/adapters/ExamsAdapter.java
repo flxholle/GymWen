@@ -1,6 +1,7 @@
 package com.ulan.timetable.adapters;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.util.SparseBooleanArray;
 import android.util.TypedValue;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
+import androidx.core.widget.ImageViewCompat;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
@@ -99,10 +101,10 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
         holder.room.setTextColor(textColor);
         holder.date.setTextColor(textColor);
         holder.time.setTextColor(textColor);
-        ((ImageView) convertView.findViewById(R.id.roomimage)).setColorFilter(textColor);
-        ((ImageView) convertView.findViewById(R.id.teacherimage)).setColorFilter(textColor);
-        ((ImageView) convertView.findViewById(R.id.timeimage)).setColorFilter(textColor);
-        ((ImageView) convertView.findViewById(R.id.popupbtn)).setColorFilter(textColor);
+        ImageViewCompat.setImageTintList(convertView.findViewById(R.id.roomimage), ColorStateList.valueOf(textColor));
+        ImageViewCompat.setImageTintList(convertView.findViewById(R.id.teacherimage), ColorStateList.valueOf(textColor));
+        ImageViewCompat.setImageTintList(convertView.findViewById(R.id.teacherimage), ColorStateList.valueOf(textColor));
+        ImageViewCompat.setImageTintList(convertView.findViewById(R.id.popupbtn), ColorStateList.valueOf(textColor));
         convertView.findViewById(R.id.line).setBackgroundColor(textColor);
 
 

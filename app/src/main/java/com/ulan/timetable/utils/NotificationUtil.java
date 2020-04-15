@@ -167,7 +167,7 @@ public class NotificationUtil {
     }
 
     private static void sendNotification(@NonNull Context context, boolean alert, @Nullable NotificationCompat.Builder notificationBuilder, int id) {
-        if (notificationBuilder == null || !PreferenceUtil.isTimeTableNotification())
+        if (notificationBuilder == null || !PreferenceUtil.isTimeTableNotification() || Build.VERSION.SDK_INT < 21)
             return;
 
 

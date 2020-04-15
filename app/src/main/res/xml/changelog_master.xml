@@ -20,7 +20,9 @@
     <release
         version="1.2.0"
         versioncode="120">
-        <change>Selbstprogrammierter Stundenplan mit integrierten Vertretungen hinzugefügt</change>
+        <change>Selbstprogrammierter Stundenplan mit integrierten Vertretungen, automatischem
+            Stummschalten und eigener Benachrichtigung hinzugefügt
+        </change>
         <change>Raumplan hinzugefügt</change>
         <change>Neue Benachrichtigungen (und passende Einstellungen)</change>
         <change>App-Icon-Shortcuts hinzugefügt</change>
@@ -30,6 +32,7 @@
         <change>Einstellungen für Home-Screen Widgets hinzugefügt</change>
         <change>Einstellung für den automatischen Update-Check hinzugefügt</change>
         <change>Neue Icons</change>
+        <change>Speicherplatz reduziert</change>
     </release>
     <release
         version="1.1.3"

@@ -37,9 +37,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (intent.getAction() != null && context != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
                 // Set the alarm here.
-                int[] times = PreferenceUtil.getAlarmTime();
-                ApplicationFeatures.setRepeatingAlarm(context, AlarmReceiver.class, times[0], times[1], times[2], AlarmReceiverID, AlarmManager.INTERVAL_DAY);
+                if (PreferenceUtil.isAlarmOn(context)) {
+                    int[] times = PreferenceUtil.getAlarmTime();
+                    ApplicationFeatures.setRepeatingAlarm(context, AlarmReceiver.class, times[0], times[1], times[2], AlarmReceiverID, AlarmManager.INTERVAL_DAY);
+                } else
+                    ApplicationFeatures.cancelAlarm(context, AlarmReceiver.class, AlarmReceiver.AlarmReceiverID);
                 ApplicationFeatures.sendNotifications(true);
+                return;
             }
         }
 

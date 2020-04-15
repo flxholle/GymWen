@@ -383,6 +383,7 @@
     <string name="legal">Rechtliches</string>
     <string name="imprint">Impressum</string>
     <string name="version">Version</string>
+    <string name="menu_items">Menüeinträge</string>
 
     <!-- Intro -->
     <string name="intro_one_title" translatable="false">Gymnasium Wendelstein App</string>

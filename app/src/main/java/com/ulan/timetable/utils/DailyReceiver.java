@@ -21,9 +21,13 @@ public class DailyReceiver extends BroadcastReceiver {
         if (intent.getAction() != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
                 // Set the alarm here.
-                int[] times = PreferenceUtil.getTimeTableAlarmTime();
-                ApplicationFeatures.setRepeatingAlarm(context, DailyReceiver.class, times[0], times[1], times[2], DailyReceiverID, AlarmManager.INTERVAL_DAY);
+                if (PreferenceUtil.isTimeTableAlarmOn(context)) {
+                    int[] times = PreferenceUtil.getTimeTableAlarmTime();
+                    ApplicationFeatures.setRepeatingAlarm(context, DailyReceiver.class, times[0], times[1], times[2], DailyReceiverID, AlarmManager.INTERVAL_DAY);
+                } else
+                    ApplicationFeatures.cancelAlarm(context, DailyReceiver.class, DailyReceiverID);
                 NotificationUtil.sendNotificationSummary(context, true);
+                return;
             }
         }
 

@@ -42,7 +42,7 @@
             app:iconSpaceReserved="false" />
         <Preference
             android:summary="@string/set_desc_menu_items_fragment"
-            android:title="Menüeinträge"
+            android:title="@string/menu_items"
             app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentHideMenuItems"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>

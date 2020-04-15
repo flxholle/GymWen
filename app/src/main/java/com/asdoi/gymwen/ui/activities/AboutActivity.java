@@ -118,7 +118,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.about_frame, new Fragment1()).commit();
+        fragmentManager.beginTransaction().replace(R.id.about_frame, new AboutFragment()).commit();
 //        setDrawUnderStatusbar();
 
 
@@ -133,7 +133,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
         setToolbar(true);
     }
 
-    static class Fragment1 extends Fragment {
+    public static class AboutFragment extends Fragment {
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -298,6 +298,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             new LibsBuilder()
                     .withActivityTitle(getString(R.string.impressum_AboutLibs_Title))
                     .withAboutIconShown(true)
+                    .withFields(R.string.class.getFields())
                     .withLicenseShown(true)
                     .withAboutDescription(getString(R.string.subtitle))
                     .withAboutAppName(getString(R.string.app_name))
