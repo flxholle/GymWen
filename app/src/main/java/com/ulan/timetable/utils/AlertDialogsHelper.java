@@ -112,9 +112,6 @@ public class AlertDialogsHelper {
         });
 
 
-        DbHelper dbHelper = new DbHelper(activity);
-        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
-
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
                     if (actionId == EditorInfo.IME_ACTION_DONE ||
@@ -124,7 +121,7 @@ public class AlertDialogsHelper {
                         if (event == null || !event.isShiftPressed()) {
                             // the user is done typing.
                             //AutoFill other fields
-                            for (Week w : alreadyInsertedWeeks) {
+                            for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                                 if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
                                     if (teacher.getText().toString().trim().isEmpty())
                                         teacher.setText(w.getTeacher());
@@ -143,7 +140,7 @@ public class AlertDialogsHelper {
         );
         subject.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                for (Week w : alreadyInsertedWeeks) {
+                for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                     if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
                         if (teacher.getText().toString().trim().isEmpty())
                             teacher.setText(w.getTeacher());
@@ -260,9 +257,6 @@ public class AlertDialogsHelper {
                     .show(activity.getSupportFragmentManager(), "colorPicker");
         });
 
-        DbHelper dbHelper = new DbHelper(activity);
-        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
-
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
                     if (actionId == EditorInfo.IME_ACTION_DONE ||
@@ -272,7 +266,7 @@ public class AlertDialogsHelper {
                         if (event == null || !event.isShiftPressed()) {
                             // the user is done typing.
                             //AutoFill other fields
-                            for (Week w : alreadyInsertedWeeks) {
+                            for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                                 if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
                                     if (teacher.getText().toString().trim().isEmpty())
                                         teacher.setText(w.getTeacher());
@@ -291,7 +285,7 @@ public class AlertDialogsHelper {
         );
         subject.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                for (Week w : alreadyInsertedWeeks) {
+                for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                     if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
                         if (teacher.getText().toString().trim().isEmpty())
                             teacher.setText(w.getTeacher());
@@ -342,7 +336,7 @@ public class AlertDialogsHelper {
                 week.setTeacher(teacher.getText().toString());
                 week.setRoom(room.getText().toString());
                 week.setColor(buttonColor.getColor());
-                dbHelper.insertWeek(week);
+                new DbHelper(activity).insertWeek(week);
                 adapter.notifyDataSetChanged();
                 subject.getText().clear();
                 teacher.getText().clear();
@@ -406,8 +400,6 @@ public class AlertDialogsHelper {
                     .show(activity.getSupportFragmentManager(), "colorPicker");
         });
 
-        DbHelper dbHelper = new DbHelper(activity);
-        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
 
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
@@ -418,7 +410,7 @@ public class AlertDialogsHelper {
                         if (event == null || !event.isShiftPressed()) {
                             // the user is done typing.
                             //AutoFill other fields
-                            for (Week w : alreadyInsertedWeeks) {
+                            for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                                 if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
                                     select_color.setBackgroundColor(w.getColor());
                                     select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
@@ -435,7 +427,7 @@ public class AlertDialogsHelper {
         );
         subject.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                for (Week w : alreadyInsertedWeeks) {
+                for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                     if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
                         select_color.setBackgroundColor(w.getColor());
                         select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
@@ -479,7 +471,7 @@ public class AlertDialogsHelper {
                 homework.setSubject(subject.getText().toString());
                 homework.setDescription(description.getText().toString());
                 homework.setColor(buttonColor.getColor());
-                dbHelper.updateHomework(homework);
+                new DbHelper(activity).updateHomework(homework);
                 homeworksAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
@@ -530,9 +522,6 @@ public class AlertDialogsHelper {
                     .show(activity.getSupportFragmentManager(), "colorPicker");
         });
 
-        DbHelper dbHelper = new DbHelper(activity);
-        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
-
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
                     if (actionId == EditorInfo.IME_ACTION_DONE ||
@@ -542,7 +531,7 @@ public class AlertDialogsHelper {
                         if (event == null || !event.isShiftPressed()) {
                             // the user is done typing.
                             //AutoFill other fields
-                            for (Week w : alreadyInsertedWeeks) {
+                            for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                                 if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
                                     select_color.setBackgroundColor(w.getColor());
                                     select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
@@ -559,7 +548,7 @@ public class AlertDialogsHelper {
         );
         subject.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                for (Week w : alreadyInsertedWeeks) {
+                for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                     if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
                         select_color.setBackgroundColor(w.getColor());
                         select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
@@ -603,6 +592,8 @@ public class AlertDialogsHelper {
                 homework.setSubject(subject.getText().toString());
                 homework.setDescription(description.getText().toString());
                 homework.setColor(buttonColor.getColor());
+
+                DbHelper dbHelper = new DbHelper(activity);
                 dbHelper.insertHomework(homework);
 
                 adapter.clear();
@@ -816,9 +807,6 @@ public class AlertDialogsHelper {
         });
 
 
-        DbHelper dbHelper = new DbHelper(activity);
-        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
-
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
                     if (actionId == EditorInfo.IME_ACTION_DONE ||
@@ -828,7 +816,7 @@ public class AlertDialogsHelper {
                         if (event == null || !event.isShiftPressed()) {
                             // the user is done typing.
                             //AutoFill other fields
-                            for (Week w : alreadyInsertedWeeks) {
+                            for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                                 if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
                                     if (teacher.getText().toString().trim().isEmpty())
                                         teacher.setText(w.getTeacher());
@@ -847,7 +835,7 @@ public class AlertDialogsHelper {
         );
         subject.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                for (Week w : alreadyInsertedWeeks) {
+                for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                     if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
                         if (teacher.getText().toString().trim().isEmpty())
                             teacher.setText(w.getTeacher());
@@ -897,7 +885,7 @@ public class AlertDialogsHelper {
                 exam.setRoom(room.getText().toString());
                 exam.setColor(buttonColor.getColor());
 
-                dbHelper.updateExam(exam);
+                new DbHelper(activity).updateExam(exam);
 
                 ExamsAdapter examsAdapter = (ExamsAdapter) listView.getAdapter();
                 examsAdapter.notifyDataSetChanged();
@@ -969,8 +957,6 @@ public class AlertDialogsHelper {
                     .show(activity.getSupportFragmentManager(), "colorPicker");
         });
 
-        DbHelper dbHelper = new DbHelper(activity);
-        ArrayList<Week> alreadyInsertedWeeks = WeekUtils.getAllWeeks(dbHelper);
 
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
@@ -981,7 +967,7 @@ public class AlertDialogsHelper {
                         if (event == null || !event.isShiftPressed()) {
                             // the user is done typing.
                             //AutoFill other fields
-                            for (Week w : alreadyInsertedWeeks) {
+                            for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                                 if (w.getSubject().equalsIgnoreCase(v.getText().toString())) {
                                     if (teacher.getText().toString().trim().isEmpty())
                                         teacher.setText(w.getTeacher());
@@ -1000,7 +986,7 @@ public class AlertDialogsHelper {
         );
         subject.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                for (Week w : alreadyInsertedWeeks) {
+                for (Week w : WeekUtils.getAllWeeks(new DbHelper(activity))) {
                     if (w.getSubject().equalsIgnoreCase(((EditText) v).getText().toString())) {
                         if (teacher.getText().toString().trim().isEmpty())
                             teacher.setText(w.getTeacher());
@@ -1051,6 +1037,7 @@ public class AlertDialogsHelper {
                 exam.setRoom(room.getText().toString());
                 exam.setColor(buttonColor.getColor());
 
+                DbHelper dbHelper = new DbHelper(activity);
                 dbHelper.insertExam(exam);
 
                 adapter.clear();
