@@ -210,6 +210,7 @@ public class AlertDialogsHelper {
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
+        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
 
         final Week week = new Week();
 
@@ -488,6 +489,8 @@ public class AlertDialogsHelper {
         editTextHashs.put(R.string.description, description);
         final TextView date = alertLayout.findViewById(R.id.datehomework);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
+        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
+
         final Homework homework = new Homework();
 
         date.setOnClickListener(v -> {
@@ -677,6 +680,7 @@ public class AlertDialogsHelper {
         final EditText title = alertLayout.findViewById(R.id.titlenote);
         title.requestFocus();
         final Button select_color = alertLayout.findViewById(R.id.select_color);
+        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
         final Note note = new Note();
 
         select_color.setOnClickListener(v -> {
@@ -909,6 +913,7 @@ public class AlertDialogsHelper {
         final TextView date = alertLayout.findViewById(R.id.dateexam_dialog);
         final TextView time = alertLayout.findViewById(R.id.timeexam_dialog);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
+        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
 
         final Exam exam = new Exam();
 
