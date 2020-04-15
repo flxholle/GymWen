@@ -49,7 +49,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 
@@ -86,7 +85,6 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -109,25 +107,6 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     @Nullable
     public static ArrayList<String> websiteHistorySaveInstance;
-
-    public static int getCurrentTimeInSeconds() {
-        Calendar calendar = Calendar.getInstance();
-        int time = calendar.get(Calendar.SECOND);
-        time += calendar.get(Calendar.MINUTE) * 60;
-        time += calendar.get(Calendar.HOUR_OF_DAY) * 3600;
-        return time;
-    }
-
-    @NonNull
-    private static Date removeTime(@NonNull Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
-    }
 
     @Override
     public void onCreate() {
@@ -409,22 +388,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static boolean coursesCheck() {
-        if (ProfileManagement.getSize() <= 0) {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-            //Backwards compatibility for versions older 1.1
-            String courses = sharedPref.getString("courses", "");
-            if (courses.trim().isEmpty()) {
-                Intent i = new Intent(getContext(), ChoiceActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getContext().startActivity(i);
-                return false;
-            } else {
-                String name = getContext().getString(R.string.profile_default_name);
-                ProfileManagement.addProfile(new Profile(courses, name));
-                ApplicationFeatures.initProfile(0, true);
-            }
-        }
-        return true;
+        return coursesCheck(true);
     }
 
 
@@ -512,44 +476,39 @@ public class ApplicationFeatures extends MultiDexApplication {
         ProfileManagement.initProfiles();
         if (!coursesCheck(false))
             return;
-        if (SubstitutionPlanFeatures.getTodayTitleString().equals(ApplicationFeatures.getContext().getString(R.string.noInternetConnection))) {
+        if (SubstitutionPlanFeatures.getTodayTitle().getNoInternet()) {
             //No Internet
             return;
         }
 
         Document[] newDocs = SubstitutionPlanFeatures.getDocs();
+        int whichDocIsToday = -1;
 
-        boolean alertForAllProfiles = PreferenceUtil.isMainNotifForAllProfiles();
+        if (SubstitutionPlanFeatures.getTodayTitle().isTitleCodeToday())
+            whichDocIsToday = 0;
+        else if (SubstitutionPlanFeatures.getTomorrowTitle().isTitleCodeToday())
+            whichDocIsToday = 1;
 
-        if (!alertForAllProfiles) {
+        if (whichDocIsToday >= 0) {
             Profile preferredProfile = ProfileManagement.getPreferredProfile();
             if (preferredProfile != null) {
-                int whichDocIsToday = -1;
+                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
 
-                if (SubstitutionPlanFeatures.getTodayTitle().isTitleCodeToday())
-                    whichDocIsToday = 0;
-                else if (SubstitutionPlanFeatures.getTomorrowTitle().isTitleCodeToday())
-                    whichDocIsToday = 1;
+                if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
+                    //Sth has changed since last download of substitutionplan
+                    sendNotifications(alert);
+                }
+            } else {
+                for (int i = 0; i < ProfileManagement.getSize(); i++) {
+                    Profile p = ProfileManagement.getProfile(i);
+                    SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
 
-                if (whichDocIsToday >= 0) {
-                    SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
                     if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
-                        //Send Main Notif only if day sth has changed today for the preferred profile, else -> summaryNotif
-                        temp.setTodayDoc(newDocs[whichDocIsToday]);
+                        //Sth has changed since last download of substitutionplan
                         sendNotifications(alert);
+                        break;
                     }
                 }
-            }
-        }
-
-        for (int i = 0; i < ProfileManagement.getSize(); i++) {
-            Profile p = ProfileManagement.getProfile(i);
-            SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
-
-            if (temp.hasSthChanged(oldDocs, newDocs)) {
-                //Sth has changed since last download of substitutionplan
-                sendNotifications(alertForAllProfiles);
-                break;
             }
         }
     }
@@ -562,39 +521,6 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static void sendNotifications(boolean alert) {
         if (PreferenceUtil.isNotification())
             new NotificationUtils.Companion.CreateNotification(alert).execute();
-    }
-
-    //Others
-    public static int frequencyOfSubString(@NonNull String str, @NonNull String findStr) {
-        int lastIndex = 0;
-        int count = 0;
-
-        while (lastIndex != -1) {
-
-            lastIndex = str.indexOf(findStr, lastIndex);
-
-            if (lastIndex != -1) {
-                count++;
-                lastIndex += findStr.length();
-            }
-        }
-        return count;
-    }
-
-    public static Bitmap getBitmapFromVectorDrawable(int drawableId) {
-        Context context = ApplicationFeatures.getContext();
-        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            drawable = (DrawableCompat.wrap(drawable)).mutate();
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
     }
 
 
