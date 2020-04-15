@@ -152,7 +152,9 @@
 
     <!--    <item android:title="@string/menu_category_settings">-->
     <!--        <menu>-->
-    <group android:checkableBehavior="none">
+    <group
+        android:checkableBehavior="none"
+        android:id="@+id/settings_group">
         <item
             android:id="@+id/nav_imprint"
             android:icon="@drawable/ic_help_outline_black_24dp"
