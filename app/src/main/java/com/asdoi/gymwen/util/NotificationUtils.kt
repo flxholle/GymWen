@@ -58,12 +58,12 @@ class NotificationUtils {
     companion object {
         const val today = 1
         const val tomorrow = 2
-        const val none = -1
+        const val both = -1
 
         class CreateNotification(private val alert: Boolean) : ApplicationFeatures.DownloadSubstitutionplanDocsTask() {
             private val summarize = PreferenceUtil.isSummarizeUp()
-            private val alertForAllProfiles = PreferenceUtil.isMainNotifForAllProfiles()
-            private val dontChangeSummary = PreferenceUtil.isDontChangeSummary()
+            private val alertForAllProfiles = PreferenceUtil.isMainNotifForAllProfiles() && ProfileManagement.isMoreThanOneProfile()
+            private val unchangedSummary = PreferenceUtil.isDontChangeSummary()
 
             override fun onPostExecute(v: Void?) {
                 super.onPostExecute(v)
@@ -84,8 +84,6 @@ class NotificationUtils {
             private fun createNotification() {
                 ProfileManagement.initProfiles()
 
-                val profileList = ProfileManagement.getProfileList()
-
                 val titleTodayArray = SubstitutionPlanFeatures.getTodayTitle()
                 val titleTomorrowArray = SubstitutionPlanFeatures.getTomorrowTitle()
                 var titleToday = "${titleTodayArray.dayOfWeek}, ${titleTodayArray.date}:"
@@ -94,13 +92,13 @@ class NotificationUtils {
                 val isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile()
 
                 //Send main notif for preferred Profile
-                var daySendInSummaryNotif = none //1 = today; 2 = tomorrow
+                var daySendInSummaryNotif = both //1 = today; 2 = tomorrow
 
                 val preferredProfile = ProfileManagement.getPreferredProfile()
                 val preferredProfilePos = if (alertForAllProfiles) -5 else ProfileManagement.getPreferredProfilePosition()
 
                 if (preferredProfile != null || alertForAllProfiles) {
-                    var whichDayIsToday = none
+                    var whichDayIsToday = both
                     if (titleTodayArray.isTitleCodeToday())
                         whichDayIsToday = today
                     else if (titleTomorrowArray.isTitleCodeToday())
@@ -123,7 +121,7 @@ class NotificationUtils {
                                 MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), if (summarize) temp.tomorrowSummarized else temp.getDay(false), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
                                 today
                             }
-                            else -> none
+                            else -> both
                         }
                     }
                 }
@@ -141,10 +139,32 @@ class NotificationUtils {
                 var messageTomorrow = StringBuilder()
                 var isNoTomorrow = true
 
-                for (i in profileList.indices) {
-                    val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), profileList[i].coursesArray)
 
-                    if (i == preferredProfilePos && daySendInSummaryNotif != none && !dontChangeSummary) {
+                for (i in ProfileManagement.getProfileList().indices) {
+                    val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), ProfileManagement.getProfileList().get(i).coursesArray)
+
+                    if (i == preferredProfilePos && !unchangedSummary) {
+                        if (daySendInSummaryNotif == today) {
+                            //Today
+                            var content = temp.getDay(true)
+                            try {
+                                countToday.append(content.entries.size)
+                                countToday.append(", ")
+                                countTotal.append(content.entries.size)
+                                countTotal.append(", ")
+                                content = if (summarize) temp.todaySummarized else content
+                                if (content.size() != 0) {
+                                    if (isMoreThanOneProfile) {
+                                        messageToday.append(ProfileManagement.getProfile(i).name)
+                                        messageToday.append(":\n")
+                                    }
+                                    messageToday.append(notifMessageContent(content, temp))
+                                    isNoToday = false
+                                }
+                            } catch (e: java.lang.Exception) {
+                                e.printStackTrace()
+                            }
+                        }
                         if (daySendInSummaryNotif == tomorrow) {
                             //Tomorrow
                             var content = temp.getDay(false)
@@ -166,7 +186,11 @@ class NotificationUtils {
                                 e.printStackTrace()
                             }
                         }
+                        if (daySendInSummaryNotif != both) {
+                            continue
+                        }
                     }
+
 
                     //Today
                     var content = temp.getDay(true)
@@ -188,15 +212,6 @@ class NotificationUtils {
                         e.printStackTrace()
                     }
 
-
-                    if (i == preferredProfilePos && daySendInSummaryNotif != none && !dontChangeSummary) {
-                        if (!dontChangeSummary) {
-                            countTotal.deleteCharAt(countTotal.lastIndexOf("|"))
-                            countTotal.append(", ")
-                        }
-                        continue
-                    }
-
                     //Tomorrow
                     content = temp.getDay(false)
                     try {
@@ -216,8 +231,9 @@ class NotificationUtils {
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
-
                 }
+
+
 
                 try {
                     countToday.deleteCharAt(countToday.lastIndexOf(", "))
@@ -233,44 +249,38 @@ class NotificationUtils {
                 if (isNoTomorrow) messageTomorrow = StringBuilder("${ApplicationFeatures.getContext().getString(R.string.notif_nothing)}\n")
 
 
-                //Send Notifications
 
                 val twoNotifs = PreferenceUtil.isTwoNotifications()
 
                 //Hide days in the past and today after 18 o'clock
-                val showToday = !PreferenceUtil.isIntelligentHide() || !titleTodayArray.isTitleCodeInPast()
-                val showTomorrow = !PreferenceUtil.isIntelligentHide() || !titleTomorrowArray.isTitleCodeInPast()
+                var sendToday = (!PreferenceUtil.isIntelligentHide() || !titleTodayArray.isTitleCodeInPast())
+                var sendTomorrow = (!PreferenceUtil.isIntelligentHide() || !titleTomorrowArray.isTitleCodeInPast())
 
-                if (!isMoreThanOneProfile || alertForAllProfiles) {
-                    if (daySendInSummaryNotif == today && showToday) {
-                        titleToday = "$titleToday $countToday"
-                        SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
-                        return
-                    } else if (daySendInSummaryNotif == tomorrow && showTomorrow) {
-                        titleTomorrow = "$titleTomorrow $countTomorrow"
-                        SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray())
-                        return
-                    }
+                if (!unchangedSummary && (alertForAllProfiles || !isMoreThanOneProfile)) {
+                    sendToday = sendToday && (daySendInSummaryNotif == both || daySendInSummaryNotif == today)
+                    sendTomorrow = sendTomorrow && (daySendInSummaryNotif == both || daySendInSummaryNotif == tomorrow)
                 }
 
+
+                //Send Notifs
                 if (twoNotifs) {
                     titleToday = "$titleToday $countToday"
                     titleTomorrow = "$titleTomorrow $countTomorrow"
-                    if (showToday) SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
-                    if (showTomorrow) SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray(), NOTIFICATION_SUMMARY_ID_2)
+                    if (sendToday) SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
+                    if (sendTomorrow) SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray(), NOTIFICATION_SUMMARY_ID_2)
                 } else {
                     //Sort notification
                     var title = ""
                     var content = ""
 
-                    if (showToday && showTomorrow) {
+                    if (sendToday && sendTomorrow) {
                         title = "${ApplicationFeatures.getContext().getString(R.string.notif_content_title)} $countTotal"
                         content = titleToday + "\n" + messageToday + titleTomorrow + "\n" + messageTomorrow
                         SummaryNotification(title, content.split("\n").toTypedArray())
-                    } else if (showToday && daySendInSummaryNotif == today) {
+                    } else if (sendToday) {
                         titleToday = "$titleToday $countToday"
                         SummaryNotification(titleToday, messageToday.split("\n").toTypedArray())
-                    } else if (showTomorrow && daySendInSummaryNotif == tomorrow) {
+                    } else if (sendTomorrow) {
                         titleTomorrow = "$titleTomorrow $countTomorrow"
                         SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray())
                     }

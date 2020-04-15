@@ -86,7 +86,7 @@ public class PreferenceUtil {
 
 
     public static boolean isTimeTableAlarmOn(@NonNull Context context) {
-        return getBooleanSettings("timetable_alarm", true, context);
+        return getBooleanSettings("timetable_alarm", false, context);
     }
 
     public static boolean doNotDisturbDontAskAgain() {

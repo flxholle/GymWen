@@ -324,10 +324,7 @@ class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var w
     }
 
     fun isTitleCodeToday(): Boolean {
-        val isPast = isTitleCodeInPast()
-        return if (!isPast) {
-            titleCode != SubstitutionPlan.futureCode
-        } else false
+        return titleCode == SubstitutionPlan.todayCode
     }
 
     fun getDayCode(): Int {

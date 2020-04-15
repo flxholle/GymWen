@@ -23,14 +23,15 @@ public class DailyReceiver extends BroadcastReceiver {
                 // Set the alarm here.
                 int[] times = PreferenceUtil.getTimeTableAlarmTime();
                 ApplicationFeatures.setRepeatingAlarm(context, DailyReceiver.class, times[0], times[1], times[2], DailyReceiverID, AlarmManager.INTERVAL_DAY);
+                NotificationUtil.sendNotificationSummary(context, true);
             }
         }
 
         if (!PreferenceUtil.isTimeTableAlarmOn(context)) {
             ApplicationFeatures.cancelAlarm(context, DailyReceiver.class, DailyReceiverID);
+        } else {
+            NotificationUtil.sendNotificationSummary(context, true);
         }
-
-        NotificationUtil.sendNotificationSummary(context, true);
     }
 
 }

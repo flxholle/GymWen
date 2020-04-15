@@ -52,7 +52,6 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
-import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
@@ -173,9 +172,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         showChangelogCK(true);
         checkRegistration();
 
-        if (!PreferenceUtil.isAlarmOn(this)) {
-            ApplicationFeatures.cancelAlarm(getContext(), AlarmReceiver.class, AlarmReceiver.AlarmReceiverID);
-        }
         setupMenuItems(navigationView);
 
         View headerview = navigationView.getHeaderView(0);

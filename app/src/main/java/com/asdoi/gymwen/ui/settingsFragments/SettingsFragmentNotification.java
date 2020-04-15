@@ -42,15 +42,7 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
 
         ProfileManagement.initProfiles();
 
-        setNotif();
-
-        Preference myPref = findPreference("showNotification");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
-            setNotif();
-            return true;
-        });
-
-        myPref = findPreference("alarm");
+        Preference myPref = findPreference("alarm");
         myPref.setOnPreferenceClickListener((Preference p) -> {
             int[] times = PreferenceUtil.getAlarmTime();
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
@@ -75,6 +67,13 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
 
         myPref = findPreference("summary_notif_as_usual");
         myPref.setVisible(ProfileManagement.isMoreThanOneProfile());
+
+        setNotif();
+        myPref = findPreference("showNotification");
+        myPref.setOnPreferenceClickListener((Preference preference) -> {
+            setNotif();
+            return true;
+        });
     }
 
     private void setNotif() {

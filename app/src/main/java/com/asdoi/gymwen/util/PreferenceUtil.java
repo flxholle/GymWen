@@ -52,22 +52,12 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("hours", false);
     }
 
-    public static boolean isAlarmOn(@NonNull Context context) {
-        return getBooleanSettings("alarm", false, context);
-    }
-
     public static boolean isFullTeacherNames() {
         return ApplicationFeatures.getBooleanSettings("show_full_names", false);
     }
 
     public static boolean isFullTeacherNamesSpecific() {
         return ApplicationFeatures.getBooleanSettings("show_full_names_specific", true);
-    }
-
-    private static void setAlarm(@NonNull Context context, boolean value) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putBoolean("alarm", value);
-        editor.commit();
     }
 
     public static boolean showWeekDate() {
@@ -242,11 +232,21 @@ public class PreferenceUtil {
     }
 
 
-    //Other
+    //Alarm
+    public static boolean isAlarmOn(@NonNull Context context) {
+        return getBooleanSettings("alarm", false, context);
+    }
+
+    private static void setAlarm(@NonNull Context context, boolean value) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("alarm", value);
+        editor.commit();
+    }
+
     @NonNull
     public static int[] getAlarmTime() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
-        return new int[]{sharedPref.getInt("Alarm_hour", 1), sharedPref.getInt("Alarm_minute", 1), sharedPref.getInt("Alarm_second", 0)};
+        return new int[]{sharedPref.getInt("Alarm_hour", 7), sharedPref.getInt("Alarm_minute", 55), sharedPref.getInt("Alarm_second", 0)};
     }
 
     public static void setAlarmTime(@NonNull int... times) {

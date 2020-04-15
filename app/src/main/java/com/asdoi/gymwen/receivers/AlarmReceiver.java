@@ -39,10 +39,15 @@ public class AlarmReceiver extends BroadcastReceiver {
                 // Set the alarm here.
                 int[] times = PreferenceUtil.getAlarmTime();
                 ApplicationFeatures.setRepeatingAlarm(context, AlarmReceiver.class, times[0], times[1], times[2], AlarmReceiverID, AlarmManager.INTERVAL_DAY);
+                ApplicationFeatures.sendNotifications(true);
             }
         }
 
-        //Trigger the notification
-        ApplicationFeatures.sendNotifications(true);
+        if (!PreferenceUtil.isAlarmOn(context)) {
+            ApplicationFeatures.cancelAlarm(context, AlarmReceiver.class, AlarmReceiver.AlarmReceiverID);
+        } else {
+            //Trigger the notification
+            ApplicationFeatures.sendNotifications(true);
+        }
     }
 }
