@@ -23,3 +23,4 @@
 -keep class .R
 -keep public class org.apache.poi.hssf.** {*;}
 -keep public class org.apache.poi.ss.** {*;}
+-keep public class me.jfenn.colorpickerdialog.** {*;}

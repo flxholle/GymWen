@@ -109,7 +109,7 @@ dependencies {
     implementation 'com.github.AbdAllahAbdElFattah13:MapView:master-SNAPSHOT'
 
     //Timetable
-    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
+    implementation 'com.github.asdoi:ColorPickerDialog:a1d628430b'
     implementation 'com.github.asdoi:SQLite2XL:e1b5e4d1cb'
     implementation 'org.apache.poi:poi:3.16'
 

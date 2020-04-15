@@ -505,5 +505,6 @@
     <string name="Documents">Documents</string>
     <string name="Downloads">Downloads</string>
     <string name="menu_items">Menu items</string>
+    <string name="colorPickerDialog_preset">Presets</string>
 
 </resources>

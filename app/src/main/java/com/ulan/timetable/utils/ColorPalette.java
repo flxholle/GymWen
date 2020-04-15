@@ -46,8 +46,14 @@ public class ColorPalette {
                     Color.parseColor("#795548"),
                     Color.parseColor("#9E9E9E"),
                     Color.parseColor("#607D8B"),
+                    Color.parseColor("#000000"),
                     Color.parseColor("#FFFFFF"),
-                    Color.parseColor("#000000")
+                    Color.parseColor("#FF0000"),
+                    Color.parseColor("#0000FF"),
+                    Color.parseColor("#00FF00"),
+                    Color.parseColor("#FF00FF"),
+                    Color.parseColor("#00FFFF"),
+                    Color.parseColor("#FFFF00")
             };
 
     public static int pickTextColorBasedOnBgColorSimple(int bgColor, int lightColor, int darkColor) {
