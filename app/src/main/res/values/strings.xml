@@ -602,5 +602,9 @@
     <string name="no_backup_found_in_downloads">Kein Backup in %1$s gefunden</string>
     <string name="Documents">Dokumente</string>
     <string name="Downloads">Downloads</string>
+    <string name="timetable_delete_content">Soll %1$s gelöscht werden?</string>
+    <string name="timetable_delete_week">das Fach %1$s</string>
+    <string name="timetable_delete_note">die Notiz %1$s</string>
+    <string name="timetable_delete_exam">die Prüfung %1$s</string>
 
 </resources>

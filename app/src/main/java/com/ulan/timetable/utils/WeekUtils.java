@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.substitutionplan.SubstitutionEntry;
 import com.asdoi.gymwen.substitutionplan.SubstitutionList;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.model.Week;
 

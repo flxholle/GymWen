@@ -19,9 +19,9 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.ulan.timetable.adapters.HomeworksAdapter;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Homework;
 import com.ulan.timetable.utils.AlertDialogsHelper;
-import com.ulan.timetable.utils.DbHelper;
 
 import java.util.ArrayList;
 

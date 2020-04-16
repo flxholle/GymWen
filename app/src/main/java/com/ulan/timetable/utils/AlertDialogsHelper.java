@@ -28,6 +28,7 @@ import com.ulan.timetable.adapters.FragmentsTabAdapter;
 import com.ulan.timetable.adapters.HomeworksAdapter;
 import com.ulan.timetable.adapters.NotesAdapter;
 import com.ulan.timetable.adapters.WeekAdapter;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.model.Exam;
 import com.ulan.timetable.model.Homework;
@@ -1061,22 +1062,17 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getDeleteDialog(@NonNull Context context, @NonNull Runnable
-            runnable) {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
-        builder.title(context.getString(R.string.profiles_delete_submit_heading));
-
-
-        builder.positiveText(context.getString(R.string.yes));
-        builder.onPositive((dialog, which) -> {
-            runnable.run();
-            dialog.dismiss();
-        });
-
-        builder.onNegative((dialog, which) -> dialog.dismiss());
-
-        builder.negativeText(context.getString(R.string.no));
-
-        builder.show();
+    public static void getDeleteDialog(@NonNull Context context, @NonNull Runnable runnable, String deleteSubject) {
+        new MaterialDialog.Builder(context)
+                .title(context.getString(R.string.profiles_delete_submit_heading))
+                .content(context.getString(R.string.timetable_delete_content, deleteSubject))
+                .positiveText(context.getString(R.string.yes))
+                .onPositive((dialog, which) -> {
+                    runnable.run();
+                    dialog.dismiss();
+                })
+                .onNegative((dialog, which) -> dialog.dismiss())
+                .negativeText(context.getString(R.string.no))
+                .show();
     }
 }

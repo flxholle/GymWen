@@ -48,6 +48,7 @@ import com.asdoi.gymwen.ui.activities.SubstitutionTimeTableActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.github.stephenvinouze.shapetextdrawable.ShapeForm;
 import com.github.stephenvinouze.shapetextdrawable.ShapeTextDrawable;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Week;
 
 import java.util.ArrayList;

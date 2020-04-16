@@ -18,8 +18,8 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.pd.chocobar.ChocoBar;
+import com.ulan.timetable.databaseUtils.DBUtil;
 import com.ulan.timetable.fragments.SettingsFragment;
-import com.ulan.timetable.utils.DBUtil;
 
 import java.io.File;
 

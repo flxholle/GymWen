@@ -10,8 +10,8 @@ import androidx.annotation.Nullable;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Note;
-import com.ulan.timetable.utils.DbHelper;
 
 public class NoteInfoActivity extends ActivityFeatures {
 

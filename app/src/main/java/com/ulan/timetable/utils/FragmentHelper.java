@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.asdoi.gymwen.R;
 import com.ulan.timetable.adapters.WeekAdapter;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Week;
 
 import java.util.ArrayList;

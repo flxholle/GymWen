@@ -27,10 +27,10 @@ import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
 import com.asdoi.gymwen.ui.activities.TeacherListActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Exam;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.ColorPalette;
-import com.ulan.timetable.utils.DbHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -143,7 +143,7 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
                             db.updateExam(getItem(position));
                             examlist.remove(position);
                             notifyDataSetChanged();
-                        });
+                        }, getContext().getString(R.string.timetable_delete_exam, exam.getSubject()));
                         return true;
                     } else if (itemId == R.id.edit_popup) {
                         final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.timetable_dialog_add_exam, null);

@@ -15,7 +15,7 @@ import androidx.preference.PreferenceManager;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.ulan.timetable.activities.SettingsActivity;
-import com.ulan.timetable.utils.DailyReceiver;
+import com.ulan.timetable.receivers.DailyReceiver;
 import com.ulan.timetable.utils.PreferenceUtil;
 
 

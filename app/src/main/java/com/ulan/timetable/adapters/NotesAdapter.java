@@ -22,10 +22,10 @@ import androidx.core.widget.ImageViewCompat;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.PreferenceUtil;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Note;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.ColorPalette;
-import com.ulan.timetable.utils.DbHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -100,7 +100,7 @@ public class NotesAdapter extends ArrayAdapter<Note> {
                             db.updateNote(getItem(position));
                             notelist.remove(position);
                             notifyDataSetChanged();
-                        });
+                        }, getContext().getString(R.string.timetable_delete_note, note.getTitle()));
                         return true;
                     } else if (itemId == R.id.edit_popup) {
                         final View alertLayout = mActivity.getLayoutInflater().inflate(R.layout.timetable_dialog_add_note, null);

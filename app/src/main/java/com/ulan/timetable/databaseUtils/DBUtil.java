@@ -16,7 +16,7 @@
  *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.ulan.timetable.utils;
+package com.ulan.timetable.databaseUtils;
 
 import android.app.Activity;
 

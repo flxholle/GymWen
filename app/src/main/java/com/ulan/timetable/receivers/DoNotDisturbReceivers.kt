@@ -16,7 +16,7 @@
  *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.ulan.timetable.utils
+package com.ulan.timetable.receivers
 
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -27,6 +27,10 @@ import com.asdoi.gymwen.ApplicationFeatures
 import com.asdoi.gymwen.profiles.ProfileManagement
 import com.asdoi.gymwen.substitutionplan.SubstitutionList
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
+import com.ulan.timetable.databaseUtils.DbHelper
+import com.ulan.timetable.utils.NotificationUtil
+import com.ulan.timetable.utils.PreferenceUtil
+import com.ulan.timetable.utils.WeekUtils
 import java.util.*
 
 class TurnOnReceiver : BroadcastReceiver() {
@@ -35,6 +39,7 @@ class TurnOnReceiver : BroadcastReceiver() {
             if (intent.action.equals(Intent.ACTION_LOCKED_BOOT_COMPLETED, ignoreCase = true)) {
                 // Set the alarm here.
                 setDoNotDisturbReceivers(context)
+                NotificationUtil.sendNotificationCurrentLesson(context, false)
                 return
             }
         }

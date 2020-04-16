@@ -21,10 +21,10 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.adapters.NotesAdapter;
+import com.ulan.timetable.databaseUtils.DBUtil;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Note;
 import com.ulan.timetable.utils.AlertDialogsHelper;
-import com.ulan.timetable.utils.DBUtil;
-import com.ulan.timetable.utils.DbHelper;
 
 import java.util.ArrayList;
 

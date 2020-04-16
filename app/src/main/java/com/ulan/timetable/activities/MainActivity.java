@@ -37,10 +37,10 @@ import com.kabouzeid.appthemehelper.ThemeStore;
 import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.adapters.FragmentsTabAdapter;
+import com.ulan.timetable.databaseUtils.DBUtil;
 import com.ulan.timetable.fragments.WeekdayFragment;
+import com.ulan.timetable.receivers.DailyReceiver;
 import com.ulan.timetable.utils.AlertDialogsHelper;
-import com.ulan.timetable.utils.DBUtil;
-import com.ulan.timetable.utils.DailyReceiver;
 import com.ulan.timetable.utils.NotificationUtil;
 import com.ulan.timetable.utils.PreferenceUtil;
 
