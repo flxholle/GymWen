@@ -746,7 +746,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
     private final int SOME_INTEGER = 1;
 
-    public void backup() {
+    private void backup() {
         //send an ACTION_CREATE_DOCUMENT intent to the system. It will open a dialog where the user can choose a location and a filename
 
         DateFormat dateFormat = DateFormat.getDateInstance();

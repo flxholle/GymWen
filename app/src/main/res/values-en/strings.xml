@@ -499,12 +499,18 @@
     <string name="backup_failed">Backup failed</string>
     <string name="import_successful">Restore succeeded</string>
     <string name="import_failed">Restore failed</string>
-    <string name="menu_import_backup">Restore</string>
+    <string name="menu_restore">Restore</string>
     <string name="no_backup_found_in_downloads">No Backup found in %1$s</string>
     <string name="open_all_settings">Open all settings</string>
     <string name="Documents">Documents</string>
     <string name="Downloads">Downloads</string>
     <string name="menu_items">Menu items</string>
     <string name="colorPickerDialog_preset">Presets</string>
+    <string name="integrate_substitution_in_timetable_on">Hide sit-in</string>
+    <string name="integrate_substitution_in_timetable_off">Show sit-in</string>
+    <string name="timetable_delete_content">Should %1$s be deleted?</string>
+    <string name="timetable_delete_week">the subject %1$s</string>
+    <string name="timetable_delete_note">the note %1$s</string>
+    <string name="timetable_delete_exam">the exam %1$s</string>
 
 </resources>
