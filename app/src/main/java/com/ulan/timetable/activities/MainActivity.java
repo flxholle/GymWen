@@ -29,6 +29,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ajts.androidmads.library.ExcelToSQLite;
 import com.ajts.androidmads.library.SQLiteToExcel;
 import com.asdoi.gymwen.ActivityFeatures;
@@ -368,6 +369,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             backup();
         } else if (item.getItemId() == R.id.action_timetable_restore) {
             restore();
+        } else if (item.getItemId() == R.id.action_timetable_remove_all) {
+            deleteAll();
+        } else if (item.getItemId() == R.id.menu_main_app) {
+            onNavigationItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -400,7 +405,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         return true;
     }
 
-    private static final String filename = "Timetable_Backup.xls";
+    private static final String filename = "Empty_Timetable.xls";
 
     @SuppressWarnings("deprecation")
     public void backup() {
@@ -493,5 +498,49 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         .show());
             }
         });
+    }
+
+    public void deleteAll() {
+        new MaterialDialog.Builder(this)
+                .title(getString(R.string.remove_all_subjects))
+                .content(getString(R.string.remove_all_subjects_content))
+                .positiveText(getString(R.string.yes))
+                .onPositive((dialog, which) -> {
+                    ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), true);
+                    Activity activity = this;
+                    excelToSQLite.importFromAsset("Empty_Timetable.xls", new ExcelToSQLite.ImportListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onCompleted(String filePath) {
+                            runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
+                                    .setText(getString(R.string.remove_all_successful))
+                                    .setDuration(ChocoBar.LENGTH_LONG)
+                                    .green()
+                                    .show());
+                            MainActivity.this.onStart();
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
+                                    .setText(getString(R.string.remove_all_failed))
+                                    .setDuration(ChocoBar.LENGTH_LONG)
+                                    .red()
+                                    .show());
+                        }
+                    });
+                })
+                .onNegative((dialog, which) -> dialog.dismiss())
+                .negativeText(getString(R.string.no))
+                .onNeutral((dialog, which) -> {
+                    backup();
+                    dialog.dismiss();
+                })
+                .neutralText(R.string.menu_backup)
+                .show();
     }
 }
