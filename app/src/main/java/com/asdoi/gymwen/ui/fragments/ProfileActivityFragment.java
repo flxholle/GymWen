@@ -203,35 +203,19 @@ public class ProfileActivityFragment extends Fragment {
     }
 
     private void openDeleteDialog(int position) {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
-        builder.title(getString(R.string.profiles_delete_submit_heading));
-
-        LinearLayout base = new LinearLayout(getContext());
-        base.setOrientation(LinearLayout.VERTICAL);
-
-        TextView note = new TextView(getContext());
         Profile p = ProfileManagement.getProfile(position);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(60, 20, 10, 0);
-        note.setText(getString(R.string.profiles_delete_message, p.getName()));
-        note.setLayoutParams(params);
-
-        base.addView(note);
-
-        builder.customView(base, true);
-
-        builder.positiveText(getString(R.string.yes));
-        builder.onPositive((dialog, which) -> {
-            ProfileManagement.removeProfile(position);
-            adapter.notifyDataSetChanged();
-            dialog.dismiss();
-        });
-
-        builder.onNegative((dialog, which) -> dialog.dismiss());
-
-        builder.negativeText(getString(R.string.no));
-
-        builder.show();
+        new MaterialDialog.Builder(getContext())
+                .title(getString(R.string.profiles_delete_submit_heading))
+                .content(getString(R.string.profiles_delete_message, p.getName()))
+                .positiveText(getString(R.string.yes))
+                .onPositive((dialog, which) -> {
+                    ProfileManagement.removeProfile(position);
+                    adapter.notifyDataSetChanged();
+                    dialog.dismiss();
+                })
+                .onNegative((dialog, which) -> dialog.dismiss())
+                .negativeText(getString(R.string.no))
+                .show();
     }
 
     private void setPreferredProfile(int position) {

@@ -240,21 +240,21 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
 
         <receiver
-            android:name="com.ulan.timetable.utils.DailyReceiver"
+            android:name="com.ulan.timetable.receivers.DailyReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.ulan.timetable.utils.TurnOnReceiver"
+            android:name="com.ulan.timetable.receivers.TurnOnReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.ulan.timetable.utils.TurnOffReceiver"
+            android:name="com.ulan.timetable.receivers.TurnOffReceiver"
             android:enabled="true" />
     </application>
 

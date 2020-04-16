@@ -61,17 +61,28 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             setTurnOff();
             return true;
         });
+
+        myPref = findPreference("timetable_subs");
+        myPref.setOnPreferenceClickListener((Preference p) -> {
+            setCourses();
+            return true;
+        });
     }
 
     private void setNotif() {
-        boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("timetableNotif", true);
-        findPreference("alwaysNotification").setVisible(showNotif);
-        findPreference("timetable_alarm").setVisible(showNotif);
+        boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("timetableNotif", true);
+        findPreference("alwaysNotification").setVisible(show);
+        findPreference("timetable_alarm").setVisible(show);
     }
 
     private void setTurnOff() {
-        boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("automatic_do_not_disturb", true);
-        findPreference("do_not_disturb_turn_off").setVisible(showNotif);
+        boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("automatic_do_not_disturb", true);
+        findPreference("do_not_disturb_turn_off").setVisible(show);
+    }
+
+    private void setCourses() {
+        boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("timetable_subs", true);
+        findPreference("courses").setVisible(show);
     }
 
     private static void tintIcons(Preference preference, int color) {
