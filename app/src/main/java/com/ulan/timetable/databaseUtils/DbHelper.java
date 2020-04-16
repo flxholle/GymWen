@@ -30,7 +30,6 @@ import androidx.annotation.NonNull;
 import com.ulan.timetable.model.Exam;
 import com.ulan.timetable.model.Homework;
 import com.ulan.timetable.model.Note;
-import com.ulan.timetable.model.Teacher;
 import com.ulan.timetable.model.Week;
 
 import java.util.ArrayList;
@@ -63,14 +62,6 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String NOTES_TITLE = "title";
     private static final String NOTES_TEXT = "text";
     private static final String NOTES_COLOR = "color";
-
-    private static final String TEACHERS = "teachers";
-    private static final String TEACHERS_ID = "id";
-    private static final String TEACHERS_NAME = "name";
-    private static final String TEACHERS_POST = "post";
-    private static final String TEACHERS_PHONE_NUMBER = "phonenumber";
-    private static final String TEACHERS_EMAIL = "email";
-    private static final String TEACHERS_COLOR = "color";
 
     private static final String EXAMS = "exams";
     private static final String EXAMS_ID = "id";
@@ -113,14 +104,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 + NOTES_TEXT + " TEXT,"
                 + NOTES_COLOR + " INTEGER" + ")";
 
-        String CREATE_TEACHERS = "CREATE TABLE IF NOT EXISTS " + TEACHERS + "("
-                + TEACHERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + TEACHERS_NAME + " TEXT,"
-                + TEACHERS_POST + " TEXT,"
-                + TEACHERS_PHONE_NUMBER + " TEXT,"
-                + TEACHERS_EMAIL + " TEXT,"
-                + TEACHERS_COLOR + " INTEGER" + ")";
-
         String CREATE_EXAMS = "CREATE TABLE IF NOT EXISTS " + EXAMS + "("
                 + EXAMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + EXAMS_SUBJECT + " TEXT,"
@@ -133,7 +116,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TIMETABLE);
         db.execSQL(CREATE_HOMEWORKS);
         db.execSQL(CREATE_NOTES);
-        db.execSQL(CREATE_TEACHERS);
         db.execSQL(CREATE_EXAMS);
     }
 
@@ -148,9 +130,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
             case 3:
                 db.execSQL("DROP TABLE IF EXISTS " + NOTES);
-
-            case 4:
-                db.execSQL("DROP TABLE IF EXISTS " + TEACHERS);
 
             case 5:
                 db.execSQL("DROP TABLE IF EXISTS " + EXAMS);
@@ -321,59 +300,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return notelist;
     }
 
-    /**
-     * Methods for Teachers activity
-     **/
-    public void insertTeacher(@NonNull Teacher teacher) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TEACHERS_NAME, teacher.getName());
-        contentValues.put(TEACHERS_POST, teacher.getPost());
-        contentValues.put(TEACHERS_PHONE_NUMBER, teacher.getPhonenumber());
-        contentValues.put(TEACHERS_EMAIL, teacher.getEmail());
-        contentValues.put(TEACHERS_COLOR, teacher.getColor());
-        db.insert(TEACHERS, null, contentValues);
-        db.close();
-    }
-
-    public void updateTeacher(@NonNull Teacher teacher) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TEACHERS_NAME, teacher.getName());
-        contentValues.put(TEACHERS_POST, teacher.getPost());
-        contentValues.put(TEACHERS_PHONE_NUMBER, teacher.getPhonenumber());
-        contentValues.put(TEACHERS_EMAIL, teacher.getEmail());
-        contentValues.put(TEACHERS_COLOR, teacher.getColor());
-        db.update(TEACHERS, contentValues, TEACHERS_ID + " = " + teacher.getId(), null);
-        db.close();
-    }
-
-    public void deleteTeacherById(@NonNull Teacher teacher) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TEACHERS, TEACHERS_ID + " =? ", new String[]{String.valueOf(teacher.getId())});
-        db.close();
-    }
-
-    @NonNull
-    public ArrayList<Teacher> getTeacher() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ArrayList<Teacher> teacherlist = new ArrayList<>();
-        Teacher teacher;
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TEACHERS, null);
-        while (cursor.moveToNext()) {
-            teacher = new Teacher();
-            teacher.setId(cursor.getInt(cursor.getColumnIndex(TEACHERS_ID)));
-            teacher.setName(cursor.getString(cursor.getColumnIndex(TEACHERS_NAME)));
-            teacher.setPost(cursor.getString(cursor.getColumnIndex(TEACHERS_POST)));
-            teacher.setPhonenumber(cursor.getString(cursor.getColumnIndex(TEACHERS_PHONE_NUMBER)));
-            teacher.setEmail(cursor.getString(cursor.getColumnIndex(TEACHERS_EMAIL)));
-            teacher.setColor(cursor.getInt(cursor.getColumnIndex(TEACHERS_COLOR)));
-            teacherlist.add(teacher);
-        }
-        cursor.close();
-        db.close();
-        return teacherlist;
-    }
 
     /**
      * Methods for Exams activity
