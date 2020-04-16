@@ -31,8 +31,8 @@
         app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentNotification"
         app:iconSpaceReserved="false" />
     <Preference
-        android:title="@string/menu_timetable"
         android:key="open_timetable_settings"
+        android:title="@string/menu_timetable"
         app:iconSpaceReserved="false" />
 
 
@@ -55,20 +55,27 @@
             app:iconSpaceReserved="false"
             app:isPreferenceVisible="true" />
         <Preference
+            android:key="show_more"
+            android:title="@string/set_show_more"
+            app:iconSpaceReserved="false" />
+        <Preference
             android:key="language"
             android:title="@string/menu_language"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:isPreferenceVisible="false" />
         <Preference
             android:key="updates"
             android:summary="@string/set_desc_updates"
             android:title="@string/menu_update"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:isPreferenceVisible="false" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="auto_update"
             android:summary="@string/set_desc_check_background_updates"
             android:title="@string/menu_auto_update_check"
-            app:iconSpaceReserved="true" />
+            app:iconSpaceReserved="true"
+            app:isPreferenceVisible="false" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="beta_features"
@@ -80,7 +87,8 @@
             android:key="offline_mode"
             android:summary="@string/set_desc_offline_mode"
             android:title="@string/set_offline_mode"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:isPreferenceVisible="false" />
     </PreferenceCategory>
 
 </PreferenceScreen>

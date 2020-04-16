@@ -65,5 +65,15 @@ public class SettingsFragmentRoot extends PreferenceFragmentCompat {
             getActivity().startActivity(new Intent(getContext(), com.ulan.timetable.activities.SettingsActivity.class));
             return true;
         });
+
+        myPref = findPreference("show_more");
+        myPref.setOnPreferenceClickListener((Preference p) -> {
+            findPreference("show_more").setVisible(false);
+            findPreference("language").setVisible(true);
+            findPreference("updates").setVisible(true);
+            findPreference("auto_update").setVisible(true);
+            findPreference("offline_mode").setVisible(true);
+            return true;
+        });
     }
 }
