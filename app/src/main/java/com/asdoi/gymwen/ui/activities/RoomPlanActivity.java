@@ -114,32 +114,13 @@ public class RoomPlanActivity extends ActivityFeatures {
 
     @NonNull
     private static List<Room> sortRooms(@NonNull List<Room> rooms) {
-        Map<Integer, Room> map = new TreeMap<>();
-        int failed = 0;
+        Map<String, Room> map = new TreeMap<>();
         for (Room room : rooms) {
-            int roomNr;
-
-            try {
-                if (Character.isDigit(room.getName().charAt(0))) {
-                    roomNr = Integer.parseInt(room.getName());
-                } else if (Character.isDigit(room.getName().charAt(1))) {
-                    roomNr = Integer.parseInt(room.getName().substring(1));
-                } else {
-                    failed--;
-                    roomNr = failed;
-                    failed--;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                failed--;
-                roomNr = failed;
-            }
-
-            map.put(roomNr, room);
+            map.put(room.getName(), room);
         }
 
         List<Room> sortedRooms = new LinkedList<>();
-        for (int i : map.keySet()) {
+        for (String i : map.keySet()) {
             sortedRooms.add(map.get(i));
         }
 
