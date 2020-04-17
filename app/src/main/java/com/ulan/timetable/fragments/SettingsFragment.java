@@ -62,6 +62,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             return true;
         });
 
+
+        setCourses();
         myPref = findPreference("timetable_subs");
         myPref.setOnPreferenceClickListener((Preference p) -> {
             setCourses();

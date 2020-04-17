@@ -2,8 +2,6 @@ package com.ulan.timetable.activities;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -48,7 +46,6 @@ import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.adapters.FragmentsTabAdapter;
 import com.ulan.timetable.databaseUtils.DBUtil;
 import com.ulan.timetable.fragments.WeekdayFragment;
-import com.ulan.timetable.receivers.DailyReceiver;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.NotificationUtil;
 import com.ulan.timetable.utils.PreferenceUtil;
@@ -186,8 +183,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         setupCustomDialog();
 
         if (switchSevenDays) changeFragments(true);
-
-        setDailyAlarm();
     }
 
     private void setupFragments() {
@@ -302,31 +297,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private void setupSevenDaysPref() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         switchSevenDays = sharedPref.getBoolean(SettingsActivity.KEY_SEVEN_DAYS_SETTING, false);
-    }
-
-    private void setDailyAlarm() {
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        Calendar cur = Calendar.getInstance();
-
-        if (cur.after(calendar)) {
-            calendar.add(Calendar.DATE, 1);
-        }
-
-        Intent myIntent = new Intent(this, DailyReceiver.class);
-        int ALARM1_ID = 10000;
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, ALARM1_ID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        if (alarmManager != null) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        }
-
     }
 
     @Override

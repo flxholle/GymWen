@@ -642,7 +642,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             return;
 
         long startTime = customCalendar.getTimeInMillis();
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, startTime, interval, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startTime, interval, pendingIntent);
     }
 
     public static void cancelAlarm(@NonNull Context context, @NonNull Class<?> cls, int id) {
