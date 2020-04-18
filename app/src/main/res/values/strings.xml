@@ -514,6 +514,17 @@
     <string name="floor">Stock</string>
     <string name="unkown_floor">Unbekanntes Stockwerk</string>
     <string name="gym">Sporthalle</string>
+    <string name="lost_and_found">Fundbüro</string>
+    <string name="homework_room">Hausaufgabenraum</string>
+    <string name="senior_room">Oberstufenraum</string>
+    <string name="ogts" translatable="false">OGTS</string>
+    <string name="art_working_room">Werkraum</string>
+    <string name="library">Bibliothek</string>
+    <string name="senior_helpers">Oberstufenkoordination</string>
+    <string name="first_aid">Erste Hilfe</string>
+    <string name="director_office">Direktorat</string>
+    <string name="office">Sekretariat</string>
+    <string name="teachers_room">Lehrerzimmer</string>
 
 
     <!-- TimeTable -->

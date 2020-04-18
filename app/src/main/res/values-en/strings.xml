@@ -516,5 +516,16 @@
     <string name="remove_all_subjects_content">Should all data in the timetable be irretrievably deleted?\n It is advisable to create a backup beforehand!</string>
     <string name="remove_all_successful">Successfully deleted everything</string>
     <string name="remove_all_failed">An error occurred</string>
+    <string name="set_show_more">Show more</string>
+    <string name="lost_and_found">Lost \u0026 found</string>
+    <string name="homework_room">Homework room</string>
+    <string name="senior_room">Senior room</string>
+    <string name="art_working_room">Art room</string>
+    <string name="library">library</string>
+    <string name="senior_helpers">Senior assistants</string>
+    <string name="first_aid">First aid</string>
+    <string name="director_office">Directory office</string>
+    <string name="office">Office</string>
+    <string name="teachers_room">Teacher\'s room</string>
 
 </resources>
