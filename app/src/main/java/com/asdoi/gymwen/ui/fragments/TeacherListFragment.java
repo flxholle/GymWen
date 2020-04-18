@@ -54,6 +54,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -108,13 +110,16 @@ public class TeacherListFragment extends Fragment {
         new Thread(() -> {
             ApplicationFeatures.downloadTeacherlistDoc();
             teacherList = TeacherlistFeatures.liste();
-            createLayout();
+            try {
+                createLayout();
+            } catch (Exception ignore) {
+            }
         }).start();
     }
 
 
     private void createLayout() {
-        getActivity().runOnUiThread(() -> {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             clear();
 
             if (teacherList.getNoInternet()) {

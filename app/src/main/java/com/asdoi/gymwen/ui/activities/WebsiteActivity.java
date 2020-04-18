@@ -619,10 +619,10 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             WebsiteActivityFragment f = new WebsiteActivityFragment(con, pageCode);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.website_host, f).commit();
-        } catch (Exception e) {
-            runOnUiThread(() -> Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show());
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
+        } catch (Exception ignore) {
+//            runOnUiThread(() -> Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show());
+//            startActivity(new Intent(this, MainActivity.class));
+//            finish();
         }
     }
 
