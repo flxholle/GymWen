@@ -18,6 +18,7 @@
 
 package com.ulan.timetable.databaseUtils;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -25,7 +26,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.ulan.timetable.model.Exam;
 import com.ulan.timetable.model.Homework;
@@ -76,7 +76,7 @@ public class DbHelper extends SQLiteOpenHelper {
         super(context, DBUtil.getDBNameFromSharedPreferences(), null, DB_VERSION);
     }
 
-    public DbHelper(@NonNull AppCompatActivity context) {
+    public DbHelper(@NonNull Activity context) {
         super(context, DBUtil.getDBName(context), null, DB_VERSION);
     }
 

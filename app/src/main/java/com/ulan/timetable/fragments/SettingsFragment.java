@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -58,7 +57,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setTurnOff();
         myPref = findPreference("automatic_do_not_disturb");
         myPref.setOnPreferenceClickListener((Preference p) -> {
-            PreferenceUtil.setDoNotDisturb((AppCompatActivity) getActivity(), false);
+            PreferenceUtil.setDoNotDisturb(getActivity(), false);
             setTurnOff();
             return true;
         });

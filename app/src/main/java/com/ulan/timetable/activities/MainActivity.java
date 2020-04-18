@@ -1,6 +1,7 @@
 package com.ulan.timetable.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -19,7 +20,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -394,7 +394,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 //        Date myDate = new Date();
 //        String filename = timeStampFormat.format(myDate);
 
-        AppCompatActivity activity = this;
+        Activity activity = this;
 
         SQLiteToExcel sqliteToExcel = new SQLiteToExcel(this, DBUtil.getDBName(this), path);
         sqliteToExcel.exportAllTables(filename, new SQLiteToExcel.ExportListener() {
@@ -443,7 +443,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return;
         }
 
-        AppCompatActivity activity = this;
+        Activity activity = this;
 
         ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), true);
         excelToSQLite.importFromFile(path, new ExcelToSQLite.ImportListener() {
@@ -480,7 +480,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 .positiveText(getString(R.string.yes))
                 .onPositive((dialog, which) -> {
                     ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), true);
-                    AppCompatActivity activity = this;
+                    Activity activity = this;
                     excelToSQLite.importFromAsset("Empty_Timetable.xls", new ExcelToSQLite.ImportListener() {
                         @Override
                         public void onStart() {
