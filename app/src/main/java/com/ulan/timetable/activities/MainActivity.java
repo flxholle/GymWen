@@ -325,9 +325,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             startActivity(settings);
             return true;
         } else if (item.getItemId() == R.id.action_substitutionIntegration) {
-            boolean newValue = !PreferenceUtil.isTimeTableSubstitution();
-            setIntegration(item, newValue);
-            PreferenceUtil.setTimeTableSubstitution(this, newValue);
+            PreferenceUtil.setTimeTableSubstitution(this, !PreferenceUtil.isTimeTableSubstitution());
             new TimeTableBuilder(profilePos, substitutionPlan).start(getContext());
             finish();
         } else if (item.getItemId() == R.id.action_timetable_backup) {
