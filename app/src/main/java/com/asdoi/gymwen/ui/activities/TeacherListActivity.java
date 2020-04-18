@@ -18,7 +18,6 @@
 
 package com.asdoi.gymwen.ui.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +28,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -106,7 +106,7 @@ public class TeacherListActivity extends ActivityFeatures {
     }
 
     //TeacherSearch
-    public static void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean fullNames, @NonNull Activity activity) {
+    public static void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean fullNames, @NonNull AppCompatActivity activity) {
         if (TeacherlistFeatures.isAOL(teacherQuery))
             return;
         TypedValue outValue = new TypedValue();

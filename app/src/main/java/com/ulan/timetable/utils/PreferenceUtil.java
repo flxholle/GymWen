@@ -18,7 +18,6 @@
 
 package com.ulan.timetable.utils;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
@@ -102,7 +102,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("automatic_do_not_disturb", true);
     }
 
-    public static void setDoNotDisturb(@NonNull Activity activity, boolean dontAskAgain) {
+    public static void setDoNotDisturb(@NonNull AppCompatActivity activity, boolean dontAskAgain) {
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

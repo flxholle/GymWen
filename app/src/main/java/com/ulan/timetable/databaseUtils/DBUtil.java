@@ -18,8 +18,6 @@
 
 package com.ulan.timetable.databaseUtils;
 
-import android.app.Activity;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,11 +36,11 @@ public class DBUtil {
 
     //Get DB Names from outside of builder
     @NonNull
-    public static String getDBName(@NonNull Activity activity) {
+    public static String getDBName(@NonNull AppCompatActivity activity) {
         return database_prefix + getProfilePosition(activity);
     }
 
-    public static int getProfilePosition(@NonNull Activity activity) {
+    public static int getProfilePosition(@NonNull AppCompatActivity activity) {
         int sharedPref = getProfilePositionFromSharedPreferences();
         try {
             int name = Objects.requireNonNull(activity.getIntent().getExtras()).getInt(TimeTableBuilder.PROFILE_POS, -1);
