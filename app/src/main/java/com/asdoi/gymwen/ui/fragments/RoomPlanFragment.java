@@ -91,9 +91,7 @@ public class RoomPlanFragment extends Fragment {
                     RoomPlanActivity.snackbar.show();
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-
+        } catch (Exception ignore) {
             //No Arguments set
             shouldSelectRoom = false;
         }
@@ -153,7 +151,7 @@ public class RoomPlanFragment extends Fragment {
                                 bitmapLayer.setLocation(marks.get(0));
                                 mapView.addLayer(bitmapLayer);
                                 RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
-                                        .setText(/*getString(R.string.room) + " " + */selectRoom.getName() + " (" + selectRoom.getFloor() + (selectRoom.hasDescription() ? ", " + selectRoom.getDescription() : "") + ")")
+                                        .setText(selectRoom.getName() + " (" + selectRoom.getFloor() + (selectRoom.hasDescription() ? ", " + selectRoom.getDescription() : "") + ")")
                                         .setTextTypefaceStyle(Typeface.BOLD)
                                         .setIcon(R.mipmap.mark_touch)
                                         .setDuration(ChocoBar.LENGTH_INDEFINITE)
@@ -164,7 +162,7 @@ public class RoomPlanFragment extends Fragment {
                                 MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
                                 markLayer.setMarkIsClickListener((int num) -> getActivity().runOnUiThread(() -> {
                                     RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
-                                            .setText(/*getString(R.string.room) + " " + */getRoomNames().get(num) + " (" + getRooms().get(num).getFloor() + (getRooms().get(num).hasDescription() ? ", " + getRooms().get(num).getDescription() : "") + ")")
+                                            .setText(getRoomNames().get(num) + " (" + getRooms().get(num).getFloor() + (getRooms().get(num).hasDescription() ? ", " + getRooms().get(num).getDescription() : "") + ")")
                                             .setTextTypefaceStyle(Typeface.BOLD)
                                             .setIcon(R.mipmap.mark_touch)
                                             .setDuration(ChocoBar.LENGTH_INDEFINITE)

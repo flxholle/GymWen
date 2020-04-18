@@ -46,6 +46,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.util.External_Const;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import butterknife.BindView;
@@ -227,8 +228,8 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             tabIntent(BUGSITE);
         } else if (v == writeAnEmail) {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("mailto:GymWenApp@t-online.de"));
-            intent.putExtra(Intent.EXTRA_EMAIL, "GymWenApp@t-online.de");
+            intent.setData(Uri.parse("mailto:" + External_Const.author_mail));
+            intent.putExtra(Intent.EXTRA_EMAIL, External_Const.author_mail);
             intent.putExtra(Intent.EXTRA_SUBJECT, "GymWenApp");
             startActivity(Intent.createChooser(intent, "E-Mail"));
         } else if (v == colorush) {

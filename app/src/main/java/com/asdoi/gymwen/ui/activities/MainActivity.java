@@ -434,7 +434,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     private void setVisibilitySpinner(boolean visible) {
         if (!ProfileManagement.isMoreThanOneProfile())
-            return;
+            visible = false;
         Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
         if (visible)
             parentSpinner.setVisibility(View.VISIBLE);

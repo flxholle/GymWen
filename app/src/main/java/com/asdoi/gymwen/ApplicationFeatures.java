@@ -62,6 +62,7 @@ import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.activities.SignInActivity;
+import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.NotificationUtils;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.asdoi.gymwen.util.ShortcutUtils;
@@ -93,7 +94,7 @@ import saschpe.android.customtabs.CustomTabsActivityLifecycleCallbacks;
 
 @AcraCore(buildConfigClass = BuildConfig.class,
         reportFormat = StringFormat.JSON)
-@AcraMailSender(mailTo = "GymWenApp@t-online.de")
+@AcraMailSender(mailTo = External_Const.author_mail)
 @AcraDialog(resText = R.string.acra_dialog_text,
         resCommentPrompt = R.string.acra_dialog_content,
         resTheme = R.style.AppTheme_Dark,

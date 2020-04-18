@@ -27,6 +27,7 @@ import com.asdoi.gymwen.R;
 public abstract class External_Const {
 
     public final static String office_TelNr = "+49 9171 818 800";
+    public static final String author_mail = "GymWenApp@t-online.de";
 
     //App packageNames
     public final static String[] cafeteria_packageName = new String[]{"de.eezzy.admin.apnr40"};

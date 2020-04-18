@@ -69,9 +69,8 @@ public class RoomPlanActivity extends ActivityFeatures {
                 room = extras.getString(SELECT_ROOM, null);
 
             search = getIntent().getAction().equals(SEARCH_ROOM);
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignore) {
             //If intent is null
-            e.printStackTrace();
         }
 
         setIntent(null);
