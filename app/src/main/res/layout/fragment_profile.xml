@@ -57,7 +57,7 @@
         android:layout_marginStart="5dp"
         android:text="@string/add_profile_button"
         android:textColor="@android:color/white"
-        android:foreground="?attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
