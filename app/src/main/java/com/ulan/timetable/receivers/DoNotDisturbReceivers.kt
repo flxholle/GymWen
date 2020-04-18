@@ -36,7 +36,7 @@ import java.util.*
 class TurnOnReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != null) {
-            if (intent.action.equals(Intent.ACTION_LOCKED_BOOT_COMPLETED, ignoreCase = true)) {
+            if (intent.action.equals(Intent.ACTION_BOOT_COMPLETED, ignoreCase = true)) {
                 // Set the alarm here.
                 setDoNotDisturbReceivers(context)
                 NotificationUtil.sendNotificationCurrentLesson(context, false)

@@ -39,7 +39,7 @@ public class DailyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         if (intent.getAction() != null) {
-            if (intent.getAction().equalsIgnoreCase(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
+            if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
                 // Set the alarm here.
                 if (PreferenceUtil.isTimeTableAlarmOn(context)) {
                     int[] times = PreferenceUtil.getTimeTableAlarmTime();

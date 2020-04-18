@@ -32,7 +32,7 @@ class CheckSubstitutionPlanReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         ApplicationFeatures.initSubstitutionPlanReceiver()
         when (intent?.action) {
-            Intent.ACTION_LOCKED_BOOT_COMPLETED ->
+            Intent.ACTION_BOOT_COMPLETED ->
                 return
         }
         Thread {

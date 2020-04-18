@@ -35,7 +35,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(@Nullable Context context, @NonNull Intent intent) {
         if (intent.getAction() != null && context != null) {
-            if (intent.getAction().equalsIgnoreCase(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
+            if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
                 // Set the alarm here.
                 if (PreferenceUtil.isAlarmOn(context)) {
                     int[] times = PreferenceUtil.getAlarmTime();
