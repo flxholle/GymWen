@@ -219,7 +219,7 @@ public class RoomPlanActivity extends ActivityFeatures {
 
         List<Room> sortedRooms = new LinkedList<>();
         for (String i : map.keySet()) {
-            sortedRooms.add(0, map.get(i));
+            sortedRooms.add(map.get(i));
         }
 
 

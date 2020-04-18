@@ -26,6 +26,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -92,7 +93,7 @@ public class RoomPlanSearchFragment extends Fragment {
             }
         });
 
-//        editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+        editText.setInputType(EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
 
         return root;

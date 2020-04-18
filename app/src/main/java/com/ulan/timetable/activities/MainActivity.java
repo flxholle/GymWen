@@ -313,10 +313,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.timetable_main, menu);
         boolean integration = PreferenceUtil.isTimeTableSubstitution();
-        if (integration)
-            menu.findItem(R.id.action_substitutionIntegration).setTitle(R.string.integrate_substitution_in_timetable_on);
-        else
-            menu.findItem(R.id.action_substitutionIntegration).setTitle(R.string.integrate_substitution_in_timetable_off);
+        setIntegration(menu.findItem(R.id.action_substitutionIntegration), integration);
         return true;
     }
 
@@ -329,12 +326,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return true;
         } else if (item.getItemId() == R.id.action_substitutionIntegration) {
             boolean newValue = !PreferenceUtil.isTimeTableSubstitution();
-            if (newValue)
-                item.setTitle(R.string.integrate_substitution_in_timetable_on);
-            else
-                item.setTitle(R.string.integrate_substitution_in_timetable_off);
-            PreferenceUtil.setTimeTableSubstitution(getContext(), newValue);
-            recreate();
+            setIntegration(item, newValue);
+            PreferenceUtil.setTimeTableSubstitution(this, newValue);
+            new TimeTableBuilder(profilePos, substitutionPlan).start(getContext());
+            finish();
         } else if (item.getItemId() == R.id.action_timetable_backup) {
             backup();
         } else if (item.getItemId() == R.id.action_timetable_restore) {
@@ -345,6 +340,16 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             onNavigationItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setIntegration(@NonNull MenuItem item, boolean newValue) {
+        if (newValue) {
+            item.setTitle(R.string.integrate_substitution_in_timetable_on);
+            item.setIcon(R.drawable.ic_assignment_turned_in_white_24dp);
+        } else {
+            item.setTitle(R.string.integrate_substitution_in_timetable_off);
+            item.setIcon(R.drawable.ic_assignment_black_24dp);
+        }
     }
 
     @Override
