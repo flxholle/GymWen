@@ -33,8 +33,6 @@
     <string name="menu_mensa">Cafeteria (kitafino)</string>
     <string name="menu_category_other">More</string>
     <string name="menu_category_school">High school</string>
-    <string name="menu_category_settings">Settings</string>
-    <string name="menu_category_substitution">Cover plan</string>
     <string name="menu_at_one_glance">At a glance!</string>
     <string name="menu_impressum">About</string>
     <string name="menu_update">Updates</string>
@@ -215,7 +213,6 @@
     <string name="nav_all">Total</string>
     <string name="menu_language">Language</string>
     <string name="set_notification_alarm">On fixed time</string>
-    <string name="time_picker_title">Pick a time</string>
     <string name="menu_filtered">Filtered</string>
     <string name="menu_unfiltered">Unfiltered</string>
     <string name="set_design_show_sections">Show filtered \u0026 unfiltered representation plan seperatly</string>
@@ -452,7 +449,6 @@
     <string name="date_error">Date field can not be empty!</string>
     <string name="edit_homework">Edit homework</string>
     <string name="add_homework">Add homework</string>
-    <string name="deadline_snackbar">Deadline field can not be empty!</string>
     <string name="date">Date</string>
 
     <!-- Notes Activity strings -->
@@ -486,7 +482,6 @@
     <string name="integrate_substitution_in_timetable" tools:ignore="Typos">Show sit-in in timetable</string>
     <string name="integrate_substitution_in_timetable_desc">If you want to edit the timetable, please disable this</string>
     <string name="edit">Edit</string>
-    <string name="submit_delete">Submit delete</string>
     <string name="automatic_update_check">Automatic update check</string>
     <string name="timetable_channel">Timetable</string>
     <string name="timetable_channel_desc">A notification about your lessons</string>

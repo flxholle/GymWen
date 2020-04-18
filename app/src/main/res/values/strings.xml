@@ -33,8 +33,6 @@
     <string name="menu_mensa">Mensa (kitafino)</string>c
     <string name="menu_category_other">Diverses</string>
     <string name="menu_category_school">Gymnasium</string>
-    <string name="menu_category_settings">Einstellungen</string>
-    <string name="menu_category_substitution">Vertretungsplan</string>
     <string name="menu_at_one_glance">Auf einen Blick!</string>
     <string name="menu_impressum">Über</string>
     <string name="menu_update">Updates</string>
@@ -325,7 +323,6 @@
     <string name="set_notification_alarm">Zu einer best. Uhrzeit</string>
 
     <!-- Time Picker-->
-    <string name="time_picker_title">Uhrzeit auswählen</string>
 
     <!-- Reload & Save Docs-->
 
@@ -569,7 +566,6 @@
     <string name="date_error">Datumsfeld darf nicht leer sein!</string>
     <string name="edit_homework">Hausaufgabe bearbeiten</string>
     <string name="add_homework">Hausaufgabe hinzufügen</string>
-    <string name="deadline_snackbar">Deadline-Feld darf nicht leer sein!</string>
     <string name="date">Datum</string>
 
     <string name="notes_activity_title">Notizen</string>
@@ -597,7 +593,6 @@
     <string name="open_all_settings">Alle Einstellungen öffnen</string>
 
     <string name="edit">Bearbeiten</string>
-    <string name="submit_delete">Wirklich löschen?</string>
     <string name="automatic_update_check">Automatisch auf Updates prüfen</string>
     <string name="url" translatable="false">URL</string>
 
