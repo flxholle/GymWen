@@ -99,7 +99,7 @@ class ShortcutUtils {
         }
 
         private fun createTeacherListShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("teacher_list", context.getString(R.string.shortcut_teacher_list), Icon.createWithResource(context, R.drawable.ic_teacher_at_the_blackboard), Intent(context, TeacherListActivity::class.java))
+            return createShortcut("teacher_list", context.getString(R.string.shortcut_teacher_list), Icon.createWithResource(context, R.drawable.ic_teacher_at_the_blackboard), Intent(context, TeacherListActivity::class.java).setAction(Intent.ACTION_VIEW))
         }
 
         private fun createNavigationShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
