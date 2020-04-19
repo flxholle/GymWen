@@ -94,8 +94,8 @@ fun setDoNotDisturbReceivers(context: Context) {
         val substitutionList: SubstitutionList =
                 if (!substitutionPlan.today.getNoInternet()) {
                     when {
-                        substitutionPlan.todayTitle.isTitleCodeToday() -> substitutionPlan.today
-                        substitutionPlan.tomorrowTitle.isTitleCodeToday() -> substitutionPlan.tomorrow
+                        substitutionPlan.todayTitle.isTitleCodeToday() -> substitutionPlan.todaySummarized
+                        substitutionPlan.tomorrowTitle.isTitleCodeToday() -> substitutionPlan.tomorrowSummarized
                         else -> SubstitutionList(true)
                     }
                 } else

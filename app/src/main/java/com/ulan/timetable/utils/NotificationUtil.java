@@ -70,16 +70,19 @@ public class NotificationUtil {
             SubstitutionList substitutionlist;
             if (!substitutionPlan.getToday().getNoInternet()) {
                 if (substitutionPlan.getTodayTitle().isTitleCodeToday())
-                    substitutionlist = substitutionPlan.getToday();
+                    substitutionlist = substitutionPlan.getTodaySummarized();
                 else if (substitutionPlan.getTomorrowTitle().isTitleCodeToday())
-                    substitutionlist = substitutionPlan.getTomorrow();
+                    substitutionlist = substitutionPlan.getTomorrowSummarized();
                 else
                     substitutionlist = new SubstitutionList(true);
             } else
                 substitutionlist = new SubstitutionList(true);
 
             DbHelper db = new DbHelper(context);
-            ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))), substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
+            ArrayList<Week> unchangedWeeks = db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
+            if (unchangedWeeks.size() <= 0)
+                return;
+            ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, unchangedWeeks, substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
 
             String lessons = getLessons(weeks, context);
             if (lessons == null)
@@ -103,16 +106,19 @@ public class NotificationUtil {
             SubstitutionList substitutionlist;
             if (!substitutionPlan.getToday().getNoInternet()) {
                 if (substitutionPlan.getTodayTitle().isTitleCodeToday())
-                    substitutionlist = substitutionPlan.getToday();
+                    substitutionlist = substitutionPlan.getTodaySummarized();
                 else if (substitutionPlan.getTomorrowTitle().isTitleCodeToday())
-                    substitutionlist = substitutionPlan.getTomorrow();
+                    substitutionlist = substitutionPlan.getTomorrowSummarized();
                 else
                     substitutionlist = new SubstitutionList(true);
             } else
                 substitutionlist = new SubstitutionList(true);
 
             DbHelper db = new DbHelper(context);
-            ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))), substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
+            ArrayList<Week> unchangedWeeks = db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
+            if (unchangedWeeks.size() <= 0)
+                return;
+            ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, unchangedWeeks, substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
             Week nextWeek = WeekUtils.getNextWeek(weeks);
             if (nextWeek == null)
                 return;

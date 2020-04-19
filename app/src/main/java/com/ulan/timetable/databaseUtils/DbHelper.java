@@ -39,7 +39,7 @@ import java.util.ArrayList;
  */
 public class DbHelper extends SQLiteOpenHelper {
 
-    private static final int DB_VERSION = 6;
+    private static final int DB_VERSION = 7;
     private static final String TIMETABLE = "timetable";
     private static final String WEEK_ID = "id";
     private static final String WEEK_SUBJECT = "subject";
@@ -71,6 +71,8 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String EXAMS_DATE = "date";
     private static final String EXAMS_TIME = "time";
     private static final String EXAMS_COLOR = "color";
+
+    private static final String TEACHERS = "teachers";
 
     public DbHelper(Context context) {
         super(context, DBUtil.getDBNameFromSharedPreferences(), null, DB_VERSION);
@@ -133,6 +135,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
             case 5:
                 db.execSQL("DROP TABLE IF EXISTS " + EXAMS);
+
+            case 6:
+                db.execSQL("DROP TABLE IF EXISTS " + TEACHERS);
                 break;
         }
         onCreate(db);

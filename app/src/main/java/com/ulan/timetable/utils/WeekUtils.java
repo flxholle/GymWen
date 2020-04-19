@@ -43,7 +43,11 @@ public class WeekUtils {
             for (int i = 0; i < entries.getEntries().size(); i++) {
                 SubstitutionEntry entry = entries.getEntries().get(i);
                 int color = ContextCompat.getColor(context, entry.isNothing() ? R.color.notification_icon_background_omitted : R.color.notification_icon_background_substitution);
-                String subject = senior ? entry.getCourse() : entry.getSubject();
+                String subject = entry.getSubject();
+                if (subject.trim().isEmpty() && senior) {
+                    subject = entry.getCourse();
+                }
+
                 String teacher = entry.getTeacher();
                 String room = entry.getRoom();
                 String begin = entry.getMatchingBeginTime("-");
@@ -83,6 +87,8 @@ public class WeekUtils {
                                 } else {
                                     if (endIsTo) {
                                         //replace
+                                        if (subject.trim().isEmpty())
+                                            weekEntry.setSubject(weeks.get(j).getSubject());
                                         weeks.remove(j);
                                         weeks.add(j, weekEntry);
                                     } else {
@@ -102,6 +108,8 @@ public class WeekUtils {
                                 } else {
                                     if (endIsTo) {
                                         //replace
+                                        if (subject.trim().isEmpty())
+                                            weekEntry.setSubject(weeks.get(j).getSubject());
                                         weeks.remove(j);
                                         weeks.add(j, weekEntry);
                                     } else {
@@ -124,6 +132,9 @@ public class WeekUtils {
                                             split(weeks, begin, end, weekEntry, j, week, false);
                                         } else {
                                             //split3
+                                            if (subject.trim().isEmpty())
+                                                weekEntry.setSubject(weeks.get(j).getSubject());
+
                                             Week week2 = new Week(week.getSubject(), week.getTeacher(), week.getRoom(), week.getFromTime(), week.getToTime(), week.getColor(), false);
                                             week.setToTime(begin);
                                             week2.setFromTime(end);
@@ -152,6 +163,9 @@ public class WeekUtils {
     }
 
     private static void split(@NonNull ArrayList<Week> weeks, String begin, String end, Week weekEntry, int j, @NonNull Week week, boolean beginIsFrom) {
+        if (weekEntry.getSubject().trim().isEmpty())
+            weekEntry.setSubject(weeks.get(j).getSubject());
+
         if (beginIsFrom) {
             week.setFromTime(end);
 //            week.setEditable(false);
