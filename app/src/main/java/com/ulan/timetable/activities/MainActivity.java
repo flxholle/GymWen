@@ -396,7 +396,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         return true;
     }
 
-    private static final String filename = "Empty_Timetable.xls";
+    private static final String filename = "Timetable_Backup.xls";
 
     @SuppressWarnings("deprecation")
     public void backup() {
