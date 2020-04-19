@@ -64,9 +64,7 @@ import androidx.preference.PreferenceManager;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.profiles.ProfileManagement;
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.teacherlist.TeacherListEntry;
-import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
@@ -153,6 +151,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
 
     //Colors
+
     /**
      * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
      */
@@ -624,13 +623,6 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     }
 
 
-    //Save Documents
-    protected void saveDocs() {
-        SubstitutionPlanFeatures.saveDocs();
-        TeacherlistFeatures.saveDoc();
-    }
-
-
     //Grades Management
     private final static String gradesFileName = "Notenverwaltung.xlsx";
     private final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
@@ -767,9 +759,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         if (requestCode == SOME_INTEGER && resultCode == Activity.RESULT_OK) {
             Uri uri = data.getData();
 
-            //just as an example, I am writing a String to the Uri I received from the user:
-
-            saveDocs();
+            ApplicationFeatures.saveDocs();
             ProfileManagement.save(false);
 
             try {

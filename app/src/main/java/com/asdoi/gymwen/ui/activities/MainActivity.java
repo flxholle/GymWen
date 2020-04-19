@@ -385,7 +385,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     @Override
     public void onPause() {
-        saveDocs();
+        ApplicationFeatures.saveDocs();
         super.onPause();
     }
 
@@ -776,7 +776,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             }
             return;
         }
-        saveDocs();
+        ApplicationFeatures.saveDocs();
         if (pressedBack) {
             finishAffinity();
             pressedBack = false;

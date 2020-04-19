@@ -188,6 +188,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         if (!TeacherlistFeatures.isDownloaded()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 TeacherlistFeatures.setDoc(downloadDoc(PreferenceUtil.getTeacherlistURL(getContext())));
+                saveDocs();
             } else if (PreferenceUtil.isOfflineMode()) {
                 TeacherlistFeatures.reloadDoc();
             }
@@ -215,7 +216,6 @@ public class ApplicationFeatures extends MultiDexApplication {
             } else if (PreferenceUtil.isOfflineMode()) {
                 SubstitutionPlanFeatures.reloadDocs();
             }
-//            sendNotification();
         }
     }
 
@@ -234,7 +234,6 @@ public class ApplicationFeatures extends MultiDexApplication {
         } else if (PreferenceUtil.isOfflineMode()) {
             SubstitutionPlanFeatures.reloadDocs();
         }
-//            sendNotification();
     }
 
     private static void downloadSubstitutionDoc() {
@@ -258,6 +257,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             }
         }
         SubstitutionPlanFeatures.setDocs(doc[0], doc[1]);
+        saveDocs();
     }
 
     public static class DownloadSubstitutionplanDocsTask extends AsyncTask<Boolean, Void, Void> {
@@ -326,6 +326,12 @@ public class ApplicationFeatures extends MultiDexApplication {
             //noinspection deprecation
             return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         }
+    }
+
+    //Save Documents
+    public static void saveDocs() {
+        SubstitutionPlanFeatures.saveDocs();
+        TeacherlistFeatures.saveDoc();
     }
 
 
