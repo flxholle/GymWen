@@ -145,7 +145,7 @@ public class NotificationUtil {
                     .append(" ");
             if (Arrays.asList(External_Const.nothing).contains(nextWeek.getTeacher())) {
                 name.append(nextWeek.getTeacher());
-            } else {
+            } else if (!nextWeek.getTeacher().trim().isEmpty()) {
                 name.append(context.getString(R.string.with_teacher))
                         .append(" ")
                         .append(nextWeek.getTeacher());
