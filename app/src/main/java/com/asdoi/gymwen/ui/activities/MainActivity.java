@@ -383,12 +383,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         menu.findItem(R.id.nav_tomorrow_both).setTitle(title);
     }
 
-    @Override
-    public void onPause() {
-        ApplicationFeatures.saveDocs();
-        super.onPause();
-    }
-
     private void initSpinner() {
         //Set Profiles
         Spinner parentSpinner = findViewById(R.id.main_profile_spinner);
