@@ -19,7 +19,6 @@
 package com.asdoi.gymwen;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -52,7 +51,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -63,7 +61,6 @@ import androidx.preference.PreferenceManager;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.teacherlist.TeacherListEntry;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.External_Const;
@@ -80,13 +77,7 @@ import com.kabouzeid.appthemehelper.util.MaterialDialogsUtil;
 import com.pd.chocobar.ChocoBar;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 import java.util.Objects;
 
 import de.cketti.library.changelog.ChangeLog;
@@ -734,65 +725,6 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("registered", true);
         editor.apply();
-    }
-
-    private final int SOME_INTEGER = 1;
-
-    private void backup() {
-        //send an ACTION_CREATE_DOCUMENT intent to the system. It will open a dialog where the user can choose a location and a filename
-
-        DateFormat dateFormat = DateFormat.getDateInstance();
-        Date date = new Date();
-
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setType("text/*"); //not needed, but maybe useful
-        intent.putExtra(Intent.EXTRA_TITLE, "Backup_GymWenApp_" + dateFormat.format(date).replaceAll(" ", "_") + ".gwbackup"); //not needed, but maybe usefull
-
-        startActivityForResult(intent, SOME_INTEGER);
-    }
-
-    //after the user has selected a location you get an uri where you can write your data to:
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SOME_INTEGER && resultCode == Activity.RESULT_OK) {
-            Uri uri = data.getData();
-
-            ApplicationFeatures.saveDocs();
-            ProfileManagement.save(false);
-
-            try {
-                OutputStream output = getContext().getContentResolver().openOutputStream(uri);
-                PrintWriter writer = new PrintWriter(output);
-
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-                Map<String, ?> allEntries = sharedPreferences.getAll();
-                String[] entries = new String[allEntries.size()];
-
-                char splitCharValues = '§';
-
-                int i = 0;
-                for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-                    entries[i] = entry.getKey() + splitCharValues + entry.getValue().toString();
-                    i++;
-                }
-
-                StringBuilder all = new StringBuilder();
-                char splitCharEntries = '°';
-
-                for (String s : entries) {
-                    all.append(s);
-                    all.append(splitCharEntries);
-                }
-
-                writer.write(all.toString());
-                writer.flush();
-                output.close();
-            } catch (IOException e) {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
 
