@@ -1,0 +1,11 @@
+- Selbstprogrammierter Stundenplan mit integrierten Vertretungen, automatischem Stummschalten und eigener Benachrichtigung hinzugefügt
+- Raumplan hinzugefügt
+- Neue Benachrichtigungen (und passende Einstellungen)
+- App-Icon-Shortcuts hinzugefügt
+- Durchsuchen der Website hinzugefügt
+- Wendelsteiner Welle hinzugefügt (Deaktiviert -> Einstellungen)
+- Herunterwischen zum Aktualisieren
+- Einstellungen für Home-Screen Widgets hinzugefügt
+- Einstellung für den automatischen Update-Check hinzugefügt
+- Neue Icons
+- Speicherplatz reduziert

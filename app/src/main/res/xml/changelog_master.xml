@@ -18,7 +18,7 @@
 
 <changelog>
     <release
-        version="1.2.0"
+        version="1.2"
         versioncode="120">
         <change>Selbstprogrammierter Stundenplan mit integrierten Vertretungen, automatischem
             Stummschalten und eigener Benachrichtigung hinzugefügt
