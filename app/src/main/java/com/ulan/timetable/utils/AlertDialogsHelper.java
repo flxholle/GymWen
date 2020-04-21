@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Felix Hollederer
+ *     This file is part of GymWenApp.
+ *
+ *     GymWenApp is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     GymWenApp is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.ulan.timetable.utils;
 
 import android.app.DatePickerDialog;
@@ -6,6 +24,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -35,10 +54,13 @@ import com.ulan.timetable.model.Homework;
 import com.ulan.timetable.model.Note;
 import com.ulan.timetable.model.Week;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import me.jfenn.colorpickerdialog.dialogs.ColorPickerDialog;
 import me.jfenn.colorpickerdialog.views.picker.RGBPickerView;
@@ -50,7 +72,7 @@ import me.jfenn.colorpickerdialog.views.picker.RGBPickerView;
 public class AlertDialogsHelper {
 
     public static void getEditSubjectDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ListView listView, @NonNull final Week week) {
-        final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
+        final SparseArray<EditText> editTextHashs = new SparseArray<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
         final EditText teacher = alertLayout.findViewById(R.id.teacher_dialog);
@@ -176,7 +198,7 @@ public class AlertDialogsHelper {
 
         save.setOnClickListener(v -> {
             if (TextUtils.isEmpty(subject.getText()) /*|| TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())*/) {
-                for (Map.Entry<Integer, EditText> entry : editTextHashs.entrySet()) {
+                for (Map.Entry<Integer, EditText> entry : getEntrySet(editTextHashs)) {
                     if (TextUtils.isEmpty(entry.getValue().getText())) {
                         entry.getValue().setError(activity.getResources().getString(entry.getKey()) + " " + activity.getResources().getString(R.string.field_error));
                         entry.getValue().requestFocus();
@@ -200,7 +222,7 @@ public class AlertDialogsHelper {
     }
 
     public static void getAddSubjectDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final FragmentsTabAdapter adapter, @NonNull final ViewPager viewPager) {
-        final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
+        final SparseArray<EditText> editTextHashs = new SparseArray<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         subject.requestFocus();
         editTextHashs.put(R.string.subject, subject);
@@ -323,7 +345,7 @@ public class AlertDialogsHelper {
 
         submit.setOnClickListener(v -> {
             if (TextUtils.isEmpty(subject.getText()) /*|| TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())*/) {
-                for (Map.Entry<Integer, EditText> entry : editTextHashs.entrySet()) {
+                for (Map.Entry<Integer, EditText> entry : getEntrySet(editTextHashs)) {
                     if (TextUtils.isEmpty(entry.getValue().getText())) {
                         entry.getValue().setError(activity.getResources().getString(entry.getKey()) + " " + activity.getResources().getString(R.string.field_error));
                         entry.getValue().requestFocus();
@@ -355,7 +377,7 @@ public class AlertDialogsHelper {
     public static void getEditHomeworkDialog(@NonNull final AppCompatActivity activity,
                                              @NonNull final View alertLayout, @NonNull final ArrayList<Homework> adapter,
                                              @NonNull final ListView listView, int listposition) {
-        final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
+        final SparseArray<EditText> editTextHashs = new SparseArray<>();
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
         final EditText description = alertLayout.findViewById(R.id.descriptionhomework);
@@ -459,7 +481,7 @@ public class AlertDialogsHelper {
 
         save.setOnClickListener(v -> {
             if (TextUtils.isEmpty(subject.getText()) || TextUtils.isEmpty(description.getText())) {
-                for (Map.Entry<Integer, EditText> editText : editTextHashs.entrySet()) {
+                for (Map.Entry<Integer, EditText> editText : getEntrySet(editTextHashs)) {
                     if (TextUtils.isEmpty(editText.getValue().getText())) {
                         editText.getValue().setError(activity.getResources().getString(editText.getKey()) + " " + activity.getResources().getString(R.string.field_error));
                         editText.getValue().requestFocus();
@@ -482,7 +504,7 @@ public class AlertDialogsHelper {
 
     public static void getAddHomeworkDialog(@NonNull final AppCompatActivity activity,
                                             @NonNull final View alertLayout, @NonNull final HomeworksAdapter adapter) {
-        final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
+        final SparseArray<EditText> editTextHashs = new SparseArray<>();
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
         subject.requestFocus();
@@ -583,7 +605,7 @@ public class AlertDialogsHelper {
 
         save.setOnClickListener(v -> {
             if (TextUtils.isEmpty(subject.getText()) || TextUtils.isEmpty(description.getText())) {
-                for (Map.Entry<Integer, EditText> editText : editTextHashs.entrySet()) {
+                for (Map.Entry<Integer, EditText> editText : getEntrySet(editTextHashs)) {
                     if (TextUtils.isEmpty(editText.getValue().getText())) {
                         editText.getValue().setError(activity.getResources().getString(editText.getKey()) + " " + activity.getResources().getString(R.string.field_error));
                         editText.getValue().requestFocus();
@@ -745,7 +767,7 @@ public class AlertDialogsHelper {
             @NonNull final AppCompatActivity activity, @NonNull final View alertLayout,
             @NonNull final ArrayList<Exam> adapter, @NonNull final ListView listView,
             int listposition) {
-        final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
+        final SparseArray<EditText> editTextHashs = new SparseArray<>();
         final EditText subject = alertLayout.findViewById(R.id.subjectexam_dialog);
         editTextHashs.put(R.string.subject, subject);
         final EditText teacher = alertLayout.findViewById(R.id.teacherexam_dialog);
@@ -873,7 +895,7 @@ public class AlertDialogsHelper {
 
         save.setOnClickListener(v -> {
             if (TextUtils.isEmpty(subject.getText())/* || TextUtils.isEmpty(teacher.getText()) || TextUtils.isEmpty(room.getText())*/) {
-                for (Map.Entry<Integer, EditText> entry : editTextHashs.entrySet()) {
+                for (Map.Entry<Integer, EditText> entry : getEntrySet(editTextHashs)) {
                     if (TextUtils.isEmpty(entry.getValue().getText())) {
                         entry.getValue().setError(activity.getResources().getString(entry.getKey()) + " " + activity.getResources().getString(R.string.field_error));
                         entry.getValue().requestFocus();
@@ -1074,5 +1096,16 @@ public class AlertDialogsHelper {
                 .onNegative((dialog, which) -> dialog.dismiss())
                 .negativeText(context.getString(R.string.no))
                 .show();
+    }
+
+    private static Set<Map.Entry<Integer, EditText>> getEntrySet(SparseArray<EditText> array) {
+        Set<Map.Entry<Integer, EditText>> entrySet = new TreeSet<>();
+        for (int i = 0; i < array.size(); i++) {
+            int key = array.keyAt(i);
+            EditText obj = array.get(key);
+            AbstractMap.SimpleEntry<Integer, EditText> entry = new AbstractMap.SimpleEntry<>(key, obj);
+            entrySet.add(entry);
+        }
+        return entrySet;
     }
 }

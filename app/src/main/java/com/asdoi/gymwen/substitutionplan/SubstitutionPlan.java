@@ -82,7 +82,7 @@ public class SubstitutionPlan {
     /**
      * @param value Context for the Strings
      */
-    public void setContext(Context value) {
+    public static void setContext(Context value) {
         context = value;
     }
 

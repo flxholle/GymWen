@@ -377,7 +377,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    private float convertDpToPx(@NonNull Context context, float dp) {
+    private static float convertDpToPx(@NonNull Context context, float dp) {
         return dp * context.getResources().getDisplayMetrics().density;
     }
 

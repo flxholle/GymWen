@@ -359,7 +359,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         return super.onOptionsItemSelected(item);
     }
 
-    private void setIntegration(@NonNull MenuItem item, boolean newValue) {
+    private static void setIntegration(@NonNull MenuItem item, boolean newValue) {
         if (newValue) {
             item.setTitle(R.string.integrate_substitution_in_timetable_on);
             item.setIcon(R.drawable.ic_assignment_turned_in_white_24dp);

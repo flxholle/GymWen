@@ -124,7 +124,7 @@ public class WebsiteSearchFragment extends Fragment {
     }
 
     @NonNull
-    private List<WebsiteSearchLink> getLinks() {
+    private static List<WebsiteSearchLink> getLinks() {
         String url = "http://www.gym-wen.de/startseite/navigation/";
         Document doc = ApplicationFeatures.downloadDoc(url);
         if (doc == null) {

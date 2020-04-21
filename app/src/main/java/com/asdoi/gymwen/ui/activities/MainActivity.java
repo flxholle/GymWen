@@ -244,7 +244,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
     }
 
-    private void setupMenuItems(@NonNull NavigationView navigationView) {
+    private static void setupMenuItems(@NonNull NavigationView navigationView) {
         //Enable disabled Views
         Menu menu = navigationView.getMenu();
 

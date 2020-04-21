@@ -589,7 +589,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     }
 
     @NonNull
-    private String getLink(@NonNull Element e) {
+    private static String getLink(@NonNull Element e) {
         String link = "";
         Elements linkElements = e.select("a");
         if (linkElements.size() > 0) {
@@ -626,7 +626,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         }
     }
 
-    private void overwriteContent(String[][] c) {
+    private static void overwriteContent(String[][] c) {
         con = c;
     }
 

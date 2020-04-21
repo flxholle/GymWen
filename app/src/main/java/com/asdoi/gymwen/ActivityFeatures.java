@@ -332,7 +332,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         view.addView(base);
     }
 
-    public void removeLoadingPanel(@NonNull ViewGroup view) {
+    public static void removeLoadingPanel(@NonNull ViewGroup view) {
         view.removeView(view.findViewWithTag("vertretung_loading"));
     }
 

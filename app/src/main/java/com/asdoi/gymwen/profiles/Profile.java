@@ -35,7 +35,7 @@ public class Profile {
 
     public Profile(@NonNull String courses, String name) {
         setCourses(courses);
-        setName(name);
+        this.name = name;
     }
 
     public String getCourses() {
