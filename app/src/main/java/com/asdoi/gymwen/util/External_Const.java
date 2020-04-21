@@ -52,7 +52,7 @@ public abstract class External_Const {
     public static final String GITLAB = "https://gitlab.com/asdoi/GymWen/";
     public static final String WEBSITE = "https://asdoi.gitlab.io/";
     public static final String BUGSITE = "https://gitlab.com/asdoi/GymWen/issues";
-    public static final String DOWNLOAD_LINK = "https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk";
+    public static final String DOWNLOAD_LINK = "https://asdoi.gitlab.io/gymwenapp.html";
 
 
     //Download Apps
