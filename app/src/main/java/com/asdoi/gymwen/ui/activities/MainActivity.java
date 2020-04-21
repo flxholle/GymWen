@@ -660,7 +660,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                    /* if (!openAppInStore(External_Const.notes_packageNames))
                         //Open Browser to Download
                         tabIntent(External_Const.downloadApp_notes);*/
-                    new TimeTableBuilder(ApplicationFeatures.getSelectedProfilePosition(), SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(ApplicationFeatures.getSelectedProfilePosition()).getCoursesArray())).start(this, NotesActivity.class);
+                    new TimeTableBuilder(ProfileManagement.loadPreferredProfilePosition(), SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(ApplicationFeatures.getSelectedProfilePosition()).getCoursesArray())).start(this, NotesActivity.class);
                 }
                 return;
             case R.id.nav_timetable:

@@ -89,6 +89,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ProfileManagement.initProfiles();
         try {
             if (getIntent().getExtras() != null) {
                 int themeId = getIntent().getExtras().getInt(TimeTableBuilder.CUSTOM_THEME, -1);
@@ -382,7 +383,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             startActivity(homework);
         } else if (itemId == R.id.notes) {
             Intent note = new Intent(MainActivity.this, NotesActivity.class);
-            note.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
+            note.putExtra(TimeTableBuilder.PROFILE_POS, ProfileManagement.loadPreferredProfilePosition());
             startActivity(note);
         } else if (itemId == R.id.settings) {
             Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
