@@ -364,7 +364,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             item.setIcon(R.drawable.ic_assignment_turned_in_white_24dp);
         } else {
             item.setTitle(R.string.integrate_substitution_in_timetable_off);
-            item.setIcon(R.drawable.ic_assignment_black_24dp);
+            item.setIcon(R.drawable.ic_assignment_failed_white_24dp);
         }
     }
 

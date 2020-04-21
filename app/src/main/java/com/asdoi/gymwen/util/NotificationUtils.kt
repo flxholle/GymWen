@@ -491,7 +491,7 @@ class NotificationUtils {
                 }
 
                 val builder = NotificationCompat.Builder(context, NOTIFICATION_SUMMARY_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_assignment_black_24dp)
+                        .setSmallIcon(R.drawable.ic_assignment_white_24dp)
                         .setShowWhen(false)
                         .setStyle(style)
                         .setContentTitle(title)

@@ -89,7 +89,7 @@ public class NotificationUtil {
                 return;
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_assignment_black_24dp)
+                    .setSmallIcon(R.drawable.ic_assignment_white_24dp)
                     .setContentTitle(context.getString(R.string.timetable_notification_summary_title))
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(lessons));
 

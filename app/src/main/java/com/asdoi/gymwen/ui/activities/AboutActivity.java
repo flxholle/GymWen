@@ -58,15 +58,6 @@ import butterknife.ButterKnife;
  */
 public class AboutActivity extends ActivityFeatures implements View.OnClickListener {
 
-    @NonNull
-    private static final String GITLAB = "https://gitlab.com/asdoi/GymWen/";
-
-    @NonNull
-    private static final String WEBSITE = "https://asdoi.gitlab.io/";
-
-    @NonNull
-    private static final String BUGSITE = "https://gitlab.com/asdoi/GymWen/issues";
-
     @Nullable
     @BindView(R.id.app_version)
     TextView appVersion;
@@ -221,11 +212,11 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             startActivity(new Intent(this, AppIntroActivity.class));
             finish();
         } else if (v == forkOnGitHub) {
-            tabIntent(GITLAB);
+            tabIntent(External_Const.GITLAB);
         } else if (v == visitWebsite) {
-            tabIntent(WEBSITE);
+            tabIntent(External_Const.WEBSITE);
         } else if (v == reportBugs) {
-            tabIntent(BUGSITE);
+            tabIntent(External_Const.BUGSITE);
         } else if (v == writeAnEmail) {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:" + External_Const.author_mail));
@@ -233,7 +224,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             intent.putExtra(Intent.EXTRA_SUBJECT, "GymWenApp");
             startActivity(Intent.createChooser(intent, "E-Mail"));
         } else if (v == colorush) {
-            final String downloadSite = "https://gitlab.com/asdoi/colorrush/blob/master/Apk/ColoRush.apk";
+            final String downloadSite = External_Const.downloadApp_colorush;
             tabIntent(downloadSite);
         } else if (v == share) {
             share();
@@ -339,8 +330,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     }
 
     private void share() {
-        String link = "https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk";
-        String message = getString(R.string.share_app_message) + " " + link;
+        String message = getString(R.string.share_app_message) + " " + External_Const.DOWNLOAD_LINK;
         Intent i = new Intent();
         i.setAction(Intent.ACTION_SEND);
         i.putExtra(Intent.EXTRA_TEXT, message);
