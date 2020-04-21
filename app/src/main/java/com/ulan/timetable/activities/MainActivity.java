@@ -464,8 +464,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
 
         Activity activity = this;
+        DbHelper dbHelper = new DbHelper(this);
+        dbHelper.deleteAll();
 
-        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), true);
+        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), false);
         excelToSQLite.importFromFile(path, new ExcelToSQLite.ImportListener() {
             @Override
             public void onStart() {
@@ -499,14 +501,22 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 .content(getString(R.string.remove_all_subjects_content))
                 .positiveText(getString(R.string.yes))
                 .onPositive((dialog, which) -> {
-                    DbHelper dbHelper = new DbHelper(this);
-                    dbHelper.deleteAll();
-                    ChocoBar.builder().setActivity(this)
-                            .setText(getString(R.string.remove_all_successful))
-                            .setDuration(ChocoBar.LENGTH_LONG)
-                            .green()
-                            .show();
-                    MainActivity.this.onStart();
+                    try {
+                        DbHelper dbHelper = new DbHelper(this);
+                        dbHelper.deleteAll();
+                        ChocoBar.builder().setActivity(this)
+                                .setText(getString(R.string.remove_all_successful))
+                                .setDuration(ChocoBar.LENGTH_LONG)
+                                .green()
+                                .show();
+                        MainActivity.this.onStart();
+                    } catch (Exception e) {
+                        ChocoBar.builder().setActivity(this)
+                                .setText(getString(R.string.remove_all_failed))
+                                .setDuration(ChocoBar.LENGTH_LONG)
+                                .red()
+                                .show();
+                    }
                 })
                 .onNegative((dialog, which) -> dialog.dismiss())
                 .negativeText(getString(R.string.no))

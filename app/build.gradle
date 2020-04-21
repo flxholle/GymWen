@@ -108,7 +108,7 @@ dependencies {
 
     //Timetable
     implementation 'com.github.asdoi:ColorPickerDialog:a1d628430b'
-    implementation 'com.github.asdoi:SQLite2XL:e1b5e4d1cb'
+    implementation 'com.github.asdoi:SQLite2XL:-SNAPSHOT'
     //noinspection GradleDependency
     implementation 'org.apache.poi:poi:3.16'
 

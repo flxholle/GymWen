@@ -366,10 +366,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TIMETABLE, null, null);
-        db.delete(HOMEWORKS, null, null);
-        db.delete(NOTES, null, null);
-        db.delete(EXAMS, null, null);
+        db.execSQL("DROP TABLE IF EXISTS " + TIMETABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + HOMEWORKS);
+        db.execSQL("DROP TABLE IF EXISTS " + NOTES);
+        db.execSQL("DROP TABLE IF EXISTS " + EXAMS);
         db.close();
+        onCreate(this.getWritableDatabase());
     }
 }
