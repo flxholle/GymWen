@@ -63,6 +63,7 @@ import com.pd.chocobar.ChocoBar;
 import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.adapters.FragmentsTabAdapter;
 import com.ulan.timetable.databaseUtils.DBUtil;
+import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.NotificationUtil;
@@ -497,33 +498,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 .content(getString(R.string.remove_all_subjects_content))
                 .positiveText(getString(R.string.yes))
                 .onPositive((dialog, which) -> {
-                    ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), true);
-                    Activity activity = this;
-                    excelToSQLite.importFromAsset("Empty_Timetable.xls", new ExcelToSQLite.ImportListener() {
-                        @Override
-                        public void onStart() {
-
-                        }
-
-                        @Override
-                        public void onCompleted(String filePath) {
-                            runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
-                                    .setText(getString(R.string.remove_all_successful))
-                                    .setDuration(ChocoBar.LENGTH_LONG)
-                                    .green()
-                                    .show());
-                            MainActivity.this.onStart();
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
-                                    .setText(getString(R.string.remove_all_failed))
-                                    .setDuration(ChocoBar.LENGTH_LONG)
-                                    .red()
-                                    .show());
-                        }
-                    });
+                    DbHelper dbHelper = new DbHelper(this);
+                    dbHelper.deleteAll();
+                    ChocoBar.builder().setActivity(this)
+                            .setText(getString(R.string.remove_all_successful))
+                            .setDuration(ChocoBar.LENGTH_LONG)
+                            .green()
+                            .show();
+                    MainActivity.this.onStart();
                 })
                 .onNegative((dialog, which) -> dialog.dismiss())
                 .negativeText(getString(R.string.no))

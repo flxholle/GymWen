@@ -78,8 +78,8 @@ public class DbHelper extends SQLiteOpenHelper {
         super(context, DBUtil.getDBNameFromSharedPreferences(), null, DB_VERSION);
     }
 
-    public DbHelper(@NonNull Activity context) {
-        super(context, DBUtil.getDBName(context), null, DB_VERSION);
+    public DbHelper(@NonNull Activity activity) {
+        super(activity, DBUtil.getDBName(activity), null, DB_VERSION);
     }
 
     public void onCreate(@NonNull SQLiteDatabase db) {
@@ -361,5 +361,15 @@ public class DbHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return examslist;
+    }
+
+
+    public void deleteAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TIMETABLE, null, null);
+        db.delete(HOMEWORKS, null, null);
+        db.delete(NOTES, null, null);
+        db.delete(EXAMS, null, null);
+        db.close();
     }
 }
