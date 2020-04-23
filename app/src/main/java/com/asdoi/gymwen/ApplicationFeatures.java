@@ -200,12 +200,12 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     //Substitutionplan docs
-    public static void downloadSubstitutionplanDocs(boolean isWidget, boolean signIn) {
+    public static void downloadSubstitutionplanDocs(boolean isWidget, boolean openActivity) {
 
         //DownloadDocs
         if (!SubstitutionPlanFeatures.areDocsDownloaded()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
-                if (!ApplicationFeatures.initSettings(true, signIn)) {
+                if (!ApplicationFeatures.initSettings(true, openActivity)) {
                     return;
                 }
                 downloadSubstitutionDoc();
@@ -219,10 +219,10 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
-    public static void downloadSubstitutionplanDocsAlways(boolean isWidget, boolean signIn) {
+    public static void downloadSubstitutionplanDocsAlways(boolean isWidget, boolean openActivity) {
         //DownloadDocs
         if (ApplicationFeatures.isNetworkAvailable()) {
-            if (!ApplicationFeatures.initSettings(true, signIn)) {
+            if (!ApplicationFeatures.initSettings(true, openActivity)) {
                 return;
             }
 
@@ -336,14 +336,15 @@ public class ApplicationFeatures extends MultiDexApplication {
 
 
     //Settings
-    public static boolean initSettings(boolean isWidget, boolean signIn) {
+    public static boolean initSettings(boolean isWidget, boolean openActivity) {
         Context context = getContext();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean signedIn = sharedPref.getBoolean("signed", false);
 
         if (signedIn) {
-            //Profile reload has been called in onCreate Application
-            if (!coursesCheck(true))
+            ProfileManagement.initProfiles();
+
+            if (!coursesCheck(openActivity))
                 return false;
 
             String courses = getSelectedProfile().getCourses();
@@ -361,7 +362,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             if (!isWidget) {
                 refreshWidgets();
             }
-        } else if (signIn) {
+        } else if (openActivity) {
             if (PreferenceUtil.isIntroShown()) {
                 Intent i = new Intent(context, SignInActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -375,7 +376,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         return signedIn;
     }
 
-    public static boolean coursesCheck(boolean openAddActivity) {
+    private static boolean coursesCheck(boolean openAddActivity) {
         if (ProfileManagement.getSize() <= 0) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
             //Backwards compatibility for versions older 1.1

@@ -69,7 +69,7 @@ class NotificationUtils {
                 super.onPostExecute(v)
                 try {
                     ProfileManagement.initProfiles()
-                    if (!ApplicationFeatures.coursesCheck(false))
+                    if (!ApplicationFeatures.initSettings(false, false))
                         return
                     if (SubstitutionPlanFeatures.getTodayTitleString() == ApplicationFeatures.getContext().getString(R.string.noInternetConnection)) {
                         return
@@ -247,7 +247,6 @@ class NotificationUtils {
 
                 if (isNoToday) messageToday = StringBuilder("${ApplicationFeatures.getContext().getString(R.string.notif_nothing)}\n")
                 if (isNoTomorrow) messageTomorrow = StringBuilder("${ApplicationFeatures.getContext().getString(R.string.notif_nothing)}\n")
-
 
 
                 val twoNotifs = PreferenceUtil.isTwoNotifications()

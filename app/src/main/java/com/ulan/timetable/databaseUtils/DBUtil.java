@@ -72,7 +72,7 @@ public class DBUtil {
     }
 
     private static int getProfilePositionFromSharedPreferences() {
-        if (!ApplicationFeatures.coursesCheck(true))
+        if (!ApplicationFeatures.initSettings(false, false))
             return -1;
 
         ProfileManagement.initProfiles();
