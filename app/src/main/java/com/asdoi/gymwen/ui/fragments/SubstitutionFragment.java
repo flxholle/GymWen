@@ -213,11 +213,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                             ((MainActivity) getActivity()).setTomorrowMenuItemTitle(tomorrowTitle.getDayOfWeek() + ", " + tomorrowTitle.getDate());
                         }
 
+                        generateTable();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    generateTable();
                 });
             } catch (Exception e) {
                 e.printStackTrace();

@@ -247,6 +247,10 @@
     <string name="share_link">Link teilen mit\u2026</string>
     <string name="tap_picture">Bild antippen</string>
     <string name="close">Schließen</string>
+    <string name="rss_notification_channel">Website</string>
+    <string name="set_rss_notification">Website-Benachrichtigung</string>
+    <string name="rss_notification_channel_description">Eine Benachrichtigung über die neuesten Artikel auf der Schulhomepage</string>
+    <string name="rss_feed">RSS-Feed</string>
 
     <!-- Notification-->
     <string name="notification_summary_channel_title">Vertretungsplan</string>

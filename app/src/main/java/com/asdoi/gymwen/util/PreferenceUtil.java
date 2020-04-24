@@ -337,4 +337,18 @@ public class PreferenceUtil {
         editor.putString("courses", ApplicationFeatures.getSelectedProfile().getCourses());
         editor.commit();
     }
+
+
+    //RSS Feed
+    public static boolean isRSSNotification() {
+        return getBooleanSettings("RSS_notif", true);
+    }
+
+    public static String getLastLoadedRSSTitle() {
+        return PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getString("lastRSSTitle", null);
+    }
+
+    public static void setLastLoadedRSSTitle(String value) {
+        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putString("lastRSSTitle", value).apply();
+    }
 }

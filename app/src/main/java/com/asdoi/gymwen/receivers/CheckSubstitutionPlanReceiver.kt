@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.asdoi.gymwen.ApplicationFeatures
+import com.asdoi.gymwen.util.RSS_Feed
 import java.util.*
 
 
@@ -32,10 +33,14 @@ class CheckSubstitutionPlanReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         ApplicationFeatures.initSubstitutionPlanReceiver()
         when (intent?.action) {
-            Intent.ACTION_BOOT_COMPLETED ->
+            Intent.ACTION_BOOT_COMPLETED -> {
+                RSS_Feed.checkRSS(context!!)
                 return
+            }
         }
         Thread {
+            if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) > 9)
+                RSS_Feed.checkRSS(context!!)
             ApplicationFeatures.checkSubstitutionPlan(true)
         }.start()
     }

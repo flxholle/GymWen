@@ -21,27 +21,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activities.WebsiteActivity">
     <item
-        android:title="@string/action_share"
-        android:id="@+id/action_share"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_share_white_24dp"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_website_search"
         android:icon="@drawable/ic_search_black_24dp"
+        android:orderInCategory="100"
         android:title="@string/action_search"
         app:iconTint="@android:color/white"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_website"
         android:icon="@drawable/ic_compass"
+        android:orderInCategory="100"
         android:title="@string/menu_website"
         app:iconTint="@android:color/white"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_share"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_open_in_browser"
         android:orderInCategory="100"
         android:title="@string/action_open_in_browser"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_open_rss_feed"
+        android:orderInCategory="100"
+        android:title="@string/rss_feed"
         app:showAsAction="never" />
     <item
         android:id="@+id/website_close"

@@ -37,6 +37,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.fragments.WebsiteActivityFragment;
 import com.asdoi.gymwen.ui.fragments.WebsiteSearchFragment;
+import com.asdoi.gymwen.util.External_Const;
 import com.pd.chocobar.ChocoBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -129,10 +130,10 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                     if (intentURL == null) {
                         Uri data = getIntent().getData();
                         intentURL = data.getHost() + data.getPath();
-                        loadPage(intentURL);
-                        setIntent(null);
-                        return;
                     }
+                    loadPage(intentURL);
+                    setIntent(null);
+                    return;
                 } else if (getIntent().hasExtra(SEARCH)) {
                     search = true;
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -229,6 +230,10 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                 break;
             case R.id.website_close:
                 onSupportNavigateUp();
+                break;
+            case R.id.action_open_rss_feed:
+                i = new Intent(Intent.ACTION_VIEW, Uri.parse(External_Const.rss_feed_Link));
+                startActivity(i);
                 break;
         }
         return super.onOptionsItemSelected(item);

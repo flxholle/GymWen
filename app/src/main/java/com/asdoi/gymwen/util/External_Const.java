@@ -46,6 +46,7 @@ public abstract class External_Const {
     public static final String news_Link = "http://schuelerzeitung-gym-wen.de/";
     public static final String podcast_Link = "https://www.machdeinradio.de/kanal/wendelsteiner-welle/";
     public static final String colorush_online = "https://asdoi.gitlab.io/colorushweb/";
+    public static final String rss_feed_Link = "https://asdoi.gitlab.io/rss-feeds/GymWenStartseite.xml";
 
 
     //About App

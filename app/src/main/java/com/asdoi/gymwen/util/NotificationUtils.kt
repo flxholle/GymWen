@@ -435,7 +435,6 @@ class NotificationUtils {
                         notificationChannel.lightColor = ContextCompat.getColor(context, R.color.colorAccent)
                         notificationChannel.enableVibration(true)
                         notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null)
-                        notificationManager.createNotificationChannel(notificationChannel)
                         notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
                         notificationManager.createNotificationChannel(notificationChannel)
                     }

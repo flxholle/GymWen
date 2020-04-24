@@ -521,5 +521,9 @@
     <string name="director_office">Directory office</string>
     <string name="office">Office</string>
     <string name="teachers_room">Teacher\'s room</string>
+    <string name="rss_notification_channel">Homepage</string>
+    <string name="set_rss_notification">Homepage notification</string>
+    <string name="rss_notification_channel_description">A notification of the latest articles on the school homepage</string>
+    <string name="rss_feed">RSS-Feed</string>
 
 </resources>

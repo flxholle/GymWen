@@ -57,6 +57,7 @@ import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
+import com.asdoi.gymwen.util.RSS_Feed;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -187,6 +188,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             startActivity(intent);
             drawer.closeDrawer(GravityCompat.START);
         });
+
+        RSS_Feed.checkRSS(this);
     }
 
     public void setupColors() {
