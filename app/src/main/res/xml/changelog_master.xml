@@ -18,6 +18,14 @@
 
 <changelog>
     <release
+        version="1.2.1"
+        versioncode="121">
+        <change>Benachrichtigung über neue Artikel auf der Homepage</change>
+        <change>RSS-Feed über die Homepage hinzugefügt</change>
+        <change>Neue Shortcut-Icons</change>
+        <change>Bugfixes</change>
+    </release>
+    <release
         version="1.2"
         versioncode="120">
         <change>Selbstprogrammierter Stundenplan mit integrierten Vertretungen, automatischem
