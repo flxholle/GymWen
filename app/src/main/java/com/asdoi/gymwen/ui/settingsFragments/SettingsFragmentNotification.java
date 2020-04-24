@@ -74,11 +74,18 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
             setNotif();
             return true;
         });
+
+        myPref = findPreference("RSS_notif");
+        myPref.setOnPreferenceClickListener((Preference preference) -> {
+            setNotif();
+            return true;
+        });
     }
 
     private void setNotif() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", true);
-        findPreference("alwaysNotification").setVisible(showNotif);
+        boolean showWebsiteNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("RSS_notif", true);
+        findPreference("alwaysNotification").setVisible(showNotif || showWebsiteNotif);
         findPreference("alarm").setVisible(showNotif);
         findPreference("two_notifs").setVisible(showNotif);
         findPreference("main_notif_for_all").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());

@@ -507,7 +507,8 @@
     <string name="timetable_delete_note">the note %1$s</string>
     <string name="timetable_delete_exam">the exam %1$s</string>
     <string name="remove_all_subjects">Delete everything</string>
-    <string name="remove_all_subjects_content">Should all data in the timetable be irretrievably deleted?\n It is advisable to create a backup beforehand!</string>
+    <string name="remove_all_subjects_content">Should all data in the timetable be irretrievably deleted?
+        \nIt is advisable to create a backup beforehand!</string>
     <string name="remove_all_successful">Successfully deleted everything</string>
     <string name="remove_all_failed">An error occurred</string>
     <string name="set_show_more">Show more</string>
