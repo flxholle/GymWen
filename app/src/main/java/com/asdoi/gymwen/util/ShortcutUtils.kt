@@ -22,8 +22,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
+import android.graphics.Color
 import android.graphics.drawable.Icon
+import android.graphics.drawable.LayerDrawable
+import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.preference.PreferenceManager
 import com.asdoi.gymwen.ApplicationFeatures
 import com.asdoi.gymwen.R
@@ -37,6 +42,9 @@ import com.asdoi.gymwen.ui.activities.WebsiteActivity
 class ShortcutUtils {
 
     companion object {
+        private val background = ContextCompat.getDrawable(ApplicationFeatures.getContext(), R.drawable.shortcuts_background)
+        private const val maxShortcuts = 4
+
         fun createShortcuts() {
             val context = ApplicationFeatures.getContext()
             val shortcutManager = context.getSystemService(ShortcutManager::class.java)
@@ -49,9 +57,9 @@ class ShortcutUtils {
             shortcuts = shortcutsPreference?.toTypedArray() ?: default
 
             //Only max 4 App-Shortcuts can be displayed
-            if (shortcuts.size > 4) {
+            if (shortcuts.size > maxShortcuts) {
                 val s = mutableListOf<String>()
-                for (i in 0 until 4) {
+                for (i in 0 until maxShortcuts) {
                     s.add(shortcuts[i])
                 }
                 shortcuts = s.toTypedArray()
@@ -78,60 +86,69 @@ class ShortcutUtils {
         }
 
 
-        private fun createShortcut(id: String, shortLabel: String, icon: Icon, intent: Intent, context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
+        private const val size = 256
+        private const val padding = 65
+        private fun createShortcut(id: String, shortLabel: String, iconId: Int, intent: Intent, context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
+            val icon = ContextCompat.getDrawable(context, iconId)
+            icon?.setTint(Color.WHITE)
+            val combined = LayerDrawable(arrayOf(background, icon))
+            combined.setLayerInset(1, padding, padding, padding, padding)
+
+            val combinedIcon = if (Build.VERSION.SDK_INT > 25) Icon.createWithAdaptiveBitmap(combined.toBitmap(size, size)) else Icon.createWithBitmap(combined.toBitmap(size, size))
+
             return ShortcutInfo.Builder(context, id)
                     .setShortLabel(shortLabel)
-                    .setIcon(icon)
+                    .setIcon(combinedIcon)
                     .setIntent(intent)
                     .build()
         }
 
         private fun createWebsiteShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("visit_website", context.getString(R.string.shortcut_website), Icon.createWithResource(context, R.drawable.ic_compass), Intent(context, WebsiteActivity::class.java).setAction(Intent.ACTION_VIEW))
+            return createShortcut("visit_website", context.getString(R.string.shortcut_website), R.drawable.ic_compass, Intent(context, WebsiteActivity::class.java).setAction(Intent.ACTION_VIEW))
         }
 
         private fun createMebisShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("mebis", context.getString(R.string.shortcut_mebis), Icon.createWithResource(context, R.drawable.ic_graduate_cap), Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_MEBIS))
+            return createShortcut("mebis", context.getString(R.string.shortcut_mebis), R.drawable.ic_graduate_cap, Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_MEBIS))
         }
 
         private fun createMensaShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("mensa", context.getString(R.string.shortcut_mensa), Icon.createWithResource(context, R.drawable.ic_restaurant), Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_MENSA))
+            return createShortcut("mensa", context.getString(R.string.shortcut_mensa), R.drawable.ic_restaurant, Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_MENSA))
         }
 
         private fun createTeacherListShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("teacher_list", context.getString(R.string.shortcut_teacher_list), Icon.createWithResource(context, R.drawable.ic_teacher_at_the_blackboard), Intent(context, TeacherListActivity::class.java).setAction(Intent.ACTION_VIEW))
+            return createShortcut("teacher_list", context.getString(R.string.shortcut_teacher_list), R.drawable.ic_teacher_at_the_blackboard, Intent(context, TeacherListActivity::class.java).setAction(Intent.ACTION_VIEW))
         }
 
         private fun createNavigationShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("navigation", context.getString(R.string.shortcut_navigation), Icon.createWithResource(context, R.drawable.ic_navigation_black_24dp), Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_NAVIGATION))
+            return createShortcut("navigation", context.getString(R.string.shortcut_navigation), R.drawable.ic_navigation_black_24dp, Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_NAVIGATION))
         }
 
         private fun createCallOfficeShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("call_office", context.getString(R.string.shortcut_call_office), Icon.createWithResource(context, R.drawable.ic_call_black_24dp), Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_CALL_OFFICE))
+            return createShortcut("call_office", context.getString(R.string.shortcut_call_office), R.drawable.ic_call_black_24dp, Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_CALL_OFFICE))
         }
 
         private fun createNewsShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("news", context.getString(R.string.shortcut_newspaper), Icon.createWithResource(context, R.drawable.ic_news), Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_NEWSPAPER))
+            return createShortcut("news", context.getString(R.string.shortcut_newspaper), R.drawable.ic_news, Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_NEWSPAPER))
         }
 
         private fun createGradeManagementShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("grades", context.getString(R.string.shortcut_grades_management), Icon.createWithResource(context, R.drawable.ic_exam), Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_GRADES_MANAGEMENT))
+            return createShortcut("grades", context.getString(R.string.shortcut_grades_management), R.drawable.ic_exam, Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_GRADES_MANAGEMENT))
         }
 
         private fun createClaXssShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("claxss", context.getString(R.string.shortcut_claxss), Icon.createWithResource(context, R.drawable.ic_internet), Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_CLAXSS))
+            return createShortcut("claxss", context.getString(R.string.shortcut_claxss), R.drawable.ic_internet, Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_CLAXSS))
         }
 
         private fun createFormsShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("forms", context.getString(R.string.shortcut_forms), Icon.createWithResource(context, R.drawable.ic_consent), Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_FORMS))
+            return createShortcut("forms", context.getString(R.string.shortcut_forms), R.drawable.ic_consent, Intent(context, MainActivity::class.java).setAction(MainActivity.SHORTCUT_ACTION_FORMS))
         }
 
         private fun createRoomPlanShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("roomplan", context.getString(R.string.shortcut_room_plan), Icon.createWithResource(context, R.drawable.ic_house_plan), Intent(context, RoomPlanActivity::class.java).setAction(Intent.ACTION_VIEW))
+            return createShortcut("roomplan", context.getString(R.string.shortcut_room_plan), R.drawable.ic_house_plan, Intent(context, RoomPlanActivity::class.java).setAction(Intent.ACTION_VIEW))
         }
 
         private fun createSearchRoomPlanShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("roomplan_search", context.getString(R.string.shortcut_room_plan_search), Icon.createWithResource(context, R.drawable.ic_search_black_24dp), Intent(context, RoomPlanActivity::class.java).setAction(RoomPlanActivity.SEARCH_ROOM))
+            return createShortcut("roomplan_search", context.getString(R.string.shortcut_room_plan_search), R.drawable.ic_search_black_24dp, Intent(context, RoomPlanActivity::class.java).setAction(RoomPlanActivity.SEARCH_ROOM))
         }
     }
 }
