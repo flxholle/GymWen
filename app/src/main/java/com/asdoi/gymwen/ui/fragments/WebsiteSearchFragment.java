@@ -83,7 +83,10 @@ public class WebsiteSearchFragment extends Fragment {
             else
                 content = contentAll;
             contentAll = content;
-            getActivity().runOnUiThread(() -> createLayout(root));
+            try {
+                getActivity().runOnUiThread(() -> createLayout(root));
+            } catch (Exception ignore) {
+            }
         }).start();
     }
 
