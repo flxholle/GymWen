@@ -43,6 +43,7 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.WebsiteActivity;
+import com.asdoi.gymwen.util.External_Const;
 
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
@@ -128,7 +129,7 @@ public class WebsiteSearchFragment extends Fragment {
 
     @NonNull
     private static List<WebsiteSearchLink> getLinks() {
-        String url = "http://www.gym-wen.de/startseite/navigation/";
+        String url = External_Const.website_navigation;
         Document doc = ApplicationFeatures.downloadDoc(url);
         if (doc == null) {
             return new ArrayList<>(0);
@@ -146,7 +147,7 @@ public class WebsiteSearchFragment extends Fragment {
                     link = whole.substring(beginIndex + "href=".length() + 1, endIndex);
                 }
                 if (link != null && !link.substring(0, "http".length()).equals("http")) {
-                    link = "http://gym-wen.de/" + link;
+                    link = External_Const.page_start_2 + link;
                 }
 
                 String name = HtmlCompat.fromHtml(whole, 0).toString().replaceAll("\n", "");

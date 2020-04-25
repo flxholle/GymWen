@@ -48,7 +48,6 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     @NonNull
@@ -63,31 +62,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     private static String[][] con;
     private Document doc;
-
-    @NonNull
-    private final List<String> homeOfPagesIndexes = Arrays.asList("http://www.gym-wen.de/schulleben/",
-            "http://www.gym-wen.de/schulleben/projekte/",
-            "http://www.gym-wen.de/schulleben/ereignisse/",
-            "http://www.gym-wen.de/schulleben/exkursionen/",
-            "http://www.gym-wen.de/information/unsere-schule/",
-            "http://www.gym-wen.de/information/",
-            "http://www.gym-wen.de/startseite/",
-            "http://www.gym-wen.de/schulleben/archiv/",
-            "http://www.gym-wen.de/schulleben/archiv/unser-schuljahr-201516/",
-            "http://www.gym-wen.de/schulleben/archiv/unser-schuljahr-201415/",
-            "http://www.gym-wen.de/schulleben/archiv/unser-schuljahr-201314/",
-            "http://www.gym-wen.de/schulleben/archiv/unser-schuljahr-201213/",
-            "http://www.gym-wen.de/information/schulanmeldung/",
-            "http://www.gym-wen.de/startseite/kontaktdaten/",
-            "http://www.gym-wen.de/information/unsere-schule/wahlkursangebot/",
-            "http://www.gym-wen.de/angebote/interessante-links/",
-            "http://www.gym-wen.de/material/",
-            "http://www.gym-wen.de/material/fachmaterialien/kunst/",
-            "http://www.gym-wen.de/material/formulare-merkblaetter/",
-            "http://www.gym-wen.de/material/corporate-design/",
-            "http://www.gym-wen.de/material/fachmaterialien/",
-            "http://www.gym-wen.de/probleme/",
-            "http://www.gym-wen.de/startseite/navigation/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +139,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
             final String formattedUrl = ApplicationFeatures.urlToRightFormat(url);
             final Context context = this;
-            if (ApplicationFeatures.isURLValid(formattedUrl) && formattedUrl.contains("http://www.gym-wen.de/")) {
+            if (ApplicationFeatures.isURLValid(formattedUrl) && formattedUrl.contains(External_Const.page_start)) {
                 (new Thread(() -> {
                     boolean isHTML;
                     try {
@@ -178,10 +152,14 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
 
                     if (isHTML) {
-                        history.add(formattedUrl);
+                        if (history.size() > 0) {
+                            if (!history.get(history.size() - 1).equalsIgnoreCase(formattedUrl))
+                                history.add(formattedUrl);
+                        } else
+                            history.add(formattedUrl);
                         setWebsiteTitle(doc);
                         //Check Site
-                        if (homeOfPagesIndexes.contains(formattedUrl)) {
+                        if (External_Const.homeOfPagesIndexes.contains(formattedUrl)) {
                             HomeOfPages(formattedUrl);
                         } else {
                             ContentPagesMixed(formattedUrl);
@@ -299,7 +277,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     //Loading pages
     private void HomepageLoad() {
-        loadPage("http://www.gym-wen.de/startseite/");
+        loadPage(External_Const.homepage);
     }
 
     private void HomeOfPages(String url) {

@@ -18,8 +18,13 @@
 
 package com.asdoi.gymwen.util;
 
+import androidx.annotation.NonNull;
+
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Class that saves constants that can change in the future
@@ -82,4 +87,36 @@ public abstract class External_Const {
 
     //App Registration (User census)
     public static final String REGISTER_URL = "https://asdoi.gitlab.io/hit_counter.html";
+
+
+    //Website Activity
+    public static final String homepage = "http://www.gym-wen.de/startseite/";
+    public static final String website_navigation = "http://www.gym-wen.de/startseite/navigation/";
+    @NonNull
+    public static final List<String> homeOfPagesIndexes = Arrays.asList("http://www.gym-wen.de/schulleben/",
+            "http://www.gym-wen.de/schulleben/projekte/",
+            "http://www.gym-wen.de/schulleben/ereignisse/",
+            "http://www.gym-wen.de/schulleben/exkursionen/",
+            "http://www.gym-wen.de/information/unsere-schule/",
+            "http://www.gym-wen.de/information/",
+            "http://www.gym-wen.de/startseite/",
+            "http://www.gym-wen.de/schulleben/archiv/",
+            "http://www.gym-wen.de/schulleben/archiv/unser-schuljahr-201516/",
+            "http://www.gym-wen.de/schulleben/archiv/unser-schuljahr-201415/",
+            "http://www.gym-wen.de/schulleben/archiv/unser-schuljahr-201314/",
+            "http://www.gym-wen.de/schulleben/archiv/unser-schuljahr-201213/",
+            "http://www.gym-wen.de/information/schulanmeldung/",
+            "http://www.gym-wen.de/startseite/kontaktdaten/",
+            "http://www.gym-wen.de/information/unsere-schule/wahlkursangebot/",
+            "http://www.gym-wen.de/angebote/interessante-links/",
+            "http://www.gym-wen.de/material/",
+            "http://www.gym-wen.de/material/fachmaterialien/kunst/",
+            "http://www.gym-wen.de/material/formulare-merkblaetter/",
+            "http://www.gym-wen.de/material/corporate-design/",
+            "http://www.gym-wen.de/material/fachmaterialien/",
+            "http://www.gym-wen.de/probleme/",
+            "http://www.gym-wen.de/startseite/navigation/");
+
+    public static final String page_start = "http://www.gym-wen.de/";
+    public static final String page_start_2 = "http://gym-wen.de/";
 }
