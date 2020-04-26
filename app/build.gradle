@@ -64,10 +64,10 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
-    implementation 'androidx.navigation:navigation-fragment:2.2.1'
-    implementation 'androidx.navigation:navigation-ui:2.2.1'
+    implementation 'androidx.navigation:navigation-fragment:2.2.2'
+    implementation 'androidx.navigation:navigation-ui:2.2.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.preference:preference:1.1.0'
+    implementation 'androidx.preference:preference:1.1.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.core:core:1.2.0'
@@ -90,8 +90,7 @@ dependencies {
     implementation 'de.cketti.library.changelog:ckchangelog:1.2.2'
     implementation 'ru.github.igla:ferriswheel:1.2'
     implementation 'com.github.IamIsPra:Sheriff:1.0.0'
-    implementation 'com.ahmedjazzar.rosetta:rosetta:1.01'
-    implementation 'com.github.franmontiel:LocaleChanger:0.9.2'
+    implementation 'com.github.zeeshanrasool91:rosetta:aa011ce58a'
     //noinspection AnnotationProcessorOnCompilePath
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
@@ -104,12 +103,12 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.ritesh:ratiolayout:1.0.0'
     implementation 'com.github.stephenvinouze:shapetextdrawable:1.0.0'
-    implementation 'com.github.AbdAllahAbdElFattah13:MapView:master-SNAPSHOT'
+    implementation 'com.github.AbdAllahAbdElFattah13:MapView:b705d2a5a7'
     implementation 'com.prof.rssparser:rssparser:2.1.2'
 
     //Timetable
     implementation 'com.github.asdoi:ColorPickerDialog:a1d628430b'
-    implementation 'com.github.asdoi:SQLite2XL:-SNAPSHOT'
+    implementation 'com.github.asdoi:SQLite2XL:88883cf56d'
     //noinspection NewerVersionAvailable,GradleDependency
     implementation 'org.apache.poi:poi:3.16'
 
