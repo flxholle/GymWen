@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
+import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.activities.WebsiteActivity;
 import com.prof.rssparser.Article;
 import com.prof.rssparser.Channel;
@@ -58,7 +59,9 @@ public class RSS_Feed {
                 if (articles.size() > 0) {
                     if (!articles.get(0).getTitle().equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle())) {
                         //Send Notification
-                        sendRSSNotification(articles.get(0), context, R.drawable.ic_compass, true);
+                        Intent notificationIntent = new Intent(context, WebsiteActivity.class);
+                        notificationIntent.putExtra(WebsiteActivity.LOADURL, articles.get(0).getLink());
+                        sendRSSNotification(articles.get(0), context, R.drawable.ic_compass, notificationIntent);
                         PreferenceUtil.setLastLoadedRSSTitle(articles.get(0).getTitle());
                     }
                 }
@@ -82,9 +85,12 @@ public class RSS_Feed {
                 // Use the channel info
                 List<Article> articles = channel.getArticles();
                 if (articles.size() > 0) {
-                    if (articles.get(articles.size() - 1).getTitle().equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle2())) {
+                    if (!articles.get(articles.size() - 1).getTitle().equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle2())) {
                         //Send Notification
-                        sendRSSNotification(articles.get(articles.size() - 1), context, R.drawable.ic_gitlab, false);
+                        Intent notificationIntent = new Intent(context, MainActivity.class);
+                        notificationIntent.setAction(MainActivity.LOADURL);
+                        notificationIntent.putExtra(MainActivity.LOADURL, articles.get(articles.size() - 1).getLink());
+                        sendRSSNotification(articles.get(articles.size() - 1), context, R.drawable.ic_gitlab, notificationIntent);
                         PreferenceUtil.setLastLoadedRSSTitle2(articles.get(articles.size() - 1).getTitle());
                     }
                 }
@@ -99,7 +105,7 @@ public class RSS_Feed {
         parser2.execute(External_Const.rss_feed_Link_2);
     }
 
-    private static void sendRSSNotification(Article article, Context context, int smallIcon, boolean url_to_right_format) {
+    private static void sendRSSNotification(Article article, Context context, int smallIcon, Intent notificationIntent) {
         if (article == null || !PreferenceUtil.isRSSNotification() || Build.VERSION.SDK_INT < 21)
             return;
 
@@ -108,9 +114,6 @@ public class RSS_Feed {
         long when = System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent notificationIntent = new Intent(context, WebsiteActivity.class);
-        notificationIntent.putExtra(WebsiteActivity.LOADURL, article.getLink());
-        notificationIntent.putExtra(WebsiteActivity.URL_TO_RIGHT_FORMAT, url_to_right_format);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(notificationIntent);
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

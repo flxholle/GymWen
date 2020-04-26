@@ -85,6 +85,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static final String SHORTCUT_ACTION_CLAXSS = "com.asdoi.gymwen.ui.activities.MainActivity.ClaXss";
     public static final String SHORTCUT_ACTION_FORMS = "com.asdoi.gymwen.ui.activities.MainActivity.Forms";
 
+    public static final String LOADURL = WebsiteActivity.LOADURL;
+
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -241,6 +243,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     break;
                 case SHORTCUT_ACTION_FORMS:
                     onNavigationItemSelected(R.id.nav_forms);
+                    break;
+                case LOADURL:
+                    tabIntent(i.getStringExtra(LOADURL));
                     break;
             }
             setIntent(null);

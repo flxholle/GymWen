@@ -54,8 +54,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     @NonNull
     public static final String SEARCH = "search";
 
-    public static final String URL_TO_RIGHT_FORMAT = "rightformat";
-
     private boolean search = false;
 
     @Nullable
@@ -105,12 +103,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                     if (intentURL == null) {
                         Uri data = getIntent().getData();
                         intentURL = data.getHost() + data.getPath();
-                    }
-                    if (getIntent().hasExtra(URL_TO_RIGHT_FORMAT)) {
-                        if (!getIntent().getBooleanExtra(URL_TO_RIGHT_FORMAT, true)) {
-                            openInTabIntent(intentURL);
-                            return;
-                        }
                     }
                     loadPage(intentURL);
                     setIntent(null);
