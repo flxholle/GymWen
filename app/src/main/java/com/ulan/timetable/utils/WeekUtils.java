@@ -162,7 +162,7 @@ public class WeekUtils {
         return sortWeekList(weeks);
     }
 
-    private static void split(@NonNull ArrayList<Week> weeks, String begin, String end, Week weekEntry, int j, @NonNull Week week, boolean beginIsFrom) {
+    private static void split(@NonNull ArrayList<Week> weeks, String begin, String end, @NonNull Week weekEntry, int j, @NonNull Week week, boolean beginIsFrom) {
         if (weekEntry.getSubject().trim().isEmpty())
             weekEntry.setSubject(weeks.get(j).getSubject());
 
@@ -179,7 +179,7 @@ public class WeekUtils {
         }
     }
 
-    private static void checkNextAndRemove(@NonNull ArrayList<Week> weeks, String begin, @NonNull String end, Week weekEntry, int j) {
+    private static void checkNextAndRemove(@NonNull ArrayList<Week> weeks, String begin, @NonNull String end, @NonNull Week weekEntry, int j) {
         for (int j2 = j; j2 < weeks.size(); j2++) {
             Week week = weeks.get(j2);
             boolean endIsAfterFrom = end.compareToIgnoreCase(week.getFromTime()) > 0;

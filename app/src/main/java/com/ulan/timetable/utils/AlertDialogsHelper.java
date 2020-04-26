@@ -1098,7 +1098,8 @@ public class AlertDialogsHelper {
                 .show();
     }
 
-    private static Set<Map.Entry<Integer, EditText>> getEntrySet(SparseArray<EditText> array) {
+    @NonNull
+    private static Set<Map.Entry<Integer, EditText>> getEntrySet(@NonNull SparseArray<EditText> array) {
         Set<Map.Entry<Integer, EditText>> entrySet = new TreeSet<>();
         for (int i = 0; i < array.size(); i++) {
             int key = array.keyAt(i);

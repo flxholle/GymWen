@@ -330,7 +330,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.timetable_main, menu);
         boolean integration = PreferenceUtil.isTimeTableSubstitution();
         setIntegration(menu.findItem(R.id.action_substitutionIntegration), integration);

@@ -37,7 +37,6 @@ public abstract class External_Const {
     //App packageNames
     public final static String[] cafeteria_packageName = new String[]{"de.eezzy.admin.apnr40"};
     public final static String[] notes_packageNames = new String[]{"com.simplemobiletools.notes", "com.simplemobiletools.notes.pro", "com.samsung.android.app.notes"};
-    public static final String[] coloRush_packageNames = new String[]{"com.JUF.ColoRush"};
     public static final String[] publicTransport_packageNames = new String[]{"de.schildbach.oeffi", "com.mdv.VGNCompanion", "de.hafas.android.db"};
     public static final String[] excel_packageNames = new String[]{"com.microsoft.office.excel", "org.documentfoundation.libreoffice", "cn.wps.moffice_eng"};
 
@@ -50,7 +49,6 @@ public abstract class External_Const {
     public final static String claxss_Link = "https://gym-wendelstein.schule-eltern.info/infoline/claxss";
     public static final String news_Link = "http://schuelerzeitung-gym-wen.de/";
     public static final String podcast_Link = "https://www.machdeinradio.de/kanal/wendelsteiner-welle/";
-    public static final String colorush_online = "https://asdoi.gitlab.io/colorushweb/";
     public static final String rss_feed_Link = "https://asdoi.gitlab.io/rss-feeds/GymWenStartseite.xml";
     public static final String rss_feed_Link_2 = "https://asdoi.gitlab.io/rss-feeds/asdoiNews.xml";
 
@@ -63,9 +61,14 @@ public abstract class External_Const {
 
 
     //Download Apps
-    public static final String downloadApp_colorush = "https://gitlab.com/asdoi/colorrush/blob/master/Apk/ColoRush.apk";
     public static final String downloadApp_publicTransport = "https://f-droid.org/de/packages/de.schildbach.oeffi/";
     public static final String downloadApp_libreoffice = "https://f-droid.org/de/packages/org.documentfoundation.libreoffice/";
+
+
+    //ColoRush
+    public static final String downloadApp_colorush = "https://asdoi.gitlab.io/colorush.html";
+    public static final String[] coloRush_packageNames = new String[]{"com.JUF.ColoRush"};
+    public static final String colorush_online = "https://asdoi.gitlab.io/colorushweb/";
 
 
     //SubstitutionPlan

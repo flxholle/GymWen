@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
@@ -344,6 +345,7 @@ public class PreferenceUtil {
         return getBooleanSettings("RSS_notif", true);
     }
 
+    @Nullable
     public static String getLastLoadedRSSTitle() {
         return PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getString("lastRSSTitle", null);
     }
@@ -352,6 +354,7 @@ public class PreferenceUtil {
         PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putString("lastRSSTitle", value).apply();
     }
 
+    @Nullable
     public static String getLastLoadedRSSTitle2() {
         return PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getString("lastRSSTitle2", null);
     }

@@ -28,6 +28,7 @@ import android.media.RingtoneManager;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
@@ -45,15 +46,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class RSS_Feed {
+    @NonNull
     public static String CHANNEL_ID = "RSS_notification";
 
-    public static void checkRSS(Context context) {
+    public static void checkRSS(@NonNull Context context) {
         Parser parser = new Parser();
         parser.onFinish(new OnTaskCompleted() {
 
             //what to do when the parsing is done
             @Override
-            public void onTaskCompleted(Channel channel) {
+            public void onTaskCompleted(@NonNull Channel channel) {
                 // Use the channel info
                 List<Article> articles = channel.getArticles();
                 if (articles.size() > 0) {
@@ -81,7 +83,7 @@ public class RSS_Feed {
 
             //what to do when the parsing is done
             @Override
-            public void onTaskCompleted(Channel channel) {
+            public void onTaskCompleted(@NonNull Channel channel) {
                 // Use the channel info
                 List<Article> articles = channel.getArticles();
                 if (articles.size() > 0) {
@@ -105,7 +107,7 @@ public class RSS_Feed {
         parser2.execute(External_Const.rss_feed_Link_2);
     }
 
-    private static void sendRSSNotification(Article article, Context context, int smallIcon, Intent notificationIntent) {
+    private static void sendRSSNotification(@Nullable Article article, @NonNull Context context, int smallIcon, @NonNull Intent notificationIntent) {
         if (article == null || !PreferenceUtil.isRSSNotification() || Build.VERSION.SDK_INT < 21)
             return;
 
