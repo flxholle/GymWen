@@ -18,7 +18,6 @@
 
 package com.asdoi.gymwen.ui.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,6 +53,8 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
     public static final String LOADURL = "url";
     @NonNull
     public static final String SEARCH = "search";
+
+    public static final String URL_TO_RIGHT_FORMAT = "rightformat";
 
     private boolean search = false;
 
@@ -105,6 +106,12 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                         Uri data = getIntent().getData();
                         intentURL = data.getHost() + data.getPath();
                     }
+                    if (getIntent().hasExtra(URL_TO_RIGHT_FORMAT)) {
+                        if (!getIntent().getBooleanExtra(URL_TO_RIGHT_FORMAT, true)) {
+                            openInTabIntent(intentURL);
+                            return;
+                        }
+                    }
                     loadPage(intentURL);
                     setIntent(null);
                     return;
@@ -138,7 +145,6 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         if (!url.trim().isEmpty()) {
 
             final String formattedUrl = ApplicationFeatures.urlToRightFormat(url);
-            final Context context = this;
             if (ApplicationFeatures.isURLValid(formattedUrl) && formattedUrl.contains(External_Const.page_start)) {
                 (new Thread(() -> {
                     boolean isHTML;

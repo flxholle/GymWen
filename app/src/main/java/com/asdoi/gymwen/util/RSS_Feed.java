@@ -58,7 +58,7 @@ public class RSS_Feed {
                 if (articles.size() > 0) {
                     if (!articles.get(0).getTitle().equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle())) {
                         //Send Notification
-                        sendRSSNotification(articles.get(0), context);
+                        sendRSSNotification(articles.get(0), context, R.drawable.ic_compass, true);
                         PreferenceUtil.setLastLoadedRSSTitle(articles.get(0).getTitle());
                     }
                 }
@@ -71,9 +71,35 @@ public class RSS_Feed {
             }
         });
         parser.execute(External_Const.rss_feed_Link);
+
+
+        Parser parser2 = new Parser();
+        parser2.onFinish(new OnTaskCompleted() {
+
+            //what to do when the parsing is done
+            @Override
+            public void onTaskCompleted(Channel channel) {
+                // Use the channel info
+                List<Article> articles = channel.getArticles();
+                if (articles.size() > 0) {
+                    if (articles.get(articles.size() - 1).getTitle().equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle2())) {
+                        //Send Notification
+                        sendRSSNotification(articles.get(articles.size() - 1), context, R.drawable.ic_gitlab, false);
+                        PreferenceUtil.setLastLoadedRSSTitle2(articles.get(articles.size() - 1).getTitle());
+                    }
+                }
+            }
+
+            //what to do in case of error
+            @Override
+            public void onError(Exception e) {
+                // Handle the exception
+            }
+        });
+        parser2.execute(External_Const.rss_feed_Link_2);
     }
 
-    private static void sendRSSNotification(Article article, Context context) {
+    private static void sendRSSNotification(Article article, Context context, int smallIcon, boolean url_to_right_format) {
         if (article == null || !PreferenceUtil.isRSSNotification() || Build.VERSION.SDK_INT < 21)
             return;
 
@@ -84,13 +110,14 @@ public class RSS_Feed {
 
         Intent notificationIntent = new Intent(context, WebsiteActivity.class);
         notificationIntent.putExtra(WebsiteActivity.LOADURL, article.getLink());
+        notificationIntent.putExtra(WebsiteActivity.URL_TO_RIGHT_FORMAT, url_to_right_format);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(notificationIntent);
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         createNotificationChannel(context);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_compass)
+                .setSmallIcon(smallIcon)
                 .setContentTitle(article.getTitle())
                 .setContentText(article.getDescription())
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -115,7 +142,6 @@ public class RSS_Feed {
             notificationManager.notify(id, notificationBuilder.build());
         }
     }
-
 
     private static void createNotificationChannel(@NonNull Context context) {
         // Create the NotificationChannel, but only on API 26+ because

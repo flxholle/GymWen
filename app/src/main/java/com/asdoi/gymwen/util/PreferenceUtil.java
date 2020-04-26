@@ -351,4 +351,12 @@ public class PreferenceUtil {
     public static void setLastLoadedRSSTitle(String value) {
         PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putString("lastRSSTitle", value).apply();
     }
+
+    public static String getLastLoadedRSSTitle2() {
+        return PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getString("lastRSSTitle2", null);
+    }
+
+    public static void setLastLoadedRSSTitle2(String value) {
+        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putString("lastRSSTitle2", value).apply();
+    }
 }
