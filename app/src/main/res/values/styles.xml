@@ -19,19 +19,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="webPageBackground">@color/web_background_homepages</item>
-    </style>
-
     <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="webPageBackground">@color/web_background_homepages</item>
-        <item name="windowActionBarOverlay">true</item>
         <item name="cardBackgroundColor">@android:color/white</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="popupMenuStyle">@style/ThemeOverlay.AppCompat.Light</item>
@@ -58,14 +50,14 @@
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
+    <style name="AppTheme.NoActionBar" parent="AppTheme.Light">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="SplashTheme" parent="AppTheme">
+    <style name="SplashTheme" parent="AppTheme.Light">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
