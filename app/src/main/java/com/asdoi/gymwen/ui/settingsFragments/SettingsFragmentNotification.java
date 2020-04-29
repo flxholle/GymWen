@@ -54,6 +54,8 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
             timePickerDialog.show();
             return true;
         });
+        int[] times = PreferenceUtil.getAlarmTime();
+        myPref.setSummary(times[0] + ":" + times[1]);
 
         setSummary();
         myPref = findPreference("showSummaryNotification");
