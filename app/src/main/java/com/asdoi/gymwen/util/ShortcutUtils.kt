@@ -36,6 +36,8 @@ import com.asdoi.gymwen.ui.activities.MainActivity
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity
 import com.asdoi.gymwen.ui.activities.TeacherListActivity
 import com.asdoi.gymwen.ui.activities.WebsiteActivity
+import com.ulan.timetable.activities.HomeworksActivity
+import com.ulan.timetable.activities.NotesActivity
 
 
 @RequiresApi(25)
@@ -79,6 +81,8 @@ class ShortcutUtils {
                     "teacherlist" -> shortcutList.add(createTeacherListShortcut())
                     "roomplan" -> shortcutList.add(createRoomPlanShortcut())
                     "roomplan_search" -> shortcutList.add(createSearchRoomPlanShortcut())
+                    "addHomework" -> shortcutList.add(createAddHomeworkShortcut())
+                    "openNotes" -> shortcutList.add(createNotesShortcut())
                 }
             }
 
@@ -149,6 +153,14 @@ class ShortcutUtils {
 
         private fun createSearchRoomPlanShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
             return createShortcut("roomplan_search", context.getString(R.string.shortcut_room_plan_search), R.drawable.ic_search_black_24dp, Intent(context, RoomPlanActivity::class.java).setAction(RoomPlanActivity.SEARCH_ROOM))
+        }
+
+        private fun createAddHomeworkShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
+            return createShortcut("add_homework", context.getString(R.string.add_homework), R.drawable.ic_book_black_24dp, Intent(context, HomeworksActivity::class.java).setAction(HomeworksActivity.ACTION_ADD_HOMEWORK))
+        }
+
+        private fun createNotesShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
+            return createShortcut("open_notes", context.getString(R.string.notes_activity_title), R.drawable.ic_event_note_black_24dp, Intent(context, NotesActivity::class.java).setAction(Intent.ACTION_VIEW))
         }
     }
 }

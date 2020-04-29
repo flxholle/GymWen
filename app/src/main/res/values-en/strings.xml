@@ -526,5 +526,8 @@
     <string name="set_rss_notification">Homepage notification</string>
     <string name="rss_notification_channel_description">A notification of the latest articles on the school homepage</string>
     <string name="rss_feed">RSS-Feed</string>
+    <string name="no_navigation_app">No navigation app installed</string>
+    <string name="no_calendar_app">No calendar app installed</string>
+    <string name="add_to_calendar">Should this event be added to your calendar?</string>
 
 </resources>

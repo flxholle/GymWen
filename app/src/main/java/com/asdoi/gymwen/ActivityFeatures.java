@@ -510,7 +510,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                 openAppPermissionSettings();
                 dialog.dismiss();
             });
-            builder.negativeText(getContext().getString(R.string.permission_ok_button));
+            builder.positiveText(getContext().getString(R.string.permission_ok_button));
 
             builder.negativeText(getContext().getString(R.string.permission_cancel_button));
             builder.onNegative((dialog, which) -> dialog.dismiss());
@@ -736,7 +736,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e2) {
-                ChocoBar.builder().setActivity(this).setText(getString(R.string.no_email_app)).setDuration(ChocoBar.LENGTH_LONG).red().show();
+                ChocoBar.builder().setActivity(this).setText(getString(R.string.no_navigation_app)).setDuration(ChocoBar.LENGTH_LONG).red().show();
             }
         }
     }

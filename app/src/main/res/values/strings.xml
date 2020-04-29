@@ -294,6 +294,7 @@
 
     <!-- TeacherlistFeatures -->
     <string name="no_email_app">Du hast keine E-Mail App installiert.</string>
+    <string name="no_navigation_app">Du hast keine Navi-App installiert.</string>
     <string name="teacher_no_teacher_found">Es wurde kein Lehrer mit diesen Daten gefunden.</string>
     <string name="teacher_search_teacher_list">Durchsuchen\u2026</string>
     <string name="teacher_mail">Mail</string>
@@ -623,5 +624,8 @@
         \nEs empfiehlt sich vorher ein Backup anzulegen!</string>
     <string name="remove_all_successful">Erfolgreich Alles gelöscht</string>
     <string name="remove_all_failed">Es ist ein Fehler aufgetreten</string>
+
+    <string name="no_calendar_app">Du hast keine Kalender-App installiert</string>
+    <string name="add_to_calendar">Soll diese Ereignis zu deinem Kalender hinzugefügt werden?</string>
 
 </resources>
