@@ -53,6 +53,7 @@
         <item>@string/shortcut_newspaper</item>
         <item>@string/add_homework</item>
         <item>@string/notes_activity_title</item>
+        <item>@string/summary_activity_title</item>
     </string-array>
 
     <string-array name="shortcuts_array_values">
@@ -70,6 +71,7 @@
         <item>newspaper</item>
         <item>addHomework</item>
         <item>openNotes</item>
+        <item>summary</item>
     </string-array>
 
     <string-array name="shortcuts_array_values_default">

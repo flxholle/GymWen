@@ -28,7 +28,7 @@ android {
     defaultConfig {
         applicationId "com.asdoi.gymwen"
         /*Android v4.3 alias "Jelly Bean"*/
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 120
         versionName "1.2.0"
@@ -111,6 +111,8 @@ dependencies {
     implementation 'com.github.asdoi:SQLite2XL:88883cf56d'
     //noinspection NewerVersionAvailable,GradleDependency
     implementation 'org.apache.poi:poi:3.16'
+    implementation 'com.github.asdoi:TimetableUI:1386c4216b'
+    implementation 'com.github.asdoi:TimetableView:master-SNAPSHOT'
 
     //Image Slider (see ColoRushFragment)
     //noinspection GradleDependency,NewerVersionAvailable

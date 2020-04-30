@@ -529,5 +529,18 @@
     <string name="no_navigation_app">No navigation app installed</string>
     <string name="no_calendar_app">No calendar app installed</string>
     <string name="add_to_calendar">Should this event be added to your calendar?</string>
+    <string name="summary_activity_title">Summary</string>
+    <string name="change_summary_library">Change presentation</string>
+    <string name="start_of_school">Start of school</string>
+    <string name="length_of_period">Length of the lesson</string>
+    <string name="minutes">minutes</string>
+    <string-array name="timetable_header">
+        <item></item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+    </string-array>
 
 </resources>

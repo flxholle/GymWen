@@ -628,4 +628,19 @@
     <string name="no_calendar_app">Du hast keine Kalender-App installiert</string>
     <string name="add_to_calendar">Soll diese Ereignis zu deinem Kalender hinzugefügt werden?</string>
 
+    <string name="start_of_school">Schulstart</string>
+    <string name="length_of_period">Stundenlänge</string>
+    <string name="minutes">Minuten</string>
+    <string name="change_summary_library">Darstellung ändern</string>
+    <string name="summary_activity_title">Zusammenfassung</string>
+
+    <string-array name="timetable_header">
+        <item></item>
+        <item>Mon</item>
+        <item>Die</item>
+        <item>Mit</item>
+        <item>Don</item>
+        <item>Fre</item>
+    </string-array>
+
 </resources>

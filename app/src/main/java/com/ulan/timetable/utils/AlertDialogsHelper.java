@@ -50,7 +50,6 @@ import com.ulan.timetable.adapters.ExamsAdapter;
 import com.ulan.timetable.adapters.FragmentsTabAdapter;
 import com.ulan.timetable.adapters.HomeworksAdapter;
 import com.ulan.timetable.adapters.NotesAdapter;
-import com.ulan.timetable.adapters.WeekAdapter;
 import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.model.Exam;
@@ -72,7 +71,7 @@ import me.jfenn.colorpickerdialog.views.picker.RGBPickerView;
  */
 public class AlertDialogsHelper {
 
-    public static void getEditSubjectDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final ListView listView, @NonNull final Week week) {
+    public static void getEditSubjectDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, Runnable runOnSafe, @NonNull final Week week) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
@@ -209,14 +208,13 @@ public class AlertDialogsHelper {
                 Snackbar.make(alertLayout, R.string.time_error, Snackbar.LENGTH_LONG).show();
             } else {
                 DbHelper db = new DbHelper(activity);
-                WeekAdapter weekAdapter = (WeekAdapter) listView.getAdapter(); // In order to get notifyDataSetChanged() method.
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 week.setSubject(subject.getText().toString());
                 week.setTeacher(teacher.getText().toString());
                 week.setRoom(room.getText().toString());
                 week.setColor(buttonColor.getColor());
                 db.updateWeek(week);
-                weekAdapter.notifyDataSetChanged();
+                runOnSafe.run();
                 dialog.dismiss();
             }
         });

@@ -38,6 +38,7 @@ import com.asdoi.gymwen.ui.activities.TeacherListActivity
 import com.asdoi.gymwen.ui.activities.WebsiteActivity
 import com.ulan.timetable.activities.HomeworksActivity
 import com.ulan.timetable.activities.NotesActivity
+import com.ulan.timetable.activities.SummaryActivity
 
 
 @RequiresApi(25)
@@ -83,6 +84,7 @@ class ShortcutUtils {
                     "roomplan_search" -> shortcutList.add(createSearchRoomPlanShortcut())
                     "addHomework" -> shortcutList.add(createAddHomeworkShortcut())
                     "openNotes" -> shortcutList.add(createNotesShortcut())
+                    "summary" -> shortcutList.add(createSummaryShortcut())
                 }
             }
 
@@ -161,6 +163,10 @@ class ShortcutUtils {
 
         private fun createNotesShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
             return createShortcut("open_notes", context.getString(R.string.notes_activity_title), R.drawable.ic_event_note_black_24dp, Intent(context, NotesActivity::class.java).setAction(Intent.ACTION_VIEW))
+        }
+
+        private fun createSummaryShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
+            return createShortcut("summary", context.getString(R.string.summary_activity_title), R.drawable.ic_assignment_white_24dp, Intent(context, SummaryActivity::class.java).setAction(Intent.ACTION_VIEW))
         }
     }
 }

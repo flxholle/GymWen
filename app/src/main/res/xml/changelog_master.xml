@@ -21,6 +21,7 @@
         version="1.2.1"
         versioncode="121">
         <change>Benachrichtigung über neue Artikel auf der Homepage</change>
+        <change>Neue Zusammenfassende Ansicht im Stundenplan hinzugefügt</change>
         <change>RSS-Feed über die Homepage hinzugefügt</change>
         <change>Neue Shortcut-Icons</change>
         <change>Bugfixes</change>

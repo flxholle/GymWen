@@ -251,6 +251,14 @@
             android:name="com.ulan.timetable.activities.ExamsActivity"
             android:label="@string/exams_activity_title" />
         <activity
+            android:name="com.ulan.timetable.activities.SummaryActivity"
+            android:label="@string/summary_activity_title" />
+        <activity
+            android:name="com.ulan.timetable.activities.SummarySettingsActivity"
+            android:label="@string/menu_settings" />
+
+
+        <activity
             android:name="com.mikepenz.aboutlibraries.ui.LibsActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
 
