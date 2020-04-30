@@ -111,7 +111,7 @@ dependencies {
     implementation 'com.github.asdoi:SQLite2XL:88883cf56d'
     //noinspection NewerVersionAvailable,GradleDependency
     implementation 'org.apache.poi:poi:3.16'
-    implementation 'com.github.asdoi:TimetableUI:1386c4216b'
+    implementation 'com.github.asdoi:TimetableUI:510602369c'
     implementation 'com.github.asdoi:TimetableView:master-SNAPSHOT'
 
     //Image Slider (see ColoRushFragment)

@@ -43,12 +43,14 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
         ProfileManagement.initProfiles();
 
         Preference myPref = findPreference("alarm");
+        Preference finalMyPref = myPref;
         myPref.setOnPreferenceClickListener((Preference p) -> {
             int[] times = PreferenceUtil.getAlarmTime();
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                     (view, hourOfDay, minute) -> {
                         PreferenceUtil.setAlarmTime(hourOfDay, minute, 0);
                         ApplicationFeatures.setRepeatingAlarm(getContext(), AlarmReceiver.class, hourOfDay, minute, 0, AlarmReceiver.AlarmReceiverID, AlarmManager.INTERVAL_DAY);
+                        finalMyPref.setSummary(hourOfDay + ":" + minute);
                     }, times[0], times[1], true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();

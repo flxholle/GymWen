@@ -19,7 +19,6 @@
 package com.ulan.timetable.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,6 +57,7 @@ public class SummaryActivity extends ActivityFeatures {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme_Light);
         setContentView(R.layout.timetable_activity_summary);
 
         lessonDuration = PreferenceUtil.getPeriodLength(this);
@@ -230,7 +230,7 @@ public class SummaryActivity extends ActivityFeatures {
 
             setName(name.toString());
 
-            setColor(w.getColor() == Color.BLACK ? Color.WHITE : w.getColor());
+            setColor(w.getColor());
         }
 
         public Week getWeek() {

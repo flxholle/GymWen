@@ -60,12 +60,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
 
         myPref = findPreference("timetable_alarm");
+        Preference finalMyPref = myPref;
         myPref.setOnPreferenceClickListener((Preference p) -> {
             int[] oldTimes = PreferenceUtil.getTimeTableAlarmTime();
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                     (view, hourOfDay, minute) -> {
                         PreferenceUtil.setTimeTableAlarmTime(hourOfDay, minute, 0);
                         ApplicationFeatures.setRepeatingAlarm(getContext(), DailyReceiver.class, hourOfDay, minute, 0, DailyReceiver.DailyReceiverID, AlarmManager.INTERVAL_DAY);
+                        finalMyPref.setSummary(hourOfDay + ":" + minute);
                     }, oldTimes[0], oldTimes[1], true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
