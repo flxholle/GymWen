@@ -375,6 +375,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             Intent homework = new Intent(MainActivity.this, HomeworksActivity.class);
             homework.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
             startActivity(homework);
+        } else if (itemId == R.id.summary) {
+            Intent summary = new Intent(MainActivity.this, SummaryActivity.class);
+            summary.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
+            startActivity(summary);
         } else if (itemId == R.id.notes) {
             Intent note = new Intent(MainActivity.this, NotesActivity.class);
             note.putExtra(TimeTableBuilder.PROFILE_POS, ProfileManagement.loadPreferredProfilePosition());
@@ -386,10 +390,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             Intent settings = new Intent(MainActivity.this, com.asdoi.gymwen.ui.activities.MainActivity.class);
             startActivity(settings);
             finish();
-        } else if (itemId == R.id.summary) {
-            Intent summary = new Intent(MainActivity.this, SummaryActivity.class);
-            summary.putExtra(TimeTableBuilder.PROFILE_POS, ProfileManagement.loadPreferredProfilePosition());
-            startActivity(summary);
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

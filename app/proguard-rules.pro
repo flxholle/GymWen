@@ -24,4 +24,4 @@
 -keep public class org.apache.poi.hssf.** {*;}
 -keep public class org.apache.poi.ss.** {*;}
 -keep public class me.jfenn.colorpickerdialog.** {*;}
--keep public class com.asdoi.gymwen.ui.settingsFragments.** {*;}
+-keep public class com.asdoi.gymwen.ui.** {*;}
