@@ -70,7 +70,7 @@ public class TimeTableBuilder {
         Intent i = new Intent(context, cl);
         i.putExtra(CUSTOM_THEME, customTheme);
         i.putExtra(PROFILE_POS, profilePos);
-        if (!substitutionPlan.getToday().getNoInternet()) {
+        if (substitutionPlan != null && !substitutionPlan.getToday().getNoInternet()) {
             i.putExtra(SUBSTITUTIONPLANDOC_TODAY, substitutionPlan.getTodayDoc().toString());
             i.putExtra(SUBSTITUTIONPLANDOC_TOMORROW, substitutionPlan.getTomorrowDoc().toString());
         }

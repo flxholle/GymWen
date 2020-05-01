@@ -251,8 +251,8 @@ public class ApplicationFeatures extends MultiDexApplication {
                         .header("Authorization", "Basic " + encodedString)
                         .get();
 
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ignore) {
+//                e.printStackTrace();
 //                return;
             }
         }
