@@ -45,6 +45,16 @@ public class DBUtil {
     public static int getProfilePosition(@NonNull Activity activity) {
         int sharedPref = getProfilePositionFromSharedPreferences();
         try {
+            if (activity.getIntent().getExtras() != null) {
+                int themeId = activity.getIntent().getExtras().getInt(TimeTableBuilder.CUSTOM_THEME, -1);
+                if (themeId != -1) {
+                    activity.setTheme(themeId);
+                }
+            }
+        } catch (Exception ignore) {
+        }
+
+        try {
             int name = Objects.requireNonNull(activity.getIntent().getExtras()).getInt(TimeTableBuilder.PROFILE_POS, -1);
             if (name == -1)
                 name = Objects.requireNonNull(Objects.requireNonNull(activity.getParentActivityIntent()).getExtras()).getInt(TimeTableBuilder.PROFILE_POS, -1);
@@ -54,8 +64,7 @@ public class DBUtil {
             } else {
                 return name;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore) {
         }
 
         if (sharedPref >= 0)

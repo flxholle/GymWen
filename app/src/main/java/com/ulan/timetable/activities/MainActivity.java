@@ -91,12 +91,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         super.onCreate(savedInstanceState);
         ProfileManagement.initProfiles();
         try {
-            if (getIntent().getExtras() != null) {
-                int themeId = getIntent().getExtras().getInt(TimeTableBuilder.CUSTOM_THEME, -1);
-                if (themeId != -1) {
-                    setTheme(themeId);
-                }
-            }
             profilePos = DBUtil.getProfilePosition(this);
             substitutionPlan = DBUtil.getSubstitutionPlanFromActivity(this);
         } catch (Exception e) {

@@ -57,7 +57,6 @@ public class SummaryActivity extends ActivityFeatures {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppTheme_Light);
         setContentView(R.layout.timetable_activity_summary);
 
         lessonDuration = PreferenceUtil.getPeriodLength(this);
@@ -166,7 +165,11 @@ public class SummaryActivity extends ActivityFeatures {
 
         // Set timetable
         studentCourse.setCourseList(courseInfoList);
+
+        courseTable.setHeader(getResources().getStringArray(R.array.timetable_header));
+        courseTable.setTextSize(14);
         courseTable.setStudentCourse(studentCourse);
+
         courseTable.setOnCourseClickListener(view -> {
             CustomCourseInfo item = (CustomCourseInfo) view.getTag();
             final View alertLayout = getLayoutInflater().inflate(R.layout.timetable_dialog_add_subject, null);
@@ -298,11 +301,17 @@ public class SummaryActivity extends ActivityFeatures {
 
         int startHour = Integer.parseInt(schoolStart.substring(0, schoolStart.indexOf(":")));
 
+        String[] header = new String[8];
+        String[] resource = getResources().getStringArray(R.array.timetable_header);
+        for (int i = 1; i < header.length; i++) {
+            header[i] = resource[i - 1];
+        }
+
         TimetableView timetable = new TimetableView.Builder(this)
-                .setColumnCount(6)
+                .setColumnCount(6 + (PreferenceUtil.isSevenDays() ? 2 : 0))
                 .setRowCount(10)
                 .setStartTime(startHour)
-                .setHeaderTitle(getResources().getStringArray(R.array.timetable_header))
+                .setHeaderTitle(header)
                 .setStickerColors(colors.toArray(new String[]{}))
                 .build();
         timetable.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));

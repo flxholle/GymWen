@@ -218,6 +218,7 @@
         <!-- Timetable -->
         <activity
             android:name="com.ulan.timetable.activities.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/timetable_activity_title" />
 
         <activity
