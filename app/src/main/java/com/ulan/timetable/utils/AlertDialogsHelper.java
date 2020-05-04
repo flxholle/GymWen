@@ -29,10 +29,13 @@ import android.provider.CalendarContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,6 +63,7 @@ import com.ulan.timetable.model.Week;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import me.jfenn.colorpickerdialog.dialogs.ColorPickerDialog;
@@ -81,6 +85,8 @@ public class AlertDialogsHelper {
 //        editTextHashs.put(R.string.room, room);
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
+        final TextView from_hour = alertLayout.findViewById(R.id.from_hour);
+        final TextView to_hour = alertLayout.findViewById(R.id.to_hour);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
         select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(week.getColor(), Color.WHITE, Color.BLACK));
 
@@ -89,6 +95,8 @@ public class AlertDialogsHelper {
         room.setText(week.getRoom());
         from_time.setText(week.getFromTime());
         to_time.setText(week.getToTime());
+        from_hour.setText("" + WeekUtils.getMatchingScheduleBegin(week.getFromTime(), PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+        to_hour.setText("" + WeekUtils.getMatchingScheduleEnd(week.getToTime(), PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
         select_color.setBackgroundColor(week.getColor() != 0 ? week.getColor() : Color.WHITE);
 
         from_time.setOnClickListener(v -> {
@@ -96,8 +104,9 @@ public class AlertDialogsHelper {
             int mMinute = Integer.parseInt(week.getFromTime().substring(week.getFromTime().indexOf(":") + 1));
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute) -> {
-                        from_time.setText(String.format("%02d:%02d", hourOfDay, minute));
-                        week.setFromTime(String.format("%02d:%02d", hourOfDay, minute));
+                        from_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        week.setFromTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        from_hour.setText("" + WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute), PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
                     }, mHour, mMinute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
@@ -108,11 +117,46 @@ public class AlertDialogsHelper {
             int mMinute = Integer.parseInt(week.getToTime().substring(week.getToTime().indexOf(":") + 1));
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute1) -> {
-                        to_time.setText(String.format("%02d:%02d", hourOfDay, minute1));
-                        week.setToTime(String.format("%02d:%02d", hourOfDay, minute1));
+                        to_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
+                        week.setToTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
+                        to_hour.setText("" + WeekUtils.getMatchingScheduleEnd(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1), PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
                     }, mHour, mMinute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
+        });
+
+        from_hour.setOnClickListener(v -> {
+            NumberPicker numberPicker = new NumberPicker(activity);
+            numberPicker.setMaxValue(15);
+            numberPicker.setMinValue(1);
+            numberPicker.setValue(Integer.parseInt(from_hour.getText().toString()));
+            new MaterialDialog.Builder(activity)
+                    .customView(numberPicker, false)
+                    .positiveText(R.string.select)
+                    .onPositive((vi, w) -> {
+                        int value = numberPicker.getValue();
+                        from_time.setText(WeekUtils.getMatchingTimeBegin(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        week.setFromTime(WeekUtils.getMatchingTimeBegin(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        from_hour.setText("" + value);
+                    })
+                    .show();
+        });
+
+        to_hour.setOnClickListener(v -> {
+            NumberPicker numberPicker = new NumberPicker(activity);
+            numberPicker.setMaxValue(15);
+            numberPicker.setMinValue(1);
+            numberPicker.setValue(Integer.parseInt(to_hour.getText().toString()));
+            new MaterialDialog.Builder(activity)
+                    .customView(numberPicker, false)
+                    .positiveText(R.string.select)
+                    .onPositive((vi, w) -> {
+                        int value = numberPicker.getValue();
+                        to_time.setText(WeekUtils.getMatchingTimeEnd(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        week.setToTime(WeekUtils.getMatchingTimeEnd(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        to_hour.setText("" + value);
+                    })
+                    .show();
         });
 
         select_color.setOnClickListener(v -> {
@@ -191,8 +235,12 @@ public class AlertDialogsHelper {
             room.getText().clear();
             from_time.setText(R.string.select_start_time);
             to_time.setText(R.string.select_end_time);
+            from_hour.setText(R.string.lesson);
+            to_hour.setText(R.string.lesson);
             select_color.setBackgroundColor(Color.WHITE);
             subject.requestFocus();
+            from_hour.setText(R.string.lesson);
+            to_hour.setText(R.string.lesson);
             dialog.dismiss();
         });
 
@@ -226,15 +274,40 @@ public class AlertDialogsHelper {
         subject.requestFocus();
         editTextHashs.put(R.string.subject, subject);
         final EditText teacher = alertLayout.findViewById(R.id.teacher_dialog);
-//        editTextHash  s.put(R.string.teacher, teacher);
+//        editTextHashs.put(R.string.teacher, teacher);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
 //        editTextHashs.put(R.string.room, room);
+
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
         final TextView to_time = alertLayout.findViewById(R.id.to_time);
+        final TextView from_hour = alertLayout.findViewById(R.id.from_hour);
+        final TextView to_hour = alertLayout.findViewById(R.id.to_hour);
+
+        from_hour.setText(R.string.select_start_time);
+        to_hour.setText(R.string.select_end_time);
+
         final Button select_color = alertLayout.findViewById(R.id.select_color);
-        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
+//        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
 
         final Week week = new Week();
+
+        if (PreferenceUtil.showTimes(activity)) {
+            from_hour.setVisibility(View.GONE);
+            from_time.setVisibility(View.VISIBLE);
+            from_time.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+
+            to_hour.setVisibility(View.GONE);
+            to_time.setVisibility(View.VISIBLE);
+            to_time.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+        } else {
+            from_hour.setVisibility(View.VISIBLE);
+            from_time.setVisibility(View.GONE);
+            from_hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+
+            to_hour.setVisibility(View.VISIBLE);
+            to_time.setVisibility(View.GONE);
+            to_hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+        }
 
         from_time.setOnClickListener(v -> {
             final Calendar c = Calendar.getInstance();
@@ -242,8 +315,9 @@ public class AlertDialogsHelper {
             int mMinute = c.get(Calendar.MINUTE);
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute) -> {
-                        from_time.setText(String.format("%02d:%02d", hourOfDay, minute));
-                        week.setFromTime(String.format("%02d:%02d", hourOfDay, minute));
+                        from_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        week.setFromTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        from_hour.setText("" + WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute), PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
                     }, mHour, mMinute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
@@ -255,11 +329,44 @@ public class AlertDialogsHelper {
             int minute = c.get(Calendar.MINUTE);
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute1) -> {
-                        to_time.setText(String.format("%02d:%02d", hourOfDay, minute1));
-                        week.setToTime(String.format("%02d:%02d", hourOfDay, minute1));
+                        to_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
+                        week.setToTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
+                        to_hour.setText("" + WeekUtils.getMatchingScheduleEnd(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute), PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
                     }, hour, minute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
+        });
+
+        from_hour.setOnClickListener(v -> {
+            NumberPicker numberPicker = new NumberPicker(activity);
+            numberPicker.setMaxValue(15);
+            numberPicker.setMinValue(1);
+            new MaterialDialog.Builder(activity)
+                    .customView(numberPicker, false)
+                    .positiveText(R.string.select)
+                    .onPositive((vi, w) -> {
+                        int value = numberPicker.getValue();
+                        from_time.setText(WeekUtils.getMatchingTimeBegin(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        week.setFromTime(WeekUtils.getMatchingTimeBegin(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        from_hour.setText("" + value);
+                    })
+                    .show();
+        });
+
+        to_hour.setOnClickListener(v -> {
+            NumberPicker numberPicker = new NumberPicker(activity);
+            numberPicker.setMaxValue(15);
+            numberPicker.setMinValue(1);
+            new MaterialDialog.Builder(activity)
+                    .customView(numberPicker, false)
+                    .positiveText(R.string.select)
+                    .onPositive((vi, w) -> {
+                        int value = numberPicker.getValue();
+                        to_time.setText(WeekUtils.getMatchingTimeEnd(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        week.setToTime(WeekUtils.getMatchingTimeEnd(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        to_hour.setText("" + value);
+                    })
+                    .show();
         });
 
         select_color.setOnClickListener(v -> {
@@ -328,8 +435,33 @@ public class AlertDialogsHelper {
         Button submit = alertLayout.findViewById(R.id.save);
         alert.setView(alertLayout);
         final AlertDialog dialog = alert.create();
+
+        //Preselection
         FloatingActionButton fab = activity.findViewById(R.id.fab);
-        fab.setOnClickListener(view -> dialog.show());
+        fab.setOnClickListener(view -> {
+            ArrayList<Week> customWeeks = WeekUtils.getPreselection(activity);
+
+            ArrayList<String> subjects = new ArrayList<>();
+            for (Week w : customWeeks) {
+                subjects.add(w.getSubject());
+            }
+
+            new MaterialDialog.Builder(activity)
+                    .title(R.string.pick_a_subject)
+                    .items(subjects)
+                    .itemsCallback((dialog1, view1, which, text) -> {
+                        Week w = customWeeks.get(which);
+                        subject.setText(w.getSubject());
+                        teacher.setText(w.getTeacher());
+                        room.setText(w.getRoom());
+                        select_color.setBackgroundColor(w.getColor());
+                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+                        dialog.show();
+                    })
+                    .positiveText(R.string.new_subject)
+                    .onPositive((dialog1, which) -> dialog.show())
+                    .show();
+        });
 
         cancel.setOnClickListener(v -> {
             subject.getText().clear();
@@ -337,6 +469,8 @@ public class AlertDialogsHelper {
             room.getText().clear();
             from_time.setText(R.string.select_start_time);
             to_time.setText(R.string.select_end_time);
+            from_hour.setText(R.string.select_start_time);
+            to_hour.setText(R.string.select_end_time);
             select_color.setBackgroundColor(Color.WHITE);
             subject.requestFocus();
             dialog.dismiss();
@@ -361,14 +495,7 @@ public class AlertDialogsHelper {
                 week.setColor(buttonColor.getColor());
                 new DbHelper(activity).insertWeek(week);
                 adapter.notifyDataSetChanged();
-                subject.getText().clear();
-                teacher.getText().clear();
-                room.getText().clear();
-                from_time.setText(R.string.select_start_time);
-                to_time.setText(R.string.select_end_time);
-                select_color.setBackgroundColor(Color.WHITE);
-                subject.requestFocus();
-                dialog.dismiss();
+                cancel.performClick();
             }
         });
     }
@@ -395,8 +522,8 @@ public class AlertDialogsHelper {
             int mMonth = calendar.get(Calendar.MONTH);
             int mdayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(activity, (view, year, month, dayOfMonth) -> {
-                date.setText(String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth));
-                homework.setDate(String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth));
+                date.setText(String.format(Locale.getDefault(), "%02d-%02d-%02d", year, month + 1, dayOfMonth));
+                homework.setDate(String.format(Locale.getDefault(), "%02d-%02d-%02d", year, month + 1, dayOfMonth));
             }, mYear, mMonth, mdayofMonth);
             datePickerDialog.setTitle(R.string.choose_date);
             datePickerDialog.show();
@@ -547,8 +674,8 @@ public class AlertDialogsHelper {
             int mMonth = calendar.get(Calendar.MONTH);
             int mdayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(activity, (view, year, month, dayOfMonth) -> {
-                date.setText(String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth));
-                homework.setDate(String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth));
+                date.setText(String.format(Locale.getDefault(), "%02d-%02d-%02d", year, month + 1, dayOfMonth));
+                homework.setDate(String.format(Locale.getDefault(), "%02d-%02d-%02d", year, month + 1, dayOfMonth));
             }, mYear, mMonth, mdayofMonth);
             datePickerDialog.setTitle(R.string.choose_date);
             datePickerDialog.show();
@@ -824,6 +951,7 @@ public class AlertDialogsHelper {
 //        editTextHashs.put(R.string.room, room);
         final TextView date = alertLayout.findViewById(R.id.dateexam_dialog);
         final TextView time = alertLayout.findViewById(R.id.timeexam_dialog);
+        final TextView hour = alertLayout.findViewById(R.id.hourexam_dialog);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
 
         final Exam exam = adapter.get(listposition);
@@ -833,6 +961,13 @@ public class AlertDialogsHelper {
         room.setText(exam.getRoom());
         date.setText(exam.getDate());
         time.setText(exam.getTime());
+        if (!exam.getTime().trim().isEmpty()) {
+            hour.setText("" + WeekUtils.getMatchingScheduleBegin(exam.getTime(), PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+            time.setText(exam.getTime());
+        } else {
+            hour.setText("0");
+            time.setText("0:0");
+        }
         select_color.setBackgroundColor(exam.getColor());
         select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(exam.getColor(), Color.WHITE, Color.BLACK));
 
@@ -842,25 +977,52 @@ public class AlertDialogsHelper {
             int mMonth = calendar.get(Calendar.MONTH);
             int mdayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(activity, (view, year, month, dayOfMonth) -> {
-                date.setText(String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth));
-                exam.setDate(String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth));
+                date.setText(String.format(Locale.getDefault(), "%02d-%02d-%02d", year, month + 1, dayOfMonth));
+                exam.setDate(String.format(Locale.getDefault(), "%02d-%02d-%02d", year, month + 1, dayOfMonth));
             }, mYear, mMonth, mdayofMonth);
             datePickerDialog.setTitle(R.string.choose_date);
             datePickerDialog.show();
         });
 
         time.setOnClickListener(v -> {
-            int mHour = Integer.parseInt(exam.getTime().substring(0, exam.getTime().indexOf(":")));
-            int mMinute = Integer.parseInt(exam.getTime().substring(exam.getTime().indexOf(":") + 1));
+            int mHour, mMinute;
+            try {
+                mHour = Integer.parseInt(exam.getTime().substring(0, exam.getTime().indexOf(":")));
+                mMinute = Integer.parseInt(exam.getTime().substring(exam.getTime().indexOf(":") + 1));
+            } catch (Exception ignore) {
+                mHour = 0;
+                mMinute = 0;
+            }
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute) -> {
-                        time.setText(String.format("%02d:%02d", hourOfDay, minute));
-                        exam.setTime(String.format("%02d:%02d", hourOfDay, minute));
+                        time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        exam.setTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        hour.setText("" + WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute), PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
                     }, mHour, mMinute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
         });
 
+        hour.setOnClickListener(v -> {
+            NumberPicker numberPicker = new NumberPicker(activity);
+            numberPicker.setMaxValue(15);
+            numberPicker.setMinValue(1);
+            try {
+                numberPicker.setValue(Integer.parseInt(hour.getText().toString()));
+            } catch (Exception e) {
+                numberPicker.setValue(1);
+            }
+            new MaterialDialog.Builder(activity)
+                    .customView(numberPicker, false)
+                    .positiveText(R.string.select)
+                    .onPositive((vi, w) -> {
+                        int value = numberPicker.getValue();
+                        time.setText(WeekUtils.getMatchingTimeBegin(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        exam.setTime(WeekUtils.getMatchingTimeBegin(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        hour.setText("" + value);
+                    })
+                    .show();
+        });
 
         select_color.setOnClickListener(v -> {
             new ColorPickerDialog()
@@ -975,17 +1137,17 @@ public class AlertDialogsHelper {
                             String month = exam.getDate().substring(year.length() + 1, exam.getDate().indexOf("-") + year.length() - 1);
                             String day = exam.getDate().substring(year.length() + month.length() + 2);
 
-                            String hour, minute;
+                            String hour2, minute;
                             if (exam.getTime() != null && !exam.getTime().trim().isEmpty()) {
-                                hour = exam.getTime().substring(0, exam.getTime().indexOf(":"));
-                                minute = exam.getTime().substring(hour.length() + 1);
+                                hour2 = exam.getTime().substring(0, exam.getTime().indexOf(":"));
+                                minute = exam.getTime().substring(hour2.length() + 1);
                             } else {
-                                hour = "0";
+                                hour2 = "0";
                                 minute = "0";
                             }
 
                             Calendar timeCalendar = Calendar.getInstance();
-                            timeCalendar.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute));
+                            timeCalendar.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour2), Integer.parseInt(minute));
 
                             Intent intent = new Intent(Intent.ACTION_INSERT)
                                     .setData(CalendarContract.Events.CONTENT_URI)
@@ -1018,8 +1180,20 @@ public class AlertDialogsHelper {
 //        editTextHashs.put(R.string.room, room);
         final TextView date = alertLayout.findViewById(R.id.dateexam_dialog);
         final TextView time = alertLayout.findViewById(R.id.timeexam_dialog);
+        final TextView hour = alertLayout.findViewById(R.id.hourexam_dialog);
         final Button select_color = alertLayout.findViewById(R.id.select_color);
         select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
+
+        hour.setText(R.string.select_time);
+        if (PreferenceUtil.showTimes(activity)) {
+            hour.setVisibility(View.GONE);
+            time.setVisibility(View.VISIBLE);
+            time.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+        } else {
+            hour.setVisibility(View.VISIBLE);
+            time.setVisibility(View.GONE);
+            hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+        }
 
         final Exam exam = new Exam();
 
@@ -1029,8 +1203,8 @@ public class AlertDialogsHelper {
             int mMonth = calendar.get(Calendar.MONTH);
             int mdayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(activity, (view, year, month, dayOfMonth) -> {
-                date.setText(String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth));
-                exam.setDate(String.format("%02d-%02d-%02d", year, month + 1, dayOfMonth));
+                date.setText(String.format(Locale.getDefault(), "%02d-%02d-%02d", year, month + 1, dayOfMonth));
+                exam.setDate(String.format(Locale.getDefault(), "%02d-%02d-%02d", year, month + 1, dayOfMonth));
             }, mYear, mMonth, mdayofMonth);
             datePickerDialog.setTitle(R.string.choose_date);
             datePickerDialog.show();
@@ -1042,11 +1216,28 @@ public class AlertDialogsHelper {
             int mMinute = c.get(Calendar.MINUTE);
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute) -> {
-                        time.setText(String.format("%02d:%02d", hourOfDay, minute));
-                        exam.setTime(String.format("%02d:%02d", hourOfDay, minute));
+                        time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        exam.setTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        hour.setText("" + WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute), PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
                     }, mHour, mMinute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
+        });
+
+        hour.setOnClickListener(v -> {
+            NumberPicker numberPicker = new NumberPicker(activity);
+            numberPicker.setMaxValue(15);
+            numberPicker.setMinValue(1);
+            new MaterialDialog.Builder(activity)
+                    .customView(numberPicker, false)
+                    .positiveText(R.string.select)
+                    .onPositive((vi, w) -> {
+                        int value = numberPicker.getValue();
+                        time.setText(WeekUtils.getMatchingTimeBegin(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        exam.setTime(WeekUtils.getMatchingTimeBegin(value, PreferenceUtil.getStartTime(activity), PreferenceUtil.getPeriodLength(activity)));
+                        hour.setText("" + value);
+                    })
+                    .show();
         });
 
         select_color.setOnClickListener(v -> {
@@ -1160,6 +1351,7 @@ public class AlertDialogsHelper {
                 room.getText().clear();
                 date.setText(R.string.choose_date);
                 time.setText(R.string.select_time);
+                hour.setText(R.string.select_time);
                 select_color.setBackgroundColor(Color.WHITE);
                 subject.requestFocus();
                 dialog.dismiss();
@@ -1172,17 +1364,17 @@ public class AlertDialogsHelper {
                             String month = exam.getDate().substring(year.length() + 1, exam.getDate().indexOf("-") + year.length() - 1);
                             String day = exam.getDate().substring(year.length() + month.length() + 2);
 
-                            String hour, minute;
+                            String hour2, minute;
                             if (exam.getTime() != null && !exam.getTime().trim().isEmpty()) {
-                                hour = exam.getTime().substring(0, exam.getTime().indexOf(":"));
-                                minute = exam.getTime().substring(hour.length() + 1);
+                                hour2 = exam.getTime().substring(0, exam.getTime().indexOf(":"));
+                                minute = exam.getTime().substring(hour2.length() + 1);
                             } else {
-                                hour = "0";
+                                hour2 = "0";
                                 minute = "0";
                             }
 
                             Calendar timeCalendar = Calendar.getInstance();
-                            timeCalendar.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute));
+                            timeCalendar.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour2), Integer.parseInt(minute));
 
                             Intent intent = new Intent(Intent.ACTION_INSERT)
                                     .setData(CalendarContract.Events.CONTENT_URI)
@@ -1207,7 +1399,7 @@ public class AlertDialogsHelper {
     public static void getDeleteDialog(@NonNull Context context, @NonNull Runnable runnable, String deleteSubject) {
         new MaterialDialog.Builder(context)
                 .title(context.getString(R.string.profiles_delete_submit_heading))
-                .content(context.getString(R.string.timetable_delete_content, deleteSubject))
+                .content(context.getString(R.string.timetable_delete_note, deleteSubject))
                 .positiveText(context.getString(R.string.yes))
                 .onPositive((dialog, which) -> {
                     runnable.run();

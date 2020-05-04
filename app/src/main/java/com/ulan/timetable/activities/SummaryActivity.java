@@ -30,19 +30,24 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.asdoi.gymwen.ActivityFeatures;
+import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.github.tlaabs.timetableview.Schedule;
 import com.github.tlaabs.timetableview.Time;
 import com.github.tlaabs.timetableview.TimetableView;
+import com.ulan.timetable.databaseUtils.DBUtil;
 import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.fragments.WeekdayFragment;
 import com.ulan.timetable.model.Week;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.PreferenceUtil;
+import com.ulan.timetable.utils.WeekUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import me.yaoandy107.ntut_timetable.CourseTableLayout;
@@ -53,6 +58,7 @@ import me.yaoandy107.ntut_timetable.model.StudentCourse;
 public class SummaryActivity extends ActivityFeatures {
     private int lessonDuration;
     private String schoolStart;
+    ArrayList<ArrayList<Week>> weeks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +71,50 @@ public class SummaryActivity extends ActivityFeatures {
 
         findViewById(R.id.courseTable).setVisibility(View.GONE);
 
-        if (PreferenceUtil.isSummaryLibrary1())
-            setupCourseTableLibrary1();
-        else
-            setupTimetableLibrary2();
+        new Thread(() -> {
+            DbHelper dbHelper = new DbHelper(this);
+            weeks = new ArrayList<>();
+            weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_MONDAY_FRAGMENT));
+            weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_TUESDAY_FRAGMENT));
+            weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_WEDNESDAY_FRAGMENT));
+            weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_THURSDAY_FRAGMENT));
+            weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_FRIDAY_FRAGMENT));
+            weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_SATURDAY_FRAGMENT));
+            weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_SUNDAY_FRAGMENT));
+
+            if (PreferenceUtil.isTimeTableSubstitution()) {
+                ProfileManagement.initProfiles();
+                ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
+
+                SubstitutionPlan substitutionPlan = null;
+                try {
+                    int profilePos = DBUtil.getProfilePosition(this);
+                    substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(profilePos).getCoursesArray());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                int codeTod = -1;
+                int codeTom = -1;
+                if (substitutionPlan != null) {
+                    codeTod = substitutionPlan.getTodayTitle().getDayCode();
+                    codeTom = substitutionPlan.getTomorrowTitle().getDayCode();
+                }
+                if (codeTod > 0) {
+                    weeks.set(codeTod - 2, WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(codeTod - 2), substitutionPlan.getTodaySummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
+                }
+                if (codeTom > 0) {
+                    weeks.set(codeTom - 2, WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(codeTom - 2), substitutionPlan.getTomorrowSummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
+                }
+            }
+
+            runOnUiThread(() -> {
+                if (PreferenceUtil.isSummaryLibrary1())
+                    setupCourseTableLibrary1();
+                else
+                    setupTimetableLibrary2();
+            });
+        }).start();
     }
 
     public void setupColors() {
@@ -87,7 +133,7 @@ public class SummaryActivity extends ActivityFeatures {
             PreferenceUtil.setSummaryLibrary(this, !PreferenceUtil.isSummaryLibrary1());
             recreate();
         } else if (item.getItemId() == R.id.action_settings) {
-            startActivity(new Intent(this, SummarySettingsActivity.class));
+            startActivity(new Intent(this, TimeSettingsActivity.class));
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -98,23 +144,12 @@ public class SummaryActivity extends ActivityFeatures {
      * Setup the course Table with Library: https://github.com/asdoi/TimetableUI
      */
     private void setupCourseTableLibrary1() {
-        DbHelper dbHelper = new DbHelper(this);
-
         CourseTableLayout courseTable = findViewById(R.id.courseTable);
         courseTable.setVisibility(View.VISIBLE);
         courseTable.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         StudentCourse studentCourse = new StudentCourse();
         ArrayList<CourseInfo> courseInfoList = new ArrayList<>();
-
-        List<List<Week>> weeks = new ArrayList<>();
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_MONDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_TUESDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_WEDNESDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_THURSDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_FRIDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_SATURDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_SUNDAY_FRAGMENT));
 
         List<List<Integer>> durations = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
@@ -142,7 +177,7 @@ public class SummaryActivity extends ActivityFeatures {
                     newW.setFromTime(schoolStart);
                     newW.setToTime(weeks.get(j).get(i).getFromTime());
                 }
-                difference_to_week_before = getDurationOfWeek(newW, true);
+                difference_to_week_before = WeekUtils.getDurationOfWeek(newW, true, lessonDuration);
 
                 durations.get(j).add(i, getDurationOfWeek(weeks.get(j).get(i)) + difference_to_week_before);
                 durationStrings.get(j).add(i, generateLessonsString(getDurationOfWeek(weeks.get(j).get(i)), ago + difference_to_week_before));
@@ -173,40 +208,13 @@ public class SummaryActivity extends ActivityFeatures {
         courseTable.setOnCourseClickListener(view -> {
             CustomCourseInfo item = (CustomCourseInfo) view.getTag();
             final View alertLayout = getLayoutInflater().inflate(R.layout.timetable_dialog_add_subject, null);
-            AlertDialogsHelper.getEditSubjectDialog(this, alertLayout, this::recreate, item.getWeek());
+            if (item.getWeek().getEditable())
+                AlertDialogsHelper.getEditSubjectDialog(this, alertLayout, this::recreate, item.getWeek());
         });
     }
 
     private int getDurationOfWeek(Week w) {
-        return getDurationOfWeek(w, false);
-    }
-
-    private int getDurationOfWeek(Week w, boolean countOnlyIfFitsLessonsTime) {
-        Calendar weekCalendarStart = Calendar.getInstance();
-        int startHour = Integer.parseInt(w.getFromTime().substring(0, w.getFromTime().indexOf(":")));
-        weekCalendarStart.set(Calendar.HOUR_OF_DAY, startHour);
-        int startMinute = Integer.parseInt(w.getFromTime().substring(w.getFromTime().indexOf(":") + 1));
-        weekCalendarStart.set(Calendar.MINUTE, startMinute);
-
-        Calendar weekCalendarEnd = Calendar.getInstance();
-        int endHour = Integer.parseInt(w.getToTime().substring(0, w.getToTime().indexOf(":")));
-        weekCalendarEnd.set(Calendar.HOUR_OF_DAY, endHour);
-        int endMinute = Integer.parseInt(w.getToTime().substring(w.getToTime().indexOf(":") + 1));
-        weekCalendarEnd.set(Calendar.MINUTE, endMinute);
-
-        long differencesInMillis = weekCalendarEnd.getTimeInMillis() - weekCalendarStart.getTimeInMillis();
-        int inMinutes = (int) (differencesInMillis / 1000 / 60);
-
-        if (inMinutes < lessonDuration && countOnlyIfFitsLessonsTime)
-            return 0;
-
-        int multiplier;
-        if (inMinutes % lessonDuration > 0 && !countOnlyIfFitsLessonsTime) {
-            multiplier = inMinutes / lessonDuration + 1;
-        } else
-            multiplier = inMinutes / lessonDuration;
-
-        return multiplier;
+        return WeekUtils.getDurationOfWeek(w, false, lessonDuration);
     }
 
     private static String generateLessonsString(int duration, int hoursBefore) {
@@ -246,16 +254,6 @@ public class SummaryActivity extends ActivityFeatures {
      * Setup the course Table with Library: https://github.com/asdoi/TimetableView
      */
     private void setupTimetableLibrary2() {
-        List<List<Week>> weeks = new ArrayList<>();
-        DbHelper dbHelper = new DbHelper(this);
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_MONDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_TUESDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_WEDNESDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_THURSDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_FRIDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_SATURDAY_FRAGMENT));
-        weeks.add(dbHelper.getWeek(WeekdayFragment.KEY_SUNDAY_FRAGMENT));
-
         List<String> done = new ArrayList<>();
         ArrayList<String> colors = new ArrayList<>();
         List<ArrayList<Schedule>> timetableContent = new ArrayList<>();

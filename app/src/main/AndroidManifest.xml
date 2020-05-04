@@ -246,8 +246,28 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/summary_activity_title" />
         <activity
-            android:name="com.ulan.timetable.activities.SummarySettingsActivity"
-            android:label="@string/menu_settings" />
+            android:name="com.ulan.timetable.activities.TimeSettingsActivity"
+            android:label="@string/time_settings" />
+        <activity
+            android:name="com.ulan.timetable.appwidget.AppWidgetConfigureActivity"
+            android:label="@string/configure_widget_controls">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.ulan.timetable.appwidget.DayAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.sunrain.timetablev4.ACTION_NEW_DAY" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/timetable_day_appwidget_info" />
+        </receiver>
+        <service
+            android:name="com.ulan.timetable.appwidget.DayAppWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
 
         <activity

@@ -50,6 +50,7 @@ import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Week;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.ColorPalette;
+import com.ulan.timetable.utils.WeekUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -152,7 +153,18 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
         holder.room.setBackgroundResource(outValue.resourceId);
 
-        holder.time.setText(week.getFromTime() + " - " + week.getToTime());
+        if (com.ulan.timetable.utils.PreferenceUtil.showTimes(getContext()))
+            holder.time.setText(week.getFromTime() + " - " + week.getToTime());
+        else {
+            int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime(), com.ulan.timetable.utils.PreferenceUtil.getStartTime(getContext()), com.ulan.timetable.utils.PreferenceUtil.getPeriodLength(getContext()));
+            int end = WeekUtils.getMatchingScheduleEnd(week.getToTime(), com.ulan.timetable.utils.PreferenceUtil.getStartTime(getContext()), com.ulan.timetable.utils.PreferenceUtil.getPeriodLength(getContext()));
+            if (start == end) {
+                holder.time.setText(start + ". " + getContext().getString(R.string.lesson));
+            } else {
+                holder.time.setText(start + ".-" + end + ". " + getContext().getString(R.string.lesson));
+            }
+        }
+
         holder.cardView.setCardBackgroundColor(week.getColor());
         holder.popup.setOnClickListener(v -> {
             ContextThemeWrapper theme = new ContextThemeWrapper(mActivity, PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);

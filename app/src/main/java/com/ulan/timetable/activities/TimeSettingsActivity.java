@@ -18,22 +18,22 @@
 
 package com.ulan.timetable.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.R;
-import com.ulan.timetable.fragments.SummarySettingsFragment;
+import com.ulan.timetable.fragments.TimeSettingsFragment;
+import com.ulan.timetable.utils.PreferenceUtil;
 
-public class SummarySettingsActivity extends ActivityFeatures {
+public class TimeSettingsActivity extends ActivityFeatures {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.timetable_activity_summary_settings);
+        setContentView(R.layout.timetable_activity_time_settings);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.settings, new SummarySettingsFragment())
+                .replace(R.id.settings, new TimeSettingsFragment())
                 .commit();
     }
 
@@ -44,7 +44,8 @@ public class SummarySettingsActivity extends ActivityFeatures {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, SummaryActivity.class));
+//        startActivity(new Intent(this, SummaryActivity.class));
+        PreferenceUtil.setStartActivityShown(this, true);
         super.onBackPressed();
     }
 

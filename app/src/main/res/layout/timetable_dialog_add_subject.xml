@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Felix Hollederer
+  ~     This file is part of GymWenApp.
+  ~
+  ~     GymWenApp is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     GymWenApp is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -75,8 +93,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
-            android:inputType="textVisiblePassword"
             android:imeOptions="actionDone"
+            android:inputType="textVisiblePassword"
             android:singleLine="true"
             android:textColor="?android:attr/textColorPrimary" />
     </LinearLayout>
@@ -100,10 +118,23 @@
             android:id="@+id/from_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".7"
-            android:background="?android:attr/selectableItemBackground"
+            android:layout_weight=".45"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:text="@string/select_start_time"
+            android:textAllCaps="true"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/from_hour"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/lesson"
             android:textAllCaps="true"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
@@ -129,10 +160,23 @@
             android:id="@+id/to_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".7"
-            android:background="?android:attr/selectableItemBackground"
+            android:layout_weight=".45"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:text="@string/select_end_time"
+            android:textAllCaps="true"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/to_hour"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/lesson"
             android:textAllCaps="true"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"

@@ -196,11 +196,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         new Thread(() -> {
             ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
             try {
+                SubstitutionTitle todayTitle = SubstitutionPlanFeatures.getTodayTitle();
+                SubstitutionTitle tomorrowTitle = SubstitutionPlanFeatures.getTomorrowTitle();
                 getActivity().runOnUiThread(() -> {
                     try {
-                        SubstitutionTitle todayTitle = SubstitutionPlanFeatures.getTodayTitle();
-                        SubstitutionTitle tomorrowTitle = SubstitutionPlanFeatures.getTomorrowTitle();
-
                         if (!changedSectionsPagerAdapterTitles && SubstitutionPlanFeatures.areDocsDownloaded() && changeViewPagerTitles) {
                             MainActivity.SectionsPagerAdapter spa = ((MainActivity) getActivity()).sectionsPagerAdapter;
                             spa.setTitles(todayTitle.getDayOfWeek(), tomorrowTitle.getDayOfWeek());
@@ -212,12 +211,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                             ((MainActivity) getActivity()).setTodayMenuItemTitle(todayTitle.getDayOfWeek() + ", " + todayTitle.getDate());
                             ((MainActivity) getActivity()).setTomorrowMenuItemTitle(tomorrowTitle.getDayOfWeek() + ", " + tomorrowTitle.getDate());
                         }
-
-                        generateTable();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } catch (Exception ignore) {
                     }
                 });
+                generateTable();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -448,10 +445,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private boolean miscellaneous;
 
     private void generateTable() {
-        clear();
-
         senior = SubstitutionPlanFeatures.getSenior();
-        ViewGroup base = root.findViewById(R.id.substitution_linear_layout_layer1);
+        LinearLayout base = new LinearLayout(context);
+        base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        base.setOrientation(LinearLayout.VERTICAL);
         boolean old = PreferenceUtil.isOldDesign();
         boolean summarize = PreferenceUtil.isSummarizeUp();
         if (old)
@@ -525,6 +522,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             generateTop(base, oldTitle);
             generateTableSpecific(base, old, PreferenceUtil.isSwipeToRefresh() && PreferenceUtil.isSwipeToRefreshFiltered());
         }
+        getActivity().runOnUiThread(() -> {
+            clear();
+            ((LinearLayout) root.findViewById(R.id.substitution_linear_layout_layer1)).addView(base);
+        });
     }
 
     private void clear() {

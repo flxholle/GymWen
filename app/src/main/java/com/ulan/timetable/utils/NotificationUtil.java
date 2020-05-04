@@ -125,19 +125,28 @@ public class NotificationUtil {
             weeks = new ArrayList<>();
             weeks.add(nextWeek);
 
-            StringBuilder lesson = new StringBuilder()
-                    .append(context.getString(R.string.time_from).substring(0, 1).toUpperCase())
-                    .append(context.getString(R.string.time_from).substring(1))
-                    .append(" ")
-                    .append(nextWeek.getFromTime())
-                    .append(" - ")
-                    .append(nextWeek.getToTime());
-
-            if (!Arrays.asList(External_Const.nothing).contains(nextWeek.getTeacher())) {
-                lesson.append(" ")
-                        .append(context.getString(R.string.share_msg_in_room))
+            StringBuilder lesson = new StringBuilder();
+            if (PreferenceUtil.showTimes(context))
+                lesson.append(context.getString(R.string.time_from).substring(0, 1).toUpperCase())
+                        .append(context.getString(R.string.time_from).substring(1))
                         .append(" ")
-                        .append(nextWeek.getRoom());
+                        .append(nextWeek.getFromTime())
+                        .append(" - ")
+                        .append(nextWeek.getToTime());
+            else {
+                int start = WeekUtils.getMatchingScheduleBegin(nextWeek.getFromTime(), PreferenceUtil.getStartTime(context), PreferenceUtil.getPeriodLength(context));
+                int end = WeekUtils.getMatchingScheduleEnd(nextWeek.getToTime(), PreferenceUtil.getStartTime(context), PreferenceUtil.getPeriodLength(context));
+                if (start == end) {
+                    lesson.append(start)
+                            .append(". ")
+                            .append(context.getString(R.string.lesson));
+                } else {
+                    lesson.append(start)
+                            .append(".-")
+                            .append(end)
+                            .append(". ")
+                            .append(context.getString(R.string.lesson));
+                }
             }
 
             StringBuilder name = new StringBuilder()
@@ -237,23 +246,36 @@ public class NotificationUtil {
                 lessons.append(week.getSubject())
                         .append(" ")
                         .append(context.getString(R.string.time_from))
-                        .append(" ")
-                        .append(week.getFromTime())
-                        .append(" - ")
-                        .append(week.getToTime())
                         .append(" ");
-                if (Arrays.asList(External_Const.nothing).contains(week.getTeacher())) {
-                    lessons.append(week.getTeacher());
-                } else {
-                    lessons.append(context.getString(R.string.with_teacher))
-                            .append(" ")
-                            .append(week.getTeacher())
-                            .append(" ")
-                            .append(context.getString(R.string.share_msg_in_room))
-                            .append(" ")
-                            .append(week.getRoom());
+
+                if (PreferenceUtil.showTimes(context))
+                    lessons.append(week.getFromTime())
+                            .append(" - ")
+                            .append(week.getToTime());
+                else {
+                    int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime(), PreferenceUtil.getStartTime(context), PreferenceUtil.getPeriodLength(context));
+                    int end = WeekUtils.getMatchingScheduleEnd(week.getToTime(), PreferenceUtil.getStartTime(context), PreferenceUtil.getPeriodLength(context));
+                    if (start == end) {
+                        lessons.append(start)
+                                .append(". ")
+                                .append(context.getString(R.string.lesson));
+                    } else {
+                        lessons.append(start)
+                                .append(".-")
+                                .append(end)
+                                .append(". ")
+                                .append(context.getString(R.string.lesson));
+                    }
                 }
-                lessons.append("\n");
+                lessons.append(" ")
+                        .append(context.getString(R.string.with_teacher))
+                        .append(" ")
+                        .append(week.getTeacher())
+                        .append(" ")
+                        .append(context.getString(R.string.share_msg_in_room))
+                        .append(" ")
+                        .append(week.getRoom())
+                        .append("\n");
             }
         }
 

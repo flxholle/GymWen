@@ -177,6 +177,19 @@ public class PreferenceUtil {
     }
 
     public static int getPeriodLength(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt("period_length", 45);
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt("period_length", 49);
+    }
+
+
+    public static boolean hasStartActivityBeenShown(Context context) {
+        return getBooleanSettings("start_activity", false, context);
+    }
+
+    public static void setStartActivityShown(Context context, boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("start_activity", value).commit();
+    }
+
+    public static boolean showTimes(Context context) {
+        return getBooleanSettings("show_times", false, context);
     }
 }

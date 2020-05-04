@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Felix Hollederer
+ *     This file is part of GymWenApp.
+ *
+ *     GymWenApp is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     GymWenApp is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.ulan.timetable.adapters;
 
 import android.content.Intent;
@@ -31,6 +49,7 @@ import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Exam;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.ColorPalette;
+import com.ulan.timetable.utils.WeekUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,8 +145,13 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
         getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
         holder.room.setBackgroundResource(outValue.resourceId);
 
+        if (com.ulan.timetable.utils.PreferenceUtil.showTimes(getContext()))
+            holder.time.setText(exam.getTime());
+        else if (!exam.getTime().trim().isEmpty())
+            holder.time.setText("" + WeekUtils.getMatchingScheduleBegin(exam.getTime(), com.ulan.timetable.utils.PreferenceUtil.getStartTime(getContext()), com.ulan.timetable.utils.PreferenceUtil.getPeriodLength(getContext())));
+
+
         holder.date.setText(exam.getDate());
-        holder.time.setText(exam.getTime());
         holder.cardView.setCardBackgroundColor(exam.getColor());
         holder.popup.setOnClickListener(v -> {
             ContextThemeWrapper theme = new ContextThemeWrapper(mActivity, PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
