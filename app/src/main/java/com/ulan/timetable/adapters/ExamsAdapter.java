@@ -94,7 +94,7 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
         String time = Objects.requireNonNull(getItem(position)).getTime();
         int color = Objects.requireNonNull(getItem(position)).getColor();
 
-        exam = new Exam(subject, teacher, date, time, room, color);
+        exam = new Exam(subject, teacher, time, date, room, color);
         final ViewHolder holder;
 
         if (convertView == null) {
@@ -148,7 +148,7 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
         if (com.ulan.timetable.utils.PreferenceUtil.showTimes(getContext()))
             holder.time.setText(exam.getTime());
         else if (!exam.getTime().trim().isEmpty())
-            holder.time.setText("" + WeekUtils.getMatchingScheduleBegin(exam.getTime(), com.ulan.timetable.utils.PreferenceUtil.getStartTime(getContext()), com.ulan.timetable.utils.PreferenceUtil.getPeriodLength(getContext())));
+            holder.time.setText("" + WeekUtils.getMatchingScheduleBegin(exam.getTime()));
 
 
         holder.date.setText(exam.getDate());

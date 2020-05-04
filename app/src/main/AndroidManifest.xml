@@ -246,9 +246,6 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/summary_activity_title" />
         <activity
-            android:name="com.ulan.timetable.activities.TimeSettingsActivity"
-            android:label="@string/time_settings" />
-        <activity
             android:name="com.ulan.timetable.appwidget.AppWidgetConfigureActivity"
             android:label="@string/configure_widget_controls">
             <intent-filter>

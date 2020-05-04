@@ -97,14 +97,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             e.printStackTrace();
         }
         setContentView(R.layout.timetable_activity_main);
-
-        if (!PreferenceUtil.hasStartActivityBeenShown(this)) {
-            new MaterialDialog.Builder(this)
-                    .content(R.string.first_start_setup)
-                    .positiveText(R.string.ok)
-                    .onPositive((v, w) -> startActivity(new Intent(this, TimeSettingsActivity.class)))
-                    .show();
-        }
     }
 
     @Override

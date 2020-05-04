@@ -145,8 +145,8 @@ class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
             if (PreferenceUtil.showTimes(mContext))
                 time = week.getFromTime() + " - " + week.getToTime();
             else {
-                int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime(), PreferenceUtil.getStartTime(mContext), PreferenceUtil.getPeriodLength(mContext));
-                int end = WeekUtils.getMatchingScheduleEnd(week.getToTime(), PreferenceUtil.getStartTime(mContext), PreferenceUtil.getPeriodLength(mContext));
+                int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime());
+                int end = WeekUtils.getMatchingScheduleEnd(week.getToTime());
                 if (start == end) {
                     time = start + ". " + mContext.getString(R.string.lesson);
                 } else {

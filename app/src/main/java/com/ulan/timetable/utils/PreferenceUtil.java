@@ -153,42 +153,6 @@ public class PreferenceUtil {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("summary_lib", value).commit();
     }
 
-    public static void setStartTime(Context context, @NonNull int... times) {
-        if (times.length != 3) {
-            return;
-        }
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("start_hour", times[0]);
-        editor.putInt("start_minute", times[1]);
-        editor.putInt("start_second", times[2]);
-        editor.commit();
-    }
-
-    @NonNull
-    public static int[] getStartTime(Context context) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        return new int[]{sharedPref.getInt("start_hour", 8), sharedPref.getInt("start_minute", 10), sharedPref.getInt("start_second", 0)};
-    }
-
-    public static void setPeriodLength(Context context, int length) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt("period_length", length).apply();
-    }
-
-    public static int getPeriodLength(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt("period_length", 49);
-    }
-
-
-    public static boolean hasStartActivityBeenShown(Context context) {
-        return getBooleanSettings("start_activity", false, context);
-    }
-
-    public static void setStartActivityShown(Context context, boolean value) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("start_activity", value).commit();
-    }
-
     public static boolean showTimes(Context context) {
         return getBooleanSettings("show_times", false, context);
     }

@@ -134,8 +134,8 @@ public class NotificationUtil {
                         .append(" - ")
                         .append(nextWeek.getToTime());
             else {
-                int start = WeekUtils.getMatchingScheduleBegin(nextWeek.getFromTime(), PreferenceUtil.getStartTime(context), PreferenceUtil.getPeriodLength(context));
-                int end = WeekUtils.getMatchingScheduleEnd(nextWeek.getToTime(), PreferenceUtil.getStartTime(context), PreferenceUtil.getPeriodLength(context));
+                int start = WeekUtils.getMatchingScheduleBegin(nextWeek.getFromTime());
+                int end = WeekUtils.getMatchingScheduleEnd(nextWeek.getToTime());
                 if (start == end) {
                     lesson.append(start)
                             .append(". ")
@@ -253,8 +253,8 @@ public class NotificationUtil {
                             .append(" - ")
                             .append(week.getToTime());
                 else {
-                    int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime(), PreferenceUtil.getStartTime(context), PreferenceUtil.getPeriodLength(context));
-                    int end = WeekUtils.getMatchingScheduleEnd(week.getToTime(), PreferenceUtil.getStartTime(context), PreferenceUtil.getPeriodLength(context));
+                    int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime());
+                    int end = WeekUtils.getMatchingScheduleEnd(week.getToTime());
                     if (start == end) {
                         lessons.append(start)
                                 .append(". ")

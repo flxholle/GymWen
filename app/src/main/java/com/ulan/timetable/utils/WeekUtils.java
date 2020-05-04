@@ -37,7 +37,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Locale;
 
 public class WeekUtils {
     @NonNull
@@ -298,38 +297,62 @@ public class WeekUtils {
         return customWeeks;
     }
 
-    public static int getMatchingScheduleBegin(String time, int[] startTime, int lessonDuration) {
-        int schedule = getDurationOfWeek(new Week("", "", "", startTime[0] + ":" + (startTime[1] - 1), time, 0, false), false, lessonDuration);
-        if (schedule == 0)
-            return 1;
-        else
-            return schedule;
+    public static int getMatchingScheduleBegin(String time) {
+        ArrayList<Integer[]> times = new ArrayList<>();
+        for (int i = 1; i <= 11; i++) {
+            String time2 = getMatchingTimeBegin(i);
+            int startHour = Integer.parseInt(time2.substring(0, time2.indexOf(":")));
+            int startMinute = Integer.parseInt(time2.substring(time2.indexOf(":") + 1));
+            times.add(new Integer[]{startHour, startMinute});
+        }
+
+        int startHour = Integer.parseInt(time.substring(0, time.indexOf(":")));
+        int startMinute = Integer.parseInt(time.substring(time.indexOf(":") + 1));
+
+        int i = 0;
+        for (; i < times.size(); i++) {
+            Integer[] t = times.get(i);
+            if (startHour < t[0] || startHour == t[0] && startMinute < t[1]) {
+                return i;
+            }
+        }
+        return i + 1;
     }
 
-    public static int getMatchingScheduleEnd(String time, int[] startTime, int lessonDuration) {
-        int schedule = getDurationOfWeek(new Week("", "", "", startTime[0] + ":" + startTime[1], time, 0, false), false, lessonDuration);
-        if (schedule == 0)
-            return 1;
-        else
-            return schedule;
+    public static int getMatchingScheduleEnd(String time) {
+        ArrayList<Integer[]> times = new ArrayList<>();
+        for (int i = 1; i <= 11; i++) {
+            String time2 = getMatchingTimeEnd(i);
+            int startHour = Integer.parseInt(time2.substring(0, time2.indexOf(":")));
+            int startMinute = Integer.parseInt(time2.substring(time2.indexOf(":") + 1));
+            times.add(new Integer[]{startHour, startMinute});
+        }
+
+        int startHour = Integer.parseInt(time.substring(0, time.indexOf(":")));
+        int startMinute = Integer.parseInt(time.substring(time.indexOf(":") + 1));
+
+        int i = 0;
+        for (; i < times.size(); i++) {
+            Integer[] t = times.get(i);
+            if (startHour < t[0] || startHour == t[0] && startMinute < t[1]) {
+                return i;
+            }
+        }
+        return i + 1;
     }
 
-    public static String getMatchingTimeBegin(int hour, int[] startTime, int lessonDuration) {
-        Calendar startOfSchool = Calendar.getInstance();
-        startOfSchool.set(Calendar.HOUR_OF_DAY, startTime[0]);
-        startOfSchool.set(Calendar.MINUTE, startTime[1]);
-        startOfSchool.setTimeInMillis(startOfSchool.getTimeInMillis() + (hour - 1) * lessonDuration * 60 * 1000);
-
-        return String.format(Locale.getDefault(), "%02d:%02d", startOfSchool.get(Calendar.HOUR_OF_DAY), startOfSchool.get(Calendar.MINUTE));
+    public static String getMatchingTimeBegin(int hour) {
+        String time = SubstitutionList.Companion.getMatchingStartTime(hour);
+        if (time.length() < 5)
+            time = "0" + time;
+        return time;
     }
 
-    public static String getMatchingTimeEnd(int hour, int[] startTime, int lessonDuration) {
-        Calendar startOfSchool = Calendar.getInstance();
-        startOfSchool.set(Calendar.HOUR_OF_DAY, startTime[0]);
-        startOfSchool.set(Calendar.MINUTE, startTime[1]);
-        startOfSchool.setTimeInMillis(startOfSchool.getTimeInMillis() + (hour) * lessonDuration * 60 * 1000);
-
-        return String.format(Locale.getDefault(), "%02d:%02d", startOfSchool.get(Calendar.HOUR_OF_DAY), startOfSchool.get(Calendar.MINUTE));
+    public static String getMatchingTimeEnd(int hour) {
+        String time = SubstitutionList.Companion.getMatchingEndTime(hour);
+        if (time.length() < 5)
+            time = "0" + time;
+        return time;
     }
 
     public static int getDurationOfWeek(Week w, boolean countOnlyIfFitsLessonsTime, int lessonDuration) {

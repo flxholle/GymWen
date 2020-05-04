@@ -156,8 +156,8 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         if (com.ulan.timetable.utils.PreferenceUtil.showTimes(getContext()))
             holder.time.setText(week.getFromTime() + " - " + week.getToTime());
         else {
-            int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime(), com.ulan.timetable.utils.PreferenceUtil.getStartTime(getContext()), com.ulan.timetable.utils.PreferenceUtil.getPeriodLength(getContext()));
-            int end = WeekUtils.getMatchingScheduleEnd(week.getToTime(), com.ulan.timetable.utils.PreferenceUtil.getStartTime(getContext()), com.ulan.timetable.utils.PreferenceUtil.getPeriodLength(getContext()));
+            int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime());
+            int end = WeekUtils.getMatchingScheduleEnd(week.getToTime());
             if (start == end) {
                 holder.time.setText(start + ". " + getContext().getString(R.string.lesson));
             } else {

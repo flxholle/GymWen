@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Felix Hollederer
   ~     This file is part of GymWenApp.
   ~
@@ -26,11 +25,12 @@
         android:summary="@string/sevendays_setting"
         android:title="@string/seven_days_of_the_week" />
 
-    <Preference
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
         android:icon="@drawable/ic_access_time_black_24dp"
-        android:key="time_settings"
-        android:summary="@string/time_settings_desc"
-        android:title="@string/time_settings" />
+        android:key="show_times"
+        android:summary="@string/show_times_instead_of_lessons_desc"
+        android:title="@string/show_times_instead_of_lessons" />
 
     <SwitchPreferenceCompat
         android:defaultValue="true"

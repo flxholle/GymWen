@@ -32,7 +32,6 @@ import androidx.preference.PreferenceManager;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.ulan.timetable.activities.TimeSettingsActivity;
 import com.ulan.timetable.receivers.DailyReceiver;
 import com.ulan.timetable.utils.PreferenceUtil;
 
@@ -90,12 +89,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         myPref = findPreference("timetable_subs");
         myPref.setOnPreferenceClickListener((Preference p) -> {
             setCourses();
-            return true;
-        });
-
-        myPref = findPreference("time_settings");
-        myPref.setOnPreferenceClickListener(p -> {
-            startActivity(new Intent(getActivity(), TimeSettingsActivity.class));
             return true;
         });
     }

@@ -18,7 +18,6 @@
 
 package com.ulan.timetable.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,18 +55,12 @@ import me.yaoandy107.ntut_timetable.model.StudentCourse;
 
 
 public class SummaryActivity extends ActivityFeatures {
-    private int lessonDuration;
-    private String schoolStart;
     ArrayList<ArrayList<Week>> weeks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timetable_activity_summary);
-
-        lessonDuration = PreferenceUtil.getPeriodLength(this);
-        int[] oldTimes = PreferenceUtil.getStartTime(this);
-        schoolStart = oldTimes[0] + ":" + oldTimes[1];
 
         findViewById(R.id.courseTable).setVisibility(View.GONE);
 
@@ -132,9 +125,6 @@ public class SummaryActivity extends ActivityFeatures {
         if (item.getItemId() == R.id.action_changeSummary) {
             PreferenceUtil.setSummaryLibrary(this, !PreferenceUtil.isSummaryLibrary1());
             recreate();
-        } else if (item.getItemId() == R.id.action_settings) {
-            startActivity(new Intent(this, TimeSettingsActivity.class));
-            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -151,11 +141,6 @@ public class SummaryActivity extends ActivityFeatures {
         StudentCourse studentCourse = new StudentCourse();
         ArrayList<CourseInfo> courseInfoList = new ArrayList<>();
 
-        List<List<Integer>> durations = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            durations.add(new ArrayList<>());
-        }
-
         List<List<String>> durationStrings = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             durationStrings.add(new ArrayList<>());
@@ -163,24 +148,10 @@ public class SummaryActivity extends ActivityFeatures {
 
         for (int j = 0; j < weeks.size(); j++) {
             for (int i = 0; i < weeks.get(j).size(); i++) {
-                int ago = 0;
-                for (int k = i - 1; k >= 0; k--) {
-                    ago += durations.get(j).get(k);
-                }
-
-                int difference_to_week_before;
-                Week newW = new Week();
-                if (i != 0) {
-                    newW.setFromTime(weeks.get(j).get(i - 1).getToTime());
-                    newW.setToTime(weeks.get(j).get(i).getFromTime());
-                } else {
-                    newW.setFromTime(schoolStart);
-                    newW.setToTime(weeks.get(j).get(i).getFromTime());
-                }
-                difference_to_week_before = WeekUtils.getDurationOfWeek(newW, true, lessonDuration);
-
-                durations.get(j).add(i, getDurationOfWeek(weeks.get(j).get(i)) + difference_to_week_before);
-                durationStrings.get(j).add(i, generateLessonsString(getDurationOfWeek(weeks.get(j).get(i)), ago + difference_to_week_before));
+                Week w = weeks.get(j).get(i);
+                int start = WeekUtils.getMatchingScheduleBegin(w.getFromTime());
+                int end = WeekUtils.getMatchingScheduleEnd(w.getToTime());
+                durationStrings.get(j).add(i, generateLessonsString(end - start + 1, start - 1));
             }
         }
 
@@ -211,10 +182,6 @@ public class SummaryActivity extends ActivityFeatures {
             if (item.getWeek().getEditable())
                 AlertDialogsHelper.getEditSubjectDialog(this, alertLayout, this::recreate, item.getWeek());
         });
-    }
-
-    private int getDurationOfWeek(Week w) {
-        return WeekUtils.getDurationOfWeek(w, false, lessonDuration);
     }
 
     private static String generateLessonsString(int duration, int hoursBefore) {
@@ -297,6 +264,7 @@ public class SummaryActivity extends ActivityFeatures {
             }
         }
 
+        String schoolStart = "8:10";
         int startHour = Integer.parseInt(schoolStart.substring(0, schoolStart.indexOf(":")));
 
         String[] header = new String[8];
