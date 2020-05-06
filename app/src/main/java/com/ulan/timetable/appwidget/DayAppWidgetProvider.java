@@ -35,6 +35,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SubstitutionTimeTableActivity;
 import com.ulan.timetable.appwidget.Dao.AppWidgetDao;
+import com.ulan.timetable.utils.PreferenceUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -77,7 +78,7 @@ public class DayAppWidgetProvider extends AppWidgetProvider {
                 RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.timetable_day_appwidget);
                 rv.setRemoteAdapter(R.id.lv_day_appwidget, intent);
                 rv.setEmptyView(R.id.lv_day_appwidget, R.id.empty_view);
-                rv.setTextViewText(R.id.tv_date, getDateText(currentTimeMillis));
+                rv.setTextViewText(R.id.tv_date, getDateText(currentTimeMillis, context));
                 rv.setInt(R.id.fl_root, "setBackgroundColor", AppWidgetDao.getAppWidgetBackgroundColor(appWidgetId, Color.TRANSPARENT, context));
 
                 rv.setOnClickPendingIntent(R.id.imgBtn_restore, makePendingIntent(context, appWidgetId, ACTION_RESTORE));
@@ -96,8 +97,21 @@ public class DayAppWidgetProvider extends AppWidgetProvider {
         }).start();
     }
 
-    private static String getDateText(long currentTimeMillis) {
-        return new SimpleDateFormat("E  d.M.", Locale.getDefault()).format(currentTimeMillis);
+    private static String getDateText(long currentTimeMillis, Context context) {
+        String date = new SimpleDateFormat("E  d.M.", Locale.getDefault()).format(currentTimeMillis);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(currentTimeMillis);
+
+        if (PreferenceUtil.isTwoWeeksEnabled(context)) {
+            date += " (";
+            if (PreferenceUtil.isEvenWeek(context, calendar))
+                date += context.getString(R.string.even_week);
+            else
+                date += context.getString(R.string.odd_week);
+            date += ")";
+        }
+
+        return date;
     }
 
     @Override
@@ -137,7 +151,7 @@ public class DayAppWidgetProvider extends AppWidgetProvider {
         views.setRemoteAdapter(R.id.lv_day_appwidget, intent);
         views.setEmptyView(R.id.lv_day_appwidget, R.id.empty_view);
         views.setInt(R.id.fl_root, "setBackgroundColor", backgroundColor);
-        views.setTextViewText(R.id.tv_date, getDateText(System.currentTimeMillis()));
+        views.setTextViewText(R.id.tv_date, getDateText(System.currentTimeMillis(), context));
         appWidgetManager.partiallyUpdateAppWidget(appWidgetId, views);
     }
 
@@ -176,7 +190,7 @@ public class DayAppWidgetProvider extends AppWidgetProvider {
             }
 
             AppWidgetDao.saveAppWidgetCurrentTime(appWidgetId, newTime, context);
-            rv.setTextViewText(R.id.tv_date, getDateText(newTime));
+            rv.setTextViewText(R.id.tv_date, getDateText(newTime, context));
 
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.lv_day_appwidget);
             appWidgetManager.partiallyUpdateAppWidget(appWidgetId, rv);

@@ -24,7 +24,11 @@
         android:key="sevendays"
         android:summary="@string/sevendays_setting"
         android:title="@string/seven_days_of_the_week" />
-
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_rotate_90_degrees_ccw_black_24dp"
+        android:key="two_weeks"
+        android:title="@string/enable_even_odd_weeks" />
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:icon="@drawable/ic_access_time_black_24dp"

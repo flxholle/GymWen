@@ -222,7 +222,7 @@
             android:label="@string/timetable_activity_title" />
 
         <activity
-            android:name="com.ulan.timetable.activities.HomeworksActivity"
+            android:name="com.ulan.timetable.activities.HomeworkActivity"
             android:label="@string/homeworks_activity_title" />
         <activity
             android:name="com.ulan.timetable.activities.NotesActivity"

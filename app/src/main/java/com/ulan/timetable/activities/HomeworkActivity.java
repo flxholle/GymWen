@@ -36,7 +36,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.ulan.timetable.adapters.HomeworksAdapter;
+import com.ulan.timetable.adapters.HomeworkAdapter;
 import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Homework;
 import com.ulan.timetable.utils.AlertDialogsHelper;
@@ -44,13 +44,13 @@ import com.ulan.timetable.utils.AlertDialogsHelper;
 import java.util.ArrayList;
 
 
-public class HomeworksActivity extends ActivityFeatures {
+public class HomeworkActivity extends ActivityFeatures {
     public static final String ACTION_ADD_HOMEWORK = "addHomework";
 
     @NonNull
     private final AppCompatActivity context = this;
     private ListView listView;
-    private HomeworksAdapter adapter;
+    private HomeworkAdapter adapter;
     private DbHelper db;
     private int listposition = 0;
 
@@ -80,7 +80,7 @@ public class HomeworksActivity extends ActivityFeatures {
     private void setupAdapter() {
         db = new DbHelper(context);
         listView = findViewById(R.id.homeworklist);
-        adapter = new HomeworksAdapter(HomeworksActivity.this, listView, R.layout.timetable_listview_homeworks_adapter, db.getHomework());
+        adapter = new HomeworkAdapter(HomeworkActivity.this, listView, R.layout.timetable_listview_homeworks_adapter, db.getHomework());
         listView.setAdapter(adapter);
     }
 
@@ -136,6 +136,6 @@ public class HomeworksActivity extends ActivityFeatures {
 
     private void setupCustomDialog() {
         final View alertLayout = getLayoutInflater().inflate(R.layout.timetable_dialog_add_homework, null);
-        AlertDialogsHelper.getAddHomeworkDialog(HomeworksActivity.this, alertLayout, adapter);
+        AlertDialogsHelper.getAddHomeworkDialog(HomeworkActivity.this, alertLayout, adapter);
     }
 }

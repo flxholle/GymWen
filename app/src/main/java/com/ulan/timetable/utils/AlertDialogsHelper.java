@@ -51,7 +51,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.pd.chocobar.ChocoBar;
 import com.ulan.timetable.adapters.ExamsAdapter;
 import com.ulan.timetable.adapters.FragmentsTabAdapter;
-import com.ulan.timetable.adapters.HomeworksAdapter;
+import com.ulan.timetable.adapters.HomeworkAdapter;
 import com.ulan.timetable.adapters.NotesAdapter;
 import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.fragments.WeekdayFragment;
@@ -74,8 +74,9 @@ import me.jfenn.colorpickerdialog.views.picker.RGBPickerView;
  * Created by Ulan on 22.10.2018.
  */
 public class AlertDialogsHelper {
+    //TODO: Rewrite Dialogs to and returning a dialog object, without activity
 
-    public static void getEditSubjectDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, Runnable runOnSafe, @NonNull final Week week) {
+    public static void getEditSubjectDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull Runnable runOnSafe, @NonNull final Week week) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
@@ -159,24 +160,22 @@ public class AlertDialogsHelper {
                     .show();
         });
 
-        select_color.setOnClickListener(v -> {
-            new ColorPickerDialog()
-                    .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withTitle(activity.getString(R.string.choose_color))
-                    .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
-                    .withCornerRadius(16)
-                    .withAlphaEnabled(false)
-                    .withListener((dialog, color) -> {
-                        // a color has been picked; use it
-                        select_color.setBackgroundColor(color);
-                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
-                    })
-                    .clearPickers()
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withPicker(RGBPickerView.class)
-                    .show(activity.getSupportFragmentManager(), "colorPicker");
-        });
+        select_color.setOnClickListener(v -> new ColorPickerDialog()
+                .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withTitle(activity.getString(R.string.choose_color))
+                .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
+                .withCornerRadius(16)
+                .withAlphaEnabled(false)
+                .withListener((dialog, color) -> {
+                    // a color has been picked; use it
+                    select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                })
+                .clearPickers()
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withPicker(RGBPickerView.class)
+                .show(activity.getSupportFragmentManager(), "colorPicker"));
 
 
         subject.setOnEditorActionListener(
@@ -291,28 +290,17 @@ public class AlertDialogsHelper {
 
         final Week week = new Week();
 
-        if (PreferenceUtil.showTimes(activity)) {
-            from_hour.setVisibility(View.GONE);
-            from_time.setVisibility(View.VISIBLE);
-            from_time.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
-
-            to_hour.setVisibility(View.GONE);
-            to_time.setVisibility(View.VISIBLE);
-            to_time.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
-        } else {
-            from_hour.setVisibility(View.VISIBLE);
-            from_time.setVisibility(View.GONE);
-            from_hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
-
-            to_hour.setVisibility(View.VISIBLE);
-            to_time.setVisibility(View.GONE);
-            to_hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
-        }
-
         from_time.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            int mHour = c.get(Calendar.HOUR_OF_DAY);
-            int mMinute = c.get(Calendar.MINUTE);
+            int mHour, mMinute;
+            try {
+                String time = from_time.getText().toString();
+                mHour = Integer.parseInt(time.substring(0, time.indexOf(":")));
+                mMinute = Integer.parseInt(time.substring(time.indexOf(":") + 1));
+            } catch (Exception ignore) {
+                final Calendar c = Calendar.getInstance();
+                mHour = c.get(Calendar.HOUR_OF_DAY);
+                mMinute = c.get(Calendar.MINUTE);
+            }
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute) -> {
                         from_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
@@ -324,14 +312,21 @@ public class AlertDialogsHelper {
         });
 
         to_time.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
+            int hour, minute;
+            try {
+                String time = WeekUtils.getMatchingTimeEnd(WeekUtils.getMatchingScheduleBegin(from_time.getText().toString()));
+                hour = Integer.parseInt(time.substring(0, time.indexOf(":")));
+                minute = Integer.parseInt(time.substring(time.indexOf(":") + 1));
+            } catch (Exception ignore) {
+                final Calendar c = Calendar.getInstance();
+                hour = c.get(Calendar.HOUR_OF_DAY);
+                minute = c.get(Calendar.MINUTE);
+            }
             TimePickerDialog timePickerDialog = new TimePickerDialog(activity,
                     (view, hourOfDay, minute1) -> {
                         to_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
                         week.setToTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
-                        to_hour.setText("" + WeekUtils.getMatchingScheduleEnd(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)));
+                        to_hour.setText("" + WeekUtils.getMatchingScheduleEnd(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1)));
                     }, hour, minute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
@@ -341,6 +336,10 @@ public class AlertDialogsHelper {
             NumberPicker numberPicker = new NumberPicker(activity);
             numberPicker.setMaxValue(10);
             numberPicker.setMinValue(1);
+            try {
+                numberPicker.setValue(Integer.parseInt(from_hour.getText().toString()));
+            } catch (Exception ignore) {
+            }
             new MaterialDialog.Builder(activity)
                     .customView(numberPicker, false)
                     .positiveText(R.string.select)
@@ -357,6 +356,10 @@ public class AlertDialogsHelper {
             NumberPicker numberPicker = new NumberPicker(activity);
             numberPicker.setMaxValue(10);
             numberPicker.setMinValue(1);
+            try {
+                numberPicker.setValue(Integer.parseInt(from_hour.getText().toString()) + 1);
+            } catch (Exception ignore) {
+            }
             new MaterialDialog.Builder(activity)
                     .customView(numberPicker, false)
                     .positiveText(R.string.select)
@@ -369,23 +372,21 @@ public class AlertDialogsHelper {
                     .show();
         });
 
-        select_color.setOnClickListener(v -> {
-            new ColorPickerDialog()
-                    .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
-                    .withTitle(activity.getString(R.string.choose_color))
-                    .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
-                    .withCornerRadius(16)
-                    .withAlphaEnabled(false)
-                    .withListener((dialog, color) -> {
-                        // a color has been picked; use it
-                        select_color.setBackgroundColor(color);
-                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
-                    })
-                    .clearPickers()
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withPicker(RGBPickerView.class)
-                    .show(activity.getSupportFragmentManager(), "colorPicker");
-        });
+        select_color.setOnClickListener(v -> new ColorPickerDialog()
+                .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
+                .withTitle(activity.getString(R.string.choose_color))
+                .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
+                .withCornerRadius(16)
+                .withAlphaEnabled(false)
+                .withListener((dialog, color) -> {
+                    // a color has been picked; use it
+                    select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                })
+                .clearPickers()
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withPicker(RGBPickerView.class)
+                .show(activity.getSupportFragmentManager(), "colorPicker"));
 
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
@@ -446,6 +447,24 @@ public class AlertDialogsHelper {
                 subjects.add(w.getSubject());
             }
 
+            if (PreferenceUtil.showTimes(activity)) {
+                from_hour.setVisibility(View.GONE);
+                from_time.setVisibility(View.VISIBLE);
+                from_time.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+
+                to_hour.setVisibility(View.GONE);
+                to_time.setVisibility(View.VISIBLE);
+                to_time.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+            } else {
+                from_hour.setVisibility(View.VISIBLE);
+                from_time.setVisibility(View.GONE);
+                from_hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+
+                to_hour.setVisibility(View.VISIBLE);
+                to_time.setVisibility(View.GONE);
+                to_hour.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, .7f));
+            }
+
             new MaterialDialog.Builder(activity)
                     .title(R.string.pick_a_subject)
                     .items(subjects)
@@ -456,10 +475,39 @@ public class AlertDialogsHelper {
                         room.setText(w.getRoom());
                         select_color.setBackgroundColor(w.getColor());
                         select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(w.getColor(), Color.WHITE, Color.BLACK));
+
+                        String key = ((WeekdayFragment) adapter.getItem(viewPager.getCurrentItem())).getKey();
+                        ArrayList<Week> weeks = new DbHelper(activity).getWeek(key);
+                        int valueNew = 1;
+                        if (weeks.size() > 0) {
+                            valueNew = WeekUtils.getMatchingScheduleBegin(weeks.get(weeks.size() - 1).getToTime());
+                        }
+                        from_time.setText(WeekUtils.getMatchingTimeBegin(valueNew));
+                        week.setFromTime(WeekUtils.getMatchingTimeBegin(valueNew));
+                        from_hour.setText("" + valueNew);
+                        to_time.setText(WeekUtils.getMatchingTimeEnd(valueNew));
+                        week.setToTime(WeekUtils.getMatchingTimeEnd(valueNew));
+                        to_hour.setText("" + valueNew);
+
                         dialog.show();
                     })
                     .positiveText(R.string.new_subject)
-                    .onPositive((dialog1, which) -> dialog.show())
+                    .onPositive((dialog1, which) -> {
+                        String key = ((WeekdayFragment) adapter.getItem(viewPager.getCurrentItem())).getKey();
+                        ArrayList<Week> weeks = new DbHelper(activity).getWeek(key);
+                        int valueNew = 1;
+                        if (weeks.size() > 0) {
+                            valueNew = WeekUtils.getMatchingScheduleBegin(weeks.get(weeks.size() - 1).getToTime());
+                        }
+                        from_time.setText(WeekUtils.getMatchingTimeBegin(valueNew));
+                        week.setFromTime(WeekUtils.getMatchingTimeBegin(valueNew));
+                        from_hour.setText("" + valueNew);
+                        to_time.setText(WeekUtils.getMatchingTimeEnd(valueNew));
+                        week.setToTime(WeekUtils.getMatchingTimeEnd(valueNew));
+                        to_hour.setText("" + valueNew);
+
+                        dialog.show();
+                    })
                     .show();
         });
 
@@ -529,24 +577,22 @@ public class AlertDialogsHelper {
             datePickerDialog.show();
         });
 
-        select_color.setOnClickListener(v -> {
-            new ColorPickerDialog()
-                    .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withTitle(activity.getString(R.string.choose_color))
-                    .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
-                    .withCornerRadius(16)
-                    .withAlphaEnabled(false)
-                    .withListener((dialog, color) -> {
-                        // a color has been picked; use it
-                        select_color.setBackgroundColor(color);
-                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
-                    })
-                    .clearPickers()
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withPicker(RGBPickerView.class)
-                    .show(activity.getSupportFragmentManager(), "colorPicker");
-        });
+        select_color.setOnClickListener(v -> new ColorPickerDialog()
+                .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withTitle(activity.getString(R.string.choose_color))
+                .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
+                .withCornerRadius(16)
+                .withAlphaEnabled(false)
+                .withListener((dialog, color) -> {
+                    // a color has been picked; use it
+                    select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                })
+                .clearPickers()
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withPicker(RGBPickerView.class)
+                .show(activity.getSupportFragmentManager(), "colorPicker"));
 
 
         subject.setOnEditorActionListener(
@@ -614,13 +660,13 @@ public class AlertDialogsHelper {
             } /*else if (!date.getText().toString().matches(".*\\d+.*")) {
                 Snackbar.make(alertLayout, R.string.deadline_snackbar, Snackbar.LENGTH_LONG).show();
             }*/ else {
-                HomeworksAdapter homeworksAdapter = (HomeworksAdapter) listView.getAdapter();
+                HomeworkAdapter homeworkAdapter = (HomeworkAdapter) listView.getAdapter();
                 ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                 homework.setSubject(subject.getText().toString());
                 homework.setDescription(description.getText().toString());
                 homework.setColor(buttonColor.getColor());
                 new DbHelper(activity).updateHomework(homework);
-                homeworksAdapter.notifyDataSetChanged();
+                homeworkAdapter.notifyDataSetChanged();
                 dialog.dismiss();
 
                 if (homework.getDate() != null && !homework.getDate().trim().isEmpty()) {
@@ -655,7 +701,7 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static void getAddHomeworkDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final HomeworksAdapter adapter) {
+    public static void getAddHomeworkDialog(@NonNull final AppCompatActivity activity, @NonNull final View alertLayout, @NonNull final HomeworkAdapter adapter) {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subjecthomework);
         editTextHashs.put(R.string.subject, subject);
@@ -681,24 +727,22 @@ public class AlertDialogsHelper {
             datePickerDialog.show();
         });
 
-        select_color.setOnClickListener(v -> {
-            new ColorPickerDialog()
-                    .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withTitle(activity.getString(R.string.choose_color))
-                    .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
-                    .withCornerRadius(16)
-                    .withAlphaEnabled(false)
-                    .withListener((dialog, color) -> {
-                        // a color has been picked; use it
-                        select_color.setBackgroundColor(color);
-                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
-                    })
-                    .clearPickers()
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withPicker(RGBPickerView.class)
-                    .show(activity.getSupportFragmentManager(), "colorPicker");
-        });
+        select_color.setOnClickListener(v -> new ColorPickerDialog()
+                .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withTitle(activity.getString(R.string.choose_color))
+                .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
+                .withCornerRadius(16)
+                .withAlphaEnabled(false)
+                .withListener((dialog, color) -> {
+                    // a color has been picked; use it
+                    select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                })
+                .clearPickers()
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withPicker(RGBPickerView.class)
+                .show(activity.getSupportFragmentManager(), "colorPicker"));
 
         subject.setOnEditorActionListener(
                 (v, actionId, event) -> {
@@ -825,24 +869,22 @@ public class AlertDialogsHelper {
         select_color.setBackgroundColor(note.getColor() != 0 ? note.getColor() : Color.WHITE);
         select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(note.getColor(), Color.WHITE, Color.BLACK));
 
-        select_color.setOnClickListener(v -> {
-            new ColorPickerDialog()
-                    .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withTitle(activity.getString(R.string.choose_color))
-                    .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
-                    .withCornerRadius(16)
-                    .withAlphaEnabled(false)
-                    .withListener((dialog, color) -> {
-                        // a color has been picked; use it
-                        select_color.setBackgroundColor(color);
-                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
-                    })
-                    .clearPickers()
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withPicker(RGBPickerView.class)
-                    .show(activity.getSupportFragmentManager(), "colorPicker");
-        });
+        select_color.setOnClickListener(v -> new ColorPickerDialog()
+                .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withTitle(activity.getString(R.string.choose_color))
+                .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
+                .withCornerRadius(16)
+                .withAlphaEnabled(false)
+                .withListener((dialog, color) -> {
+                    // a color has been picked; use it
+                    select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                })
+                .clearPickers()
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withPicker(RGBPickerView.class)
+                .show(activity.getSupportFragmentManager(), "colorPicker"));
 
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(R.string.edit_note);
@@ -884,24 +926,22 @@ public class AlertDialogsHelper {
         select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
         final Note note = new Note();
 
-        select_color.setOnClickListener(v -> {
-            new ColorPickerDialog()
-                    .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withTitle(activity.getString(R.string.choose_color))
-                    .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
-                    .withCornerRadius(16)
-                    .withAlphaEnabled(false)
-                    .withListener((dialog, color) -> {
-                        // a color has been picked; use it
-                        select_color.setBackgroundColor(color);
-                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
-                    })
-                    .clearPickers()
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withPicker(RGBPickerView.class)
-                    .show(activity.getSupportFragmentManager(), "colorPicker");
-        });
+        select_color.setOnClickListener(v -> new ColorPickerDialog()
+                .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withTitle(activity.getString(R.string.choose_color))
+                .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
+                .withCornerRadius(16)
+                .withAlphaEnabled(false)
+                .withListener((dialog, color) -> {
+                    // a color has been picked; use it
+                    select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                })
+                .clearPickers()
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withPicker(RGBPickerView.class)
+                .show(activity.getSupportFragmentManager(), "colorPicker"));
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(R.string.add_note);
@@ -1024,24 +1064,22 @@ public class AlertDialogsHelper {
                     .show();
         });
 
-        select_color.setOnClickListener(v -> {
-            new ColorPickerDialog()
-                    .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withTitle(activity.getString(R.string.choose_color))
-                    .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
-                    .withCornerRadius(16)
-                    .withAlphaEnabled(false)
-                    .withListener((dialog, color) -> {
-                        // a color has been picked; use it
-                        select_color.setBackgroundColor(color);
-                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
-                    })
-                    .clearPickers()
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withPicker(RGBPickerView.class)
-                    .show(activity.getSupportFragmentManager(), "colorPicker");
-        });
+        select_color.setOnClickListener(v -> new ColorPickerDialog()
+                .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withTitle(activity.getString(R.string.choose_color))
+                .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
+                .withCornerRadius(16)
+                .withAlphaEnabled(false)
+                .withListener((dialog, color) -> {
+                    // a color has been picked; use it
+                    select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                })
+                .clearPickers()
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withPicker(RGBPickerView.class)
+                .show(activity.getSupportFragmentManager(), "colorPicker"));
 
 
         subject.setOnEditorActionListener(
@@ -1240,24 +1278,22 @@ public class AlertDialogsHelper {
                     .show();
         });
 
-        select_color.setOnClickListener(v -> {
-            new ColorPickerDialog()
-                    .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withTitle(activity.getString(R.string.choose_color))
-                    .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
-                    .withCornerRadius(16)
-                    .withAlphaEnabled(false)
-                    .withListener((dialog, color) -> {
-                        // a color has been picked; use it
-                        select_color.setBackgroundColor(color);
-                        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
-                    })
-                    .clearPickers()
-                    .withPresets(ColorPalette.PRIMARY_COLORS)
-                    .withPicker(RGBPickerView.class)
-                    .show(activity.getSupportFragmentManager(), "colorPicker");
-        });
+        select_color.setOnClickListener(v -> new ColorPickerDialog()
+                .withColor(((ColorDrawable) select_color.getBackground()).getColor()) // the default / initial color
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withTitle(activity.getString(R.string.choose_color))
+                .withTheme(com.asdoi.gymwen.util.PreferenceUtil.getGeneralTheme())
+                .withCornerRadius(16)
+                .withAlphaEnabled(false)
+                .withListener((dialog, color) -> {
+                    // a color has been picked; use it
+                    select_color.setBackgroundColor(color);
+                    select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK));
+                })
+                .clearPickers()
+                .withPresets(ColorPalette.PRIMARY_COLORS)
+                .withPicker(RGBPickerView.class)
+                .show(activity.getSupportFragmentManager(), "colorPicker"));
 
 
         subject.setOnEditorActionListener(
@@ -1399,7 +1435,7 @@ public class AlertDialogsHelper {
     public static void getDeleteDialog(@NonNull Context context, @NonNull Runnable runnable, String deleteSubject) {
         new MaterialDialog.Builder(context)
                 .title(context.getString(R.string.profiles_delete_submit_heading))
-                .content(context.getString(R.string.timetable_delete_note, deleteSubject))
+                .content(context.getString(R.string.timetable_delete_content, deleteSubject))
                 .positiveText(context.getString(R.string.yes))
                 .onPositive((dialog, which) -> {
                     runnable.run();

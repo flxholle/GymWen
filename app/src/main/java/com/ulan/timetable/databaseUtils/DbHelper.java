@@ -33,6 +33,7 @@ import com.ulan.timetable.model.Note;
 import com.ulan.timetable.model.Week;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Ulan on 07.09.2018.
@@ -74,12 +75,20 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String TEACHERS = "teachers";
 
-    public DbHelper(Context context) {
-        super(context, DBUtil.getDBNameFromSharedPreferences(), null, DB_VERSION);
+    public DbHelper(Context context, Calendar now) {
+        super(context, DBUtil.getDBName(context, now), null, DB_VERSION);
     }
 
+    public DbHelper(Context context) {
+        super(context, DBUtil.getDBName(context, Calendar.getInstance()), null, DB_VERSION);
+    }
+
+//    public DbHelper(@NonNull Activity activity, Calendar now) {
+//        super(activity, DBUtil.getDBName(activity, now), null, DB_VERSION);
+//    }
+
     public DbHelper(@NonNull Activity activity) {
-        super(activity, DBUtil.getDBName(activity), null, DB_VERSION);
+        super(activity, DBUtil.getDBName(activity, Calendar.getInstance()), null, DB_VERSION);
     }
 
     public void onCreate(@NonNull SQLiteDatabase db) {

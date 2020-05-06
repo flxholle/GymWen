@@ -355,31 +355,18 @@ public class WeekUtils {
         return time;
     }
 
-    public static int getDurationOfWeek(Week w, boolean countOnlyIfFitsLessonsTime, int lessonDuration) {
-        Calendar weekCalendarStart = Calendar.getInstance();
-        int startHour = Integer.parseInt(w.getFromTime().substring(0, w.getFromTime().indexOf(":")));
-        weekCalendarStart.set(Calendar.HOUR_OF_DAY, startHour);
-        int startMinute = Integer.parseInt(w.getFromTime().substring(w.getFromTime().indexOf(":") + 1));
-        weekCalendarStart.set(Calendar.MINUTE, startMinute);
+    public static boolean isEvenWeek(@NonNull Calendar termStart, @NonNull Calendar now) {
+        boolean isEven = true;
 
-        Calendar weekCalendarEnd = Calendar.getInstance();
-        int endHour = Integer.parseInt(w.getToTime().substring(0, w.getToTime().indexOf(":")));
-        weekCalendarEnd.set(Calendar.HOUR_OF_DAY, endHour);
-        int endMinute = Integer.parseInt(w.getToTime().substring(w.getToTime().indexOf(":") + 1));
-        weekCalendarEnd.set(Calendar.MINUTE, endMinute);
+        int weekDifference = now.get(Calendar.WEEK_OF_YEAR) - termStart.get(Calendar.WEEK_OF_YEAR);
+        if (weekDifference < 0) {
+            weekDifference = -weekDifference;
+        }
 
-        long differencesInMillis = weekCalendarEnd.getTimeInMillis() - weekCalendarStart.getTimeInMillis();
-        int inMinutes = (int) (differencesInMillis / 1000 / 60);
+        for (int i = 0; i < weekDifference; i++) {
+            isEven = !isEven;
+        }
 
-        if (inMinutes < lessonDuration && countOnlyIfFitsLessonsTime)
-            return 0;
-
-        int multiplier;
-        if (inMinutes % lessonDuration > 0 && !countOnlyIfFitsLessonsTime) {
-            multiplier = inMinutes / lessonDuration + 1;
-        } else
-            multiplier = inMinutes / lessonDuration;
-
-        return multiplier;
+        return isEven;
     }
 }

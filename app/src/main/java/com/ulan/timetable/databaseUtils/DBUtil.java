@@ -19,6 +19,7 @@
 package com.ulan.timetable.databaseUtils;
 
 import android.app.Activity;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,18 +29,32 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.ulan.timetable.TimeTableBuilder;
+import com.ulan.timetable.utils.PreferenceUtil;
 
 import org.jsoup.Jsoup;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 public class DBUtil {
     private static final String database_prefix = "db_profile_";
+    private static final String odd_week_postfix = "_odd";
 
-    //Get DB Names from outside of builder
     @NonNull
-    public static String getDBName(@NonNull Activity activity) {
-        return database_prefix + getProfilePosition(activity);
+    public static String getDBName(@NonNull Activity activity, Calendar now) {
+        String dbName = database_prefix + getProfilePosition(activity);
+        if (PreferenceUtil.isEvenWeek(activity, now))
+            return dbName;
+        else
+            return dbName + odd_week_postfix;
+    }
+
+    public static String getDBName(Context context, Calendar now) {
+        String dbName = database_prefix + getProfilePositionFromSharedPreferences();
+        if (PreferenceUtil.isEvenWeek(context, now))
+            return dbName;
+        else
+            return dbName + odd_week_postfix;
     }
 
     public static int getProfilePosition(@NonNull Activity activity) {
@@ -73,11 +88,6 @@ public class DBUtil {
             activity.finish();
             return sharedPref;
         }
-    }
-
-    @NonNull
-    public static String getDBNameFromSharedPreferences() {
-        return database_prefix + getProfilePositionFromSharedPreferences();
     }
 
     private static int getProfilePositionFromSharedPreferences() {

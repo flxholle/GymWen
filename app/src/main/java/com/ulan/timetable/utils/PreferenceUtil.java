@@ -34,8 +34,11 @@ import androidx.preference.PreferenceManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
 import com.ulan.timetable.activities.SettingsActivity;
 import com.ulan.timetable.receivers.DoNotDisturbReceiversKt;
+
+import java.util.Calendar;
 
 import static com.asdoi.gymwen.util.PreferenceUtil.getBooleanSettings;
 
@@ -155,5 +158,54 @@ public class PreferenceUtil {
 
     public static boolean showTimes(Context context) {
         return getBooleanSettings("show_times", false, context);
+    }
+
+    //Even, odd weeks
+    public static boolean isTwoWeeksEnabled(Context context) {
+        return getBooleanSettings("two_weeks", false, context);
+    }
+
+    public static void setTermStart(Context context, int year, int month, int day) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt("term_year", year);
+        editor.putInt("term_month", month);
+        editor.putInt("term_day", day);
+        editor.commit();
+    }
+
+    public static void setTermStart(SubstitutionTitle today, Context context) {
+        if (today != null) {
+            Calendar todayCal = today.getDayAsCalendar();
+            if (!today.getWeek().equalsIgnoreCase("A"))
+                todayCal.set(Calendar.WEEK_OF_YEAR, todayCal.get(Calendar.WEEK_OF_YEAR) - 1);
+
+            setTermStart(context, todayCal.get(Calendar.YEAR), todayCal.get(Calendar.MONTH), todayCal.get(Calendar.DAY_OF_MONTH));
+        }
+    }
+
+    @NonNull
+    public static Calendar getTermStart(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        Calendar calendar = Calendar.getInstance();
+        int year = sharedPref.getInt("term_year", -999999999);
+
+        //If start has not been set
+        if (year == -999999999) {
+            setTermStart(context, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            return getTermStart(context);
+        }
+
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, sharedPref.getInt("term_month", 0));
+        calendar.set(Calendar.DAY_OF_MONTH, sharedPref.getInt("term_day", 0));
+
+        return calendar;
+    }
+
+    public static boolean isEvenWeek(Context context, @NonNull Calendar now) {
+        if (isTwoWeeksEnabled(context)) {
+            return WeekUtils.isEvenWeek(getTermStart(context), now);
+        } else
+            return true;
     }
 }

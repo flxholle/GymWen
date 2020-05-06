@@ -93,19 +93,22 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         try {
             profilePos = DBUtil.getProfilePosition(this);
             substitutionPlan = DBUtil.getSubstitutionPlanFromActivity(this);
+
+            if (substitutionPlan != null)
+                PreferenceUtil.setTermStart(substitutionPlan.getTodayTitle(), this);
         } catch (Exception e) {
             e.printStackTrace();
         }
         setContentView(R.layout.timetable_activity_main);
+
+        initAll();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        NotificationUtil.sendNotificationCurrentLesson(getContext(), false);
         PreferenceUtil.setDoNotDisturb(this, PreferenceUtil.doNotDisturbDontAskAgain());
-        initAll();
-        initSpinner();
+        setupWeekTV();
     }
 
     @Override
@@ -122,6 +125,52 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         findViewById(R.id.toolbar).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
         appBarLayout.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+    }
+
+    private void initAll() {
+        PreferenceUtil.setDoNotDisturb(this, PreferenceUtil.doNotDisturbDontAskAgain());
+        NotificationUtil.sendNotificationCurrentLesson(getContext(), false);
+        initSpinner();
+
+        setupWeekTV();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerview = navigationView.getHeaderView(0);
+        headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> startActivity(new Intent(this, SettingsActivity.class)));
+        TextView title = headerview.findViewById(R.id.nav_header_main_title);
+        title.setText(R.string.timetable_activity_title);
+
+        TextView desc = headerview.findViewById(R.id.nav_header_main_desc);
+        desc.setText(R.string.timetable_credit);
+
+        PreferenceManager.setDefaultValues(this, R.xml.timetable_settings, false);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        setupSevenDaysPref();
+        setupFragments();
+        setupCustomDialog();
+
+        if (switchSevenDays) changeFragments(true);
+    }
+
+    private void setupWeekTV() {
+        TextView weekView = findViewById(R.id.main_week_tV);
+        if (PreferenceUtil.isTwoWeeksEnabled(this)) {
+            weekView.setVisibility(View.VISIBLE);
+            if (PreferenceUtil.isEvenWeek(this, Calendar.getInstance()))
+                weekView.setText(R.string.even_week);
+            else
+                weekView.setText(R.string.odd_week);
+        } else
+            weekView.setVisibility(View.GONE);
     }
 
     private boolean dontfire = true;
@@ -168,34 +217,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             parentSpinner.setVisibility(View.GONE);
             parentSpinner.setEnabled(false);
         }
-    }
-
-    private void initAll() {
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerview = navigationView.getHeaderView(0);
-        headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> startActivity(new Intent(this, SettingsActivity.class)));
-        TextView title = headerview.findViewById(R.id.nav_header_main_title);
-        title.setText(R.string.timetable_activity_title);
-
-        TextView desc = headerview.findViewById(R.id.nav_header_main_desc);
-        desc.setText(R.string.timetable_credit);
-
-        PreferenceManager.setDefaultValues(this, R.xml.timetable_settings, false);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        setupSevenDaysPref();
-        setupFragments();
-        setupCustomDialog();
-
-        if (switchSevenDays) changeFragments(true);
     }
 
     private void setupFragments() {
@@ -340,7 +361,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         } else if (item.getItemId() == R.id.action_substitutionIntegration) {
             PreferenceUtil.setTimeTableSubstitution(this, !PreferenceUtil.isTimeTableSubstitution());
             setIntegration(item, PreferenceUtil.isTimeTableSubstitution());
-            MainActivity.this.onStart();
+            initAll();
         } else if (item.getItemId() == R.id.action_timetable_backup) {
             backup();
         } else if (item.getItemId() == R.id.action_timetable_restore) {
@@ -371,7 +392,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             exams.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
             startActivity(exams);
         } else if (itemId == R.id.homework) {
-            Intent homework = new Intent(MainActivity.this, HomeworksActivity.class);
+            Intent homework = new Intent(MainActivity.this, HomeworkActivity.class);
             homework.putExtra(TimeTableBuilder.PROFILE_POS, profilePos);
             startActivity(homework);
         } else if (itemId == R.id.summary) {
@@ -413,7 +434,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         Activity activity = this;
 
-        SQLiteToExcel sqliteToExcel = new SQLiteToExcel(this, DBUtil.getDBName(this), path);
+        SQLiteToExcel sqliteToExcel = new SQLiteToExcel(this, DBUtil.getDBName(this, Calendar.getInstance()), path);
         sqliteToExcel.exportAllTables(filename, new SQLiteToExcel.ExportListener() {
             @Override
             public void onStart() {
@@ -464,7 +485,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         DbHelper dbHelper = new DbHelper(this);
         dbHelper.deleteAll();
 
-        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), false);
+        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this, Calendar.getInstance()), false);
         excelToSQLite.importFromFile(path, new ExcelToSQLite.ImportListener() {
             @Override
             public void onStart() {
@@ -478,7 +499,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         .setDuration(ChocoBar.LENGTH_LONG)
                         .green()
                         .show());
-                MainActivity.this.onStart();
+                initAll();
             }
 
             @Override
@@ -506,7 +527,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                                 .setDuration(ChocoBar.LENGTH_LONG)
                                 .green()
                                 .show();
-                        MainActivity.this.onStart();
+                        initAll();
                     } catch (Exception e) {
                         ChocoBar.builder().setActivity(this)
                                 .setText(getString(R.string.remove_all_failed))

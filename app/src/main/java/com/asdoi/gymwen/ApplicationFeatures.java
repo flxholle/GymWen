@@ -216,6 +216,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             } else if (PreferenceUtil.isOfflineMode()) {
                 SubstitutionPlanFeatures.reloadDocs();
             }
+            com.ulan.timetable.utils.PreferenceUtil.setTermStart(SubstitutionPlanFeatures.getTodayTitle(), getContext());
         }
     }
 

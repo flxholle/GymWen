@@ -351,6 +351,15 @@ class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var w
         }*/
     }
 
+    fun getDayAsCalendar(): Calendar {
+        val df = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val startDate = removeTime(df.parse(date))
+
+        val c = Calendar.getInstance()
+        c.time = startDate
+        return c
+    }
+
     /**
      * @param date Date
      * @return param Date with removed time (only the day).

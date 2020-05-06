@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Felix Hollederer
+ *     This file is part of GymWenApp.
+ *
+ *     GymWenApp is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     GymWenApp is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.ulan.timetable.adapters;
 
 import android.content.res.ColorStateList;
@@ -33,7 +51,7 @@ import java.util.Objects;
 /**
  * Created by Ulan on 21.09.2018.
  */
-public class HomeworksAdapter extends ArrayAdapter<Homework> {
+public class HomeworkAdapter extends ArrayAdapter<Homework> {
 
     @NonNull
     private final AppCompatActivity mActivity;
@@ -50,7 +68,7 @@ public class HomeworksAdapter extends ArrayAdapter<Homework> {
         ImageView popup;
     }
 
-    public HomeworksAdapter(@NonNull AppCompatActivity activity, ListView listView, int resource, @NonNull ArrayList<Homework> objects) {
+    public HomeworkAdapter(@NonNull AppCompatActivity activity, ListView listView, int resource, @NonNull ArrayList<Homework> objects) {
         super(activity, resource, objects);
         mActivity = activity;
         mListView = listView;

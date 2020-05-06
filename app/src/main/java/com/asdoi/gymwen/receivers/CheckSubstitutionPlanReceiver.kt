@@ -18,7 +18,6 @@
 
 package com.asdoi.gymwen.receivers
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -29,15 +28,13 @@ import java.util.*
 
 class CheckSubstitutionPlanReceiver : BroadcastReceiver() {
 
-    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context?, intent: Intent?) {
         ApplicationFeatures.initSubstitutionPlanReceiver()
-        when (intent?.action) {
-            Intent.ACTION_BOOT_COMPLETED -> {
-                RSS_Feed.checkRSS(context!!)
-                return
-            }
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent?.action, ignoreCase = true)) {
+            RSS_Feed.checkRSS(context!!)
+            return
         }
+
         Thread {
             if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) > 9)
                 RSS_Feed.checkRSS(context!!)

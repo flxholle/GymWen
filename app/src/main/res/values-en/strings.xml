@@ -582,4 +582,5 @@
 
     <string name="select">Select</string>
 
+    <string name="delete_content">Should %1$s be deleted?</string>
 </resources>

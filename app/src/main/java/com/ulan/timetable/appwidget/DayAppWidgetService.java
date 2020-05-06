@@ -76,6 +76,9 @@ class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         long currentTime = AppWidgetDao.getAppWidgetCurrentTime(mAppWidgetId, System.currentTimeMillis(), mContext);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(currentTime);
+
+        DbHelper db = new DbHelper(mContext, calendar);
+
         calendar.setTime(removeTime(calendar.getTime()));
 
         try {
@@ -110,11 +113,10 @@ class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
             } else
                 substitutionlist = new SubstitutionList(true);
 
-            DbHelper db = new DbHelper(mContext);
             content = WeekUtils.compareSubstitutionAndWeeks(mContext, db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK))),
                     substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
         } catch (Exception ignore) {
-            content = new DbHelper(mContext).getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK)));
+            content = db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK)));
         }
     }
 
