@@ -583,4 +583,7 @@
     <string name="select">Select</string>
 
     <string name="timetable_delete_content">Should %1$s be deleted?</string>
+    <string name="enable_even_odd_weeks">Enable A \u0026 B weeks</string>
+    <string name="even_week">Week A</string>
+    <string name="odd_week">Week B</string>
 </resources>

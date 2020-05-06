@@ -54,11 +54,11 @@ public class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
 
     private void setFullNames() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_full_names", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        Objects.requireNonNull(findPreference("show_full_names_specific")).setVisible(showNotif);
+        findPreference("show_full_names_specific").setVisible(showNotif);
     }
 
     private void setSummarize() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("summarize", true) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        Objects.requireNonNull(findPreference("summarize_old")).setVisible(showNotif);
+        findPreference("summarize_old").setVisible(showNotif);
     }
 }

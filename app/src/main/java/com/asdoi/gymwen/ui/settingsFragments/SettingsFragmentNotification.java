@@ -91,16 +91,16 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
     private void setNotif() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", true);
         boolean showWebsiteNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("RSS_notif", true);
-        Objects.requireNonNull(findPreference("alwaysNotification")).setVisible(showNotif || showWebsiteNotif);
-        Objects.requireNonNull(findPreference("alarm")).setVisible(showNotif);
-        Objects.requireNonNull(findPreference("two_notifs")).setVisible(showNotif);
-        Objects.requireNonNull(findPreference("main_notif_for_all")).setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
-        Objects.requireNonNull(findPreference("showSummaryNotification")).setVisible(showNotif);
-        Objects.requireNonNull(findPreference("summary_notif_as_usual")).setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
+        findPreference("alwaysNotification").setVisible(showNotif || showWebsiteNotif);
+        findPreference("alarm").setVisible(showNotif);
+        findPreference("two_notifs").setVisible(showNotif);
+        findPreference("main_notif_for_all").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
+        findPreference("showSummaryNotification").setVisible(showNotif);
+        findPreference("summary_notif_as_usual").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
     }
 
     private void setSummary() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showSummaryNotification", true);
-        Objects.requireNonNull(findPreference("summary_notif_as_usual")).setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
+        findPreference("summary_notif_as_usual").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
     }
 }

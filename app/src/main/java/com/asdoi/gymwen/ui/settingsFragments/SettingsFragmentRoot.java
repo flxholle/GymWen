@@ -70,11 +70,11 @@ public class SettingsFragmentRoot extends PreferenceFragmentCompat {
 
         myPref = findPreference("show_more");
         Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
-            Objects.requireNonNull(findPreference("show_more")).setVisible(false);
-            Objects.requireNonNull(findPreference("language")).setVisible(true);
-            Objects.requireNonNull(findPreference("updates")).setVisible(true);
-            Objects.requireNonNull(findPreference("auto_update")).setVisible(true);
-            Objects.requireNonNull(findPreference("offline_mode")).setVisible(true);
+            findPreference("show_more").setVisible(false);
+            findPreference("language").setVisible(true);
+            findPreference("updates").setVisible(true);
+            findPreference("auto_update").setVisible(true);
+            findPreference("offline_mode").setVisible(true);
             return true;
         });
     }

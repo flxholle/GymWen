@@ -110,8 +110,8 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
     private void showBoth() {
         SwitchPreference switchPreference = findPreference("show_sections");
         boolean showBoth = Objects.requireNonNull(switchPreference).isChecked();
-        Objects.requireNonNull(findPreference("menu_filtered")).setEnabled(showBoth);
-        Objects.requireNonNull(findPreference("menu_unfiltered")).setEnabled(showBoth);
+        findPreference("menu_filtered").setEnabled(showBoth);
+        findPreference("menu_unfiltered").setEnabled(showBoth);
     }
 
 }

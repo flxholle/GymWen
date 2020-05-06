@@ -163,6 +163,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
     private void setupWeekTV() {
         TextView weekView = findViewById(R.id.main_week_tV);
+        weekView.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
         if (PreferenceUtil.isTwoWeeksEnabled(this)) {
             weekView.setVisibility(View.VISIBLE);
             if (PreferenceUtil.isEvenWeek(this, Calendar.getInstance()))

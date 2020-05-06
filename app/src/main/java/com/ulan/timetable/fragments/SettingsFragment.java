@@ -97,18 +97,18 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private void setNotif() {
         boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("timetableNotif", true);
-        Objects.requireNonNull(findPreference("alwaysNotification")).setVisible(show);
-        Objects.requireNonNull(findPreference("timetable_alarm")).setVisible(show);
+        findPreference("alwaysNotification").setVisible(show);
+        findPreference("timetable_alarm").setVisible(show);
     }
 
     private void setTurnOff() {
         boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("automatic_do_not_disturb", true);
-        Objects.requireNonNull(findPreference("do_not_disturb_turn_off")).setVisible(show);
+        findPreference("do_not_disturb_turn_off").setVisible(show);
     }
 
     private void setCourses() {
         boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("timetable_subs", true);
-        Objects.requireNonNull(findPreference("courses")).setVisible(show);
+        findPreference("courses").setVisible(show);
     }
 
     private static void tintIcons(Preference preference, int color) {
