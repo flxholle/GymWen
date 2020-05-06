@@ -47,6 +47,8 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.WebsiteActivity;
 import com.github.chrisbanes.photoview.PhotoView;
 
+import java.util.Objects;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -90,7 +92,7 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         root = inflater.inflate(R.layout.fragment_website, container, false);
         context = getActivity();
 
-        root.setBackgroundColor(ApplicationFeatures.getWebPageBackgroundColor(context));
+        root.setBackgroundColor(ApplicationFeatures.getWebPageBackgroundColor(requireContext()));
 
         basic = root.findViewById(R.id.website_linear);
         websiteActivity = (WebsiteActivity) getActivity();
@@ -133,10 +135,10 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        int backgroundColor = ApplicationFeatures.getBackgroundColor(context);
+        int backgroundColor = ApplicationFeatures.getBackgroundColor(requireContext());
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
-        int titleColor = ApplicationFeatures.getTextColorPrimary(context);
+        int titleColor = ApplicationFeatures.getTextColorPrimary(requireContext());
         int descriptionColor = ApplicationFeatures.getTextColorPrimary(context);
         int linkColor = ApplicationFeatures.getLinkColor(context);
 
@@ -258,10 +260,10 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 
         float columnBottomDp = 10f;
         float columnLeftRightDp = 5f;
-        int backgroundColor = ApplicationFeatures.getBackgroundColor(context);
+        int backgroundColor = ApplicationFeatures.getBackgroundColor(requireContext());
         float imageMarginDp = 10f;
         float rightMarginDp = 5f;
-        int titleColor = ApplicationFeatures.getTextColorPrimary(context);
+        int titleColor = ApplicationFeatures.getTextColorPrimary(requireContext());
         int descriptionColor = ApplicationFeatures.getTextColorPrimary(context);
         int linkColor = ApplicationFeatures.getLinkColor(context);
 
@@ -386,13 +388,13 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         int id = view.getId();
         if (id == -1) {
             //Goto Home of Projects
-            String url = ((WebsiteActivity) getActivity()).history.get(((WebsiteActivity) getActivity()).history.size() - 1);
+            String url = Objects.requireNonNull(((WebsiteActivity) requireActivity()).history).get(Objects.requireNonNull(((WebsiteActivity) getActivity()).history).size() - 1);
             String first = url.substring("http://".length() + 1);
             String second = url.substring(first.indexOf('/'));
             int charOfsecondSlash = second.indexOf('/') + 1 + "http://".length() + 2 + first.indexOf('/') + 1;
             ((WebsiteActivity) getActivity()).loadPage(url.substring(0, charOfsecondSlash));
         } else {
-            websiteActivity.onClick(view);
+            Objects.requireNonNull(websiteActivity).onClick(view);
         }
     }
 

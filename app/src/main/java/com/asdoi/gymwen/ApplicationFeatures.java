@@ -89,6 +89,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import saschpe.android.customtabs.CustomTabsActivityLifecycleCallbacks;
 
@@ -314,16 +315,16 @@ public class ApplicationFeatures extends MultiDexApplication {
         ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Network nw = connectivityManager.getActiveNetwork();
+                Network nw = Objects.requireNonNull(connectivityManager).getActiveNetwork();
                 NetworkCapabilities actNw = connectivityManager.getNetworkCapabilities(nw);
-                return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
+                return Objects.requireNonNull(actNw).hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
 
             } else {
                 throw new Exception();
             }
         } catch (Exception e) {
             @SuppressWarnings("deprecation")
-            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            NetworkInfo activeNetworkInfo = Objects.requireNonNull(connectivityManager).getActiveNetworkInfo();
             //noinspection deprecation
             return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         }
@@ -423,7 +424,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static Bitmap vectorToBitmap(@DrawableRes int resVector) {
         Context context = getContext();
         Drawable drawable = AppCompatResources.getDrawable(context, resVector);
-        return vectorToBitmap(drawable);
+        return vectorToBitmap(Objects.requireNonNull(drawable));
     }
 
     private static Bitmap vectorToBitmap(@NonNull Drawable drawable) {
@@ -658,7 +659,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         Intent intent = new Intent(context, cls);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.cancel(pendingIntent);
+        Objects.requireNonNull(am).cancel(pendingIntent);
         pendingIntent.cancel();
     }
 

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Class that parses the substitution plan, it gets information like title and entries
@@ -151,7 +152,7 @@ abstract class Parse {
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
                 SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
 
-                Date startDate = removeTime(df.parse(day.getDate()));
+                Date startDate = removeTime(Objects.requireNonNull(df.parse(day.getDate())));
 
                 day.setDayOfWeek(simpleDateformat.format(startDate));
                 Date currentDate = removeTime(new Date());
@@ -236,7 +237,7 @@ abstract class Parse {
             //Weekday
             try {
                 DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-                Date startDate = removeTime(df.parse(day.getDate()));
+                Date startDate = removeTime(Objects.requireNonNull(df.parse(day.getDate())));
 
                 Date currentDate = removeTime(new Date());
 

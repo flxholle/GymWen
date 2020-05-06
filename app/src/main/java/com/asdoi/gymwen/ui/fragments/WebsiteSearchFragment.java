@@ -51,6 +51,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class WebsiteSearchFragment extends Fragment {
     private ListView listView;
@@ -76,7 +77,7 @@ public class WebsiteSearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((ActivityFeatures) getActivity()).createLoadingPanel((ViewGroup) root);
+        ((ActivityFeatures) requireActivity()).createLoadingPanel((ViewGroup) root);
 
         new Thread(() -> {
             if (contentAll == null || contentAll.size() <= 0)
@@ -85,16 +86,16 @@ public class WebsiteSearchFragment extends Fragment {
                 content = contentAll;
             contentAll = content;
             try {
-                getActivity().runOnUiThread(() -> createLayout(root));
+                requireActivity().runOnUiThread(() -> createLayout(root));
             } catch (Exception ignore) {
             }
         }).start();
     }
 
     private void createLayout(@NonNull View root) {
-        ((ActivityFeatures) getActivity()).removeLoadingPanel((ViewGroup) root);
+        ActivityFeatures.removeLoadingPanel((ViewGroup) root);
         listView.setVisibility(View.VISIBLE);
-        listView.setAdapter(new SearchListAdapter(getContext(), 0));
+        listView.setAdapter(new SearchListAdapter(requireContext(), 0));
 
         EditText editText = root.findViewById(R.id.search_template_input);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -152,7 +153,7 @@ public class WebsiteSearchFragment extends Fragment {
 
                 String name = HtmlCompat.fromHtml(whole, 0).toString().replaceAll("\n", "");
 
-                int level = link.replace("http://gym-wen.de/", "").split("/").length;
+                int level = Objects.requireNonNull(link).replace("http://gym-wen.de/", "").split("/").length;
 
                 if (!name.trim().isEmpty()) {
                     con.add(new WebsiteSearchLink(name, link, level));
@@ -229,14 +230,14 @@ public class WebsiteSearchFragment extends Fragment {
 
             if (link.getLink() != null) {
                 usedView.setOnClickListener((View v) -> {
-                    ((WebsiteActivity) getActivity()).loadPage(link.getLink());
-                    getActivity().invalidateOptionsMenu();
+                    ((WebsiteActivity) requireActivity()).loadPage(link.getLink());
+                    requireActivity().invalidateOptionsMenu();
                 });
                 TypedValue outValue = new TypedValue();
                 getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
                 usedView.setBackgroundResource(outValue.resourceId);
 
-                button.setOnClickListener((View v) -> ((ActivityFeatures) getActivity()).tabIntent(link.getLink()));
+                button.setOnClickListener((View v) -> ((ActivityFeatures) requireActivity()).tabIntent(link.getLink()));
             }
 
             return view;

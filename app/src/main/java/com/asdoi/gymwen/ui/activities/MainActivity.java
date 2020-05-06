@@ -74,6 +74,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends ActivityFeatures implements NavigationView.OnNavigationItemSelectedListener {
     public static final String SHORTCUT_ACTION_CALL_OFFICE = "com.asdoi.gymwen.ui.activities.MainActivity.CallOffice";
@@ -756,7 +757,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
 
         if (!title.trim().isEmpty())
-            getSupportActionBar().setTitle(title);
+            Objects.requireNonNull(getSupportActionBar()).setTitle(title);
     }
 
     @Override

@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Felix Hollederer
+ *     This file is part of GymWenApp.
+ *
+ *     GymWenApp is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     GymWenApp is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.ulan.timetable.adapters;
 
 import android.content.res.ColorStateList;
@@ -96,8 +114,8 @@ public class NotesAdapter extends ArrayAdapter<Note> {
                     int itemId = item.getItemId();
                     if (itemId == R.id.delete_popup) {
                         AlertDialogsHelper.getDeleteDialog(getContext(), () -> {
-                            db.deleteNoteById(getItem(position));
-                            db.updateNote(getItem(position));
+                            db.deleteNoteById(Objects.requireNonNull(getItem(position)));
+                            db.updateNote(Objects.requireNonNull(getItem(position)));
                             notelist.remove(position);
                             notifyDataSetChanged();
                         }, getContext().getString(R.string.timetable_delete_note, note.getTitle()));

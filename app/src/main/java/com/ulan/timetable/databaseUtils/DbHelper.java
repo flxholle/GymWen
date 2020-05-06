@@ -75,11 +75,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String TEACHERS = "teachers";
 
-    public DbHelper(Context context, Calendar now) {
+    public DbHelper(@NonNull Context context, @NonNull Calendar now) {
         super(context, DBUtil.getDBName(context, now), null, DB_VERSION);
     }
 
-    public DbHelper(Context context) {
+    public DbHelper(@NonNull Context context) {
         super(context, DBUtil.getDBName(context, Calendar.getInstance()), null, DB_VERSION);
     }
 

@@ -44,7 +44,7 @@ public abstract class SubstitutionPlanFeatures {
     private static final SubstitutionPlan substitutionPlan = new SubstitutionPlan();
 
     public static void setContext(Context context) {
-        substitutionPlan.setContext(context);
+        SubstitutionPlan.setContext(context);
     }
 
     public static void setup(boolean hours, String... courses) {

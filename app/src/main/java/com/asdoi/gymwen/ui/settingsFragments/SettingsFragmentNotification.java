@@ -33,23 +33,25 @@ import com.asdoi.gymwen.receivers.AlarmReceiver;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 
+import java.util.Objects;
+
 public class SettingsFragmentNotification extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_notification, rootKey);
 
-        ((SettingsActivity) getActivity()).loadedFragments++;
+        ((SettingsActivity) requireActivity()).loadedFragments++;
 
         ProfileManagement.initProfiles();
 
         Preference myPref = findPreference("alarm");
         Preference finalMyPref = myPref;
-        myPref.setOnPreferenceClickListener((Preference p) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
             int[] times = PreferenceUtil.getAlarmTime();
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                     (view, hourOfDay, minute) -> {
                         PreferenceUtil.setAlarmTime(hourOfDay, minute, 0);
-                        ApplicationFeatures.setRepeatingAlarm(getContext(), AlarmReceiver.class, hourOfDay, minute, 0, AlarmReceiver.AlarmReceiverID, AlarmManager.INTERVAL_DAY);
+                        ApplicationFeatures.setRepeatingAlarm(requireContext(), AlarmReceiver.class, hourOfDay, minute, 0, AlarmReceiver.AlarmReceiverID, AlarmManager.INTERVAL_DAY);
                         finalMyPref.setSummary(hourOfDay + ":" + minute);
                     }, times[0], times[1], true);
             timePickerDialog.setTitle(R.string.choose_time);
@@ -61,26 +63,26 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
 
         setSummary();
         myPref = findPreference("showSummaryNotification");
-        myPref.setOnPreferenceClickListener((Preference p) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
             setSummary();
             return true;
         });
 
         myPref = findPreference("main_notif_for_all");
-        myPref.setVisible(ProfileManagement.isMoreThanOneProfile());
+        Objects.requireNonNull(myPref).setVisible(ProfileManagement.isMoreThanOneProfile());
 
         myPref = findPreference("summary_notif_as_usual");
-        myPref.setVisible(ProfileManagement.isMoreThanOneProfile());
+        Objects.requireNonNull(myPref).setVisible(ProfileManagement.isMoreThanOneProfile());
 
         setNotif();
         myPref = findPreference("showNotification");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             setNotif();
             return true;
         });
 
         myPref = findPreference("RSS_notif");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             setNotif();
             return true;
         });
@@ -89,16 +91,16 @@ public class SettingsFragmentNotification extends PreferenceFragmentCompat {
     private void setNotif() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showNotification", true);
         boolean showWebsiteNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("RSS_notif", true);
-        findPreference("alwaysNotification").setVisible(showNotif || showWebsiteNotif);
-        findPreference("alarm").setVisible(showNotif);
-        findPreference("two_notifs").setVisible(showNotif);
-        findPreference("main_notif_for_all").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
-        findPreference("showSummaryNotification").setVisible(showNotif);
-        findPreference("summary_notif_as_usual").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
+        Objects.requireNonNull(findPreference("alwaysNotification")).setVisible(showNotif || showWebsiteNotif);
+        Objects.requireNonNull(findPreference("alarm")).setVisible(showNotif);
+        Objects.requireNonNull(findPreference("two_notifs")).setVisible(showNotif);
+        Objects.requireNonNull(findPreference("main_notif_for_all")).setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
+        Objects.requireNonNull(findPreference("showSummaryNotification")).setVisible(showNotif);
+        Objects.requireNonNull(findPreference("summary_notif_as_usual")).setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
     }
 
     private void setSummary() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("showSummaryNotification", true);
-        findPreference("summary_notif_as_usual").setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
+        Objects.requireNonNull(findPreference("summary_notif_as_usual")).setVisible(showNotif && ProfileManagement.isMoreThanOneProfile());
     }
 }

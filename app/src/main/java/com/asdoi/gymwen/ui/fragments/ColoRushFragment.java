@@ -81,11 +81,11 @@ public class ColoRushFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.colorush_app:
                 //Check the two notes versions
-                if (!((ActivityFeatures) getActivity()).startApp(External_Const.coloRush_packageNames))
-                    ((ActivityFeatures) getActivity()).tabIntent(External_Const.downloadApp_colorush);
+                if (!((ActivityFeatures) requireActivity()).startApp(External_Const.coloRush_packageNames))
+                    ((ActivityFeatures) requireActivity()).tabIntent(External_Const.downloadApp_colorush);
                 break;
             case R.id.colorush_online:
-                ((ActivityFeatures) getActivity()).tabIntent(External_Const.colorush_online);
+                ((ActivityFeatures) requireActivity()).tabIntent(External_Const.colorush_online);
                 break;
         }
     }

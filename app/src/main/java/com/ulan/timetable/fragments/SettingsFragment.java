@@ -35,6 +35,8 @@ import com.asdoi.gymwen.R;
 import com.ulan.timetable.receivers.DailyReceiver;
 import com.ulan.timetable.utils.PreferenceUtil;
 
+import java.util.Objects;
+
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -42,31 +44,31 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.timetable_settings, rootKey);
 
-        tintIcons(getPreferenceScreen(), ApplicationFeatures.getTextColorPrimary(getContext()));
+        tintIcons(getPreferenceScreen(), ApplicationFeatures.getTextColorPrimary(requireContext()));
 
         Preference allPrefs = findPreference("allprefs");
-        allPrefs.setOnPreferenceClickListener((Preference p) -> {
+        Objects.requireNonNull(allPrefs).setOnPreferenceClickListener((Preference p) -> {
             startActivity(new Intent(getActivity(), com.asdoi.gymwen.ui.activities.SettingsActivity.class));
-            getActivity().finish();
+            requireActivity().finish();
             return true;
         });
 
         setNotif();
 
         Preference myPref = findPreference("timetableNotif");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             setNotif();
             return true;
         });
 
         myPref = findPreference("timetable_alarm");
         Preference finalMyPref = myPref;
-        myPref.setOnPreferenceClickListener((Preference p) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
             int[] oldTimes = PreferenceUtil.getTimeTableAlarmTime();
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                     (view, hourOfDay, minute) -> {
                         PreferenceUtil.setTimeTableAlarmTime(hourOfDay, minute, 0);
-                        ApplicationFeatures.setRepeatingAlarm(getContext(), DailyReceiver.class, hourOfDay, minute, 0, DailyReceiver.DailyReceiverID, AlarmManager.INTERVAL_DAY);
+                        ApplicationFeatures.setRepeatingAlarm(requireContext(), DailyReceiver.class, hourOfDay, minute, 0, DailyReceiver.DailyReceiverID, AlarmManager.INTERVAL_DAY);
                         finalMyPref.setSummary(hourOfDay + ":" + minute);
                     }, oldTimes[0], oldTimes[1], true);
             timePickerDialog.setTitle(R.string.choose_time);
@@ -78,8 +80,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         setTurnOff();
         myPref = findPreference("automatic_do_not_disturb");
-        myPref.setOnPreferenceClickListener((Preference p) -> {
-            PreferenceUtil.setDoNotDisturb(getActivity(), false);
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
+            PreferenceUtil.setDoNotDisturb(requireActivity(), false);
             setTurnOff();
             return true;
         });
@@ -87,7 +89,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         setCourses();
         myPref = findPreference("timetable_subs");
-        myPref.setOnPreferenceClickListener((Preference p) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
             setCourses();
             return true;
         });
@@ -95,18 +97,18 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private void setNotif() {
         boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("timetableNotif", true);
-        findPreference("alwaysNotification").setVisible(show);
-        findPreference("timetable_alarm").setVisible(show);
+        Objects.requireNonNull(findPreference("alwaysNotification")).setVisible(show);
+        Objects.requireNonNull(findPreference("timetable_alarm")).setVisible(show);
     }
 
     private void setTurnOff() {
         boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("automatic_do_not_disturb", true);
-        findPreference("do_not_disturb_turn_off").setVisible(show);
+        Objects.requireNonNull(findPreference("do_not_disturb_turn_off")).setVisible(show);
     }
 
     private void setCourses() {
         boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("timetable_subs", true);
-        findPreference("courses").setVisible(show);
+        Objects.requireNonNull(findPreference("courses")).setVisible(show);
     }
 
     private static void tintIcons(Preference preference, int color) {

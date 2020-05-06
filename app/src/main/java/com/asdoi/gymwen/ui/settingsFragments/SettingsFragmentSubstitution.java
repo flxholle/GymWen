@@ -28,16 +28,18 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 
+import java.util.Objects;
+
 public class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_substitutionplan, rootKey);
 
-        ((SettingsActivity) getActivity()).loadedFragments++;
+        ((SettingsActivity) requireActivity()).loadedFragments++;
 
         setFullNames();
         Preference myPref = findPreference("show_full_names");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             setFullNames();
             return true;
         });
@@ -52,11 +54,11 @@ public class SettingsFragmentSubstitution extends PreferenceFragmentCompat {
 
     private void setFullNames() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("show_full_names", false) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        findPreference("show_full_names_specific").setVisible(showNotif);
+        Objects.requireNonNull(findPreference("show_full_names_specific")).setVisible(showNotif);
     }
 
     private void setSummarize() {
         boolean showNotif = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("summarize", true) && !PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("hide_gesamt", false);
-        findPreference("summarize_old").setVisible(showNotif);
+        Objects.requireNonNull(findPreference("summarize_old")).setVisible(showNotif);
     }
 }

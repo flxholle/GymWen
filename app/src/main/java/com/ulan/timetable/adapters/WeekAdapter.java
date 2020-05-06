@@ -176,8 +176,8 @@ public class WeekAdapter extends ArrayAdapter<Week> {
                     int itemId = item.getItemId();
                     if (itemId == R.id.delete_popup) {
                         AlertDialogsHelper.getDeleteDialog(getContext(), () -> {
-                            db.deleteWeekById(getItem(position));
-                            db.updateWeek(getItem(position));
+                            db.deleteWeekById(Objects.requireNonNull(getItem(position)));
+                            db.updateWeek(Objects.requireNonNull(getItem(position)));
                             weeklist.remove(position);
                             notifyDataSetChanged();
                         }, getContext().getString(R.string.timetable_delete_week, week.getSubject()));

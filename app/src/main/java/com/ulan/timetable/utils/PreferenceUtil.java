@@ -27,6 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
@@ -39,6 +40,7 @@ import com.ulan.timetable.activities.SettingsActivity;
 import com.ulan.timetable.receivers.DoNotDisturbReceiversKt;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import static com.asdoi.gymwen.util.PreferenceUtil.getBooleanSettings;
 
@@ -111,10 +113,10 @@ public class PreferenceUtil {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Check if the notification policy access has been granted for the app.
-            if (!notificationManager.isNotificationPolicyAccessGranted() && !dontAskAgain) {
+            if (!Objects.requireNonNull(notificationManager).isNotificationPolicyAccessGranted() && !dontAskAgain) {
                 Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.ic_do_not_disturb_on_black_24dp);
                 try {
-                    Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                    Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
                     DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(activity));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -130,7 +132,7 @@ public class PreferenceUtil {
                         .positiveText(R.string.permission_ok_button)
                         .negativeText(R.string.permission_cancel_button)
                         .onNegative(((dialog, which) -> dialog.dismiss()))
-                        .icon(drawable)
+                        .icon(Objects.requireNonNull(drawable))
                         .onNeutral(((dialog, which) -> setDoNotDisturbDontAskAgain(activity, true)))
                         .neutralText(R.string.dont_show_again)
                         .show();
@@ -152,20 +154,20 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("summary_lib", true);
     }
 
-    public static void setSummaryLibrary(Context context, boolean value) {
+    public static void setSummaryLibrary(@NonNull Context context, boolean value) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("summary_lib", value).commit();
     }
 
-    public static boolean showTimes(Context context) {
+    public static boolean showTimes(@NonNull Context context) {
         return getBooleanSettings("show_times", false, context);
     }
 
     //Even, odd weeks
-    public static boolean isTwoWeeksEnabled(Context context) {
+    public static boolean isTwoWeeksEnabled(@NonNull Context context) {
         return getBooleanSettings("two_weeks", false, context);
     }
 
-    public static void setTermStart(Context context, int year, int month, int day) {
+    public static void setTermStart(@NonNull Context context, int year, int month, int day) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putInt("term_year", year);
         editor.putInt("term_month", month);
@@ -173,7 +175,7 @@ public class PreferenceUtil {
         editor.commit();
     }
 
-    public static void setTermStart(SubstitutionTitle today, Context context) {
+    public static void setTermStart(@Nullable SubstitutionTitle today, @NonNull Context context) {
         if (today != null) {
             Calendar todayCal = today.getDayAsCalendar();
             if (!today.getWeek().equalsIgnoreCase("A"))
@@ -184,7 +186,7 @@ public class PreferenceUtil {
     }
 
     @NonNull
-    public static Calendar getTermStart(Context context) {
+    public static Calendar getTermStart(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         Calendar calendar = Calendar.getInstance();
         int year = sharedPref.getInt("term_year", -999999999);
@@ -202,7 +204,7 @@ public class PreferenceUtil {
         return calendar;
     }
 
-    public static boolean isEvenWeek(Context context, @NonNull Calendar now) {
+    public static boolean isEvenWeek(@NonNull Context context, @NonNull Calendar now) {
         if (isTwoWeeksEnabled(context)) {
             return WeekUtils.isEvenWeek(getTermStart(context), now);
         } else

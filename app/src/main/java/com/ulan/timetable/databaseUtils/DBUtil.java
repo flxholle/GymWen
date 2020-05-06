@@ -41,7 +41,7 @@ public class DBUtil {
     private static final String odd_week_postfix = "_odd";
 
     @NonNull
-    public static String getDBName(@NonNull Activity activity, Calendar now) {
+    public static String getDBName(@NonNull Activity activity, @NonNull Calendar now) {
         String dbName = database_prefix + getProfilePosition(activity);
         if (PreferenceUtil.isEvenWeek(activity, now))
             return dbName;
@@ -49,7 +49,8 @@ public class DBUtil {
             return dbName + odd_week_postfix;
     }
 
-    public static String getDBName(Context context, Calendar now) {
+    @NonNull
+    public static String getDBName(@NonNull Context context, @NonNull Calendar now) {
         String dbName = database_prefix + getProfilePositionFromSharedPreferences();
         if (PreferenceUtil.isEvenWeek(context, now))
             return dbName;
@@ -101,13 +102,13 @@ public class DBUtil {
     @Nullable
     public static SubstitutionPlan getSubstitutionPlanFromActivity(@NonNull AppCompatActivity activity) {
         try {
-            String todayDoc = activity.getIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TODAY, null);
+            String todayDoc = Objects.requireNonNull(activity.getIntent().getExtras()).getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TODAY, null);
             if (todayDoc == null)
-                todayDoc = activity.getParentActivityIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TODAY, null);
+                todayDoc = Objects.requireNonNull(Objects.requireNonNull(activity.getParentActivityIntent()).getExtras()).getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TODAY, null);
 
             String tomorrowDoc = activity.getIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TOMORROW, null);
             if (tomorrowDoc == null)
-                tomorrowDoc = activity.getParentActivityIntent().getExtras().getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TOMORROW, null);
+                tomorrowDoc = Objects.requireNonNull(Objects.requireNonNull(activity.getParentActivityIntent()).getExtras()).getString(TimeTableBuilder.SUBSTITUTIONPLANDOC_TOMORROW, null);
 
             int pos = getProfilePosition(activity);
 

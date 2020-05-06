@@ -49,6 +49,8 @@ import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.util.External_Const;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -147,23 +149,23 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     }
 
     private void setUpAppVersion() {
-        appVersion.setText(getCurrentVersionName(this));
+        Objects.requireNonNull(appVersion).setText(getCurrentVersionName(this));
     }
 
     private void setUpOnClickListeners() {
-        changelog.setOnClickListener(this);
-        intro.setOnClickListener(this);
-        licenses.setOnClickListener(this);
-        forkOnGitHub.setOnClickListener(this);
-        visitWebsite.setOnClickListener(this);
-        reportBugs.setOnClickListener(this);
-        writeAnEmail.setOnClickListener(this);
-        share.setOnClickListener(this);
-        privacy.setOnClickListener(this);
-        image_sources.setOnClickListener(this);
-        libs.setOnClickListener(this);
-        colorush.setOnClickListener(this);
-        imprint.setOnClickListener(this);
+        Objects.requireNonNull(changelog).setOnClickListener(this);
+        Objects.requireNonNull(intro).setOnClickListener(this);
+        Objects.requireNonNull(licenses).setOnClickListener(this);
+        Objects.requireNonNull(forkOnGitHub).setOnClickListener(this);
+        Objects.requireNonNull(visitWebsite).setOnClickListener(this);
+        Objects.requireNonNull(reportBugs).setOnClickListener(this);
+        Objects.requireNonNull(writeAnEmail).setOnClickListener(this);
+        Objects.requireNonNull(share).setOnClickListener(this);
+        Objects.requireNonNull(privacy).setOnClickListener(this);
+        Objects.requireNonNull(image_sources).setOnClickListener(this);
+        Objects.requireNonNull(libs).setOnClickListener(this);
+        Objects.requireNonNull(colorush).setOnClickListener(this);
+        Objects.requireNonNull(imprint).setOnClickListener(this);
     }
 
     private static String getCurrentVersionName(@NonNull final Context context) {
@@ -192,7 +194,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_description_white_24dp);
             try {
-                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
                 DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -206,7 +208,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     // The dialog is automatically dismissed when a dialog button is clicked.
                     .onPositive((dialog, which) -> dialog.dismiss())
                     .positiveText(R.string.ok)
-                    .icon(drawable)
+                    .icon(Objects.requireNonNull(drawable))
                     .show();
         } else if (v == intro) {
             startActivity(new Intent(this, AppIntroActivity.class));
@@ -238,7 +240,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_fingerprint_black_24dp);
             try {
-                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
                 DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -252,7 +254,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     // The dialog is automatically dismissed when a dialog button is clicked.
                     .onPositive((dialog, which) -> dialog.dismiss())
                     .positiveText(R.string.ok)
-                    .icon(drawable)
+                    .icon(Objects.requireNonNull(drawable))
                     .show();
         } else if (v == image_sources) {
             String sources = getString(R.string.credits);
@@ -265,7 +267,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_image_black_24dp);
             try {
-                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
                 DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -282,7 +284,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .cancelable(true)
                     .positiveText(R.string.ok)
                     .onPositive((dialog, which) -> dialog.dismiss())
-                    .icon(drawable)
+                    .icon(Objects.requireNonNull(drawable))
                     .customView(message, true)
                     .show();
 
@@ -306,7 +308,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
 
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_credit_card_black_24dp);
             try {
-                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
                 DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -323,7 +325,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
                     .cancelable(true)
                     .positiveText(R.string.ok)
                     .onPositive((dialog, which) -> dialog.dismiss())
-                    .icon(drawable)
+                    .icon(Objects.requireNonNull(drawable))
                     .customView(message, true)
                     .show();
         }

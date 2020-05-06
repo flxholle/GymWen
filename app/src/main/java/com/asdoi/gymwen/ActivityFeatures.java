@@ -558,7 +558,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                 .setDestinationInExternalPublicDir(dirType, subPath)
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
-        downloadID = mgr.enqueue(request);
+        downloadID = Objects.requireNonNull(mgr).enqueue(request);
 
         Toast.makeText(this, getString(R.string.download_start), Toast.LENGTH_LONG).show();
 

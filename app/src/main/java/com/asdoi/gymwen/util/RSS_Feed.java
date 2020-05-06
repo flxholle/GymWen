@@ -43,11 +43,12 @@ import com.prof.rssparser.OnTaskCompleted;
 import com.prof.rssparser.Parser;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class RSS_Feed {
     @NonNull
-    public static String CHANNEL_ID = "RSS_notification";
+    public static final String CHANNEL_ID = "RSS_notification";
 
     public static void checkRSS(@NonNull Context context) {
         Parser parser = new Parser();
@@ -59,7 +60,7 @@ public class RSS_Feed {
                 // Use the channel info
                 List<Article> articles = channel.getArticles();
                 if (articles.size() > 0) {
-                    if (!articles.get(0).getTitle().equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle())) {
+                    if (!Objects.requireNonNull(articles.get(0).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle())) {
                         //Send Notification
                         Intent notificationIntent = new Intent(context, WebsiteActivity.class);
                         notificationIntent.putExtra(WebsiteActivity.LOADURL, articles.get(0).getLink());
@@ -71,7 +72,7 @@ public class RSS_Feed {
 
             //what to do in case of error
             @Override
-            public void onError(Exception e) {
+            public void onError(@NonNull Exception e) {
                 // Handle the exception
             }
         });
@@ -87,7 +88,7 @@ public class RSS_Feed {
                 // Use the channel info
                 List<Article> articles = channel.getArticles();
                 if (articles.size() > 0) {
-                    if (!articles.get(articles.size() - 1).getTitle().equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle2())) {
+                    if (!Objects.requireNonNull(articles.get(articles.size() - 1).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle2())) {
                         //Send Notification
                         Intent notificationIntent = new Intent(context, MainActivity.class);
                         notificationIntent.setAction(MainActivity.LOADURL);
@@ -100,7 +101,7 @@ public class RSS_Feed {
 
             //what to do in case of error
             @Override
-            public void onError(Exception e) {
+            public void onError(@NonNull Exception e) {
                 // Handle the exception
             }
         });
@@ -111,7 +112,7 @@ public class RSS_Feed {
         if (article == null || !PreferenceUtil.isRSSNotification() || Build.VERSION.SDK_INT < 21)
             return;
 
-        int id = article.getTitle().hashCode();
+        int id = Objects.requireNonNull(article.getTitle()).hashCode();
 
         long when = System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -164,7 +165,7 @@ public class RSS_Feed {
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
         }
     }
 

@@ -41,6 +41,7 @@ import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.activities.SubstitutionWidgetActivity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SubstitutionWidgetProvider extends AppWidgetProvider {
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
@@ -60,8 +61,8 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         if (intent.hasExtra(WIDGET_ID_KEY)) {
-            int[] ids = intent.getExtras().getIntArray(WIDGET_ID_KEY);
-            this.onUpdate(context, AppWidgetManager.getInstance(context), ids);
+            int[] ids = Objects.requireNonNull(intent.getExtras()).getIntArray(WIDGET_ID_KEY);
+            this.onUpdate(context, AppWidgetManager.getInstance(context), Objects.requireNonNull(ids));
         } else if (OPEN_APP.equals(intent.getAction())) {
             Intent openapp = new Intent(context, MainActivity.class);
             openapp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

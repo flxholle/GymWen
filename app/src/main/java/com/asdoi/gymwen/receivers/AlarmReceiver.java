@@ -29,6 +29,8 @@ import androidx.annotation.Nullable;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.util.PreferenceUtil;
 
+import java.util.Objects;
+
 public class AlarmReceiver extends BroadcastReceiver {
     public static final int AlarmReceiverID = 500;
 
@@ -47,7 +49,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         }
 
-        if (!PreferenceUtil.isAlarmOn(context)) {
+        if (!PreferenceUtil.isAlarmOn(Objects.requireNonNull(context))) {
             ApplicationFeatures.cancelAlarm(context, AlarmReceiver.class, AlarmReceiver.AlarmReceiverID);
         } else {
             //Trigger the notification

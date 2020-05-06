@@ -32,47 +32,49 @@ import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.github.javiersantos.appupdater.enums.Display;
 
+import java.util.Objects;
+
 public class SettingsFragmentRoot extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_root, rootKey);
 
-        ((SettingsActivity) getActivity()).loadedFragments++;
+        ((SettingsActivity) requireActivity()).loadedFragments++;
 
         Preference myPref = findPreference("language");
-        myPref.setOnPreferenceClickListener((Preference p) -> {
-            ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(getActivity());
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
+            ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(requireActivity());
             return true;
         });
         myPref.setSummary(ApplicationFeatures.getLanguageSwitcher().getCurrentLocale().toString());
 
         myPref = findPreference("updates");
-        myPref.setOnPreferenceClickListener((Preference p) -> {
-            ((ActivityFeatures) getActivity()).checkUpdates(Display.DIALOG, true);
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
+            ((ActivityFeatures) requireActivity()).checkUpdates(Display.DIALOG, true);
             return true;
         });
 
         myPref = findPreference("shortcuts_array");
         if (Build.VERSION.SDK_INT >= 25) {
-            myPref.setVisible(true);
-            String[] defaultValues = PreferenceUtil.isParents() ? getContext().getResources().getStringArray(R.array.shortcuts_array_values_default_parent_mode) : getContext().getResources().getStringArray(R.array.shortcuts_array_values_default);
+            Objects.requireNonNull(myPref).setVisible(true);
+            String[] defaultValues = PreferenceUtil.isParents() ? requireContext().getResources().getStringArray(R.array.shortcuts_array_values_default_parent_mode) : requireContext().getResources().getStringArray(R.array.shortcuts_array_values_default);
             myPref.setDefaultValue(defaultValues);
         } else
-            myPref.setVisible(false);
+            Objects.requireNonNull(myPref).setVisible(false);
 
         myPref = findPreference("open_timetable_settings");
-        myPref.setOnPreferenceClickListener((Preference p) -> {
-            getActivity().startActivity(new Intent(getContext(), com.ulan.timetable.activities.SettingsActivity.class));
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
+            requireActivity().startActivity(new Intent(getContext(), com.ulan.timetable.activities.SettingsActivity.class));
             return true;
         });
 
         myPref = findPreference("show_more");
-        myPref.setOnPreferenceClickListener((Preference p) -> {
-            findPreference("show_more").setVisible(false);
-            findPreference("language").setVisible(true);
-            findPreference("updates").setVisible(true);
-            findPreference("auto_update").setVisible(true);
-            findPreference("offline_mode").setVisible(true);
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
+            Objects.requireNonNull(findPreference("show_more")).setVisible(false);
+            Objects.requireNonNull(findPreference("language")).setVisible(true);
+            Objects.requireNonNull(findPreference("updates")).setVisible(true);
+            Objects.requireNonNull(findPreference("auto_update")).setVisible(true);
+            Objects.requireNonNull(findPreference("offline_mode")).setVisible(true);
             return true;
         });
     }

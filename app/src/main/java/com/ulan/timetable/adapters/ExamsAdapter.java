@@ -163,8 +163,8 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
                     int itemId = item.getItemId();
                     if (itemId == R.id.delete_popup) {
                         AlertDialogsHelper.getDeleteDialog(getContext(), () -> {
-                            db.deleteExamById(getItem(position));
-                            db.updateExam(getItem(position));
+                            db.deleteExamById(Objects.requireNonNull(getItem(position)));
+                            db.updateExam(Objects.requireNonNull(getItem(position)));
                             examlist.remove(position);
                             notifyDataSetChanged();
                         }, getContext().getString(R.string.timetable_delete_exam, exam.getSubject()));

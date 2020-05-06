@@ -27,21 +27,23 @@ import androidx.preference.SwitchPreference;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 
+import java.util.Objects;
+
 public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_hide_menu_items, rootKey);
 
-        ((SettingsActivity) getActivity()).loadedFragments++;
+        ((SettingsActivity) requireActivity()).loadedFragments++;
 
         Preference myPref = findPreference("show_sections");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             boolean checked = ((SwitchPreference) preference).isChecked();
             SwitchPreference days = findPreference("show_days");
-            days.setChecked(!checked);
+            Objects.requireNonNull(days).setChecked(!checked);
 
             days = findPreference("show_no_sections");
-            days.setChecked(false);
+            Objects.requireNonNull(days).setChecked(false);
 
             showBoth();
             checkFilteredUnfiltered();
@@ -49,12 +51,12 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
         });
 
         myPref = findPreference("show_no_sections");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             SwitchPreference days = findPreference("show_days");
-            days.setChecked(!((SwitchPreference) preference).isChecked());
+            Objects.requireNonNull(days).setChecked(!((SwitchPreference) preference).isChecked());
 
             days = findPreference("show_sections");
-            days.setChecked(false);
+            Objects.requireNonNull(days).setChecked(false);
 
             showBoth();
             checkFilteredUnfiltered();
@@ -64,25 +66,25 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
         showBoth();
         checkFilteredUnfiltered();
         myPref = findPreference("menu_filtered");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             setFilteredUnfiltered();
             return true;
         });
 
         myPref = findPreference("menu_unfiltered");
-        myPref.setOnPreferenceClickListener((Preference preference) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference preference) -> {
             setFilteredUnfiltered();
             return true;
         });
 
 
         myPref = findPreference("show_days");
-        myPref.setOnPreferenceClickListener((Preference pref) -> {
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference pref) -> {
             SwitchPreference separate = findPreference("show_sections");
-            separate.setChecked(!((SwitchPreference) pref).isChecked());
+            Objects.requireNonNull(separate).setChecked(!((SwitchPreference) pref).isChecked());
 
             SwitchPreference days = findPreference("show_no_sections");
-            days.setChecked(false);
+            Objects.requireNonNull(days).setChecked(false);
 
             showBoth();
             checkFilteredUnfiltered();
@@ -92,24 +94,24 @@ public class SettingsFragmentHideMenuItems extends PreferenceFragmentCompat {
 
     private void setFilteredUnfiltered() {
         SwitchPreference switchPreference = findPreference("show_sections");
-        boolean showBothFalse = !((SwitchPreference) findPreference("menu_filtered")).isChecked() && !((SwitchPreference) findPreference("menu_unfiltered")).isChecked();
-        switchPreference.setChecked(!showBothFalse);
+        boolean showBothFalse = !((SwitchPreference) Objects.requireNonNull(findPreference("menu_filtered"))).isChecked() && !((SwitchPreference) Objects.requireNonNull(findPreference("menu_unfiltered"))).isChecked();
+        Objects.requireNonNull(switchPreference).setChecked(!showBothFalse);
         showBoth();
         if (showBothFalse)
-            ((SwitchPreference) findPreference("show_days")).setChecked(true);
+            ((SwitchPreference) Objects.requireNonNull(findPreference("show_days"))).setChecked(true);
     }
 
     private void checkFilteredUnfiltered() {
-        boolean bothFalse = !((SwitchPreference) findPreference("menu_filtered")).isChecked() && !((SwitchPreference) findPreference("menu_unfiltered")).isChecked();
+        boolean bothFalse = !((SwitchPreference) Objects.requireNonNull(findPreference("menu_filtered"))).isChecked() && !((SwitchPreference) Objects.requireNonNull(findPreference("menu_unfiltered"))).isChecked();
         if (bothFalse)
-            ((SwitchPreference) findPreference("menu_filtered")).setChecked(true);
+            ((SwitchPreference) Objects.requireNonNull(findPreference("menu_filtered"))).setChecked(true);
     }
 
     private void showBoth() {
         SwitchPreference switchPreference = findPreference("show_sections");
-        boolean showBoth = switchPreference.isChecked();
-        findPreference("menu_filtered").setEnabled(showBoth);
-        findPreference("menu_unfiltered").setEnabled(showBoth);
+        boolean showBoth = Objects.requireNonNull(switchPreference).isChecked();
+        Objects.requireNonNull(findPreference("menu_filtered")).setEnabled(showBoth);
+        Objects.requireNonNull(findPreference("menu_unfiltered")).setEnabled(showBoth);
     }
 
 }

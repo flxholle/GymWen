@@ -40,6 +40,7 @@ import com.ulan.timetable.utils.PreferenceUtil;
 import com.ulan.timetable.utils.WeekUtils;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class WeekdayFragment extends Fragment {
     public static final String KEY_MONDAY_FRAGMENT = "Monday";
@@ -97,19 +98,19 @@ public class WeekdayFragment extends Fragment {
     }
 
     private void setupAdapter(@NonNull View view) {
-        db = new DbHelper(getActivity());
+        db = new DbHelper(requireActivity());
         listView = view.findViewById(R.id.timetable_daylist);
         ArrayList<Week> weeks = db.getWeek(key);
         if (PreferenceUtil.isTimeTableSubstitution() && !entries.getNoInternet()) {
-            weeks = WeekUtils.compareSubstitutionAndWeeks(getContext(), weeks, entries, senior, db);
+            weeks = WeekUtils.compareSubstitutionAndWeeks(requireContext(), weeks, entries, senior, db);
         }
-        adapter = new WeekAdapter((ActivityFeatures) getActivity(), listView, 0, weeks);
+        adapter = new WeekAdapter((ActivityFeatures) requireActivity(), listView, 0, weeks);
         listView.setAdapter(adapter);
     }
 
     private void setupListViewMultiSelect() {
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(FragmentHelper.setupListViewMultiSelect((AppCompatActivity) getActivity(), listView, adapter, db));
+        listView.setMultiChoiceModeListener(FragmentHelper.setupListViewMultiSelect((AppCompatActivity) requireActivity(), listView, Objects.requireNonNull(adapter), Objects.requireNonNull(db)));
     }
 
     public String getKey() {

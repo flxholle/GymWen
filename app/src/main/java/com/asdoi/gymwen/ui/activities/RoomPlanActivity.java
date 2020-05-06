@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 public class RoomPlanActivity extends ActivityFeatures {
@@ -68,7 +69,7 @@ public class RoomPlanActivity extends ActivityFeatures {
             if (extras != null)
                 room = extras.getString(SELECT_ROOM, null);
 
-            search = getIntent().getAction().equals(SEARCH_ROOM);
+            search = Objects.requireNonNull(getIntent().getAction()).equals(SEARCH_ROOM);
         } catch (NullPointerException ignore) {
             //If intent is null
         }
@@ -346,7 +347,7 @@ public class RoomPlanActivity extends ActivityFeatures {
         }
 
         public boolean hasDescription() {
-            return !description.trim().isEmpty();
+            return !Objects.requireNonNull(description).trim().isEmpty();
         }
     }
 }

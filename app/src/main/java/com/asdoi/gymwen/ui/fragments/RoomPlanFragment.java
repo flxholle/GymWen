@@ -72,7 +72,7 @@ public class RoomPlanFragment extends Fragment {
             generateMarks();
             shouldSelectRoom = false;
 
-            String roomName = getArguments().getString(RoomPlanActivity.SELECT_ROOM, null);
+            String roomName = requireArguments().getString(RoomPlanActivity.SELECT_ROOM, null);
             if (roomName != null && !roomName.trim().isEmpty()) {
                 for (RoomPlanActivity.Room r : getRooms()) {
                     if (r.getName().equalsIgnoreCase(roomName)) {
@@ -83,7 +83,7 @@ public class RoomPlanFragment extends Fragment {
                 }
 
                 if (!shouldSelectRoom) {
-                    RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
+                    RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(requireActivity())
                             .setActionText(getString(R.string.ok))
                             .setText(getString(R.string.room) + " " + roomName + " " + getString(R.string.not_found))
                             .setDuration(ChocoBar.LENGTH_INDEFINITE)
@@ -107,7 +107,7 @@ public class RoomPlanFragment extends Fragment {
         mapView = root.findViewById(R.id.mapview);
         mapView.setVisibility(View.GONE);
 
-        ((ActivityFeatures) getActivity()).createLoadingPanel((ViewGroup) root);
+        ((ActivityFeatures) requireActivity()).createLoadingPanel((ViewGroup) root);
 
         loadMap();
         return root;
@@ -121,9 +121,9 @@ public class RoomPlanFragment extends Fragment {
             Bitmap marker = markerBitmap;
             try {
                 if (roomPlan == null)
-                    roomPlan = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.roomplan);
+                    roomPlan = BitmapFactory.decodeResource(requireContext().getResources(), R.drawable.roomplan);
                 if (shouldSelectRoom && marker == null)
-                    marker = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.marker_bitmap);
+                    marker = BitmapFactory.decodeResource(requireContext().getResources(), R.drawable.marker_bitmap);
 
                 roomPlanBitmap = roomPlan;
                 markerBitmap = marker;
@@ -135,8 +135,8 @@ public class RoomPlanFragment extends Fragment {
             Bitmap finalMarkerBitmap = markerBitmap;
 
             //Load Indoor Map
-            getActivity().runOnUiThread(() -> {
-                ((ActivityFeatures) getActivity()).removeLoadingPanel((ViewGroup) root);
+            requireActivity().runOnUiThread(() -> {
+                ActivityFeatures.removeLoadingPanel((ViewGroup) root);
                 mapView.setVisibility(View.VISIBLE);
                 mapView.loadMap(finalRoomPlanBitmap);
                 mapView.setMapViewListener(new MapViewListener() {
@@ -145,12 +145,12 @@ public class RoomPlanFragment extends Fragment {
                         List<PointF> marks = getRoomLocations();
                         List<String> marksName = getRoomNames();
 
-                        getActivity().runOnUiThread(() -> {
+                        requireActivity().runOnUiThread(() -> {
                             if (shouldSelectRoom) {
                                 BitmapLayer bitmapLayer = new BitmapLayer(mapView, finalMarkerBitmap);
                                 bitmapLayer.setLocation(marks.get(0));
                                 mapView.addLayer(bitmapLayer);
-                                RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
+                                RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(requireActivity())
                                         .setText(selectRoom.getName() + " (" + selectRoom.getFloor() + (selectRoom.hasDescription() ? ", " + selectRoom.getDescription() : "") + ")")
                                         .setTextTypefaceStyle(Typeface.BOLD)
                                         .setIcon(R.mipmap.mark_touch)
@@ -160,7 +160,7 @@ public class RoomPlanFragment extends Fragment {
                                 RoomPlanActivity.snackbar.show();
                             } else {
                                 MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
-                                markLayer.setMarkIsClickListener((int num) -> getActivity().runOnUiThread(() -> {
+                                markLayer.setMarkIsClickListener((int num) -> requireActivity().runOnUiThread(() -> {
                                     RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
                                             .setText(getRoomNames().get(num) + " (" + getRooms().get(num).getFloor() + (getRooms().get(num).hasDescription() ? ", " + getRooms().get(num).getDescription() : "") + ")")
                                             .setTextTypefaceStyle(Typeface.BOLD)
@@ -183,8 +183,8 @@ public class RoomPlanFragment extends Fragment {
 
                     @Override
                     public void onMapLoadFail() {
-                        getActivity().runOnUiThread(() -> {
-                            RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
+                        requireActivity().runOnUiThread(() -> {
+                            RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(requireActivity())
                                     .setText(R.string.cannot_load_room_plan)
                                     .setDuration(ChocoBar.LENGTH_INDEFINITE)
                                     .setActionText(R.string.ok)

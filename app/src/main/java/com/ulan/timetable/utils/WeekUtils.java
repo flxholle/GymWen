@@ -262,7 +262,7 @@ public class WeekUtils {
 
     @NonNull
 
-    public static ArrayList<Week> getAllWeeksAndRemoveDuplicates(DbHelper dbHelper) {
+    public static ArrayList<Week> getAllWeeksAndRemoveDuplicates(@NonNull DbHelper dbHelper) {
         ArrayList<Week> weeks = getAllWeeks(dbHelper);
         ArrayList<Week> returnValue = new ArrayList<>();
         ArrayList<String> returnValueSubjects = new ArrayList<>();
@@ -297,7 +297,7 @@ public class WeekUtils {
         return customWeeks;
     }
 
-    public static int getMatchingScheduleBegin(String time) {
+    public static int getMatchingScheduleBegin(@NonNull String time) {
         ArrayList<Integer[]> times = new ArrayList<>();
         for (int i = 1; i <= 11; i++) {
             String time2 = getMatchingTimeBegin(i);
@@ -319,7 +319,7 @@ public class WeekUtils {
         return i + 1;
     }
 
-    public static int getMatchingScheduleEnd(String time) {
+    public static int getMatchingScheduleEnd(@NonNull String time) {
         ArrayList<Integer[]> times = new ArrayList<>();
         for (int i = 1; i <= 11; i++) {
             String time2 = getMatchingTimeEnd(i);
@@ -341,6 +341,7 @@ public class WeekUtils {
         return i + 1;
     }
 
+    @NonNull
     public static String getMatchingTimeBegin(int hour) {
         String time = SubstitutionList.Companion.getMatchingStartTime(hour);
         if (time.length() < 5)
@@ -348,6 +349,7 @@ public class WeekUtils {
         return time;
     }
 
+    @NonNull
     public static String getMatchingTimeEnd(int hour) {
         String time = SubstitutionList.Companion.getMatchingEndTime(hour);
         if (time.length() < 5)

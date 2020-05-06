@@ -42,6 +42,7 @@ import com.ulan.timetable.model.Homework;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class HomeworkActivity extends ActivityFeatures {
@@ -115,7 +116,7 @@ public class HomeworkActivity extends ActivityFeatures {
                     for (int i = 0; i < checkedItems.size(); i++) {
                         int key = checkedItems.keyAt(i);
                         if (checkedItems.get(key)) {
-                            db.deleteHomeworkById(adapter.getItem(key));
+                            db.deleteHomeworkById(Objects.requireNonNull(adapter.getItem(key)));
                             removelist.add(adapter.getHomeworkList().get(key));
                         }
                     }

@@ -44,6 +44,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RoomPlanSearchFragment extends Fragment {
     private ListView listView;
@@ -62,7 +63,7 @@ public class RoomPlanSearchFragment extends Fragment {
         content = RoomPlanActivity.getRoomMarkers();
 
         listView = root.findViewById(R.id.search_template_list);
-        listView.setAdapter(new SearchListAdapter(getContext(), 0));
+        listView.setAdapter(new SearchListAdapter(requireContext(), 0));
 
         EditText editText = root.findViewById(R.id.search_template_input);
         editText.addTextChangedListener(new TextWatcher() {
@@ -105,7 +106,7 @@ public class RoomPlanSearchFragment extends Fragment {
         for (RoomPlanActivity.Room n : all) {
             if (n.getName().toUpperCase().contains(query.toUpperCase())) {
                 matches.add(n);
-            } else if (n.getDescription().toUpperCase().contains(query.toUpperCase()))
+            } else if (Objects.requireNonNull(n.getDescription()).toUpperCase().contains(query.toUpperCase()))
                 matches.add(n);
         }
         content = matches;
@@ -136,12 +137,12 @@ public class RoomPlanSearchFragment extends Fragment {
         private View createView(@NonNull View base, int position) {
             RoomPlanActivity.Room room = content.get(position);
 
-            base.setOnClickListener((View v) -> ((RoomPlanActivity) getActivity()).showRoom(room.getName()));
+            base.setOnClickListener((View v) -> ((RoomPlanActivity) requireActivity()).showRoom(room.getName()));
             TypedValue outValue = new TypedValue();
             getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             base.setBackgroundResource(outValue.resourceId);
 
-            base.findViewById(R.id.room_search_button).setOnClickListener((View v) -> ((RoomPlanActivity) getActivity()).showRoom(room.getName()));
+            base.findViewById(R.id.room_search_button).setOnClickListener((View v) -> ((RoomPlanActivity) requireActivity()).showRoom(room.getName()));
 
             TextView roomName = base.findViewById(R.id.room_search_room);
             roomName.setText(room.getName());

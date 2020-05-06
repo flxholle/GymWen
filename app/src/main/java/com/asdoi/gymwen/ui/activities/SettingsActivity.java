@@ -41,6 +41,8 @@ import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentRoot;
 import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSignIn;
 import com.asdoi.gymwen.util.ShortcutUtils;
 
+import java.util.Objects;
+
 public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     public static final String SIGN_IN_SETTINGS = "SignInSettings";
 
@@ -110,7 +112,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
         } else {
             loadedFragments--;
             try {
-                getSupportActionBar().setTitle(R.string.title_activity_settings);
+                Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.title_activity_settings);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -133,7 +135,7 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 .commit();
 
         try {
-            getSupportActionBar().setTitle(pref.getTitle());
+            Objects.requireNonNull(getSupportActionBar()).setTitle(pref.getTitle());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Felix Hollederer
+ *     This file is part of GymWenApp.
+ *
+ *     GymWenApp is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     GymWenApp is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with GymWenApp.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.ulan.timetable.utils;
 
 import android.util.SparseBooleanArray;
@@ -17,6 +35,7 @@ import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Week;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Ulan on 03.12.2018.
@@ -40,7 +59,7 @@ public class FragmentHelper {
                     SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
                     for (int i = 0; i < checkedItems.size(); i++) {
                         int key = checkedItems.keyAt(i);
-                        db.deleteWeekById(adapter.getItem(key));
+                        db.deleteWeekById(Objects.requireNonNull(adapter.getItem(key)));
                         removelist.add(adapter.getWeekList().get(key));
                     }
                     adapter.getWeekList().removeAll(removelist);

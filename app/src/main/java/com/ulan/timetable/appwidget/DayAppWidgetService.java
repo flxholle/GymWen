@@ -25,6 +25,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import static com.ulan.timetable.utils.NotificationUtil.getCurrentDay;
 
@@ -51,8 +53,9 @@ import static com.ulan.timetable.utils.NotificationUtil.getCurrentDay;
  */
 public class DayAppWidgetService extends RemoteViewsService {
 
+    @NonNull
     @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
+    public RemoteViewsFactory onGetViewFactory(@NonNull Intent intent) {
         return new DayAppWidgetRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 }
@@ -63,7 +66,7 @@ class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
     private ArrayList<Week> content;
     private final int mAppWidgetId;
 
-    DayAppWidgetRemoteViewsFactory(Context context, Intent intent) {
+    DayAppWidgetRemoteViewsFactory(Context context, @NonNull Intent intent) {
         mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         mContext = context;
     }
@@ -94,7 +97,7 @@ class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
                 } catch (Exception ignore) {
                 }
                 Calendar calendar1 = Calendar.getInstance();
-                calendar1.setTime(removeTime(startDate));
+                calendar1.setTime(removeTime(Objects.requireNonNull(startDate)));
 
                 Date startDate2 = null;
                 try {
@@ -102,7 +105,7 @@ class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
                 } catch (Exception ignore) {
                 }
                 Calendar calendar2 = Calendar.getInstance();
-                calendar2.setTime(removeTime(startDate2));
+                calendar2.setTime(removeTime(Objects.requireNonNull(startDate2)));
 
                 if (calendar1.getTimeInMillis() == calendar.getTimeInMillis())
                     substitutionlist = substitutionPlan.getTodaySummarized();
@@ -135,6 +138,7 @@ class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         return content.size();
     }
 
+    @NonNull
     @Override
     public RemoteViews getViewAt(int position) {
 
@@ -167,6 +171,7 @@ class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         return rv;
     }
 
+    @Nullable
     @Override
     public RemoteViews getLoadingView() {
         return null;

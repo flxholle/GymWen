@@ -100,10 +100,10 @@ public class TeacherListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((ActivityFeatures) getActivity()).createLoadingPanel(base);
+        ((ActivityFeatures) requireActivity()).createLoadingPanel(base);
         //noinspection CatchMayIgnoreException
         try {
-            teacherQuery = getArguments().getString(TeacherListActivity.SEARCH_TEACHER, null);
+            teacherQuery = requireArguments().getString(TeacherListActivity.SEARCH_TEACHER, null);
         } catch (Exception e) {
         }
 
@@ -119,12 +119,12 @@ public class TeacherListFragment extends Fragment {
 
 
     private void createLayout() {
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+        requireActivity().runOnUiThread(() -> {
             clear();
 
-            if (teacherList.getNoInternet()) {
+            if (Objects.requireNonNull(teacherList).getNoInternet()) {
                 TextView title = createTitleLayout();
-                title.setText(context.getString(R.string.noInternetConnection));
+                title.setText(requireContext().getString(R.string.noInternetConnection));
                 return;
             }
 
@@ -141,12 +141,12 @@ public class TeacherListFragment extends Fragment {
             base2.addView(searchInput, 0);
             base.addView(base2);
             teacherListView = new ListView(context);
-            teacherListView.setAdapter(new TeacherListAdapter(context, 0));
+            teacherListView.setAdapter(new TeacherListAdapter(requireContext(), 0));
             teacherListView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
             if (PreferenceUtil.isSwipeToRefresh()) {
-                SwipeRefreshLayout swipeRefreshLayout = new SwipeRefreshLayout(context);
-                swipeRefreshLayout.setOnRefreshListener(() -> ((TeacherListActivity) getActivity()).onOptionsItemSelected(R.id.action_refresh));
+                SwipeRefreshLayout swipeRefreshLayout = new SwipeRefreshLayout(requireContext());
+                swipeRefreshLayout.setOnRefreshListener(() -> ((TeacherListActivity) requireActivity()).onOptionsItemSelected(R.id.action_refresh));
                 swipeRefreshLayout.addView(teacherListView);
                 swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.YELLOW, Color.BLUE);
                 base.addView(swipeRefreshLayout);
@@ -163,7 +163,7 @@ public class TeacherListFragment extends Fragment {
     @NonNull
     private TextView createTitleLayout() {
         TextView textView = new TextView(context);
-        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(context));
+        textView.setTextColor(ApplicationFeatures.getTextColorPrimary(requireContext()));
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         textView.setGravity(Gravity.CENTER);
@@ -175,7 +175,7 @@ public class TeacherListFragment extends Fragment {
     @NonNull
     private com.google.android.material.textfield.TextInputLayout createSearchLayout(@Nullable String
                                                                                              query) {
-        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(context);
+        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(requireContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
         inputLayout.setLayoutParams(params);
 
@@ -186,7 +186,7 @@ public class TeacherListFragment extends Fragment {
         }
         inputText.setLayoutParams(params);
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
-        inputText.setTextColor(ApplicationFeatures.getTextColorSecondary(context));
+        inputText.setTextColor(ApplicationFeatures.getTextColorSecondary(requireContext()));
         inputText.setHint(getString(R.string.teacher_search_teacher_list));
         inputText.addTextChangedListener(new TextWatcher() {
             @NonNull
@@ -206,7 +206,7 @@ public class TeacherListFragment extends Fragment {
                         teacherList = TeacherlistFeatures.liste();
                     }
                     before = charSequence.toString();
-                    ((BaseAdapter) teacherListView.getAdapter()).notifyDataSetChanged();
+                    ((BaseAdapter) Objects.requireNonNull(teacherListView).getAdapter()).notifyDataSetChanged();
                 }
             }
 
@@ -235,12 +235,12 @@ public class TeacherListFragment extends Fragment {
                 convertView = getLayoutInflater().inflate(R.layout.list_teacherlist_entry, null);
             }
 
-            return ((ActivityFeatures) getActivity()).getTeacherView(convertView, teacherList.getEntries().get(position));
+            return ((ActivityFeatures) requireActivity()).getTeacherView(convertView, Objects.requireNonNull(teacherList).getEntries().get(position));
         }
 
         @Override
         public int getCount() {
-            return teacherList.size();
+            return Objects.requireNonNull(teacherList).size();
         }
     }
 

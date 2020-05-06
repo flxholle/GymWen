@@ -57,10 +57,10 @@ public class ProfileActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        adapter = new ProfileListAdapter(getContext(), 0);
+        adapter = new ProfileListAdapter(requireContext(), 0);
         ((ListView) root.findViewById(R.id.profile_list)).setAdapter(adapter);
 
-        root.findViewById(R.id.profile_add_button).setBackgroundColor(ApplicationFeatures.getAccentColor(getContext()));
+        root.findViewById(R.id.profile_add_button).setBackgroundColor(ApplicationFeatures.getAccentColor(requireContext()));
         root.findViewById(R.id.profile_add_button).setOnClickListener((View v) -> openAddDialog());
         return root;
     }
@@ -114,7 +114,7 @@ public class ProfileActivityFragment extends Fragment {
     }
 
     private void openAddDialog() {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity());
         builder.title(getString(R.string.profiles_add));
 
         // Set up the input
@@ -122,7 +122,7 @@ public class ProfileActivityFragment extends Fragment {
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setHint(getString(R.string.name));
-        input.setHighlightColor(ApplicationFeatures.getAccentColor(getContext()));
+        input.setHighlightColor(ApplicationFeatures.getAccentColor(requireContext()));
 //        input.setColor
         builder.customView(input, true);
 
@@ -132,13 +132,13 @@ public class ProfileActivityFragment extends Fragment {
             Bundle extras = new Bundle();
             extras.putBoolean("parents", true);
             if (input.getText().toString().trim().isEmpty())
-                extras.putString("name", getContext().getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1));
+                extras.putString("name", requireContext().getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1));
             else
                 extras.putString("name", input.getText().toString());
             extras.putBoolean("profileAdd", true);
 
             mIntent.putExtras(extras);
-            getActivity().startActivity(mIntent);
+            requireActivity().startActivity(mIntent);
             getActivity().finish();
             dialog.dismiss();
         });
@@ -147,13 +147,13 @@ public class ProfileActivityFragment extends Fragment {
 
         builder.positiveText(R.string.add);
         builder.negativeText(R.string.cancel);
-        builder.negativeColor(ApplicationFeatures.getAccentColor(getContext()));
-        builder.positiveColor(ApplicationFeatures.getAccentColor(getContext()));
+        builder.negativeColor(ApplicationFeatures.getAccentColor(requireContext()));
+        builder.positiveColor(ApplicationFeatures.getAccentColor(requireContext()));
         builder.build().show();
     }
 
     private void openEditDialog(int position) {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireContext());
         builder.title(getString(R.string.profiles_edit));
 
         // Set up the input
@@ -176,7 +176,7 @@ public class ProfileActivityFragment extends Fragment {
         base.addView(course);
 
         TextView note = new TextView(getContext());
-        note.setText(getContext().getString(R.string.set_desc_courses));
+        note.setText(requireContext().getString(R.string.set_desc_courses));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(10, 0, 10, 0);
         note.setLayoutParams(params);
@@ -204,7 +204,7 @@ public class ProfileActivityFragment extends Fragment {
 
     private void openDeleteDialog(int position) {
         Profile p = ProfileManagement.getProfile(position);
-        new MaterialDialog.Builder(getContext())
+        new MaterialDialog.Builder(requireContext())
                 .title(getString(R.string.profiles_delete_submit_heading))
                 .content(getString(R.string.profiles_delete_message, p.getName()))
                 .positiveText(getString(R.string.yes))

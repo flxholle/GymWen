@@ -54,6 +54,7 @@ import com.ulan.timetable.model.Week;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.UUID;
 
 public class NotificationUtil {
@@ -234,7 +235,7 @@ public class NotificationUtil {
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
         }
     }
 

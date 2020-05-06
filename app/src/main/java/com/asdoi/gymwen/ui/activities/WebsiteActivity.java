@@ -47,6 +47,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class WebsiteActivity extends ActivityFeatures implements View.OnClickListener {
     @NonNull
@@ -102,7 +103,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                     String intentURL = getIntent().getStringExtra(LOADURL);
                     if (intentURL == null) {
                         Uri data = getIntent().getData();
-                        intentURL = data.getHost() + data.getPath();
+                        intentURL = Objects.requireNonNull(data).getHost() + data.getPath();
                     }
                     loadPage(intentURL);
                     setIntent(null);
@@ -111,7 +112,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                     search = true;
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
-                    getSupportActionBar().setTitle(R.string.action_search);
+                    Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.action_search);
                     invalidateOptionsMenu();
                     return;
                 }
@@ -150,7 +151,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
 
                     if (isHTML) {
-                        if (history.size() > 0) {
+                        if (Objects.requireNonNull(history).size() > 0) {
                             if (!history.get(history.size() - 1).equalsIgnoreCase(formattedUrl))
                                 history.add(formattedUrl);
                         } else
@@ -181,7 +182,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         switch (item.getItemId()) {
             case R.id.action_open_in_browser:
                 try {
-                    openInTabIntent(history.get(history.size() - 1));
+                    openInTabIntent(Objects.requireNonNull(history).get(history.size() - 1));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -189,14 +190,14 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             case R.id.action_share:
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_SEND);
-                i.putExtra(Intent.EXTRA_TEXT, history.get(history.size() - 1));
+                i.putExtra(Intent.EXTRA_TEXT, Objects.requireNonNull(history).get(history.size() - 1));
                 i.setType("text/plan");
                 startActivity(Intent.createChooser(i, getString(R.string.share_link)));
                 break;
             case R.id.action_website_search:
                 getSupportFragmentManager().beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
                 search = true;
-                getSupportActionBar().setTitle(R.string.action_search);
+                Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.action_search);
                 invalidateOptionsMenu();
                 break;
             case R.id.action_website:
@@ -232,7 +233,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             return;
         }
 
-        if (history.size() >= 2) {
+        if (Objects.requireNonNull(history).size() >= 2) {
             String url = history.get(history.size() - 2);
             //Remove last two Sites, because the side that will be loaded will also be added by loadSite()
             history.remove(history.size() - 1);
@@ -592,7 +593,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
         String whole = doc.select("head").select("title").toString();
         final String title = HtmlCompat.fromHtml(whole, 0).toString().replaceAll("\n", "");
 
-        runOnUiThread(() -> getSupportActionBar().setTitle(title));
+        runOnUiThread(() -> Objects.requireNonNull(getSupportActionBar()).setTitle(title));
     }
 
     private void loadFragment(final int pageCode) {

@@ -123,8 +123,8 @@ public class HomeworkAdapter extends ArrayAdapter<Homework> {
                 public boolean onMenuItemClick(@NonNull MenuItem item) {
                     int itemId = item.getItemId();
                     if (itemId == R.id.delete_popup) {
-                        db.deleteHomeworkById(getItem(position));
-                        db.updateHomework(getItem(position));
+                        db.deleteHomeworkById(Objects.requireNonNull(getItem(position)));
+                        db.updateHomework(Objects.requireNonNull(getItem(position)));
                         homeworklist.remove(position);
                         notifyDataSetChanged();
                         return true;
