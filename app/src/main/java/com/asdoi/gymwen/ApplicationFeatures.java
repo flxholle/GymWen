@@ -188,8 +188,13 @@ public class ApplicationFeatures extends MultiDexApplication {
     public static void downloadTeacherlistDoc() {
         if (!TeacherlistFeatures.isDownloaded()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
-                TeacherlistFeatures.setDoc(downloadDoc(PreferenceUtil.getTeacherlistURL(getContext())));
-                saveDocs();
+                Document teacherList = downloadDoc(PreferenceUtil.getTeacherlistURL(getContext()));
+                if (teacherList != null) {
+                    TeacherlistFeatures.setDoc(teacherList);
+                    saveDocs();
+                } else if (PreferenceUtil.isOfflineMode()) {
+                    TeacherlistFeatures.reloadDoc();
+                }
             } else if (PreferenceUtil.isOfflineMode()) {
                 TeacherlistFeatures.reloadDoc();
             }
@@ -254,8 +259,10 @@ public class ApplicationFeatures extends MultiDexApplication {
                         .get();
 
             } catch (IOException ignore) {
-//                e.printStackTrace();
-//                return;
+                if (PreferenceUtil.isOfflineMode()) {
+                    SubstitutionPlanFeatures.reloadDocs();
+                }
+                return;
             }
         }
         SubstitutionPlanFeatures.setDocs(doc[0], doc[1]);
