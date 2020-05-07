@@ -176,12 +176,15 @@ public class PreferenceUtil {
     }
 
     public static void setTermStart(@Nullable SubstitutionTitle today, @NonNull Context context) {
-        if (today != null) {
-            Calendar todayCal = today.getDayAsCalendar();
-            if (!today.getWeek().equalsIgnoreCase("A"))
-                todayCal.set(Calendar.WEEK_OF_YEAR, todayCal.get(Calendar.WEEK_OF_YEAR) - 1);
+        if (today != null && !today.getNoInternet()) {
+            try {
+                Calendar todayCal = today.getDayAsCalendar();
+                if (!today.getWeek().equalsIgnoreCase("A"))
+                    todayCal.set(Calendar.WEEK_OF_YEAR, todayCal.get(Calendar.WEEK_OF_YEAR) - 1);
 
-            setTermStart(context, todayCal.get(Calendar.YEAR), todayCal.get(Calendar.MONTH), todayCal.get(Calendar.DAY_OF_MONTH));
+                setTermStart(context, todayCal.get(Calendar.YEAR), todayCal.get(Calendar.MONTH), todayCal.get(Calendar.DAY_OF_MONTH));
+            } catch (Exception ignore) {
+            }
         }
     }
 
