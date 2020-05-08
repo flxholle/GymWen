@@ -79,7 +79,7 @@ public abstract class ProfileManagement {
     }
 
     public static boolean isUninit() {
-        return getProfileListNames() == null;
+        return getProfileList() == null || getProfileList().size() == 0;
     }
 
     public static void initProfiles() {
