@@ -108,6 +108,15 @@ public class AlertDialogsHelper {
                         from_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                         week.setFromTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                         from_hour.setText("" + WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)));
+                        try {
+                            int value = WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                            if (Integer.parseInt(to_hour.getText().toString()) < value) {
+                                to_time.setText(WeekUtils.getMatchingTimeEnd(value));
+                                week.setToTime(WeekUtils.getMatchingTimeEnd(value));
+                                to_hour.setText("" + value);
+                            }
+                        } catch (Exception ignore) {
+                        }
                     }, mHour, mMinute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
@@ -121,6 +130,15 @@ public class AlertDialogsHelper {
                         to_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
                         week.setToTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
                         to_hour.setText("" + WeekUtils.getMatchingScheduleEnd(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1)));
+                        try {
+                            int value = WeekUtils.getMatchingScheduleEnd(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
+                            if (Integer.parseInt(from_hour.getText().toString()) > value) {
+                                from_time.setText(WeekUtils.getMatchingTimeBegin(value));
+                                week.setFromTime(WeekUtils.getMatchingTimeBegin(value));
+                                from_hour.setText("" + value);
+                            }
+                        } catch (Exception ignore) {
+                        }
                     }, mHour, mMinute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
@@ -139,6 +157,14 @@ public class AlertDialogsHelper {
                         from_time.setText(WeekUtils.getMatchingTimeBegin(value));
                         week.setFromTime(WeekUtils.getMatchingTimeBegin(value));
                         from_hour.setText("" + value);
+                        try {
+                            if (Integer.parseInt(to_hour.getText().toString()) < value) {
+                                to_time.setText(WeekUtils.getMatchingTimeEnd(value));
+                                week.setToTime(WeekUtils.getMatchingTimeEnd(value));
+                                to_hour.setText("" + value);
+                            }
+                        } catch (Exception ignore) {
+                        }
                     })
                     .show();
         });
@@ -156,6 +182,14 @@ public class AlertDialogsHelper {
                         to_time.setText(WeekUtils.getMatchingTimeEnd(value));
                         week.setToTime(WeekUtils.getMatchingTimeEnd(value));
                         to_hour.setText("" + value);
+                        try {
+                            if (Integer.parseInt(from_hour.getText().toString()) > value) {
+                                from_time.setText(WeekUtils.getMatchingTimeBegin(value));
+                                week.setFromTime(WeekUtils.getMatchingTimeBegin(value));
+                                from_hour.setText("" + value);
+                            }
+                        } catch (Exception ignore) {
+                        }
                     })
                     .show();
         });
@@ -306,6 +340,15 @@ public class AlertDialogsHelper {
                         from_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                         week.setFromTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                         from_hour.setText("" + WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)));
+                        try {
+                            int value = WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                            if (Integer.parseInt(to_hour.getText().toString()) < value) {
+                                to_time.setText(WeekUtils.getMatchingTimeEnd(value));
+                                week.setToTime(WeekUtils.getMatchingTimeEnd(value));
+                                to_hour.setText("" + value);
+                            }
+                        } catch (Exception ignore) {
+                        }
                     }, mHour, mMinute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
@@ -327,6 +370,15 @@ public class AlertDialogsHelper {
                         to_time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
                         week.setToTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
                         to_hour.setText("" + WeekUtils.getMatchingScheduleEnd(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1)));
+                        try {
+                            int value = WeekUtils.getMatchingScheduleEnd(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1));
+                            if (Integer.parseInt(from_hour.getText().toString()) > value) {
+                                from_time.setText(WeekUtils.getMatchingTimeBegin(value));
+                                week.setFromTime(WeekUtils.getMatchingTimeBegin(value));
+                                from_hour.setText("" + value);
+                            }
+                        } catch (Exception ignore) {
+                        }
                     }, hour, minute, true);
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
@@ -348,6 +400,14 @@ public class AlertDialogsHelper {
                         from_time.setText(WeekUtils.getMatchingTimeBegin(value));
                         week.setFromTime(WeekUtils.getMatchingTimeBegin(value));
                         from_hour.setText("" + value);
+                        try {
+                            if (Integer.parseInt(to_hour.getText().toString()) < value) {
+                                to_time.setText(WeekUtils.getMatchingTimeEnd(value));
+                                week.setToTime(WeekUtils.getMatchingTimeEnd(value));
+                                to_hour.setText("" + value);
+                            }
+                        } catch (Exception ignore) {
+                        }
                     })
                     .show();
         });
@@ -368,6 +428,14 @@ public class AlertDialogsHelper {
                         to_time.setText(WeekUtils.getMatchingTimeEnd(value));
                         week.setToTime(WeekUtils.getMatchingTimeEnd(value));
                         to_hour.setText("" + value);
+                        try {
+                            if (Integer.parseInt(from_hour.getText().toString()) > value) {
+                                from_time.setText(WeekUtils.getMatchingTimeBegin(value));
+                                week.setFromTime(WeekUtils.getMatchingTimeBegin(value));
+                                from_hour.setText("" + value);
+                            }
+                        } catch (Exception ignore) {
+                        }
                     })
                     .show();
         });
@@ -480,7 +548,7 @@ public class AlertDialogsHelper {
                         ArrayList<Week> weeks = new DbHelper(activity).getWeek(key);
                         int valueNew = 1;
                         if (weeks.size() > 0) {
-                            valueNew = WeekUtils.getMatchingScheduleBegin(weeks.get(weeks.size() - 1).getToTime());
+                            valueNew = WeekUtils.getMatchingScheduleEnd(weeks.get(weeks.size() - 1).getToTime()) + 1;
                         }
                         from_time.setText(WeekUtils.getMatchingTimeBegin(valueNew));
                         week.setFromTime(WeekUtils.getMatchingTimeBegin(valueNew));
@@ -497,7 +565,7 @@ public class AlertDialogsHelper {
                         ArrayList<Week> weeks = new DbHelper(activity).getWeek(key);
                         int valueNew = 1;
                         if (weeks.size() > 0) {
-                            valueNew = WeekUtils.getMatchingScheduleBegin(weeks.get(weeks.size() - 1).getToTime());
+                            valueNew = WeekUtils.getMatchingScheduleEnd(weeks.get(weeks.size() - 1).getToTime()) + 1;
                         }
                         from_time.setText(WeekUtils.getMatchingTimeBegin(valueNew));
                         week.setFromTime(WeekUtils.getMatchingTimeBegin(valueNew));
