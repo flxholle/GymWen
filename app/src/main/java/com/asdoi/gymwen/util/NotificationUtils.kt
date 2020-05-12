@@ -404,8 +404,13 @@ class NotificationUtils {
 
                 if (alert)
                     createNotificationChannel(context)
-                else
+                else {
                     SummaryNotification.createNotificationChannel(context)
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                        builder.priority = NotificationCompat.PRIORITY_LOW
+                    }
+                }
+
                 with(NotificationManagerCompat.from(context)) {
                     // notificationId is a unique int for each notification that you must define
                     notify(id, builder.build())
@@ -497,9 +502,12 @@ class NotificationUtils {
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setAutoCancel(true)
                         .setOnlyAlertOnce(true)
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setPriority(Notification.PRIORITY_LOW)
                         .setOnlyAlertOnce(true)
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    builder.priority = NotificationCompat.PRIORITY_LOW
+                } else
+                    builder.priority = NotificationCompat.PRIORITY_DEFAULT
 
                 if (PreferenceUtil.isAlwaysNotification()) {
                     builder.setOngoing(true)

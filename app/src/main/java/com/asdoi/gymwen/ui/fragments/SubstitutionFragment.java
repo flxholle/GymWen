@@ -641,7 +641,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         String[] headline;
 
         if (all) {
-            headline = new String[]{context.getString(R.string.classes), miscellaneous ? context.getString(R.string.hours_short) : context.getString(R.string.hours), context.getString(R.string.subject), context.getString(R.string.teacher_short), miscellaneous ? context.getString(R.string.room_short) : context.getString(R.string.room), context.getString(R.string.miscellaneous)};
+            headline = new String[]{context.getString(R.string.classes), miscellaneous ? context.getString(R.string.hours_short) : context.getString(R.string.hours), context.getString(R.string.subject), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), miscellaneous ? context.getString(R.string.room_short) : context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : ""};
         } else if (senior) {
             headline = new String[]{miscellaneous ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : "", context.getString(R.string.subject)};
         } else {
@@ -685,7 +685,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         base.setOrientation(LinearLayout.HORIZONTAL);
         base.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        for (int i = 0; i < headline.length; i++) {
+        int length = headline.length;
+        if (!miscellaneous)
+            length--;
+        for (int i = 0; i < length; i++) {
             LinearLayout.LayoutParams params;
             TextView hour = createBlankTextView();
 
