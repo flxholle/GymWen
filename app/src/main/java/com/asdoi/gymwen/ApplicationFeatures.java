@@ -356,20 +356,19 @@ public class ApplicationFeatures extends MultiDexApplication {
             if (!coursesCheck(openActivity))
                 return false;
 
-            String courses = getSelectedProfile().getCourses();
-
-            boolean hours = PreferenceUtil.isHour();
-
-            SubstitutionPlanFeatures.setup(hours, courses.split(Profile.coursesSeparator));
-
             String username = PreferenceUtil.getUsername(context);
             String password = PreferenceUtil.getPassword(context);
-
             SubstitutionPlanFeatures.signin(username, password);
 
+            try {
+                String courses = getSelectedProfile().getCourses();
+                boolean hours = PreferenceUtil.isHour();
+                SubstitutionPlanFeatures.setup(hours, courses.split(Profile.coursesSeparator));
 
-            if (!isWidget) {
-                refreshWidgets();
+                if (!isWidget) {
+                    refreshWidgets();
+                }
+            } catch (Exception ignore) {
             }
         } else if (openActivity) {
             if (PreferenceUtil.isIntroShown()) {
@@ -689,10 +688,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static Profile getSelectedProfile() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        int n = sharedPref.getInt("selected", 0);
-        return ProfileManagement.getProfile(sharedPref.getInt("selected", 0));
-
+        return ProfileManagement.getProfile(getSelectedProfilePosition());
     }
 
     public static void resetSelectedProfile() {

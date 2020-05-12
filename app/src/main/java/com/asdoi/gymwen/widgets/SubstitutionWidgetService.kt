@@ -94,7 +94,7 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         }
 
         for (p in profiles) {
-            val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
+            val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.coursesArray)
 
             //Today
             if (showToday) {

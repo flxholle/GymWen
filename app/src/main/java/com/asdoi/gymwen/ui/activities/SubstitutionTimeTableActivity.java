@@ -39,11 +39,7 @@ public class SubstitutionTimeTableActivity extends ActivityFeatures {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_substitution_time_table);
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
         createLoadingPanel(findViewById(R.id.substitution_time_frame));
 
         if (!ApplicationFeatures.initSettings(false, true)) {

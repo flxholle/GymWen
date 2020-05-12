@@ -51,7 +51,8 @@ class SummaryWidget : AppWidgetProvider() {
         // There may be multiple widgets active, so update all of them
         thread(true) {
 //            SubstitutionWidgetProvider.setColors(SubstitutionWidgetProvider.getThemeInt(context), context)
-            ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true)
+//            ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true)
+            ApplicationFeatures.downloadSubstitutionplanDocs(true, true)
             for (appWidgetId in appWidgetIds) {
                 updateAppWidget(context, appWidgetManager, appWidgetId)
             }
@@ -111,7 +112,7 @@ class SummaryWidget : AppWidgetProvider() {
             var tomorrow = 0
 
             for (p in profileList) {
-                val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.courses.split(Profile.coursesSeparator).toTypedArray())
+                val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.coursesArray)
                 val todayList = tempSubstitutionplan.getDay(true)
                 todayList //No Internet
                 today += todayList.entries.size
