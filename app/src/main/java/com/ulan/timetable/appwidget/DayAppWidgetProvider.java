@@ -35,7 +35,7 @@ import androidx.annotation.NonNull;
 
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.ui.activities.SubstitutionTimeTableActivity;
+import com.ulan.timetable.activities.MainActivity;
 import com.ulan.timetable.appwidget.Dao.AppWidgetDao;
 import com.ulan.timetable.utils.PreferenceUtil;
 
@@ -87,7 +87,7 @@ public class DayAppWidgetProvider extends AppWidgetProvider {
                 rv.setOnClickPendingIntent(R.id.imgBtn_yesterday, makePendingIntent(context, appWidgetId, ACTION_YESTERDAY));
                 rv.setOnClickPendingIntent(R.id.imgBtn_tomorrow, makePendingIntent(context, appWidgetId, ACTION_TOMORROW));
 
-                Intent listviewClickIntent = new Intent(context, SubstitutionTimeTableActivity.class);
+                Intent listviewClickIntent = new Intent(context, MainActivity.class);
                 listviewClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
                 listviewClickIntent.setAction(Intent.ACTION_VIEW);
                 PendingIntent listviewPendingIntent = PendingIntent.getActivity(context, appWidgetId, listviewClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);

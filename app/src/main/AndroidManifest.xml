@@ -78,16 +78,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.SubstitutionTimeTableActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/timetable_activity_title">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".ui.activities.TeacherListActivity"
             android:label="@string/menu_teacher_list" />
         <activity android:name=".ui.activities.AppIntroActivity" />
@@ -219,7 +209,13 @@
         <activity
             android:name="com.ulan.timetable.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/timetable_activity_title" />
+            android:label="@string/timetable_activity_title">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.ulan.timetable.activities.HomeworkActivity"

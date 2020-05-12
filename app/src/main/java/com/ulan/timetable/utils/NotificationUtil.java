@@ -44,10 +44,10 @@ import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
-import com.asdoi.gymwen.ui.activities.SubstitutionTimeTableActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.github.stephenvinouze.shapetextdrawable.ShapeForm;
 import com.github.stephenvinouze.shapetextdrawable.ShapeTextDrawable;
+import com.ulan.timetable.activities.MainActivity;
 import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Week;
 
@@ -191,7 +191,7 @@ public class NotificationUtil {
         long when = System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent notificationIntent = new Intent(context, SubstitutionTimeTableActivity.class);
+        Intent notificationIntent = new Intent(context, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(notificationIntent);
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

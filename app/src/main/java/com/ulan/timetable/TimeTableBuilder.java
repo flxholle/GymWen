@@ -31,6 +31,7 @@ public class TimeTableBuilder {
     public static final String PROFILE_POS = "profilepos";
     public static final String SUBSTITUTIONPLANDOC_TODAY = "substitutionplandoctoday";
     public static final String SUBSTITUTIONPLANDOC_TOMORROW = "substitutionplandoctomorrow";
+    public static final String DO_NOT_DOWNLOAD_DOCS_ACTION = "downloaddocs";
 
     private int customTheme = -1;
     private SubstitutionPlan substitutionPlan;
@@ -74,6 +75,7 @@ public class TimeTableBuilder {
             i.putExtra(SUBSTITUTIONPLANDOC_TODAY, substitutionPlan.getTodayDoc().toString());
             i.putExtra(SUBSTITUTIONPLANDOC_TOMORROW, substitutionPlan.getTomorrowDoc().toString());
         }
+        i.setAction(DO_NOT_DOWNLOAD_DOCS_ACTION);
 
         return i;
     }

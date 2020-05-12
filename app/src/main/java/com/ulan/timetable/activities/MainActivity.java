@@ -53,6 +53,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
+import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.ui.activities.ProfileActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
@@ -89,19 +90,42 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.timetable_activity_main);
         ProfileManagement.initProfiles();
+
         try {
             profilePos = DBUtil.getProfilePosition(this);
-            substitutionPlan = DBUtil.getSubstitutionPlanFromActivity(this);
 
-            if (substitutionPlan != null)
-                PreferenceUtil.setTermStart(substitutionPlan.getTodayTitle(), this);
+            if (TimeTableBuilder.DO_NOT_DOWNLOAD_DOCS_ACTION.equalsIgnoreCase(getIntent().getAction())) {
+                substitutionPlan = DBUtil.getSubstitutionPlanFromActivity(this);
+
+                if (substitutionPlan != null)
+                    PreferenceUtil.setTermStart(substitutionPlan.getTodayTitle(), this);
+                initAll();
+            } else {
+                if (!ApplicationFeatures.initSettings(false, true)) {
+                    finish();
+                    return;
+                }
+
+                createLoadingPanel(findViewById(R.id.container));
+                findViewById(R.id.tabLayout).setVisibility(View.GONE);
+                new Thread(() -> {
+                    ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
+                    substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(profilePos).getCoursesArray());
+                    runOnUiThread(() -> {
+                        if (substitutionPlan != null)
+                            PreferenceUtil.setTermStart(substitutionPlan.getTodayTitle(), this);
+                        removeLoadingPanel(findViewById(R.id.container));
+                        findViewById(R.id.tabLayout).setVisibility(View.VISIBLE);
+                        initAll();
+                    });
+                }).start();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setContentView(R.layout.timetable_activity_main);
-
-        initAll();
     }
 
     @Override
