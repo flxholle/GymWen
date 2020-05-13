@@ -37,9 +37,6 @@ import java.util.ArrayList;
  * An abstract class which organizes the substitution plan object for easier access, not necessary
  */
 public abstract class SubstitutionPlanFeatures {
-    public static String strUserId = "";
-    public static String strPasword = "";
-
     @NonNull
     private static final SubstitutionPlan substitutionPlan = new SubstitutionPlan();
 
@@ -58,11 +55,6 @@ public abstract class SubstitutionPlanFeatures {
         SubstitutionPlan temp = new SubstitutionPlan(hours, courses);
         temp.setDocs(substitutionPlan.getDoc(true), substitutionPlan.getDoc(false));
         return temp;
-    }
-
-    public static void signin(String username, String password) {
-        strUserId = username;
-        strPasword = password;
     }
 
     public static boolean isUninit() {

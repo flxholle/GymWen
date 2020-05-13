@@ -94,6 +94,10 @@ class NotificationUtils {
                 //Send main notif for preferred Profile
                 var daySendInSummaryNotif = both //1 = today; 2 = tomorrow
 
+                //Hide days in the past and today after 18 o'clock
+                var sendToday = (!PreferenceUtil.isIntelligentHide() || !titleTodayArray.isTitleCodeInPast())
+                var sendTomorrow = (!PreferenceUtil.isIntelligentHide() || !titleTomorrowArray.isTitleCodeInPast())
+
                 val preferredProfile = ProfileManagement.getPreferredProfile()
                 val preferredProfilePos = if (alertForAllProfiles) -5 else ProfileManagement.getPreferredProfilePosition()
 
@@ -114,11 +118,13 @@ class NotificationUtils {
                         val temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), checkProfileList[p].coursesArray)
                         daySendInSummaryNotif = when (whichDayIsToday) {
                             today -> {
-                                MainNotification(SubstitutionPlanFeatures.getTodayTitleString(), if (summarize) temp.todaySummarized else temp.getDay(true), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
+                                if (sendToday)
+                                    MainNotification(SubstitutionPlanFeatures.getTodayTitleString(), if (summarize) temp.todaySummarized else temp.getDay(true), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
                                 tomorrow
                             }
                             tomorrow -> {
-                                MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), if (summarize) temp.tomorrowSummarized else temp.getDay(false), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
+                                if (sendTomorrow)
+                                    MainNotification(SubstitutionPlanFeatures.getTomorrowTitleString(), if (summarize) temp.tomorrowSummarized else temp.getDay(false), temp.senior, if (isMoreThanOneProfile && alertForAllProfiles) checkProfileList[p].name; else "", alert, p)
                                 today
                             }
                             else -> both
@@ -237,6 +243,9 @@ class NotificationUtils {
 
                 try {
                     countToday.deleteCharAt(countToday.lastIndexOf(", "))
+                } catch (e: java.lang.Exception) {
+                }
+                try {
                     countTomorrow.deleteCharAt(countTomorrow.lastIndexOf(", "))
                 } catch (e: java.lang.Exception) {
                 }
@@ -250,10 +259,6 @@ class NotificationUtils {
 
 
                 val twoNotifs = PreferenceUtil.isTwoNotifications()
-
-                //Hide days in the past and today after 18 o'clock
-                var sendToday = (!PreferenceUtil.isIntelligentHide() || !titleTodayArray.isTitleCodeInPast())
-                var sendTomorrow = (!PreferenceUtil.isIntelligentHide() || !titleTomorrowArray.isTitleCodeInPast())
 
                 if (!unchangedSummary && (alertForAllProfiles || !isMoreThanOneProfile)) {
                     sendToday = sendToday && (daySendInSummaryNotif == both || daySendInSummaryNotif == today)

@@ -248,10 +248,12 @@ public class ApplicationFeatures extends MultiDexApplication {
         Document[] doc = new Document[strURL.length];
         for (int i = 0; i < 2; i++) {
 
-            String authString = SubstitutionPlanFeatures.strUserId + ":" + SubstitutionPlanFeatures.strPasword;
+            String username = PreferenceUtil.getUsername(getContext());
+            String password = PreferenceUtil.getPassword(getContext());
 
-            String encodedString =
-                    new String(Base64.encodeBase64(authString.getBytes()));
+            String authString = username + ":" + password;
+
+            String encodedString = new String(Base64.encodeBase64(authString.getBytes()));
 
             try {
                 doc[i] = Jsoup.connect(strURL[i])
@@ -355,10 +357,6 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             if (!coursesCheck(openActivity))
                 return false;
-
-            String username = PreferenceUtil.getUsername(context);
-            String password = PreferenceUtil.getPassword(context);
-            SubstitutionPlanFeatures.signin(username, password);
 
             try {
                 String courses = getSelectedProfile().getCourses();
