@@ -26,12 +26,23 @@ import java.util.*
 class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableListOf()) {
     private var noInternet: Boolean = false
 
+    init {
+        //Remove empty fields
+        for (i in entries.indices) {
+            val entry = entries[i]
+            if (entry.isEmpty()) {
+                entries.removeAt(i)
+            }
+        }
+    }
+
     constructor(notInternet: Boolean) : this() {
         this.noInternet = true
     }
 
     fun add(entry: SubstitutionEntry) {
-        entries.add(entry)
+        if (!entry.isEmpty())
+            entries.add(entry)
     }
 
     fun getNoInternet(): Boolean {
@@ -288,6 +299,10 @@ class SubstitutionEntry(var course: String, var hour: String, var subject: Strin
             return false
         val entry: SubstitutionEntry = other as SubstitutionEntry
         return course == entry.course && hour == entry.hour && subject == entry.subject && teacher == entry.teacher && room == entry.room && moreInformation == entry.moreInformation
+    }
+
+    fun isEmpty(): Boolean {
+        return equals(SubstitutionEntry("", "", "", "", "", ""))
     }
 }
 

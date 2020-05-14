@@ -113,9 +113,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 new Thread(() -> {
                     ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
                     substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(profilePos).getCoursesArray());
+                    PreferenceUtil.setTermStart(substitutionPlan.getTodayTitle(), this);
+
                     runOnUiThread(() -> {
-                        if (substitutionPlan != null)
-                            PreferenceUtil.setTermStart(substitutionPlan.getTodayTitle(), this);
                         removeLoadingPanel(findViewById(R.id.container));
                         findViewById(R.id.tabLayout).setVisibility(View.VISIBLE);
                         initAll();
@@ -152,7 +152,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     private void initAll() {
-        PreferenceUtil.setDoNotDisturb(this, PreferenceUtil.doNotDisturbDontAskAgain());
         NotificationUtil.sendNotificationCurrentLesson(getContext(), false);
         initSpinner();
 

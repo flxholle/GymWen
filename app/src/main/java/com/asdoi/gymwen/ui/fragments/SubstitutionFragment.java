@@ -551,7 +551,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             if (content.size() == 0) {
                 TextView tv = new TextView(context);
                 tv.setTextColor(ApplicationFeatures.getTextColorSecondary(requireContext()));
-                tv.setText(requireContext().getString(R.string.nothing));
+                tv.setText(all ? requireContext().getString(R.string.nothing_for_whole_day) : requireContext().getString(R.string.nothing));
                 tv.setTextSize(20);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
@@ -584,7 +584,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 if (content.size() == 0) {
                     bgColor = ContextCompat.getColor(getContext(), R.color.nothing);
                     textColor = ContextCompat.getColor(getContext(), R.color.nothing_text);
-                    titleView = createTitleLayoutNewDesign("", requireContext().getString(R.string.nothing), bgColor, textColor);
+                    titleView = createTitleLayoutNewDesign("", all ? requireContext().getString(R.string.nothing_for_whole_day) : requireContext().getString(R.string.nothing), bgColor, textColor);
                     base.addView(titleView);
                 }
 
@@ -654,7 +654,6 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     //Body
     private void generateTableAll(@NonNull ViewGroup base) {
-
         if (!Objects.requireNonNull(content).getNoInternet() && content.size() > 0) {
             //Overview
             base.addView(generateOverviewAll());
