@@ -343,27 +343,7 @@ class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var w
     }
 
     fun getDayCode(): Int {
-        if (isTitleCodeInPast())
-            return -1
-
-        val df = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        val startDate = removeTime(df.parse(date))
-
-        val c = Calendar.getInstance()
-        c.time = startDate // yourdate is an object of type Date
-        return c[Calendar.DAY_OF_WEEK] // this will for example return 3 for tuesday
-
-
-/*        return when (dayOfWeek) {
-            "Montag" -> SubstitutionPlan.monday
-            "Dienstag" -> SubstitutionPlan.tuesday
-            "Mittwoch" -> SubstitutionPlan.wednesday
-            "Donnerstag" -> SubstitutionPlan.thursday
-            "Freitag" -> SubstitutionPlan.friday
-            "Samstag" -> SubstitutionPlan.saturday
-            "Sonntag" -> SubstitutionPlan.sunday
-            else -> -1
-        }*/
+        return getDayAsCalendar()[Calendar.DAY_OF_WEEK]
     }
 
     fun getDayAsCalendar(): Calendar {
@@ -373,6 +353,21 @@ class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var w
         val c = Calendar.getInstance()
         c.time = startDate
         return c
+    }
+
+    fun getDayCode(futureWeeks: Int): Int {
+        if (isTitleCodeInPast())
+            return -1
+
+        val today = removeTime(Calendar.getInstance())
+        today[Calendar.WEEK_OF_YEAR] += futureWeeks
+
+        val thisCal = getDayAsCalendar()
+
+        return if (today.after(thisCal))
+            thisCal[Calendar.DAY_OF_WEEK]
+        else
+            -1
     }
 
     /**
@@ -400,5 +395,13 @@ class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var w
         cal[Calendar.SECOND] = 0
         cal[Calendar.MILLISECOND] = 0
         return cal.time
+    }
+
+    private fun removeTime(cal: Calendar): Calendar {
+        cal[Calendar.HOUR_OF_DAY] = 0
+        cal[Calendar.MINUTE] = 0
+        cal[Calendar.SECOND] = 0
+        cal[Calendar.MILLISECOND] = 0
+        return cal
     }
 }

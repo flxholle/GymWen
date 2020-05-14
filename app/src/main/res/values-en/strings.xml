@@ -586,4 +586,5 @@
     <string name="enable_even_odd_weeks">Enable A \u0026 B weeks</string>
     <string name="even_week">Week A</string>
     <string name="odd_week">Week B</string>
+    <string name="nothing_for_whole_day">No sit-ins for the entire day.</string>
 </resources>

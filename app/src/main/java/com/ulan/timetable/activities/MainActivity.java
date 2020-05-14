@@ -257,8 +257,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         int codeTod = -1;
         int codeTom = -1;
         if (substitutionPlan != null) {
-            codeTod = substitutionPlan.getTodayTitle().getDayCode();
-            codeTom = substitutionPlan.getTomorrowTitle().getDayCode();
+            codeTod = substitutionPlan.getTodayTitle().getDayCode(1);
+            codeTom = substitutionPlan.getTomorrowTitle().getDayCode(1);
         }
 
         switch (codeTod) {

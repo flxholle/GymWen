@@ -91,8 +91,8 @@ public class SummaryActivity extends ActivityFeatures {
                 int codeTod = -1;
                 int codeTom = -1;
                 if (substitutionPlan != null) {
-                    codeTod = substitutionPlan.getTodayTitle().getDayCode();
-                    codeTom = substitutionPlan.getTomorrowTitle().getDayCode();
+                    codeTod = substitutionPlan.getTodayTitle().getDayCode(1);
+                    codeTom = substitutionPlan.getTomorrowTitle().getDayCode(1);
                 }
                 if (codeTod > 0) {
                     weeks.set(codeTod - 2, WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(codeTod - 2), substitutionPlan.getTodaySummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
