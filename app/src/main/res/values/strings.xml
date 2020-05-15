@@ -256,7 +256,7 @@
     <!-- Notification-->
     <string name="notification_summary_channel_title">Vertretungsplan</string>
     <string name="notification_summary_channel_description">Eine zusammenfassende Benachrichtigung über den Vertretungsplan</string>
-    <string name="notification_main_channel_title">Vertretungsplan Wichtig</string>
+    <string name="notification_main_channel_title">Vertretungsplan, Wichtig</string>
     <string name="notification_main_channel_description">Eine Benachrichtigung, die dir deine aktuellen Vertretungen sendet</string>
     <string name="notif_content_title">Vertretung:</string>
     <string name="notif_dismiss">Verbergen</string>
@@ -682,5 +682,7 @@
     <string name="enable_even_odd_weeks">A \u0026 B Wochen aktivieren</string>
     <string name="even_week">Woche A</string>
     <string name="odd_week">Woche B</string>
+    <string name="intelligent_auto_fill">Automatisch passende Start-/End-Zeiten</string>
+    <string name="intelligent_auto_fill_desc">Automatisch die passenden Start-/End-Zeiten zu deinen Eingaben auswählen.</string>
 
 </resources>

@@ -213,4 +213,8 @@ public class PreferenceUtil {
         } else
             return true;
     }
+
+    public static boolean isIntelligentAutoFill(Context context) {
+        return getBooleanSettings("auto_fill", true, context);
+    }
 }

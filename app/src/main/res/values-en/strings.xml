@@ -380,7 +380,7 @@
     <string name="set_swipe_to_refresh">Swipe to refresh</string>
     <string name="set_at_filtered_plan">Even with the filtered plan</string>
     <string name="set_intelligent_hide">Intelligent hiding</string>
-    <string name="notification_main_channel_title">Substitution plan Important</string>
+    <string name="notification_main_channel_title">Cover plan, Important</string>
     <string name="notification_main_channel_description">A notification that sends you your current representatives</string>
     <string name="more">more</string>
     <string name="set_desc_intelligent_hide">Past or no longer relevant days are hidden.</string>
@@ -587,4 +587,7 @@
     <string name="even_week">Week A</string>
     <string name="odd_week">Week B</string>
     <string name="nothing_for_whole_day">No sit-ins for the entire day.</string>
+
+    <string name="intelligent_auto_fill">Automatically select start/end</string>
+    <string name="intelligent_auto_fill_desc">Automatically select the matching begin/end time to your inputs.</string>
 </resources>

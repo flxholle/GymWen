@@ -78,6 +78,13 @@
         android:summary="@string/set_desc_courses"
         android:title="@string/set_courses_title" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_access_time_black_24dp"
+        android:key="auto_fill"
+        android:summary="@string/intelligent_auto_fill_desc"
+        android:title="@string/intelligent_auto_fill" />
+
     <Preference
         android:icon="@drawable/ic_open_in_browser_white_24dp"
         android:key="allprefs"
