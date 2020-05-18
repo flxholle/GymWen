@@ -56,7 +56,7 @@ class TurnOnReceiver : BroadcastReceiver() {
 class TurnOffReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         setDoNotDisturbReceivers(context)
-        if (PreferenceUtil.isDoNotDisturbTurnOff())
+        if (PreferenceUtil.isDoNotDisturbTurnOff(context))
             setDoNotDisturb(context, false)
     }
 

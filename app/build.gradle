@@ -53,7 +53,7 @@ android {
     buildToolsVersion = '29.0.2'
 }
 
-def acraVersion = '5.5.0'
+def acraVersion = '5.5.1'
 dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
@@ -63,7 +63,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta5'
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -111,7 +111,7 @@ dependencies {
     implementation 'com.github.asdoi:SQLite2XL:88883cf56d'
     //noinspection NewerVersionAvailable,GradleDependency
     implementation 'org.apache.poi:poi:3.16'
-    implementation 'com.github.asdoi:TimetableUI:0383f94236'
+    implementation 'com.github.asdoi:TimetableUI:master-SNAPSHOT'
     implementation 'com.github.asdoi:TimetableView:master-SNAPSHOT'
 
     //Image Slider (see ColoRushFragment)

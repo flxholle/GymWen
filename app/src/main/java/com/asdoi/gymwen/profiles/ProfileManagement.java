@@ -83,7 +83,7 @@ public abstract class ProfileManagement {
     }
 
     public static void initProfiles() {
-        if (!isUninit())
+        if (isUninit())
             reload();
     }
 

@@ -142,8 +142,8 @@ public class PreferenceUtil {
         }
     }
 
-    public static boolean isDoNotDisturbTurnOff() {
-        return ApplicationFeatures.getBooleanSettings("do_not_disturb_turn_off", false);
+    public static boolean isDoNotDisturbTurnOff(Context context) {
+        return getBooleanSettings("do_not_disturb_turn_off", false, context);
     }
 
     public static boolean isSevenDays() {

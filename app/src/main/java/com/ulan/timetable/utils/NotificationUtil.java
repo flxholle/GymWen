@@ -119,6 +119,7 @@ public class NotificationUtil {
             ArrayList<Week> unchangedWeeks = db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
             if (unchangedWeeks.size() <= 0)
                 return;
+            ProfileManagement.initProfiles();
             ArrayList<Week> weeks = WeekUtils.compareSubstitutionAndWeeks(context, unchangedWeeks, substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
             Week nextWeek = WeekUtils.getNextWeek(weeks);
             if (nextWeek == null)
