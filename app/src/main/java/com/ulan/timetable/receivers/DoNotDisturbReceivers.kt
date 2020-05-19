@@ -55,7 +55,7 @@ class TurnOnReceiver : BroadcastReceiver() {
 
 class TurnOffReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
-        setDoNotDisturbReceivers(context)
+        setDoNotDisturbReceivers(context, true)
         if (PreferenceUtil.isDoNotDisturbTurnOff(context))
             setDoNotDisturb(context, false)
     }
@@ -81,7 +81,7 @@ fun setDoNotDisturb(context: Context, on: Boolean) {
     }
 }
 
-fun setDoNotDisturbReceivers(context: Context) {
+fun setDoNotDisturbReceivers(context: Context, onlyReceivers: Boolean = false) {
     Thread(Runnable {
         val dbHelper = DbHelper(context)
 
@@ -131,7 +131,7 @@ fun setDoNotDisturbReceivers(context: Context) {
                 on = false
             }
 
-            if (((startHour == calendar.get(Calendar.HOUR_OF_DAY) && startMinute <= calendar.get(Calendar.MINUTE)) || startHour < calendar.get(Calendar.HOUR_OF_DAY)) && ((endHour == calendar.get(Calendar.HOUR_OF_DAY) && endMinute > calendar.get(Calendar.MINUTE)) || endHour > calendar.get(Calendar.HOUR_OF_DAY))) {
+            if (((startHour == calendar.get(Calendar.HOUR_OF_DAY) && startMinute <= calendar.get(Calendar.MINUTE)) || startHour < calendar.get(Calendar.HOUR_OF_DAY)) && ((endHour == calendar.get(Calendar.HOUR_OF_DAY) && endMinute > calendar.get(Calendar.MINUTE)) || endHour > calendar.get(Calendar.HOUR_OF_DAY)) && !onlyReceivers) {
                 //Just in lesson
                 setDoNotDisturb(context, true)
             }

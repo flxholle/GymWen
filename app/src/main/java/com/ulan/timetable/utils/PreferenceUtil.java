@@ -137,7 +137,7 @@ public class PreferenceUtil {
                         .neutralText(R.string.dont_show_again)
                         .show();
             }
-            DoNotDisturbReceiversKt.setDoNotDisturbReceivers(activity);
+            DoNotDisturbReceiversKt.setDoNotDisturbReceivers(activity, false);
         }
     }
 
