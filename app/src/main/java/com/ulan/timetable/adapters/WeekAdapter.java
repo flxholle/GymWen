@@ -48,6 +48,7 @@ import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Week;
+import com.ulan.timetable.receivers.DoNotDisturbReceiversKt;
 import com.ulan.timetable.utils.AlertDialogsHelper;
 import com.ulan.timetable.utils.ColorPalette;
 import com.ulan.timetable.utils.WeekUtils;
@@ -180,6 +181,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
                             db.updateWeek(Objects.requireNonNull(getItem(position)));
                             weeklist.remove(position);
                             notifyDataSetChanged();
+                            DoNotDisturbReceiversKt.setDoNotDisturbReceivers(mActivity, false);
                         }, getContext().getString(R.string.timetable_delete_week, week.getSubject()));
                         return true;
                     } else if (itemId == R.id.edit_popup) {
