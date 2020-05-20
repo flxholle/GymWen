@@ -170,9 +170,10 @@ public class RoomPlanActivity extends ActivityFeatures {
         rooms.add(new Room("WC", "w", "1. " + context.getString(R.string.floor), new PointF(590, 1100)));
 
         //Second floor
-        rooms.add(new Room("205", new PointF(1450, 840)));
-        rooms.add(new Room("206", new PointF(1270, 790)));
-        rooms.add(new Room("204", new PointF(1520, 740)));
+        rooms.add(new Room("206", new PointF(1245, 785)));
+        rooms.add(new Room("205", new PointF(1375, 820)));
+        rooms.add(new Room("204", new PointF(1490, 850)));
+        rooms.add(new Room("203", new PointF(1520, 740)));
         rooms.add(new Room("202", new PointF(1560, 600)));
         rooms.add(new Room("246", new PointF(1340, 420)));
         rooms.add(new Room("247", new PointF(1440, 440)));
