@@ -22,8 +22,9 @@
         versioncode="121">
         <change>Benachrichtigung über neue Artikel auf der Homepage</change>
         <change>Neue Zusammenfassende Ansicht im Stundenplan hinzugefügt</change>
-        <change>RSS-Feed über die Homepage hinzugefügt</change>
+        <change>RSS-Feed für die Homepage hinzugefügt</change>
         <change>Neue Shortcut-Icons</change>
+        <change>Räume im Raumplan korrigiert</change>
         <change>Bugfixes</change>
     </release>
     <release

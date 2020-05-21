@@ -128,11 +128,17 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
     }
 
+    private static MenuItem integration = null;
+
     @Override
     public void onStart() {
         super.onStart();
         PreferenceUtil.setDoNotDisturb(this, PreferenceUtil.doNotDisturbDontAskAgain());
         setupWeekTV();
+        if (integration != null) {
+            boolean integration = PreferenceUtil.isTimeTableSubstitution();
+            setIntegration(MainActivity.integration, integration);
+        }
     }
 
     @Override
@@ -399,6 +405,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     private static void setIntegration(@NonNull MenuItem item, boolean newValue) {
+        integration = item;
         if (newValue) {
             item.setTitle(R.string.integrate_substitution_in_timetable_on);
             item.setIcon(R.drawable.ic_assignment_turned_in_white_24dp);
