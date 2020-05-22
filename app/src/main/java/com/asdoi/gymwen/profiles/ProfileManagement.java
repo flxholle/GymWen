@@ -65,16 +65,17 @@ public abstract class ProfileManagement {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext());
         String pref = sharedPref.getString("profiles", "");
         String[] profiles = pref.split("" + splitChar);
-        profileList = new ArrayList<>();
+        ArrayList<Profile> pList = new ArrayList<>();
         for (String s : profiles) {
             try {
                 Profile p = Profile.parse(s);
                 if (p != null)
-                    addProfile(p);
+                    pList.add(p);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        profileList = pList;
         preferredProfile = sharedPref.getInt("preferred_position", 0);
     }
 

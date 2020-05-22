@@ -590,4 +590,11 @@
 
     <string name="intelligent_auto_fill">Automatically select start/end</string>
     <string name="intelligent_auto_fill_desc">Automatically select the matching begin/end time to your inputs.</string>
+    <string name="assembly_hall">Assembly Hall</string>
+    <string name="wc">WC</string>
+    <string name="cafeteria">Cafeteria</string>
+    <string name="male_short">m</string>
+    <string name="female_short">f</string>
+    <string name="engineering_room">Engineers</string>
+    <string name="student_council">Student Council</string>
 </resources>

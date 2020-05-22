@@ -527,6 +527,13 @@
     <string name="director_office">Direktorat</string>
     <string name="office">Sekretariat</string>
     <string name="teachers_room">Lehrerzimmer</string>
+    <string name="assembly_hall">Aula</string>
+    <string name="wc">WC</string>
+    <string name="cafeteria">Mensa</string>
+    <string name="male_short">m</string>
+    <string name="female_short">w</string>
+    <string name="engineering_room">Technik</string>
+    <string name="student_council">SMV</string>
 
 
     <!-- TimeTable -->
