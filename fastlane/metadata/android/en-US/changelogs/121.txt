@@ -1,0 +1,6 @@
+- Benachrichtigung über neue Artikel auf der Homepage
+- Neue Zusammenfassende Ansicht im Stundenplan hinzugefügt
+- RSS-Feed für die Homepage hinzugefügt
+- Neue Shortcut-Icons
+- Räume im Raumplan korrigiert
+- Bugfixes
