@@ -1,4 +1,5 @@
-image: ruby:2.6
+stages:
+    - build
 
 build_badges:
   stage: build
