@@ -92,7 +92,7 @@ public class TeacherListFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_teacherlist, container, false);
 
         base = root.findViewById(R.id.teacher_list_base);
-        context = getContext();
+        context = requireContext();
 
         return root;
     }

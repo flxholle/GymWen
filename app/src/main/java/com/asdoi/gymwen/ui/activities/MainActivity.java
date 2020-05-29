@@ -408,8 +408,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 @Override
                 public void onItemSelected(@NonNull AdapterView<?> parent, View view, int position, long id) {
                     String item = parent.getItemAtPosition(position).toString();
-                    if (item.equals(getContext().getString(R.string.profiles_edit))) {
-                        Intent intent = new Intent(getContext(), ProfileActivity.class);
+                    if (item.equals(requireContext().getString(R.string.profiles_edit))) {
+                        Intent intent = new Intent(requireContext(), ProfileActivity.class);
                         startActivity(intent);
                         finish();
                     } else {

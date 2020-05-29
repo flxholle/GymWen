@@ -118,7 +118,7 @@ public class ProfileActivityFragment extends Fragment {
         builder.title(getString(R.string.profiles_add));
 
         // Set up the input
-        final EditText input = new EditText(getContext());
+        final EditText input = new EditText(requireContext());
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setHint(getString(R.string.name));
@@ -128,7 +128,7 @@ public class ProfileActivityFragment extends Fragment {
 
         // Set up the buttons
         builder.onPositive((dialog, which) -> {
-            Intent mIntent = new Intent(getActivity(), ChoiceActivity.class);
+            Intent mIntent = new Intent(requireActivity(), ChoiceActivity.class);
             Bundle extras = new Bundle();
             extras.putBoolean("parents", true);
             if (input.getText().toString().trim().isEmpty())
@@ -139,7 +139,7 @@ public class ProfileActivityFragment extends Fragment {
 
             mIntent.putExtras(extras);
             requireActivity().startActivity(mIntent);
-            getActivity().finish();
+            requireActivity().finish();
             dialog.dismiss();
         });
 
@@ -157,10 +157,10 @@ public class ProfileActivityFragment extends Fragment {
         builder.title(getString(R.string.profiles_edit));
 
         // Set up the input
-        LinearLayout base = new LinearLayout(getContext());
+        LinearLayout base = new LinearLayout(requireContext());
         base.setOrientation(LinearLayout.VERTICAL);
 
-        EditText name = new EditText(getContext());
+        EditText name = new EditText(requireContext());
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         name.setInputType(InputType.TYPE_CLASS_TEXT);
         name.setText(ProfileManagement.getProfile(position).getName());
@@ -168,14 +168,14 @@ public class ProfileActivityFragment extends Fragment {
         base.addView(name);
 
         // Set up the input
-        EditText course = new EditText(getContext());
+        EditText course = new EditText(requireContext());
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         name.setInputType(InputType.TYPE_CLASS_TEXT);
         course.setText(ProfileManagement.getProfile(position).getCourses());
         course.setHint(getString(R.string.profile_courses));
         base.addView(course);
 
-        TextView note = new TextView(getContext());
+        TextView note = new TextView(requireContext());
         note.setText(requireContext().getString(R.string.set_desc_courses));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(10, 0, 10, 0);

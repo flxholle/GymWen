@@ -64,7 +64,7 @@ public class SettingsFragmentRoot extends PreferenceFragmentCompat {
 
         myPref = findPreference("open_timetable_settings");
         Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
-            requireActivity().startActivity(new Intent(getContext(), com.ulan.timetable.activities.SettingsActivity.class));
+            requireActivity().startActivity(new Intent(requireContext(), com.ulan.timetable.activities.SettingsActivity.class));
             return true;
         });
 

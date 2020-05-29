@@ -37,8 +37,8 @@ public class SummaryWidgetActivity extends SubstitutionWidgetActivity {
 
             new Thread(() -> {
                 ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getContext());
-                SummaryWidget.Companion.updateAppWidget(getContext(), appWidgetManager, appWidgetId);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(requireContext());
+                SummaryWidget.Companion.updateAppWidget(requireContext(), appWidgetManager, appWidgetId);
 
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);

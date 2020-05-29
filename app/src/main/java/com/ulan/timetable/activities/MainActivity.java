@@ -158,7 +158,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     }
 
     private void initAll() {
-        NotificationUtil.sendNotificationCurrentLesson(getContext(), false);
+        NotificationUtil.sendNotificationCurrentLesson(requireContext(), false);
         initSpinner();
 
         setupWeekTV();
@@ -228,12 +228,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     }
 
                     String item = parent.getItemAtPosition(position).toString();
-                    if (item.equals(getContext().getString(R.string.profiles_edit))) {
-                        Intent intent = new Intent(getContext(), ProfileActivity.class);
+                    if (item.equals(requireContext().getString(R.string.profiles_edit))) {
+                        Intent intent = new Intent(requireContext(), ProfileActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
-                        new TimeTableBuilder(position, substitutionPlan).start(getContext());
+                        new TimeTableBuilder(position, substitutionPlan).start(requireContext());
                         finish();
                     }
                 }

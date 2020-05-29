@@ -48,7 +48,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         Preference allPrefs = findPreference("allprefs");
         Objects.requireNonNull(allPrefs).setOnPreferenceClickListener((Preference p) -> {
-            startActivity(new Intent(getActivity(), com.asdoi.gymwen.ui.activities.SettingsActivity.class));
+            startActivity(new Intent(requireActivity(), com.asdoi.gymwen.ui.activities.SettingsActivity.class));
             requireActivity().finish();
             return true;
         });
@@ -65,7 +65,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference finalMyPref = myPref;
         Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
             int[] oldTimes = PreferenceUtil.getTimeTableAlarmTime();
-            TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+            TimePickerDialog timePickerDialog = new TimePickerDialog(requireActivity(),
                     (view, hourOfDay, minute) -> {
                         PreferenceUtil.setTimeTableAlarmTime(hourOfDay, minute, 0);
                         ApplicationFeatures.setRepeatingAlarm(requireContext(), DailyReceiver.class, hourOfDay, minute, 0, DailyReceiver.DailyReceiverID, AlarmManager.INTERVAL_DAY);

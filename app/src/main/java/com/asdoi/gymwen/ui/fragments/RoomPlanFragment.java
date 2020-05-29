@@ -174,7 +174,7 @@ public class RoomPlanFragment extends Fragment {
                                     .setText(R.string.cannot_load_room_plan)
                                     .setDuration(ChocoBar.LENGTH_INDEFINITE)
                                     .setActionText(R.string.ok)
-                                    .setActionClickListener((View v) -> getActivity().finish())
+                                    .setActionClickListener((View v) -> requireActivity().finish())
                                     .red();
                             RoomPlanActivity.snackbar.show();
                         });

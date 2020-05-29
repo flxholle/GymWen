@@ -89,7 +89,7 @@ public class ChoiceActivity extends ActivityFeatures {
         if (extras != null) {
             setParents(extras.getBoolean("parents", false));
             this.name = extras.getString("name",
-                    getContext().getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1));
+                    requireContext().getString(R.string.profile_empty_name) + (ProfileManagement.getSize() + 1));
             profileAdd = extras.getBoolean("profileAdd", false);
         }
 
@@ -159,7 +159,7 @@ public class ChoiceActivity extends ActivityFeatures {
         //Finish
         ProfileManagement.addProfile(new Profile(courses, name));
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(requireContext());
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("parents", profileAdd ? sharedPref.getBoolean("parents", false) : parents);
         editor.apply();

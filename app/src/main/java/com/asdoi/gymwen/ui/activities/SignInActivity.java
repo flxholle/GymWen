@@ -109,7 +109,7 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
                 String encodedString =
                         new String(Base64.encodeBase64(authString.getBytes()));
                 try {
-                    doc = Jsoup.connect(PreferenceUtil.getTodayURL(getContext()))
+                    doc = Jsoup.connect(PreferenceUtil.getTodayURL(requireContext()))
                             .header("Authorization", "Basic " + encodedString)
                             .get();
                     signedIn = true;

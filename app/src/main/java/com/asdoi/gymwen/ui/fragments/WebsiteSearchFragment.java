@@ -234,7 +234,7 @@ public class WebsiteSearchFragment extends Fragment {
                     requireActivity().invalidateOptionsMenu();
                 });
                 TypedValue outValue = new TypedValue();
-                getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+                requireContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
                 usedView.setBackgroundResource(outValue.resourceId);
 
                 button.setOnClickListener((View v) -> ((ActivityFeatures) requireActivity()).tabIntent(link.getLink()));

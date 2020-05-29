@@ -59,7 +59,7 @@ public class ColoRushFragment extends Fragment implements View.OnClickListener {
         url_images.put(names[3], "https://gitlab.com/asdoi/colorrush/raw/master/Screenshots/colorushmenu.png?inline=false");
 
         for (String name : url_images.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(getContext());
+            TextSliderView textSliderView = new TextSliderView(requireContext());
             // initialize a SliderLayout
             textSliderView
                     .description(name)

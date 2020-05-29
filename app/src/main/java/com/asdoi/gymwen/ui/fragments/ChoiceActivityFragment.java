@@ -79,8 +79,8 @@ public class ChoiceActivityFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mainActivity = ((ChoiceActivity) getActivity());
-        context = getContext();
+        mainActivity = ((ChoiceActivity) requireActivity());
+        context = requireContext();
         switch (step) {
             default:
             case 1:

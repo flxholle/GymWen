@@ -92,7 +92,7 @@ import saschpe.android.customtabs.WebViewFallback;
 public abstract class ActivityFeatures extends AppCompatActivity {
 
     @NonNull
-    public Context getContext() {
+    public Context requireContext() {
         return this;
     }
 
@@ -232,7 +232,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                     .setButtonUpdateClickListener((dialogInterface, i) -> {
                         try {
                             String apkUrl = External_Const.APK_DOWNLOAD;
-                            startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), getContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
+                            startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), requireContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
                             dialogInterface.dismiss();
                         } catch (Exception e) {
                             tabIntent(External_Const.APK_DOWNLOAD_PAGE);
@@ -257,7 +257,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                         @Override
                         public void onSuccess(Update update, Boolean isUpdateAvailable) {
                             if (isUpdateAvailable) {
-                                Toast.makeText(getContext(), getContext().getString(R.string.update_available_title), Toast.LENGTH_LONG).show();
+                                Toast.makeText(requireContext(), requireContext().getString(R.string.update_available_title), Toast.LENGTH_LONG).show();
                                 tabIntent(External_Const.APK_DOWNLOAD_PAGE);
                             }
                         }
@@ -402,7 +402,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
             } catch (Exception e) {
                 try {
                     emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getContext().startActivity(emailIntent);
+                    requireContext().startActivity(emailIntent);
                 } catch (ActivityNotFoundException e2) {
                     ChocoBar.builder().setActivity(this).setText(getString(R.string.no_email_app)).setDuration(ChocoBar.LENGTH_LONG).red().show();
                 }
@@ -474,7 +474,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                 .requestCode(REQUEST_MULTIPLE_PERMISSION)
                 .setPermissionResultCallback(pl)
                 .askFor(permissions)
-                .rationalMessage(getContext().getString(R.string.sheriff_permission_rational))
+                .rationalMessage(requireContext().getString(R.string.sheriff_permission_rational))
                 .build();
 
         sheriffPermission.requestPermissions();
@@ -501,18 +501,18 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         @Override
         public void onPermissionsDenied(int requestCode, ArrayList<String> deniedPermissionList) {
             // setup the alert builder
-            MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext());
-            builder.title(getContext().getString(R.string.permission_required));
-            builder.content(getContext().getString(R.string.permission_required_description));
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(requireContext());
+            builder.title(requireContext().getString(R.string.permission_required));
+            builder.content(requireContext().getString(R.string.permission_required_description));
 
             // add the buttons
             builder.onPositive((dialog, which) -> {
                 openAppPermissionSettings();
                 dialog.dismiss();
             });
-            builder.positiveText(getContext().getString(R.string.permission_ok_button));
+            builder.positiveText(requireContext().getString(R.string.permission_ok_button));
 
-            builder.negativeText(getContext().getString(R.string.permission_cancel_button));
+            builder.negativeText(requireContext().getString(R.string.permission_cancel_button));
             builder.onNegative((dialog, which) -> dialog.dismiss());
 
             // create and show the alert dialog
@@ -547,7 +547,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
         Uri uri = Uri.parse(url);
 
-        DownloadManager mgr = (DownloadManager) getContext().getSystemService(DOWNLOAD_SERVICE);
+        DownloadManager mgr = (DownloadManager) requireContext().getSystemService(DOWNLOAD_SERVICE);
 
         DownloadManager.Request request = new DownloadManager.Request(uri)
                 .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI |
@@ -588,7 +588,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     private final
     BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
-            Intent i = new Intent(getContext(), MainActivity.class);
+            Intent i = new Intent(requireContext(), MainActivity.class);
             startActivity(i);
             unregisterReceiver(this);
         }
@@ -689,13 +689,13 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         // Set up the buttons
         builder.onPositive((MaterialDialog dialog, DialogAction which) -> {
             dialog.dismiss();
-            register(getContext());
+            register(requireContext());
         });
 
         builder.onNegative((MaterialDialog dialog, DialogAction which) -> dialog.dismiss());
 
         builder.onNeutral((MaterialDialog dialog, DialogAction which) -> {
-            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(requireContext()).edit();
             editor.putBoolean("registered", true);
             editor.apply();
             dialog.dismiss();
@@ -704,9 +704,9 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         builder.positiveText(R.string.yes);
         builder.negativeText(R.string.no);
         builder.neutralText(R.string.dont_show_again);
-        builder.negativeColor(ApplicationFeatures.getAccentColor(getContext()));
-        builder.positiveColor(ApplicationFeatures.getAccentColor(getContext()));
-        builder.neutralColor(ApplicationFeatures.getAccentColor(getContext()));
+        builder.negativeColor(ApplicationFeatures.getAccentColor(requireContext()));
+        builder.positiveColor(ApplicationFeatures.getAccentColor(requireContext()));
+        builder.neutralColor(ApplicationFeatures.getAccentColor(requireContext()));
         builder.build().show();
 
 

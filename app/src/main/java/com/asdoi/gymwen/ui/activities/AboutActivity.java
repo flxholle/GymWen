@@ -195,12 +195,12 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_description_white_24dp);
             try {
                 Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
-                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(requireContext()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            new MaterialDialog.Builder(getContext())
+            new MaterialDialog.Builder(requireContext())
                     .title(getString(R.string.licenses))
                     .content(s)
 
@@ -241,12 +241,12 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_fingerprint_black_24dp);
             try {
                 Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
-                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(requireContext()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            new MaterialDialog.Builder(getContext())
+            new MaterialDialog.Builder(requireContext())
                     .title(getString(R.string.menu_privacy))
                     .content(datenschutz)
 
@@ -268,18 +268,18 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_image_black_24dp);
             try {
                 Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
-                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(requireContext()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            final TextView message = new TextView(getContext());
+            final TextView message = new TextView(requireContext());
             final SpannableString s = new SpannableString(sources);
             Linkify.addLinks(s, Linkify.WEB_URLS);
             message.setText(s);
             message.setMovementMethod(LinkMovementMethod.getInstance());
 
-            new MaterialDialog.Builder(getContext())
+            new MaterialDialog.Builder(requireContext())
                     .title(getString(R.string.image_sources))
                     .cancelable(true)
                     .positiveText(R.string.ok)
@@ -309,18 +309,18 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_credit_card_black_24dp);
             try {
                 Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
-                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(getContext()));
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(requireContext()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            final TextView message = new TextView(getContext());
+            final TextView message = new TextView(requireContext());
             final SpannableString s = new SpannableString(sources);
             Linkify.addLinks(s, Linkify.WEB_URLS);
             message.setText(s);
             message.setMovementMethod(LinkMovementMethod.getInstance());
 
-            new MaterialDialog.Builder(getContext())
+            new MaterialDialog.Builder(requireContext())
                     .title(getString(R.string.imprint))
                     .cancelable(true)
                     .positiveText(R.string.ok)

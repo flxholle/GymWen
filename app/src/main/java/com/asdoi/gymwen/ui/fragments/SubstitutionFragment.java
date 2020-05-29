@@ -178,7 +178,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        context = getContext();
+        context = requireContext();
         root = inflater.inflate(R.layout.fragment_substitution, container, false);
         return root;
     }
@@ -210,7 +210,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                         //Update menu Items for days
                         if (!todayTitle.getDayOfWeek().trim().isEmpty()) {
                             ((MainActivity) requireActivity()).setTodayMenuItemTitle(todayTitle.getDayOfWeek() + ", " + todayTitle.getDate());
-                            ((MainActivity) getActivity()).setTomorrowMenuItemTitle(tomorrowTitle.getDayOfWeek() + ", " + tomorrowTitle.getDate());
+                            ((MainActivity) requireActivity()).setTomorrowMenuItemTitle(tomorrowTitle.getDayOfWeek() + ", " + tomorrowTitle.getDate());
                         }
                     } catch (Exception ignore) {
                     }
@@ -245,7 +245,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         message += footprint;
 
         if (SubstitutionPlanFeatures.getTodayTitle().getNoInternet()) {
-            //Toast.makeText(getActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
+            //Toast.makeText(requireActivity(), "Du bist nicht mit dem Internet verbunden!",Toast.LENGTH_LONG).show();
             ChocoBar.builder().setActivity(requireActivity()).setText(getString(R.string.noInternet)).setDuration(ChocoBar.LENGTH_LONG).orange().show();
             return;
         }
@@ -582,8 +582,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 base.addView(titleView);
 
                 if (content.size() == 0) {
-                    bgColor = ContextCompat.getColor(getContext(), R.color.nothing);
-                    textColor = ContextCompat.getColor(getContext(), R.color.nothing_text);
+                    bgColor = ContextCompat.getColor(requireContext(), R.color.nothing);
+                    textColor = ContextCompat.getColor(requireContext(), R.color.nothing_text);
                     titleView = createTitleLayoutNewDesign("", all ? requireContext().getString(R.string.nothing_for_whole_day) : requireContext().getString(R.string.nothing), bgColor, textColor);
                     base.addView(titleView);
                 }
@@ -901,7 +901,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         TextView room = view.findViewById(R.id.substitution_all_entry_textViewRoom);
         room.setText(entry.getRoom());
         room.setOnClickListener((View v) -> {
-            Intent intent = new Intent(getContext(), RoomPlanActivity.class);
+            Intent intent = new Intent(requireContext(), RoomPlanActivity.class);
             intent.putExtra(RoomPlanActivity.SELECT_ROOM_NAME, entry.getRoom());
             startActivity(intent);
         });
@@ -922,7 +922,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     //Pop up menu for adding course to profile
     private void showAddPopup(@NonNull View v, @NonNull String course) {
-        ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
+        ContextThemeWrapper theme = new ContextThemeWrapper(requireActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
         PopupMenu popup = new PopupMenu(theme, v);
         popup.setOnMenuItemClickListener((MenuItem item) -> {
             switch (item.getItemId()) {
@@ -1030,7 +1030,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             room.setText(content);
             room.setOnClickListener((View v) -> {
-                Intent intent = new Intent(getContext(), RoomPlanActivity.class);
+                Intent intent = new Intent(requireContext(), RoomPlanActivity.class);
                 intent.putExtra(RoomPlanActivity.SELECT_ROOM_NAME, entry.getRoom());
                 startActivity(intent);
             });
@@ -1115,7 +1115,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                 room.setText(content);
                 room.setOnClickListener((View v) -> {
-                    Intent intent = new Intent(getContext(), RoomPlanActivity.class);
+                    Intent intent = new Intent(requireContext(), RoomPlanActivity.class);
                     intent.putExtra(RoomPlanActivity.SELECT_ROOM_NAME, entry.getRoom());
                     startActivity(intent);
                 });
@@ -1156,7 +1156,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     private void showRemovePopup(@NonNull View v, @NonNull String course) {
         if (ApplicationFeatures.getSelectedProfile().getCoursesArray().length <= 1)
             return;
-        ContextThemeWrapper theme = new ContextThemeWrapper(getActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
+        ContextThemeWrapper theme = new ContextThemeWrapper(requireActivity(), PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
         PopupMenu popup = new PopupMenu(theme, v);
         popup.setOnMenuItemClickListener((MenuItem item) -> {
             switch (item.getItemId()) {

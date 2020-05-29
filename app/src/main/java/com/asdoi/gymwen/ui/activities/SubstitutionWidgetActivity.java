@@ -73,7 +73,7 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
             return;
         }
 
-        selectedProfiles = loadPref(getContext(), appWidgetId);
+        selectedProfiles = loadPref(requireContext(), appWidgetId);
 
         // Find the widget id from the intent.
         Intent intent = getIntent();
@@ -90,7 +90,7 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
         ProfileManagement.initProfiles();
 
         ListView listView = findViewById(R.id.widget_creation_profile_list);
-        listView.setAdapter(new ProfileListAdapter(getContext(), 0));
+        listView.setAdapter(new ProfileListAdapter(requireContext(), 0));
     }
 
     @Override
@@ -101,9 +101,9 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
 
             new Thread(() -> {
                 ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getContext());
-                RemoteViews views = new RemoteViews(getContext().getPackageName(), R.layout.widget_substitution);
-                SubstitutionWidgetProvider.updateWidget(getContext(), appWidgetManager, appWidgetId, views);
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(requireContext());
+                RemoteViews views = new RemoteViews(requireContext().getPackageName(), R.layout.widget_substitution);
+                SubstitutionWidgetProvider.updateWidget(requireContext(), appWidgetManager, appWidgetId, views);
                 appWidgetManager.updateAppWidget(appWidgetId, views);
 
                 Intent resultValue = new Intent();
@@ -126,7 +126,7 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
             for (int i = 0; i < ProfileManagement.getProfileList().size(); i++) {
                 selectedProfiles.add(i);
             }
-            runOnUiThread(() -> Toast.makeText(getContext(), R.string.selected_all_profiles, Toast.LENGTH_SHORT).show());
+            runOnUiThread(() -> Toast.makeText(requireContext(), R.string.selected_all_profiles, Toast.LENGTH_SHORT).show());
         }
 
         StringBuilder s = new StringBuilder();
@@ -136,7 +136,7 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
         }
         s.deleteCharAt(s.length() - 1);
 
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
                 .putString(PREF_PREFIX_KEY + appWidgetId, s.toString())
                 .commit();
     }

@@ -90,12 +90,12 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
 //        loadHomeOfPages();
 //        loadContentPages("http://www.gym-wen.de/schulleben/exkursionen/hc-bei-der-insights-x/");
         root = inflater.inflate(R.layout.fragment_website, container, false);
-        context = getActivity();
+        context = requireActivity();
 
         root.setBackgroundColor(ApplicationFeatures.getWebPageBackgroundColor(requireContext()));
 
         basic = root.findViewById(R.id.website_linear);
-        websiteActivity = (WebsiteActivity) getActivity();
+        websiteActivity = (WebsiteActivity) requireActivity();
 
         shortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -388,11 +388,11 @@ public class WebsiteActivityFragment extends Fragment implements View.OnClickLis
         int id = view.getId();
         if (id == -1) {
             //Goto Home of Projects
-            String url = Objects.requireNonNull(((WebsiteActivity) requireActivity()).history).get(Objects.requireNonNull(((WebsiteActivity) getActivity()).history).size() - 1);
+            String url = Objects.requireNonNull(((WebsiteActivity) requireActivity()).history).get(Objects.requireNonNull(((WebsiteActivity) requireActivity()).history).size() - 1);
             String first = url.substring("http://".length() + 1);
             String second = url.substring(first.indexOf('/'));
             int charOfsecondSlash = second.indexOf('/') + 1 + "http://".length() + 2 + first.indexOf('/') + 1;
-            ((WebsiteActivity) getActivity()).loadPage(url.substring(0, charOfsecondSlash));
+            ((WebsiteActivity) requireActivity()).loadPage(url.substring(0, charOfsecondSlash));
         } else {
             Objects.requireNonNull(websiteActivity).onClick(view);
         }
