@@ -597,4 +597,11 @@
     <string name="female_short">f</string>
     <string name="engineering_room">Engineers</string>
     <string name="student_council">Student Council</string>
+    <string name="imprint_text"><![CDATA[
+        <div>Imprint of the Gymnasium Wendelstein:<br>
+        http://gym-wen.de/startseite/impressum/</div><br>
+        <div>Imprint of the developer:<br>
+        https://asdoi.gitlab.io/imprint.html</div>]]></string>
+    <string name="missing_short">noth</string>
+    <string name="url">URL</string>
 </resources>

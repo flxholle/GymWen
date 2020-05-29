@@ -55,10 +55,9 @@ public class RoomPlanFragment extends Fragment {
     private MapView mapView;
 
     @NonNull
-    public static RoomPlanFragment newInstance(String selectRoom) {
-
+    public static RoomPlanFragment newInstance(int index) {
         Bundle args = new Bundle();
-        args.putString(RoomPlanActivity.SELECT_ROOM, selectRoom);
+        args.putInt(RoomPlanActivity.SELECT_ROOM, index);
 
         RoomPlanFragment fragment = new RoomPlanFragment();
         fragment.setArguments(args);
@@ -72,24 +71,11 @@ public class RoomPlanFragment extends Fragment {
             generateMarks();
             shouldSelectRoom = false;
 
-            String roomName = requireArguments().getString(RoomPlanActivity.SELECT_ROOM, null);
-            if (roomName != null && !roomName.trim().isEmpty()) {
-                for (RoomPlanActivity.Room r : getRooms()) {
-                    if (r.getName().equalsIgnoreCase(roomName)) {
-                        selectRoom = r;
-                        shouldSelectRoom = true;
-                        break;
-                    }
-                }
-
-                if (!shouldSelectRoom) {
-                    RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(requireActivity())
-                            .setActionText(getString(R.string.ok))
-                            .setText(getString(R.string.room) + " " + roomName + " " + getString(R.string.not_found))
-                            .setDuration(ChocoBar.LENGTH_INDEFINITE)
-                            .orange();
-                    RoomPlanActivity.snackbar.show();
-                }
+            int roomName = requireArguments().getInt(RoomPlanActivity.SELECT_ROOM, -1);
+            if (roomName >= 0 && roomName < getRooms().size()) {
+                RoomPlanActivity.Room r = getRooms().get(roomName);
+                selectRoom = r;
+                shouldSelectRoom = true;
             }
         } catch (Exception ignore) {
             //No Arguments set
@@ -161,7 +147,7 @@ public class RoomPlanFragment extends Fragment {
                             } else {
                                 MarkLayer markLayer = new MarkLayer(mapView, marks, marksName);
                                 markLayer.setMarkIsClickListener((int num) -> requireActivity().runOnUiThread(() -> {
-                                    RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(getActivity())
+                                    RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(requireActivity())
                                             .setText(getRoomNames().get(num) + " (" + getRooms().get(num).getFloor() + (getRooms().get(num).hasDescription() ? ", " + getRooms().get(num).getDescription() : "") + ")")
                                             .setTextTypefaceStyle(Typeface.BOLD)
                                             .setIcon(R.mipmap.mark_touch)

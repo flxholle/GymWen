@@ -37,6 +37,7 @@ import com.asdoi.gymwen.ui.fragments.RoomPlanFragment;
 import com.asdoi.gymwen.ui.fragments.RoomPlanSearchFragment;
 import com.asdoi.gymwen.util.External_Const;
 import com.google.android.material.snackbar.Snackbar;
+import com.pd.chocobar.ChocoBar;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -49,6 +50,8 @@ public class RoomPlanActivity extends ActivityFeatures {
 
     @NonNull
     public static final String SELECT_ROOM = "selectroom";
+    @NonNull
+    public static final String SELECT_ROOM_NAME = "selectroomName";
     @NonNull
     public static final String SEARCH_ROOM = "searchroom";
 
@@ -63,15 +66,37 @@ public class RoomPlanActivity extends ActivityFeatures {
         setContentView(R.layout.activity_room_plan);
 
         String room = null;
+        int roomIndex = -1;
+        List<Room> roomMarkers = getRoomMarkers();
         try {
             Bundle extras = getIntent().getExtras();
 
-            if (extras != null)
-                room = extras.getString(SELECT_ROOM, null);
+            if (extras != null) {
+                room = extras.getString(SELECT_ROOM_NAME, null);
+                roomIndex = extras.getInt(SELECT_ROOM, -1);
+            }
 
             search = Objects.requireNonNull(getIntent().getAction()).equals(SEARCH_ROOM);
         } catch (NullPointerException ignore) {
             //If intent is null
+        }
+
+        if (room != null && !room.trim().isEmpty()) {
+            for (int i = 0; i < roomMarkers.size(); i++) {
+                if (roomMarkers.get(i).getName().equalsIgnoreCase(room)) {
+                    roomIndex = i;
+                    break;
+                }
+            }
+
+            if ((roomIndex < 0 || roomIndex > roomMarkers.size()) && !search) {
+                RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(this)
+                        .setActionText(getString(R.string.ok))
+                        .setText(getString(R.string.room) + " " + room + " " + getString(R.string.not_found))
+                        .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                        .orange();
+                RoomPlanActivity.snackbar.show();
+            }
         }
 
         setIntent(null);
@@ -81,9 +106,9 @@ public class RoomPlanActivity extends ActivityFeatures {
         if (search) {
             fragment = new RoomPlanSearchFragment();
         } else {
-            if (room != null) {
-                fragment = RoomPlanFragment.newInstance(room);
-            } else
+            if (roomIndex >= 0 && roomIndex < roomMarkers.size())
+                fragment = RoomPlanFragment.newInstance(roomIndex);
+            else
                 fragment = new RoomPlanFragment();
         }
 
@@ -263,8 +288,8 @@ public class RoomPlanActivity extends ActivityFeatures {
         }
     }
 
-    public void showRoom(String room) {
-        Fragment fragment = RoomPlanFragment.newInstance(room);
+    public void showRoom(int index) {
+        Fragment fragment = RoomPlanFragment.newInstance(index);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.room_plan_frame, fragment).commit();
         search = false;

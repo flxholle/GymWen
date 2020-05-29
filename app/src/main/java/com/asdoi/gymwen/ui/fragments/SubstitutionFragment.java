@@ -902,7 +902,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         room.setText(entry.getRoom());
         room.setOnClickListener((View v) -> {
             Intent intent = new Intent(getContext(), RoomPlanActivity.class);
-            intent.putExtra(RoomPlanActivity.SELECT_ROOM, entry.getRoom());
+            intent.putExtra(RoomPlanActivity.SELECT_ROOM_NAME, entry.getRoom());
             startActivity(intent);
         });
         TypedValue outValue = new TypedValue();
@@ -1031,7 +1031,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             room.setText(content);
             room.setOnClickListener((View v) -> {
                 Intent intent = new Intent(getContext(), RoomPlanActivity.class);
-                intent.putExtra(RoomPlanActivity.SELECT_ROOM, entry.getRoom());
+                intent.putExtra(RoomPlanActivity.SELECT_ROOM_NAME, entry.getRoom());
                 startActivity(intent);
             });
             TypedValue outValue = new TypedValue();
@@ -1116,7 +1116,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 room.setText(content);
                 room.setOnClickListener((View v) -> {
                     Intent intent = new Intent(getContext(), RoomPlanActivity.class);
-                    intent.putExtra(RoomPlanActivity.SELECT_ROOM, entry.getRoom());
+                    intent.putExtra(RoomPlanActivity.SELECT_ROOM_NAME, entry.getRoom());
                     startActivity(intent);
                 });
                 TypedValue outValue = new TypedValue();

@@ -138,7 +138,7 @@ public class ExamsAdapter extends ArrayAdapter<Exam> {
         holder.room.setText(exam.getRoom());
         holder.room.setOnClickListener((View v) -> {
             Intent intent = new Intent(getContext(), RoomPlanActivity.class);
-            intent.putExtra(RoomPlanActivity.SELECT_ROOM, holder.room.getText());
+            intent.putExtra(RoomPlanActivity.SELECT_ROOM_NAME, holder.room.getText());
             mActivity.startActivity(intent);
         });
         TypedValue outValue = new TypedValue();

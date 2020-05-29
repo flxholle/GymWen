@@ -126,7 +126,7 @@
     <string name="share_substitution_plan">Vertretung senden an\u2026</string>
     <string name="day_past">(Vergangen)</string>
     <string name="with_teacher">bei</string>
-    <string name="missing_short" translatable="false">entf</string>
+    <string name="missing_short">entf</string>
     <string name="add_to_my_courses">Zu meinen Kursen hinzufügen</string>
     <string name="remove_from_my_courses">Aus meinen Kursen entfernen</string>
 
@@ -316,7 +316,7 @@
     </string>
 
     <!-- Imprint -->
-    <string name="imprint_text" translatable="false"><![CDATA[
+    <string name="imprint_text"><![CDATA[
         <div>Impressum des Gymnasiums Wendelstein:<br>
         http://gym-wen.de/startseite/impressum/</div><br>
         <div>Impressum des App-Entwicklers:<br>
@@ -606,7 +606,7 @@
 
     <string name="edit">Bearbeiten</string>
     <string name="automatic_update_check">Automatisch auf Updates prüfen</string>
-    <string name="url" translatable="false">URL</string>
+    <string name="url">URL</string>
 
     <string name="timetable_channel">Stundenplan</string>
     <string name="timetable_channel_desc">Eine Benachrichtigung mit deinen Fächern</string>
