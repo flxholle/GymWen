@@ -3,7 +3,7 @@
 [![Fdroid](https://img.shields.io/f-droid/v/com.asdoi.gymwen.svg)]()
 [![Release](https://img.shields.io/badge/dynamic/json.svg?label=Release&url=https://gitlab.com/asdoi/GymWen/-/jobs/artifacts/master/raw/badges.json?job=build_badges&query=release_tag&colorB=brightgreen&logo=gitlab)]()
 
-[<img src="https://f-droid.org/badge/get-it-on.png"
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/packages/com.asdoi.gymwen)
 [<img src="https://github.com/k0shk0sh/FastHub/raw/development/.github/assets/direct-apk-download.png"
