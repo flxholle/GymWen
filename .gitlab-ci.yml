@@ -1,12 +1,7 @@
 image: ruby:2.6
 
-stages:
-    - build
-
 build_badges:
   stage: build
-  tags:
-    - docker-build
   before_script:
     - chmod +x get-updated-badge-info.sh
   script:
