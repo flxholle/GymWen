@@ -1,7 +1,7 @@
 # Offizielle App des <a href="http://www.gym-wen.de/startseite/">Gymnasiums Wendelstein</a>
 
 [![Fdroid](https://img.shields.io/f-droid/v/com.asdoi.gymwen.svg)](F-Droid-Version)
-[![Release](https://img.shields.io/badge/dynamic/json.svg?label=Release&url=https://asdoi.gitlab.com/GymWen/raw/master/badge.json&query=commits&colorB=brightgreen)](Tag-Version)
+[![Release](https://img.shields.io/badge/dynamic/json.svg?label=Release&url=https://gitlab.com/asdoi/GymWen/-/jobs/artifacts/master/raw/badges.json?job=build_badges&query=release_tag&colorB=brightgreen)](Tag-Version)
 
 [<img src="https://f-droid.org/badge/get-it-on.png"
       alt="Get it on F-Droid"
