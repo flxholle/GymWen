@@ -180,7 +180,7 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == changelog) {
-            showChangelogCK(false);
+            showChangelog(false);
         } else if (v == licenses) {
             String license = getString(R.string.gnu_license);
 

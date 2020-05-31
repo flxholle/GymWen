@@ -173,7 +173,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         if (PreferenceUtil.isBackgroundUpdateCheck())
             checkUpdates(Display.DIALOG, false);
 
-        showChangelogCK(true);
+        showChangelog(true);
         checkRegistration();
 
         setupMenuItems(navigationView);
@@ -657,7 +657,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 checkUpdates(Display.DIALOG, true);
                 return;
             case R.id.action_changelog:
-                showChangelogCK(false);
+                showChangelog(false);
                 return;
             case R.id.nav_teacherlist:
                 intent = new Intent(this, TeacherListActivity.class);

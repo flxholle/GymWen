@@ -612,8 +612,9 @@
     <string name="timetable_channel_desc">Eine Benachrichtigung mit deinen Fächern</string>
     <string name="do_not_disturb_permission_desc">Um automatisch in den Nicht-Stören-Modus zu wechseln, benötigt die App die entsprechende Berechtigung. Dies kann auch später noch in den Einstellungen geändert werden.</string>
     <string name="do_not_disturb_setting">Automatisches Stummschalten</string>
-    <string name="do_not_disturb_settings_desc">Automatisch während Fächern in den Nicht-Stören-Modus wechseln und ihn danach wieder ausschalten</string>
+    <string name="do_not_disturb_settings_desc">Automatisch während des Unterrichts in den Nicht-Stören-Modus wechseln.</string>
     <string name="do_not_disturb_turn_off">Auch wieder auf laut stellen</string>
+    <string name="do_not_disturb_turn_off_desc">Nach Ende des Unterrichts den Nicht-Stören-Modus automatisch wieder deaktivieren.</string>
 
     <string name="action_open_main_app">Hauptapp</string>
     <string name="backup_failed">Backup fehlgeschlagen</string>
@@ -628,7 +629,7 @@
     <string name="timetable_delete_note">die Notiz %1$s</string>
     <string name="timetable_delete_exam">die Prüfung %1$s</string>
     <string name="remove_all_subjects">Alles löschen</string>
-    <string name="remove_all_subjects_content">Sollen alle Daten des Stundenplans unwiederbringliche gelöscht werden?
+    <string name="remove_all_subjects_content">Sollen alle Daten des Stundenplans unwiederbringlich gelöscht werden?
         \nEs empfiehlt sich vorher ein Backup anzulegen!</string>
     <string name="remove_all_successful">Erfolgreich Alles gelöscht</string>
     <string name="remove_all_failed">Es ist ein Fehler aufgetreten</string>

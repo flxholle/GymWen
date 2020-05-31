@@ -178,7 +178,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
 
     //Changelog
-    protected void showChangelogCK(boolean checkFirstRun) {
+    protected void showChangelog(boolean checkFirstRun) {
         ChangeLog cl = new ChangeLog(this);
         try {
             if (checkFirstRun) {
@@ -187,8 +187,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
             } else {
                 cl.getFullLogDialog().show();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore) {
         }
     }
 
