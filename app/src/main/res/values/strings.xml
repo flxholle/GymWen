@@ -694,4 +694,5 @@
     <string name="intelligent_auto_fill_desc">Automatisch die passenden Start-/End-Zeiten zu deinen Eingaben auswählen.</string>
     <string name="show_preselection_list">Vorauswahlliste anzeigen</string>
     <string name="set_preselection_elements">Elemente der Liste festlegen</string>
+    <string name="de_select_all">Alles an-/abwählen</string>
 </resources>

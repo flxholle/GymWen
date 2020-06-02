@@ -40,6 +40,8 @@ import com.ulan.timetable.activities.SettingsActivity;
 import com.ulan.timetable.receivers.DoNotDisturbReceiversKt;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -220,6 +222,13 @@ public class PreferenceUtil {
 
     public static boolean isPreselectionList(Context context) {
         return getBooleanSettings("is_preselection", true, context);
+    }
+
+    public static void setPreselectionElements(Context context, String[] value) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Set<String> stringSet = new HashSet<>();
+        Collections.addAll(stringSet, value);
+        sharedPrefs.edit().putStringSet("preselection_elements", stringSet).apply();
     }
 
     public static String[] getPreselectionElements(Context context) {
