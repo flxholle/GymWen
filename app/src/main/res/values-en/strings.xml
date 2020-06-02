@@ -605,4 +605,6 @@
         https://asdoi.gitlab.io/imprint.html</div>]]></string>
     <string name="missing_short">noth</string>
     <string name="url">URL</string>
+    <string name="show_preselection_list">Show preselection list</string>
+    <string name="set_preselection_elements">Set the elements of the list</string>
 </resources>

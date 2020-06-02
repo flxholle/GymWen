@@ -86,6 +86,20 @@
         android:summary="@string/intelligent_auto_fill_desc"
         android:title="@string/intelligent_auto_fill" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_baseline_view_list_24"
+        android:key="is_preselection"
+        android:title="@string/show_preselection_list" />
+
+    <MultiSelectListPreference
+        android:defaultValue="@array/preselected_subjects_values"
+        android:entries="@array/preselected_subjects"
+        android:entryValues="@array/preselected_subjects_values"
+        android:key="preselection_elements"
+        android:title="@string/set_preselection_elements" />
+
+
     <Preference
         android:icon="@drawable/ic_open_in_browser_white_24dp"
         android:key="allprefs"

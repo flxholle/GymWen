@@ -41,6 +41,7 @@ import com.ulan.timetable.receivers.DoNotDisturbReceiversKt;
 
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.Set;
 
 import static com.asdoi.gymwen.util.PreferenceUtil.getBooleanSettings;
 
@@ -215,5 +216,18 @@ public class PreferenceUtil {
 
     public static boolean isIntelligentAutoFill(Context context) {
         return getBooleanSettings("auto_fill", true, context);
+    }
+
+    public static boolean isPreselectionList(Context context) {
+        return getBooleanSettings("is_preselection", true, context);
+    }
+
+    public static String[] getPreselectionElements(Context context) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Set<String> preselection = sharedPrefs.getStringSet("preselection_elements", null);
+        if (preselection == null)
+            return context.getResources().getStringArray(R.array.preselected_subjects_values);
+        else
+            return preselection.toArray(new String[]{});
     }
 }

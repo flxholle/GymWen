@@ -86,11 +86,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             return true;
         });
 
-
         setCourses();
         myPref = findPreference("timetable_subs");
         Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
             setCourses();
+            return true;
+        });
+
+        showPreselectionElements();
+        myPref = findPreference("is_preselection");
+        Objects.requireNonNull(myPref).setOnPreferenceClickListener(p -> {
+            showPreselectionElements();
             return true;
         });
     }
@@ -109,6 +115,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private void setCourses() {
         boolean show = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("timetable_subs", true);
         findPreference("courses").setVisible(show);
+    }
+
+    private void showPreselectionElements() {
+        boolean show = PreferenceUtil.isPreselectionList(requireContext());
+        findPreference("preselection_elements").setVisible(show);
     }
 
     private static void tintIcons(Preference preference, int color) {
