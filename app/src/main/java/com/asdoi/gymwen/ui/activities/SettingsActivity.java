@@ -37,13 +37,19 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentDesign;
+import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentHideMenuItems;
+import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentNotification;
 import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentRoot;
 import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSignIn;
+import com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSubstitution;
 import com.asdoi.gymwen.util.ShortcutUtils;
+import com.bytehamster.lib.preferencesearch.SearchPreferenceResult;
+import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener;
 
 import java.util.Objects;
 
-public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+public class SettingsActivity extends ActivityFeatures implements ColorChooserDialog.ColorCallback, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback, SearchPreferenceResultListener {
     public static final String SIGN_IN_SETTINGS = "SignInSettings";
 
     public int loadedFragments = 0;
@@ -109,6 +115,12 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
+        } else if (loadedFragments == -10) {
+            loadedFragments = 0;
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.settings, new SettingsFragmentRoot())
+                    .commit();
         } else {
             loadedFragments--;
             try {
@@ -165,5 +177,44 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
     @Override
     public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
         dialog.dismiss();
+    }
+
+    @Override
+    public void onSearchResultClicked(SearchPreferenceResult result) {
+        PreferenceFragmentCompat fragment;
+        switch (result.getResourceFile()) {
+            case R.xml.preferences_design:
+                fragment = new SettingsFragmentDesign();
+                break;
+            case R.xml.preferences_hide_menu_items:
+                fragment = new SettingsFragmentHideMenuItems();
+                break;
+            case R.xml.preferences_notification:
+                fragment = new SettingsFragmentNotification();
+                break;
+            case R.xml.preferences_signin:
+                fragment = new SettingsFragmentSignIn();
+                break;
+            case R.xml.preferences_substitutionplan:
+                fragment = new SettingsFragmentSubstitution();
+                break;
+            case R.xml.timetable_settings:
+                fragment = new com.ulan.timetable.fragments.SettingsFragment();
+                break;
+            default:
+            case R.xml.preferences_root:
+                fragment = new SettingsFragmentRoot();
+                break;
+        }
+
+        loadedFragments = -11;
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.settings, fragment)
+                .commit();
+
+        result.closeSearchPage(this);
+        result.highlight(fragment);
     }
 }

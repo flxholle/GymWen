@@ -18,15 +18,21 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.bytehamster.lib.preferencesearch.SearchPreference
+        android:key="searchPreference"
+        app:textHint="@string/search_through" />
     <Preference
+        android:key="substitutionplan"
         android:title="@string/set_substitution_title"
         app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSubstitution"
         app:iconSpaceReserved="false" />
     <Preference
+        android:key="design"
         android:title="@string/set_design_title"
         app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentDesign"
         app:iconSpaceReserved="false" />
     <Preference
+        android:key="notification"
         android:title="@string/set_notification_title"
         app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentNotification"
         app:iconSpaceReserved="false" />

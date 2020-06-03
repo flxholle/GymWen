@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -30,6 +31,8 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
+import com.bytehamster.lib.preferencesearch.SearchConfiguration;
+import com.bytehamster.lib.preferencesearch.SearchPreference;
 import com.github.javiersantos.appupdater.enums.Display;
 
 import java.util.Objects;
@@ -40,6 +43,17 @@ public class SettingsFragmentRoot extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.preferences_root, rootKey);
 
         ((SettingsActivity) requireActivity()).loadedFragments++;
+
+        SearchPreference searchPreference = (SearchPreference) findPreference("searchPreference");
+        SearchConfiguration config = searchPreference.getSearchConfiguration();
+        config.setActivity((AppCompatActivity) getActivity());
+        config.index(R.xml.preferences_root);
+        config.index(R.xml.preferences_design);
+        config.index(R.xml.preferences_hide_menu_items);
+        config.index(R.xml.preferences_notification);
+        config.index(R.xml.preferences_signin);
+        config.index(R.xml.preferences_substitutionplan);
+        config.index(R.xml.timetable_settings);
 
         Preference myPref = findPreference("language");
         Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {

@@ -187,7 +187,7 @@ public class TeacherListFragment extends Fragment {
         inputText.setLayoutParams(params);
         inputText.setInputType(InputType.TYPE_CLASS_TEXT);
         inputText.setTextColor(ApplicationFeatures.getTextColorSecondary(requireContext()));
-        inputText.setHint(getString(R.string.teacher_search_teacher_list));
+        inputText.setHint(getString(R.string.search_through));
         inputText.addTextChangedListener(new TextWatcher() {
             @NonNull
             String before = "";

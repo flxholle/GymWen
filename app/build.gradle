@@ -105,6 +105,7 @@ dependencies {
     implementation 'com.github.stephenvinouze:shapetextdrawable:1.0.0'
     implementation 'com.github.AbdAllahAbdElFattah13:MapView:b705d2a5a7'
     implementation 'com.prof.rssparser:rssparser:2.1.2'
+    implementation 'com.github.ByteHamster:SearchPreference:-SNAPSHOT'
 
     //Timetable
     implementation 'com.github.asdoi:ColorPickerDialog:a1d628430b'
