@@ -63,6 +63,7 @@
     <Preference
         android:summary="@string/set_desc_credentials_fragment"
         android:title="@string/set_substitution_signin"
+        android:key="signin"
         app:fragment="com.asdoi.gymwen.ui.settingsFragments.SettingsFragmentSignIn"
         app:iconSpaceReserved="false" />
 </PreferenceScreen>
