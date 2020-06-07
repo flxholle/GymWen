@@ -2,6 +2,13 @@
 
 [![Fdroid](https://img.shields.io/f-droid/v/com.asdoi.gymwen.svg)]()
 [![Release](https://img.shields.io/badge/dynamic/json.svg?label=Release&url=https://gitlab.com/asdoi/GymWen/-/jobs/artifacts/master/raw/badges.json?job=build_badges&query=release_tag&colorB=brightgreen&logo=gitlab)]()
+[![Commits since last release](https://gitlab.com/asdoi/GymWen/-/jobs/artifacts/master/raw/badges/commits_since_last_release.svg?job=build_badges)]()  
+[![Commit activity](https://gitlab.com/asdoi/GymWen/-/jobs/artifacts/master/raw/badges/commit_activity.svg?job=build_badges)]()
+[![Releases activity](https://gitlab.com/asdoi/GymWen/-/jobs/artifacts/master/raw/badges/releases_activity.svg?job=build_badges)]()
+[![Releases](https://gitlab.com/asdoi/GymWen/-/jobs/artifacts/master/raw/badges/releases_amount.svg?job=build_badges)]()
+
+[![Day the Repository has been created](https://gitlab.com/asdoi/GymWen/-/jobs/artifacts/master/raw/badges/repository_creation_day.svg?job=build_badges)]()
+[![Time the repo exists](https://gitlab.com/asdoi/GymWen/-/jobs/artifacts/master/raw/badges/time_repository_exists.svg?job=build_badges)]()
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
       alt="Get it on F-Droid"
