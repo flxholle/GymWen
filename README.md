@@ -14,7 +14,7 @@
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="130">](https://f-droid.org/packages/com.asdoi.gymwen)
-[<img src="https://github.com/k0shk0sh/FastHub/raw/development/.github/assets/direct-apk-download.png"
+[<img src="https://raw.githubusercontent.com/LibreShift/red-moon/master/art/direct-apk-download.png"
       alt="Direct apk download"
       height="130">](https://gitlab.com/asdoi/gymwenreleases/-/raw/master/GymWenApp.apk)*
 
