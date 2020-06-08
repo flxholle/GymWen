@@ -41,7 +41,7 @@
 <img src="https://gitlab.com/asdoi/GymWen/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/GymWena.png"
       height="400">
 
-*Made by <a href="https://github.com/smichel17">smichel17</a> from <a href="https://github.com/LibreShift/red-moon">LibreShifte/red-moon</a>
+*Made by <a href="https://github.com/smichel17">smichel17</a> from <a href="https://github.com/LibreShift/red-moon">LibreShift/red-moon</a>
 
 # Lizenz
     Copyright (C) 2019 Felix Hollederer
