@@ -261,26 +261,18 @@ public class WeekUtils {
         return weeks;
     }
 
-    @NonNull
-
-    public static ArrayList<Week> getAllWeeksAndRemoveDuplicates(@NonNull DbHelper dbHelper) {
-        ArrayList<Week> weeks = getAllWeeks(dbHelper);
-        ArrayList<Week> returnValue = new ArrayList<>();
-        ArrayList<String> returnValueSubjects = new ArrayList<>();
-        for (Week w : weeks) {
-            if (!returnValueSubjects.contains(w.getSubject().toUpperCase())) {
-                returnValue.add(w);
-                returnValueSubjects.add(w.getSubject().toUpperCase());
-            }
-        }
-        return returnValue;
-    }
-
     @NotNull
     public static ArrayList<Week> getPreselection(@NonNull AppCompatActivity activity) {
-        DbHelper dbHelper = new DbHelper(activity);
+        Calendar calendar = Calendar.getInstance();
+        DbHelper dbHelper = new DbHelper(activity, calendar);
+        ArrayList<Week> customWeeks = getAllWeeks(dbHelper);
 
-        ArrayList<Week> customWeeks = getAllWeeksAndRemoveDuplicates(dbHelper);
+        calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR) - 1);
+        dbHelper = new DbHelper(activity, calendar);
+        customWeeks.addAll(getAllWeeks(dbHelper));
+
+        customWeeks = removeDuplicates(customWeeks);
+
         ArrayList<String> subjects = new ArrayList<>();
         for (Week w : customWeeks) {
             subjects.add(w.getSubject().toUpperCase());
@@ -302,6 +294,19 @@ public class WeekUtils {
 
         Collections.sort(customWeeks, (week1, week2) -> week1.getSubject().compareToIgnoreCase(week2.getSubject()));
         return customWeeks;
+    }
+
+    @NonNull
+    private static ArrayList<Week> removeDuplicates(@NonNull ArrayList<Week> weeks) {
+        ArrayList<Week> returnValue = new ArrayList<>();
+        ArrayList<String> returnValueSubjects = new ArrayList<>();
+        for (Week w : weeks) {
+            if (!returnValueSubjects.contains(w.getSubject().toUpperCase())) {
+                returnValue.add(w);
+                returnValueSubjects.add(w.getSubject().toUpperCase());
+            }
+        }
+        return returnValue;
     }
 
     public static int getMatchingScheduleBegin(@NonNull String time) {

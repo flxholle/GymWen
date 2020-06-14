@@ -393,14 +393,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     private void teacherSearch(@NonNull String query) {
         new Thread(() -> {
-            try {
-                ApplicationFeatures.downloadTeacherlistDoc();
-                if (TeacherlistFeatures.liste().getNoInternet())
-                    throw new Exception();
-                requireActivity().runOnUiThread(() -> ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(((ActivityFeatures) requireActivity()).createTeacherView(Objects.requireNonNull(TeacherlistFeatures.getTeacher(query)))));
-            } catch (Exception e) {
-                e.printStackTrace();
-                requireActivity().runOnUiThread(() -> {
+            ApplicationFeatures.downloadTeacherlistDoc();
+            requireActivity().runOnUiThread(() -> {
+                try {
+                    if (TeacherlistFeatures.liste().getNoInternet())
+                        throw new Exception();
+                    ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(((ActivityFeatures) requireActivity()).createTeacherView(Objects.requireNonNull(TeacherlistFeatures.getTeacher(query))));
+                } catch (Exception e) {
                     if (!TeacherlistFeatures.isDownloaded()) {
                         ChocoBar.builder().setActivity(requireActivity())
                                 .setText(getString(R.string.noInternet))
@@ -414,8 +413,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                                 .red()
                                 .show();
                     }
-                });
-            }
+                }
+            });
         }).start();
     }
 
