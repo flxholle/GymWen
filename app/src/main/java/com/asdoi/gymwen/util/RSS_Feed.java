@@ -88,13 +88,13 @@ public class RSS_Feed {
                 // Use the channel info
                 List<Article> articles = channel.getArticles();
                 if (articles.size() > 0) {
-                    if (!Objects.requireNonNull(articles.get(articles.size() - 1).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle2())) {
+                    if (!Objects.requireNonNull(articles.get(0).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle2())) {
                         //Send Notification
                         Intent notificationIntent = new Intent(context, MainActivity.class);
                         notificationIntent.setAction(MainActivity.LOADURL);
-                        notificationIntent.putExtra(MainActivity.LOADURL, articles.get(articles.size() - 1).getLink());
-                        sendRSSNotification(articles.get(articles.size() - 1), context, R.drawable.ic_gitlab, notificationIntent);
-                        PreferenceUtil.setLastLoadedRSSTitle2(articles.get(articles.size() - 1).getTitle());
+                        notificationIntent.putExtra(MainActivity.LOADURL, articles.get(0).getLink());
+                        sendRSSNotification(articles.get(0), context, R.drawable.ic_gitlab, notificationIntent);
+                        PreferenceUtil.setLastLoadedRSSTitle2(articles.get(0).getTitle());
                     }
                 }
             }
