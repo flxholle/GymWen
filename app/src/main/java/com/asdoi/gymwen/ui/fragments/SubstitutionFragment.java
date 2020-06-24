@@ -326,28 +326,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
 
     //TeacherSearch
-    private void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean showBorders, boolean fullNames) {
-        if (TeacherlistFeatures.isAOL(teacherQuery))
-            return;
-        int padding = 0;
-        if (showBorders) {
-            Drawable drawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_shape);
-            try {
-                Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
-                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(requireContext()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            view.setBackground(drawable);
-            padding = 7;
-        } else {
-            TypedValue outValue = new TypedValue();
-            requireContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
-            view.setBackgroundResource(outValue.resourceId);
-        }
-        view.setPadding(padding, padding, padding, padding);
-
-
+    private void setTeacherView(@NonNull TextView view, @NonNull String teacherQuery, boolean showBorders, boolean fullNames) {
         if (fullNames) {
             new Thread(() -> {
                 ApplicationFeatures.downloadTeacherlistDoc();
@@ -365,6 +344,26 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             view.setText(teacherQuery);
         }
 
+        if (TeacherlistFeatures.isAOL(teacherQuery))
+            return;
+
+        int padding = 0;
+        if (showBorders) {
+            Drawable drawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_shape);
+            try {
+                Drawable wrappedDrawable = DrawableCompat.wrap(Objects.requireNonNull(drawable));
+                DrawableCompat.setTint(wrappedDrawable, ApplicationFeatures.getTextColorPrimary(requireContext()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            view.setBackground(drawable);
+            padding = 7;
+        } else {
+            TypedValue outValue = new TypedValue();
+            requireContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            view.setBackgroundResource(outValue.resourceId);
+        }
+        view.setPadding(padding, padding, padding, padding);
 
         view.setClickable(true);
         view.setOnClickListener((View v) -> {
@@ -893,7 +892,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
         removeTeacherClick(teacher);
         if (!entry.isNothing())
-            teacherClick(teacher, entry.getTeacher(), !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false), !PreferenceUtil.isFullTeacherNamesSpecific() && PreferenceUtil.isFullTeacherNames());
+            setTeacherView(teacher, entry.getTeacher(), !ApplicationFeatures.getBooleanSettings("show_border_specific", true) && ApplicationFeatures.getBooleanSettings("show_borders", false), !PreferenceUtil.isFullTeacherNamesSpecific() && PreferenceUtil.isFullTeacherNames());
         else
             teacher.setText(entry.getTeacher());
 
@@ -1020,7 +1019,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             teacher.setTextColor(subject.getTextColors());
             teacher.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_teacher)));
             teacher.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-            teacherClick(teacher, entry.getTeacher(), ApplicationFeatures.getBooleanSettings("show_borders", true), PreferenceUtil.isFullTeacherNames());
+            setTeacherView(teacher, entry.getTeacher(), ApplicationFeatures.getBooleanSettings("show_borders", true), PreferenceUtil.isFullTeacherNames());
 
             room.setVisibility(View.VISIBLE);
             room.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, context.getResources().getInteger(R.integer.substitution_specific_entry_room)));
@@ -1101,11 +1100,11 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 teacher.setVisibility(View.VISIBLE);
                 teacher.setGravity(Gravity.CENTER);
                 teacher.setTextColor(subject.getTextColors());
-                teacherClick(teacher, entry.getTeacher(), ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
+                setTeacherView(teacher, entry.getTeacher(), ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
 
                 subject.setText(entry.getSubject() + " " + requireContext().getString(R.string.with_teacher) + " ");
             } else {
-                teacherClick(subject, entry.getTeacher(), ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
+                setTeacherView(subject, entry.getTeacher(), ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
                 subject.setText(entry.getTeacher());
             }
 
