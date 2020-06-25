@@ -227,7 +227,7 @@
     <string name="profiles_delete_submit_heading">Are you sure?</string>
     <string name="profiles_edit">Edit\u2026</string>
     <string name="yes">Yes</string>
-    <string name="profiles_delete_message">Are you sure that you want to delete User %1$s</string>
+    <string name="profiles_delete_message">Are you sure that you want to delete User %s</string>
     <string name="profile_courses">Class/Courses</string>
     <string name="title_activity_profile">Profiles</string>
     <string name="menu_profiles">Profiles</string>
@@ -490,12 +490,12 @@
     <string name="do_not_disturb_turn_off">Also turning off</string>
     <string name="do_not_disturb_turn_off_desc">Turn do not disturb mode off at the end of the subjects.</string>
     <string name="action_open_main_app">Main app</string>
-    <string name="backup_successful">Backup has been saved to %1$s</string>
+    <string name="backup_successful">Backup has been saved to %s</string>
     <string name="backup_failed">Backup failed</string>
     <string name="import_successful">Restore succeeded</string>
     <string name="import_failed">Restore failed</string>
     <string name="menu_restore">Restore</string>
-    <string name="no_backup_found_in_downloads">No Backup found in %1$s</string>
+    <string name="no_backup_found_in_downloads">No Backup found in %s</string>
     <string name="open_all_settings">Open all settings</string>
     <string name="Documents">Documents</string>
     <string name="Downloads">Downloads</string>
@@ -503,9 +503,9 @@
     <string name="colorPickerDialog_preset">Presets</string>
     <string name="integrate_substitution_in_timetable_on">Hide sit-in</string>
     <string name="integrate_substitution_in_timetable_off">Show sit-in</string>
-    <string name="timetable_delete_week">the subject %1$s</string>
-    <string name="timetable_delete_note">the note %1$s</string>
-    <string name="timetable_delete_exam">the exam %1$s</string>
+    <string name="timetable_delete_week">the subject %s</string>
+    <string name="timetable_delete_note">the note %s</string>
+    <string name="timetable_delete_exam">the exam %s</string>
     <string name="remove_all_subjects">Delete everything</string>
     <string name="remove_all_subjects_content">Should all data in the timetable be irretrievably deleted?
         \nIt is advisable to create a backup beforehand!</string>
@@ -583,7 +583,7 @@
 
     <string name="select">Select</string>
 
-    <string name="timetable_delete_content">Should %1$s be deleted?</string>
+    <string name="timetable_delete_content">Should %s be deleted?</string>
     <string name="enable_even_odd_weeks">Enable A \u0026 B weeks</string>
     <string name="even_week">Week A</string>
     <string name="odd_week">Week B</string>

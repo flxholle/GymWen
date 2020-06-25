@@ -627,7 +627,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
                 return;
-            case R.id.action_refresh2:
             case R.id.action_refresh:
                 switch (lastLoaded) {
                     case lastLoadedTabs:

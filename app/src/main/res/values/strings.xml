@@ -335,7 +335,7 @@
     <string name="title_activity_profile">Profile</string>
     <string name="profiles_edit">Bearbeiten\u2026</string>
     <string name="profiles_delete_submit_heading">Bestätigen</string>
-    <string name="profiles_delete_message">Soll der Nutzer %1$s gelöscht werden?</string>
+    <string name="profiles_delete_message">Soll der Nutzer %s gelöscht werden?</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="cancel">Abbrechen</string>
@@ -620,14 +620,14 @@
     <string name="backup_failed">Backup fehlgeschlagen</string>
     <string name="import_successful">Wiederherstellen erfolgreich</string>
     <string name="import_failed">Wiederherstellen fehlgeschlagen</string>
-    <string name="backup_successful">Backup in %1$s gespeichert</string>
-    <string name="no_backup_found_in_downloads">Kein Backup in %1$s gefunden</string>
+    <string name="backup_successful">Backup in %s gespeichert</string>
+    <string name="no_backup_found_in_downloads">Kein Backup in %s gefunden</string>
     <string name="Documents">Dokumente</string>
     <string name="Downloads">Downloads</string>
-    <string name="timetable_delete_content">Soll %1$s gelöscht werden?</string>
-    <string name="timetable_delete_week">das Fach %1$s</string>
-    <string name="timetable_delete_note">die Notiz %1$s</string>
-    <string name="timetable_delete_exam">die Prüfung %1$s</string>
+    <string name="timetable_delete_content">Soll %s gelöscht werden?</string>
+    <string name="timetable_delete_week">das Fach %s</string>
+    <string name="timetable_delete_note">die Notiz %s</string>
+    <string name="timetable_delete_exam">die Prüfung %s</string>
     <string name="remove_all_subjects">Alles löschen</string>
     <string name="remove_all_subjects_content">Sollen alle Daten des Stundenplans unwiederbringlich gelöscht werden?
         \nEs empfiehlt sich vorher ein Backup anzulegen!</string>
