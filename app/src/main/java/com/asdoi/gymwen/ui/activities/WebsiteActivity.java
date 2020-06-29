@@ -108,10 +108,10 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                     fragmentManager.beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
                     Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.action_search);
                     invalidateOptionsMenu();
+                    setIntent(null);
                     return;
                 } else {
-                    Uri data = getIntent().getData();
-                    intentURL = Objects.requireNonNull(data).getHost() + data.getPath();
+                    intentURL = Objects.requireNonNull(getIntent().getData()).toString();
                 }
 
                 if (intentURL != null) {
