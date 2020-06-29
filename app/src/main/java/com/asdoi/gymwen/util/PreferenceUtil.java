@@ -195,6 +195,13 @@ public class PreferenceUtil {
         return getBooleanSettings("menu_podcast", false);
     }
 
+    public static boolean showMebisDialog() {
+        return getBooleanSettings("mebis_dialog", true);
+    }
+
+    public static void setShowMebisDialog(boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putBoolean("mebis_dialog", value).apply();
+    }
 
     //SubstitutionPlan
     @NonNull

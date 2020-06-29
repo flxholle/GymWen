@@ -231,7 +231,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                     .setButtonUpdateClickListener((dialogInterface, i) -> {
                         try {
                             String apkUrl = External_Const.APK_DOWNLOAD;
-                            startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), requireContext().getString(R.string.update_down_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
+                            startDownload(apkUrl, "GymWen Version " + (BuildConfig.VERSION_CODE + 1), requireContext().getString(R.string.update_download_title), Environment.DIRECTORY_DOWNLOADS, "GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk", new installApk("GymWenAppv" + (BuildConfig.VERSION_CODE + 1) + ".apk"));
                             dialogInterface.dismiss();
                         } catch (Exception e) {
                             tabIntent(External_Const.APK_DOWNLOAD_PAGE);
@@ -437,6 +437,17 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         return false;
     }
 
+    public boolean isAppAvailable(@NonNull String... packageNames) {
+        Intent intent;
+        for (String s : packageNames) {
+            intent = getPackageManager().getLaunchIntentForPackage(s);
+            if (intent != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected boolean openAppInStore(@NonNull String... packageNames) {
         boolean run = false;
         for (String s : packageNames) {
@@ -532,7 +543,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     //DownloadManager
     private long downloadID;
 
-    private void startDownload(String url, String title, String description, String dirType, String subPath, BroadcastReceiver onComplete) {
+    public void startDownload(String url, String title, String description, String dirType, String subPath, BroadcastReceiver onComplete) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -563,7 +574,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
     }
 
-    private class installApk extends BroadcastReceiver {
+    public class installApk extends BroadcastReceiver {
         final String subPath;
 
         public installApk(String subPath) {
@@ -615,7 +626,6 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
     //Grades Management
     private final static String gradesFileName = "Notenverwaltung.xlsx";
-    private final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
 
     @SuppressWarnings("deprecation")
     protected void checkGradesFile() {
@@ -631,7 +641,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         if (file.exists()) {
             openGradesFile();
         } else {
-            startDownload(downloadGradesTable, getString(R.string.grades_management), getString(R.string.grades_down_title), Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS, gradesFileName, openGradesFile);
+            startDownload(External_Const.downloadGradesTable, getString(R.string.grades_management), getString(R.string.grades_down_title), Build.VERSION.SDK_INT >= 19 ? Environment.DIRECTORY_DOCUMENTS : Environment.DIRECTORY_DOWNLOADS, gradesFileName, openGradesFile);
         }
     }
 

@@ -64,12 +64,17 @@ public abstract class External_Const {
     public static final String downloadApp_publicTransport = "https://f-droid.org/de/packages/de.schildbach.oeffi/";
     public static final String downloadApp_libreoffice = "https://f-droid.org/de/packages/org.documentfoundation.libreoffice/";
 
+    public final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
+
 
     //ColoRush
     public static final String downloadApp_colorush = "https://asdoi.gitlab.io/colorush.html";
     public static final String[] coloRush_packageNames = new String[]{"com.JUF.ColoRush"};
     public static final String colorush_online = "https://asdoi.gitlab.io/colorushweb/";
 
+    //Mebis App
+    public static final String mebis_packageName = "com.asdoi.mebis";
+    public static final String mebis_download_link = "https://gitlab.com/asdoi/MebisApp/-/raw/mebis/app/release/app-release.apk";
 
     //SubstitutionPlan
     public static final String todayURL = "http://gym-wen.de/vp/heute.htm";

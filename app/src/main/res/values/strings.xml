@@ -270,7 +270,7 @@
     <string name="update_not_available_content">Du hast bereits die neueste Version installiert.</string>
     <string name="update_now">Jetzt herunterladen</string>
     <string name="update_later">Später</string>
-    <string name="update_down_title">Lädt Update herunter\u2026</string>
+    <string name="update_download_title">Lädt Update herunter\u2026</string>
 
     <!-- Acra -->
     <string name="acra_dialog_text">Tut mir leid! Das hätte nicht passieren sollen. Die App ist abgestürzt.
@@ -695,4 +695,9 @@
     <string name="show_preselection_list">Vorauswahlliste anzeigen</string>
     <string name="set_preselection_elements">Elemente der Liste festlegen</string>
     <string name="de_select_all">Alles an-/abwählen</string>
+
+    <!--    Mebis App-->
+    <string name="download_mebis_app">Mebis App herunterladen</string>
+    <string name="download_mebis_app_msg">Verfollständigen…Mebis App herunterladen?</string>
+    <string name="download_mebis_app_title">Lädt mebis App herunter…</string>
 </resources>

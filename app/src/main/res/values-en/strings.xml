@@ -180,7 +180,7 @@
     <string name="update_not_available_content">You have already installed the latest version.</string>
     <string name="update_now">Download now</string>
     <string name="update_later">Later</string>
-    <string name="update_down_title">Downloading update\u2026</string>
+    <string name="update_download_title">Downloading update\u2026</string>
 
 
     <string name="acra_dialog_text">I\'m sorry! That shouldn\'t have happened. The app crashed.

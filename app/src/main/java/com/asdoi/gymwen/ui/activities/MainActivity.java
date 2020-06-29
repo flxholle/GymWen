@@ -24,6 +24,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +49,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
@@ -608,7 +610,29 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 drawer.closeDrawer(GravityCompat.START);
                 return;
             case R.id.nav_mebis:
-                tabIntent(External_Const.mebis_Link);
+                boolean appAvailable = isAppAvailable(External_Const.mebis_packageName);
+                if (PreferenceUtil.showMebisDialog() && !appAvailable) {
+                    new MaterialDialog.Builder(requireContext())
+                            .title(R.string.download_mebis_app)
+                            .content(R.string.download_mebis_app_msg)
+                            .positiveText(R.string.yes)
+                            .onPositive((dialog, which) -> {
+                                if (!startApp(External_Const.mebis_packageName)) {
+                                    startDownload(External_Const.mebis_download_link, "Mebis App", requireContext().getString(R.string.download_mebis_app_title), Environment.DIRECTORY_DOWNLOADS, "mebis.apk", new installApk("mebis.apk"));
+                                }
+                            })
+                            .negativeText(R.string.no)
+                            .onNegative((dialog, which) -> tabIntent(External_Const.mebis_Link))
+                            .neutralText(R.string.dont_show_again)
+                            .onNeutral((dialog, which) -> {
+                                PreferenceUtil.setShowMebisDialog(false);
+                                tabIntent(External_Const.mebis_Link);
+                            })
+                            .show();
+                } else if (appAvailable) {
+                    startApp(External_Const.mebis_packageName);
+                } else
+                    tabIntent(External_Const.mebis_Link);
                 return;
 //            case R.id.nav_backup:
 //                backup();
