@@ -99,21 +99,24 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
         try {
             if (getIntent() != null) {
+                String intentURL;
                 if (getIntent().hasExtra(LOADURL)) {
-                    String intentURL = getIntent().getStringExtra(LOADURL);
-                    if (intentURL == null) {
-                        Uri data = getIntent().getData();
-                        intentURL = Objects.requireNonNull(data).getHost() + data.getPath();
-                    }
-                    loadPage(intentURL);
-                    setIntent(null);
-                    return;
+                    intentURL = getIntent().getStringExtra(LOADURL);
                 } else if (getIntent().hasExtra(SEARCH)) {
                     search = true;
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.website_host, new WebsiteSearchFragment()).commit();
                     Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.action_search);
                     invalidateOptionsMenu();
+                    return;
+                } else {
+                    Uri data = getIntent().getData();
+                    intentURL = Objects.requireNonNull(data).getHost() + data.getPath();
+                }
+
+                if (intentURL != null) {
+                    loadPage(intentURL);
+                    setIntent(null);
                     return;
                 }
             }

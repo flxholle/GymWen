@@ -175,7 +175,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         try {
             return Jsoup.connect(url).get();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -260,7 +260,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                         .header("Authorization", "Basic " + encodedString)
                         .get();
 
-            } catch (IOException ignore) {
+            } catch (Exception ignore) {
                 if (PreferenceUtil.isOfflineMode()) {
                     SubstitutionPlanFeatures.reloadDocs();
                 }
