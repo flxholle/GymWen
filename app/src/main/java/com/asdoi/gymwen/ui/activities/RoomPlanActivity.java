@@ -227,6 +227,7 @@ public class RoomPlanActivity extends ActivityFeatures {
         rooms.add(new Room("232", new PointF(740, 530)));
         rooms.add(new Room("235", context.getString(R.string.biology), new PointF(630, 220)));
         rooms.add(new Room("236", context.getString(R.string.biology), new PointF(820, 270)));
+        rooms.add(new Room("237", context.getString(R.string.physics), new PointF(860, 290)));
         rooms.add(new Room("238", context.getString(R.string.physics), new PointF(910, 300)));
         rooms.add(new Room("240", context.getString(R.string.physics), new PointF(1080, 340)));
         rooms.add(new Room(context.getString(R.string.wc), 2, new PointF(260, 510)));

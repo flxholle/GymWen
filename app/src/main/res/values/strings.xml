@@ -698,6 +698,8 @@
 
     <!--    Mebis App-->
     <string name="download_mebis_app">Mebis App herunterladen</string>
-    <string name="download_mebis_app_msg">Verfollständigen…Mebis App herunterladen?</string>
-    <string name="download_mebis_app_title">Lädt mebis App herunter…</string>
+    <string name="download_mebis_app_msg">Vor Kurzem habe ich eine selbstprogrammierte separate Mebis-App veröffentlicht.
+        \nMithilfe dieser App soll der Umgang mit Mebis so einfach wie möglich gehalten werden.
+        \nMöchtest du die Mebis App herunterladen?</string>
+    <string name="download_mebis_app_title">Lädt Mebis App herunter…</string>
 </resources>
