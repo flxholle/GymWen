@@ -74,7 +74,7 @@ public abstract class External_Const {
 
     //Mebis App
     public static final String mebis_packageName = "com.asdoi.mebis";
-    public static final String mebis_download_link = "https://gitlab.com/asdoi/MebisApp/-/raw/mebis/app/release/app-release.apk";
+    public static final String mebis_download_link = "https://gitlab.com/asdoi/MebisApp/-/raw/mebis/app/release/mebis.apk";
 
     //SubstitutionPlan
     public static final String todayURL = "http://gym-wen.de/vp/heute.htm";
