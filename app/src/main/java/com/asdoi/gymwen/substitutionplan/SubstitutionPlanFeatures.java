@@ -38,7 +38,7 @@ import java.util.ArrayList;
  */
 public abstract class SubstitutionPlanFeatures {
     @NonNull
-    private static final SubstitutionPlan substitutionPlan = new SubstitutionPlan();
+    private static final SubstitutionPlan substitutionPlan = new SubstitutionPlan(false, "1A");
 
     public static void setContext(Context context) {
         SubstitutionPlan.setContext(context);
