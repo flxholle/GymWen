@@ -40,7 +40,6 @@
 
     <string-array name="shortcuts_array">
         <item>@string/shortcut_website</item>
-        <item>@string/shortcut_mebis</item>
         <item>@string/shortcut_mensa</item>
         <item>@string/shortcut_grades_management</item>
         <item>@string/shortcut_teacher_list</item>
@@ -48,6 +47,7 @@
         <item>@string/shortcut_room_plan</item>
         <item>@string/shortcut_room_plan_search</item>
         <item>@string/shortcut_navigation</item>
+        <item>@string/shortcut_mebis</item>
         <item>@string/shortcut_claxss</item>
         <item>@string/shortcut_forms</item>
         <item>@string/shortcut_newspaper</item>
@@ -58,7 +58,6 @@
 
     <string-array name="shortcuts_array_values">
         <item>website</item>
-        <item>mebis</item>
         <item>mensa</item>
         <item>grades_management</item>
         <item>teacherlist</item>
@@ -66,6 +65,7 @@
         <item>roomplan</item>
         <item>roomplan_search</item>
         <item>navigation</item>
+        <item>mebis</item>
         <item>claxss</item>
         <item>forms</item>
         <item>newspaper</item>
@@ -75,7 +75,7 @@
     </string-array>
 
     <string-array name="shortcuts_array_values_default">
-        <item>mebis</item>
+        <item>teacherlist</item>
         <item>mensa</item>
         <item>grades_management</item>
         <item>roomplan_search</item>
