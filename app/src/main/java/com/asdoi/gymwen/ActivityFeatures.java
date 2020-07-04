@@ -54,6 +54,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.biometric.BiometricPrompt;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -79,6 +80,7 @@ import com.pd.chocobar.ChocoBar;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.Executor;
 
 import de.cketti.library.changelog.ChangeLog;
 import info.isuru.sheriff.enums.SheriffPermission;
@@ -748,5 +750,49 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                 ChocoBar.builder().setActivity(this).setText(getString(R.string.no_navigation_app)).setDuration(ChocoBar.LENGTH_LONG).red().show();
             }
         }
+    }
+
+
+    //Unlock
+    public void checkLock() {
+        if (!PreferenceUtil.isBiometricUnlock() || !PreferenceUtil.isLocked())
+            return;
+
+        Executor executor = ContextCompat.getMainExecutor(this);
+        BiometricPrompt biometricPrompt = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode,
+                                              @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(requireContext(), getString(R.string.authentication_error) + errString, Toast.LENGTH_SHORT).show();
+                PreferenceUtil.setLocked(true);
+                finishAffinity();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(
+                    @NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                PreferenceUtil.setLocked(false);
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(requireContext(), R.string.authentication_failed, Toast.LENGTH_SHORT).show();
+                PreferenceUtil.setLocked(true);
+                finishAffinity();
+            }
+        });
+
+        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle(getString(R.string.biometric_login_title))
+                .setSubtitle(getString(R.string.biometric_login_message))
+//                .setNegativeButtonText("Use account password")
+                .setDeviceCredentialAllowed(true)
+                .build();
+
+
+        biometricPrompt.authenticate(promptInfo);
     }
 }

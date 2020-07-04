@@ -57,9 +57,15 @@
             android:entryValues="@array/shortcuts_array_values"
             android:key="shortcuts_array"
             android:summary="@string/set_desc_shortcuts"
-            android:title="Shortcuts"
+            android:title="@string/shortcuts"
             app:iconSpaceReserved="false"
             app:isPreferenceVisible="true" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="biometric"
+            android:summary="@string/biometric_unlock_description"
+            android:title="@string/biometric_unlock"
+            app:iconSpaceReserved="false" />
         <Preference
             android:key="show_more"
             android:title="@string/set_show_more"

@@ -613,4 +613,12 @@
     <string name="download_mebis_app_msg">Recently I have published a self-programmed separate Mebis app.
         \nWith the help of this app, the handling of Mebis should be kept as simple as possible.
         \nDo you want to download the Mebis app?</string>
+
+    <string name="authentication_error">Authentication error: </string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="biometric_unlock">Manual unlocking</string>
+    <string name="biometric_unlock_description">Unlock the app with your fingerprint or your device credentials.</string>
+    <string name="biometric_login_title">Unlock GymWen app</string>
+    <string name="biometric_login_message">Unlock using your device credentials</string>
+    <string name="shortcuts">Shortcuts</string>
 </resources>

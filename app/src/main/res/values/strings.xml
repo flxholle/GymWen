@@ -495,6 +495,7 @@
     <string name="selected_all_profiles">Alle Profile ausgewählt</string>
 
     <!-- Shortcuts -->
+    <string name="shortcuts">Shortcuts</string>
     <string name="shortcut_website">Website</string>
     <string name="shortcut_navigation">Navigation</string>
     <string name="shortcut_call_office">Sekretariat</string>
@@ -702,4 +703,12 @@
         \nMithilfe dieser App soll der Umgang mit Mebis so einfach wie möglich gehalten werden.
         \nMöchtest du die Mebis App herunterladen?</string>
     <string name="download_mebis_app_title">Lädt Mebis App herunter…</string>
+
+    <!--    Biometric unlock-->
+    <string name="authentication_error">Anmeldungsfehler: </string>
+    <string name="authentication_failed">Anmeldung fehlgeschlagen</string>
+    <string name="biometric_unlock">Manuell Entsperren</string>
+    <string name="biometric_unlock_description">Entsperre die App mit deinem Fingerabdruck oder deinen Handy-Anmeldedaten.</string>
+    <string name="biometric_login_title">Entsperren der GymWen App</string>
+    <string name="biometric_login_message">Entsperre mit deinen Handy-Anmeldedaten</string>
 </resources>

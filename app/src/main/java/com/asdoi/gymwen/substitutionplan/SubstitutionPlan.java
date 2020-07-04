@@ -53,9 +53,6 @@ public class SubstitutionPlan {
     private Document todayDoc;
     private Document tomorrowDoc;
 
-    SubstitutionPlan() {
-    }
-
     /**
      * @param hours   boolean if it should show the matching hours, like a 1 will be converted to 8:10
      * @param courses The class names, which the substiution plan should be searched for

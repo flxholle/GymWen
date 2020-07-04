@@ -116,6 +116,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
 
+        checkLock();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setToolbar(false);
@@ -804,6 +806,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         ApplicationFeatures.saveDocs();
         if (pressedBack) {
+            PreferenceUtil.setLocked(true);
             finishAffinity();
             pressedBack = false;
         } else {

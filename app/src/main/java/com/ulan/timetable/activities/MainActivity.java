@@ -90,6 +90,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkLock();
+
         setContentView(R.layout.timetable_activity_main);
         ProfileManagement.initProfiles();
 
@@ -369,6 +371,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            com.asdoi.gymwen.util.PreferenceUtil.setLocked(true);
             super.onBackPressed();
         }
     }

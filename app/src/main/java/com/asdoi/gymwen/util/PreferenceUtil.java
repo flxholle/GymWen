@@ -203,6 +203,19 @@ public class PreferenceUtil {
         PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putBoolean("mebis_dialog", value).apply();
     }
 
+    public static boolean isBiometricUnlock() {
+        return getBooleanSettings("biometric", false);
+    }
+
+    public static boolean isLocked() {
+        return getBooleanSettings("locked", true);
+    }
+
+    public static void setLocked(boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putBoolean("locked", value).apply();
+    }
+
+
     //SubstitutionPlan
     @NonNull
     public static String getUsername(@NonNull Context context) {
