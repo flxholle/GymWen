@@ -707,8 +707,8 @@
     <!--    Biometric unlock-->
     <string name="authentication_error">Anmeldungsfehler: </string>
     <string name="authentication_failed">Anmeldung fehlgeschlagen</string>
-    <string name="biometric_unlock">Manuell Entsperren</string>
-    <string name="biometric_unlock_description">Entsperre die App mit deinem Fingerabdruck oder deinen Handy-Anmeldedaten.</string>
+    <string name="biometric_unlock">App-Sperre</string>
+    <string name="biometric_unlock_description">Entsperre die App bei jedem Start mit deinem Fingerabdruck oder deinen Handy-Anmeldedaten.</string>
     <string name="biometric_login_title">Entsperren der GymWen App</string>
     <string name="biometric_login_message">Entsperre mit deinen Handy-Anmeldedaten</string>
 </resources>

@@ -36,7 +36,7 @@ class SubstitutionList(var entries: MutableList<SubstitutionEntry> = mutableList
         }
     }
 
-    constructor(notInternet: Boolean) : this() {
+    constructor(noInternet: Boolean) : this() {
         this.noInternet = true
     }
 

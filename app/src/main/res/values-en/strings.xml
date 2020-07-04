@@ -616,7 +616,7 @@
 
     <string name="authentication_error">Authentication error: </string>
     <string name="authentication_failed">Authentication failed</string>
-    <string name="biometric_unlock">Manual unlocking</string>
+    <string name="biometric_unlock">App lock</string>
     <string name="biometric_unlock_description">Unlock the app with your fingerprint or your device credentials.</string>
     <string name="biometric_login_title">Unlock GymWen app</string>
     <string name="biometric_login_message">Unlock using your device credentials</string>

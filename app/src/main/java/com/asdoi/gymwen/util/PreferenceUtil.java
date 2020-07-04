@@ -212,7 +212,7 @@ public class PreferenceUtil {
     }
 
     public static void setLocked(boolean value) {
-        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putBoolean("locked", value).apply();
+        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putBoolean("locked", value).commit();
     }
 
 
