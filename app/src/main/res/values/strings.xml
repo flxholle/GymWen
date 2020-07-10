@@ -29,7 +29,7 @@
     <string name="tomorrow">Morgen</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_website">Startseite</string>
-    <string name="menu_mebis">Mebis</string>
+    <string name="menu_mebis" translatable="false">Mebis</string>
     <string name="menu_mensa">Mensa (kitafino)</string>c
     <string name="menu_category_other">Diverses</string>
     <string name="menu_category_school">Gymnasium</string>
@@ -700,7 +700,7 @@
     <!--    Mebis App-->
     <string name="download_mebis_app">Mebis App herunterladen</string>
     <string name="download_mebis_app_msg">Vor Kurzem habe ich eine selbstprogrammierte separate Mebis-App veröffentlicht.
-        \nMithilfe dieser App soll der Umgang mit Mebis so einfach wie möglich gehalten werden.
+        \nSie soll durch eine automatische Anmeldung, Lesezeichenverwaltung, Gestensteuerung und einigen weiteren nützlichen Funktionen, den mobilen Umgang mit mebis erleichtern.
         \nMöchtest du die Mebis App herunterladen?</string>
     <string name="download_mebis_app_title">Lädt Mebis App herunter…</string>
 
