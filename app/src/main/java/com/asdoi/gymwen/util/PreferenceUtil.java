@@ -207,12 +207,12 @@ public class PreferenceUtil {
         return getBooleanSettings("biometric", false);
     }
 
-    public static boolean isLocked() {
-        return getBooleanSettings("locked", true);
+    public static int getUnlockedPid() {
+        return getIntSettings("unlocked_pid", 0);
     }
 
-    public static void setLocked(boolean value) {
-        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putBoolean("locked", value).commit();
+    public static void setUnlockedPid(int value) {
+        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putInt("unlocked_pid", value).commit();
     }
 
 

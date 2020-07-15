@@ -114,6 +114,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         setStatusbarColor();
         super.onCreate(savedInstanceState);
         MaterialDialogsUtil.updateMaterialDialogsThemeSingleton(this);
+        checkLock();
     }
 
     @Override
@@ -754,8 +755,8 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
 
     //Unlock
-    public void checkLock() {
-        if (!PreferenceUtil.isBiometricUnlock() || !PreferenceUtil.isLocked())
+    private void checkLock() {
+        if (!PreferenceUtil.isBiometricUnlock() || android.os.Process.myPid() == PreferenceUtil.getUnlockedPid())
             return;
 
         Executor executor = ContextCompat.getMainExecutor(this);
@@ -765,7 +766,6 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                                               @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
                 Toast.makeText(requireContext(), getString(R.string.authentication_error) + errString, Toast.LENGTH_SHORT).show();
-                PreferenceUtil.setLocked(true);
                 finishAffinity();
             }
 
@@ -773,14 +773,13 @@ public abstract class ActivityFeatures extends AppCompatActivity {
             public void onAuthenticationSucceeded(
                     @NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                PreferenceUtil.setLocked(false);
+                PreferenceUtil.setUnlockedPid(android.os.Process.myPid());
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
                 Toast.makeText(requireContext(), R.string.authentication_failed, Toast.LENGTH_SHORT).show();
-                PreferenceUtil.setLocked(true);
                 finishAffinity();
             }
         });
@@ -788,7 +787,6 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle(getString(R.string.biometric_login_title))
                 .setSubtitle(getString(R.string.biometric_login_message))
-//                .setNegativeButtonText("Use account password")
                 .setDeviceCredentialAllowed(true)
                 .build();
 

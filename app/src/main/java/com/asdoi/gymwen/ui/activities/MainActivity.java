@@ -116,8 +116,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
 
-        checkLock();
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setToolbar(false);
@@ -806,7 +804,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         }
         ApplicationFeatures.saveDocs();
         if (pressedBack) {
-            PreferenceUtil.setLocked(true);
+//            com.asdoi.gymwen.util.PreferenceUtil.setUnlockedPid(0);
             finishAffinity();
             pressedBack = false;
         } else {
