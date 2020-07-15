@@ -53,7 +53,7 @@ android {
     buildToolsVersion = '29.0.3'
 }
 
-def acraVersion = '5.5.1'
+def acraVersion = '5.6.2'
 dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
@@ -63,7 +63,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta7'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta8'
     implementation 'androidx.navigation:navigation-fragment:2.3.0'
     implementation 'androidx.navigation:navigation-ui:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -83,7 +83,7 @@ dependencies {
     implementation 'androidx.biometric:biometric:1.0.1'
 
     implementation 'saschpe.android:customtabs:3.0.2'
-    implementation "com.mikepenz:aboutlibraries:8.1.2"
+    implementation "com.mikepenz:aboutlibraries:8.3.0"
     implementation 'com.github.javiersantos:AppUpdater:2.7'
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation "ch.acra:acra-mail:$acraVersion"
