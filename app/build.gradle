@@ -70,7 +70,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.core:core:1.3.0'
+    implementation 'androidx.core:core:1.3.1'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -78,7 +78,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.core:core-ktx:1.3.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"
     implementation 'androidx.biometric:biometric:1.0.1'
 
@@ -109,12 +109,12 @@ dependencies {
     implementation 'com.github.ByteHamster:SearchPreference:-SNAPSHOT'
 
     //Timetable
-    implementation 'com.github.asdoi:ColorPickerDialog:a1d628430b'
-    implementation 'com.github.asdoi:SQLite2XL:88883cf56d'
+    implementation 'com.github.quwepiro:ColorPickerDialog:a1d628430b'
+    implementation 'com.github.quwepiro:SQLite2XL:88883cf56d'
     //noinspection NewerVersionAvailable,GradleDependency
     implementation 'org.apache.poi:poi:3.16'
-    implementation 'com.github.asdoi:TimetableUI:master-SNAPSHOT'
-    implementation 'com.github.asdoi:TimetableView:master-SNAPSHOT'
+    implementation 'com.github.quwepiro:TimetableUI:master-SNAPSHOT'
+    implementation 'com.github.quwepiro:TimetableView:master-SNAPSHOT'
 
     //Image Slider (see ColoRushFragment)
     //noinspection GradleDependency,NewerVersionAvailable
