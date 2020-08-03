@@ -17,38 +17,11 @@
   -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <androidx.preference.SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:icon="@drawable/ic_view_week_black_24dp"
-        android:key="sevendays"
-        android:summary="@string/sevendays_setting"
-        android:title="@string/seven_days_of_the_week" />
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:icon="@drawable/ic_rotate_90_degrees_ccw_black_24dp"
         android:key="two_weeks"
         android:title="@string/enable_even_odd_weeks" />
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:icon="@drawable/ic_access_time_black_24dp"
-        android:key="show_times"
-        android:summary="@string/show_times_instead_of_lessons_desc"
-        android:title="@string/show_times_instead_of_lessons" />
-
-    <SwitchPreferenceCompat
-        android:defaultValue="true"
-        android:icon="@drawable/ic_do_not_disturb_on_black_24dp"
-        android:key="automatic_do_not_disturb"
-        android:summary="@string/do_not_disturb_settings_desc"
-        android:title="@string/do_not_disturb_setting" />
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="do_not_disturb_turn_off"
-        android:summary="@string/do_not_disturb_turn_off_desc"
-        android:title="@string/do_not_disturb_turn_off" />
-
     <SwitchPreferenceCompat
         android:defaultValue="true"
         android:icon="@drawable/ic_slideshow_black_24dp"
@@ -67,17 +40,16 @@
 
     <SwitchPreferenceCompat
         android:defaultValue="true"
-        android:icon="@drawable/ic_assignment_late_black_24dp"
-        android:key="timetable_subs"
-        android:summary="@string/integrate_substitution_in_timetable_desc"
-        android:title="@string/integrate_substitution_in_timetable" />
+        android:icon="@drawable/ic_do_not_disturb_on_black_24dp"
+        android:key="automatic_do_not_disturb"
+        android:summary="@string/do_not_disturb_settings_desc"
+        android:title="@string/do_not_disturb_setting" />
 
-    <EditTextPreference
-        android:key="courses"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="@string/set_desc_courses"
-        android:title="@string/set_courses_title" />
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="do_not_disturb_turn_off"
+        android:summary="@string/do_not_disturb_turn_off_desc"
+        android:title="@string/do_not_disturb_turn_off" />
 
     <SwitchPreferenceCompat
         android:defaultValue="true"
@@ -85,17 +57,41 @@
         android:key="auto_fill"
         android:summary="@string/intelligent_auto_fill_desc"
         android:title="@string/intelligent_auto_fill" />
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_access_time_black_24dp"
+        android:key="show_times"
+        android:summary="@string/show_times_instead_of_lessons_desc"
+        android:title="@string/show_times_instead_of_lessons" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_view_week_black_24dp"
+        android:key="sevendays"
+        android:summary="@string/sevendays_setting"
+        android:title="@string/seven_days_of_the_week" />
 
     <SwitchPreferenceCompat
         android:defaultValue="true"
         android:icon="@drawable/ic_baseline_view_list_24"
         android:key="is_preselection"
         android:title="@string/show_preselection_list" />
-
     <Preference
         android:key="preselection_elements"
         android:title="@string/set_preselection_elements" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_assignment_late_black_24dp"
+        android:key="timetable_subs"
+        android:summary="@string/integrate_substitution_in_timetable_desc"
+        android:title="@string/integrate_substitution_in_timetable" />
+    <EditTextPreference
+        android:key="courses"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/set_desc_courses"
+        android:title="@string/set_courses_title" />
 
     <Preference
         android:icon="@drawable/ic_open_in_browser_white_24dp"

@@ -578,7 +578,7 @@
     <string name="confirm">Confirm</string>
 
     <string name="lesson">lesson</string>
-    <string name="show_times_instead_of_lessons">Show times of lessons</string>
+    <string name="show_times_instead_of_lessons">Show times instead of lessons</string>
     <string name="show_times_instead_of_lessons_desc">Show the times instead of the lessons number, e.g. 8:00 instead of 1</string>
 
     <string name="select">Select</string>
@@ -621,4 +621,5 @@
     <string name="biometric_login_title">Unlock GymWen app</string>
     <string name="biometric_login_message">Unlock using your device credentials</string>
     <string name="shortcuts">Shortcuts</string>
+    <string name="set_general_category">General</string>
 </resources>

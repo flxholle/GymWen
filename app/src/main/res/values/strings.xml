@@ -113,6 +113,7 @@
     <string name="set_show_summary_usual_title">Alle Profile in der zusammenfassenden Benachrichtigung anzeigen</string>
     <string name="set_main_notif_for_all_title">Die prägnante Benachrichtigung für alle Profile senden</string>
     <string name="set_show_more">Mehr anzeigen</string>
+    <string name="set_general_category">Allgemein</string>
 
 
     <!-- SubstitutionPlan -->
