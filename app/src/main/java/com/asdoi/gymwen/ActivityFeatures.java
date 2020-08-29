@@ -19,6 +19,7 @@
 package com.asdoi.gymwen;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -31,6 +32,7 @@ import android.graphics.BlendMode;
 import android.graphics.BlendModeColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -182,13 +184,25 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
     //Changelog
     protected void showChangelog(boolean checkFirstRun) {
-        ChangeLog cl = new ChangeLog(this);
+        int backgroundColor = ApplicationFeatures.getBackgroundColor(requireContext());
+        String css = ChangeLog.DEFAULT_CSS;
+        css += "body { "
+                + "color: " + ApplicationFeatures.colorToHex(ApplicationFeatures.getTextColorPrimary(requireContext())) + "; "
+                + "background-color: " + ApplicationFeatures.colorToHex(backgroundColor) + ";" +
+                "}";
+        ChangeLog cl = new ChangeLog(this, css);
+        AlertDialog dialog = null;
         try {
             if (checkFirstRun) {
                 if (cl.isFirstRun())
-                    cl.getLogDialog().show();
+                    dialog = cl.getLogDialog();
             } else {
-                cl.getFullLogDialog().show();
+                dialog = cl.getFullLogDialog();
+            }
+
+            if (dialog != null) {
+                dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(backgroundColor));
             }
         } catch (Exception ignore) {
         }

@@ -774,6 +774,13 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
     }
 
+    public static String colorToHex(int color) {
+        return "#"
+                + Integer.toHexString(Color.red(color))
+                + Integer.toHexString(Color.green(color))
+                + Integer.toHexString(Color.blue(color));
+    }
+
 
     //Backup, Export, Import
     public static void exportBackup(@NonNull Context context) {
