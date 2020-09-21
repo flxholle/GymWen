@@ -306,10 +306,10 @@ class SubstitutionEntry(var course: String, var hour: String, var subject: Strin
     }
 }
 
-class SubstitutionTitle(var date: String = "", var dayOfWeek: String = "", var week: String = "", var titleCode: Int = -1) {
+class SubstitutionTitle(var date: String, var dayOfWeek: String, var week: String, var titleCode: Int = -1) {
     private var noInternet: Boolean = false
 
-    constructor(noInternet: Boolean) : this() {
+    constructor(noInternet: Boolean) : this("", "", "") {
         this.noInternet = true
     }
 

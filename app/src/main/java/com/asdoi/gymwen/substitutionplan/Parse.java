@@ -22,17 +22,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Class that parses the substitution plan, it gets information like title and entries
@@ -43,242 +40,68 @@ abstract class Parse {
     //Internal parse methods
 
     /**
-     * @param doc raw HTML-Document (Jsoup), which will be analyzed
-     * @return an array with all information of the title of the substitution plan, with the length 3!
-     * @see SubstitutionPlan where it will be sorted in method getTitleArray()
-     */
-    @NonNull
-    private static String[] getTitleArrayUnsorted(@Nullable Document doc) {
-
-        if (doc == null) {
-//            System.out.println("Authentication failed! at getting Title");
-            return new String[]{""};
-        }
-
-        try {
-            Elements values = doc.select("h2");
-            String[] matches = new String[values.size()];
-
-            for (int i = 0; i < values.size(); i++) {
-                Element elem = values.get(i);
-                matches[i] = elem.text();
-            }
-
-            String title;
-            if (matches.length > 1) {
-                return new String[]{""};
-            } else {
-                title = matches[0];
-            }
-
-            //Analyze String
-            title = title.replaceAll("Substitutionplan für ", "");
-
-            return title.split(",");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new String[]{""};
-        }
-    }
-
-    /**
-     * @param doc raw HTML-Document (Jsoup), which will be analyzed
-     * @return an unsorted String with all the analyzed information separated by " "
-     * @see #getTitleArrayUnsorted
-     */
-    @Nullable
-    private static String getTitleAsStringUnsorted(Document doc) {
-        try {
-            String[] dayTitle = Parse.getTitleArrayUnsorted(doc);
-            StringBuilder returnValue = new StringBuilder();
-            for (String s : dayTitle) {
-                returnValue.append(s).append(" ");
-            }
-            if ((returnValue.length() == 0) || returnValue.toString().replace(" ", "").isEmpty())
-                return null;
-
-            return returnValue.substring(0, returnValue.length() - 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * @param doc           raw HTML-Document (Jsoup), which will be analyzed
-     * @param showWeekdates boolean: if the specific day should also be shown, if the date is in the past
-     * @param today         The name of today in the specific language
-     * @param tomorrow      The name of tomorrow in the specific language
-     * @param laterDay      The name of "day is in the past" in the specific language
+     * @param doc          raw HTML-Document (Jsoup), which will be analyzed
+     * @param showWeekdays boolean: if the specific day should also be shown, if the date is in the past
+     * @param today        The name of today in the specific language
+     * @param tomorrow     The name of tomorrow in the specific language
+     * @param laterDay     The name of "day is in the past" in the specific language
      * @return an sorted Array of all title information, with the length 3. Like this: new String[]{Date, DateName (Weekday), WeekNr}
-     * @see #getTitleArrayUnsorted
      */
     //Date, DateName, WeekNr
     @NonNull
-    private static SubstitutionTitle getTitleWithoutCode(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay) {
+    public static SubstitutionTitle getTitle(Document doc, boolean showWeekdays, String today, String tomorrow, String laterDay, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
         try {
-            SubstitutionTitle day = new SubstitutionTitle();
+            String title = doc.select("h2.TextUeberschrift").get(0).text();
+            String[] titleElements = title.replace("Vertretungsplan für ", "").replace("(", ",").split(",");
 
-            String dayString = getTitleAsStringUnsorted(doc);
-            if (dayString == null) {
-                return new SubstitutionTitle(true);
-            }
-            char[] dayArray = dayString.toCharArray();
+            String dateString = titleElements[1].trim();
 
-            //Date
-            int start = -1, end = -1;
+            SimpleDateFormat parser = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+            Date startDate = parser.parse(dateString);
 
-            for (int i = 0; i < dayArray.length; i++) {
-                if (Character.isDigit(dayArray[i])) {
-                    start = i;
-                    break;
-                }
-            }
-            if (start < 0 || start == dayArray.length - 1)
-                return new SubstitutionTitle(true);
+            SimpleDateFormat localeFormat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
+            String dayOfWeek = localeFormat.format(startDate);
 
-            for (int i = start + 1; i < dayArray.length; i++) {
-                if (!Character.isDigit(dayArray[i]) && dayArray[i] != '.') {
-                    end = i;
-                    break;
-                }
-            }
+            char weekChar = titleElements[2].trim().replace(")", "").replace("Woche", "").charAt(0);
 
-            day.setDate(dayString.substring(start, end));
 
+            SubstitutionTitle day = new SubstitutionTitle(dateString, dayOfWeek, "" + weekChar, -1);
 
             //Weekday
-            try {
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-                SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.getDefault()); // the dayArray of the week spelled out completely
+            Date currentDate = removeTime(new Date());
 
-                Date startDate = removeTime(Objects.requireNonNull(df.parse(day.getDate())));
+            if (currentDate.after(startDate)) {
+                //If date is in past
+                day.setDayOfWeek(showWeekdays ? day.getDayOfWeek() + " " + laterDay : laterDay);
+                day.setTitleCode(pastCode);
+            } else if (currentDate.equals(startDate)) {
+                //If date is today
+                day.setDayOfWeek(showWeekdays ? day.getDayOfWeek() + " (" + today + ")" : today);
+                day.setTitleCode(todayCode);
+            } else {
+                //If date is tomorrow
+                //Set current date to one day in the future
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
 
-                day.setDayOfWeek(simpleDateformat.format(startDate));
-                Date currentDate = removeTime(new Date());
-
-                if (currentDate.after(startDate)) {
-                    //If date is in past
-//                    return new String[]{day[0], showWeekdates ? day[1] + " " + laterDay : laterDay};
-                    day.setDayOfWeek(showWeekdates ? day.getDayOfWeek() + " " + laterDay : laterDay);
-                } else if (currentDate.equals(startDate)) {
-                    //If date is today
-                    day.setDayOfWeek(showWeekdates ? day.getDayOfWeek() + " (" + today + ")" : today);
-                } else {
-                    //If date is tomorrow
-                    //Set current date to one day in the future
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.HOUR_OF_DAY, 0);
-                    cal.set(Calendar.MINUTE, 0);
-                    cal.set(Calendar.SECOND, 0);
-                    cal.set(Calendar.MILLISECOND, 0);
-                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
-
-                    //Check if currentdate equals date -> Tomorrow
-                    currentDate = cal.getTime();
-                    if (currentDate.equals(startDate)) {
-                        day.setDayOfWeek(showWeekdates ? day.getDayOfWeek() + " (" + tomorrow + ")" : tomorrow);
-                    }
-                }
-
-            } catch (ParseException e) {
-                day.setDayOfWeek(dayString.substring(0, start - 1));
-            }
-
-
-            //Week Number
-            if (end == dayArray.length - 1)
-                return day;
-
-            try {
-                start = dayString.indexOf("Woche") + "Woche".length();
-            } catch (
-                    Exception e) {
-                for (int i = end + 1; i < dayArray.length; i++) {
-                    if (Character.isLetter(dayArray[i])) {
-                        start = i;
-                        break;
-                    }
+                //Check if currentdate equals date -> Tomorrow
+                currentDate = cal.getTime();
+                if (currentDate.equals(startDate)) {
+                    day.setDayOfWeek(showWeekdays ? day.getDayOfWeek() + " (" + tomorrow + ")" : tomorrow);
+                    day.setTitleCode(tomorrowCode);
                 }
             }
 
-            if (start < 0 || start == dayArray.length - 1)
-                return day;
-
-
-            try {
-                end = start + 1;
-                day.setWeek(dayString.substring(start, end));
-            } catch (
-                    Exception e) {
-                end = -1;
-                for (int i = start + 1; i < dayArray.length; i++) {
-                    if (!Character.isLetter(dayArray[i])) {
-                        end = i;
-                        break;
-                    }
-                }
-                day.setWeek(dayString.substring(start, end));
-            }
 
             return day;
         } catch (Exception e) {
             e.printStackTrace();
             return new SubstitutionTitle(true);
         }
-    }
-
-
-    //Methods that should be used
-    @NonNull
-    static SubstitutionTitle getTitle(Document doc, boolean showWeekdates, String today, String tomorrow, String laterDay, int pastCode, int todayCode, int tomorrowCode, int futureCode) {
-        SubstitutionTitle day = getTitleWithoutCode(doc, showWeekdates, today, tomorrow, laterDay);
-        try {
-            //Weekday
-            try {
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-                Date startDate = removeTime(Objects.requireNonNull(df.parse(day.getDate())));
-
-                Date currentDate = removeTime(new Date());
-
-                if (currentDate.after(startDate)) {
-                    //If date is in past
-//                    return new String[]{day[0], showWeekdates ? day[1] + " " + laterDay : laterDay};
-                    day.setTitleCode(pastCode);
-                    return day;
-                } else if (currentDate.equals(startDate)) {
-                    //If date is today
-                    day.setTitleCode(todayCode);
-                    return day;
-                } else {
-                    //If date is tomorrow
-                    //Set current date to one day in the future
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.HOUR_OF_DAY, 0);
-                    cal.set(Calendar.MINUTE, 0);
-                    cal.set(Calendar.SECOND, 0);
-                    cal.set(Calendar.MILLISECOND, 0);
-                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
-
-                    //Check if currentdate equals date -> Tomorrow
-                    currentDate = cal.getTime();
-                    if (currentDate.equals(startDate)) {
-                        day.setTitleCode(tomorrowCode);
-                        return day;
-                    }
-                }
-
-            } catch (ParseException e) {
-                day.setTitleCode(futureCode);
-                return day;
-            }
-            day.setTitleCode(futureCode);
-        } catch (Exception e) {
-            e.printStackTrace();
-            day.setTitleCode(pastCode);
-            return day;
-        }
-        return day;
     }
 
     /**
@@ -306,59 +129,47 @@ abstract class Parse {
     //All
     @NonNull
     static SubstitutionList getSubstitutionListUnfiltered(@Nullable Document doc) {
-
         if (doc == null) {
             System.out.println("Document is null");
             return new SubstitutionList(true);
         }
 
-        Elements values = doc.select("tr");
-        int columnNr = 6;
+        Elements rows = doc.select("table.TabelleVertretungen tr");
 
-        String[] docContent = new String[values.size()];
-        for (int i = 0; i < values.size(); i++) {
-            docContent[i] = "" + values.get(i);
+        SubstitutionList entries = new SubstitutionList();
+        int courseIndex, hourIndex, subjectIndex, teacherIndex, roomIndex, moreInformationIndex;
+        List<String> headline = rows.get(0).select("td").eachText();
+        for (int i = 0; i < headline.size(); i++) {
+            headline.set(i, headline.get(i).trim());
+        }
+        courseIndex = headline.indexOf("Klasse");
+        hourIndex = headline.indexOf("Stunde");
+        subjectIndex = headline.indexOf("Fach");
+        teacherIndex = headline.indexOf("Vertretung");
+        roomIndex = headline.indexOf("Raum");
+        moreInformationIndex = headline.indexOf("Sonstiges");
+
+        for (int i = 1; i < rows.size(); i++) {
+            Elements content = rows.get(i).select("td");
+            String course = courseIndex >= 0 ? content.get(courseIndex).text().trim() : "";
+            String hour = hourIndex >= 0 ? content.get(hourIndex).text().trim() : "";
+            String subject = subjectIndex >= 0 ? content.get(subjectIndex).text().trim() : "";
+            String teacher = teacherIndex >= 0 ? content.get(teacherIndex).text().trim() : "";
+            String room = roomIndex >= 0 ? content.get(roomIndex).text().trim() : "";
+            String moreInformation = moreInformationIndex >= 0 ? content.get(moreInformationIndex).text() : "";
+            entries.add(
+                    new SubstitutionEntry(
+                            course,
+                            hour,
+                            subject,
+                            teacher,
+                            room,
+                            moreInformation
+                    )
+            );
         }
 
-        String[][] line = new String[docContent.length - 2][20];
-        for (int i = 2; i < line.length + 2; i++) {
-            int indexBegin = 0;
-            int indexEnd = 2;
-
-            for (int j = 0; true; j++) {
-                line[i - 2][j] = "";
-                indexBegin = docContent[i].indexOf(">", indexBegin + 1);
-                indexEnd = docContent[i].indexOf("<", indexEnd + 1);
-                if (indexBegin > indexEnd) {
-                    break;
-                }
-                line[i - 2][j] = docContent[i].substring(indexBegin + 1, indexEnd);
-
-            }
-            line[i - 2] = removeValues(line[i - 2], columnNr);
-        }
-
-
-        //Analyze String
-        String[][] content = new String[line.length][columnNr];
-
-        for (int i = 0; i < content.length; i++) {
-            for (int j = 0; j < content[0].length; j++) {
-                if (line[i][j] == null) {
-                    content[i][j] = "";
-                } else {
-                    content[i][j] = line[i][j];
-                }
-            }
-        }
-
-        SubstitutionList substitutionList = new SubstitutionList();
-        for (String[] con : content) {
-            SubstitutionEntry entry = new SubstitutionEntry(con[0], con[1], con[2], con[3], con[4], con[5]);
-            substitutionList.add(entry);
-        }
-
-        return substitutionList;
+        return entries;
     }
 
     /**
@@ -375,131 +186,35 @@ abstract class Parse {
             return new SubstitutionList(true);
         }
 
-        Elements values = doc.select("tr");
+        SubstitutionList oldList = getSubstitutionListUnfiltered(doc);
+        List<SubstitutionEntry> list;
+        if (senior)
+            list = filterCourses(classNames, oldList);
+        else
+            list = filterClass(classNames.get(0), oldList);
 
-        String[] docContent = new String[values.size()];
-        for (int i = 0; i < values.size(); i++) {
-            docContent[i] = "" + values.get(i);
-        }
-
-        int columNr = 6;
-
-        String[][] line = new String[docContent.length - 2][20];
-        for (int i = 2; i < line.length + 2; i++) {
-//            Element elem = values.get(i);
-//            System.out.println(elem.text());
-            int indexBegin = 0;
-            int indexEnd = 2;
-            for (int j = 0; true; j++) {
-                line[i - 2][j] = "";
-
-//                System.out.println(docContent[i].indexOf(">", indexBegin) + 1);
-//                System.out.println(docContent[i].indexOf("<", indexEnd));
-                indexBegin = docContent[i].indexOf(">", indexBegin + 1);
-                indexEnd = docContent[i].indexOf("<", indexEnd + 1);
-                if (indexBegin > indexEnd) {
-                    break;
-                }
-                line[i - 2][j] = docContent[i].substring(indexBegin + 1, indexEnd);
-//                System.out.println(line[i - 2][j]);
-
-            }
-            line[i - 2] = removeValues(line[i - 2], columNr);
-        }
-
-        for (int i = 0; i < line.length; i++) {
-            line[i][0] = line[i][0].trim();
-        }
-
-        //Analyze String
-
-        String[][] content = new String[line.length][columNr];
-
-        for (int i = 0; i < content.length; i++) {
-            for (int j = 0; j < content[0].length; j++) {
-                if (line[i][j] == null) {
-                    content[i][j] = "";
-                } else {
-                    content[i][j] = line[i][j];
-                }
-            }
-        }
-
-
-        String[][] yourContent = new String[line.length][columNr];
-        int j = 0;
-        for (String[] strings : content) {
-            if (senior) {
-                if (classNames.contains("" + strings[0].trim())) {
-                    yourContent[j] = strings;
-                    j++;
-                }
-            } else if (strings[0].length() > 1) {
-                //For courses like 10c
-                //System.out.println(content[i][0].charAt(1));
-                if (!Character.isLetter(strings[0].charAt(1))) {
-                    if (classNames.contains("" + strings[0].charAt(0) + strings[0].charAt(1))) {
-                        for (int z = 2; z < strings[0].length(); z++) {
-                            if (classNames.contains("" + strings[0].charAt(z))) {
-                                yourContent[j] = strings;
-                                j++;
-                                break;
-                            }
-                        }
-                    }
-                }
-                //For courses like 9b
-                else {
-                    if (classNames.contains("" + strings[0].charAt(0))) {
-                        for (int z = 1; z < strings[0].length(); z++) {
-                            if (classNames.contains("" + strings[0].charAt(z))) {
-                                yourContent[j] = strings;
-                                j++;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (j == 0) {
-            return new SubstitutionList();
-        }
-
-        String[][] trimmedContent = new String[j][columNr];
-        System.arraycopy(yourContent, 0, trimmedContent, 0, j);
-
-        SubstitutionList substitutionList = new SubstitutionList();
-        for (String[] con : trimmedContent) {
-            SubstitutionEntry entry = new SubstitutionEntry(con[0], con[1], con[2], con[3], con[4], con[5]);
-            substitutionList.add(entry);
-        }
-
-        return substitutionList;
+        return new SubstitutionList(list);
     }
 
-    /**
-     * @param array  String array form which the values after the given length should be deleted
-     * @param length the length the returned array should have
-     * @return array with all entries after the length parameter deleted
-     */
-    @NonNull
-    private static String[] removeValues(@NonNull String[] array, int length) {
-        int multplier = 2;
-        String[] returnValue = new String[length];
-        int j = 0;
-        //remove every second value
-        for (int i = 1; i < array.length; i += multplier) {
-            returnValue[j] = array[i];
-            if (j == returnValue.length - 1) {
-                break;
-            } else {
-                j++;
-            }
+    private static List<SubstitutionEntry> filterClass(String className, SubstitutionList list) {
+        List<SubstitutionEntry> newList = new ArrayList<>();
+        String classLetter = "" + className.charAt(className.length() - 1);
+        String classNumber = className.substring(0, className.length() - 1);
+        for (int i = 0; i < list.size(); i++) {
+            String entryCourse = list.getEntries().get(i).getCourse();
+            if (entryCourse.contains(classLetter) && entryCourse.contains(classNumber))
+                newList.add(list.getEntries().get(i));
         }
+        return newList;
+    }
 
-        return returnValue;
+    private static List<SubstitutionEntry> filterCourses(List<String> courses, SubstitutionList list) {
+        List<SubstitutionEntry> newList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (courses.contains(list.getEntries().get(i).getCourse()))
+                newList.add(list.getEntries().get(i));
+        }
+        return newList;
     }
 }
 

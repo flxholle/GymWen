@@ -70,7 +70,7 @@ public class SubstitutionPlan {
      */
     public void reCreate(boolean hours, @NonNull String... courses) {
         this.senior = courses.length > 1;
-        this.courses = generateCourseList(courses);
+        this.courses = new ArrayList<>(Arrays.asList(courses));
         this.hours = hours;
     }
 
@@ -320,42 +320,6 @@ public class SubstitutionPlan {
     @Nullable
     public ArrayList<String> getCourses() {
         return courses;
-    }
-
-    @Nullable
-    private static ArrayList<String> generateCourseList(@NonNull String... courses) {
-        if (courses.length == 1) {
-            return generateClassCodes(courses[0]);
-        }
-        return generateSeniorCodes(courses);
-    }
-
-    @NonNull
-    private static ArrayList<String> generateSeniorCodes(@NonNull String[] courseNames) {
-        ArrayList<String> returnValue = new ArrayList<>(Arrays.asList(courseNames));
-
-        return returnValue;
-    }
-
-    @Nullable
-    private static ArrayList<String> generateClassCodes(@NonNull String className) {
-//        if (className.length() > 3 || className.length() <= 1) {
-        if (className.length() <= 1) {
-            System.out.println("Wrong class format");
-            return null;
-        }
-
-        ArrayList<String> returnValue = new ArrayList<>();
-
-        if (className.length() > 2) {
-            returnValue.add(("" + className.charAt(0) + className.charAt(1)).trim());
-            returnValue.add(("" + className.charAt(2)).trim());
-        } else {
-            returnValue.add(("" + className.charAt(0)).trim());
-            returnValue.add(("" + className.charAt(1)).trim());
-        }
-
-        return returnValue;
     }
 
 
