@@ -152,7 +152,7 @@ abstract class Parse {
         for (int i = 1; i < rows.size(); i++) {
             Elements content = rows.get(i).select("td");
             String course = courseIndex >= 0 ? content.get(courseIndex).text().trim() : "";
-            String hour = hourIndex >= 0 ? content.get(hourIndex).text().trim() : "";
+            String hour = hourIndex >= 0 ? content.get(hourIndex).text().trim() : "0";
             String subject = subjectIndex >= 0 ? content.get(subjectIndex).text().trim() : "";
             String teacher = teacherIndex >= 0 ? content.get(teacherIndex).text().trim() : "";
             String room = roomIndex >= 0 ? content.get(roomIndex).text().trim() : "";

@@ -48,21 +48,7 @@ abstract class Parse {
 
             String[] lines = new String[values.size()];
             for (int i = 0; i < values.size(); i++) {
-                lines[i] = values.get(i).toString();
-            }
-
-            for (int i = 0; i < lines.length; i++) {
-                int indexBegin = 0;
-                int indexEnd = 2;
-                for (int j = 0; true; j++) {
-                    String value = values.get(i).toString();
-                    indexBegin = value.indexOf(">", indexBegin + 1);
-                    indexEnd = value.indexOf("<", indexEnd + 1);
-                    if (indexBegin > indexEnd) {
-                        break;
-                    }
-                    lines[i] = value.substring(indexBegin + 1, indexEnd);
-                }
+                lines[i] = values.get(i).text();
             }
 
             //Analyze String
