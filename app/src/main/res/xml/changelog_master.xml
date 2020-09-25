@@ -20,12 +20,13 @@
     <release
         version="1.2.2"
         versioncode="122">
+        <change>(Inoffizielle) Mebis App hinzugefügt</change>
         <change>Durchsuchbare Einstellungen</change>
         <change>Vorschlägeliste im Stundenplan editierbar</change>
         <change>Manuelle Entsperrung hinzugefügt</change>
         <change>Samsung DeX Kompatibilität</change>
         <change>Kleinere Design-Änderungen</change>
-        <change>Bugfixes</change>
+        <change>Großer Bugfix im Vertretungsplan</change>
     </release>
     <release
         version="1.2.1"
