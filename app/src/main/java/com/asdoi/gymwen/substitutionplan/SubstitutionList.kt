@@ -72,7 +72,6 @@ class SubstitutionList(
     }
 
     fun summarize(): SubstitutionList {
-        val separator = "-"
         val summarizedList = mutableListOf<SubstitutionEntry>()
 
         for (i in entries.indices) {

@@ -262,48 +262,50 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         WeekdayFragment thursdayFragment = new WeekdayFragment(WeekdayFragment.KEY_THURSDAY_FRAGMENT);
         WeekdayFragment fridayFragment = new WeekdayFragment(WeekdayFragment.KEY_FRIDAY_FRAGMENT);
 
-        DayOfWeek codeTod = DayOfWeek.MONDAY;
-        DayOfWeek codeTom = DayOfWeek.MONDAY;
-        if (substitutionPlan != null) {
+        DayOfWeek codeTod = null;
+        DayOfWeek codeTom = null;
+        if (substitutionPlan != null && substitutionPlan.areListsSet()) {
             codeTod = substitutionPlan.getTodayTitle().getDayOfWeek();
             codeTom = substitutionPlan.getTomorrowTitle().getDayOfWeek();
         }
 
-        switch (codeTod) {
-            case MONDAY:
-                mondayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_MONDAY_FRAGMENT);
-                break;
-            case TUESDAY:
-                tuesdayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_TUESDAY_FRAGMENT);
-                break;
-            case WEDNESDAY:
-                wednesdayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_WEDNESDAY_FRAGMENT);
-                break;
-            case THURSDAY:
-                thursdayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_THURSDAY_FRAGMENT);
-                break;
-            case FRIDAY:
-                fridayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_FRIDAY_FRAGMENT);
-                break;
-        }
+        if (codeTod != null)
+            switch (codeTod) {
+                case MONDAY:
+                    mondayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_MONDAY_FRAGMENT);
+                    break;
+                case TUESDAY:
+                    tuesdayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_TUESDAY_FRAGMENT);
+                    break;
+                case WEDNESDAY:
+                    wednesdayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_WEDNESDAY_FRAGMENT);
+                    break;
+                case THURSDAY:
+                    thursdayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_THURSDAY_FRAGMENT);
+                    break;
+                case FRIDAY:
+                    fridayFragment = new WeekdayFragment(substitutionPlan.getTodayFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_FRIDAY_FRAGMENT);
+                    break;
+            }
 
-        switch (codeTom) {
-            case MONDAY:
-                mondayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_MONDAY_FRAGMENT);
-                break;
-            case TUESDAY:
-                tuesdayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_TUESDAY_FRAGMENT);
-                break;
-            case WEDNESDAY:
-                wednesdayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_WEDNESDAY_FRAGMENT);
-                break;
-            case THURSDAY:
-                thursdayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_THURSDAY_FRAGMENT);
-                break;
-            case FRIDAY:
-                fridayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_FRIDAY_FRAGMENT);
-                break;
-        }
+        if (codeTom != null)
+            switch (codeTom) {
+                case MONDAY:
+                    mondayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_MONDAY_FRAGMENT);
+                    break;
+                case TUESDAY:
+                    tuesdayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_TUESDAY_FRAGMENT);
+                    break;
+                case WEDNESDAY:
+                    wednesdayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_WEDNESDAY_FRAGMENT);
+                    break;
+                case THURSDAY:
+                    thursdayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_THURSDAY_FRAGMENT);
+                    break;
+                case FRIDAY:
+                    fridayFragment = new WeekdayFragment(substitutionPlan.getTomorrowFilteredSummarized(), substitutionPlan.getSenior(), WeekdayFragment.KEY_FRIDAY_FRAGMENT);
+                    break;
+            }
 
         adapter.addFragment(mondayFragment, getResources().getString(R.string.monday));
         adapter.addFragment(tuesdayFragment, getResources().getString(R.string.tuesday));

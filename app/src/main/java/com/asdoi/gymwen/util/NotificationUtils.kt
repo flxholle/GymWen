@@ -302,18 +302,18 @@ class NotificationUtils {
                         for (index in 0 until content.size()) {
                             val line = content.getEntry(index)
                             if (line.isNothing()) {
-                                message.append(line.getStart()).append(". ").append(context.getString(R.string.share_msg_nothing_hour_senior)).append(" ").append(line.course).append("\n")
+                                message.append(line.getTime()).append(". ").append(context.getString(R.string.share_msg_nothing_hour_senior)).append(" ").append(line.course).append("\n")
                             } else {
-                                message.append(line.getStart()).append(". ").append(context.getString(R.string.share_msg_hour_senior)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")
+                                message.append(line.getTime()).append(". ").append(context.getString(R.string.share_msg_hour_senior)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")
                             }
                         }
                     } else {
                         for (index in 0 until content.size()) {
                             val line = content.getEntry(index)
                             if (line.isNothing()) {
-                                message.append(line.getStart()).append(". ").append(context.getString(R.string.share_msg_nothing_hour)).append("\n")
+                                message.append(line.getTime()).append(". ").append(context.getString(R.string.share_msg_nothing_hour)).append("\n")
                             } else {
-                                message.append(line.getStart()).append(". ").append(context.getString(R.string.share_msg_hour)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")
+                                message.append(line.getTime()).append(". ").append(context.getString(R.string.share_msg_hour)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")
                             }
                         }
                     }
@@ -355,11 +355,11 @@ class NotificationUtils {
                     else
                         ContextCompat.getColor(context, R.color.notification_icon_text_substitution)
 
-                    var textSize = context.resources.getInteger(R.integer.notification_max_text_size) - context.resources.getInteger(R.integer.notification_text_size_substitution_factor) * entry.getStart().length
+                    var textSize = context.resources.getInteger(R.integer.notification_max_text_size) - context.resources.getInteger(R.integer.notification_text_size_substitution_factor) * entry.getTime().length
                     if (textSize < context.resources.getInteger(R.integer.notification_min_text_size))
                         textSize = context.resources.getInteger(R.integer.notification_min_text_size)
 
-                    val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = entry.getStart(), textSize = textSize, textBold = true, color = color, textColor = textColor)
+                    val drawable = ShapeTextDrawable(ShapeForm.ROUND, radius = 10f, text = entry.getTime(), textSize = textSize, textBold = true, color = color, textColor = textColor)
                     val list = createMessage(entry)
                     val person = Person.Builder().setName(list[0]).setIcon(IconCompat.createWithBitmap(drawable.toBitmap(context.resources.getInteger(R.integer.notification_bitmap_size), context.resources.getInteger(R.integer.notification_bitmap_size)))).build()
                     val message = "${list[1]} ${if (profileName.trim().isNotEmpty() && j == 0) " ($profileName)"; else ""}"
@@ -426,9 +426,9 @@ class NotificationUtils {
             fun createMessage(entry: SubstitutionEntry): List<String> {
                 val context = ApplicationFeatures.getContext()
                 return if (entry.isNothing()) {
-                    listOf("${entry.getStart()}. ${context.getString(R.string.share_msg_nothing_hour)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
+                    listOf("${entry.getTime()}. ${context.getString(R.string.share_msg_nothing_hour)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
                 } else {
-                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} ${context.getString(R.string.with_teacher)} " else ""}${entry.teacher} ${context.getString(R.string.share_msg_in_room)} ${entry.room}", "${entry.getStart()}. ${context.getString(R.string.share_msg_hour)}${if (!entry.moreInformation.isBlank()) ", ${entry.moreInformation} " else " "} ${if (senior) "(${entry.course})"; else ""}")
+                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} ${context.getString(R.string.with_teacher)} " else ""}${entry.teacher} ${context.getString(R.string.share_msg_in_room)} ${entry.room}", "${entry.getTime()}. ${context.getString(R.string.share_msg_hour)}${if (!entry.moreInformation.isBlank()) ", ${entry.moreInformation} " else " "} ${if (senior) "(${entry.course})"; else ""}")
                 }
 
             }

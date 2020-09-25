@@ -130,7 +130,6 @@ public class DayAppWidgetService extends RemoteViewsService {
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.timetable_item_day_appwidget);
             Week week = content.get(position);
 
-//        String lessons = getLessons(content, mContext);
             if (week != null) {
                 String time;
                 if (PreferenceUtil.showTimes(mContext))

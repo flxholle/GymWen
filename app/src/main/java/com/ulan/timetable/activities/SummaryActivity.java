@@ -91,7 +91,7 @@ public class SummaryActivity extends ActivityFeatures {
 
                 DayOfWeek codeTod = null;
                 DayOfWeek codeTom = null;
-                if (substitutionPlan != null) {
+                if (substitutionPlan != null && substitutionPlan.getTodayTitle() != null) {
                     codeTod = substitutionPlan.getTodayTitle().getDayOfWeek();
                     codeTom = substitutionPlan.getTomorrowTitle().getDayOfWeek();
                 }

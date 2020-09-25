@@ -2,6 +2,7 @@ package com.asdoi.gymwen.substitutionplan
 
 import androidx.preference.PreferenceManager
 import com.asdoi.gymwen.ApplicationFeatures
+import com.asdoi.gymwen.util.PreferenceUtil
 import org.jsoup.Jsoup
 
 object MainSubstitutionPlan : SubstitutionPlan("1A") {
@@ -24,7 +25,7 @@ object MainSubstitutionPlan : SubstitutionPlan("1A") {
     }
 
     fun init() {
-        if (!areDocumentsSet())
+        if (!areDocumentsSet() && PreferenceUtil.isOfflineMode())
             reload()
     }
 

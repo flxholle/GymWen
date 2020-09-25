@@ -53,9 +53,11 @@ data class SubstitutionEntry(
 
     fun getEnd(time: Boolean): String = if (time) endTime.toString("HH:mm") else endLesson.toString()
 
-    fun getStart() = getStart(PreferenceUtil.isHour())
-
-    fun getEnd() = getEnd(PreferenceUtil.isHour())
+    fun getTime() =
+            if (startLesson == endLesson)
+                getStart(PreferenceUtil.isHour())
+            else
+                "${getStart(PreferenceUtil.isHour())}-${getEnd(PreferenceUtil.isHour())}"
 
     companion object {
         fun getStartLocalTimeOfLesson(lesson: Int): LocalTime {

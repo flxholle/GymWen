@@ -78,20 +78,23 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
     override fun onCreate() {
         contentList = mutableListOf()
 
-        var noInternet = false
+        var noInternet = !MainSubstitutionPlan.areListsSet()
         val summarize = PreferenceUtil.isSummarizeUp() && PreferenceUtil.isSummarizeOld()
 
         val todayEntryList = mutableListOf<EntryHelper>()
         val tomorrowEntryList = mutableListOf<EntryHelper>()
         var today = ""
         var tomorrow = ""
+        var showToday = true
+        var showTomorrow = false
 
-        var showToday = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.getTodayTitle()!!.isPast()
-        var showTomorrow = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.getTomorrowTitle()!!.isPast()
-        if (!showToday && !showTomorrow) {
-            if (MainSubstitutionPlan.getTodayTitle()!!.isToday()) showToday = true else showTomorrow = true
+        if (!noInternet) {
+            showToday = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.getTodayTitle()!!.isPast()
+            showTomorrow = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.getTomorrowTitle()!!.isPast()
+            if (!showToday && !showTomorrow) {
+                if (MainSubstitutionPlan.getTodayTitle()!!.isToday()) showToday = true else showTomorrow = true
+            }
         }
-
         for (p in profiles) {
             val tempSubstitutionplan = MainSubstitutionPlan.getInstance(p.coursesArray)
 
@@ -242,7 +245,7 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
 
     private fun getEntrySpecific(entry: SubstitutionEntry, senior: Boolean, miscellaneous: Boolean): RemoteViews {
         val view = getRemoteViews(context)
-        view.setTextViewText(R.id.substitution_specific_entry_textViewHour, entry.getStart())
+        view.setTextViewText(R.id.substitution_specific_entry_textViewHour, entry.getTime())
         view.setTextViewText(R.id.substitution_specific_entry_textViewSubject, if (senior) entry.course else entry.subject)
         if (!entry.isNothing()) {
             view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, entry.teacher)
