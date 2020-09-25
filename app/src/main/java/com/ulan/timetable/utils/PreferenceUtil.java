@@ -178,10 +178,11 @@ public class PreferenceUtil {
     }
 
     public static void setTermStart(@Nullable SubstitutionTitle today, @NonNull Context context) {
-        if (today != null && !today.getNoInternet()) {
+        if (today != null) {
             try {
-                Calendar todayCal = today.getDayAsCalendar();
-                if (!today.getWeek().equalsIgnoreCase("A"))
+                Calendar todayCal = Calendar.getInstance();
+                todayCal.setTime(today.getDate().toDate());
+                if (today.getWeek() != 'A')
                     todayCal.set(Calendar.WEEK_OF_YEAR, todayCal.get(Calendar.WEEK_OF_YEAR) - 1);
 
                 setTermStart(context, todayCal.get(Calendar.YEAR), todayCal.get(Calendar.MONTH), todayCal.get(Calendar.DAY_OF_MONTH));

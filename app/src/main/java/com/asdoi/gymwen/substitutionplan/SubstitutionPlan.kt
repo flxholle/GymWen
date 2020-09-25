@@ -33,11 +33,15 @@ open class SubstitutionPlan(courses: Array<String>) {
         this.tomorrowDocument = tomorrowDocument
     }
 
-    fun areDocumentsSet() = todayDocument == null && tomorrowDocument == null
+    protected fun areDocumentsSet() = todayDocument != null && tomorrowDocument != null
+
+    fun getDocuments(): Array<Document?> = arrayOf(todayDocument, tomorrowDocument)
 
     private fun parseList(document: Document): SubstitutionList? {
         return Parse.parseSubstitutionList(document)
     }
+
+    fun areListsSet() = todayList != null && tomorrowList != null
 
     open fun getDay(today: Boolean): SubstitutionList? {
         return if (today) {
@@ -54,13 +58,13 @@ open class SubstitutionPlan(courses: Array<String>) {
     fun getDayFilteredSummarized(today: Boolean) = getDayFiltered(today)?.summarize()
 
     fun isContentEqual(newDocument: Document): Boolean {
-        val newList = parseList(newDocument) ?: return false
+        val newList = parseList(newDocument)?.filter(courses) ?: return false
 
         return when (newList.title) {
-            getToday()?.title ->
-                getToday()?.isContentEqual(newList) ?: false
-            getTomorrow()?.title ->
-                getTomorrow()?.isContentEqual(newList) ?: false
+            getTodayFiltered()?.title ->
+                getTodayFiltered()?.isContentEqual(newList) ?: false
+            getTomorrowFiltered()?.title ->
+                getTomorrowFiltered()?.isContentEqual(newList) ?: false
             else ->
                 false
         }
@@ -79,6 +83,10 @@ open class SubstitutionPlan(courses: Array<String>) {
     fun getTodayFiltered() = getDayFiltered(true)
 
     fun getTomorrowFiltered() = getDayFiltered(false)
+
+    fun getTodayFilteredSummarized() = getTodayFiltered()?.summarize()
+
+    fun getTomorrowFilteredSummarized() = getTomorrowFiltered()?.summarize()
 
     fun getTodayTitle() = getToday()?.title
 

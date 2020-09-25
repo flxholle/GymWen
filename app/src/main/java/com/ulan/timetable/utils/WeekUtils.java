@@ -41,11 +41,11 @@ import java.util.Collections;
 
 public class WeekUtils {
     @NonNull
-    public static ArrayList<Week> compareSubstitutionAndWeeks(@NonNull Context context, @NonNull ArrayList<Week> weeks, @NonNull SubstitutionList entries, boolean senior, @NonNull DbHelper dbHelper) {
+    public static ArrayList<Week> compareSubstitutionAndWeeks(@NonNull Context context, @NonNull ArrayList<Week> weeks, SubstitutionList entries, boolean senior, @NonNull DbHelper dbHelper) {
         boolean empty = weeks.isEmpty();
-        if (!entries.getNoInternet()) {
-            for (int i = 0; i < entries.getEntries().size(); i++) {
-                SubstitutionEntry entry = entries.getEntries().get(i);
+        if (entries != null) {
+            for (int i = 0; i < entries.size(); i++) {
+                SubstitutionEntry entry = entries.getEntry(i);
                 int color = ContextCompat.getColor(context, entry.isNothing() ? R.color.notification_icon_background_omitted : R.color.notification_icon_background_substitution);
                 String subject = entry.getSubject();
                 if (subject.trim().isEmpty() && senior) {
@@ -54,11 +54,11 @@ public class WeekUtils {
 
                 String teacher = entry.getTeacher();
                 String room = entry.getRoom();
-                String begin = entry.getMatchingBeginTime("-");
+                String begin = entry.getStartTime().toString("HH:mm");
                 if (begin.length() < 5)
                     begin = "0" + begin;
 
-                String end = entry.getMatchingEndTime("-");
+                String end = entry.getEndTime().toString("HH:mm");
                 if (end.length() < 5)
                     end = "0" + end;
 
@@ -355,7 +355,7 @@ public class WeekUtils {
 
     @NonNull
     public static String getMatchingTimeBegin(int hour) {
-        String time = SubstitutionList.Companion.getMatchingStartTime(hour);
+        String time = SubstitutionEntry.Companion.getStartLocalTimeOfLesson(hour).toString("HH:mm");
         if (time.length() < 5)
             time = "0" + time;
         return time;
@@ -363,7 +363,7 @@ public class WeekUtils {
 
     @NonNull
     public static String getMatchingTimeEnd(int hour) {
-        String time = SubstitutionList.Companion.getMatchingEndTime(hour);
+        String time = SubstitutionEntry.Companion.getEndLocalTimeOfLesson(hour).toString("HH:mm");
         if (time.length() < 5)
             time = "0" + time;
         return time;

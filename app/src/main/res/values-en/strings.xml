@@ -75,7 +75,7 @@
     <string name="noInternet">You are not connected to the internet!</string>
     <string name="noInternetConnection">No Internet connection!</string>
     <string name="share_substitution_plan">Send representation to\u2026</string>
-    <string name="day_past">(Past)</string>
+    <string name="day_past">Past</string>
 
 
     <string name="classes">Grade</string>

@@ -41,9 +41,9 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
+import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.util.External_Const;
 import com.github.stephenvinouze.shapetextdrawable.ShapeForm;
 import com.github.stephenvinouze.shapetextdrawable.ShapeTextDrawable;
@@ -66,18 +66,18 @@ public class NotificationUtil {
         new Thread(() -> {
             ProfileManagement.initProfiles();
             ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
-            SubstitutionPlan substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).getCoursesArray());
+            SubstitutionPlan substitutionPlan = MainSubstitutionPlan.INSTANCE.getInstance(ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).getCoursesArray());
 
             SubstitutionList substitutionlist;
-            if (!substitutionPlan.getToday().getNoInternet()) {
-                if (substitutionPlan.getTodayTitle().isTitleCodeToday())
-                    substitutionlist = substitutionPlan.getTodaySummarized();
-                else if (substitutionPlan.getTomorrowTitle().isTitleCodeToday())
-                    substitutionlist = substitutionPlan.getTomorrowSummarized();
+            if (substitutionPlan.getTodayFiltered() != null) {
+                if (substitutionPlan.getTodayTitle().isToday())
+                    substitutionlist = substitutionPlan.getTodayFilteredSummarized();
+                else if (substitutionPlan.getTomorrowTitle().isToday())
+                    substitutionlist = substitutionPlan.getTomorrowFilteredSummarized();
                 else
-                    substitutionlist = new SubstitutionList(true);
+                    substitutionlist = null;
             } else
-                substitutionlist = new SubstitutionList(true);
+                substitutionlist = null;
 
             DbHelper db = new DbHelper(context);
             ArrayList<Week> unchangedWeeks = db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
@@ -102,18 +102,18 @@ public class NotificationUtil {
         new Thread(() -> {
             ProfileManagement.initProfiles();
             ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
-            SubstitutionPlan substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).getCoursesArray());
+            SubstitutionPlan substitutionPlan = MainSubstitutionPlan.INSTANCE.getInstance(ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).getCoursesArray());
 
             SubstitutionList substitutionlist;
-            if (!substitutionPlan.getToday().getNoInternet()) {
-                if (substitutionPlan.getTodayTitle().isTitleCodeToday())
-                    substitutionlist = substitutionPlan.getTodaySummarized();
-                else if (substitutionPlan.getTomorrowTitle().isTitleCodeToday())
-                    substitutionlist = substitutionPlan.getTomorrowSummarized();
+            if (substitutionPlan.getTodayFiltered() != null) {
+                if (substitutionPlan.getTodayTitle().isToday())
+                    substitutionlist = substitutionPlan.getTodayFilteredSummarized();
+                else if (substitutionPlan.getTomorrowTitle().isToday())
+                    substitutionlist = substitutionPlan.getTomorrowFilteredSummarized();
                 else
-                    substitutionlist = new SubstitutionList(true);
+                    substitutionlist = null;
             } else
-                substitutionlist = new SubstitutionList(true);
+                substitutionlist = null;
 
             DbHelper db = new DbHelper(context);
             ArrayList<Week> unchangedWeeks = db.getWeek(getCurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));

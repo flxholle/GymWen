@@ -1,6 +1,7 @@
 package com.asdoi.gymwen.substitutionplan
 
 import com.asdoi.gymwen.util.External_Const
+import com.asdoi.gymwen.util.PreferenceUtil
 import org.joda.time.LocalTime
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,6 +49,13 @@ data class SubstitutionEntry(
     fun isContentEqual(compareEntry: SubstitutionEntry) =
             course == compareEntry.course && subject == compareEntry.subject && teacher == compareEntry.teacher && room == compareEntry.room && moreInformation == compareEntry.moreInformation
 
+    fun getStart(time: Boolean): String = if (time) startTime.toString("HH:mm") else startLesson.toString()
+
+    fun getEnd(time: Boolean): String = if (time) endTime.toString("HH:mm") else endLesson.toString()
+
+    fun getStart() = getStart(PreferenceUtil.isHour())
+
+    fun getEnd() = getEnd(PreferenceUtil.isHour())
 
     companion object {
         fun getStartLocalTimeOfLesson(lesson: Int): LocalTime {
@@ -68,13 +76,18 @@ data class SubstitutionEntry(
                     //Breaks are excluded
                     ("" + (45 * lesson + 8 * 60 + 10) / 60).replace(",".toRegex(), ".")
             }
-
-            val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-            return LocalTime.fromDateFields(dateFormat.parse(time))
+            try {
+                val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+                return LocalTime.fromDateFields(dateFormat.parse(time))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return LocalTime.MIDNIGHT
         }
 
         fun getEndLocalTimeOfLesson(lesson: Int): LocalTime {
             val time = when (lesson) {
+                0 -> "00:00"
                 1 -> "08:55"
                 2 -> "09:40"
                 3 -> "10:40"
@@ -91,8 +104,13 @@ data class SubstitutionEntry(
                     ("" + (45 * (lesson + 1) + 8 * 60 + 10) / 60).replace(",".toRegex(), ".")
             }
 
-            val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-            return LocalTime.fromDateFields(dateFormat.parse(time))
+            try {
+                val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+                return LocalTime.fromDateFields(dateFormat.parse(time))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return LocalTime.MIDNIGHT
         }
     }
 }

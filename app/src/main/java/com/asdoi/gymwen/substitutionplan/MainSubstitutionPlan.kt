@@ -9,12 +9,14 @@ object MainSubstitutionPlan : SubstitutionPlan("1A") {
         this.courses = courses
     }
 
-    fun getInstance(): SubstitutionPlan {
+    fun getInstance(courses: Array<String>): SubstitutionPlan {
         init()
         val substitutionPlan = SubstitutionPlan(courses)
         substitutionPlan.setDocuments(todayDocument, tomorrowDocument)
         return substitutionPlan
     }
+
+    fun getInstance(): SubstitutionPlan = getInstance(courses)
 
     override fun getDay(today: Boolean): SubstitutionList? {
         init()

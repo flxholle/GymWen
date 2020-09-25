@@ -32,8 +32,9 @@ import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.substitutionplan.DayOfWeek;
+import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.github.tlaabs.timetableview.Schedule;
 import com.github.tlaabs.timetableview.Time;
 import com.github.tlaabs.timetableview.TimetableView;
@@ -83,22 +84,22 @@ public class SummaryActivity extends ActivityFeatures {
                 SubstitutionPlan substitutionPlan = null;
                 try {
                     int profilePos = DBUtil.getProfilePosition(this);
-                    substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(profilePos).getCoursesArray());
+                    substitutionPlan = MainSubstitutionPlan.INSTANCE.getInstance(ProfileManagement.getProfile(profilePos).getCoursesArray());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                int codeTod = -1;
-                int codeTom = -1;
+                DayOfWeek codeTod = null;
+                DayOfWeek codeTom = null;
                 if (substitutionPlan != null) {
-                    codeTod = substitutionPlan.getTodayTitle().getDayCode(1);
-                    codeTom = substitutionPlan.getTomorrowTitle().getDayCode(1);
+                    codeTod = substitutionPlan.getTodayTitle().getDayOfWeek();
+                    codeTom = substitutionPlan.getTomorrowTitle().getDayOfWeek();
                 }
-                if (codeTod > 0) {
-                    weeks.set(codeTod - 2, WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(codeTod - 2), substitutionPlan.getTodaySummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
+                if (codeTod != null) {
+                    weeks.set(getMatchingIndex(codeTod), WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(getMatchingIndex(codeTod)), substitutionPlan.getTodayFilteredSummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
                 }
-                if (codeTom > 0) {
-                    weeks.set(codeTom - 2, WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(codeTom - 2), substitutionPlan.getTomorrowSummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
+                if (codeTom != null) {
+                    weeks.set(getMatchingIndex(codeTod), WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(getMatchingIndex(codeTod)), substitutionPlan.getTomorrowFilteredSummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
                 }
             }
 
@@ -109,6 +110,34 @@ public class SummaryActivity extends ActivityFeatures {
                     setupTimetableLibrary2();
             });
         }).start();
+    }
+
+    private int getMatchingIndex(DayOfWeek dayOfWeek) {
+        int index = 0;
+        switch (dayOfWeek) {
+            case MONDAY:
+                index = 0;
+                break;
+            case TUESDAY:
+                index = 1;
+                break;
+            case WEDNESDAY:
+                index = 2;
+                break;
+            case THURSDAY:
+                index = 3;
+                break;
+            case FRIDAY:
+                index = 4;
+                break;
+            case SATURDAY:
+                index = 5;
+                break;
+            case SUNDAY:
+                index = 6;
+                break;
+        }
+        return index;
     }
 
     public void setupColors() {

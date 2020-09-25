@@ -31,10 +31,9 @@ import androidx.core.content.ContextCompat
 import com.asdoi.gymwen.R
 import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
+import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan
 import com.asdoi.gymwen.substitutionplan.SubstitutionEntry
 import com.asdoi.gymwen.substitutionplan.SubstitutionList
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlan
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
 import com.asdoi.gymwen.ui.activities.SubstitutionWidgetActivity
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment
 import com.asdoi.gymwen.util.PreferenceUtil
@@ -87,21 +86,21 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         var today = ""
         var tomorrow = ""
 
-        var showToday = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.getTodayTitle().isTitleCodeInPast()
-        var showTomorrow = !PreferenceUtil.isIntelligentHide() || !SubstitutionPlanFeatures.getTomorrowTitle().isTitleCodeInPast()
+        var showToday = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.getTodayTitle()!!.isPast()
+        var showTomorrow = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.getTomorrowTitle()!!.isPast()
         if (!showToday && !showTomorrow) {
-            if (SubstitutionPlanFeatures.getTodayTitle().titleCode == SubstitutionPlan.todayCode) showToday = true else showTomorrow = true
+            if (MainSubstitutionPlan.getTodayTitle()!!.isToday()) showToday = true else showTomorrow = true
         }
 
         for (p in profiles) {
-            val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.coursesArray)
+            val tempSubstitutionplan = MainSubstitutionPlan.getInstance(p.coursesArray)
 
             //Today
             if (showToday) {
-                today = tempSubstitutionplan.getTitleString(true)
-                var todayList = tempSubstitutionplan.today
-                if (summarize) todayList = tempSubstitutionplan.todaySummarized
-                if (todayList.getNoInternet()) {
+                today = tempSubstitutionplan.getTodayFormattedTitleString(context)
+                var todayList = tempSubstitutionplan.getTodayFiltered()
+                if (summarize) todayList = tempSubstitutionplan.getTodayFilteredSummarized()
+                if (todayList == null) {
                     noInternet = true
                     break
                 }
@@ -110,10 +109,10 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
 
             //Tomorrow
             if (showTomorrow) {
-                tomorrow = tempSubstitutionplan.getTitleString(false)
-                var tomorrowList = tempSubstitutionplan.tomorrow
-                if (summarize) tomorrowList = tempSubstitutionplan.tomorrowSummarized
-                if (tomorrowList.getNoInternet()) {
+                tomorrow = tempSubstitutionplan.getTomorrowFormattedTitleString(context)
+                var tomorrowList = tempSubstitutionplan.getTomorrowFiltered()
+                if (summarize) tomorrowList = tempSubstitutionplan.getTomorrowFilteredSummarized()
+                if (tomorrowList == null) {
                     noInternet = true
                     break
                 }
@@ -147,8 +146,8 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         else {
             miscellaneous = SubstitutionFragment.isMiscellaneous(dayList)
             entryList.add(EntryHelper(headline = generateHeadline(context, true, senior), code = headline, miscellaneous = miscellaneous, senior = senior))
-            for (entry in dayList.entries) {
-                entryList.add(EntryHelper(entry, content, miscellaneous))
+            for (i in 0 until dayList.size()) {
+                entryList.add(EntryHelper(dayList.getEntry(i), content, miscellaneous))
             }
         }
         return entryList
@@ -200,7 +199,7 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         onCreate()
     }
 
-    class EntryHelper(val entry: SubstitutionEntry = SubstitutionEntry("", "", "", "", "", ""), val code: Int = nothing, val miscellaneous: Boolean = false, val senior: Boolean = false, val title: String = "", val headline: Array<String> = arrayOf())
+    class EntryHelper(val entry: SubstitutionEntry = SubstitutionEntry("", 0, "", "", "", ""), val code: Int = nothing, val miscellaneous: Boolean = false, val senior: Boolean = false, val title: String = "", val headline: Array<String> = arrayOf())
 
 
     //View creators
@@ -243,7 +242,7 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
 
     private fun getEntrySpecific(entry: SubstitutionEntry, senior: Boolean, miscellaneous: Boolean): RemoteViews {
         val view = getRemoteViews(context)
-        view.setTextViewText(R.id.substitution_specific_entry_textViewHour, entry.hour)
+        view.setTextViewText(R.id.substitution_specific_entry_textViewHour, entry.getStart())
         view.setTextViewText(R.id.substitution_specific_entry_textViewSubject, if (senior) entry.course else entry.subject)
         if (!entry.isNothing()) {
             view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, entry.teacher)

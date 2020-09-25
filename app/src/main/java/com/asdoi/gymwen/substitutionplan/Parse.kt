@@ -22,6 +22,7 @@ object Parse {
 
             return SubstitutionTitle(LocalDate.fromDateFields(date), dayOfWeek, weekChar)
         } catch (e: Exception) {
+            e.printStackTrace()
             return null
         }
     }
@@ -62,6 +63,7 @@ object Parse {
 
             return substitutionList.sort()
         } catch (e: Exception) {
+            e.printStackTrace()
             return null
         }
     }

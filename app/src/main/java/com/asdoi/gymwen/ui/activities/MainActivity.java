@@ -57,7 +57,7 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.services.NotificationTileService;
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
+import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan;
 import com.asdoi.gymwen.ui.fragments.ColoRushFragment;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.util.External_Const;
@@ -131,8 +131,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         drawer.addDrawerListener(toggle);
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        SubstitutionPlanFeatures.setContext(this);
 
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), true, true, new String[]{getString(R.string.today), getString(R.string.tomorrow)});
         SubstitutionFragment.changedSectionsPagerAdapterTitles = false;
@@ -698,7 +696,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                    /* if (!openAppInStore(External_Const.notes_packageNames))
                         //Open Browser to Download
                         tabIntent(External_Const.downloadApp_notes);*/
-                    new TimeTableBuilder(ProfileManagement.loadPreferredProfilePosition(), SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(ApplicationFeatures.getSelectedProfilePosition()).getCoursesArray())).start(this, NotesActivity.class);
+                    new TimeTableBuilder(ProfileManagement.loadPreferredProfilePosition(), MainSubstitutionPlan.INSTANCE.getInstance(ProfileManagement.getProfile(ApplicationFeatures.getSelectedProfilePosition()).getCoursesArray())).start(this, NotesActivity.class);
                 }
                 return;
             case R.id.nav_timetable:
@@ -707,7 +705,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         //Open Browser to Download
                         tabIntent(External_Const.downloadApp_timetable);
                 }*/
-                new TimeTableBuilder(ApplicationFeatures.getSelectedProfilePosition(), SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(ApplicationFeatures.getSelectedProfilePosition()).getCoursesArray())).start(this);
+                new TimeTableBuilder(ApplicationFeatures.getSelectedProfilePosition(), MainSubstitutionPlan.INSTANCE.getInstance(ProfileManagement.getProfile(ApplicationFeatures.getSelectedProfilePosition()).getCoursesArray())).start(this);
                 return;
             case R.id.nav_grades:
                 checkGradesFile();

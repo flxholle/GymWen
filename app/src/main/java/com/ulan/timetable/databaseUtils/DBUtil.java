@@ -117,10 +117,10 @@ public class DBUtil {
             } else {
                 ProfileManagement.initProfiles();
 
-                SubstitutionPlan plan = new SubstitutionPlan(false, ProfileManagement.getProfile(pos).getCoursesArray());
-                plan.setDocs(Jsoup.parse(todayDoc), Jsoup.parse(tomorrowDoc));
+                SubstitutionPlan plan = new SubstitutionPlan(ProfileManagement.getProfile(pos).getCoursesArray());
+                plan.setDocuments(Jsoup.parse(todayDoc), Jsoup.parse(tomorrowDoc));
 
-                if (plan.getTitle(true).getNoInternet() && plan.getTitle(false).getNoInternet())
+                if (plan.getTodayTitle() == null && plan.getTomorrowTitle() == null)
                     return null;
 
                 return plan;

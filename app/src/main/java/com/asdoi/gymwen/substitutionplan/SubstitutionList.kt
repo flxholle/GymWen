@@ -97,4 +97,24 @@ class SubstitutionList(
 
         return SubstitutionList(summarizedList, title)
     }
+
+    fun replaceRegex(regex: String, replacement: String): SubstitutionList {
+        val replacedList = mutableListOf<SubstitutionEntry>()
+        for (i in 0 until size()) {
+            val oldEntry = getEntry(i)
+            replacedList.add(
+                    SubstitutionEntry(
+                            oldEntry.course.replace(regex, replacement),
+                            oldEntry.startLesson,
+                            oldEntry.endLesson,
+                            oldEntry.startTime,
+                            oldEntry.endTime,
+                            oldEntry.subject.replace(regex, replacement),
+                            oldEntry.teacher.replace(regex, replacement),
+                            oldEntry.room.replace(regex, replacement),
+                            oldEntry.moreInformation.replace(regex, replacement)
+                    ))
+        }
+        return SubstitutionList(replacedList, title)
+    }
 }

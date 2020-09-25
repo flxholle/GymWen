@@ -25,8 +25,8 @@ import android.content.Intent
 import android.os.Build
 import com.asdoi.gymwen.ApplicationFeatures
 import com.asdoi.gymwen.profiles.ProfileManagement
+import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan
 import com.asdoi.gymwen.substitutionplan.SubstitutionList
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
 import com.ulan.timetable.databaseUtils.DbHelper
 import com.ulan.timetable.utils.NotificationUtil
 import com.ulan.timetable.utils.PreferenceUtil
@@ -87,19 +87,19 @@ fun setDoNotDisturbReceivers(context: Context, onlyReceivers: Boolean = false) {
 
         ProfileManagement.initProfiles()
         ApplicationFeatures.downloadSubstitutionplanDocs(false, true)
-        val substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).coursesArray)
+        val substitutionPlan = MainSubstitutionPlan.getInstance(ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).coursesArray)
 
         val calendar = Calendar.getInstance()
         val currentDay = NotificationUtil.getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK))
-        val substitutionList: SubstitutionList =
-                if (!substitutionPlan.today.getNoInternet()) {
+        val substitutionList: SubstitutionList? =
+                if (substitutionPlan.getTodayFiltered() != null) {
                     when {
-                        substitutionPlan.todayTitle.isTitleCodeToday() -> substitutionPlan.todaySummarized
-                        substitutionPlan.tomorrowTitle.isTitleCodeToday() -> substitutionPlan.tomorrowSummarized
-                        else -> SubstitutionList(true)
+                        substitutionPlan.getTodayTitle()!!.isToday() -> substitutionPlan.getTodayFilteredSummarized()
+                        substitutionPlan.getTomorrowTitle()!!.isToday() -> substitutionPlan.getTomorrowFilteredSummarized()
+                        else -> null
                     }
                 } else
-                    SubstitutionList(true)
+                    null
 
         val weeks = WeekUtils.compareSubstitutionAndWeeks(context, dbHelper.getWeek(currentDay), substitutionList, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior, dbHelper)
 

@@ -56,8 +56,8 @@ import com.ahmedjazzar.rosetta.LanguageSwitcher;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.CheckSubstitutionPlanReceiver;
+import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
@@ -202,14 +202,14 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static void deleteOfflineSubstitutionDocs() {
-        SubstitutionPlanFeatures.setDocs(null, null);
+        MainSubstitutionPlan.INSTANCE.setDocuments(null, null);
     }
 
     //Substitutionplan docs
     public static void downloadSubstitutionplanDocs(boolean isWidget, boolean openActivity) {
 
         //DownloadDocs
-        if (!SubstitutionPlanFeatures.areDocsDownloaded()) {
+        if (!MainSubstitutionPlan.INSTANCE.areListsSet()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 if (!ApplicationFeatures.initSettings(true, openActivity)) {
                     return;
@@ -220,9 +220,9 @@ public class ApplicationFeatures extends MultiDexApplication {
                     refreshWidgets();
                 }
             } else if (PreferenceUtil.isOfflineMode()) {
-                SubstitutionPlanFeatures.reloadDocs();
+                MainSubstitutionPlan.INSTANCE.reload();
             }
-            com.ulan.timetable.utils.PreferenceUtil.setTermStart(SubstitutionPlanFeatures.getTodayTitle(), getContext());
+            com.ulan.timetable.utils.PreferenceUtil.setTermStart(MainSubstitutionPlan.INSTANCE.getTodayTitle(), getContext());
         }
     }
 
@@ -239,7 +239,7 @@ public class ApplicationFeatures extends MultiDexApplication {
                 refreshWidgets();
             }
         } else if (PreferenceUtil.isOfflineMode()) {
-            SubstitutionPlanFeatures.reloadDocs();
+            MainSubstitutionPlan.INSTANCE.reload();
         }
     }
 
@@ -262,12 +262,12 @@ public class ApplicationFeatures extends MultiDexApplication {
 
             } catch (Exception ignore) {
                 if (PreferenceUtil.isOfflineMode()) {
-                    SubstitutionPlanFeatures.reloadDocs();
+                    MainSubstitutionPlan.INSTANCE.reload();
                 }
                 return;
             }
         }
-        SubstitutionPlanFeatures.setDocs(doc[0], doc[1]);
+        MainSubstitutionPlan.INSTANCE.setDocuments(doc[0], doc[1]);
         saveDocs();
     }
 
@@ -341,7 +341,7 @@ public class ApplicationFeatures extends MultiDexApplication {
 
     //Save Documents
     public static void saveDocs() {
-        SubstitutionPlanFeatures.saveDocs();
+        MainSubstitutionPlan.INSTANCE.save();
         TeacherlistFeatures.saveDoc();
     }
 
@@ -361,7 +361,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             try {
                 String courses = getSelectedProfile().getCourses();
                 boolean hours = PreferenceUtil.isHour();
-                SubstitutionPlanFeatures.setup(hours, courses.split(Profile.coursesSeparator));
+                MainSubstitutionPlan.INSTANCE.changeCourses(courses.split(Profile.coursesSeparator));
 
                 if (!isWidget) {
                     refreshWidgets();
@@ -482,42 +482,40 @@ public class ApplicationFeatures extends MultiDexApplication {
      *              WatchOut: Network on Main Thread -> Always run this method inside a non-main thread
      */
     public static void checkSubstitutionPlan(boolean alert) {
-        if (SubstitutionPlanFeatures.isUninit())
-            SubstitutionPlanFeatures.reloadDocs();
-        Document[] oldDocs = SubstitutionPlanFeatures.getDocs();
+        MainSubstitutionPlan.INSTANCE.init();
+        Document[] oldDocs = MainSubstitutionPlan.INSTANCE.getDocuments();
 
         downloadSubstitutionplanDocs(false, false);
         ProfileManagement.initProfiles();
         if (!coursesCheck(false))
             return;
-        if (SubstitutionPlanFeatures.getTodayTitle().getNoInternet()) {
+        if (!MainSubstitutionPlan.INSTANCE.areListsSet()) {
             //No Internet
             return;
         }
 
-        Document[] newDocs = SubstitutionPlanFeatures.getDocs();
-        int whichDocIsToday = -1;
+        int todayDoc = -1;
 
-        if (SubstitutionPlanFeatures.getTodayTitle().isTitleCodeToday())
-            whichDocIsToday = 0;
-        else if (SubstitutionPlanFeatures.getTomorrowTitle().isTitleCodeToday())
-            whichDocIsToday = 1;
+        if (MainSubstitutionPlan.INSTANCE.getTodayTitle().isToday())
+            todayDoc = 0;
+        else if (MainSubstitutionPlan.INSTANCE.getTomorrowTitle().isToday())
+            todayDoc = 1;
 
-        if (whichDocIsToday >= 0) {
+        if (todayDoc >= 0) {
             Profile preferredProfile = ProfileManagement.getPreferredProfile();
             if (preferredProfile != null) {
-                SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), preferredProfile.getCoursesArray());
+                SubstitutionPlan temp = MainSubstitutionPlan.INSTANCE.getInstance(preferredProfile.getCoursesArray());
 
-                if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
+                if (temp.hasContentChanged(oldDocs[todayDoc])) {
                     //Sth has changed since last download of substitutionplan
                     sendNotifications(alert);
                 }
             } else {
                 for (int i = 0; i < ProfileManagement.getSize(); i++) {
                     Profile p = ProfileManagement.getProfile(i);
-                    SubstitutionPlan temp = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.getCoursesArray());
+                    SubstitutionPlan temp = MainSubstitutionPlan.INSTANCE.getInstance(p.getCoursesArray());
 
-                    if (temp.hasSthChanged(oldDocs[whichDocIsToday], newDocs[whichDocIsToday])) {
+                    if (temp.hasContentChanged(oldDocs[todayDoc])) {
                         //Sth has changed since last download of substitutionplan
                         sendNotifications(alert);
                         break;
@@ -671,7 +669,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     //Profiles
     public static void initProfile(int position, boolean global) {
         String courses = ProfileManagement.getProfile(position).getCourses();
-        SubstitutionPlanFeatures.setup(PreferenceUtil.isHour(), courses.split(Profile.coursesSeparator));
+        MainSubstitutionPlan.INSTANCE.changeCourses(courses.split(Profile.coursesSeparator));
         if (global)
             initProfileGlobal(position, courses);
     }

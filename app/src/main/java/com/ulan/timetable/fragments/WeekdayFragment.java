@@ -73,14 +73,14 @@ public class WeekdayFragment extends Fragment {
         super();
         this.key = key;
         senior = false;
-        entries = new SubstitutionList(true);
+        entries = null;
     }
 
     public WeekdayFragment() {
         super();
         this.key = KEY_MONDAY_FRAGMENT;
         senior = false;
-        entries = new SubstitutionList(true);
+        entries = null;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class WeekdayFragment extends Fragment {
         db = new DbHelper(requireActivity());
         listView = view.findViewById(R.id.timetable_daylist);
         ArrayList<Week> weeks = db.getWeek(key);
-        if (PreferenceUtil.isTimeTableSubstitution() && !entries.getNoInternet()) {
+        if (PreferenceUtil.isTimeTableSubstitution() && entries != null) {
             weeks = WeekUtils.compareSubstitutionAndWeeks(requireContext(), weeks, entries, senior, db);
         }
         adapter = new WeekAdapter((ActivityFeatures) requireActivity(), listView, 0, weeks);

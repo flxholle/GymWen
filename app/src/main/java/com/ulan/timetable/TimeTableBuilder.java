@@ -71,9 +71,9 @@ public class TimeTableBuilder {
         Intent i = new Intent(context, cl);
         i.putExtra(CUSTOM_THEME, customTheme);
         i.putExtra(PROFILE_POS, profilePos);
-        if (substitutionPlan != null && !substitutionPlan.getToday().getNoInternet()) {
-            i.putExtra(SUBSTITUTIONPLANDOC_TODAY, substitutionPlan.getTodayDoc().toString());
-            i.putExtra(SUBSTITUTIONPLANDOC_TOMORROW, substitutionPlan.getTomorrowDoc().toString());
+        if (substitutionPlan != null && substitutionPlan.getTodayFiltered() != null) {
+            i.putExtra(SUBSTITUTIONPLANDOC_TODAY, substitutionPlan.getTodayDocument().toString());
+            i.putExtra(SUBSTITUTIONPLANDOC_TOMORROW, substitutionPlan.getTomorrowDocument().toString());
         }
         i.setAction(DO_NOT_DOWNLOAD_DOCS_ACTION);
 

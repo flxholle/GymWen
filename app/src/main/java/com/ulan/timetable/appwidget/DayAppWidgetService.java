@@ -29,21 +29,18 @@ import androidx.annotation.Nullable;
 
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.profiles.ProfileManagement;
+import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures;
 import com.ulan.timetable.appwidget.Dao.AppWidgetDao;
 import com.ulan.timetable.databaseUtils.DbHelper;
 import com.ulan.timetable.model.Week;
 import com.ulan.timetable.utils.PreferenceUtil;
 import com.ulan.timetable.utils.WeekUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 import static com.ulan.timetable.utils.NotificationUtil.getCurrentDay;
@@ -58,156 +55,145 @@ public class DayAppWidgetService extends RemoteViewsService {
     public RemoteViewsFactory onGetViewFactory(@NonNull Intent intent) {
         return new DayAppWidgetRemoteViewsFactory(this.getApplicationContext(), intent);
     }
-}
 
-class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
+    static class DayAppWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    private final Context mContext;
-    private ArrayList<Week> content;
-    private final int mAppWidgetId;
+        private final Context mContext;
+        private ArrayList<Week> content;
+        private final int mAppWidgetId;
 
-    DayAppWidgetRemoteViewsFactory(Context context, @NonNull Intent intent) {
-        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-        mContext = context;
-    }
-
-    @Override
-    public void onCreate() {
-        ProfileManagement.initProfiles();
-        SubstitutionPlan substitutionPlan = SubstitutionPlanFeatures.createTempSubstitutionplan(false, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).getCoursesArray());
-
-        long currentTime = AppWidgetDao.getAppWidgetCurrentTime(mAppWidgetId, System.currentTimeMillis(), mContext);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(currentTime);
-
-        DbHelper db = new DbHelper(mContext, calendar);
-
-        calendar.setTime(removeTime(calendar.getTime()));
-
-        try {
-            if (!PreferenceUtil.isTimeTableSubstitution())
-                throw new Exception();
-
-            SubstitutionList substitutionlist;
-            if (!substitutionPlan.getToday().getNoInternet()) {
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-                Date startDate = null;
-                try {
-                    startDate = df.parse(substitutionPlan.getTodayTitle().getDate());
-                } catch (Exception ignore) {
-                }
-                Calendar calendar1 = Calendar.getInstance();
-                calendar1.setTime(removeTime(Objects.requireNonNull(startDate)));
-
-                Date startDate2 = null;
-                try {
-                    startDate2 = df.parse(substitutionPlan.getTomorrowTitle().getDate());
-                } catch (Exception ignore) {
-                }
-                Calendar calendar2 = Calendar.getInstance();
-                calendar2.setTime(removeTime(Objects.requireNonNull(startDate2)));
-
-                if (calendar1.getTimeInMillis() == calendar.getTimeInMillis())
-                    substitutionlist = substitutionPlan.getTodaySummarized();
-                else if (calendar2.getTimeInMillis() == calendar.getTimeInMillis())
-                    substitutionlist = substitutionPlan.getTomorrowSummarized();
-                else
-                    substitutionlist = new SubstitutionList(true);
-            } else
-                substitutionlist = new SubstitutionList(true);
-
-            content = WeekUtils.compareSubstitutionAndWeeks(mContext, db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK))),
-                    substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
-        } catch (Exception ignore) {
-            content = db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK)));
+        DayAppWidgetRemoteViewsFactory(Context context, @NonNull Intent intent) {
+            mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+            mContext = context;
         }
-    }
 
-    @Override
-    public void onDataSetChanged() {
-        onCreate();
-    }
+        @Override
+        public void onCreate() {
+            ProfileManagement.initProfiles();
+            SubstitutionPlan substitutionPlan = MainSubstitutionPlan.INSTANCE.getInstance(ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).getCoursesArray());
 
-    @Override
-    public void onDestroy() {
-        content.clear();
-    }
+            long currentTime = AppWidgetDao.getAppWidgetCurrentTime(mAppWidgetId, System.currentTimeMillis(), mContext);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(currentTime);
 
-    @Override
-    public int getCount() {
-        return content.size();
-    }
+            DbHelper db = new DbHelper(mContext, calendar);
 
-    @NonNull
-    @Override
-    public RemoteViews getViewAt(int position) {
+            calendar.setTime(removeTime(calendar.getTime()));
 
-        RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.timetable_item_day_appwidget);
-        Week week = content.get(position);
+            try {
+                if (!PreferenceUtil.isTimeTableSubstitution())
+                    throw new Exception();
+
+                SubstitutionList substitutionlist;
+                if (substitutionPlan.getTodayFiltered() != null) {
+                    Calendar calendar1 = Calendar.getInstance();
+                    calendar1.setTime(removeTime(Objects.requireNonNull(substitutionPlan.getTodayTitle().getDate().toDate())));
+
+                    Calendar calendar2 = Calendar.getInstance();
+                    calendar2.setTime(removeTime(Objects.requireNonNull(substitutionPlan.getTomorrowTitle().getDate().toDate())));
+
+                    if (calendar1.getTimeInMillis() == calendar.getTimeInMillis())
+                        substitutionlist = substitutionPlan.getTodayFilteredSummarized();
+                    else if (calendar2.getTimeInMillis() == calendar.getTimeInMillis())
+                        substitutionlist = substitutionPlan.getTomorrowFilteredSummarized();
+                    else
+                        substitutionlist = null;
+                } else
+                    substitutionlist = null;
+
+                content = WeekUtils.compareSubstitutionAndWeeks(mContext, db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK))),
+                        substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
+            } catch (Exception ignore) {
+                content = db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK)));
+            }
+        }
+
+        @Override
+        public void onDataSetChanged() {
+            onCreate();
+        }
+
+        @Override
+        public void onDestroy() {
+            content.clear();
+        }
+
+        @Override
+        public int getCount() {
+            return content.size();
+        }
+
+        @NonNull
+        @Override
+        public RemoteViews getViewAt(int position) {
+
+            RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.timetable_item_day_appwidget);
+            Week week = content.get(position);
 
 //        String lessons = getLessons(content, mContext);
-        if (week != null) {
-            String time;
-            if (PreferenceUtil.showTimes(mContext))
-                time = week.getFromTime() + " - " + week.getToTime();
-            else {
-                int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime());
-                int end = WeekUtils.getMatchingScheduleEnd(week.getToTime());
-                if (start == end) {
-                    time = start + ". " + mContext.getString(R.string.lesson);
-                } else {
-                    time = start + ".-" + end + ". " + mContext.getString(R.string.lesson);
+            if (week != null) {
+                String time;
+                if (PreferenceUtil.showTimes(mContext))
+                    time = week.getFromTime() + " - " + week.getToTime();
+                else {
+                    int start = WeekUtils.getMatchingScheduleBegin(week.getFromTime());
+                    int end = WeekUtils.getMatchingScheduleEnd(week.getToTime());
+                    if (start == end) {
+                        time = start + ". " + mContext.getString(R.string.lesson);
+                    } else {
+                        time = start + ".-" + end + ". " + mContext.getString(R.string.lesson);
+                    }
                 }
+
+                StringBuilder text = new StringBuilder(week.getSubject()).append(": ").append(time);
+                if (!week.getRoom().trim().isEmpty())
+                    text.append(", ").append(week.getRoom());
+                if (!week.getTeacher().trim().isEmpty())
+                    text.append(" (").append(week.getTeacher()).append(")");
+                rv.setTextViewText(R.id.widget_text, text.toString());
             }
 
-            StringBuilder text = new StringBuilder(week.getSubject()).append(": ").append(time);
-            if (!week.getRoom().trim().isEmpty())
-                text.append(", ").append(week.getRoom());
-            if (!week.getTeacher().trim().isEmpty())
-                text.append(" (").append(week.getTeacher()).append(")");
-            rv.setTextViewText(R.id.widget_text, text.toString());
+            //Set OpenApp Button intent
+            Intent intent = new Intent();
+            intent.putExtra("keyData", position);
+            rv.setOnClickFillInIntent(R.id.widget_linear, intent);
+            return rv;
         }
 
-        //Set OpenApp Button intent
-        Intent intent = new Intent();
-        intent.putExtra("keyData", position);
-        rv.setOnClickFillInIntent(R.id.widget_linear, intent);
-        return rv;
-    }
+        @Nullable
+        @Override
+        public RemoteViews getLoadingView() {
+            return null;
+        }
 
-    @Nullable
-    @Override
-    public RemoteViews getLoadingView() {
-        return null;
-    }
+        @Override
+        public int getViewTypeCount() {
+            return 1;
+        }
 
-    @Override
-    public int getViewTypeCount() {
-        return 1;
-    }
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
 
-    @Override
-    public boolean hasStableIds() {
-        return true;
-    }
-
-    /**
-     * @param date Date
-     * @return param Date with removed time (only the day).
-     */
-    @NonNull
-    private static Date removeTime(@NonNull Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
+        /**
+         * @param date Date
+         * @return param Date with removed time (only the day).
+         */
+        @NonNull
+        private static Date removeTime(@NonNull Date date) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            return cal.getTime();
+        }
     }
 }

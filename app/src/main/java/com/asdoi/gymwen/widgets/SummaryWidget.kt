@@ -28,10 +28,9 @@ import com.asdoi.gymwen.ApplicationFeatures
 import com.asdoi.gymwen.R
 import com.asdoi.gymwen.profiles.Profile
 import com.asdoi.gymwen.profiles.ProfileManagement
-import com.asdoi.gymwen.substitutionplan.SubstitutionPlanFeatures
+import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan
 import com.asdoi.gymwen.ui.activities.MainActivity
 import com.asdoi.gymwen.ui.activities.SubstitutionWidgetActivity
-import com.asdoi.gymwen.util.PreferenceUtil
 import kotlin.concurrent.thread
 
 /**
@@ -112,12 +111,11 @@ class SummaryWidget : AppWidgetProvider() {
             var tomorrow = 0
 
             for (p in profileList) {
-                val tempSubstitutionplan = SubstitutionPlanFeatures.createTempSubstitutionplan(PreferenceUtil.isHour(), p.coursesArray)
-                val todayList = tempSubstitutionplan.getDay(true)
-                todayList //No Internet
-                today += todayList.entries.size
-                val tomorrowList = tempSubstitutionplan.getDay(false)
-                tomorrow += tomorrowList.entries.size
+                val tempSubstitutionplan = MainSubstitutionPlan.getInstance(p.coursesArray)
+                val todayList = tempSubstitutionplan.getTodayFiltered()!!
+                today += todayList.size()
+                val tomorrowList = tempSubstitutionplan.getTomorrowFiltered()!!
+                tomorrow += tomorrowList.size()
             }
             return "$today|$tomorrow"
         }
