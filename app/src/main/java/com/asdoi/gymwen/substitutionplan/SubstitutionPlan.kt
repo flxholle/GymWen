@@ -5,35 +5,41 @@ import com.asdoi.gymwen.R
 import com.asdoi.gymwen.util.PreferenceUtil
 import org.jsoup.nodes.Document
 
-class SubstitutionPlan(val courses: Array<String>) {
+open class SubstitutionPlan(courses: Array<String>) {
 
     constructor(className: String) : this(arrayOf(className))
+
+    var courses: Array<String> = courses
+        protected set
+    val senior
+        get() = courses.size > 1
 
     private var todayList: SubstitutionList? = null
     private var tomorrowList: SubstitutionList? = null
 
-    val senior
-        get() = courses.size > 1
+    var todayDocument: Document? = null
+        set(value) {
+            todayList = value?.let { parseList(it) }
+            field = value
+        }
+    var tomorrowDocument: Document? = null
+        set(value) {
+            tomorrowList = value?.let { parseList(it) }
+            field = value
+        }
 
     fun setDocuments(todayDocument: Document?, tomorrowDocument: Document?) {
-        todayList = if (todayDocument != null)
-            parseList(todayDocument)
-        else
-            null
-
-        tomorrowList = if (tomorrowDocument != null)
-            parseList(tomorrowDocument)
-        else
-            null
+        this.todayDocument = todayDocument
+        this.tomorrowDocument = tomorrowDocument
     }
 
-    fun areDocumentsSet() = todayList == null && tomorrowList == null
+    fun areDocumentsSet() = todayDocument == null && tomorrowDocument == null
 
     private fun parseList(document: Document): SubstitutionList? {
         return Parse.parseSubstitutionList(document)
     }
 
-    fun getDay(today: Boolean): SubstitutionList? {
+    open fun getDay(today: Boolean): SubstitutionList? {
         return if (today) {
             todayList
         } else {
@@ -51,10 +57,10 @@ class SubstitutionPlan(val courses: Array<String>) {
         val newList = parseList(newDocument) ?: return false
 
         return when (newList.title) {
-            todayList?.title ->
-                todayList?.isContentEqual(newList) ?: false
-            tomorrowList?.title ->
-                tomorrowList?.isContentEqual(newList) ?: false
+            getToday()?.title ->
+                getToday()?.isContentEqual(newList) ?: false
+            getTomorrow()?.title ->
+                getTomorrow()?.isContentEqual(newList) ?: false
             else ->
                 false
         }
