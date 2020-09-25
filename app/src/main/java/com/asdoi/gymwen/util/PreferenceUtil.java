@@ -61,7 +61,7 @@ public class PreferenceUtil {
         return ApplicationFeatures.getBooleanSettings("show_full_names_specific", true);
     }
 
-    public static boolean showWeekDate() {
+    public static boolean showDayOfWeek() {
         return ApplicationFeatures.getBooleanSettings("week_dates", false);
     }
 
