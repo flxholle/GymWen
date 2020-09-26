@@ -89,10 +89,13 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         var showTomorrow = false
 
         if (!noInternet) {
-            showToday = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.getTodayTitle()!!.isPast()
-            showTomorrow = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.getTomorrowTitle()!!.isPast()
+            showToday = MainSubstitutionPlan.getTodayTitle()!!.showDay()
+            showTomorrow = MainSubstitutionPlan.getTomorrowTitle()!!.showDay()
             if (!showToday && !showTomorrow) {
-                if (MainSubstitutionPlan.getTodayTitle()!!.isToday()) showToday = true else showTomorrow = true
+                if (MainSubstitutionPlan.getTodayTitle()!!.isToday())
+                    showToday = true
+                else
+                    showTomorrow = true
             }
         }
         for (p in profiles) {

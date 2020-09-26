@@ -70,9 +70,9 @@ public class NotificationUtil {
 
             SubstitutionList substitutionlist;
             if (substitutionPlan.getTodayFiltered() != null) {
-                if (substitutionPlan.getTodayTitle().isToday())
+                if (substitutionPlan.getTodayTitle().isCustomToday())
                     substitutionlist = substitutionPlan.getTodayFilteredSummarized();
-                else if (substitutionPlan.getTomorrowTitle().isToday())
+                else if (substitutionPlan.getTomorrowTitle().isCustomToday())
                     substitutionlist = substitutionPlan.getTomorrowFilteredSummarized();
                 else
                     substitutionlist = null;
@@ -106,9 +106,9 @@ public class NotificationUtil {
 
             SubstitutionList substitutionlist;
             if (substitutionPlan.getTodayFiltered() != null) {
-                if (substitutionPlan.getTodayTitle().isToday())
+                if (substitutionPlan.getTodayTitle().isCustomToday())
                     substitutionlist = substitutionPlan.getTodayFilteredSummarized();
-                else if (substitutionPlan.getTomorrowTitle().isToday())
+                else if (substitutionPlan.getTomorrowTitle().isCustomToday())
                     substitutionlist = substitutionPlan.getTomorrowFilteredSummarized();
                 else
                     substitutionlist = null;

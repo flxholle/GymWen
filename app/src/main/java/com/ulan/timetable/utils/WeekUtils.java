@@ -44,6 +44,9 @@ public class WeekUtils {
     public static ArrayList<Week> compareSubstitutionAndWeeks(@NonNull Context context, @NonNull ArrayList<Week> weeks, SubstitutionList entries, boolean senior, @NonNull DbHelper dbHelper) {
         boolean empty = weeks.isEmpty();
         if (entries != null) {
+            if (!entries.getTitle().isCustomFuture())
+                return weeks;
+
             for (int i = 0; i < entries.size(); i++) {
                 SubstitutionEntry entry = entries.getEntry(i);
                 int color = ContextCompat.getColor(context, entry.isNothing() ? R.color.notification_icon_background_omitted : R.color.notification_icon_background_substitution);

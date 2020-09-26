@@ -496,9 +496,9 @@ public class ApplicationFeatures extends MultiDexApplication {
 
         int todayDoc = -1;
 
-        if (MainSubstitutionPlan.INSTANCE.getTodayTitle().isToday())
+        if (MainSubstitutionPlan.INSTANCE.getTodayTitle().isCustomToday())
             todayDoc = 0;
-        else if (MainSubstitutionPlan.INSTANCE.getTomorrowTitle().isToday())
+        else if (MainSubstitutionPlan.INSTANCE.getTomorrowTitle().isCustomToday())
             todayDoc = 1;
 
         if (todayDoc >= 0) {

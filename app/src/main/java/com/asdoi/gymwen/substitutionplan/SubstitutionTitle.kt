@@ -4,6 +4,7 @@ import android.content.Context
 import com.asdoi.gymwen.R
 import com.asdoi.gymwen.util.PreferenceUtil
 import org.joda.time.LocalDate
+import org.joda.time.LocalTime
 import java.util.*
 
 data class SubstitutionTitle(val date: LocalDate, val dayOfWeek: DayOfWeek, val week: Char) {
@@ -16,22 +17,33 @@ data class SubstitutionTitle(val date: LocalDate, val dayOfWeek: DayOfWeek, val 
     }
 
     fun isTomorrow(): Boolean {
-        val now = LocalDate()
-        now.plusDays(1)
-        return now.isEqual(date)
+        val tomorrow = LocalDate().plusDays(1)
+        return tomorrow.isEqual(date)
     }
 
     fun isFuture(): Boolean {
         return LocalDate().isBefore(date)
     }
 
-    fun toString(past: String?, today: String?, tomorrow: String?, future: String?) =
-            "${date.toString("dd.MM.yyyy")}, ${getDayOfWeekDescription(past, today, tomorrow, future)}, $week"
+    fun isCustomToday() =
+            if (PreferenceUtil.isIntelligentHide())
+                LocalDate().isEqual(date) && LocalTime.now().hourOfDay < 18
+            else
+                isToday()
 
-    fun toString(past: String?, today: String?, tomorrow: String?, future: String?, monday: String, tuesday: String, wednesday: String, thursday: String, friday: String, saturday: String, sunday: String) =
-            "${date.toString("dd.MM.yyyy")}, ${getDayOfWeekDescription(past, today, tomorrow, future, monday, tuesday, wednesday, thursday, friday, saturday, sunday)}, $week"
+    fun isCustomFuture() = isCustomToday() || isFuture()
 
-    fun getDayOfWeekDescription(past: String?, today: String?, tomorrow: String?, future: String?) =
+    fun showDay(): Boolean {
+        return !PreferenceUtil.isIntelligentHide() || isCustomFuture()
+    }
+
+    fun getStringWithoutDayOfWeek(past: String?, today: String?, tomorrow: String?, future: String?) =
+            "${date.toString("dd.MM.yyyy")}, ${getTimeString(past, today, tomorrow, future)}, $week"
+
+    fun getStringWithDayOfWeek(past: String?, today: String?, tomorrow: String?, future: String?, monday: String, tuesday: String, wednesday: String, thursday: String, friday: String, saturday: String, sunday: String) =
+            "${date.toString("dd.MM.yyyy")}, ${getDayOfWeekString(past, today, tomorrow, future, monday, tuesday, wednesday, thursday, friday, saturday, sunday)}, $week"
+
+    fun getTimeString(past: String?, today: String?, tomorrow: String?, future: String?) =
             if (isPast())
                 past
             else if (isToday())
@@ -41,11 +53,11 @@ data class SubstitutionTitle(val date: LocalDate, val dayOfWeek: DayOfWeek, val 
             else
                 future
 
-    fun getDayOfWeekDescription(past: String?, today: String?, tomorrow: String?, future: String?, monday: String, tuesday: String, wednesday: String, thursday: String, friday: String, saturday: String, sunday: String) =
-            if (getDayOfWeekDescription(past, today, tomorrow, future) == null)
+    fun getDayOfWeekString(past: String?, today: String?, tomorrow: String?, future: String?, monday: String, tuesday: String, wednesday: String, thursday: String, friday: String, saturday: String, sunday: String) =
+            if (getTimeString(past, today, tomorrow, future) == null)
                 getDayOfWeek(monday, tuesday, wednesday, thursday, friday, saturday, sunday)
             else
-                "${getDayOfWeek(monday, tuesday, wednesday, thursday, friday, saturday, sunday)} (${getDayOfWeekDescription(past, today, tomorrow, future)})"
+                "${getDayOfWeek(monday, tuesday, wednesday, thursday, friday, saturday, sunday)} (${getTimeString(past, today, tomorrow, future)})"
 
     fun getDayOfWeek(monday: String, tuesday: String, wednesday: String, thursday: String, friday: String, saturday: String, sunday: String) =
             when (dayOfWeek) {
@@ -63,20 +75,20 @@ data class SubstitutionTitle(val date: LocalDate, val dayOfWeek: DayOfWeek, val 
     private fun getDayOfWeek(context: Context) =
             getDayOfWeek(context.getString(R.string.monday), context.getString(R.string.tuesday), context.getString(R.string.wednesday), context.getString(R.string.thursday), context.getString(R.string.friday), context.getString(R.string.saturday), context.getString(R.string.sunday))
 
-    fun getDayOfWeekDescription(context: Context) =
+    fun getDayOfWeekString(context: Context) =
             if (PreferenceUtil.showDayOfWeek())
-                getDayOfWeekDescription(context.getString(R.string.day_past), context.getString(R.string.today), context.getString(R.string.tomorrow), null, context.getString(R.string.monday), context.getString(R.string.tuesday), context.getString(R.string.wednesday), context.getString(R.string.thursday), context.getString(R.string.friday), context.getString(R.string.saturday), context.getString(R.string.sunday))
+                getDayOfWeekString(context.getString(R.string.day_past), context.getString(R.string.today), context.getString(R.string.tomorrow), null, context.getString(R.string.monday), context.getString(R.string.tuesday), context.getString(R.string.wednesday), context.getString(R.string.thursday), context.getString(R.string.friday), context.getString(R.string.saturday), context.getString(R.string.sunday))
             else
-                getDayOfWeekDescription(context.getString(R.string.day_past), context.getString(R.string.today), context.getString(R.string.tomorrow), getDayOfWeek(context))
+                getTimeString(getDayOfWeek(context) + " (" + context.getString(R.string.day_past) + ")", context.getString(R.string.today), context.getString(R.string.tomorrow), getDayOfWeek(context))
 
-    fun toString(context: Context) =
-            toString(context.getString(R.string.day_past), context.getString(R.string.today), context.getString(R.string.tomorrow), null, context.getString(R.string.monday), context.getString(R.string.tuesday), context.getString(R.string.wednesday), context.getString(R.string.thursday), context.getString(R.string.friday), context.getString(R.string.saturday), context.getString(R.string.sunday))
+    fun getStringWithDayOfWeek(context: Context) =
+            getStringWithDayOfWeek(context.getString(R.string.day_past), context.getString(R.string.today), context.getString(R.string.tomorrow), null, context.getString(R.string.monday), context.getString(R.string.tuesday), context.getString(R.string.wednesday), context.getString(R.string.thursday), context.getString(R.string.friday), context.getString(R.string.saturday), context.getString(R.string.sunday))
 
     fun toString(context: Context, showDayOfWeek: Boolean) =
             if (showDayOfWeek)
-                toString(context)
+                getStringWithDayOfWeek(context)
             else
-                toString(context.getString(R.string.day_past), context.getString(R.string.today), context.getString(R.string.tomorrow), getDayOfWeek(context))
+                getStringWithoutDayOfWeek(getDayOfWeek(context) + " (" + context.getString(R.string.day_past) + ")", context.getString(R.string.today), context.getString(R.string.tomorrow), getDayOfWeek(context))
 }
 
 enum class DayOfWeek {

@@ -86,8 +86,8 @@ class NotificationUtils {
 
                 val titleTodayArray = MainSubstitutionPlan.getTodayTitle()!!
                 val titleTomorrowArray = MainSubstitutionPlan.getTomorrowTitle()!!
-                var titleToday = "${titleTodayArray.getDayOfWeekDescription(ApplicationFeatures.getContext())}, ${titleTodayArray.date.toString("dd.MM.yyyy")}:"
-                var titleTomorrow = "${titleTomorrowArray.getDayOfWeekDescription(ApplicationFeatures.getContext())}, ${titleTomorrowArray.date.toString("dd.MM.yyyy")}:"
+                var titleToday = "${titleTodayArray.getDayOfWeekString(ApplicationFeatures.getContext())}, ${titleTodayArray.date.toString("dd.MM.yyyy")}:"
+                var titleTomorrow = "${titleTomorrowArray.getDayOfWeekString(ApplicationFeatures.getContext())}, ${titleTomorrowArray.date.toString("dd.MM.yyyy")}:"
 
                 val isMoreThanOneProfile = ProfileManagement.isMoreThanOneProfile()
 
@@ -95,17 +95,17 @@ class NotificationUtils {
                 var daySendInSummaryNotif = both //1 = today; 2 = tomorrow
 
                 //Hide days in the past and today after 18 o'clock
-                var sendToday = (!PreferenceUtil.isIntelligentHide() || !titleTodayArray.isPast())
-                var sendTomorrow = (!PreferenceUtil.isIntelligentHide() || !titleTomorrowArray.isPast())
+                var sendToday = titleTodayArray.showDay()
+                var sendTomorrow = titleTomorrowArray.showDay()
 
                 val preferredProfile = ProfileManagement.getPreferredProfile()
                 val preferredProfilePos = if (alertForAllProfiles) -5 else ProfileManagement.getPreferredProfilePosition()
 
                 if (preferredProfile != null || alertForAllProfiles) {
                     var whichDayIsToday = both
-                    if (titleTodayArray.isToday())
+                    if (titleTodayArray.isCustomToday())
                         whichDayIsToday = today
-                    else if (titleTomorrowArray.isToday())
+                    else if (titleTomorrowArray.isCustomToday())
                         whichDayIsToday = tomorrow
 
                     var checkProfileList = mutableListOf<Profile>()

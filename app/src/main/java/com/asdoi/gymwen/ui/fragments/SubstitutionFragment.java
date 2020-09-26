@@ -203,14 +203,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                     try {
                         if (!changedSectionsPagerAdapterTitles && MainSubstitutionPlan.INSTANCE.areListsSet() && changeViewPagerTitles) {
                             MainActivity.SectionsPagerAdapter spa = ((MainActivity) requireActivity()).sectionsPagerAdapter;
-                            spa.setTitles(todayTitle.getDayOfWeekDescription(requireContext()), tomorrowTitle.getDayOfWeekDescription(requireContext()));
+                            spa.setTitles(todayTitle.getDayOfWeekString(requireContext()), tomorrowTitle.getDayOfWeekString(requireContext()));
                             spa.notifyDataSetChanged();
                             changedSectionsPagerAdapterTitles = true;
                         }
                         //Update menu Items for days
-                        if (!todayTitle.getDayOfWeekDescription(requireContext()).trim().isEmpty()) {
-                            ((MainActivity) requireActivity()).setTodayMenuItemTitle(todayTitle.getDayOfWeekDescription(requireContext()) + ", " + todayTitle.getDate().toString("dd.MM.yyyy"));
-                            ((MainActivity) requireActivity()).setTomorrowMenuItemTitle(tomorrowTitle.getDayOfWeekDescription(requireContext()) + ", " + tomorrowTitle.getDate().toString("dd.MM.yyyy"));
+                        if (!todayTitle.getDayOfWeekString(requireContext()).trim().isEmpty()) {
+                            ((MainActivity) requireActivity()).setTodayMenuItemTitle(todayTitle.getDayOfWeekString(requireContext()) + ", " + todayTitle.getDate().toString("dd.MM.yyyy"));
+                            ((MainActivity) requireActivity()).setTomorrowMenuItemTitle(tomorrowTitle.getDayOfWeekString(requireContext()) + ", " + tomorrowTitle.getDate().toString("dd.MM.yyyy"));
                         }
                     } catch (Exception ignore) {
                     }
@@ -462,8 +462,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 showTomorrow = false;
             } else {
                 //Hide days in the past and today after 18 o'clock
-                showToday = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.INSTANCE.getTodayTitle().isPast();
-                showTomorrow = !PreferenceUtil.isIntelligentHide() || !MainSubstitutionPlan.INSTANCE.getTomorrowTitle().isPast();
+                showToday = MainSubstitutionPlan.INSTANCE.getTodayTitle().showDay();
+                showTomorrow = MainSubstitutionPlan.INSTANCE.getTomorrowTitle().showDay();
 
                 if (!showToday && !showTomorrow) {
                     if (MainSubstitutionPlan.INSTANCE.getTodayTitle().isToday())
@@ -481,7 +481,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 generateTop(base, oldTitle);
                 generateTableSpecific(base, old, false);
             }
-            if ((!showToday || content == null) && showTomorrow) {
+            if (showTomorrow) {
                 content = summarize ? MainSubstitutionPlan.INSTANCE.getTomorrowFilteredSummarized() : MainSubstitutionPlan.INSTANCE.getTomorrowFiltered();
                 title = MainSubstitutionPlan.INSTANCE.getTomorrowFormattedTitleString(requireContext());
                 titleObject = MainSubstitutionPlan.INSTANCE.getTomorrowTitle();
@@ -577,7 +577,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                     bgColor = ContextCompat.getColor(requireContext(), R.color.past);
                     textColor = ContextCompat.getColor(requireContext(), R.color.past_text);
                 }
-                ViewGroup titleView = createTitleLayoutNewDesign(titleObject.getDayOfWeekDescription(requireContext()), titleObject.getDate().toString("dd.MM.yyyy") + ", " + titleObject.getWeek(), bgColor, textColor);
+                ViewGroup titleView = createTitleLayoutNewDesign(titleObject.getDayOfWeekString(requireContext()), titleObject.getDate().toString("dd.MM.yyyy") + ", " + titleObject.getWeek(), bgColor, textColor);
                 base.addView(titleView);
 
                 if (content.size() == 0) {

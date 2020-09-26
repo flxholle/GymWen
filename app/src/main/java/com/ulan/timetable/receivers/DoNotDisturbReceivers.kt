@@ -94,8 +94,8 @@ fun setDoNotDisturbReceivers(context: Context, onlyReceivers: Boolean = false) {
         val substitutionList: SubstitutionList? =
                 if (substitutionPlan.getTodayFiltered() != null) {
                     when {
-                        substitutionPlan.getTodayTitle()!!.isToday() -> substitutionPlan.getTodayFilteredSummarized()
-                        substitutionPlan.getTomorrowTitle()!!.isToday() -> substitutionPlan.getTomorrowFilteredSummarized()
+                        substitutionPlan.getTodayTitle()!!.isCustomToday() -> substitutionPlan.getTodayFilteredSummarized()
+                        substitutionPlan.getTomorrowTitle()!!.isCustomToday() -> substitutionPlan.getTomorrowFilteredSummarized()
                         else -> null
                     }
                 } else

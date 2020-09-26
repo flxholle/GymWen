@@ -99,7 +99,7 @@ public class SummaryActivity extends ActivityFeatures {
                     weeks.set(getMatchingIndex(codeTod), WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(getMatchingIndex(codeTod)), substitutionPlan.getTodayFilteredSummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
                 }
                 if (codeTom != null) {
-                    weeks.set(getMatchingIndex(codeTod), WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(getMatchingIndex(codeTod)), substitutionPlan.getTomorrowFilteredSummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
+                    weeks.set(getMatchingIndex(codeTom), WeekUtils.compareSubstitutionAndWeeks(this, weeks.get(getMatchingIndex(codeTom)), substitutionPlan.getTomorrowFilteredSummarized(), ProfileManagement.getProfile(DBUtil.getProfilePosition(this)).isSenior(), dbHelper));
                 }
             }
 
