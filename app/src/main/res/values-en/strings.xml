@@ -625,4 +625,9 @@
     <string name="preferred_profile_explanation">Mark a profile with a star.
         \nThis profile is automatically displayed when the app is started.
         \nIn addition, based on this profile data, notifications are sent and the smartphone is set to \"Do Not Disturb\" mode.</string>
+
+    <string name="corona_live_ticker">Corona Live-Ticker (%s):
+        \nNumber of cases: %d
+        \nChange from previous day: %d
+        \n\tData source: %s</string>
 </resources>
