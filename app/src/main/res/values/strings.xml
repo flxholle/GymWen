@@ -313,7 +313,10 @@
         <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div>Icons made by <a href="https://www.flaticon.com/authors/srip" title="srip">srip</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div>Icons made by <a href="https://www.flaticon.com/authors/ddara" title="dDara">dDara</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>]]>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/bqlqn" title="bqlqn">bqlqn</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></div>
+]]>
     </string>
 
     <!-- Imprint -->
@@ -716,4 +719,10 @@
     <string name="preferred_profile_explanation">Markiere ein Profil mit einem Stern.
         \nDieses Profil wird automatisch beim Starten der App angezeigt.
         \nAußerdem werden auf Basis dieses Profils die Benachrichtigungen gesendet und das Smartphone in den Nicht-Stören Modus versetzt.</string>
+
+    <string name="corona_live_ticker">Corona Live-Ticker (%s):
+        \nAnzahl Fälle: %d
+        \nVeränderung zum Vortag: %d
+        \n\tQuelle: %s</string>
+
 </resources>

@@ -55,6 +55,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.coronalive.CoronaTicker;
+import com.asdoi.gymwen.coronalive.ParseCoronaLiveTicker;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.services.NotificationTileService;
 import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan;
@@ -76,6 +78,7 @@ import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.activities.NotesActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,7 +174,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     .setDuration(ChocoBar.LENGTH_INDEFINITE)
                     .orange()
                     .show();
-        }
+        } else
+            showCoronaLiveTicker();
+
 
         if (PreferenceUtil.isBackgroundUpdateCheck())
             checkUpdates(Display.DIALOG, false);
@@ -818,6 +823,27 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private void setDesignChangerVisibility(boolean visible) {
         if (menu != null)
             menu.findItem(R.id.action_switch_design).setVisible(visible);
+    }
+
+    private void showCoronaLiveTicker() {
+        new Thread(() -> {
+            Document document = ApplicationFeatures.downloadDoc(External_Const.CORONA_LIVE_TICKER);
+            if (document != null) {
+                final CoronaTicker coronaTicker = ParseCoronaLiveTicker.INSTANCE.parseLiveTicker(document, External_Const.CORONA_LIVE_TICKER_CITY);
+                if (coronaTicker != null) {
+                    runOnUiThread(() -> {
+                        String text = getString(R.string.corona_live_ticker, External_Const.CORONA_LIVE_LOCATION, coronaTicker.getInfections(), coronaTicker.getInfectionsYesterdayToday(), External_Const.CORONA_LIVE_SOURCE);
+                        ChocoBar.builder().setActivity(this)
+                                .setActionText(getString(R.string.ok))
+                                .setText(text)
+                                .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                                .setIcon(R.drawable.ic_virus)
+                                .orange()
+                                .show();
+                    });
+                }
+            }
+        }).start();
     }
 
     //Tabs

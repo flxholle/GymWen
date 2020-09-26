@@ -128,4 +128,9 @@ public abstract class External_Const {
 
     public static final String page_start = "http://www.gym-wen.de/";
     public static final String page_start_2 = "http://gym-wen.de/";
+
+    public static final String CORONA_LIVE_TICKER = "https://www.lgl.bayern.de/gesundheit/infektionsschutz/infektionskrankheiten_a_z/coronavirus/karte_coronavirus/";
+    public static final String CORONA_LIVE_TICKER_CITY = "Roth";
+    public static final String CORONA_LIVE_SOURCE = "www.lgl.bayern.de";
+    public static final String CORONA_LIVE_LOCATION = "LK Roth";
 }
