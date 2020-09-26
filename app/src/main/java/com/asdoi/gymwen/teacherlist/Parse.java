@@ -21,10 +21,9 @@ package com.asdoi.gymwen.teacherlist;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -36,7 +35,6 @@ abstract class Parse {
      * @return an two-dimensal String-Array with all teachers in it, one teacher entry is like this: String[]{Kürzel, Nachname, Vorname, Sprechstunde}
      * @see TeacherlistFeatures
      */
-    @NotNull
     static TeacherList getList(@Nullable Document doc) {
         if (doc == null) {
             System.out.println("Document is null");
@@ -44,12 +42,8 @@ abstract class Parse {
         }
 
         try {
-            Elements values = doc.select("div#content_left").select("div.csc-default").get(1).select("p.bodytext");
-
-            String[] lines = new String[values.size()];
-            for (int i = 0; i < values.size(); i++) {
-                lines[i] = values.get(i).text();
-            }
+            List<String> values = doc.select("div#content_left").select("div.csc-default").get(1).select("p.bodytext").eachText();
+            String[] lines = values.toArray(new String[]{});
 
             //Analyze String
             //Kürzel - Nachname - Vorname - Sprechstunde
