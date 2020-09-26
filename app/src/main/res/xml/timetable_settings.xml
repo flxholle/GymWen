@@ -18,15 +18,15 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:icon="@drawable/ic_rotate_90_degrees_ccw_black_24dp"
-        android:key="two_weeks"
-        android:title="@string/enable_even_odd_weeks" />
-    <SwitchPreferenceCompat
         android:defaultValue="true"
         android:icon="@drawable/ic_slideshow_black_24dp"
         android:key="timetableNotif"
         android:title="@string/set_notification_isOn" />
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_rotate_90_degrees_ccw_black_24dp"
+        android:key="two_weeks"
+        android:title="@string/enable_even_odd_weeks" />
 
     <SwitchPreferenceCompat
         android:defaultValue="true"

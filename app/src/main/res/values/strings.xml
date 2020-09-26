@@ -712,4 +712,8 @@
     <string name="biometric_unlock_description">Entsperre die App bei jedem Start mit deinem Fingerabdruck oder deinen Handy-Anmeldedaten.</string>
     <string name="biometric_login_title">Entsperren der GymWen App</string>
     <string name="biometric_login_message">Entsperre mit deinen Handy-Anmeldedaten</string>
+
+    <string name="preferred_profile_explanation">Markiere ein Profil mit einem Stern.
+        \nDieses Profil wird automatisch beim Starten der App angezeigt.
+        \nAußerdem werden auf Basis dieses Profils die Benachrichtigungen gesendet und das Smartphone in den Nicht-Stören Modus versetzt.</string>
 </resources>

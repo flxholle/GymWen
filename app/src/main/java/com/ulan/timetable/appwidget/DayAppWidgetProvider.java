@@ -47,6 +47,8 @@ import java.util.Locale;
  * From https://github.com/SubhamTyagi/TimeTable
  */
 public class DayAppWidgetProvider extends AppWidgetProvider {
+    int lastAppWidgetId = 0;
+    String lastAction = null;
 
     private static final String ACTION_RESTORE = "com.ulan.timetable" + ".ACTION_RESTORE";
     private static final String ACTION_YESTERDAY = "com.ulan.timetable" + ".ACTION_YESTERDAY";
@@ -159,15 +161,21 @@ public class DayAppWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
+        /*
+         * Whenever a request is received, checks if anything changes before using the data
+         */
+        if (intent.getAction().equals(lastAction) && lastAppWidgetId == intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)) {
+            return;
+        }
 
-        String action = intent.getAction();
+        updateValues(intent);
 
-        if (ACTION_NEW_DAY.equals(action)) {
+        if (ACTION_NEW_DAY.equals(lastAction)) {
             notifyUpdate(context);
             return;
         }
 
-        if (ACTION_RESTORE.equals(action) || ACTION_YESTERDAY.equals(action) || ACTION_TOMORROW.equals(action)) {
+        if (ACTION_RESTORE.equals(lastAction) || ACTION_YESTERDAY.equals(lastAction) || ACTION_TOMORROW.equals(lastAction)) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.timetable_day_appwidget);
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -175,10 +183,10 @@ public class DayAppWidgetProvider extends AppWidgetProvider {
             long currentTime;
             long newTime;
 
-            if (ACTION_RESTORE.equals(action)) {
+            if (ACTION_RESTORE.equals(lastAction)) {
                 rv.setViewVisibility(R.id.imgBtn_restore, View.INVISIBLE);
                 newTime = System.currentTimeMillis();
-            } else if (ACTION_YESTERDAY.equals(action)) {
+            } else if (ACTION_YESTERDAY.equals(lastAction)) {
                 rv.setViewVisibility(R.id.imgBtn_restore, View.VISIBLE);
                 currentTime = AppWidgetDao.getAppWidgetCurrentTime(appWidgetId, System.currentTimeMillis(), context);
                 newTime = currentTime - ONE_DAY_MILLIS;
@@ -199,6 +207,11 @@ public class DayAppWidgetProvider extends AppWidgetProvider {
         }
 
         super.onReceive(context, intent);
+    }
+
+    private void updateValues(Intent intent) {
+        lastAction = intent.getAction();
+        lastAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
     }
 
     public void notifyUpdate(@NonNull Context context) {

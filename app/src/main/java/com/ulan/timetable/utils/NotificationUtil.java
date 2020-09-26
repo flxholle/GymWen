@@ -150,6 +150,12 @@ public class NotificationUtil {
                             .append(context.getString(R.string.lesson));
                 }
             }
+            if (!nextWeek.getRoom().trim().isEmpty()) {
+                lesson.append(" ")
+                        .append(context.getString(R.string.share_msg_in_room))
+                        .append(" ")
+                        .append(nextWeek.getRoom());
+            }
 
             StringBuilder name = new StringBuilder()
                     .append(nextWeek.getSubject())
@@ -273,15 +279,19 @@ public class NotificationUtil {
                                 .append(context.getString(R.string.lesson));
                     }
                 }
-                lessons.append(" ")
-                        .append(context.getString(R.string.with_teacher))
-                        .append(" ")
-                        .append(week.getTeacher())
-                        .append(" ")
-                        .append(context.getString(R.string.share_msg_in_room))
-                        .append(" ")
-                        .append(week.getRoom())
-                        .append("\n");
+                if (!week.getTeacher().trim().isEmpty()) {
+                    lessons.append(" ")
+                            .append(context.getString(R.string.with_teacher))
+                            .append(" ")
+                            .append(week.getTeacher());
+                }
+                if (!week.getRoom().trim().isEmpty()) {
+                    lessons.append(" ")
+                            .append(context.getString(R.string.share_msg_in_room))
+                            .append(" ")
+                            .append(week.getRoom());
+                }
+                lessons.append("\n");
             }
         }
 

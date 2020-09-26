@@ -622,4 +622,7 @@
     <string name="biometric_login_message">Unlock using your device credentials</string>
     <string name="shortcuts">Shortcuts</string>
     <string name="set_general_category">General</string>
+    <string name="preferred_profile_explanation">Mark a profile with a star.
+        \nThis profile is automatically displayed when the app is started.
+        \nIn addition, based on this profile data, notifications are sent and the smartphone is set to \"Do Not Disturb\" mode.</string>
 </resources>

@@ -37,7 +37,6 @@ public class ProfileActivity extends ActivityFeatures {
         setContentView(R.layout.activity_profile);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
-        fab.setOnClickListener(view -> onBackPressed());
     }
 
     public void setupColors() {
@@ -52,5 +51,11 @@ public class ProfileActivity extends ActivityFeatures {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 }

@@ -39,4 +39,10 @@ public class SettingsActivity extends ActivityFeatures {
             ProfileManagement.save(true);
         }
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

@@ -60,8 +60,7 @@ public class ProfileActivityFragment extends Fragment {
         adapter = new ProfileListAdapter(requireContext(), 0);
         ((ListView) root.findViewById(R.id.profile_list)).setAdapter(adapter);
 
-        root.findViewById(R.id.profile_add_button).setBackgroundColor(ApplicationFeatures.getAccentColor(requireContext()));
-        root.findViewById(R.id.profile_add_button).setOnClickListener((View v) -> openAddDialog());
+        requireActivity().findViewById(R.id.fab).setOnClickListener((View v) -> openAddDialog());
         return root;
     }
 
@@ -78,30 +77,38 @@ public class ProfileActivityFragment extends Fragment {
                 convertView = getLayoutInflater().inflate(R.layout.list_profiles_entry, null);
             }
 
-            return generateView(convertView, position);
+            if (position < ProfileManagement.getSize())
+                return generateProfileView(convertView, position);
+            else
+                return generateInfoView(convertView);
         }
 
         @Override
         public int getCount() {
-            return ProfileManagement.getSize();
+            return ProfileManagement.getSize() + 1;
         }
 
         @NonNull
-        private View generateView(@NonNull View base, int position) {
+        private View generateProfileView(@NonNull View base, int position) {
             Profile p = ProfileManagement.getProfile(position);
             TextView name = base.findViewById(R.id.profilelist_name);
+            name.setTextSize(22);
             name.setText(p.getName());
 
             TextView courses = base.findViewById(R.id.profilelist_courses);
+            courses.setVisibility(View.VISIBLE);
             courses.setText(p.getCourses());
 
             ImageButton edit = base.findViewById(R.id.profilelist_edit);
+            edit.setVisibility(View.VISIBLE);
             edit.setOnClickListener((View v) -> openEditDialog(position));
 
             ImageButton delete = base.findViewById(R.id.profilelist_delete);
+            delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener((View v) -> openDeleteDialog(position));
 
             ImageButton star = base.findViewById(R.id.profilelist_preferred);
+            star.setVisibility(View.VISIBLE);
             if (position == preferredProfilePos) {
                 star.setImageResource(R.drawable.ic_star_black_24dp);
             } else {
@@ -109,6 +116,18 @@ public class ProfileActivityFragment extends Fragment {
             }
             star.setOnClickListener((View v) -> setPreferredProfile(position));
 
+            return base;
+        }
+
+        private View generateInfoView(View base) {
+            base.findViewById(R.id.profilelist_edit).setVisibility(View.GONE);
+            base.findViewById(R.id.profilelist_delete).setVisibility(View.GONE);
+            base.findViewById(R.id.profilelist_preferred).setVisibility(View.GONE);
+            TextView name = base.findViewById(R.id.profilelist_name);
+            name.setText(getString(R.string.preferred_profile_explanation));
+            name.setTextSize(12);
+            TextView courses = base.findViewById(R.id.profilelist_courses);
+            courses.setVisibility(View.GONE);
             return base;
         }
     }

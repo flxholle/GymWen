@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
-import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.ApplicationFeatures;
 
 /**
  * Created by Ulan on 28.09.2018.
@@ -29,7 +29,7 @@ public class LinedEditText extends EditText {
         mRect = new Rect();
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mPaint.setColor(R.color.colorPrimaryDark);
+        mPaint.setColor(ApplicationFeatures.getTextColorSecondary(context));
     }
 
     @Override
