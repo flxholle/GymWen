@@ -92,6 +92,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                     .setText(getString(R.string.noInternetConnection))
                     .setDuration(ChocoBar.LENGTH_INDEFINITE)
                     .setActionClickListener((View v) -> finish())
+                    .setIcon(R.drawable.ic_no_wifi)
                     .orange()
                     .show();
             return;

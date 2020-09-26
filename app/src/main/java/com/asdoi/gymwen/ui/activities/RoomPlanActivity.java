@@ -94,6 +94,7 @@ public class RoomPlanActivity extends ActivityFeatures {
                         .setActionText(getString(R.string.ok))
                         .setText(getString(R.string.room) + " " + room + " " + getString(R.string.not_found))
                         .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                        .setIcon(R.drawable.ic_404_error)
                         .orange();
                 RoomPlanActivity.snackbar.show();
             }

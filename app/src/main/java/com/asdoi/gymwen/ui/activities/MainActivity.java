@@ -172,6 +172,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     .setActionText(getString(R.string.ok))
                     .setText(getString(R.string.noInternetConnection))
                     .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                    .setIcon(R.drawable.ic_no_wifi)
                     .orange()
                     .show();
         } else

@@ -245,7 +245,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         message += footprint;
 
         if (MainSubstitutionPlan.INSTANCE.getTodayTitle() == null) {
-            ChocoBar.builder().setActivity(requireActivity()).setText(getString(R.string.noInternet)).setDuration(ChocoBar.LENGTH_LONG).orange().show();
+            ChocoBar.builder().setActivity(requireActivity()).setText(getString(R.string.noInternet)).setDuration(ChocoBar.LENGTH_LONG).setIcon(R.drawable.ic_no_wifi).orange().show();
             return;
         }
 
@@ -404,12 +404,14 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                         ChocoBar.builder().setActivity(requireActivity())
                                 .setText(getString(R.string.noInternet))
                                 .setDuration(ChocoBar.LENGTH_LONG)
+                                .setIcon(R.drawable.ic_no_wifi)
                                 .orange()
                                 .show();
                     } else {
                         ChocoBar.builder().setActivity(requireActivity())
                                 .setText(getString(R.string.teacher_no_teacher_found))
                                 .setDuration(ChocoBar.LENGTH_LONG)
+                                .setIcon(R.drawable.ic_404_error)
                                 .red()
                                 .show();
                     }
