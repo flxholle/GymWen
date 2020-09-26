@@ -470,7 +470,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 
         Activity activity = this;
 
-        SQLiteToExcel sqliteToExcel = new SQLiteToExcel(this, DBUtil.getDBName(this, Calendar.getInstance()), path);
+        SQLiteToExcel sqliteToExcel = new SQLiteToExcel(this, DBUtil.getDBName(this), path);
         sqliteToExcel.exportAllTables(filename, new SQLiteToExcel.ExportListener() {
             @Override
             public void onStart() {
@@ -521,7 +521,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         DbHelper dbHelper = new DbHelper(this);
         dbHelper.deleteAll();
 
-        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this, Calendar.getInstance()), false);
+        ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBUtil.getDBName(this), false);
         excelToSQLite.importFromFile(path, new ExcelToSQLite.ImportListener() {
             @Override
             public void onStart() {

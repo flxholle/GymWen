@@ -76,7 +76,7 @@ public class DayAppWidgetService extends RemoteViewsService {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(currentTime);
 
-            DbHelper db = new DbHelper(mContext, calendar);
+            DbHelper db = new DbHelper(mContext);
 
             calendar.setTime(removeTime(calendar.getTime()));
 
@@ -101,10 +101,10 @@ public class DayAppWidgetService extends RemoteViewsService {
                 } else
                     substitutionlist = null;
 
-                content = WeekUtils.compareSubstitutionAndWeeks(mContext, db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK))),
+                content = WeekUtils.compareSubstitutionAndWeeks(mContext, db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK)), calendar),
                         substitutionlist, ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).isSenior(), db);
             } catch (Exception ignore) {
-                content = db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK)));
+                content = db.getWeek(getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK)), calendar);
             }
         }
 

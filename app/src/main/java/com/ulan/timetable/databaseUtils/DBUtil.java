@@ -19,7 +19,6 @@
 package com.ulan.timetable.databaseUtils;
 
 import android.app.Activity;
-import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,33 +28,22 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
 import com.ulan.timetable.TimeTableBuilder;
-import com.ulan.timetable.utils.PreferenceUtil;
 
 import org.jsoup.Jsoup;
 
-import java.util.Calendar;
 import java.util.Objects;
 
 public class DBUtil {
     private static final String database_prefix = "db_profile_";
-    private static final String odd_week_postfix = "_odd";
 
     @NonNull
-    public static String getDBName(@NonNull Activity activity, @NonNull Calendar now) {
-        String dbName = database_prefix + getProfilePosition(activity);
-        if (PreferenceUtil.isEvenWeek(activity, now))
-            return dbName;
-        else
-            return dbName + odd_week_postfix;
+    public static String getDBName(@NonNull Activity activity) {
+        return database_prefix + getProfilePosition(activity);
     }
 
     @NonNull
-    public static String getDBName(@NonNull Context context, @NonNull Calendar now) {
-        String dbName = database_prefix + getProfilePositionFromSharedPreferences();
-        if (PreferenceUtil.isEvenWeek(context, now))
-            return dbName;
-        else
-            return dbName + odd_week_postfix;
+    public static String getDBName() {
+        return database_prefix + getProfilePositionFromSharedPreferences();
     }
 
     public static int getProfilePosition(@NonNull Activity activity) {
