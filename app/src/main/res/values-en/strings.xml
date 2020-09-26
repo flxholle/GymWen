@@ -610,9 +610,9 @@
     <string name="de_select_all">De-/Select all</string>
     <string name="download_mebis_app">Download Mebis App</string>
     <string name="download_mebis_app_title">Downloading Mebis App…</string>
-    <string name="download_mebis_app_msg">Recently I have published a self-programmed separate Mebis app.
+    <string name="download_mebis_app_msg">Recently I have published a self-programmed separate (unofficial) Mebis app.
         \nWith the help of this app, the handling of Mebis should be kept as simple as possible.
-        \nDo you want to download the Mebis app?</string>
+        \nDo you want to download the (unofficial) Mebis app?</string>
 
     <string name="authentication_error">Authentication error: </string>
     <string name="authentication_failed">Authentication failed</string>

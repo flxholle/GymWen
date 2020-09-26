@@ -700,9 +700,9 @@
 
     <!--    Mebis App-->
     <string name="download_mebis_app">Mebis App herunterladen</string>
-    <string name="download_mebis_app_msg">Vor Kurzem habe ich eine selbstprogrammierte separate Mebis-App veröffentlicht.
+    <string name="download_mebis_app_msg">Vor Kurzem habe ich eine selbstprogrammierte separate (inoffizielle) Mebis-App veröffentlicht.
         \nSie soll durch eine automatische Anmeldung, Lesezeichenverwaltung, Gestensteuerung und einigen weiteren nützlichen Funktionen, den mobilen Umgang mit mebis erleichtern.
-        \nMöchtest du die Mebis App herunterladen?</string>
+        \nMöchtest du die (inofizielle) Mebis App herunterladen?</string>
     <string name="download_mebis_app_title">Lädt Mebis App herunter…</string>
 
     <!--    Biometric unlock-->
