@@ -6,10 +6,6 @@ import com.asdoi.gymwen.util.PreferenceUtil
 import org.jsoup.Jsoup
 
 object MainSubstitutionPlan : SubstitutionPlan("1A") {
-    fun changeCourses(courses: Array<String>) {
-        this.courses = courses
-    }
-
     fun getInstance(courses: Array<String>): SubstitutionPlan {
         init()
         val substitutionPlan = SubstitutionPlan(courses)

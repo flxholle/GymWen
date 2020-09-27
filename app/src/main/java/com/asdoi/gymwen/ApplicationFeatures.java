@@ -361,7 +361,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             try {
                 String courses = getSelectedProfile().getCourses();
                 boolean hours = PreferenceUtil.isHour();
-                MainSubstitutionPlan.INSTANCE.changeCourses(courses.split(Profile.coursesSeparator));
+                MainSubstitutionPlan.INSTANCE.setCourses(courses.split(Profile.coursesSeparator));
 
                 if (!isWidget) {
                     refreshWidgets();
@@ -669,7 +669,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     //Profiles
     public static void initProfile(int position, boolean global) {
         String courses = ProfileManagement.getProfile(position).getCourses();
-        MainSubstitutionPlan.INSTANCE.changeCourses(courses.split(Profile.coursesSeparator));
+        MainSubstitutionPlan.INSTANCE.setCourses(courses.split(Profile.coursesSeparator));
         if (global)
             initProfileGlobal(position, courses);
     }

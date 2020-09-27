@@ -10,7 +10,10 @@ open class SubstitutionPlan(courses: Array<String>) {
     constructor(className: String) : this(arrayOf(className))
 
     var courses: Array<String> = courses
-        protected set
+        set(value) {
+            field = value
+            setDocuments(todayDocument, tomorrowDocument)
+        }
     val senior
         get() = courses.size > 1
 
@@ -84,9 +87,9 @@ open class SubstitutionPlan(courses: Array<String>) {
 
     fun getTomorrowFiltered() = getDayFiltered(false)
 
-    fun getTodayFilteredSummarized() = getTodayFiltered()?.summarize()
+    fun getTodayFilteredSummarized() = getDayFilteredSummarized(true)
 
-    fun getTomorrowFilteredSummarized() = getTomorrowFiltered()?.summarize()
+    fun getTomorrowFilteredSummarized() = getDayFilteredSummarized(false)
 
     fun getTodayTitle() = getToday()?.title
 
