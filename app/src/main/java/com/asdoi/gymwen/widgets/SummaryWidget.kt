@@ -110,13 +110,18 @@ class SummaryWidget : AppWidgetProvider() {
             var today = 0
             var tomorrow = 0
 
-            for (p in profileList) {
-                val tempSubstitutionplan = MainSubstitutionPlan.getInstance(p.coursesArray)
-                val todayList = tempSubstitutionplan.getTodayFiltered()!!
-                today += todayList.size()
-                val tomorrowList = tempSubstitutionplan.getTomorrowFiltered()!!
-                tomorrow += tomorrowList.size()
+            try {
+                for (p in profileList) {
+                    val tempSubstitutionplan = MainSubstitutionPlan.getInstance(p.coursesArray)
+                    val todayList = tempSubstitutionplan.getTodayFiltered()!!
+                    today += todayList.size()
+                    val tomorrowList = tempSubstitutionplan.getTomorrowFiltered()!!
+                    tomorrow += tomorrowList.size()
+                }
+            } catch (e: Exception) {
+                //No internet connection
             }
+
             return "$today|$tomorrow"
         }
     }

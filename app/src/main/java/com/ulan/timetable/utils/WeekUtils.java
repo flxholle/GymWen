@@ -44,7 +44,7 @@ public class WeekUtils {
     public static ArrayList<Week> compareSubstitutionAndWeeks(@NonNull Context context, @NonNull ArrayList<Week> weeks, SubstitutionList entries, boolean senior, @NonNull DbHelper dbHelper) {
         boolean empty = weeks.isEmpty();
         if (entries != null) {
-            if (!entries.getTitle().isCustomFuture())
+            if (!entries.getTitle().showDay())
                 return weeks;
 
             for (int i = 0; i < entries.size(); i++) {

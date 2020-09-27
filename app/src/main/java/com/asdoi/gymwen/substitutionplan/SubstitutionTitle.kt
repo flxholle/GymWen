@@ -31,10 +31,8 @@ data class SubstitutionTitle(val date: LocalDate, val dayOfWeek: DayOfWeek, val 
             else
                 isToday()
 
-    fun isCustomFuture() = isCustomToday() || isFuture()
-
     fun showDay(): Boolean {
-        return !PreferenceUtil.isIntelligentHide() || isCustomFuture()
+        return !PreferenceUtil.isIntelligentHide() || (isCustomToday() || isFuture())
     }
 
     fun getStringWithoutDayOfWeek(past: String?, today: String?, tomorrow: String?, future: String?) =
