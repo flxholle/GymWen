@@ -31,7 +31,7 @@ object ParseCoronaLiveTicker {
                 if (row[cityIndex] == city) {
                     val infections = row[infectionsIndex].toInt()
                     val infectionsYesterdayTodayString = row[infectionsYesterdayTodayIndex]
-                            .replace("(", "").replace(")", "")
+                            .replace("(", "").replace(")", "").replace("+", "").trim()
                     val infectionsYesterdayToday =
                             if (infectionsYesterdayTodayString == "-")
                                 0
@@ -41,7 +41,7 @@ object ParseCoronaLiveTicker {
                     val sevenDayIncidencePerOneHundredThousands = row[sevenDayIncidencePerOneHundredThousandsIndex].replace(",", ".").toFloat()
                     val deaths = row[deathsIndex].toInt()
                     val deathsYesterdayTodayString = row[deathsYesterdayTodayIndex]
-                            .replace("(", "").replace(")", "")
+                            .replace("(", "").replace(")", "").replace("+", "").trim()
                     val deathsYesterdayToday =
                             if (deathsYesterdayTodayString == "-")
                                 0
