@@ -51,25 +51,31 @@ abstract class Parse {
             String[][] content = new String[lines.length][4];
             TeacherList teacherList = new TeacherList();
             for (int i = 0; i < lines.length; i++) {
-                String line = lines[i];
-                //Kürzel
-                content[i][0] = line.substring(0, 3);
+                try {
+                    String line = lines[i];
+                    //Kürzel
+                    content[i][0] = line.substring(0, 3);
 
-                //Nachname
-                int indexComma = line.indexOf(',');
-                content[i][1] = line.substring(4, indexComma);
+                    //Nachname
+                    int indexComma = line.indexOf(',');
+                    content[i][1] = line.substring(4, indexComma);
 
-                //Vorname
-                int indexNextWhiteSpace = line.indexOf(',', indexComma + 2);
-//            if (line.contains("Dr.")) {
-//                content[i][2] = line.substring(indexComma + 2 + "Dr. ".length(), indexNextWhiteSpace);
-//            } else {
-                content[i][2] = line.substring(indexComma + 2, indexNextWhiteSpace);
-//            }
+                    //Vorname
+                    int indexNextWhiteSpace = line.indexOf(' ', indexComma + 2);
+                    if (line.contains("Dr.")) {
+                        indexNextWhiteSpace = line.indexOf(' ', indexComma + 2 + "Dr. ".length());
+                        content[i][2] = line.substring(indexComma + 2 + "Dr. ".length(), indexNextWhiteSpace);
+                        content[i][1] = "Dr. " + content[i][1];
+                    } else {
+                        content[i][2] = line.substring(indexComma + 2, indexNextWhiteSpace);
+                    }
 
-                //Sprechstunde
-                content[i][3] = line.substring(indexNextWhiteSpace + 1);
-                teacherList.add(new TeacherListEntry(content[i][0], content[i][1], content[i][2], content[i][3]));
+                    //Sprechstunde
+                    content[i][3] = line.substring(indexNextWhiteSpace + 1);
+                    teacherList.add(new TeacherListEntry(content[i][0], content[i][1], content[i][2], content[i][3]));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             return teacherList;
