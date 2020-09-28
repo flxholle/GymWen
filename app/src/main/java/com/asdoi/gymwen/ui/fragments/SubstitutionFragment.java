@@ -95,7 +95,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
     @NonNull
     public static SubstitutionFragment newInstance(int state) {
-        return newInstance(state, true);
+        return newInstance(state, false);
     }
 
     @NonNull
@@ -208,7 +208,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                             changedSectionsPagerAdapterTitles = true;
                         }
                         //Update menu Items for days
-                        if (!todayTitle.getDayOfWeekString(requireContext()).trim().isEmpty()) {
+                        if (todayTitle != null && tomorrowTitle != null) {
                             ((MainActivity) requireActivity()).setTodayMenuItemTitle(todayTitle.getDayOfWeekString(requireContext()) + ", " + todayTitle.getDate().toString("dd.MM.yyyy"));
                             ((MainActivity) requireActivity()).setTomorrowMenuItemTitle(tomorrowTitle.getDayOfWeekString(requireContext()) + ", " + tomorrowTitle.getDate().toString("dd.MM.yyyy"));
                         }

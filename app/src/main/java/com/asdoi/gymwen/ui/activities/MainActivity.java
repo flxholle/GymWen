@@ -598,8 +598,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 findViewById(R.id.fragment_main).setVisibility(View.GONE);
                 findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
                 sectionsPagerAdapter.setDay(false);
-                sectionsPagerAdapter.notifyDataSetChanged();
                 sectionsPagerAdapter.setTitles(getString(R.string.menu_filtered), getString(R.string.menu_unfiltered));
+                sectionsPagerAdapter.notifyDataSetChanged();
                 lastLoaded = lastLoadedTabs;
                 lastLoadedInTabs = lastLoadedTabsTomorrow;
                 setDesignChangerVisibility(true);
@@ -889,20 +889,20 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             if (day) {
                 if (position == 0) {
                     if (today)
-                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today, false);
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today);
                     else
-                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow, false);
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow);
                 } else {
                     if (today)
-                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today_All, false);
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Today_All);
                     else
-                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow_All, false);
+                        return SubstitutionFragment.newInstance(SubstitutionFragment.Instance_Tomorrow_All);
 
                 }
             } else if (all)
-                return SubstitutionFragment.newInstance(position == 0 ? SubstitutionFragment.Instance_Today_All : SubstitutionFragment.Instance_Tomorrow_All);
+                return SubstitutionFragment.newInstance(position == 0 ? SubstitutionFragment.Instance_Today_All : SubstitutionFragment.Instance_Tomorrow_All, true);
             else
-                return SubstitutionFragment.newInstance(position == 0 ? SubstitutionFragment.Instance_Today : SubstitutionFragment.Instance_Tomorrow);
+                return SubstitutionFragment.newInstance(position == 0 ? SubstitutionFragment.Instance_Today : SubstitutionFragment.Instance_Tomorrow, true);
         }
 
         @Nullable
