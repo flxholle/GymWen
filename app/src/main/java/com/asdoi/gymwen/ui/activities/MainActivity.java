@@ -126,105 +126,18 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         Toolbar toolbar = findViewById(R.id.toolbar);
         setToolbar(false);
 
-        drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        drawer.addDrawerListener(toggle);
-
-        navigationView.setNavigationItemSelectedListener(this);
-
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), true, true, new String[]{getString(R.string.today), getString(R.string.tomorrow)});
-        SubstitutionFragment.changedSectionsPagerAdapterTitles = false;
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-
-        BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
-        navView.setOnNavigationItemSelectedListener((MenuItem item) -> {
-            onNavigationItemSelected(item.getItemId());
-            return true;
-        });
-
         if (!ApplicationFeatures.initSettings(false, true)) {
             finish();
             return;
         }
 
-        PreferenceUtil.setMainNotifForAllProfiles(PreferenceUtil.isParents());
-
-        ApplicationFeatures.initSubstitutionPlanReceiver();
-
-        initSpinner();
-
-        onNavigationItemSelected(R.id.nav_at_one_glance);
-        navigationView.setCheckedItem(R.id.nav_at_one_glance);
-
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
+        navigationView.setNavigationItemSelectedListener(this);
         toggle.syncState();
-
-        lastLoadedInTabs = lastLoadedTabsSpecific;
-
-        if (!ApplicationFeatures.isNetworkAvailable()) {
-            ChocoBar.builder().setActivity(this)
-                    .setActionText(getString(R.string.ok))
-                    .setText(getString(R.string.noInternetConnection))
-                    .setDuration(ChocoBar.LENGTH_INDEFINITE)
-                    .setIcon(R.drawable.ic_no_wifi)
-                    .orange()
-                    .show();
-        } else
-            showCoronaLiveTicker();
-
-
-        if (PreferenceUtil.isBackgroundUpdateCheck())
-            checkUpdates(Display.DIALOG, false);
-
-        showChangelog(true);
-        checkRegistration();
-
-        setupMenuItems(navigationView);
-
-        View headerview = navigationView.getHeaderView(0);
-        headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> onNavigationItemSelected(R.id.action_settings));
-        headerview.findViewById(R.id.nav_header_main_settings).setOnLongClickListener((View v) -> {
-            onNavigationItemSelected(R.id.action_imprint);
-            return true;
-        });
-
-        headerview.findViewById(R.id.nav_header_main_icon).setOnClickListener((View v) -> {
-            Intent intent = new Intent(this, WebsiteActivity.class);
-//            intent.putExtra("url", "gym-wen.de/information/unsere-schule/");
-            startActivity(intent);
-            drawer.closeDrawer(GravityCompat.START);
-        });
-
-        RSS_Feed.checkRSS(this);
-    }
-
-    public void setupColors() {
-        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
-        appBarLayout.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
-
-        findViewById(R.id.main_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
-
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
-        tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
-        if (Build.VERSION.SDK_INT >= 21)
-            findViewById(R.id.main_fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
-        int accentColor = ThemeStore.accentColor(this);
-        NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
-        NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        ApplicationFeatures.sendNotifications();
 
         //Apply Shortcut functions
         Intent i = getIntent();
@@ -260,6 +173,83 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             }
             setIntent(null);
         }
+
+        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), true, true, new String[]{getString(R.string.today), getString(R.string.tomorrow)});
+        SubstitutionFragment.changedSectionsPagerAdapterTitles = false;
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+
+        BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
+        navView.setOnNavigationItemSelectedListener((MenuItem item) -> {
+            onNavigationItemSelected(item.getItemId());
+            return true;
+        });
+
+        PreferenceUtil.setMainNotifForAllProfiles(PreferenceUtil.isParents());
+        ApplicationFeatures.initSubstitutionPlanReceiver();
+        ApplicationFeatures.sendNotifications();
+
+        initSpinner();
+
+        onNavigationItemSelected(R.id.nav_at_one_glance);
+        navigationView.setCheckedItem(R.id.nav_at_one_glance);
+
+        lastLoadedInTabs = lastLoadedTabsSpecific;
+
+        if (!ApplicationFeatures.isNetworkAvailable()) {
+            ChocoBar.builder().setActivity(this)
+                    .setActionText(getString(R.string.ok))
+                    .setText(getString(R.string.noInternetConnection))
+                    .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                    .setIcon(R.drawable.ic_no_wifi)
+                    .orange()
+                    .show();
+        } else
+            showCoronaLiveTicker();
+
+        setupMenuItems(navigationView);
+        View headerview = navigationView.getHeaderView(0);
+        headerview.findViewById(R.id.nav_header_main_settings).setOnClickListener((View v) -> onNavigationItemSelected(R.id.action_settings));
+        headerview.findViewById(R.id.nav_header_main_settings).setOnLongClickListener((View v) -> {
+            onNavigationItemSelected(R.id.action_imprint);
+            return true;
+        });
+        headerview.findViewById(R.id.nav_header_main_icon).setOnClickListener((View v) -> {
+            Intent intent = new Intent(this, WebsiteActivity.class);
+//            intent.putExtra("url", "gym-wen.de/information/unsere-schule/");
+            startActivity(intent);
+            drawer.closeDrawer(GravityCompat.START);
+        });
+
+        if (PreferenceUtil.isBackgroundUpdateCheck())
+            checkUpdates(Display.DIALOG, false);
+        showChangelog(true);
+        checkRegistration();
+        RSS_Feed.checkRSS(this);
+    }
+
+    public void setupColors() {
+        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
+        appBarLayout.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+
+        findViewById(R.id.main_spinner_relative).setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setBackgroundColor(ApplicationFeatures.getPrimaryColor(this));
+        tabs.setSelectedTabIndicatorColor(ApplicationFeatures.getAccentColor(this));
+        if (Build.VERSION.SDK_INT >= 21)
+            findViewById(R.id.main_fab).setBackgroundTintList(ColorStateList.valueOf(ApplicationFeatures.getAccentColor(this)));
+        int accentColor = ThemeStore.accentColor(this);
+        NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
+        NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             TileService.requestListeningState(this, new ComponentName(this, NotificationTileService.class));
         }

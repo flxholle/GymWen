@@ -91,11 +91,8 @@ public class SubstitutionWidgetActivity extends ActivityFeatures {
 
         ListView listView = findViewById(R.id.widget_creation_profile_list);
         listView.setAdapter(new ProfileListAdapter(requireContext(), 0));
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+
         findViewById(R.id.fab).setOnClickListener((View v) -> {
             savePref();
 

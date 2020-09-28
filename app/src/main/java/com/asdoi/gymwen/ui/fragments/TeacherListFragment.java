@@ -94,12 +94,6 @@ public class TeacherListFragment extends Fragment {
         base = root.findViewById(R.id.teacher_list_base);
         context = requireContext();
 
-        return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         ((ActivityFeatures) requireActivity()).createLoadingPanel(base);
         //noinspection CatchMayIgnoreException
         try {
@@ -115,8 +109,8 @@ public class TeacherListFragment extends Fragment {
             } catch (Exception ignore) {
             }
         }).start();
+        return root;
     }
-
 
     private void createLayout() {
         requireActivity().runOnUiThread(() -> {

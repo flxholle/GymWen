@@ -180,17 +180,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                              ViewGroup container, Bundle savedInstanceState) {
         context = requireContext();
         root = inflater.inflate(R.layout.fragment_substitution, container, false);
-        return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
 
         //Loading Pabel
         ((ActivityFeatures) requireActivity()).createLoadingPanel(root.findViewById(R.id.substitution_frame));
 
         refreshAndTable();
+        return root;
     }
 
     private void refreshAndTable() {
@@ -400,7 +395,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                         throw new Exception();
                     ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(((ActivityFeatures) requireActivity()).createTeacherView(Objects.requireNonNull(TeacherlistFeatures.getTeacher(query))));
                 } catch (Exception e) {
-                    if (!TeacherlistFeatures.isDownloaded()) {
+                    if (TeacherlistFeatures.liste().getNoInternet()) {
                         ChocoBar.builder().setActivity(requireActivity())
                                 .setText(getString(R.string.noInternet))
                                 .setDuration(ChocoBar.LENGTH_LONG)

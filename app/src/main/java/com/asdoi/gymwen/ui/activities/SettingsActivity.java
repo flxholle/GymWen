@@ -63,15 +63,6 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                 .replace(R.id.settings, new SettingsFragmentRoot())
                 .commit();
         loadedFragments = 0;
-    }
-
-    public void setupColors() {
-        setToolbar(true);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
 
         Intent i = getIntent();
         if (i != null && i.getAction() != null) {
@@ -84,6 +75,10 @@ public class SettingsActivity extends ActivityFeatures implements ColorChooserDi
                     break;
             }
         }
+    }
+
+    public void setupColors() {
+        setToolbar(true);
     }
 
     @Override

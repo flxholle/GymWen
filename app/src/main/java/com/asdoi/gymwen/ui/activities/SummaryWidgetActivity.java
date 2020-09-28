@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -30,8 +31,8 @@ import com.asdoi.gymwen.widgets.SummaryWidget;
 
 public class SummaryWidgetActivity extends SubstitutionWidgetActivity {
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
         findViewById(R.id.fab).setOnClickListener((View v) -> {
             savePref();
 

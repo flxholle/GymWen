@@ -71,12 +71,7 @@ public class WebsiteSearchFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_search_template, container, false);
         listView = root.findViewById(R.id.search_template_list);
         listView.setVisibility(View.GONE);
-        return root;
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
         ((ActivityFeatures) requireActivity()).createLoadingPanel((ViewGroup) root);
 
         new Thread(() -> {
@@ -90,6 +85,7 @@ public class WebsiteSearchFragment extends Fragment {
             } catch (Exception ignore) {
             }
         }).start();
+        return root;
     }
 
     private void createLayout(@NonNull View root) {
