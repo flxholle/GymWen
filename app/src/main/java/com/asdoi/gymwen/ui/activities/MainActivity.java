@@ -22,6 +22,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,6 +42,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -824,13 +827,34 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 if (coronaTicker != null) {
                     runOnUiThread(() -> {
                         String text = getString(R.string.corona_live_ticker, External_Const.CORONA_LIVE_LOCATION, coronaTicker.getInfections(), coronaTicker.getInfectionsYesterdayToday(), External_Const.CORONA_LIVE_SOURCE);
-                        ChocoBar.builder().setActivity(this)
+                        ChocoBar.Builder builder = ChocoBar.builder().setActivity(this)
                                 .setActionText(getString(R.string.ok))
                                 .setText(text)
-                                .setDuration(ChocoBar.LENGTH_INDEFINITE)
-                                .setIcon(R.drawable.ic_virus)
-                                .orange()
-                                .show();
+                                .setDuration(ChocoBar.LENGTH_INDEFINITE);
+                        Drawable icon = ContextCompat.getDrawable(this, R.drawable.ic_virus);
+                        switch (coronaTicker.getCoronaLightColor()) {
+                            case GREEN:
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    icon.setTint(Color.WHITE);
+                                }
+                                builder.setIcon(icon);
+                                builder.green().show();
+                                break;
+                            case YELLOW:
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    icon.setTint(Color.BLACK);
+                                }
+                                builder.setIcon(icon);
+                                builder.orange().show();
+                                break;
+                            case RED:
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    icon.setTint(Color.WHITE);
+                                }
+                                builder.setIcon(icon);
+                                builder.red().show();
+                                break;
+                        }
                     });
                 }
             }
