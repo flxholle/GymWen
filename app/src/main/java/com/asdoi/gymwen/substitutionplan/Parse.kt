@@ -45,20 +45,24 @@ object Parse {
             val moreInformationIndex: Int = headline.indexOf("Sonstiges")
 
             for (i in 1 until rows.size) {
-                val content = rows[i].select("td")
+                try {
+                    val content = rows[i].select("td")
 
-                val course: String = if (courseIndex >= 0) content[courseIndex].text().trim() else ""
-                val hour: Int = if (hourIndex >= 0) content[hourIndex].text().trim().toInt() else 0
-                val subject: String = if (subjectIndex >= 0) content[subjectIndex].text().trim() else ""
-                val teacher: String = if (teacherIndex >= 0) content[teacherIndex].text().trim() else ""
-                val room: String = if (roomIndex >= 0) content[roomIndex].text().trim() else ""
-                val moreInformation: String = if (moreInformationIndex >= 0) content[moreInformationIndex].text() else ""
+                    val course: String = if (courseIndex >= 0) content[courseIndex].text().trim() else ""
+                    val hour: Int = if (hourIndex >= 0) content[hourIndex].text().trim().toInt() else 0
+                    val subject: String = if (subjectIndex >= 0) content[subjectIndex].text().trim() else ""
+                    val teacher: String = if (teacherIndex >= 0) content[teacherIndex].text().trim() else ""
+                    val room: String = if (roomIndex >= 0) content[roomIndex].text().trim() else ""
+                    val moreInformation: String = if (moreInformationIndex >= 0) content[moreInformationIndex].text() else ""
 
-                substitutionList.add(
-                        SubstitutionEntry(
-                                course, hour, subject, teacher, room, moreInformation
-                        )
-                )
+                    substitutionList.add(
+                            SubstitutionEntry(
+                                    course, hour, subject, teacher, room, moreInformation
+                            )
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
 
             return substitutionList.sort()
