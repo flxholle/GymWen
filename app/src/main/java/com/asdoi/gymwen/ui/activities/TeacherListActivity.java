@@ -36,7 +36,7 @@ import androidx.fragment.app.FragmentManager;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
-import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
+import com.asdoi.gymwen.teacherlist.MainTeacherList;
 import com.asdoi.gymwen.ui.fragments.SubstitutionFragment;
 import com.asdoi.gymwen.ui.fragments.TeacherListFragment;
 
@@ -107,7 +107,7 @@ public class TeacherListActivity extends ActivityFeatures {
 
     //TeacherSearch
     public static void teacherClick(@NonNull TextView view, @NonNull String teacherQuery, boolean fullNames, @NonNull Activity activity) {
-        if (TeacherlistFeatures.isAOL(teacherQuery))
+        if (MainTeacherList.INSTANCE.isAOL(teacherQuery))
             return;
         TypedValue outValue = new TypedValue();
         activity.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);

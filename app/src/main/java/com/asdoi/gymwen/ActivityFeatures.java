@@ -64,7 +64,7 @@ import androidx.preference.PreferenceManager;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.asdoi.gymwen.teacherlist.TeacherListEntry;
+import com.asdoi.gymwen.teacherlist.Teacher;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.util.External_Const;
 import com.asdoi.gymwen.util.PreferenceUtil;
@@ -353,7 +353,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     }
 
     @NonNull
-    public ViewGroup createTeacherView(@NonNull TeacherListEntry teacher) {
+    public ViewGroup createTeacherView(@NonNull Teacher teacher) {
         LinearLayout base = new LinearLayout(this);
         base.setOrientation(LinearLayout.VERTICAL);
         base.setGravity(Gravity.CENTER);
@@ -387,21 +387,21 @@ public abstract class ActivityFeatures extends AppCompatActivity {
     }
 
     @NonNull
-    public View getTeacherView(@NonNull View view, @NonNull TeacherListEntry entry) {
+    public View getTeacherView(@NonNull View view, @NonNull Teacher entry) {
         TextView kuerzel = view.findViewById(R.id.teacher_kürzel);
-        kuerzel.setText(entry.getShort());
+        kuerzel.setText(entry.getAbbreviation());
 
         TextView nname = view.findViewById(R.id.teacher_nname);
-        nname.setText(entry.getName());
+        nname.setText(entry.getLastName());
 
         TextView vname = view.findViewById(R.id.teacher_vname);
-        vname.setText(" " + entry.getFirst_name());
+        vname.setText(" " + entry.getFirstName());
 
         vname.setTextIsSelectable(false);
         nname.setTextIsSelectable(false);
 
         TextView hour = view.findViewById(R.id.teacher_hour);
-        hour.setText(entry.getMeeting());
+        hour.setText(entry.getOfficeHour());
         hour.setVisibility(View.GONE);
 
         LinearLayout hideLayout = view.findViewById(R.id.teacher_list_linear);
@@ -412,7 +412,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         Button mailButton = view.findViewById(R.id.teacher_mail);
         mailButton.setOnClickListener((View v) -> {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-            emailIntent.setData(Uri.parse("mailto:" + entry.getShort() + External_Const.MAIL_ENDING));
+            emailIntent.setData(Uri.parse("mailto:" + entry.getAbbreviation() + External_Const.MAIL_ENDING));
             try {
                 startActivity(emailIntent);
             } catch (Exception e) {

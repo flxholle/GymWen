@@ -46,8 +46,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
+import com.asdoi.gymwen.teacherlist.MainTeacherList;
 import com.asdoi.gymwen.teacherlist.TeacherList;
-import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
 import com.asdoi.gymwen.ui.activities.TeacherListActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
 import com.google.android.material.textfield.TextInputLayout;
@@ -103,7 +103,7 @@ public class TeacherListFragment extends Fragment {
 
         new Thread(() -> {
             ApplicationFeatures.downloadTeacherlistDoc();
-            teacherList = TeacherlistFeatures.liste();
+            teacherList = MainTeacherList.INSTANCE.getTeacherList();
             try {
                 createLayout();
             } catch (Exception ignore) {
@@ -116,7 +116,7 @@ public class TeacherListFragment extends Fragment {
         requireActivity().runOnUiThread(() -> {
             clear();
 
-            if (Objects.requireNonNull(teacherList).getNoInternet()) {
+            if (teacherList == null) {
                 TextView title = createTitleLayout();
                 title.setText(requireContext().getString(R.string.noInternetConnection));
                 return;
@@ -128,7 +128,7 @@ public class TeacherListFragment extends Fragment {
 
             TextInputLayout searchInput = createSearchLayout(null);
             if (teacherQuery != null && !teacherQuery.trim().isEmpty()) {
-                teacherList = TeacherlistFeatures.getTeachers(teacherQuery);
+                teacherList = MainTeacherList.INSTANCE.getTeacherList().getMatches(teacherQuery);
                 searchInput = createSearchLayout(teacherQuery);
             }
 
@@ -195,9 +195,9 @@ public class TeacherListFragment extends Fragment {
             public void onTextChanged(@NonNull CharSequence charSequence, int i, int i1, int i2) {
                 if (!charSequence.toString().equals(before)) {
                     if (charSequence.length() > 0) {
-                        teacherList = TeacherlistFeatures.getTeachers("" + charSequence);
+                        teacherList = MainTeacherList.INSTANCE.getTeacherList().getMatches("" + charSequence);
                     } else {
-                        teacherList = TeacherlistFeatures.liste();
+                        teacherList = MainTeacherList.INSTANCE.getTeacherList();
                     }
                     before = charSequence.toString();
                     ((BaseAdapter) Objects.requireNonNull(teacherListView).getAdapter()).notifyDataSetChanged();
@@ -234,7 +234,7 @@ public class TeacherListFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return Objects.requireNonNull(teacherList).size();
+            return Objects.requireNonNull(teacherList).getEntries().size();
         }
     }
 

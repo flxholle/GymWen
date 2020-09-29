@@ -57,8 +57,8 @@ import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionEntry;
 import com.asdoi.gymwen.substitutionplan.SubstitutionList;
 import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
-import com.asdoi.gymwen.teacherlist.TeacherListEntry;
-import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
+import com.asdoi.gymwen.teacherlist.MainTeacherList;
+import com.asdoi.gymwen.teacherlist.Teacher;
 import com.asdoi.gymwen.ui.activities.MainActivity;
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity;
 import com.asdoi.gymwen.util.External_Const;
@@ -340,7 +340,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             view.setText(teacherQuery);
         }
 
-        if (TeacherlistFeatures.isAOL(teacherQuery))
+        if (MainTeacherList.INSTANCE.isAOL(teacherQuery))
             return;
 
         int padding = 0;
@@ -391,11 +391,11 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             ApplicationFeatures.downloadTeacherlistDoc();
             requireActivity().runOnUiThread(() -> {
                 try {
-                    if (TeacherlistFeatures.liste().getNoInternet())
+                    if (MainTeacherList.INSTANCE.getTeacherList() == null)
                         throw new Exception();
-                    ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(((ActivityFeatures) requireActivity()).createTeacherView(Objects.requireNonNull(TeacherlistFeatures.getTeacher(query))));
+                    ((ViewGroup) root.findViewById(R.id.substitution_frame)).addView(((ActivityFeatures) requireActivity()).createTeacherView(Objects.requireNonNull(MainTeacherList.INSTANCE.getTeacherList().findTeacher(query))));
                 } catch (Exception e) {
-                    if (TeacherlistFeatures.liste().getNoInternet()) {
+                    if (MainTeacherList.INSTANCE.getTeacherList() == null) {
                         ChocoBar.builder().setActivity(requireActivity())
                                 .setText(getString(R.string.noInternet))
                                 .setDuration(ChocoBar.LENGTH_LONG)
@@ -420,8 +420,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         String teacher = null;
         try {
             ApplicationFeatures.downloadTeacherlistDoc();
-            TeacherListEntry response = TeacherlistFeatures.getTeacher(query);
-            teacher = Objects.requireNonNull(response).getName();
+            Teacher response = MainTeacherList.INSTANCE.getTeacherList().findTeacher(query);
+            teacher = Objects.requireNonNull(response).getLastName();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }

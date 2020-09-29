@@ -58,7 +58,7 @@ import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.CheckSubstitutionPlanReceiver;
 import com.asdoi.gymwen.substitutionplan.MainSubstitutionPlan;
 import com.asdoi.gymwen.substitutionplan.SubstitutionPlan;
-import com.asdoi.gymwen.teacherlist.TeacherlistFeatures;
+import com.asdoi.gymwen.teacherlist.MainTeacherList;
 import com.asdoi.gymwen.ui.activities.AppIntroActivity;
 import com.asdoi.gymwen.ui.activities.ChoiceActivity;
 import com.asdoi.gymwen.ui.activities.SignInActivity;
@@ -182,21 +182,21 @@ public class ApplicationFeatures extends MultiDexApplication {
     }
 
     public static void deleteOfflineTeacherlistDoc() {
-        TeacherlistFeatures.setDoc(null);
+        MainTeacherList.INSTANCE.setDocument(null);
     }
 
     public static void downloadTeacherlistDoc() {
-        if (!TeacherlistFeatures.isDownloaded()) {
+        if (!MainTeacherList.INSTANCE.isDocumentSet()) {
             if (ApplicationFeatures.isNetworkAvailable()) {
                 Document teacherList = downloadDoc(PreferenceUtil.getTeacherlistURL(getContext()));
                 if (teacherList != null) {
-                    TeacherlistFeatures.setDoc(teacherList);
+                    MainTeacherList.INSTANCE.setDocument(teacherList);
                     saveDocs();
                 } else if (PreferenceUtil.isOfflineMode()) {
-                    TeacherlistFeatures.reloadDoc();
+                    MainTeacherList.INSTANCE.reload();
                 }
             } else if (PreferenceUtil.isOfflineMode()) {
-                TeacherlistFeatures.reloadDoc();
+                MainTeacherList.INSTANCE.reload();
             }
         }
     }
@@ -342,7 +342,7 @@ public class ApplicationFeatures extends MultiDexApplication {
     //Save Documents
     public static void saveDocs() {
         MainSubstitutionPlan.INSTANCE.save();
-        TeacherlistFeatures.saveDoc();
+        MainTeacherList.INSTANCE.save();
     }
 
 
