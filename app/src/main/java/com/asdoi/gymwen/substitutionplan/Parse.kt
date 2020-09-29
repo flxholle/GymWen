@@ -38,9 +38,9 @@ object Parse {
                 headline[i] = headline[i].trim()
             }
             val courseIndex: Int = headline.indexOf("Klasse")
-            val hourIndex: Int = headline.indexOf("Stunde")
+            val hourIndex: Int = headline.indexOf("Std")
             val subjectIndex: Int = headline.indexOf("Fach")
-            val teacherIndex: Int = headline.indexOf("Vertretung")
+            val teacherIndex: Int = headline.indexOf("Lehrer")
             val roomIndex: Int = headline.indexOf("Raum")
             val moreInformationIndex: Int = headline.indexOf("Sonstiges")
 
