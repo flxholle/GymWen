@@ -116,23 +116,22 @@
                     android:icon="@drawable/ic_directions_transit_black_24dp"
                     android:title="@string/menu_public_transport" />
                 <item
+                    android:id="@+id/nav_call_office"
+                    android:icon="@drawable/ic_call_black_24dp"
+                    android:title="@string/menu_call_office"
+                    android:visible="false" />
+                <item
                     android:id="@+id/nav_news"
                     android:icon="@drawable/ic_news"
                     android:title="@string/menu_news" />
                 <item
                     android:id="@+id/nav_shop"
                     android:icon="@drawable/ic_t_shirt"
-                    android:title="@string/menu_shop"
-                    android:visible="false" />
+                    android:title="@string/menu_shop" />
                 <item
                     android:id="@+id/nav_podcast"
                     android:icon="@drawable/ic_podcast"
-                    android:title="@string/menu_podcast"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/nav_call_office"
-                    android:icon="@drawable/ic_call_black_24dp"
-                    android:title="@string/menu_call_office" />
+                    android:title="@string/menu_podcast" />
                 <item
                     android:id="@+id/nav_navigation"
                     android:icon="@drawable/ic_navigation_black_24dp"

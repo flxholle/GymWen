@@ -67,19 +67,14 @@
         android:title="@string/menu_mensa"
         app:iconSpaceReserved="false" />
     <SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="menu_shop"
         android:title="@string/menu_shop"
         app:iconSpaceReserved="false" />
     <SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="menu_podcast"
         android:title="@string/menu_podcast"
-        app:iconSpaceReserved="false" />
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="menu_call_office"
-        android:title="@string/menu_call_office"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"

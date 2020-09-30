@@ -101,10 +101,6 @@ public class PreferenceUtil {
         return getBooleanSettings("menu_unfiltered", true);
     }
 
-    public static boolean isOfficeMenu() {
-        return getBooleanSettings("menu_call_office", true);
-    }
-
     public static boolean isTransportMenu() {
         return getBooleanSettings("menu_public_transport", true);
     }
@@ -122,7 +118,7 @@ public class PreferenceUtil {
     }
 
     public static boolean isShop() {
-        return getBooleanSettings("menu_shop", false);
+        return getBooleanSettings("menu_shop", true);
     }
 
     public static boolean isNavigation() {
@@ -192,7 +188,7 @@ public class PreferenceUtil {
     }
 
     public static boolean isPodcast() {
-        return getBooleanSettings("menu_podcast", false);
+        return getBooleanSettings("menu_podcast", true);
     }
 
     public static boolean showMebisDialog() {

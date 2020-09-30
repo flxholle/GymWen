@@ -27,7 +27,7 @@
         <change>Samsung DeX Kompatibilität</change>
         <change>Vorschlägeliste im Stundenplan editierbar</change>
         <change>Kleinere Design-Änderungen</change>
-        <change>Großer Bugfix im Vertretungsplan</change>
+        <change>Großer Bugfix in Vertretungsplan und Lehrerliste</change>
     </release>
     <release
         version="1.2.1"

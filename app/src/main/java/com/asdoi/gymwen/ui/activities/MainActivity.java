@@ -302,6 +302,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         if (PreferenceUtil.isParents()) {
             itemsEnable.add(menu.findItem(R.id.nav_claxss));
             itemsEnable.add(menu.findItem(R.id.nav_forms));
+            itemsEnable.add(menu.findItem(R.id.nav_call_office));
             itemsDisable.add(menu.findItem(R.id.nav_mebis));
             itemsDisable.add(menu.findItem(R.id.nav_timetable));
             itemsDisable.add(menu.findItem(R.id.nav_grades));
@@ -309,6 +310,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         } else {
             itemsDisable.add(menu.findItem(R.id.nav_claxss));
             itemsDisable.add(menu.findItem(R.id.nav_forms));
+            itemsDisable.add(menu.findItem(R.id.nav_call_office));
             itemsEnable.add(menu.findItem(R.id.nav_mebis));
             itemsEnable.add(menu.findItem(R.id.nav_timetable));
             itemsEnable.add(menu.findItem(R.id.nav_grades));
@@ -319,11 +321,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsEnable.add(menu.findItem(R.id.nav_at_one_glance));
         } else
             itemsDisable.add(menu.findItem(R.id.nav_at_one_glance));
-
-        if (PreferenceUtil.isOfficeMenu())
-            itemsEnable.add(menu.findItem(R.id.nav_call_office));
-        else
-            itemsDisable.add(menu.findItem(R.id.nav_call_office));
 
         if (PreferenceUtil.isTransportMenu())
             itemsEnable.add(menu.findItem(R.id.nav_public_transport));
