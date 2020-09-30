@@ -822,8 +822,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             if (document != null) {
                 final CoronaTicker coronaTicker = ParseCoronaLiveTicker.INSTANCE.parseLiveTicker(document, External_Const.CORONA_LIVE_TICKER_CITY);
                 if (coronaTicker != null) {
+                    String infectionsYesterdayToday = (coronaTicker.getInfectionsYesterdayToday() > 0 ? "+" : "") + coronaTicker.getInfectionsYesterdayToday();
                     runOnUiThread(() -> {
-                        String text = getString(R.string.corona_live_ticker, External_Const.CORONA_LIVE_LOCATION, coronaTicker.getInfections(), coronaTicker.getInfectionsYesterdayToday(), External_Const.CORONA_LIVE_SOURCE);
+                        String text = getString(R.string.corona_live_ticker, External_Const.CORONA_LIVE_LOCATION, infectionsYesterdayToday, Math.round(coronaTicker.getSevenDayIncidencePerOneHundredThousands()), External_Const.CORONA_LIVE_SOURCE);
                         ChocoBar.Builder builder = ChocoBar.builder().setActivity(this)
                                 .setActionText(getString(R.string.ok))
                                 .setText(text)

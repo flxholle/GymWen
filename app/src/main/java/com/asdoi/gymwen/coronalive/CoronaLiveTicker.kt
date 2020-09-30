@@ -1,5 +1,7 @@
 package com.asdoi.gymwen.coronalive
 
+import kotlin.math.roundToInt
+
 data class CoronaTicker(val infections: Int,
                         val infectionsYesterdayToday: Int,
                         val infectionsPerOneHundredThousands: Float,
@@ -23,13 +25,13 @@ data class CoronaTicker(val infections: Int,
                     sevenDayIncidencePerOneHundredThousands,
                     deaths,
                     deathsYesterdayToday,
-                    calculateCoronaLightColor(infectionsInTheLastSevenDays))
+                    calculateCoronaLightColor(sevenDayIncidencePerOneHundredThousands.roundToInt()))
 
     companion object {
-        fun calculateCoronaLightColor(infectionsInTheLastSevenDays: Int) =
-                if (infectionsInTheLastSevenDays < 20)
+        fun calculateCoronaLightColor(sevenDayIncidencePerOneHundredThousands: Int) =
+                if (sevenDayIncidencePerOneHundredThousands < 35)
                     CoronaLightColor.GREEN
-                else if (infectionsInTheLastSevenDays < 30)
+                else if (sevenDayIncidencePerOneHundredThousands < 50)
                     CoronaLightColor.YELLOW
                 else
                     CoronaLightColor.RED

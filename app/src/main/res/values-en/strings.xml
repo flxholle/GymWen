@@ -627,7 +627,7 @@
         \nIn addition, based on this profile data, notifications are sent and the smartphone is set to \"Do Not Disturb\" mode.</string>
 
     <string name="corona_live_ticker">Corona Live-Ticker (%s):
-        \nNumber of cases: %d
-        \nChange from previous day: %d
+        \nChange from previous day: %s
+        \n7-day incidence per 100,000: %d
         \n\tData source: %s</string>
 </resources>

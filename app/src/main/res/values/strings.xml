@@ -720,8 +720,8 @@
         \nAußerdem werden auf Basis dieses Profils die Benachrichtigungen gesendet und das Smartphone in den Nicht-Stören Modus versetzt.</string>
 
     <string name="corona_live_ticker">Corona Live-Ticker (%s):
-        \nAnzahl Fälle: %d
-        \nVeränderung zum Vortag: %d
+        \nVeränderung zum Vortag: %s
+        \n7-Tage-Inzidenz pro 100.000: %d
         \n\tQuelle: %s</string>
 
 </resources>
