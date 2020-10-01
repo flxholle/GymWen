@@ -708,7 +708,7 @@
     <string name="download_mebis_app_title">Lädt Mebis App herunter…</string>
 
     <!--    Biometric unlock-->
-    <string name="authentication_error">Anmeldungsfehler: </string>
+    <string name="authentication_error">Anmeldungsfehler:</string>
     <string name="authentication_failed">Anmeldung fehlgeschlagen</string>
     <string name="biometric_unlock">App-Sperre</string>
     <string name="biometric_unlock_description">Entsperre die App bei jedem Start mit deinem Fingerabdruck oder deinen Handy-Anmeldedaten.</string>

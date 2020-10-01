@@ -23,17 +23,17 @@ object ParseCoronaLiveTicker {
                 if (row[cityIndex] == city) {
                     val infections = row[infectionsIndex].toInt()
                     val infectionsYesterdayTodayString = row[infectionsYesterdayTodayIndex]
-                            .replace("(", "").replace(")", "").replace("+", "").trim()
+                            .replace("(", "").replace(")", "").replace("+", "").replace(" ", "").trim()
                     val infectionsYesterdayToday =
                             if (infectionsYesterdayTodayString == "-")
                                 0
-                            else infectionsYesterdayTodayString.toInt()
+                            else infectionsYesterdayTodayString.trim().toInt()
                     val infectionsPerOneHundredThousands = row[infectionsPerOneHundredThousandsIndex].replace(",", ".").toFloat()
                     val infectionsInTheLastSevenDays = row[infectionsInTheLastSevenDaysIndex].toInt()
                     val sevenDayIncidencePerOneHundredThousands = row[sevenDayIncidencePerOneHundredThousandsIndex].replace(",", ".").toFloat()
                     val deaths = row[deathsIndex].toInt()
                     val deathsYesterdayTodayString = row[deathsYesterdayTodayIndex]
-                            .replace("(", "").replace(")", "").replace("+", "").trim()
+                            .replace("(", "").replace(")", "").replace("+", "").replace(" ", "").trim()
                     val deathsYesterdayToday =
                             if (deathsYesterdayTodayString == "-")
                                 0

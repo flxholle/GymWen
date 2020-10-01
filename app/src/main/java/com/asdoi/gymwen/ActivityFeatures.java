@@ -779,7 +779,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
             public void onAuthenticationError(int errorCode,
                                               @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(requireContext(), getString(R.string.authentication_error) + errString, Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.authentication_error) + " " + errString, Toast.LENGTH_SHORT).show();
                 finishAffinity();
             }
 

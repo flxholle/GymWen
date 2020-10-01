@@ -614,7 +614,7 @@
         \nWith the help of this app, the handling of Mebis should be kept as simple as possible.
         \nDo you want to download the (unofficial) Mebis app?</string>
 
-    <string name="authentication_error">Authentication error: </string>
+    <string name="authentication_error">Authentication error:</string>
     <string name="authentication_failed">Authentication failed</string>
     <string name="biometric_unlock">App lock</string>
     <string name="biometric_unlock_description">Unlock the app with your fingerprint or your device credentials.</string>
