@@ -116,6 +116,10 @@
                     android:icon="@drawable/ic_directions_transit_black_24dp"
                     android:title="@string/menu_public_transport" />
                 <item
+                    android:id="@+id/nav_navigation"
+                    android:icon="@drawable/ic_navigation_black_24dp"
+                    android:title="@string/menu_navigation" />
+                <item
                     android:id="@+id/nav_call_office"
                     android:icon="@drawable/ic_call_black_24dp"
                     android:title="@string/menu_call_office"
@@ -133,17 +137,13 @@
                     android:icon="@drawable/ic_podcast"
                     android:title="@string/menu_podcast" />
                 <item
-                    android:id="@+id/nav_navigation"
-                    android:icon="@drawable/ic_navigation_black_24dp"
-                    android:title="@string/menu_navigation" />
+                    android:id="@+id/nav_notes"
+                    android:icon="@drawable/ic_writing"
+                    android:title="@string/menu_notes" />
                 <item
                     android:icon="@drawable/ic_cloud_download_black_24dp"
                     android:title="@string/menu_backup"
                     android:visible="false" />
-                <item
-                    android:id="@+id/nav_notes"
-                    android:icon="@drawable/ic_writing"
-                    android:title="@string/menu_notes" />
             </group>
         </menu>
     </item>
