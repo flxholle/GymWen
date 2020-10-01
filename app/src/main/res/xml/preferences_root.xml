@@ -71,11 +71,6 @@
             android:title="@string/set_show_more"
             app:iconSpaceReserved="false" />
         <Preference
-            android:key="language"
-            android:title="@string/menu_language"
-            app:iconSpaceReserved="false"
-            app:isPreferenceVisible="false" />
-        <Preference
             android:key="updates"
             android:summary="@string/set_desc_updates"
             android:title="@string/menu_update"

@@ -46,7 +46,6 @@
     <string name="menu_days">Einzelne Tage</string>
     <string name="menu_filtered">Gefiltert</string>
     <string name="menu_unfiltered">Gesamt</string>
-    <string name="menu_language">Sprache</string>
     <string name="menu_colorush" translatable="false">ColoRush</string>
     <string name="menu_profiles">Profile</string>
     <string name="menu_claxss" translatable="false">ClaXss</string>

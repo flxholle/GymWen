@@ -27,7 +27,6 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.asdoi.gymwen.ActivityFeatures;
-import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.ui.activities.SettingsActivity;
 import com.asdoi.gymwen.util.PreferenceUtil;
@@ -55,14 +54,7 @@ public class SettingsFragmentRoot extends PreferenceFragmentCompat {
         config.index(R.xml.preferences_substitutionplan);
         config.index(R.xml.timetable_settings);
 
-        Preference myPref = findPreference("language");
-        Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
-            ApplicationFeatures.getLanguageSwitcher().showChangeLanguageDialog(requireActivity());
-            return true;
-        });
-        myPref.setSummary(ApplicationFeatures.getLanguageSwitcher().getCurrentLocale().toString());
-
-        myPref = findPreference("updates");
+        Preference myPref = findPreference("updates");
         Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
             ((ActivityFeatures) requireActivity()).checkUpdates(Display.DIALOG, true);
             return true;
@@ -85,7 +77,6 @@ public class SettingsFragmentRoot extends PreferenceFragmentCompat {
         myPref = findPreference("show_more");
         Objects.requireNonNull(myPref).setOnPreferenceClickListener((Preference p) -> {
             findPreference("show_more").setVisible(false);
-            findPreference("language").setVisible(true);
             findPreference("updates").setVisible(true);
             findPreference("auto_update").setVisible(true);
             findPreference("offline_mode").setVisible(true);

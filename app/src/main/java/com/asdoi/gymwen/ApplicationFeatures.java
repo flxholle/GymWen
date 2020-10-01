@@ -52,7 +52,6 @@ import androidx.core.content.ContextCompat;
 import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 
-import com.ahmedjazzar.rosetta.LanguageSwitcher;
 import com.asdoi.gymwen.profiles.Profile;
 import com.asdoi.gymwen.profiles.ProfileManagement;
 import com.asdoi.gymwen.receivers.CheckSubstitutionPlanReceiver;
@@ -86,9 +85,7 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import saschpe.android.customtabs.CustomTabsActivityLifecycleCallbacks;
@@ -126,7 +123,6 @@ public class ApplicationFeatures extends MultiDexApplication {
         }
 
         mContext = this;
-        initRosetta();
         ProfileManagement.reload();
         initSubstitutionPlanReceiver();
 
@@ -537,43 +533,6 @@ public class ApplicationFeatures extends MultiDexApplication {
         if (PreferenceUtil.isNotification())
             new NotificationUtils.Companion.CreateNotification(alert).execute();
     }
-
-
-    //Localization
-    private static LanguageSwitcher languageSwitcher;
-
-    public static LanguageSwitcher getLanguageSwitcher() {
-        return languageSwitcher;
-    }
-
-    private void initRosetta() {
-        // This is the locale that you wanna your app to launch with.
-        Locale displayLang = Locale.getDefault();
-
-        // You can use a HashSet<String> instead and call 'setSupportedStringLocales()' :)
-        HashSet<Locale> supportedLocales = new HashSet<>();
-        supportedLocales.add(Locale.GERMAN);
-        supportedLocales.add(Locale.ENGLISH);
-
-        boolean match = false;
-        for (Locale l : supportedLocales) {
-            if (displayLang.getDisplayLanguage().contains(l.getDisplayLanguage())) {
-                match = true;
-                break;
-            }
-        }
-
-        if (!match)
-            displayLang = Locale.ENGLISH;
-
-        languageSwitcher = new LanguageSwitcher(this, displayLang);
-        languageSwitcher.setSupportedLocales(supportedLocales);
-
-//        List<Locale> SUPPORTED_LOCALES = new ArrayList<Locale>(supportedLocales);
-//
-//        LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
-    }
-
 
     //Schedule and TimePicker
     public static void setOneTimeAlarm(@NonNull Context context, @NonNull Class<?> cls, int hour, int min, int second, int id) {

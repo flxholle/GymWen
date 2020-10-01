@@ -92,7 +92,6 @@ dependencies {
     implementation 'de.cketti.library.changelog:ckchangelog:1.2.2'
     implementation 'ru.github.igla:ferriswheel:1.2'
     implementation 'com.github.IamIsPra:Sheriff:1.0.0'
-    implementation 'com.github.zeeshanrasool91:rosetta:aa011ce58a'
     //noinspection AnnotationProcessorOnCompilePath
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'

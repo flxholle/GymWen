@@ -211,7 +211,6 @@
 
     <string name="nav_filter">Filtered</string>
     <string name="nav_all">Total</string>
-    <string name="menu_language">Language</string>
     <string name="set_notification_alarm">On fixed time</string>
     <string name="menu_filtered">Filtered</string>
     <string name="menu_unfiltered">Unfiltered</string>
