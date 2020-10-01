@@ -236,7 +236,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         today = false;
         message += shareMessage(false);
 
-        String footprint = getString(R.string.footprint);
+        String footprint = getString(R.string.footprint) + " " + External_Const.DOWNLOAD_LINK;
         message += footprint;
 
         if (MainSubstitutionPlan.INSTANCE.getTodayTitle() == null) {
@@ -305,18 +305,42 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             for (int index = 0; index < content.size(); index++) {
                 SubstitutionEntry entry = content.getEntry(index);
                 if (entry.isNothing()) {
-                    message.append(freespace).append(entry.getTime()).append(". ").append(requireContext().getString(R.string.share_msg_nothing_hour_senior)).append(" ").append(entry.getCourse()).append("\n");
+                    message.append(freespace)
+                            .append(entry.getTimeSegment(context)).append(" ")
+                            .append(requireContext().getString(R.string.share_msg_nothing_senior))
+                            .append(" ").append(entry.getCourse())
+                            .append("\n");
                 } else {
-                    message.append(freespace).append(entry.getTime()).append(". ").append(requireContext().getString(R.string.share_msg_hour_senior)).append(" ").append(entry.getCourse()).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(entry.getRoom()).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(entry.getTeacher()).append(", ").append(entry.getMoreInformation()).append("\n");
+                    message.append(freespace)
+                            .append(entry.getTimeSegment(context)).append(" ")
+                            .append(requireContext().getString(R.string.share_msg_for_senior))
+                            .append(" ").append(entry.getCourse())
+                            .append(" ").append(context.getString(R.string.share_msg_in_room))
+                            .append(" ").append(entry.getRoom())
+                            .append(" ").append(context.getString(R.string.with_teacher))
+                            .append(" ").append(entry.getTeacher())
+                            .append(", ").append(entry.getMoreInformation())
+                            .append("\n");
                 }
             }
         } else {
             for (int index = 0; index < content.size(); index++) {
                 SubstitutionEntry entry = content.getEntry(index);
                 if (entry.isNothing()) {
-                    message.append(freespace).append(entry.getTime()).append(". ").append(requireContext().getString(R.string.share_msg_nothing_hour)).append("\n");
+                    message.append(freespace)
+                            .append(entry.getTimeSegment(context)).append(" ")
+                            .append(requireContext().getString(R.string.share_msg_dismissed))
+                            .append("\n");
                 } else {
-                    message.append(freespace).append(entry.getTime()).append(". ").append(requireContext().getString(R.string.share_msg_hour)).append(" ").append(entry.getSubject()).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(entry.getRoom()).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(entry.getTeacher()).append(", ").append(entry.getMoreInformation()).append("\n");
+                    message.append(freespace)
+                            .append(entry.getTimeSegment(context)).append(" ")
+                            .append(entry.getSubject()).append(" ")
+                            .append(context.getString(R.string.share_msg_in_room)).append(" ")
+                            .append(entry.getRoom())
+                            .append(" ").append(context.getString(R.string.with_teacher))
+                            .append(" ").append(entry.getTeacher())
+                            .append(", ").append(entry.getMoreInformation())
+                            .append("\n");
                 }
             }
         }
@@ -874,7 +898,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                              boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_all_entry_textViewCourse);
         course.setText(entry.getCourse());
-        course.setOnClickListener((View v) -> showAddPopup(course, entry.getCourse()));
+        if (senior)
+            course.setOnClickListener((View v) -> showAddPopup(course, entry.getCourse()));
 
         TextView hour = view.findViewById(R.id.substitution_all_entry_textViewHour);
         hour.setText(entry.getTime());
@@ -1074,7 +1099,8 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                                            boolean miscellaneous) {
         TextView course = view.findViewById(R.id.substitution_card_entry_textViewClass);
         course.setText(entry.getCourse());
-        course.setOnClickListener((View v) -> showRemovePopup(course, entry.getCourse()));
+        if (senior)
+            course.setOnClickListener((View v) -> showRemovePopup(course, entry.getCourse()));
 
         TextView hour = view.findViewById(R.id.substitution_card_entry_textViewHour);
         hour.setText(entry.getTime());

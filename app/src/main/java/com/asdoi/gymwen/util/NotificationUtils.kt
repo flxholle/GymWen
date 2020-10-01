@@ -302,18 +302,49 @@ class NotificationUtils {
                         for (index in 0 until content.size()) {
                             val line = content.getEntry(index)
                             if (line.isNothing()) {
-                                message.append(line.getTime()).append(". ").append(context.getString(R.string.share_msg_nothing_hour_senior)).append(" ").append(line.course).append("\n")
+                                message.append(
+                                        line.getTimeSegment(context)).append(" ")
+                                        .append(context.getString(R.string.share_msg_nothing_senior))
+                                        .append(" ")
+                                        .append(line.course)
+                                        .append("\n")
                             } else {
-                                message.append(line.getTime()).append(". ").append(context.getString(R.string.share_msg_hour_senior)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")
+                                message.append(
+                                        line.getTimeSegment(context)).append(" ")
+                                        .append(context.getString(R.string.share_msg_for_senior))
+                                        .append(" ")
+                                        .append(line.course)
+                                        .append(" ")
+                                        .append(context.getString(R.string.share_msg_in_room))
+                                        .append(" ")
+                                        .append(line.room)
+                                        .append(" ")
+                                        .append(context.getString(R.string.with_teacher))
+                                        .append(" ")
+                                        .append(line.teacher)
+                                        .append(", ")
+                                        .append(line.moreInformation)
+                                        .append("\n")
                             }
                         }
                     } else {
                         for (index in 0 until content.size()) {
                             val line = content.getEntry(index)
                             if (line.isNothing()) {
-                                message.append(line.getTime()).append(". ").append(context.getString(R.string.share_msg_nothing_hour)).append("\n")
+                                message.append(
+                                        line.getTimeSegment(context)).append(" ")
+                                        .append(context.getString(R.string.share_msg_dismissed))
+                                        .append("\n")
                             } else {
-                                message.append(line.getTime()).append(". ").append(context.getString(R.string.share_msg_hour)).append(" ").append(line.course).append(" ").append(context.getString(R.string.share_msg_in_room)).append(" ").append(line.room).append(" ").append(context.getString(R.string.with_teacher)).append(" ").append(line.teacher).append(", ").append(line.moreInformation).append("\n")
+                                message.append(
+                                        line.getTimeSegment(context))
+                                        .append(" ").append(line.course)
+                                        .append(" ").append(context.getString(R.string.share_msg_in_room))
+                                        .append(" ").append(line.room)
+                                        .append(" ").append(context.getString(R.string.with_teacher))
+                                        .append(" ").append(line.teacher)
+                                        .append(", ").append(line.moreInformation)
+                                        .append("\n")
                             }
                         }
                     }
@@ -426,9 +457,10 @@ class NotificationUtils {
             fun createMessage(entry: SubstitutionEntry): List<String> {
                 val context = ApplicationFeatures.getContext()
                 return if (entry.isNothing()) {
-                    listOf("${entry.getTime()}. ${context.getString(R.string.share_msg_nothing_hour)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
+                    listOf("${entry.getTimeSegment(context)} ${context.getString(R.string.share_msg_dismissed)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
                 } else {
-                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} ${context.getString(R.string.with_teacher)} " else ""}${entry.teacher} ${context.getString(R.string.share_msg_in_room)} ${entry.room}", "${entry.getTime()}. ${context.getString(R.string.share_msg_hour)}${if (!entry.moreInformation.isBlank()) ", ${entry.moreInformation} " else " "} ${if (senior) "(${entry.course})"; else ""}")
+                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} ${context.getString(R.string.with_teacher)} " else ""}${entry.teacher} ${context.getString(R.string.share_msg_in_room)} ${entry.room}",
+                            "${entry.getTimeSegment(context)}${if (!entry.moreInformation.isBlank()) ", ${entry.moreInformation}" else ""}  ${if (senior) "(${entry.course})"; else ""}")
                 }
 
             }

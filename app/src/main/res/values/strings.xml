@@ -121,7 +121,7 @@
     <string name="nothing_for_whole_day">Keine Vertretungen an diesem Tag.</string>
     <string name="back_button">Erneut drücken zum Beenden</string>
     <string name="downloading">Lädt\u2026</string>
-    <string name="footprint">Mit der GymWen App erzeugt: https://asdoi.gitlab.io/</string>
+    <string name="footprint">Mit der GymWen App erzeugt:</string>
     <string name="noInternet">Du bist nicht mit dem Internet verbunden!</string>
     <string name="noInternetConnection">Keine Internetverbindung!</string>
     <string name="share_substitution_plan">Vertretung senden an\u2026</string>
@@ -417,10 +417,10 @@
     <!-- Share Message -->
     <string name="share_msg_nothing_at">Keine Vertretung am</string>
     <string name="share_msg_substitution_at">Vertretung am</string>
-    <string name="share_msg_nothing_hour_senior">Stunde entfällt für Kurs</string>
-    <string name="share_msg_hour_senior">Stunde für Kurs</string>
+    <string name="share_msg_nothing_senior">entfällt für Kurs</string>
+    <string name="share_msg_for_senior">für Kurs</string>
     <string name="share_msg_in_room">in Raum</string>
-    <string name="share_msg_nothing_hour">Stunde entfällt</string>
+    <string name="share_msg_dismissed">entfällt</string>
     <string name="share_msg_hour">Stunde</string>
     <string name="share_msg_for_courses">für die Kurse</string>
 

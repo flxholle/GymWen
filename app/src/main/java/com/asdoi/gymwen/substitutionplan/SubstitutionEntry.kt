@@ -1,5 +1,7 @@
 package com.asdoi.gymwen.substitutionplan
 
+import android.content.Context
+import com.asdoi.gymwen.R
 import com.asdoi.gymwen.util.External_Const
 import com.asdoi.gymwen.util.PreferenceUtil
 import org.joda.time.LocalTime
@@ -58,6 +60,17 @@ data class SubstitutionEntry(
                 getStart(PreferenceUtil.isHour())
             else
                 "${getStart(PreferenceUtil.isHour())}-${getEnd(PreferenceUtil.isHour())}"
+
+    fun getTimeSegment(context: Context) =
+            if (PreferenceUtil.isHour()) {
+                getTime()
+            } else {
+                if (isStartEqualEnd())
+                    "${getStart(true)}. ${context.getString(R.string.share_msg_hour)}"
+                else
+                    "${getStart(PreferenceUtil.isHour())}.-${getEnd(PreferenceUtil.isHour())}. ${context.getString(R.string.share_msg_hour)}"
+            }
+
 
     companion object {
         fun getStartLocalTimeOfLesson(lesson: Int): LocalTime {
