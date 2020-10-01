@@ -240,7 +240,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         message += footprint;
 
         if (MainSubstitutionPlan.INSTANCE.getTodayTitle() == null) {
-            ChocoBar.builder().setActivity(requireActivity()).setText(getString(R.string.noInternet)).setDuration(ChocoBar.LENGTH_LONG).setIcon(R.drawable.ic_no_wifi).orange().show();
+            ChocoBar.builder().setActivity(requireActivity())
+                    .setText(getString(R.string.noInternet))
+                    .setDuration(ChocoBar.LENGTH_LONG)
+                    .setIcon(R.drawable.ic_no_wifi)
+                    .orange()
+                    .show();
             return;
         }
 

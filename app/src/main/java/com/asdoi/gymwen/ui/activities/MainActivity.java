@@ -206,7 +206,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             ChocoBar.builder().setActivity(this)
                     .setActionText(getString(R.string.ok))
                     .setText(getString(R.string.noInternetConnection))
-                    .setDuration(ChocoBar.LENGTH_INDEFINITE)
+                    .setDuration(5 * 1000)
                     .setIcon(R.drawable.ic_no_wifi)
                     .orange()
                     .show();
@@ -232,6 +232,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         showChangelog(true);
         checkRegistration();
         RSS_Feed.checkRSS(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            TileService.requestListeningState(this, new ComponentName(this, NotificationTileService.class));
+        }
     }
 
     public void setupColors() {
@@ -248,14 +252,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         int accentColor = ThemeStore.accentColor(this);
         NavigationViewUtil.setItemIconColors(findViewById(R.id.nav_view), ThemeStore.textColorSecondary(this), accentColor);
         NavigationViewUtil.setItemTextColors(findViewById(R.id.nav_view), ThemeStore.textColorPrimary(this), accentColor);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            TileService.requestListeningState(this, new ComponentName(this, NotificationTileService.class));
-        }
     }
 
     private static void setupMenuItems(@NonNull NavigationView navigationView) {

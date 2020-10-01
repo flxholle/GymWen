@@ -25,10 +25,10 @@ data class CoronaTicker(val infections: Int,
                     sevenDayIncidencePerOneHundredThousands,
                     deaths,
                     deathsYesterdayToday,
-                    calculateCoronaLightColor(sevenDayIncidencePerOneHundredThousands.roundToInt()))
+                    calculateCoronaLightColor(sevenDayIncidencePerOneHundredThousands.roundToInt().toFloat()))
 
     companion object {
-        fun calculateCoronaLightColor(sevenDayIncidencePerOneHundredThousands: Int) =
+        fun calculateCoronaLightColor(sevenDayIncidencePerOneHundredThousands: Float) =
                 if (sevenDayIncidencePerOneHundredThousands < 35)
                     CoronaLightColor.GREEN
                 else if (sevenDayIncidencePerOneHundredThousands < 50)
