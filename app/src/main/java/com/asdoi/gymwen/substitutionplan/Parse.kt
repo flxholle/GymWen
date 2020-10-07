@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object Parse {
+    private val teacherHeadlines = listOf("Lehrer", "Vertretung")
+
     private fun parseSubstitutionTitle(doc: Document): SubstitutionTitle? {
         try {
             val title = doc.select("h2.TextUeberschrift")[0].text()
@@ -37,10 +39,15 @@ object Parse {
             for (i in headline.indices) {
                 headline[i] = headline[i].trim()
             }
+
             val courseIndex: Int = headline.indexOf("Klasse")
             val hourIndex: Int = headline.indexOf("Std")
             val subjectIndex: Int = headline.indexOf("Fach")
-            val teacherIndex: Int = headline.indexOf("Lehrer")
+            var teacherIndex: Int = -1
+            for (name in teacherHeadlines) {
+                if (headline.indexOf(name) >= 0)
+                    teacherIndex = headline.indexOf(name)
+            }
             val roomIndex: Int = headline.indexOf("Raum")
             val moreInformationIndex: Int = headline.indexOf("Sonstiges")
 
