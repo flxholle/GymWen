@@ -118,7 +118,7 @@ public class HomeworkAdapter extends ArrayAdapter<Homework> {
             ContextThemeWrapper theme = new ContextThemeWrapper(mActivity, PreferenceUtil.isDark() ? R.style.Widget_AppCompat_PopupMenu : R.style.Widget_AppCompat_Light_PopupMenu);
             final PopupMenu popup = new PopupMenu(theme, holder.popup);
             final DbHelper db = new DbHelper(mActivity);
-            popup.getMenuInflater().inflate(R.menu.timetable_popup_menu, popup.getMenu());
+            popup.inflate(R.menu.timetable_popup_menu);
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(@NonNull MenuItem item) {
                     int itemId = item.getItemId();

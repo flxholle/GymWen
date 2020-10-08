@@ -27,6 +27,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.provider.CalendarContract;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,7 +119,7 @@ public class AlertDialogsHelper {
                             }
                         } catch (Exception ignore) {
                         }
-                    }, mHour, mMinute, true);
+                    }, mHour, mMinute, DateFormat.is24HourFormat(activity));
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
         });
@@ -140,7 +141,7 @@ public class AlertDialogsHelper {
                             }
                         } catch (Exception ignore) {
                         }
-                    }, mHour, mMinute, true);
+                    }, mHour, mMinute, DateFormat.is24HourFormat(activity));
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
         });
@@ -322,7 +323,7 @@ public class AlertDialogsHelper {
         to_hour.setText(R.string.select_end_time);
 
         final Button select_color = alertLayout.findViewById(R.id.select_color);
-//        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
+        select_color.setTextColor(ColorPalette.pickTextColorBasedOnBgColorSimple(((ColorDrawable) select_color.getBackground()).getColor(), Color.WHITE, Color.BLACK));
 
         final Week week = new Week();
 
@@ -351,7 +352,7 @@ public class AlertDialogsHelper {
                             }
                         } catch (Exception ignore) {
                         }
-                    }, mHour, mMinute, true);
+                    }, mHour, mMinute, DateFormat.is24HourFormat(activity));
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
         });
@@ -381,7 +382,7 @@ public class AlertDialogsHelper {
                             }
                         } catch (Exception ignore) {
                         }
-                    }, hour, minute, true);
+                    }, hour, minute, DateFormat.is24HourFormat(activity));
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
         });
@@ -1126,7 +1127,7 @@ public class AlertDialogsHelper {
                         time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                         exam.setTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                         hour.setText("" + WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)));
-                    }, mHour, mMinute, true);
+                    }, mHour, mMinute, DateFormat.is24HourFormat(activity));
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
         });
@@ -1345,7 +1346,7 @@ public class AlertDialogsHelper {
                         time.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                         exam.setTime(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                         hour.setText("" + WeekUtils.getMatchingScheduleBegin(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)));
-                    }, mHour, mMinute, true);
+                    }, mHour, mMinute, DateFormat.is24HourFormat(activity));
             timePickerDialog.setTitle(R.string.choose_time);
             timePickerDialog.show();
         });

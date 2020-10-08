@@ -480,6 +480,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
                         .setText(getString(R.string.backup_successful, Build.VERSION.SDK_INT >= 19 ? getString(R.string.Documents) : getString(R.string.Downloads)))
                         .setDuration(ChocoBar.LENGTH_LONG)
+                        .setIcon(R.drawable.ic_baseline_save_24)
                         .green()
                         .show());
             }
@@ -531,6 +532,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 runOnUiThread(() -> ChocoBar.builder().setActivity(activity)
                         .setText(getString(R.string.import_successful))
                         .setDuration(ChocoBar.LENGTH_LONG)
+                        .setIcon(R.drawable.ic_baseline_settings_backup_restore_24)
                         .green()
                         .show());
                 initAll();
@@ -559,6 +561,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                         ChocoBar.builder().setActivity(this)
                                 .setText(getString(R.string.remove_all_successful))
                                 .setDuration(ChocoBar.LENGTH_LONG)
+                                .setIcon(R.drawable.ic_delete_forever_black_24dp)
                                 .green()
                                 .show();
                         initAll();
