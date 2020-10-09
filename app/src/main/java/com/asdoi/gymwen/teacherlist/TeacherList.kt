@@ -20,6 +20,17 @@ open class TeacherList(entries: List<Teacher>) {
         for (teacher in entries) {
             if (teacher.abbreviation.contains(regex, true)
                     || teacher.firstName.contains(regex, true)
+                    || teacher.lastName.contains(regex, true))
+                matches.add(teacher)
+        }
+        return TeacherList(matches)
+    }
+
+    fun getContainingItems(regex: String): TeacherList {
+        val matches = mutableListOf<Teacher>()
+        for (teacher in entries) {
+            if (teacher.abbreviation.contains(regex, true)
+                    || teacher.firstName.contains(regex, true)
                     || teacher.lastName.contains(regex, true)
                     || teacher.officeHour.contains(regex, true))
                 matches.add(teacher)
