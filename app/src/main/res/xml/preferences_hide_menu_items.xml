@@ -58,13 +58,28 @@
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
-        android:key="menu_news"
-        android:title="@string/menu_news"
+        android:key="menu_timetable"
+        android:title="@string/menu_timetable"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="menu_mensa"
         android:title="@string/menu_mensa"
+        app:iconSpaceReserved="false" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="menu_public_transport"
+        android:title="@string/menu_public_transport"
+        app:iconSpaceReserved="false" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="menu_navigation"
+        android:title="@string/menu_navigation"
+        app:iconSpaceReserved="false" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="menu_news"
+        android:title="@string/menu_news"
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
@@ -78,23 +93,8 @@
         app:iconSpaceReserved="false" />
     <SwitchPreference
         android:defaultValue="true"
-        android:key="menu_navigation"
-        android:title="@string/menu_navigation"
-        app:iconSpaceReserved="false" />
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="menu_public_transport"
-        android:title="@string/menu_public_transport"
-        app:iconSpaceReserved="false" />
-    <SwitchPreference
-        android:defaultValue="true"
         android:key="menu_notes"
         android:title="@string/menu_notes"
-        app:iconSpaceReserved="false" />
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="menu_timetable"
-        android:title="@string/menu_timetable"
         app:iconSpaceReserved="false" />
 
 </PreferenceScreen>
