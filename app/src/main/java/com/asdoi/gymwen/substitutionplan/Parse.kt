@@ -72,7 +72,7 @@ object Parse {
                 }
             }
 
-            return substitutionList.sort()
+            return substitutionList
         } catch (e: Exception) {
             e.printStackTrace()
             return null

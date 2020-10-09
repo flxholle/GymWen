@@ -56,7 +56,7 @@ open class SubstitutionPlan(courses: Array<String>) {
 
     fun getDaySummarized(today: Boolean): SubstitutionList? = getDay(today)?.summarize()
 
-    fun getDayFiltered(today: Boolean) = getDay(today)?.filter(courses)
+    fun getDayFiltered(today: Boolean) = getDay(today)?.filter(courses)?.sortByStart()
 
     fun getDayFilteredSummarized(today: Boolean) = getDayFiltered(today)?.summarize()
 

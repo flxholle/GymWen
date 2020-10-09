@@ -50,6 +50,23 @@ class SubstitutionList(
     }
 
     fun sort(): SubstitutionList {
+        val courses = mutableListOf<String>()
+        for (entry in entries) {
+            if (entry.course !in courses) {
+                courses.add(entry.course)
+            }
+        }
+        courses.sort()
+
+        val sortedList = mutableListOf<SubstitutionEntry>()
+        for (course in courses) {
+            sortedList.addAll(filterClass(course))
+        }
+
+        return SubstitutionList(sortedList, title)
+    }
+
+    fun sortByStart(): SubstitutionList {
         val numbers = IntArray(entries.size)
         for (i in entries.indices) {
             numbers[i] = getEntry(i).startLesson
