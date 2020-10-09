@@ -831,7 +831,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                                     new StringBuilder(getString(R.string.corona_live_ticker, External_Const.CORONA_LIVE_LOCATION)).append("\n")
                                             .append(getString(R.string.change_from_previous_day, infectionsYesterdayToday)).append("\n")
                                             .append(getString(R.string.seven_day_incidence_per_100_000, Math.round(coronaTicker.getSevenDayIncidencePerOneHundredThousands()))).append("\n")
-                                            .append("\t").append(getString(R.string.source, External_Const.CORONA_LIVE_SOURCE));
+                                            .append("\t\t").append(getString(R.string.source, External_Const.CORONA_LIVE_SOURCE));
 
                             ChocoBar.Builder builder = ChocoBar.builder().setActivity(this)
                                     .setActionText(getString(R.string.ok))
