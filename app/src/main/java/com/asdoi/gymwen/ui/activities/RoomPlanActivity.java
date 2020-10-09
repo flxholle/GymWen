@@ -300,7 +300,14 @@ public class RoomPlanActivity extends ActivityFeatures {
 
     @Override
     public void onBackPressed() {
-        finish();
+        if (search) {
+            Fragment fragment = new RoomPlanFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.room_plan_frame, fragment).commit();
+            search = false;
+            invalidateOptionsMenu();
+        } else
+            finish();
     }
 
     @Override
