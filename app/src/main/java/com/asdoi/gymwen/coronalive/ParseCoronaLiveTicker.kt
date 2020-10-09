@@ -28,9 +28,9 @@ object ParseCoronaLiveTicker {
                             if (infectionsYesterdayTodayString == "-")
                                 0
                             else infectionsYesterdayTodayString.trim().toInt()
-                    val infectionsPerOneHundredThousands = row[infectionsPerOneHundredThousandsIndex].replace(",", ".").toFloat()
+                    val infectionsPerOneHundredThousands = row[infectionsPerOneHundredThousandsIndex].replace(",", ".").toDouble()
                     val infectionsInTheLastSevenDays = row[infectionsInTheLastSevenDaysIndex].toInt()
-                    val sevenDayIncidencePerOneHundredThousands = row[sevenDayIncidencePerOneHundredThousandsIndex].replace(",", ".").toFloat()
+                    val sevenDayIncidencePerOneHundredThousands = row[sevenDayIncidencePerOneHundredThousandsIndex].replace(",", ".").toDouble()
                     val deaths = row[deathsIndex].toInt()
                     val deathsYesterdayTodayString = row[deathsYesterdayTodayIndex]
                             .replace("(", "").replace(")", "").replace("+", "").replace(" ", "").trim()

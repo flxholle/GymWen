@@ -4,18 +4,18 @@ import kotlin.math.roundToInt
 
 data class CoronaTicker(val infections: Int,
                         val infectionsYesterdayToday: Int,
-                        val infectionsPerOneHundredThousands: Float,
+                        val infectionsPerOneHundredThousands: Double,
                         val infectionsInTheLastSevenDays: Int,
-                        val sevenDayIncidencePerOneHundredThousands: Float,
+                        val sevenDayIncidencePerOneHundredThousands: Double,
                         val deaths: Int,
                         val deathsYesterdayToday: Int,
                         val coronaLightColor: CoronaLightColor) {
 
     constructor(infections: Int,
                 infectionsYesterdayToday: Int,
-                infectionsPerOneHundredThousands: Float,
+                infectionsPerOneHundredThousands: Double,
                 infectionsInTheLastSevenDays: Int,
-                sevenDayIncidencePerOneHundredThousands: Float,
+                sevenDayIncidencePerOneHundredThousands: Double,
                 deaths: Int,
                 deathsYesterdayToday: Int) :
             this(infections,

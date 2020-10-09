@@ -625,8 +625,13 @@
         \nThis profile is automatically displayed when the app is started.
         \nIn addition, based on this profile data, notifications are sent and the smartphone is set to \"Do Not Disturb\" mode.</string>
 
-    <string name="corona_live_ticker">Corona Live-Ticker (%s):
-        \nChange from previous day: %s
-        \n7-day incidence per 100,000: %d
-        \n\tData source: %s</string>
+    <string name="corona_menu_item">Corona Live-Ticker</string>
+    <string name="corona_live_ticker">Corona Live-Ticker (%s):</string>
+    <string name="total_infections">Total infections: %d</string>
+    <string name="change_from_previous_day">Change from previous day: %s</string>
+    <string name="total_infections_per_100_000">Total infections per 100,000: %d</string>
+    <string name="infections_in_the_last_seven_days">Infections in the last 7 days: %d</string>
+    <string name="seven_day_incidence_per_100_000">7-day incidence per 100,000: %d</string>
+    <string name="deaths">Deaths: %d</string>
+    <string name="source">Data source: %s</string>
 </resources>

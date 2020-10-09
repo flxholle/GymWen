@@ -79,6 +79,7 @@ import com.kabouzeid.appthemehelper.util.NavigationViewUtil;
 import com.pd.chocobar.ChocoBar;
 import com.ulan.timetable.TimeTableBuilder;
 import com.ulan.timetable.activities.NotesActivity;
+import com.ulan.timetable.utils.ColorPalette;
 
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
@@ -211,7 +212,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     .orange()
                     .show();
         } else
-            showCoronaLiveTicker();
+            showCoronaLiveTicker(true);
 
         setupMenuItems(navigationView);
         View headerview = navigationView.getHeaderView(0);
@@ -746,6 +747,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 intent = new Intent(this, RoomPlanActivity.class);
                 startActivity(intent);
                 return;
+            case R.id.action_corona_live_ticker:
+                showCoronaLiveTicker(false);
+                return;
         }
 
 
@@ -812,46 +816,108 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             menu.findItem(R.id.action_switch_design).setVisible(visible);
     }
 
-    private void showCoronaLiveTicker() {
+    private void showCoronaLiveTicker(final boolean snackbar) {
         new Thread(() -> {
             Document document = ApplicationFeatures.downloadDoc(External_Const.CORONA_LIVE_TICKER);
             if (document != null) {
                 final CoronaTicker coronaTicker = ParseCoronaLiveTicker.INSTANCE.parseLiveTicker(document, External_Const.CORONA_LIVE_TICKER_CITY);
                 if (coronaTicker != null) {
                     String infectionsYesterdayToday = (coronaTicker.getInfectionsYesterdayToday() > 0 ? "+" : "") + coronaTicker.getInfectionsYesterdayToday();
+                    String deathsYesterdayToday = (coronaTicker.getDeathsYesterdayToday() > 0 ? "+" : "") + coronaTicker.getDeathsYesterdayToday();
+
                     runOnUiThread(() -> {
-                        String text = getString(R.string.corona_live_ticker, External_Const.CORONA_LIVE_LOCATION, infectionsYesterdayToday, Math.round(coronaTicker.getSevenDayIncidencePerOneHundredThousands()), External_Const.CORONA_LIVE_SOURCE);
-                        ChocoBar.Builder builder = ChocoBar.builder().setActivity(this)
-                                .setActionText(getString(R.string.ok))
-                                .setText(text)
-                                .setDuration(ChocoBar.LENGTH_INDEFINITE);
-                        Drawable icon = ContextCompat.getDrawable(this, R.drawable.ic_virus);
-                        switch (coronaTicker.getCoronaLightColor()) {
-                            case GREEN:
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    icon.setTint(Color.WHITE);
-                                }
-                                builder.setIcon(icon);
-                                builder.green().show();
-                                break;
-                            case YELLOW:
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    icon.setTint(Color.BLACK);
-                                }
-                                builder.setIcon(icon);
-                                builder.orange().show();
-                                break;
-                            case RED:
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    icon.setTint(Color.WHITE);
-                                }
-                                builder.setIcon(icon);
-                                builder.red().show();
-                                break;
+                        if (snackbar) {
+                            StringBuilder text =
+                                    new StringBuilder(getString(R.string.corona_live_ticker, External_Const.CORONA_LIVE_LOCATION)).append("\n")
+                                            .append(getString(R.string.change_from_previous_day, infectionsYesterdayToday)).append("\n")
+                                            .append(getString(R.string.seven_day_incidence_per_100_000, Math.round(coronaTicker.getSevenDayIncidencePerOneHundredThousands()))).append("\n")
+                                            .append("\t").append(getString(R.string.source, External_Const.CORONA_LIVE_SOURCE));
+
+                            ChocoBar.Builder builder = ChocoBar.builder().setActivity(this)
+                                    .setActionText(getString(R.string.ok))
+                                    .setText(text)
+                                    .setDuration(ChocoBar.LENGTH_INDEFINITE);
+
+                            Drawable icon = ContextCompat.getDrawable(this, R.drawable.ic_virus);
+                            switch (coronaTicker.getCoronaLightColor()) {
+                                case GREEN:
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        icon.setTint(Color.WHITE);
+                                    }
+                                    builder.setIcon(icon);
+                                    builder.green().show();
+                                    break;
+                                case YELLOW:
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        icon.setTint(Color.BLACK);
+                                    }
+                                    builder.setIcon(icon);
+                                    builder.orange().show();
+                                    break;
+                                case RED:
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        icon.setTint(Color.WHITE);
+                                    }
+                                    builder.setIcon(icon);
+                                    builder.red().show();
+                                    break;
+                            }
+                        } else {
+                            StringBuilder text =
+                                    new StringBuilder(getString(R.string.total_infections, coronaTicker.getInfections())).append("\n")
+                                            .append("\t\t").append(getString(R.string.change_from_previous_day, infectionsYesterdayToday)).append("\n")
+                                            .append(getString(R.string.total_infections_per_100_000, Math.round(coronaTicker.getInfectionsPerOneHundredThousands()))).append("\n")
+                                            .append(getString(R.string.infections_in_the_last_seven_days, coronaTicker.getInfectionsInTheLastSevenDays())).append("\n")
+                                            .append(getString(R.string.seven_day_incidence_per_100_000, Math.round(coronaTicker.getSevenDayIncidencePerOneHundredThousands()))).append("\n")
+                                            .append(getString(R.string.deaths, coronaTicker.getDeaths())).append("\n")
+                                            .append("\t\t").append(getString(R.string.change_from_previous_day, deathsYesterdayToday));
+
+                            int color = Color.WHITE;
+                            switch (coronaTicker.getCoronaLightColor()) {
+                                case GREEN:
+                                    color = ContextCompat.getColor(this, R.color.nothing);
+                                    break;
+                                case YELLOW:
+                                    color = ContextCompat.getColor(this, R.color.tomorrow);
+                                    break;
+                                case RED:
+                                    color = ContextCompat.getColor(this, R.color.today);
+                                    break;
+                            }
+
+                            int textColor = ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK);
+                            Drawable icon = ContextCompat.getDrawable(this, R.drawable.ic_virus);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                icon.setTint(textColor);
+                            }
+
+                            new MaterialDialog.Builder(this)
+                                    .icon(icon)
+                                    .backgroundColor(color)
+                                    .title(getString(R.string.corona_live_ticker, External_Const.CORONA_LIVE_LOCATION))
+                                    .titleColor(textColor)
+                                    .content(text)
+                                    .contentColor(textColor)
+                                    .neutralText(External_Const.CORONA_LIVE_SOURCE)
+                                    .neutralColor(textColor)
+                                    .onNeutral((dialog, which) -> tabIntent(External_Const.CORONA_LIVE_TICKER))
+                                    .positiveText(R.string.ok)
+                                    .positiveColor(textColor)
+                                    .show();
                         }
                     });
                 }
+            } else if (!snackbar) {
+                runOnUiThread(() ->
+                        ChocoBar.builder().setActivity(this)
+                                .setActionText(getString(R.string.ok))
+                                .setText(getString(R.string.noInternetConnection))
+                                .setDuration(5 * 1000)
+                                .setIcon(R.drawable.ic_no_wifi)
+                                .orange()
+                                .show());
             }
+
         }).start();
     }
 

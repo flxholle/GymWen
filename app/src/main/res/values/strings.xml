@@ -718,9 +718,14 @@
         \nDieses Profil wird automatisch beim Starten der App angezeigt.
         \nAußerdem werden auf Basis dieses Profils die Benachrichtigungen gesendet und das Smartphone in den Nicht-Stören Modus versetzt.</string>
 
-    <string name="corona_live_ticker">Corona Live-Ticker (%s):
-        \nVeränderung zum Vortag: %s
-        \n7-Tage-Inzidenz pro 100.000: %d
-        \n\tQuelle: %s</string>
+    <string name="corona_menu_item">Corona Live-Ticker</string>
+    <string name="corona_live_ticker">Corona Live-Ticker (%s):</string>
+    <string name="total_infections">Gesamtinfektionen: %d</string>
+    <string name="change_from_previous_day">Veränderung zum Vortag: %s</string>
+    <string name="total_infections_per_100_000">Gesamtinfektionen pro 100.000: %d</string>
+    <string name="infections_in_the_last_seven_days">Infektionen der letzten 7 Tage: %d</string>
+    <string name="seven_day_incidence_per_100_000">7-Tage-Inzidenz pro 100.000: %d</string>
+    <string name="deaths">Todesfälle: %d</string>
+    <string name="source">Quelle: %s</string>
 
 </resources>
