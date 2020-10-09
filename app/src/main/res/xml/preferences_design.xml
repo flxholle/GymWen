@@ -79,8 +79,8 @@
             app:iconSpaceReserved="false" />
         <SwitchPreference
             android:defaultValue="true"
-            android:key="swipe_to_refresh_filtered"
-            android:title="@string/set_at_filtered_plan"
+            android:key="show_swipe_to_refresh_all"
+            android:title="@string/set_show_show_swipe_to_refresh_all"
             app:iconSpaceReserved="true" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -124,6 +124,6 @@ public class SettingsFragmentDesign extends PreferenceFragmentCompat {
 
     private void setSwipeSpecific() {
         boolean showSpecific = PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getBoolean("swipe_to_refresh", true);
-        findPreference("swipe_to_refresh_filtered").setVisible(showSpecific);
+        findPreference("show_swipe_to_refresh_all").setVisible(showSpecific);
     }
 }

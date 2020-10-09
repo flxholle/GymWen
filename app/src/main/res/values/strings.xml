@@ -106,7 +106,7 @@
     <string name="set_old_title">Alte Überschrift</string>
     <string name="set_design_no_sections">Gefiltert \u0026 Gesamt zusammen anzeigen</string>
     <string name="set_swipe_to_refresh">Herunterziehen zum Aktualisieren</string>
-    <string name="set_at_filtered_plan">Auch beim gefilterten Plan</string>
+    <string name="set_show_show_swipe_to_refresh_all">Nur beim ungefilterten Plan</string>
     <string name="set_intelligent_hide">Intelligentes Ausblenden</string>
     <string name="set_show_summary_notif_title">Zusammenfassende Benachrichtigung anzeigen</string>
     <string name="set_show_summary_usual_title">Alle Profile in der zusammenfassenden Benachrichtigung anzeigen</string>

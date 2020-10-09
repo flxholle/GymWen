@@ -66,6 +66,7 @@
     <string name="set_miscellaneous_title">Others</string>
     <string name="set_beta_features">Beta Features</string>
     <string name="set_old_substitution">Old design</string>
+    <string name="set_show_show_swipe_to_refresh_all">Unfiltered plan only</string>
 
 
     <string name="nothing">No sit-ins for you</string>

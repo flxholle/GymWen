@@ -145,8 +145,8 @@ public class PreferenceUtil {
         return getBooleanSettings("swipe_to_refresh", true);
     }
 
-    public static boolean isSwipeToRefreshFiltered() {
-        return getBooleanSettings("swipe_to_refresh_filtered", true);
+    public static boolean isSwipeToRefreshAll() {
+        return getBooleanSettings("show_swipe_to_refresh_all", true);
     }
 
     public static boolean isIntelligentHide() {

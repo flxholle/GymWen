@@ -546,7 +546,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
             miscellaneous = isMiscellaneous(content);
             generateTop(base, oldTitle);
-            generateTableSpecific(base, old, PreferenceUtil.isSwipeToRefresh() && PreferenceUtil.isSwipeToRefreshFiltered());
+            generateTableSpecific(base, old, PreferenceUtil.isSwipeToRefresh() && !PreferenceUtil.isSwipeToRefreshAll());
         }
         requireActivity().runOnUiThread(() -> {
             clear();
