@@ -206,8 +206,8 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                 break;
             case R.id.action_website:
                 HomepageLoad();
-                invalidateOptionsMenu();
                 search = false;
+                invalidateOptionsMenu();
                 break;
             case R.id.website_close:
                 onSupportNavigateUp();
@@ -243,6 +243,10 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
             history.remove(history.size() - 1);
             history.remove(history.size() - 1);
             loadPage(url);
+        } else if (search) {
+            HomepageLoad();
+            search = false;
+            invalidateOptionsMenu();
         } else {
             onSupportNavigateUp();
             super.onBackPressed();
