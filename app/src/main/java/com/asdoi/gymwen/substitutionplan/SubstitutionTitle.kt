@@ -27,7 +27,7 @@ data class SubstitutionTitle(val date: LocalDate, val dayOfWeek: DayOfWeek, val 
 
     fun isCustomToday() =
             if (PreferenceUtil.isIntelligentHide())
-                LocalDate().isEqual(date) && LocalTime.now().hourOfDay < 18
+                LocalDate().isEqual(date) && LocalTime.now().hourOfDay < PreferenceUtil.getIntelligentHideHour()
             else
                 isToday()
 

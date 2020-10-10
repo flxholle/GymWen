@@ -32,9 +32,6 @@ import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 
 public class PreferenceUtil {
-    @NonNull
-    public static final String hideDayAfterTime = "18:00:00";
-
     //Booleans
     public static boolean getBooleanSettings(String key, boolean defaultValue, @NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -151,6 +148,10 @@ public class PreferenceUtil {
 
     public static boolean isIntelligentHide() {
         return getBooleanSettings("intelligent_hide", true);
+    }
+
+    public static int getIntelligentHideHour() {
+        return 18;
     }
 
     public static boolean isMainNotifForAllProfiles() {

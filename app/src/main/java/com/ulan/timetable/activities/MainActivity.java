@@ -342,7 +342,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         //If its after 18 o'clock, show the next day
-        if (hour >= 18) {
+        if (hour >= com.asdoi.gymwen.util.PreferenceUtil.getIntelligentHideHour()) {
             day++;
         }
         if (day > 7) { //Calender.Saturday
