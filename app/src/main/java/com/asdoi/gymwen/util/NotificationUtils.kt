@@ -304,18 +304,18 @@ class NotificationUtils {
                             if (line.isNothing()) {
                                 message.append(
                                         line.getTimeSegment(context)).append(" ")
-                                        .append(context.getString(R.string.share_msg_nothing_senior))
+                                        .append(context.getString(R.string.is_missing_for_course))
                                         .append(" ")
                                         .append(line.course)
                                         .append("\n")
                             } else {
                                 message.append(
                                         line.getTimeSegment(context)).append(" ")
-                                        .append(context.getString(R.string.share_msg_for_senior))
+                                        .append(context.getString(R.string.for_course))
                                         .append(" ")
                                         .append(line.course)
                                         .append(" ")
-                                        .append(context.getString(R.string.share_msg_in_room))
+                                        .append(context.getString(R.string.in_room))
                                         .append(" ")
                                         .append(line.room)
                                         .append(" ")
@@ -333,13 +333,13 @@ class NotificationUtils {
                             if (line.isNothing()) {
                                 message.append(
                                         line.getTimeSegment(context)).append(" ")
-                                        .append(context.getString(R.string.share_msg_dismissed))
+                                        .append(context.getString(R.string.missing))
                                         .append("\n")
                             } else {
                                 message.append(
                                         line.getTimeSegment(context))
                                         .append(" ").append(line.course)
-                                        .append(" ").append(context.getString(R.string.share_msg_in_room))
+                                        .append(" ").append(context.getString(R.string.in_room))
                                         .append(" ").append(line.room)
                                         .append(" ").append(context.getString(R.string.with_teacher))
                                         .append(" ").append(line.teacher)
@@ -457,9 +457,9 @@ class NotificationUtils {
             fun createMessage(entry: SubstitutionEntry): List<String> {
                 val context = ApplicationFeatures.getContext()
                 return if (entry.isNothing()) {
-                    listOf("${entry.getTimeSegment(context)} ${context.getString(R.string.share_msg_dismissed)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
+                    listOf("${entry.getTimeSegment(context)} ${context.getString(R.string.missing)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
                 } else {
-                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} ${context.getString(R.string.with_teacher)} " else ""}${entry.teacher} ${context.getString(R.string.share_msg_in_room)} ${entry.room}",
+                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} ${context.getString(R.string.with_teacher)} " else ""}${entry.teacher} ${context.getString(R.string.in_room)} ${entry.room}",
                             "${entry.getTimeSegment(context)}${if (!entry.moreInformation.isBlank()) ", ${entry.moreInformation}" else ""}  ${if (senior) "(${entry.course})"; else ""}")
                 }
 

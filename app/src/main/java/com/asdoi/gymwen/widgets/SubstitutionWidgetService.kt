@@ -306,9 +306,9 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
 
     private fun generateHeadline(context: Context, isShort: Boolean, senior: Boolean): Array<String> {
         return if (senior) {
-            arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), if (isShort) context.getString(R.string.courses_short) else context.getString(R.string.courses), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), context.getString(R.string.subject))
+            arrayOf(if (isShort) context.getString(R.string.lessons_short_three) else context.getString(R.string.lessons), if (isShort) context.getString(R.string.courses_short) else context.getString(R.string.courses), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), context.getString(R.string.subject))
         } else {
-            arrayOf(if (isShort) context.getString(R.string.hours_short_three) else context.getString(R.string.hours), context.getString(R.string.subject), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), if (isShort) context.getString(R.string.classes_short) else context.getString(R.string.classes))
+            arrayOf(if (isShort) context.getString(R.string.lessons_short_three) else context.getString(R.string.lessons), context.getString(R.string.subject), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), if (isShort) context.getString(R.string.classes_short) else context.getString(R.string.classes))
         }
     }
 }

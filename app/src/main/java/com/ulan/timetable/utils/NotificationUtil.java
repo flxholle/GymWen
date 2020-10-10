@@ -152,7 +152,7 @@ public class NotificationUtil {
             }
             if (!nextWeek.getRoom().trim().isEmpty()) {
                 lesson.append(" ")
-                        .append(context.getString(R.string.share_msg_in_room))
+                        .append(context.getString(R.string.in_room))
                         .append(" ")
                         .append(nextWeek.getRoom());
             }
@@ -287,7 +287,7 @@ public class NotificationUtil {
                 }
                 if (!week.getRoom().trim().isEmpty()) {
                     lessons.append(" ")
-                            .append(context.getString(R.string.share_msg_in_room))
+                            .append(context.getString(R.string.in_room))
                             .append(" ")
                             .append(week.getRoom());
                 }

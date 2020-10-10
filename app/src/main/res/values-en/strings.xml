@@ -60,7 +60,7 @@
     <string name="set_notification_title">Notification</string>
     <string name="set_notification_isOn">Show notification</string>
     <string name="set_notification_showAlways">Show permanently</string>
-    <string name="set_hours">Show times instead of hours</string>
+    <string name="set_lessons">Show times instead of lessons</string>
     <string name="set_show_borders">Outline the teachers</string>
     <string name="set_show_borders_specific">Filtered plan only</string>
     <string name="set_miscellaneous_title">Others</string>
@@ -81,9 +81,9 @@
 
     <string name="classes">Grade</string>
     <string name="courses">Course</string>
-    <string name="hours">Hour</string>
-    <string name="hours_short">H</string>
-    <string name="hours_short_three">Hour</string>
+    <string name="lessons">Lesson</string>
+    <string name="lessons_short">L</string>
+    <string name="lessons_short_three">Lsn</string>
     <string name="subject">Subj.</string>
     <string name="teacher">Teacher</string>
     <string name="teacher_short">T</string>
@@ -293,14 +293,14 @@
     <string name="intro_four_desc">This app is also very useful for parents. So you can create different profiles for each child and use certain functions that are particularly useful for parents.</string>
     <string name="intro_five_desc">You can also call up a version of the school homepage optimized for smartphones and manage your grades and your timetable. There are also many other things for which there is unfortunately no more space.</string>
     <string name="switch_design">Change design</string>
-    <string name="share_msg_for_courses">for the courses</string>
-    <string name="share_msg_in_room">in room</string>
-    <string name="share_msg_nothing_at">No Sit-in on</string>
-    <string name="share_msg_hour">hour</string>
-    <string name="share_msg_dismissed">is missing</string>
-    <string name="share_msg_nothing_senior">is missing for course</string>
-    <string name="share_msg_for_senior">for course</string>
-    <string name="share_msg_substitution_at">Sit-in on</string>
+    <string name="for_courses">for the courses</string>
+    <string name="in_room">in room</string>
+    <string name="no_substitution_on">No Sit-in on</string>
+    <string name="lesson">lesson</string>
+    <string name="missing">is missing</string>
+    <string name="is_missing_for_course">is missing for course</string>
+    <string name="for_course">for course</string>
+    <string name="substitution_on">Sit-in on</string>
     <string name="menu_from_this_developer">By this developer</string>
     <string name="version">Version</string>
     <string name="gnu_license" tools:ignore="TypographyOther">
@@ -329,7 +329,7 @@
     <string name="set_offline_mode">Offline-mode</string>
     <string name="set_teacherlist_url">URL for the teacher list</string>
     <string name="set_substitution_category">Substitution plan</string>
-    <string name="set_summarize">Summarize the same hours</string>
+    <string name="set_summarize">Summarize the same lessons</string>
     <string name="also_at_old_design">Even with the old design</string>
     <string name="set_single_days">Display days individually</string>
     <string name="set_old_title">Old headline</string>
@@ -339,8 +339,8 @@
     <string name="colorush_screen2">Choosing mode</string>
     <string name="colorush_screen3">Level 1</string>
     <string name="colorush_screen4">Main menu</string>
-    <string name="set_desc_hours">Replace the hour display with the respective time, e.g. 8:10 instead of 1</string>
-    <string name="set_desc_summarize">Combine individual hours with the same content (for example, the exchange of a double hour).</string>
+    <string name="set_desc_lessons">Replace the lesson display with the respective time, e.g. 8:10 instead of 1</string>
+    <string name="set_desc_summarize">Combine individual lessons with the same content (for example, the exchange of a double lesson).</string>
 
     <string name="set_desc_week_dates">Always show the day of the week belonging to the date (even if the day has already passed)</string>
     <string name="set_desc_show_full_names">Replace all teacher abbreviations with the respective last name</string>
@@ -352,7 +352,7 @@
     <string name="set_desc_tomorrow_url">Link to the second day (usually tomorrow)</string>
     <string name="set_desc_teacherlist_url">Link to the list of teachers</string>
 
-    <string name="set_desc_accentColor">The color with which important things are highlighted, e.g. the hours in the substitution plan</string>
+    <string name="set_desc_accentColor">The color with which important things are highlighted, e.g. the lessons in the substitution plan</string>
     <string name="set_desc_primaryColor">The color of the title bar</string>
     <string name="set_desc_menu_items_fragment">Hide or show certain entries in the navigation bar</string>
     <string name="set_desc_show_borders">Outline all teacher abbreviations that can be clicked</string>
@@ -576,7 +576,6 @@
     <string name="no_class">No schedule</string>
     <string name="confirm">Confirm</string>
 
-    <string name="lesson">lesson</string>
     <string name="show_times_instead_of_lessons">Show times instead of lessons</string>
     <string name="show_times_instead_of_lessons_desc">Show the times instead of the lessons number, e.g. 8:00 instead of 1</string>
 

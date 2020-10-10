@@ -69,9 +69,9 @@ data class SubstitutionEntry(
                     "${context.getString(R.string.lessons_from)} ${getStart(true)}-${getEnd(true)}"
             } else {
                 if (isStartEqualEnd())
-                    "${getStart(false)}. ${context.getString(R.string.share_msg_hour)}"
+                    "${getStart(false)}. ${context.getString(R.string.lesson)}"
                 else
-                    "${getStart(false)}.-${getEnd(false)}. ${context.getString(R.string.share_msg_hour)}"
+                    "${getStart(false)}.-${getEnd(false)}. ${context.getString(R.string.lesson)}"
             }
 
 

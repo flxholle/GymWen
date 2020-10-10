@@ -284,20 +284,20 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
             }
             classes.append(courses.get(courses.size() - 1));
             if (content.size() == 0) {
-                message = new StringBuilder(requireContext().getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + requireContext().getString(R.string.share_msg_for_courses) + " " + classes + ")\n" : "\n"));
+                message = new StringBuilder(requireContext().getString(R.string.no_substitution_on) + " " + title + (withCourses ? " (" + requireContext().getString(R.string.for_courses) + " " + classes + ")\n" : "\n"));
                 return message.toString();
             } else
-                message = new StringBuilder(requireContext().getString(R.string.share_msg_substitution_at) + " " + title + ":\n");
+                message = new StringBuilder(requireContext().getString(R.string.substitution_on) + " " + title + ":\n");
         } else {
             List<String> courses = Arrays.asList(MainSubstitutionPlan.INSTANCE.getCourses());
             for (int i = 0; i < courses.size(); i++) {
                 classes.append(courses.get(i));
             }
             if (content.size() == 0) {
-                message = new StringBuilder(requireContext().getString(R.string.share_msg_nothing_at) + " " + title + (withCourses ? " (" + classes + ")\n" : "\n"));
+                message = new StringBuilder(requireContext().getString(R.string.no_substitution_on) + " " + title + (withCourses ? " (" + classes + ")\n" : "\n"));
                 return message.toString();
             } else
-                message = new StringBuilder(requireContext().getString(R.string.share_msg_substitution_at) + " " + title + (withCourses ? " (" + classes + "):\n" : ":\n"));
+                message = new StringBuilder(requireContext().getString(R.string.substitution_on) + " " + title + (withCourses ? " (" + classes + "):\n" : ":\n"));
         }
 
         String freespace = "    ";
@@ -307,15 +307,15 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 if (entry.isNothing()) {
                     message.append(freespace)
                             .append(entry.getTimeSegment(context)).append(" ")
-                            .append(requireContext().getString(R.string.share_msg_nothing_senior))
+                            .append(requireContext().getString(R.string.is_missing_for_course))
                             .append(" ").append(entry.getCourse())
                             .append("\n");
                 } else {
                     message.append(freespace)
                             .append(entry.getTimeSegment(context)).append(" ")
-                            .append(requireContext().getString(R.string.share_msg_for_senior))
+                            .append(requireContext().getString(R.string.for_course))
                             .append(" ").append(entry.getCourse())
-                            .append(" ").append(context.getString(R.string.share_msg_in_room))
+                            .append(" ").append(context.getString(R.string.in_room))
                             .append(" ").append(entry.getRoom())
                             .append(" ").append(context.getString(R.string.with_teacher))
                             .append(" ").append(entry.getTeacher())
@@ -329,13 +329,13 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 if (entry.isNothing()) {
                     message.append(freespace)
                             .append(entry.getTimeSegment(context)).append(" ")
-                            .append(requireContext().getString(R.string.share_msg_dismissed))
+                            .append(requireContext().getString(R.string.missing))
                             .append("\n");
                 } else {
                     message.append(freespace)
                             .append(entry.getTimeSegment(context)).append(" ")
                             .append(entry.getSubject()).append(" ")
-                            .append(context.getString(R.string.share_msg_in_room)).append(" ")
+                            .append(context.getString(R.string.in_room)).append(" ")
                             .append(entry.getRoom())
                             .append(" ").append(context.getString(R.string.with_teacher))
                             .append(" ").append(entry.getTeacher())
@@ -666,11 +666,11 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         String[] headline;
 
         if (all) {
-            headline = new String[]{context.getString(R.string.classes), miscellaneous ? context.getString(R.string.hours_short) : context.getString(R.string.hours), context.getString(R.string.subject), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), miscellaneous ? context.getString(R.string.room_short) : context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : ""};
+            headline = new String[]{context.getString(R.string.classes), miscellaneous ? context.getString(R.string.lessons_short) : context.getString(R.string.lessons), context.getString(R.string.subject), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), miscellaneous ? context.getString(R.string.room_short) : context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : ""};
         } else if (senior) {
-            headline = new String[]{miscellaneous ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.courses), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : "", context.getString(R.string.subject)};
+            headline = new String[]{miscellaneous ? context.getString(R.string.lessons_short_three) : context.getString(R.string.lessons), context.getString(R.string.courses), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : "", context.getString(R.string.subject)};
         } else {
-            headline = new String[]{miscellaneous ? context.getString(R.string.hours_short_three) : context.getString(R.string.hours), context.getString(R.string.subject), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : "", context.getString(R.string.classes)};
+            headline = new String[]{miscellaneous ? context.getString(R.string.lessons_short_three) : context.getString(R.string.lessons), context.getString(R.string.subject), miscellaneous ? context.getString(R.string.teacher_short) : context.getString(R.string.teacher), context.getString(R.string.room), miscellaneous ? context.getString(R.string.miscellaneous_short) : "", context.getString(R.string.classes)};
         }
 
         return headline;

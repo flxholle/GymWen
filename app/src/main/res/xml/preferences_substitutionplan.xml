@@ -28,8 +28,8 @@
     <SwitchPreference
         android:defaultValue="false"
         android:key="hours"
-        android:summary="@string/set_desc_hours"
-        android:title="@string/set_hours"
+        android:summary="@string/set_desc_lessons"
+        android:title="@string/set_lessons"
         app:iconSpaceReserved="false" />
     <CheckBoxPreference
         android:defaultValue="true"

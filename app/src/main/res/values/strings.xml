@@ -77,7 +77,7 @@
     <string name="set_notification_title">Benachrichtigung</string>
     <string name="set_notification_isOn">Benachrichtigung anzeigen</string>
     <string name="set_notification_showAlways">Dauerhaft anzeigen</string>
-    <string name="set_hours">Uhrzeiten statt Stunden anzeigen</string>
+    <string name="set_lessons">Uhrzeiten statt Stunden anzeigen</string>
     <string name="set_show_borders">Umranden der Lehrerkürzel</string>
     <string name="set_show_borders_specific">Nur beim gefilterten Plan</string>
     <string name="set_miscellaneous_title">Sonstiges</string>
@@ -135,9 +135,9 @@
     <string name="classes_short">K</string>
     <string name="courses">Kurs</string>
     <string name="courses_short">K</string>
-    <string name="hours">Stunde</string>
-    <string name="hours_short">h</string>
-    <string name="hours_short_three">Std</string>
+    <string name="lessons">Stunde</string>
+    <string name="lessons_short">h</string>
+    <string name="lessons_short_three">Std</string>
     <string name="subject">Fach</string>
     <string name="teacher">Lehrer</string>
     <string name="teacher_short">L</string>
@@ -414,14 +414,14 @@
     <string name="off">Aus</string>
 
     <!-- Share Message -->
-    <string name="share_msg_nothing_at">Keine Vertretung am</string>
-    <string name="share_msg_substitution_at">Vertretung am</string>
-    <string name="share_msg_nothing_senior">entfällt für Kurs</string>
-    <string name="share_msg_for_senior">für Kurs</string>
-    <string name="share_msg_in_room">in Raum</string>
-    <string name="share_msg_dismissed">entfällt</string>
-    <string name="share_msg_hour">Stunde</string>
-    <string name="share_msg_for_courses">für die Kurse</string>
+    <string name="no_substitution_on">Keine Vertretung am</string>
+    <string name="substitution_on">Vertretung am</string>
+    <string name="is_missing_for_course">entfällt für Kurs</string>
+    <string name="for_course">für Kurs</string>
+    <string name="in_room">in Raum</string>
+    <string name="missing">entfällt</string>
+    <string name="lesson">Stunde</string>
+    <string name="for_courses">für die Kurse</string>
     <string name="lessons_from">Stunden von</string>
     <string name="lesson_at">Stunde um</string>
 
@@ -458,7 +458,7 @@
 
     <!-- Settings descriptions -->
     <string name="set_desc_courses">Einzelne Kurse mit einem # zwischen den Kursen trennen, z.B. 1ph3#1d4#1bio2</string>
-    <string name="set_desc_hours">Die Stundenanzeige durch die jeweilige Uhrzeit ersetzen, z.B. 8:10 statt 1</string>
+    <string name="set_desc_lessons">Die Stundenanzeige durch die jeweilige Uhrzeit ersetzen, z.B. 8:10 statt 1</string>
     <string name="set_desc_summarize">Einzelne Stunden mit demselben Inhalt zusammenfassen (Beispielsweise der Raumtausch einer Doppelstunde).</string>
     <string name="set_desc_week_dates">Immer den zum Datum gehörenden Wochentag anzeigen (auch wenn der Tag schon vergangen ist)</string>
     <string name="set_desc_show_full_names">Alle Lehrerkürzel durch den jeweiligen Nachnamen ersetzen</string>
@@ -689,7 +689,6 @@
     <string name="confirm">Bestätigen</string>
     <string name="app_widget_configure_intensity">Intensität der Hintergrundfarbe（%d%%）</string>
     <string name="select">Auswählen</string>
-    <string name="lesson">Stunde</string>
     <string name="show_times_instead_of_lessons">Uhrzeiten statt Stunden anzeigen</string>
     <string name="show_times_instead_of_lessons_desc">Zeige die Uhrzeiten anstatt der Stundenzahl an. Zum Beispiel 8:00 statt 1</string>
     <string name="enable_even_odd_weeks">A \u0026 B Wochen aktivieren</string>
