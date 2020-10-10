@@ -63,12 +63,15 @@ data class SubstitutionEntry(
 
     fun getTimeSegment(context: Context) =
             if (PreferenceUtil.isHour()) {
-                getTime()
+                if (isStartEqualEnd())
+                    "${context.getString(R.string.lesson_at)} ${getStart(true)}"
+                else
+                    "${context.getString(R.string.lessons_from)} ${getStart(true)}-${getEnd(true)}"
             } else {
                 if (isStartEqualEnd())
-                    "${getStart(true)}. ${context.getString(R.string.share_msg_hour)}"
+                    "${getStart(false)}. ${context.getString(R.string.share_msg_hour)}"
                 else
-                    "${getStart(PreferenceUtil.isHour())}.-${getEnd(PreferenceUtil.isHour())}. ${context.getString(R.string.share_msg_hour)}"
+                    "${getStart(false)}.-${getEnd(false)}. ${context.getString(R.string.share_msg_hour)}"
             }
 
 

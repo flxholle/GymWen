@@ -634,4 +634,6 @@
     <string name="seven_day_incidence_per_100_000">7-day incidence per 100,000: %d</string>
     <string name="deaths">Deaths: %d</string>
     <string name="source">Data source: %s</string>
+    <string name="lessons_from">Lessons from</string>
+    <string name="lesson_at">Lesson at</string>
 </resources>

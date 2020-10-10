@@ -422,6 +422,8 @@
     <string name="share_msg_dismissed">entfällt</string>
     <string name="share_msg_hour">Stunde</string>
     <string name="share_msg_for_courses">für die Kurse</string>
+    <string name="lessons_from">Stunden von</string>
+    <string name="lesson_at">Stunde um</string>
 
 
     <string name="gnu_license" tools:ignore="TypographyOther">
