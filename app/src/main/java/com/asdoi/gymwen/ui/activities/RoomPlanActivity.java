@@ -290,8 +290,8 @@ public class RoomPlanActivity extends ActivityFeatures {
         }
     }
 
-    public void showRoom(int index) {
-        Fragment fragment = RoomPlanFragment.newInstance(index);
+    public void showRoom(Room room) {
+        Fragment fragment = RoomPlanFragment.newInstance(getRoomMarkers().indexOf(room));
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.room_plan_frame, fragment).commit();
         search = false;
@@ -345,7 +345,6 @@ public class RoomPlanActivity extends ActivityFeatures {
 
     public static class Room {
         private final String name;
-        @Nullable
         private final String description;
         private final PointF location;
         private final String floor;
@@ -414,6 +413,15 @@ public class RoomPlanActivity extends ActivityFeatures {
 
         public boolean hasDescription() {
             return !Objects.requireNonNull(description).trim().isEmpty();
+        }
+
+        @Override
+        public boolean equals(@Nullable Object obj) {
+            if (obj instanceof Room) {
+                Room room = (Room) obj;
+                return name.equals(room.name) && description.equals(room.description) && location.equals(room.location) && floor.equals(room.floor);
+            }
+            return false;
         }
     }
 }

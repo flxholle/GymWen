@@ -137,12 +137,12 @@ public class RoomPlanSearchFragment extends Fragment {
         private View createView(@NonNull View base, int position) {
             RoomPlanActivity.Room room = content.get(position);
 
-            base.setOnClickListener((View v) -> ((RoomPlanActivity) requireActivity()).showRoom(position));
+            base.setOnClickListener((View v) -> ((RoomPlanActivity) requireActivity()).showRoom(content.get(position)));
             TypedValue outValue = new TypedValue();
             requireContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             base.setBackgroundResource(outValue.resourceId);
 
-            base.findViewById(R.id.room_search_button).setOnClickListener((View v) -> ((RoomPlanActivity) requireActivity()).showRoom(position));
+            base.findViewById(R.id.room_search_button).setOnClickListener((View v) -> ((RoomPlanActivity) requireActivity()).showRoom(content.get(position)));
 
             TextView roomName = base.findViewById(R.id.room_search_room);
             roomName.setText(room.getName());
