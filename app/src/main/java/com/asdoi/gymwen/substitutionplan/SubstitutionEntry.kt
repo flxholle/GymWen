@@ -90,6 +90,8 @@ data class SubstitutionEntry(
                 9 -> "14:45"
                 10 -> "15:30"
                 11 -> "16:15"
+                12 -> "17:00"
+                13 -> "17:45"
                 else ->
                     //Breaks are excluded
                     ("" + (45 * lesson + 8 * 60 + 10) / 60).replace(",".toRegex(), ".")
@@ -117,6 +119,8 @@ data class SubstitutionEntry(
                 9 -> "15:30"
                 10 -> "16:15"
                 11 -> "17:00"
+                12 -> "17:45"
+                13 -> "18:30"
                 else ->
                     //Breaks are excluded
                     ("" + (45 * (lesson + 1) + 8 * 60 + 10) / 60).replace(",".toRegex(), ".")

@@ -148,7 +148,7 @@ public class AlertDialogsHelper {
 
         from_hour.setOnClickListener(v -> {
             NumberPicker numberPicker = new NumberPicker(activity);
-            numberPicker.setMaxValue(10);
+            numberPicker.setMaxValue(11);
             numberPicker.setMinValue(1);
             numberPicker.setValue(Integer.parseInt(from_hour.getText().toString()));
             new MaterialDialog.Builder(activity)
@@ -173,7 +173,7 @@ public class AlertDialogsHelper {
 
         to_hour.setOnClickListener(v -> {
             NumberPicker numberPicker = new NumberPicker(activity);
-            numberPicker.setMaxValue(10);
+            numberPicker.setMaxValue(11);
             numberPicker.setMinValue(1);
             numberPicker.setValue(Integer.parseInt(to_hour.getText().toString()));
             new MaterialDialog.Builder(activity)
@@ -389,7 +389,7 @@ public class AlertDialogsHelper {
 
         from_hour.setOnClickListener(v -> {
             NumberPicker numberPicker = new NumberPicker(activity);
-            numberPicker.setMaxValue(10);
+            numberPicker.setMaxValue(11);
             numberPicker.setMinValue(1);
             try {
                 numberPicker.setValue(Integer.parseInt(from_hour.getText().toString()));
@@ -417,7 +417,7 @@ public class AlertDialogsHelper {
 
         to_hour.setOnClickListener(v -> {
             NumberPicker numberPicker = new NumberPicker(activity);
-            numberPicker.setMaxValue(10);
+            numberPicker.setMaxValue(11);
             numberPicker.setMinValue(1);
             try {
                 numberPicker.setValue(Integer.parseInt(from_hour.getText().toString()) + 1);
@@ -1134,7 +1134,7 @@ public class AlertDialogsHelper {
 
         hour.setOnClickListener(v -> {
             NumberPicker numberPicker = new NumberPicker(activity);
-            numberPicker.setMaxValue(10);
+            numberPicker.setMaxValue(11);
             numberPicker.setMinValue(1);
             try {
                 numberPicker.setValue(Integer.parseInt(hour.getText().toString()));
@@ -1353,7 +1353,7 @@ public class AlertDialogsHelper {
 
         hour.setOnClickListener(v -> {
             NumberPicker numberPicker = new NumberPicker(activity);
-            numberPicker.setMaxValue(10);
+            numberPicker.setMaxValue(11);
             numberPicker.setMinValue(1);
             new MaterialDialog.Builder(activity)
                     .customView(numberPicker, false)
