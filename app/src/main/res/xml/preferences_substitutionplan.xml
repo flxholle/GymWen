@@ -31,7 +31,7 @@
         android:summary="@string/set_desc_lessons"
         android:title="@string/set_lessons"
         app:iconSpaceReserved="false" />
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="true"
         android:key="summarize"
         android:summary="@string/set_desc_summarize"
