@@ -274,8 +274,8 @@ class NotificationUtils {
                     if (sendTomorrow) SummaryNotification(titleTomorrow, messageTomorrow.split("\n").toTypedArray(), NOTIFICATION_SUMMARY_ID_2)
                 } else {
                     //Sort notification
-                    var title = ""
-                    var content = ""
+                    val title: String
+                    val content: String
 
                     if (sendToday && sendTomorrow) {
                         title = "${ApplicationFeatures.getContext().getString(R.string.notif_content_title)} $countTotal"
@@ -317,14 +317,20 @@ class NotificationUtils {
                                         .append(" ")
                                         .append(context.getString(R.string.in_room))
                                         .append(" ")
-                                        .append(line.room)
-                                        .append(" ")
-                                        .append(context.getString(R.string.with_teacher))
-                                        .append(" ")
-                                        .append(line.teacher)
-                                        .append(", ")
-                                        .append(line.moreInformation)
-                                        .append("\n")
+                                if (line.room.isNotBlank()) {
+                                    message.append(line.room)
+                                            .append(" ")
+                                }
+                                if (line.teacher.isNotBlank()) {
+                                    message.append(context.getString(R.string.with_teacher))
+                                            .append(" ")
+                                            .append(line.teacher)
+                                }
+                                if (line.moreInformation.isNotBlank()) {
+                                    message.append(", ")
+                                            .append(line.moreInformation)
+                                }
+                                message.append("\n")
                             }
                         }
                     } else {
@@ -339,12 +345,18 @@ class NotificationUtils {
                                 message.append(
                                         line.getTimeSegment(context))
                                         .append(" ").append(line.course)
-                                        .append(" ").append(context.getString(R.string.in_room))
-                                        .append(" ").append(line.room)
-                                        .append(" ").append(context.getString(R.string.with_teacher))
-                                        .append(" ").append(line.teacher)
-                                        .append(", ").append(line.moreInformation)
-                                        .append("\n")
+                                if (line.room.isNotBlank()) {
+                                    message.append(" ").append(context.getString(R.string.in_room))
+                                            .append(" ").append(line.room)
+                                }
+                                if (line.teacher.isNotBlank()) {
+                                    message.append(" ").append(context.getString(R.string.with_teacher))
+                                            .append(" ").append(line.teacher)
+                                }
+                                if (line.moreInformation.isNotBlank()) {
+                                    message.append(", ").append(line.moreInformation)
+                                }
+                                message.append("\n")
                             }
                         }
                     }
@@ -459,8 +471,8 @@ class NotificationUtils {
                 return if (entry.isNothing()) {
                     listOf("${entry.getTimeSegment(context)} ${context.getString(R.string.missing)}", "${entry.moreInformation} ${if (senior) "(${entry.course})"; else ""}")
                 } else {
-                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} ${context.getString(R.string.with_teacher)} " else ""}${entry.teacher} ${context.getString(R.string.in_room)} ${entry.room}",
-                            "${entry.getTimeSegment(context)}${if (!entry.moreInformation.isBlank()) ", ${entry.moreInformation}" else ""}  ${if (senior) "(${entry.course})"; else ""}")
+                    listOf("${if (!entry.subject.isBlank()) "${entry.subject} ${context.getString(R.string.with_teacher)} " else ""}${entry.teacher} ${if (entry.room.isNotBlank()) "${context.getString(R.string.in_room)} ${entry.room}" else ""}",
+                            "${entry.getTimeSegment(context)}${if (entry.moreInformation.isNotBlank()) ", ${entry.moreInformation}" else ""}  ${if (senior) "(${entry.course})"; else ""}")
                 }
 
             }

@@ -314,13 +314,19 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                     message.append(freespace)
                             .append(entry.getTimeSegment(context)).append(" ")
                             .append(requireContext().getString(R.string.for_course))
-                            .append(" ").append(entry.getCourse())
-                            .append(" ").append(context.getString(R.string.in_room))
-                            .append(" ").append(entry.getRoom())
-                            .append(" ").append(context.getString(R.string.with_teacher))
-                            .append(" ").append(entry.getTeacher())
-                            .append(", ").append(entry.getMoreInformation())
-                            .append("\n");
+                            .append(" ").append(entry.getCourse());
+                    if (!entry.getRoom().trim().isEmpty()) {
+                        message.append(" ").append(context.getString(R.string.in_room))
+                                .append(" ").append(entry.getRoom());
+                    }
+                    if (!entry.getTeacher().trim().isEmpty()) {
+                        message.append(" ").append(context.getString(R.string.with_teacher))
+                                .append(" ").append(entry.getTeacher());
+                    }
+                    if (!entry.getMoreInformation().trim().isEmpty()) {
+                        message.append(", ").append(entry.getMoreInformation());
+                    }
+                    message.append("\n");
                 }
             }
         } else {
@@ -334,13 +340,19 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                 } else {
                     message.append(freespace)
                             .append(entry.getTimeSegment(context)).append(" ")
-                            .append(entry.getSubject()).append(" ")
-                            .append(context.getString(R.string.in_room)).append(" ")
-                            .append(entry.getRoom())
-                            .append(" ").append(context.getString(R.string.with_teacher))
-                            .append(" ").append(entry.getTeacher())
-                            .append(", ").append(entry.getMoreInformation())
-                            .append("\n");
+                            .append(entry.getSubject()).append(" ");
+                    if (!entry.getRoom().trim().isEmpty()) {
+                        message.append(context.getString(R.string.in_room)).append(" ")
+                                .append(entry.getRoom());
+                    }
+                    if (!entry.getTeacher().trim().isEmpty()) {
+                        message.append(" ").append(context.getString(R.string.with_teacher))
+                                .append(" ").append(entry.getTeacher());
+                    }
+                    if (!entry.getMoreInformation().trim().isEmpty()) {
+                        message.append(", ").append(entry.getMoreInformation());
+                    }
+                    message.append("\n");
                 }
             }
         }
