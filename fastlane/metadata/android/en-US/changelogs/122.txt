@@ -1,0 +1,8 @@
+- (Inoffizielle) Mebis App hinzugefügt
+- Corona Live-Ticker für den LK Roth hinzugefügt
+- Durchsuchbare Einstellungen
+- Manuelles Entsperren hinzugefügt
+- Samsung DeX Kompatibilität
+- Vorschlägeliste im Stundenplan editierbar
+- Kleinere Design-Änderungen
+- Großer Bugfix in Vertretungsplan und Lehrerliste
