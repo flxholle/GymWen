@@ -998,7 +998,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             else
                 ((SubstitutionFragment) object).update(all);
 
-            //don'AndroidManifest.xml return POSITION_NONE, avoid fragment recreation.
+            //don't return POSITION_NONE, avoid fragment recreation.
             return super.getItemPosition(object);
         }
     }

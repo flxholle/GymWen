@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidStudioProjects-GymWen.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidStudioProjects-GymWen.iml" group="GymWen" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/GymWen.iml" filepath="$PROJECT_DIR$/.idea/GymWen.iml" group="GymWen" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GymWen-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GymWen-app.iml" group="GymWen/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GymWenNew-GymWen.iml" filepath="$PROJECT_DIR$/.idea/modules/GymWenNew-GymWen.iml" group="GymWen" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GymWenNew-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GymWenNew-app.iml" group="GymWen/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StudioProjects-GymWenNew-GymWen.iml" filepath="$PROJECT_DIR$/.idea/modules/StudioProjects-GymWenNew-GymWen.iml" group="GymWen" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="GymWen/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GymWen.iml" filepath="$PROJECT_DIR$/.idea/modules/GymWen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GymWen.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GymWen.app.iml" />
     </modules>
   </component>
 </project>
