@@ -21,19 +21,19 @@ object ParseCoronaLiveTicker {
             for (line in 1 until rows.size) {
                 val row = rows[line].select("td").eachText()
                 if (row[cityIndex] == city) {
-                    val infections = row[infectionsIndex].toInt()
+                    val infections = row[infectionsIndex].replace(".", "").toInt()
                     val infectionsYesterdayTodayString = row[infectionsYesterdayTodayIndex]
-                            .replace("(", "").replace(")", "").replace("+", "").replace(" ", "").trim()
+                            .replace("(", "").replace(")", "").replace("+", "").replace(" ", "").replace(".", "").trim()
                     val infectionsYesterdayToday =
                             if (infectionsYesterdayTodayString == "-")
                                 0
-                            else infectionsYesterdayTodayString.trim().toInt()
+                            else infectionsYesterdayTodayString.toInt()
                     val infectionsPerOneHundredThousands = row[infectionsPerOneHundredThousandsIndex].replace(",", ".").toDouble()
-                    val infectionsInTheLastSevenDays = row[infectionsInTheLastSevenDaysIndex].toInt()
+                    val infectionsInTheLastSevenDays = row[infectionsInTheLastSevenDaysIndex].replace(".", "").toInt()
                     val sevenDayIncidencePerOneHundredThousands = row[sevenDayIncidencePerOneHundredThousandsIndex].replace(",", ".").toDouble()
-                    val deaths = row[deathsIndex].toInt()
+                    val deaths = row[deathsIndex].replace(".", "").toInt()
                     val deathsYesterdayTodayString = row[deathsYesterdayTodayIndex]
-                            .replace("(", "").replace(")", "").replace("+", "").replace(" ", "").trim()
+                            .replace("(", "").replace(")", "").replace("+", "").replace(" ", "").replace(".", "").trim()
                     val deathsYesterdayToday =
                             if (deathsYesterdayTodayString == "-")
                                 0
