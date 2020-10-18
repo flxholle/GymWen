@@ -36,6 +36,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.asdoi.gymwen.ApplicationFeatures;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.substitutionplan.SubstitutionTitle;
+import com.asdoi.gymwen.substitutionplan.WeekChar;
 import com.ulan.timetable.activities.SettingsActivity;
 import com.ulan.timetable.receivers.DoNotDisturbReceiversKt;
 
@@ -182,7 +183,7 @@ public class PreferenceUtil {
             try {
                 Calendar todayCal = Calendar.getInstance();
                 todayCal.setTime(today.getDate().toDate());
-                if (today.getWeek() != 'A')
+                if (today.getWeek() != WeekChar.WEEK_A)
                     todayCal.set(Calendar.WEEK_OF_YEAR, todayCal.get(Calendar.WEEK_OF_YEAR) - 1);
 
                 setTermStart(context, todayCal.get(Calendar.YEAR), todayCal.get(Calendar.MONTH), todayCal.get(Calendar.DAY_OF_MONTH));

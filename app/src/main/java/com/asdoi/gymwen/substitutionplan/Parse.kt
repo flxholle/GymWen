@@ -22,7 +22,7 @@ object Parse {
 
             val weekChar: Char = titleElements[2].trim().replace(")", "").replace("Woche", "")[0]
 
-            return SubstitutionTitle(LocalDate.fromDateFields(date), dayOfWeek, weekChar)
+            return SubstitutionTitle(LocalDate.fromDateFields(date), dayOfWeek, WeekChar.valueOf(weekChar))
         } catch (e: Exception) {
             e.printStackTrace()
             return null

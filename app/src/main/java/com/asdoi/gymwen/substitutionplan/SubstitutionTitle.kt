@@ -7,7 +7,7 @@ import org.joda.time.LocalDate
 import org.joda.time.LocalTime
 import java.util.*
 
-data class SubstitutionTitle(val date: LocalDate, val dayOfWeek: DayOfWeek, val week: Char) {
+data class SubstitutionTitle(val date: LocalDate, val dayOfWeek: DayOfWeek, val week: WeekChar) {
     fun isPast(): Boolean {
         return LocalDate().isAfter(date)
     }
@@ -104,6 +104,33 @@ enum class DayOfWeek {
                 Calendar.SUNDAY -> SUNDAY
                 else -> MONDAY
             }
+        }
+    }
+}
+
+enum class WeekChar {
+    WEEK_A, WEEK_B;
+
+    override fun toString(): String {
+        return when (this) {
+            WEEK_A -> "A"
+            WEEK_B -> "B"
+        }
+    }
+
+    companion object {
+        fun valueOf(value: String) =
+                if (value.isNotEmpty())
+                    valueOf(value[0])
+                else
+                    WEEK_B
+
+
+        fun valueOf(weekChar: Char): WeekChar {
+            return if (weekChar == 'A' || weekChar == 'a')
+                WEEK_A
+            else
+                WEEK_B
         }
     }
 }
