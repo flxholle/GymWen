@@ -135,6 +135,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return;
         }
 
+        ApplicationFeatures.deleteOfflineSubstitutionDocs();
+
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -647,14 +649,13 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 drawer.closeDrawer(GravityCompat.START);
                 return;
             case R.id.action_refresh:
+                ApplicationFeatures.deleteOfflineSubstitutionDocs();
                 switch (lastLoaded) {
                     case lastLoadedTabs:
-                        ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         sectionsPagerAdapter.notifyDataSetChanged();
                         break;
                     case lastLoadedSubstitution:
                     default:
-                        ApplicationFeatures.deleteOfflineSubstitutionDocs();
                         fragment = SubstitutionFragment.newInstance(SubstitutionFragment.Instance_AtOneGlance);
                         break;
                 }

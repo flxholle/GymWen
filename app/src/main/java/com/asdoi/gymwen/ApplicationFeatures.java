@@ -267,27 +267,6 @@ public class ApplicationFeatures extends MultiDexApplication {
         saveDocs();
     }
 
-    public static class DownloadSubstitutionplanDocsTask extends AsyncTask<Boolean, Void, Void> {
-        @Nullable
-        @Override
-        protected Void doInBackground(@Nullable Boolean... params) {
-            try {
-                if (params == null)
-                    params = new Boolean[]{false, false};
-                else if (params.length < 2) {
-                    if (params.length == 1)
-                        params = new Boolean[]{params[0], true};
-                    else
-                        params = new Boolean[]{false, false};
-                }
-                downloadSubstitutionplanDocs(params[0], params[1]);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
-
     public static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         final ImageView bmImage;
 
@@ -481,7 +460,7 @@ public class ApplicationFeatures extends MultiDexApplication {
         MainSubstitutionPlan.INSTANCE.init();
         Document[] oldDocs = MainSubstitutionPlan.INSTANCE.getDocuments();
 
-        downloadSubstitutionplanDocs(false, false);
+        downloadSubstitutionplanDocsAlways(false, false);
         ProfileManagement.initProfiles();
         if (!coursesCheck(false))
             return;
@@ -531,7 +510,7 @@ public class ApplicationFeatures extends MultiDexApplication {
             return;
 
         if (PreferenceUtil.isNotification())
-            new NotificationUtils.Companion.CreateNotification(alert).execute();
+            new NotificationUtils.Companion.CreateNotification(alert).sendNotification();
     }
 
     //Schedule and TimePicker

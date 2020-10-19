@@ -60,25 +60,27 @@ class NotificationUtils {
         const val tomorrow = 2
         const val both = -1
 
-        class CreateNotification(private val alert: Boolean) : ApplicationFeatures.DownloadSubstitutionplanDocsTask() {
+        class CreateNotification(private val alert: Boolean) {
             private val summarize = PreferenceUtil.isSummarizeUp()
             private val alertForAllProfiles = PreferenceUtil.isMainNotifForAllProfiles() && ProfileManagement.isMoreThanOneProfile()
             private val unchangedSummary = PreferenceUtil.isDontChangeSummary()
 
-            override fun onPostExecute(v: Void?) {
-                super.onPostExecute(v)
-                try {
-                    ProfileManagement.initProfiles()
-                    if (!ApplicationFeatures.initSettings(false, false))
-                        return
-                    if (!MainSubstitutionPlan.areListsSet()) {
-                        return
-                    }
-                    createNotification()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+            fun sendNotification() {
+                Thread {
+                    ApplicationFeatures.downloadSubstitutionplanDocs(false, false)
 
+                    try {
+                        ProfileManagement.initProfiles()
+                        if (!ApplicationFeatures.initSettings(false, false))
+                            return@Thread
+                        if (!MainSubstitutionPlan.areListsSet()) {
+                            return@Thread
+                        }
+                        createNotification()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }.start()
             }
 
             private fun createNotification() {

@@ -65,7 +65,7 @@ public class NotificationUtil {
     public static void sendNotificationSummary(@NonNull Context context, boolean alert) {
         new Thread(() -> {
             ProfileManagement.initProfiles();
-            ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
+            ApplicationFeatures.downloadSubstitutionplanDocsAlways(false, false);
             SubstitutionPlan substitutionPlan = MainSubstitutionPlan.INSTANCE.getInstance(ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).getCoursesArray());
 
             SubstitutionList substitutionlist;
@@ -101,7 +101,7 @@ public class NotificationUtil {
     public static void sendNotificationCurrentLesson(@NonNull Context context, boolean alert) {
         new Thread(() -> {
             ProfileManagement.initProfiles();
-            ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
+            ApplicationFeatures.downloadSubstitutionplanDocsAlways(false, false);
             SubstitutionPlan substitutionPlan = MainSubstitutionPlan.INSTANCE.getInstance(ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).getCoursesArray());
 
             SubstitutionList substitutionlist;

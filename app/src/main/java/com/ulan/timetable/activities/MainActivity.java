@@ -113,7 +113,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 createLoadingPanel(findViewById(R.id.container));
                 findViewById(R.id.tabLayout).setVisibility(View.GONE);
                 new Thread(() -> {
-                    ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
+                    ApplicationFeatures.downloadSubstitutionplanDocsAlways(false, true);
                     substitutionPlan = MainSubstitutionPlan.INSTANCE.getInstance(ProfileManagement.getProfile(profilePos).getCoursesArray());
                     PreferenceUtil.setTermStart(substitutionPlan.getTodayTitle(), this);
 

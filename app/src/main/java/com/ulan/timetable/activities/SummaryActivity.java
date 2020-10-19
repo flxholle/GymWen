@@ -79,7 +79,7 @@ public class SummaryActivity extends ActivityFeatures {
 
             if (PreferenceUtil.isTimeTableSubstitution()) {
                 ProfileManagement.initProfiles();
-                ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
+                ApplicationFeatures.downloadSubstitutionplanDocsAlways(false, true);
 
                 SubstitutionPlan substitutionPlan = null;
                 try {

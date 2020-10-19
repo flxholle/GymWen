@@ -86,7 +86,7 @@ fun setDoNotDisturbReceivers(context: Context, onlyReceivers: Boolean = false) {
         val dbHelper = DbHelper(context)
 
         ProfileManagement.initProfiles()
-        ApplicationFeatures.downloadSubstitutionplanDocs(false, true)
+        ApplicationFeatures.downloadSubstitutionplanDocs(false, false)
         val substitutionPlan = MainSubstitutionPlan.getInstance(ProfileManagement.getProfile(ProfileManagement.loadPreferredProfilePosition()).coursesArray)
 
         val calendar = Calendar.getInstance()

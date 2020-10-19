@@ -65,7 +65,7 @@ public class DayAppWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(@NonNull Context context, @NonNull AppWidgetManager appWidgetManager, @NonNull int[] appWidgetIds) {
         new Thread(() -> {
-            ApplicationFeatures.downloadSubstitutionplanDocs(false, true);
+            ApplicationFeatures.downloadSubstitutionplanDocs(false, false);
 
             if (isAlarmManagerNotSet(context)) {
                 registerNewDayBroadcast(context);

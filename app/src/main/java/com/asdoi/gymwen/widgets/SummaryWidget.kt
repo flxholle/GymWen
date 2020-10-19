@@ -51,7 +51,7 @@ class SummaryWidget : AppWidgetProvider() {
         thread(true) {
 //            SubstitutionWidgetProvider.setColors(SubstitutionWidgetProvider.getThemeInt(context), context)
 //            ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true)
-            ApplicationFeatures.downloadSubstitutionplanDocs(true, true)
+            ApplicationFeatures.downloadSubstitutionplanDocs(true, false)
             for (appWidgetId in appWidgetIds) {
                 updateAppWidget(context, appWidgetManager, appWidgetId)
             }
