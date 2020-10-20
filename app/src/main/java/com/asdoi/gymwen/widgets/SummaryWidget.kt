@@ -49,8 +49,6 @@ class SummaryWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
         thread(true) {
-//            SubstitutionWidgetProvider.setColors(SubstitutionWidgetProvider.getThemeInt(context), context)
-//            ApplicationFeatures.downloadSubstitutionplanDocsAlways(true, true)
             ApplicationFeatures.downloadSubstitutionplanDocs(true, false)
             for (appWidgetId in appWidgetIds) {
                 updateAppWidget(context, appWidgetManager, appWidgetId)

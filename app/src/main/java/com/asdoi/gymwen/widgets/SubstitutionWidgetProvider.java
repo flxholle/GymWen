@@ -31,7 +31,6 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
@@ -46,17 +45,6 @@ import java.util.Objects;
 public class SubstitutionWidgetProvider extends AppWidgetProvider {
     public static final String WIDGET_ID_KEY = "mywidgetproviderwidgetids";
     public static final String OPEN_APP = "openapp";
-
-    @ColorInt
-    protected static int textColorSecondary = Color.GRAY;
-    @ColorInt
-    protected static int textColorPrimary = Color.BLACK;
-    @ColorInt
-    private static int backgroundColor = Color.WHITE;
-
-    private final static int light = 1;
-    private final static int dark = 2;
-    private final static int black = 3;
 
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
@@ -73,7 +61,6 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(@NonNull Context context, @NonNull AppWidgetManager appWidgetManager, @NonNull int[] appWidgetIds) {
-        setColors(getThemeInt(context));
         new Thread(() -> {
             ApplicationFeatures.downloadSubstitutionplanDocs(true, false);
             for (int appWidgetId : appWidgetIds) {
@@ -86,7 +73,7 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
     }
 
     public static void updateWidget(@NonNull Context context, @NonNull AppWidgetManager appWidgetManager, int appWidgetId, @NonNull RemoteViews remoteViews) {
-        remoteViews.setInt(R.id.widget_substitution_frame, "setBackgroundColor", backgroundColor);
+        remoteViews.setInt(R.id.widget_substitution_frame, "setBackgroundColor", getBackgroundColor(context));
 
         //Setup listview
         Intent intent = new Intent(context, SubstitutionWidgetService.class);
@@ -134,51 +121,47 @@ public class SubstitutionWidgetProvider extends AppWidgetProvider {
         remoteViews.setViewVisibility(R.id.widget_substiution_loading, View.GONE);
     }
 
-    private static void setColors(int mode) {
+    private static int getBackgroundColor(Context context) {
+        ThemeValues mode = getThemeInt(context);
         switch (mode) {
             default:
-            case light:
-                backgroundColor = Color.parseColor("#D9FFFFFF");
-                textColorPrimary = Color.BLACK;
-                textColorSecondary = Color.GRAY;
-                break;
-            case dark:
-                backgroundColor = Color.parseColor("#D9212121");
-                textColorPrimary = Color.WHITE;
-                textColorSecondary = Color.LTGRAY;
-                break;
-            case black:
-                backgroundColor = Color.parseColor("#D9000000");
-                textColorPrimary = Color.WHITE;
-                textColorSecondary = Color.LTGRAY;
-                break;
+            case LIGHT:
+                return Color.parseColor("#D9FFFFFF");
+            case DARK:
+                return Color.parseColor("#D9212121");
+            case BLACK:
+                return Color.parseColor("#D9000000");
         }
     }
 
-    private static int getThemeInt(@NonNull Context context) {
+    protected static ThemeValues getThemeInt(@NonNull Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         String theme = sharedPref.getString("theme", "switch");
         return getThemeResFromPrefValue(theme, context);
     }
 
-    private static int getThemeResFromPrefValue(@NonNull String themePrefValue, @NonNull Context context) {
+    private static ThemeValues getThemeResFromPrefValue(@NonNull String themePrefValue, @NonNull Context context) {
         switch (themePrefValue) {
             case "dark":
-                return dark;
+                return ThemeValues.DARK;
             case "black":
-                return black;
+                return ThemeValues.BLACK;
             case "switch":
                 int nightModeFlags = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
                 switch (nightModeFlags) {
                     case Configuration.UI_MODE_NIGHT_YES:
-                        return dark;
+                        return ThemeValues.DARK;
                     default:
                     case Configuration.UI_MODE_NIGHT_NO:
-                        return light;
+                        return ThemeValues.LIGHT;
                 }
             case "light":
             default:
-                return light;
+                return ThemeValues.LIGHT;
         }
+    }
+
+    protected enum ThemeValues {
+        LIGHT, DARK, BLACK
     }
 }

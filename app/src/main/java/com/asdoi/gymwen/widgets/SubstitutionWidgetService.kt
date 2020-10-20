@@ -74,8 +74,10 @@ class SubstitutionWidgetService : RemoteViewsService() {
 
 class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile>) : RemoteViewsService.RemoteViewsFactory {
     private var contentList: MutableList<EntryHelper> = mutableListOf()
+    private lateinit var themeMode: SubstitutionWidgetProvider.ThemeValues
 
     override fun onCreate() {
+        themeMode = SubstitutionWidgetProvider.getThemeInt(context)
         contentList = mutableListOf()
 
         var noInternet = !MainSubstitutionPlan.areListsSet()
@@ -217,7 +219,7 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         view.setViewVisibility(R.id.substitution_specific_entry_textViewSubject, View.GONE)
         view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, text)
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 25f)
-        view.setTextColor(R.id.substitution_specific_entry_textViewTeacher, SubstitutionWidgetProvider.textColorPrimary)
+        view.setTextColor(R.id.substitution_specific_entry_textViewTeacher, getTextColorPrimary())
         view.setViewVisibility(R.id.substitution_specific_entry_textViewRoom, View.GONE)
         view.setViewVisibility(R.id.substitution_specific_entry_textViewOther, View.GONE)
         view.setViewVisibility(R.id.substitution_specific_entry_textViewClass, View.GONE)
@@ -235,7 +237,7 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, textSize.toFloat())
         view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, headline[2])
         view.setTextViewText(R.id.substitution_specific_entry_textViewRoom, headline[3])
-        view.setTextColor(R.id.substitution_specific_entry_textViewRoom, SubstitutionWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.substitution_specific_entry_textViewRoom, getTextColorSecondary())
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, textSize.toFloat())
         view.setViewVisibility(R.id.substitution_specific_entry_textViewOther, if (miscellaneous) View.VISIBLE else View.GONE)
         view.setTextViewText(R.id.substitution_specific_entry_textViewOther, headline[4])
@@ -285,11 +287,11 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         view.setViewVisibility(R.id.substitution_specific_entry_textViewSubject, View.VISIBLE)
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewSubject, TypedValue.COMPLEX_UNIT_SP, 18f)
         view.setTextViewText(R.id.substitution_specific_entry_textViewSubject, "")
-        view.setTextColor(R.id.substitution_specific_entry_textViewSubject, SubstitutionWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.substitution_specific_entry_textViewSubject, getTextColorSecondary())
         view.setViewVisibility(R.id.substitution_specific_entry_textViewTeacher, View.VISIBLE)
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewTeacher, TypedValue.COMPLEX_UNIT_SP, 17f)
         view.setTextViewText(R.id.substitution_specific_entry_textViewTeacher, "")
-        view.setTextColor(R.id.substitution_specific_entry_textViewTeacher, SubstitutionWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.substitution_specific_entry_textViewTeacher, getTextColorSecondary())
         view.setViewVisibility(R.id.substitution_specific_entry_textViewRoom, View.VISIBLE)
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewRoom, TypedValue.COMPLEX_UNIT_SP, 24f)
         view.setTextViewText(R.id.substitution_specific_entry_textViewRoom, "")
@@ -297,11 +299,11 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
         view.setViewVisibility(R.id.substitution_specific_entry_textViewOther, View.VISIBLE)
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewOther, TypedValue.COMPLEX_UNIT_SP, 16f)
         view.setTextViewText(R.id.substitution_specific_entry_textViewOther, "")
-        view.setTextColor(R.id.substitution_specific_entry_textViewOther, SubstitutionWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.substitution_specific_entry_textViewOther, getTextColorSecondary())
         view.setViewVisibility(R.id.substitution_specific_entry_textViewClass, View.VISIBLE)
         view.setTextViewTextSize(R.id.substitution_specific_entry_textViewClass, TypedValue.COMPLEX_UNIT_SP, 12f)
         view.setTextViewText(R.id.substitution_specific_entry_textViewClass, "")
-        view.setTextColor(R.id.substitution_specific_entry_textViewClass, SubstitutionWidgetProvider.textColorSecondary)
+        view.setTextColor(R.id.substitution_specific_entry_textViewClass, getTextColorSecondary())
     }
 
     private fun generateHeadline(context: Context, isShort: Boolean, senior: Boolean): Array<String> {
@@ -309,6 +311,22 @@ class SubstitutionWidgetFactory(val context: Context, val profiles: List<Profile
             arrayOf(if (isShort) context.getString(R.string.lessons_short_three) else context.getString(R.string.lessons), if (isShort) context.getString(R.string.courses_short) else context.getString(R.string.courses), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), context.getString(R.string.subject))
         } else {
             arrayOf(if (isShort) context.getString(R.string.lessons_short_three) else context.getString(R.string.lessons), context.getString(R.string.subject), if (isShort) context.getString(R.string.teacher_short) else context.getString(R.string.teacher), if (isShort) context.getString(R.string.room_short) else context.getString(R.string.room), context.getString(R.string.miscellaneous_short), if (isShort) context.getString(R.string.classes_short) else context.getString(R.string.classes))
+        }
+    }
+
+    private fun getTextColorPrimary(): Int {
+        return when (themeMode) {
+            SubstitutionWidgetProvider.ThemeValues.LIGHT -> Color.BLACK
+            SubstitutionWidgetProvider.ThemeValues.DARK -> Color.WHITE
+            SubstitutionWidgetProvider.ThemeValues.BLACK -> Color.WHITE
+        }
+    }
+
+    private fun getTextColorSecondary(): Int {
+        return when (themeMode) {
+            SubstitutionWidgetProvider.ThemeValues.LIGHT -> Color.GRAY
+            SubstitutionWidgetProvider.ThemeValues.DARK -> Color.LTGRAY
+            SubstitutionWidgetProvider.ThemeValues.BLACK -> Color.LTGRAY
         }
     }
 }
