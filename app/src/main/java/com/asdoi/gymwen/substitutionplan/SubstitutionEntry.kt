@@ -134,5 +134,57 @@ data class SubstitutionEntry(
             }
             return LocalTime.MIDNIGHT
         }
+
+        fun getStartLessonOfLocalTime(time: LocalTime): Int {
+            var lesson = -1
+            while (lesson < 25) {
+                val lessonTime = getStartLocalTimeOfLesson(lesson)
+                if (lessonTime.isAfter(time) || lessonTime.isEqual(time)) {
+                    return lesson
+                }
+                lesson++
+            }
+            return lesson
+        }
+
+        fun getEndLessonOfLocalTime(time: LocalTime): Int {
+            var lesson = -1
+            while (lesson < 25) {
+                val lessonTime = getEndLocalTimeOfLesson(lesson)
+                if (lessonTime.isAfter(time) || lessonTime.isEqual(time)) {
+                    return lesson
+                }
+                lesson++
+            }
+            return lesson
+        }
+
+        fun getStartLessonOfLocalTime(time: String): Int {
+            try {
+                val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+                val parseTime =
+                        if (time.length == 4)
+                            "0$time"
+                        else time
+                return getStartLessonOfLocalTime(LocalTime.fromDateFields(dateFormat.parse(parseTime)))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return 0
+        }
+
+        fun getEndLessonOfLocalTime(time: String): Int {
+            try {
+                val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+                val parseTime =
+                        if (time.length == 4)
+                            "0$time"
+                        else time
+                return getEndLessonOfLocalTime(LocalTime.fromDateFields(dateFormat.parse(parseTime)))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return 0
+        }
     }
 }

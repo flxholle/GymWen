@@ -313,53 +313,17 @@ public class WeekUtils {
     }
 
     public static int getMatchingScheduleBegin(@NonNull String time) {
-        ArrayList<Integer[]> times = new ArrayList<>();
-        for (int i = 1; i <= 11; i++) {
-            String time2 = getMatchingTimeBegin(i);
-            int startHour = Integer.parseInt(time2.substring(0, time2.indexOf(":")));
-            int startMinute = Integer.parseInt(time2.substring(time2.indexOf(":") + 1));
-            times.add(new Integer[]{startHour, startMinute});
-        }
-
-        int startHour = Integer.parseInt(time.substring(0, time.indexOf(":")));
-        int startMinute = Integer.parseInt(time.substring(time.indexOf(":") + 1));
-
-        int i = 0;
-        for (; i < times.size(); i++) {
-            Integer[] t = times.get(i);
-            if (startHour < t[0] || startHour == t[0] && startMinute < t[1]) {
-                return i;
-            }
-        }
-        return i + 1;
+        return SubstitutionEntry.Companion.getStartLessonOfLocalTime(time);
     }
 
     public static int getMatchingScheduleEnd(@NonNull String time) {
-        ArrayList<Integer[]> times = new ArrayList<>();
-        for (int i = 1; i <= 11; i++) {
-            String time2 = getMatchingTimeEnd(i);
-            int startHour = Integer.parseInt(time2.substring(0, time2.indexOf(":")));
-            int startMinute = Integer.parseInt(time2.substring(time2.indexOf(":") + 1));
-            times.add(new Integer[]{startHour, startMinute});
-        }
-
-        int startHour = Integer.parseInt(time.substring(0, time.indexOf(":")));
-        int startMinute = Integer.parseInt(time.substring(time.indexOf(":") + 1));
-
-        int i = 0;
-        for (; i < times.size(); i++) {
-            Integer[] t = times.get(i);
-            if (startHour < t[0] || startHour == t[0] && startMinute < t[1]) {
-                return i;
-            }
-        }
-        return i + 1;
+        return SubstitutionEntry.Companion.getEndLessonOfLocalTime(time);
     }
 
     @NonNull
     public static String getMatchingTimeBegin(int hour) {
         String time = SubstitutionEntry.Companion.getStartLocalTimeOfLesson(hour).toString("HH:mm");
-        if (time.length() < 5)
+        if (time.length() == 4)
             time = "0" + time;
         return time;
     }
@@ -367,7 +331,7 @@ public class WeekUtils {
     @NonNull
     public static String getMatchingTimeEnd(int hour) {
         String time = SubstitutionEntry.Companion.getEndLocalTimeOfLesson(hour).toString("HH:mm");
-        if (time.length() < 5)
+        if (time.length() == 4)
             time = "0" + time;
         return time;
     }
