@@ -30,9 +30,9 @@ data class CoronaTicker(val infections: Int,
     companion object {
         fun calculateCoronaLightColor(sevenDayIncidencePerOneHundredThousands: Float) =
                 when (sevenDayIncidencePerOneHundredThousands.roundToInt()) {
-                    in 0..35 -> CoronaLightColor.GREEN
-                    in 35..50 -> CoronaLightColor.YELLOW
-                    in 50..100 -> CoronaLightColor.RED
+                    in 0 until 35 -> CoronaLightColor.GREEN
+                    in 35 until 50 -> CoronaLightColor.YELLOW
+                    in 50 until 100 -> CoronaLightColor.RED
                     else -> CoronaLightColor.DEEP_RED
                 }
     }
