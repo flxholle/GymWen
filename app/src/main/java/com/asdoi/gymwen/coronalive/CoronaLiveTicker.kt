@@ -29,17 +29,18 @@ data class CoronaTicker(val infections: Int,
 
     companion object {
         fun calculateCoronaLightColor(sevenDayIncidencePerOneHundredThousands: Float) =
-                if (sevenDayIncidencePerOneHundredThousands < 35)
-                    CoronaLightColor.GREEN
-                else if (sevenDayIncidencePerOneHundredThousands < 50)
-                    CoronaLightColor.YELLOW
-                else
-                    CoronaLightColor.RED
+                when (sevenDayIncidencePerOneHundredThousands.roundToInt()) {
+                    in 0..35 -> CoronaLightColor.GREEN
+                    in 35..50 -> CoronaLightColor.YELLOW
+                    in 50..100 -> CoronaLightColor.RED
+                    else -> CoronaLightColor.DEEP_RED
+                }
     }
 }
 
 enum class CoronaLightColor {
     GREEN,
     YELLOW,
-    RED
+    RED,
+    DEEP_RED
 }

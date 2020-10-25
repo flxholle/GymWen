@@ -4,6 +4,7 @@ import org.jsoup.nodes.Document
 
 object ParseCoronaLiveTicker {
     fun parseLiveTicker(doc: Document, city: String): CoronaTicker? {
+        val upperCity = city.toUpperCase()
         try {
             val table = doc.select("table#tableLandkreise")
             val rows = table.select("tbody tr")
@@ -20,7 +21,7 @@ object ParseCoronaLiveTicker {
 
             for (line in 1 until rows.size) {
                 val row = rows[line].select("td").eachText()
-                if (row[cityIndex] == city) {
+                if (row[cityIndex].toUpperCase() == upperCity) {
                     val infections = row[infectionsIndex].replace(".", "").toInt()
                     val infectionsYesterdayTodayString = row[infectionsYesterdayTodayIndex]
                             .replace("(", "").replace(")", "").replace("+", "").replace(" ", "").replace(".", "").trim()
