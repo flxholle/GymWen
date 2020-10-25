@@ -860,6 +860,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                                         icon.setTint(Color.WHITE);
                                     }
                                     builder.setIcon(icon);
+                                    builder.setBackgroundColor(ContextCompat.getColor(this, R.color.corona_light_red));
+                                    builder.red().show();
+                                    break;
+                                case DEEP_RED:
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        icon.setTint(Color.WHITE);
+                                    }
+                                    builder.setIcon(icon);
                                     builder.red().show();
                                     break;
                             }
@@ -876,13 +884,16 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                             int color = Color.WHITE;
                             switch (coronaTicker.getCoronaLightColor()) {
                                 case GREEN:
-                                    color = ContextCompat.getColor(this, R.color.nothing);
+                                    color = ContextCompat.getColor(this, R.color.corona_light_green);
                                     break;
                                 case YELLOW:
-                                    color = ContextCompat.getColor(this, R.color.tomorrow);
+                                    color = ContextCompat.getColor(this, R.color.corona_light_yellow);
                                     break;
                                 case RED:
-                                    color = ContextCompat.getColor(this, R.color.today);
+                                    color = ContextCompat.getColor(this, R.color.corona_light_red);
+                                    break;
+                                case DEEP_RED:
+                                    color = ContextCompat.getColor(this, R.color.corona_light_deep_red);
                                     break;
                             }
 
