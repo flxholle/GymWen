@@ -1145,6 +1145,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
 
                 subject.setText(entry.getSubject() + " " + requireContext().getString(R.string.with_teacher) + " ");
             } else {
+                teacher.setVisibility(View.GONE);
                 setTeacherView(subject, entry.getTeacher(), ApplicationFeatures.getBooleanSettings("show_borders", false), PreferenceUtil.isFullTeacherNames());
                 subject.setText(entry.getTeacher());
             }

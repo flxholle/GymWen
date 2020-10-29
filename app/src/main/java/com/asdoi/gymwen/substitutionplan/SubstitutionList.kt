@@ -18,7 +18,17 @@ class SubstitutionList(
 
     fun isEmpty(): Boolean = size() == 0
 
-    fun isContentEqual(compareList: SubstitutionList) = entries == compareList.entries
+    fun isContentEqual(compareList: SubstitutionList): Boolean {
+        if (entries.size != compareList.entries.size)
+            return false
+
+        entries.forEach {
+            if (!compareList.entries.contains(it))
+                return false
+        }
+
+        return true
+    }
 
     fun filter(courses: Array<String>): SubstitutionList {
         val filteredList = if (courses.size == 1)
