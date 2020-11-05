@@ -8,10 +8,6 @@ class SubstitutionList(
 ) {
     constructor(title: SubstitutionTitle) : this(mutableListOf<SubstitutionEntry>(), title)
 
-    fun add(entry: SubstitutionEntry) {
-        entries.add(entry)
-    }
-
     fun getEntry(index: Int): SubstitutionEntry = entries[index]
 
     fun size(): Int = entries.size

@@ -31,9 +31,9 @@ object Parse {
 
     fun parseSubstitutionList(doc: Document): SubstitutionList? {
         try {
-            val rows = doc.select("table.TabelleVertretungen tr")
+            val entries: MutableList<SubstitutionEntry> = mutableListOf()
 
-            val substitutionList = SubstitutionList(parseSubstitutionTitle(doc)!!)
+            val rows = doc.select("table.TabelleVertretungen tr")
 
             val headline = rows[0].select("td").eachText()
             for (i in headline.indices) {
@@ -62,7 +62,7 @@ object Parse {
                     val room: String = if (roomIndex >= 0) content[roomIndex].text().trim() else ""
                     val moreInformation: String = if (moreInformationIndex >= 0) content[moreInformationIndex].text() else ""
 
-                    substitutionList.add(
+                    entries.add(
                             SubstitutionEntry(
                                     course, hour, subject, teacher, room, moreInformation
                             )
@@ -72,7 +72,7 @@ object Parse {
                 }
             }
 
-            return substitutionList
+            return SubstitutionList(entries, parseSubstitutionTitle(doc)!!)
         } catch (e: Exception) {
             e.printStackTrace()
             return null
