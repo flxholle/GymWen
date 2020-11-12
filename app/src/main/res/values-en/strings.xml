@@ -89,7 +89,6 @@
     <string name="teacher_short">T</string>
     <string name="room">Room</string>
     <string name="room_short">R</string>
-    <string name="miscellaneous">Others</string>
     <string name="miscellaneous_short">Others</string>
 
 
@@ -192,12 +191,6 @@
     <string name="acra_dialog_title">That shouldn\'t have happened</string>
 
 
-    <string name="changelog_full_title">Changes \u0026 improvements</string>
-    <string name="changelog_title">What\'s new</string>
-    <string name="changelog_ok_button">All right!</string>
-    <string name="changelog_show_full">More\u2026</string>
-
-
     <string name="sheriff_permission_rational">A few permissions are required for this function. To ensure comprehensive functionality, please grant them.</string>
     <string name="permission_required">Authorization is required!</string>
     <string name="permission_required_description">These authorization (s) are required to ensure comprehensive functionality</string>
@@ -246,7 +239,6 @@
     <string name="profile_default_name">Default</string>
     <string name="grades_down_title">Downloading grades management\u2026</string>
     <string name="grades_management">Grades management</string>
-    <string name="add_profile_button">Add profile</string>
     <string name="teacher_mail">Mail</string>
     <string name="author">Author</string>
     <string name="fork_on_gitlab">Fork on GitLab</string>
@@ -499,7 +491,6 @@
     <string name="Documents">Documents</string>
     <string name="Downloads">Downloads</string>
     <string name="menu_items">Menu items</string>
-    <string name="colorPickerDialog_preset">Presets</string>
     <string name="integrate_substitution_in_timetable_on">Hide sit-in</string>
     <string name="integrate_substitution_in_timetable_off">Show sit-in</string>
     <string name="timetable_delete_week">the subject %s</string>
@@ -624,15 +615,7 @@
         \nThis profile is automatically displayed when the app is started.
         \nIn addition, based on this profile data, notifications are sent and the smartphone is set to \"Do Not Disturb\" mode.</string>
 
-    <string name="corona_menu_item">Corona Live-Ticker</string>
     <string name="corona_live_ticker">Corona Live-Ticker (%s):</string>
-    <string name="total_infections">Total infections: %d</string>
-    <string name="change_from_previous_day">Change from previous day: %s</string>
-    <string name="total_infections_per_100_000">Total infections per 100,000: %d</string>
-    <string name="infections_in_the_last_seven_days">Infections in the last 7 days: %d</string>
-    <string name="seven_day_incidence_per_100_000">7-day incidence per 100,000: %d</string>
-    <string name="deaths">Deaths: %d</string>
-    <string name="source">Data source: %s</string>
     <string name="lessons_from">Lessons from</string>
     <string name="lesson_at">Lesson at</string>
 </resources>

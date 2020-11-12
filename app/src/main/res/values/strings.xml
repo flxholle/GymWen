@@ -143,7 +143,6 @@
     <string name="teacher_short">L</string>
     <string name="room">Raum</string>
     <string name="room_short">R</string>
-    <string name="miscellaneous">Sonstiges</string>
     <string name="miscellaneous_short">Sons.</string>
 
     <!-- Sign In -->
@@ -281,10 +280,6 @@
     <string name="acra_dialog_title">Das hätte nicht passieren sollen.</string>
 
     <!-- ckChangeLog -->
-    <string name="changelog_full_title">Änderungen \u0026 Verbesserungen</string>
-    <string name="changelog_title">Was ist neu</string>
-    <string name="changelog_ok_button">Alles Klar!</string>
-    <string name="changelog_show_full">Mehr\u2026</string>
 
     <!-- Sheriff Permissions -->
     <string name="sheriff_permission_rational">Es werden ein paar Berechtigungen für diese Funktion benötigt. Um eine umfassende Funktionalität zu gewährleisten, gewähren Sie diese bitte.</string>
@@ -348,7 +343,6 @@
     <string name="profiles_add">Profile hinzufügen\u2026</string>
     <string name="profile_empty_name">NeuesProfil</string>
     <string name="profile_default_name">Standard</string>
-    <string name="add_profile_button">Weiteres Profil hinzufügen</string>
 
     <!-- Grades Management -->
     <string name="grades_no_app">Keine Excel App installiert!</string>
@@ -572,7 +566,6 @@
     <string name="select_end_time">Ende</string>
     <string name="select_color">Farbe</string>
     <string name="choose_color">Farbe auswählen</string>
-    <string name="colorPickerDialog_preset">Vorschläge</string>
     <string name="choose_time">Zeit</string>
     <string name="choose_date">Datum</string>
 
@@ -719,14 +712,6 @@
         \nDieses Profil wird automatisch beim Starten der App angezeigt.
         \nAußerdem werden auf Basis dieses Profils die Benachrichtigungen gesendet und das Smartphone in den Nicht-Stören Modus versetzt.</string>
 
-    <string name="corona_menu_item">Corona Live-Ticker</string>
     <string name="corona_live_ticker">Corona Live-Ticker (%s):</string>
-    <string name="total_infections">Gesamtinfektionen: %d</string>
-    <string name="change_from_previous_day">Veränderung zum Vortag: %s</string>
-    <string name="total_infections_per_100_000">Gesamtinfektionen pro 100.000: %d</string>
-    <string name="infections_in_the_last_seven_days">Infektionen der letzten 7 Tage: %d</string>
-    <string name="seven_day_incidence_per_100_000">7-Tage-Inzidenz pro 100.000: %d</string>
-    <string name="deaths">Todesfälle: %d</string>
-    <string name="source">Quelle: %s</string>
 
 </resources>
