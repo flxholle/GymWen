@@ -36,6 +36,9 @@ public abstract class ProfileManagement {
     private static int preferredProfile;
 
     public static Profile getProfile(int pos) {
+        if (pos >= profileList.size() || pos < 0) {
+            return new Profile("1a", "Standard");
+        }
         return profileList.get(pos);
     }
 
