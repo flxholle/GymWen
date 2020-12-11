@@ -151,7 +151,7 @@ public class PreferenceUtil {
     }
 
     public static int getIntelligentHideHour() {
-        return 18;
+        return 17;
     }
 
     public static boolean isMainNotifForAllProfiles() {

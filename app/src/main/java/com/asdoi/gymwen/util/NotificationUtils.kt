@@ -533,22 +533,19 @@ class NotificationUtils {
 
 
                 //Build notification
-                val style = NotificationCompat.InboxStyle()
+                val style = NotificationCompat.BigTextStyle()
+                val text = StringBuilder()
                 for (s in content) {
-                    style.addLine(s)
+                    text.append(s).append("\n")
                 }
-
-                val maxLineSize = 6
-
-                if (content.size > maxLineSize) {
-                    style.setSummaryText("+" + (content.size - maxLineSize) + " " + context.getString(R.string.more))
-                }
+                text.removeSuffix("\n");
 
                 val builder = NotificationCompat.Builder(context, NOTIFICATION_SUMMARY_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_assignment_white_24dp)
                         .setShowWhen(false)
                         .setStyle(style)
                         .setContentTitle(title)
+                        .setContentText(text)
                         .setContentIntent(resultPendingIntent)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setAutoCancel(true)
