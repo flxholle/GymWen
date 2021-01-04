@@ -58,6 +58,7 @@ class TurnOffReceiver : BroadcastReceiver() {
         setDoNotDisturbReceivers(context, true)
         if (PreferenceUtil.isDoNotDisturbTurnOff(context))
             setDoNotDisturb(context, false)
+        NotificationUtil.removeNotificationCurrentLesson(context)
     }
 
     companion object {
