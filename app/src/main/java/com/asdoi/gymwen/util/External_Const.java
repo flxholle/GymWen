@@ -90,9 +90,9 @@ public abstract class External_Const {
     public static final String location = "geo:49.34600,11.15838?q=Gymnasium%20Wendelstein";
 
     //Updater
-    public static final String UPDATER_JSON = "https://gitlab.com/asdoi/gymwenreleases/raw/master/UpdaterFile.json";
-    public static final String APK_DOWNLOAD = "https://gitlab.com/asdoi/gymwenreleases/raw/master/GymWenApp.apk";
-    public static final String APK_DOWNLOAD_PAGE = "https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk";
+    public static final String UPDATER_JSON = "https://gitlab.com/asdoi/GymWen/raw/master/releases/UpdaterFile.json";
+    public static final String APK_DOWNLOAD = "https://gitlab.com/asdoi/GymWen/raw/master/releases/GymWenApp.apk";
+    public static final String APK_DOWNLOAD_PAGE = "https://gitlab.com/asdoi/GymWen/blob/master/releases/GymWenApp.apk";
 
     //App Registration (User census)
     public static final String REGISTER_URL = "https://asdoi.gitlab.io/hit_counter.html";

@@ -259,7 +259,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
                     /*.setButtonDismissClickListener(new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            tabIntent("https://gitlab.com/asdoi/gymwenreleases/blob/master/GymWenApp.apk");
+                            tabIntent("https://gitlab.com/asdoi/GymWen/raw/master/releases/GymWenApp.apk");
                         }
                     })*/
                     .setIcon(R.drawable.ic_system_update_black_24dp)
