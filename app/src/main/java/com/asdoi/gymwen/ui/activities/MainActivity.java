@@ -879,6 +879,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                                 builder.setIcon(icon);
                                 builder.red().show();
                                 break;
+                            case PURPLE:
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    icon.setTint(Color.WHITE);
+                                }
+                                builder.setIcon(icon);
+                                builder.setBackgroundColor(ContextCompat.getColor(this, R.color.light_purple));
+                                builder.red().show();
+                                break;
                         }
                     } else {
                         int color = finalCoronaTicker.getColor(this);
