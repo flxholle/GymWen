@@ -618,4 +618,6 @@
     <string name="corona_live_ticker">Corona Live-Ticker (%s):</string>
     <string name="lessons_from">Lessons from</string>
     <string name="lesson_at">Lesson at</string>
+    <string name="menu_ms_teams">MS Teams</string>
+    <string name="no_teams_app_installed">MS Teams app is not installed!</string>
 </resources>

@@ -85,6 +85,10 @@
                     android:icon="@drawable/ic_internet"
                     android:title="@string/menu_claxss" />
                 <item
+                    android:id="@+id/nav_teams"
+                    android:icon="@drawable/ic_group"
+                    android:title="@string/menu_ms_teams" />
+                <item
                     android:id="@+id/nav_mensa"
                     android:icon="@drawable/ic_restaurant"
                     android:title="@string/menu_mensa" />

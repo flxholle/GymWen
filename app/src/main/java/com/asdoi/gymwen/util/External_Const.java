@@ -39,7 +39,7 @@ public abstract class External_Const {
     public final static String[] notes_packageNames = new String[]{"com.simplemobiletools.notes", "com.simplemobiletools.notes.pro", "com.samsung.android.app.notes"};
     public static final String[] publicTransport_packageNames = new String[]{"de.schildbach.oeffi", "com.mdv.VGNCompanion", "de.hafas.android.db"};
     public static final String[] excel_packageNames = new String[]{"com.microsoft.office.excel", "org.documentfoundation.libreoffice", "cn.wps.moffice_eng"};
-
+    public static final String[] msTeams_packageName = new String[]{"com.microsoft.teams"};
 
     //Links
     public final static String forms_Link = "http://www.gym-wen.de/material/formulare-merkblaetter/";
@@ -63,9 +63,9 @@ public abstract class External_Const {
     //Download Apps
     public static final String downloadApp_publicTransport = "https://f-droid.org/de/packages/de.schildbach.oeffi/";
     public static final String downloadApp_libreoffice = "https://f-droid.org/de/packages/org.documentfoundation.libreoffice/";
-
     public final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
 
+    public static final String teamsAppOnline = "https://teams.microsoft.com";
 
     //ColoRush
     public static final String downloadApp_colorush = "https://asdoi.gitlab.io/colorush.html";
