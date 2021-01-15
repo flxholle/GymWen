@@ -21,6 +21,7 @@
         version="1.2.3"
         versioncode="123">
         <change>MS Teams Button hinzugefügt</change>
+        <change>Lilane Färbung für Hotspots im Corona Live-Ticker</change>
         <change>Kleinere Designänderungen</change>
         <change>Bugfixes</change>
     </release>
