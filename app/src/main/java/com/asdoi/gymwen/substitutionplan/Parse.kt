@@ -20,7 +20,11 @@ object Parse {
             c.time = date
             val dayOfWeek = DayOfWeek.getMatchingDay(c[Calendar.DAY_OF_WEEK])
 
-            val weekChar: Char = titleElements[2].trim().replace(")", "").replace("Woche", "")[0]
+            val weekChar: Char = try {
+                titleElements[2].trim().replace(")", "").replace("Woche", "")[0]
+            } catch (e: Exception) {
+                'A'
+            }
 
             return SubstitutionTitle(LocalDate.fromDateFields(date), dayOfWeek, WeekChar.valueOf(weekChar))
         } catch (e: Exception) {
