@@ -857,6 +857,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                                 builder.setIcon(icon);
                                 builder.green().show();
                                 break;
+                            case ORANGE:
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    icon.setTint(Color.WHITE);
+                                }
+                                builder.setIcon(icon);
+                                builder.setBackgroundColor(ContextCompat.getColor(this, R.color.light_orange));
+                                builder.red().show();
+                                break;
                             case YELLOW:
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     icon.setTint(Color.BLACK);

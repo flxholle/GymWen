@@ -108,7 +108,7 @@ dependencies {
     implementation 'com.prof.rssparser:rssparser:2.1.2'
     //noinspection GradleDependency
     implementation 'com.github.ByteHamster:SearchPreference:-SNAPSHOT'
-    implementation 'com.gitlab.asdoi:coronastats:v1.2'
+    implementation 'com.gitlab.asdoi:coronastats:v1.3'
 
     //Timetable
     implementation 'com.github.quwepiro:ColorPickerDialog:a1d628430b'
