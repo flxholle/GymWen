@@ -30,13 +30,13 @@ android {
         /*Android v4.3 alias "Jelly Bean"*/
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 123
-        versionName "1.2.3"
+        versionCode 124
+        versionName "1.2.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
-        //strip other than english,german resources
+        //strip other than english & german resources
         resConfigs "en", "de"
     }
     buildTypes {
