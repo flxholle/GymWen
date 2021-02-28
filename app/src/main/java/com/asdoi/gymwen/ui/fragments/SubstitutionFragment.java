@@ -203,8 +203,10 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                             changedSectionsPagerAdapterTitles = true;
                         }
                         //Update menu Items for days
-                        if (todayTitle != null && tomorrowTitle != null) {
+                        if (todayTitle != null) {
                             ((MainActivity) requireActivity()).setTodayMenuItemTitle(todayTitle.getDayOfWeekString(requireContext()) + ", " + todayTitle.getDate().toString("dd.MM.yyyy"));
+                        }
+                        if (tomorrowTitle != null) {
                             ((MainActivity) requireActivity()).setTomorrowMenuItemTitle(tomorrowTitle.getDayOfWeekString(requireContext()) + ", " + tomorrowTitle.getDate().toString("dd.MM.yyyy"));
                         }
                     } catch (Exception ignore) {
@@ -495,9 +497,12 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
         if (atOneGlance) {
             boolean showToday, showTomorrow;
 
-            if (MainSubstitutionPlan.INSTANCE.getToday() == null) {
-                showToday = true;
-                showTomorrow = false;
+            if (MainSubstitutionPlan.INSTANCE.getToday() == null || MainSubstitutionPlan.INSTANCE.getTomorrow() == null) {
+                showToday = MainSubstitutionPlan.INSTANCE.getToday() != null;
+                showTomorrow = MainSubstitutionPlan.INSTANCE.getTomorrow() != null;
+                if (!showToday && !showTomorrow) {
+                    showToday = true;
+                }
             } else {
                 //Hide days in the past and today after 18 o'clock
                 showToday = MainSubstitutionPlan.INSTANCE.getTodayTitle().showDay();
