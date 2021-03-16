@@ -71,7 +71,6 @@
 
     <string name="nothing">No sit-ins for you</string>
     <string name="back_button">Press again to exit</string>
-    <string name="downloading">Loading\u2026</string>
     <string name="footprint">Generated with the GymWenApp:</string>
     <string name="noInternet">You are not connected to the internet!</string>
     <string name="noInternetConnection">No Internet connection!</string>
@@ -198,7 +197,7 @@
     <string name="permission_cancel_button">Cancel</string>
 
 
-    <string name="no_email_app">You don\'t have an email app installed</string>
+    <string name="no_email_app">No email app installed</string>
     <string name="teacher_no_teacher_found">No teacher was found matching this data.</string>
     <string name="search_through">Search\u2026</string>
 
@@ -620,4 +619,8 @@
     <string name="lesson_at">Lesson at</string>
     <string name="menu_ms_teams">MS Teams</string>
     <string name="no_teams_app_installed">MS Teams app is not installed!</string>
+    <string name="import_holidays">Import holidays</string>
+    <string name="holiday_bavaria">Bavaria holidays %s</string>
+    <string name="downloading">Downloading \u2026</string>
+    <string name="holidays_bavaria_ics">Bavaria-holidays-%s.ics</string>
 </resources>

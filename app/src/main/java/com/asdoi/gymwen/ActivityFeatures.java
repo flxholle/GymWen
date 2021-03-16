@@ -81,6 +81,7 @@ import com.pd.chocobar.ChocoBar;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 
@@ -335,7 +336,7 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textView.setGravity(Gravity.CENTER);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        textView.setText(ApplicationFeatures.getContext().getString(R.string.downloading));
+        textView.setText(ApplicationFeatures.getContext().getString(R.string.loading));
 
         base.addView(ferrisWheelView);
 
@@ -806,5 +807,71 @@ public abstract class ActivityFeatures extends AppCompatActivity {
 
 
         biometricPrompt.authenticate(promptInfo);
+    }
+
+
+    //Holidays
+    public void importHolidays() {
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        ArrayList<String> yearsList = new ArrayList<>();
+        yearsList.add("" + currentYear);
+        for (int i = 1; i <= 3; i++) {
+            yearsList.add("" + (currentYear + i));
+        }
+        String[] years = yearsList.toArray(new String[]{});
+
+        new MaterialDialog.Builder(this)
+                .title(getString(R.string.import_holidays))
+                .items(years)
+                .itemsCallbackSingleChoice(0, (dialog, itemView, which, text) -> {
+                    importHolidays(Integer.parseInt(text.toString()));
+                    return true;
+                })
+                .positiveText(R.string.select)
+                .negativeText(R.string.cancel)
+                .show();
+    }
+
+
+    private void importHolidays(int year) {
+        String downloadURL = String.format(External_Const.HOLIDAY_DOWNLOAD, year);
+        try {
+            startDownload(downloadURL, getString(R.string.holiday_bavaria, "" + year), getString(R.string.downloading), Environment.DIRECTORY_DOWNLOADS, getString(R.string.holidays_bavaria_ics, "" + year), new openFile(getString(R.string.holidays_bavaria_ics, "" + year)));
+        } catch (Exception e) {
+            e.printStackTrace();
+            tabIntent(downloadURL);
+        }
+
+    }
+
+    private void openFile(String path) {
+        File file = new File(path);
+        Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
+        Intent intent = new Intent(Intent.ACTION_VIEW, fileUri);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, R.string.no_calendar_app, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public class openFile extends BroadcastReceiver {
+        final String subPath;
+
+        public openFile(String subPath) {
+            this.subPath = subPath;
+        }
+
+        @Override
+        public void onReceive(Context ctxt, @NonNull Intent intent) {
+            //Fetching the download id received with the broadcast
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            if (downloadID == id) {
+                openFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + subPath);
+                unregisterReceiver(this);
+            }
+        }
     }
 }

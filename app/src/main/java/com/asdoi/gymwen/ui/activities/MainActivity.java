@@ -18,6 +18,7 @@
 
 package com.asdoi.gymwen.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -489,6 +490,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
      * @param title The string through which the title in action should be replaced, empty if not
      *              Here the code is centralized, to be called from other methods, without creating a MenuItem or others
      */
+    @SuppressLint("NonConstantResourceId")
     public void onNavigationItemSelected(int id, @NonNull String title) {
         // Handle navigation view item clicks here.
         Fragment fragment = null;
@@ -759,6 +761,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 return;
             case R.id.action_corona_live_ticker:
                 showCoronaLiveTicker(false);
+                return;
+            case R.id.nav_holiday:
+                importHolidays();
                 return;
         }
 

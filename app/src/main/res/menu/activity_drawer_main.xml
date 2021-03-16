@@ -141,6 +141,10 @@
                     android:icon="@drawable/ic_podcast"
                     android:title="@string/menu_podcast" />
                 <item
+                    android:id="@+id/nav_holiday"
+                    android:icon="@drawable/ic_baseline_calendar_today_24"
+                    android:title="@string/import_holidays" />
+                <item
                     android:id="@+id/nav_notes"
                     android:icon="@drawable/ic_writing"
                     android:title="@string/menu_notes" />
