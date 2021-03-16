@@ -36,6 +36,10 @@
             android:id="@+id/notes"
             android:icon="@drawable/ic_event_note_black_24dp"
             android:title="@string/notes_activity_title" />
+        <item
+            android:id="@+id/nav_holiday"
+            android:icon="@drawable/ic_baseline_calendar_today_24"
+            android:title="@string/import_holidays" />
     </group>
 
     <group

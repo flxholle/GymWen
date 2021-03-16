@@ -18,6 +18,11 @@
 
 <changelog>
     <release
+        version="1.2.5"
+        versioncode="125">
+        <change>Importieren der Ferien hinzugefügt</change>
+    </release>
+    <release
         version="1.2.4"
         versioncode="124">
         <change>Orange Färbung im Corona Live-Ticker</change>

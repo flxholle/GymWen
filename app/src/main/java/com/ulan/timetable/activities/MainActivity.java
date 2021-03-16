@@ -444,6 +444,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             Intent settings = new Intent(MainActivity.this, com.asdoi.gymwen.ui.activities.MainActivity.class);
             startActivity(settings);
             finish();
+        } else if (itemId == R.id.nav_holiday) {
+            importHolidays();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
