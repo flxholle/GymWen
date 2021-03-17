@@ -719,5 +719,7 @@
     <string name="holiday_bavaria">Ferien Bayern %s</string>
     <string name="downloading">Lädt herunter\u2026</string>
     <string name="holidays_bavaria_ics">Ferien-Bayern-%s.ics</string>
+    <string name="import_holidays_msg">Bitte wähle das Jahr aus, aus dem die Ferien importiert werden sollen.
+        \nAnschließend werden diese heruntergeladen und in den Kalender importiert.</string>
 
 </resources>

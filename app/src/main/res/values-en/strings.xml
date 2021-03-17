@@ -623,4 +623,6 @@
     <string name="holiday_bavaria">Bavaria holidays %s</string>
     <string name="downloading">Downloading \u2026</string>
     <string name="holidays_bavaria_ics">Bavaria-holidays-%s.ics</string>
+    <string name="import_holidays_msg">Please select the year from which the holidays should be imported.
+        \nThen they are downloaded and imported into the calendar.</string>
 </resources>

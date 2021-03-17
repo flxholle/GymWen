@@ -821,7 +821,8 @@ public abstract class ActivityFeatures extends AppCompatActivity {
         String[] years = yearsList.toArray(new String[]{});
 
         new MaterialDialog.Builder(this)
-                .title(getString(R.string.import_holidays))
+                .title(R.string.import_holidays)
+                .content(R.string.import_holidays_msg)
                 .items(years)
                 .itemsCallbackSingleChoice(0, (dialog, itemView, which, text) -> {
                     importHolidays(Integer.parseInt(text.toString()));
