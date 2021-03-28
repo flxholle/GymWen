@@ -51,8 +51,8 @@ public class RSS_Feed {
     public static final String CHANNEL_ID = "RSS_notification";
 
     public static void checkRSS(@NonNull Context context) {
-        Parser parser = new Parser();
-        parser.onFinish(new OnTaskCompleted() {
+        Parser parserGymWen = new Parser();
+        parserGymWen.onFinish(new OnTaskCompleted() {
 
             //what to do when the parsing is done
             @Override
@@ -60,12 +60,12 @@ public class RSS_Feed {
                 // Use the channel info
                 List<Article> articles = channel.getArticles();
                 if (articles.size() > 0) {
-                    if (!Objects.requireNonNull(articles.get(0).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle())) {
+                    if (!Objects.requireNonNull(articles.get(0).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitleGymWen())) {
                         //Send Notification
                         Intent notificationIntent = new Intent(context, WebsiteActivity.class);
                         notificationIntent.putExtra(WebsiteActivity.LOADURL, articles.get(0).getLink());
                         sendRSSNotification(articles.get(0), context, R.drawable.ic_compass, notificationIntent);
-                        PreferenceUtil.setLastLoadedRSSTitle(articles.get(0).getTitle());
+                        PreferenceUtil.setLastLoadedRSSTitleGymWen(articles.get(0).getTitle());
                     }
                 }
             }
@@ -76,11 +76,10 @@ public class RSS_Feed {
                 // Handle the exception
             }
         });
-        parser.execute(External_Const.rss_feed_Link);
+        parserGymWen.execute(External_Const.rss_feed_gymwen);
 
-
-        Parser parser2 = new Parser();
-        parser2.onFinish(new OnTaskCompleted() {
+        Parser parserKM = new Parser();
+        parserKM.onFinish(new OnTaskCompleted() {
 
             //what to do when the parsing is done
             @Override
@@ -88,13 +87,42 @@ public class RSS_Feed {
                 // Use the channel info
                 List<Article> articles = channel.getArticles();
                 if (articles.size() > 0) {
-                    if (!Objects.requireNonNull(articles.get(0).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitle2())) {
+                    if (!Objects.requireNonNull(articles.get(0).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitleKM())) {
+                        //Send Notification
+                        Intent notificationIntent = new Intent(context, MainActivity.class);
+                        notificationIntent.setAction(MainActivity.LOADURL);
+                        notificationIntent.putExtra(MainActivity.LOADURL, articles.get(0).getLink());
+                        sendRSSNotification(articles.get(0), context, R.drawable.ic_school_black_24dp, notificationIntent);
+                        PreferenceUtil.setLastLoadedRSSTitleKM(articles.get(0).getTitle());
+                    }
+                }
+            }
+
+            //what to do in case of error
+            @Override
+            public void onError(@NonNull Exception e) {
+                // Handle the exception
+            }
+        });
+        parserKM.execute(External_Const.rss_feed_km);
+
+
+        Parser parserAsdoi = new Parser();
+        parserAsdoi.onFinish(new OnTaskCompleted() {
+
+            //what to do when the parsing is done
+            @Override
+            public void onTaskCompleted(@NonNull Channel channel) {
+                // Use the channel info
+                List<Article> articles = channel.getArticles();
+                if (articles.size() > 0) {
+                    if (!Objects.requireNonNull(articles.get(0).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitleAsdoi())) {
                         //Send Notification
                         Intent notificationIntent = new Intent(context, MainActivity.class);
                         notificationIntent.setAction(MainActivity.LOADURL);
                         notificationIntent.putExtra(MainActivity.LOADURL, articles.get(0).getLink());
                         sendRSSNotification(articles.get(0), context, R.drawable.ic_gitlab, notificationIntent);
-                        PreferenceUtil.setLastLoadedRSSTitle2(articles.get(0).getTitle());
+                        PreferenceUtil.setLastLoadedRSSTitleAsdoi(articles.get(0).getTitle());
                     }
                 }
             }
@@ -105,7 +133,7 @@ public class RSS_Feed {
                 // Handle the exception
             }
         });
-        parser2.execute(External_Const.rss_feed_Link_2);
+        parserAsdoi.execute(External_Const.rss_feed_asdoi);
     }
 
     private static void sendRSSNotification(@Nullable Article article, @NonNull Context context, int smallIcon, @NonNull Intent notificationIntent) {

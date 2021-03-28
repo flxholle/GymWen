@@ -213,7 +213,7 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
                 onSupportNavigateUp();
                 break;
             case R.id.action_open_rss_feed:
-                i = new Intent(Intent.ACTION_VIEW, Uri.parse(External_Const.rss_feed_Link));
+                i = new Intent(Intent.ACTION_VIEW, Uri.parse(External_Const.rss_feed_gymwen));
                 startActivity(i);
                 break;
         }

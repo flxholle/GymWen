@@ -20,6 +20,7 @@
     <release
         version="1.2.5"
         versioncode="125">
+        <change>RSS-Feed des Kultusministeriums hinzugefügt</change>
         <change>Importieren der Ferien hinzugefügt</change>
     </release>
     <release

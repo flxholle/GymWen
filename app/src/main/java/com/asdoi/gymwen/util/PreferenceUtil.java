@@ -363,20 +363,29 @@ public class PreferenceUtil {
     }
 
     @Nullable
-    public static String getLastLoadedRSSTitle() {
+    public static String getLastLoadedRSSTitleGymWen() {
         return PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getString("lastRSSTitle", null);
     }
 
-    public static void setLastLoadedRSSTitle(String value) {
+    public static void setLastLoadedRSSTitleGymWen(String value) {
         PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putString("lastRSSTitle", value).apply();
     }
 
     @Nullable
-    public static String getLastLoadedRSSTitle2() {
+    public static String getLastLoadedRSSTitleKM() {
+        return PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getString("lastRSSTitleKM", null);
+    }
+
+    public static void setLastLoadedRSSTitleKM(String value) {
+        PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putString("lastRSSTitleKM", value).apply();
+    }
+
+    @Nullable
+    public static String getLastLoadedRSSTitleAsdoi() {
         return PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).getString("lastRSSTitle2", null);
     }
 
-    public static void setLastLoadedRSSTitle2(String value) {
+    public static void setLastLoadedRSSTitleAsdoi(String value) {
         PreferenceManager.getDefaultSharedPreferences(ApplicationFeatures.getContext()).edit().putString("lastRSSTitle2", value).apply();
     }
 }

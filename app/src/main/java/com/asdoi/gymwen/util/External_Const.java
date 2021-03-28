@@ -49,8 +49,9 @@ public abstract class External_Const {
     public final static String claxss_Link = "https://gym-wendelstein.schule-eltern.info/infoline/claxss";
     public static final String news_Link = "http://schuelerzeitung-gym-wen.de/";
     public static final String podcast_Link = "https://www.machdeinradio.de/kanal/wendelsteiner-welle/";
-    public static final String rss_feed_Link = "https://asdoi.gitlab.io/rss-feeds/GymWenStartseite.xml";
-    public static final String rss_feed_Link_2 = "https://asdoi.gitlab.io/rss-feeds/asdoiNews.xml";
+    public static final String rss_feed_gymwen = "https://asdoi.gitlab.io/rss-feeds/GymWenStartseite.xml";
+    public static final String rss_feed_km = "https://www.km.bayern.de/schueler.rss";
+    public static final String rss_feed_asdoi = "https://asdoi.gitlab.io/rss-feeds/asdoiNews.xml";
 
 
     //About App
