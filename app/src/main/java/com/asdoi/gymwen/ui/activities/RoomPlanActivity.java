@@ -88,6 +88,14 @@ public class RoomPlanActivity extends ActivityFeatures {
                     break;
                 }
             }
+            if (roomIndex < 0) {
+                for (int i = 0; i < roomMarkers.size(); i++) {
+                    if (roomMarkers.get(i).getDescription().equalsIgnoreCase(room)) {
+                        roomIndex = i;
+                        break;
+                    }
+                }
+            }
 
             if ((roomIndex < 0 || roomIndex > roomMarkers.size()) && !search) {
                 RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(this)
@@ -130,6 +138,7 @@ public class RoomPlanActivity extends ActivityFeatures {
         rooms.add(new Room("H1", null, context.getString(R.string.gym), new PointF(1950, 1480)));
         rooms.add(new Room("H2", null, context.getString(R.string.gym), new PointF(2070, 1510)));
         rooms.add(new Room("H3", null, context.getString(R.string.gym), new PointF(2200, 1550)));
+        rooms.add(new Room("HSpi", context.getString(R.string.mirror_room), context.getString(R.string.gym), new PointF(2140, 1765)));
 
         //Main floor
         rooms.add(new Room("040", context.getString(R.string.music), new PointF(1280, 1550)));

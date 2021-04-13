@@ -625,4 +625,5 @@
     <string name="holidays_bavaria_ics">Bavaria-holidays-%s.ics</string>
     <string name="import_holidays_msg">Please select the year from which the holidays should be imported.
         \nThen they are downloaded and imported into the calendar.</string>
+    <string name="mirror_room">Mirror room</string>
 </resources>

@@ -202,6 +202,7 @@
     <string name="P_Seminar">P-Seminar</string>
     <string name="profile_subject">Profilfach</string>
     <string name="additum">Additum</string>
+    <string name="mirror_room">Spiegelsaal</string>
     <!-- ShortNames Of Subjects -->
     <string name="mathShort" translatable="false">m</string>
     <string name="germanShort" translatable="false">d</string>
