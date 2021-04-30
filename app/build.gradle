@@ -84,7 +84,7 @@ dependencies {
     implementation 'joda-time:joda-time:2.10.10'
 
     implementation 'saschpe.android:customtabs:3.0.2'
-    implementation "com.mikepenz:aboutlibraries:8.8.2"
+    implementation "com.mikepenz:aboutlibraries:8.8.5"
     implementation 'com.github.javiersantos:AppUpdater:2.7'
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation "ch.acra:acra-mail:$acraVersion"
@@ -111,7 +111,7 @@ dependencies {
     implementation 'com.gitlab.asdoi:coronastats:v1.4'
 
     //Timetable
-    implementation 'com.github.quwepiro:ColorPickerDialog:a1d628430b'
+    implementation 'me.jfenn.ColorPickerDialog:base:0.2.2'
     implementation 'com.github.quwepiro:SQLite2XL:88883cf56d'
     //noinspection NewerVersionAvailable,GradleDependency
     implementation 'org.apache.poi:poi:3.16'
