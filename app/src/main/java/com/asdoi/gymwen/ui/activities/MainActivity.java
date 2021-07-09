@@ -301,7 +301,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         if (PreferenceUtil.isParents()) {
             itemsEnable.add(menu.findItem(R.id.nav_claxss));
             itemsEnable.add(menu.findItem(R.id.nav_forms));
-            itemsEnable.add(menu.findItem(R.id.nav_call_office));
             itemsDisable.add(menu.findItem(R.id.nav_mebis));
             itemsDisable.add(menu.findItem(R.id.nav_teams));
             itemsDisable.add(menu.findItem(R.id.nav_timetable));
@@ -310,7 +309,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         } else {
             itemsDisable.add(menu.findItem(R.id.nav_claxss));
             itemsDisable.add(menu.findItem(R.id.nav_forms));
-            itemsDisable.add(menu.findItem(R.id.nav_call_office));
             itemsEnable.add(menu.findItem(R.id.nav_mebis));
             itemsEnable.add(menu.findItem(R.id.nav_teams));
             itemsEnable.add(menu.findItem(R.id.nav_timetable));
