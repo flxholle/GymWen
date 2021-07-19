@@ -70,12 +70,16 @@ public class NotificationUtil {
 
             SubstitutionList substitutionlist;
             if (substitutionPlan.getTodayFiltered() != null) {
-                if (substitutionPlan.getTodayTitle().isCustomToday())
-                    substitutionlist = substitutionPlan.getTodayFilteredSummarized();
-                else if (substitutionPlan.getTomorrowTitle().isCustomToday())
-                    substitutionlist = substitutionPlan.getTomorrowFilteredSummarized();
-                else
+                try {
+                    if (substitutionPlan.getTodayTitle().isCustomToday())
+                        substitutionlist = substitutionPlan.getTodayFilteredSummarized();
+                    else if (substitutionPlan.getTomorrowTitle().isCustomToday())
+                        substitutionlist = substitutionPlan.getTomorrowFilteredSummarized();
+                    else
+                        substitutionlist = null;
+                } catch (Exception e) {
                     substitutionlist = null;
+                }
             } else
                 substitutionlist = null;
 
@@ -113,12 +117,16 @@ public class NotificationUtil {
 
             SubstitutionList substitutionlist;
             if (substitutionPlan.getTodayFiltered() != null) {
-                if (substitutionPlan.getTodayTitle().isCustomToday())
-                    substitutionlist = substitutionPlan.getTodayFilteredSummarized();
-                else if (substitutionPlan.getTomorrowTitle().isCustomToday())
-                    substitutionlist = substitutionPlan.getTomorrowFilteredSummarized();
-                else
+                try {
+                    if (substitutionPlan.getTodayTitle().isCustomToday())
+                        substitutionlist = substitutionPlan.getTodayFilteredSummarized();
+                    else if (substitutionPlan.getTomorrowTitle().isCustomToday())
+                        substitutionlist = substitutionPlan.getTomorrowFilteredSummarized();
+                    else
+                        substitutionlist = null;
+                } catch (Exception e) {
                     substitutionlist = null;
+                }
             } else
                 substitutionlist = null;
 
