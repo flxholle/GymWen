@@ -649,7 +649,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
     @NonNull
     private ViewGroup createTitleLayoutNewDesign(@NonNull String day, @NonNull String description, @ColorInt int backgroundColor, @ColorInt int textColor) {
         View v = getLayoutInflater().inflate(R.layout.substitution_title_new, null);
-        v.findViewById(R.id.substitution_new_background).setBackgroundColor(backgroundColor);
+        ((CardView) v.findViewById(R.id.substitution_new_background)).setCardBackgroundColor(backgroundColor);
 
         SpannableString dayUnderlined = new SpannableString(day);
         dayUnderlined.setSpan(new UnderlineSpan(), 0, dayUnderlined.length(), 0);
