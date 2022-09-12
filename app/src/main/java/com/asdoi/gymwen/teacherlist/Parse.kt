@@ -6,26 +6,21 @@ object Parse {
     fun parseTeacherList(doc: Document): TeacherList? {
         try {
             //abbreviation - last name - first name - office hour
-            val lines: List<String> = doc.select("div#content_left").select("div.csc-default")[1].select("p.bodytext").eachText()
+            val lines = doc.select("div.table-responsive").select("tbody").select("tr").drop(1)
             val entries = mutableListOf<Teacher>()
 
-            for (line in lines) {
+            for (lineRaw in lines) {
                 try {
-                    val abbreviation = line.substring(0, 3)
+                    val line = lineRaw.select("td")
 
-                    val indexOfComma = line.indexOf(',')
-                    var lastName = line.substring(4, indexOfComma)
+                    val abbreviation = line[0].text().trim()
 
-                    var indexNextWhitespace = line.indexOf(' ', indexOfComma + 2)
-                    val firstName =
-                            if (line.contains("Dr.")) {
-                                indexNextWhitespace = line.indexOf(' ', indexOfComma + 6)
-                                lastName = "Dr. $lastName"
-                                line.substring(indexOfComma + 6, indexNextWhitespace)
-                            } else
-                                line.substring(indexOfComma + 2, indexNextWhitespace)
+                    val name = line[1].text()
+                    val indexLastWhitespace = name.lastIndexOf(" ")
+                    val firstName = name.substring(0, indexLastWhitespace)
+                    val lastName = name.substring(indexLastWhitespace + 1, name.length)
 
-                    val officeHour = line.substring(indexNextWhitespace + 1)
+                    val officeHour = line[2].text()
 
                     entries.add(Teacher(abbreviation, firstName, lastName, officeHour))
                 } catch (e: Exception) {
