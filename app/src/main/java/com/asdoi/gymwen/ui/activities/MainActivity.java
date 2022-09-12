@@ -99,7 +99,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static final String SHORTCUT_ACTION_FORMS = "com.asdoi.gymwen.ui.activities.MainActivity.Forms";
     public static final String SHORTCUT_ACTION_WEBSITE = "com.asdoi.gymwen.ui.activities.MainActivity.Website";
 
-    public static final String LOADURL = WebsiteActivity.LOADURL;
+    public static final String LOADURL = "url";
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
