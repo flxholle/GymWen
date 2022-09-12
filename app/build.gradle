@@ -23,14 +23,14 @@ apply plugin: 'kotlin-android-extensions'
 
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.asdoi.gymwen"
         /*Android v4.3 alias "Jelly Bean"*/
         minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 130
-        versionName "1.3"
+        targetSdkVersion 30
+        versionCode 140
+        versionName "1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true

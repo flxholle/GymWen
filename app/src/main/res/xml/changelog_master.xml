@@ -18,6 +18,11 @@
 
 <changelog>
     <release
+        version="1.4"
+        versioncode="140">
+        <change>Alles auf die neue Homepage umgestellt</change>
+    </release>
+    <release
         version="1.3"
         versioncode="130">
         <change>RSS-Feed des Kultusministeriums hinzugefügt</change>
