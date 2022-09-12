@@ -88,8 +88,11 @@ public class SignInActivity extends ActivityFeatures implements View.OnClickList
         checkData(username, password);
     }
 
-
     private void checkData(final String username, final String password) {
+        signIn(true);
+    }
+
+    private void checkDataOld(final String username, final String password) {
         if (!ApplicationFeatures.isNetworkAvailable()) {
             runOnUiThread(() -> {
                 Toast.makeText(getApplicationContext(), getString(R.string.noInternetConnection), Toast.LENGTH_SHORT).show();
