@@ -17,7 +17,6 @@
  */
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.akaita.android.easylauncher'
 apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -37,7 +36,7 @@ android {
         multiDexEnabled true
 
         //strip other than english & german resources
-        resConfigs "en", "de"
+        resConfigs 'en', 'de'
     }
     buildTypes {
         release {
@@ -50,7 +49,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    buildToolsVersion = '29.0.3'
 }
 
 def acraVersion = '5.8.3'
@@ -108,7 +106,7 @@ dependencies {
     implementation 'com.prof.rssparser:rssparser:2.1.2'
     //noinspection GradleDependency
     implementation 'com.github.ByteHamster:SearchPreference:-SNAPSHOT'
-    implementation 'com.gitlab.asdoi:coronastats:v1.5'
+    implementation 'com.gitlab.asdoi:coronastats:1.7'
 
     //Timetable
     implementation 'me.jfenn.ColorPickerDialog:base:0.2.2'

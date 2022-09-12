@@ -56,7 +56,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.asdoi.corona.lgl.LGLParser;
+import com.asdoi.corona.Parser;
 import com.asdoi.corona.model.LiveTicker;
 import com.asdoi.gymwen.ActivityFeatures;
 import com.asdoi.gymwen.ApplicationFeatures;
@@ -217,8 +217,8 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                     .setIcon(R.drawable.ic_no_wifi)
                     .orange()
                     .show();
-        } else
-            showCoronaLiveTicker(true);
+        }/* else
+            showCoronaLiveTicker(true);*/
 
         setupMenuItems(navigationView);
         View headerview = navigationView.getHeaderView(0);
@@ -839,7 +839,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
         new Thread(() -> {
             LiveTicker coronaTicker = null;
             try {
-                coronaTicker = LGLParser.INSTANCE.parse("Roth").get(0);
+                coronaTicker = Parser.INSTANCE.parse("Roth").get(0);
             } catch (Exception ignore) {
             }
 
