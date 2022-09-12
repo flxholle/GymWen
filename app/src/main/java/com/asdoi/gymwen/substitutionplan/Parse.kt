@@ -8,8 +8,9 @@ import java.util.*
 object Parse {
     private fun parseSubstitutionTitle(doc: Document): SubstitutionTitle? {
         try {
-            val title = doc.select("h2.TextUeberschrift")[0].text()
-            val titleElements = title.replace("Vertretungsplan für ", "").replace("(", ",").split(",")
+            val title = doc.select("h2")[0].text()
+            val titleElements =
+                title.replace("Vertretungsplan für ", "").split(",")
 
             val parser = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             val date = parser.parse(titleElements[1].trim())!!
@@ -18,13 +19,13 @@ object Parse {
             c.time = date
             val dayOfWeek = DayOfWeek.getMatchingDay(c[Calendar.DAY_OF_WEEK])
 
-            val weekChar: Char = try {
-                titleElements[2].trim().replace(")", "").replace("Woche", "")[0]
-            } catch (e: Exception) {
-                'A'
-            }
+            /*val weekChar: Char = try {
+                  titleElements[2].trim().replace(")", "").replace("Woche", "")[0]
+              } catch (e: Exception) {
+                  'A'
+              }*/
 
-            return SubstitutionTitle(LocalDate.fromDateFields(date), dayOfWeek, WeekChar.valueOf(weekChar))
+            return SubstitutionTitle(LocalDate.fromDateFields(date), dayOfWeek, WeekChar.UNKNOWN)
         } catch (e: Exception) {
             e.printStackTrace()
             return null
@@ -35,9 +36,10 @@ object Parse {
         try {
             val entries: MutableList<SubstitutionEntry> = mutableListOf()
 
-            val rows = doc.select("table.TabelleVertretungen tr")
+            val bigTable = doc.select("tbody")[0].select("table")
+            val rows = bigTable.select("tr")
 
-            val headline = rows[0].select("td").eachText()
+            val headline = rows[0].select("th").eachText()
             for (i in headline.indices) {
                 headline[i] = headline[i].trim()
             }
@@ -59,17 +61,22 @@ object Parse {
                 try {
                     val content = rows[i].select("td")
 
-                    val course: String = if (courseIndex >= 0) content[courseIndex].text().trim() else ""
-                    val hour: Int = if (hourIndex >= 0) content[hourIndex].text().trim().toInt() else 0
-                    val subject: String = if (subjectIndex >= 0) content[subjectIndex].text().trim() else ""
-                    val teacher: String = if (teacherIndex >= 0) content[teacherIndex].text().trim() else ""
+                    val course: String =
+                        if (courseIndex >= 0) content[courseIndex].text().trim() else ""
+                    val hour: Int =
+                        if (hourIndex >= 0) content[hourIndex].text().trim().toInt() else 0
+                    val subject: String =
+                        if (subjectIndex >= 0) content[subjectIndex].text().trim() else ""
+                    val teacher: String =
+                        if (teacherIndex >= 0) content[teacherIndex].text().trim() else ""
                     val room: String = if (roomIndex >= 0) content[roomIndex].text().trim() else ""
-                    val moreInformation: String = if (moreInformationIndex >= 0) content[moreInformationIndex].text() else ""
+                    val moreInformation: String =
+                        if (moreInformationIndex >= 0) content[moreInformationIndex].text() else ""
 
                     entries.add(
-                            SubstitutionEntry(
-                                    course, hour, subject, teacher, room, moreInformation
-                            )
+                        SubstitutionEntry(
+                            course, hour, subject, teacher, room, moreInformation
+                        )
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()

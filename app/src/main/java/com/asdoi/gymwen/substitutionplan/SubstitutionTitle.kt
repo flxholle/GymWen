@@ -35,11 +35,42 @@ data class SubstitutionTitle(val date: LocalDate, val dayOfWeek: DayOfWeek, val 
         return !PreferenceUtil.isIntelligentHide() || (isCustomToday() || isFuture())
     }
 
-    fun getStringWithoutDayOfWeek(past: String?, today: String?, tomorrow: String?, future: String?) =
-            "${date.toString("dd.MM.yyyy")}, ${getTimeString(past, today, tomorrow, future)}, $week"
+    fun getStringWithoutDayOfWeek(
+        past: String?,
+        today: String?,
+        tomorrow: String?,
+        future: String?
+    ) =
+        "${date.toString("dd.MM.yyyy")}, ${getTimeString(past, today, tomorrow, future)}"/*, $week*/
 
-    fun getStringWithDayOfWeek(past: String?, today: String?, tomorrow: String?, future: String?, monday: String, tuesday: String, wednesday: String, thursday: String, friday: String, saturday: String, sunday: String) =
-            "${date.toString("dd.MM.yyyy")}, ${getDayOfWeekString(past, today, tomorrow, future, monday, tuesday, wednesday, thursday, friday, saturday, sunday)}, $week"
+    fun getStringWithDayOfWeek(
+        past: String?,
+        today: String?,
+        tomorrow: String?,
+        future: String?,
+        monday: String,
+        tuesday: String,
+        wednesday: String,
+        thursday: String,
+        friday: String,
+        saturday: String,
+        sunday: String
+    ) =
+        "${date.toString("dd.MM.yyyy")}, ${
+            getDayOfWeekString(
+                past,
+                today,
+                tomorrow,
+                future,
+                monday,
+                tuesday,
+                wednesday,
+                thursday,
+                friday,
+                saturday,
+                sunday
+            )
+        }"/*, $week*/
 
     fun getTimeString(past: String?, today: String?, tomorrow: String?, future: String?) =
             if (isPast())
@@ -109,12 +140,13 @@ enum class DayOfWeek {
 }
 
 enum class WeekChar {
-    WEEK_A, WEEK_B;
+    WEEK_A, WEEK_B, UNKNOWN;
 
     override fun toString(): String {
         return when (this) {
             WEEK_A -> "A"
             WEEK_B -> "B"
+            UNKNOWN -> ""
         }
     }
 

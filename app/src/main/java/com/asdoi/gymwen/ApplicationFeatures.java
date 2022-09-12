@@ -254,9 +254,11 @@ public class ApplicationFeatures extends MultiDexApplication {
             try {
                 doc[i] = Jsoup.connect(strURL[i])
                         .header("Authorization", "Basic " + encodedString)
+                        .ignoreContentType(true)
                         .get();
 
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                e.printStackTrace();
                 if (PreferenceUtil.isOfflineMode()) {
                     MainSubstitutionPlan.INSTANCE.reload();
                 }

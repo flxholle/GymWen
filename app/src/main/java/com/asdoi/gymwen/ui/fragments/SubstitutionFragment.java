@@ -620,7 +620,7 @@ public class SubstitutionFragment extends Fragment implements View.OnClickListen
                     bgColor = ContextCompat.getColor(requireContext(), R.color.past);
                     textColor = ContextCompat.getColor(requireContext(), R.color.past_text);
                 }
-                ViewGroup titleView = createTitleLayoutNewDesign(titleObject.getDayOfWeekString(requireContext()), titleObject.getDate().toString("dd.MM.yyyy") + ", " + titleObject.getWeek(), bgColor, textColor);
+                ViewGroup titleView = createTitleLayoutNewDesign(titleObject.getDayOfWeekString(requireContext()), titleObject.getDate().toString("dd.MM.yyyy") /*+ ", " + titleObject.getWeek()*/, bgColor, textColor);
                 base.addView(titleView);
 
                 if (content.size() == 0) {
