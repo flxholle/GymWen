@@ -102,7 +102,7 @@ public abstract class External_Const {
 
 
     //Website Activity
-    public static final String homepage = "http://www.gym-wen.de/startseite/";
+    public static final String homepage = "https://www.gym-wen.de";
     public static final String website_navigation = "http://www.gym-wen.de/startseite/navigation/";
     @NonNull
     public static final List<String> homeOfPagesIndexes = Arrays.asList("http://www.gym-wen.de/schulleben/",

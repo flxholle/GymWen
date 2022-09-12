@@ -103,28 +103,27 @@ public class RoomPlanFragment extends Fragment {
 
         new Thread(() -> {
             //Load Bitmaps
-            Bitmap roomPlan = roomPlanBitmap;
-            Bitmap marker = markerBitmap;
-            try {
-                if (roomPlan == null)
-                    roomPlan = BitmapFactory.decodeResource(requireContext().getResources(), R.drawable.roomplan);
-                if (shouldSelectRoom && marker == null)
-                    marker = BitmapFactory.decodeResource(requireContext().getResources(), R.drawable.marker_bitmap);
-
-                roomPlanBitmap = roomPlan;
-                markerBitmap = marker;
-            } catch (Exception e) {
-                e.printStackTrace();
+            final Bitmap roomPlan;
+            final Bitmap marker;
+            if (roomPlanBitmap == null) {
+                roomPlan = BitmapFactory.decodeResource(requireContext().getResources(), R.drawable.roomplan);
+            } else {
+                roomPlan = roomPlanBitmap;
+            }
+            if (shouldSelectRoom && markerBitmap == null) {
+                marker = BitmapFactory.decodeResource(requireContext().getResources(), R.drawable.marker_bitmap);
+            } else {
+                marker = markerBitmap;
             }
 
-            Bitmap finalRoomPlanBitmap = roomPlanBitmap;
-            Bitmap finalMarkerBitmap = markerBitmap;
+            roomPlanBitmap = roomPlan;
+            markerBitmap = marker;
 
             //Load Indoor Map
             requireActivity().runOnUiThread(() -> {
                 ActivityFeatures.removeLoadingPanel((ViewGroup) root);
                 mapView.setVisibility(View.VISIBLE);
-                mapView.loadMap(finalRoomPlanBitmap);
+                mapView.loadMap(roomPlan);
                 mapView.setMapViewListener(new MapViewListener() {
                     @Override
                     public void onMapLoadSuccess() {
@@ -133,7 +132,7 @@ public class RoomPlanFragment extends Fragment {
 
                         requireActivity().runOnUiThread(() -> {
                             if (shouldSelectRoom) {
-                                BitmapLayer bitmapLayer = new BitmapLayer(mapView, finalMarkerBitmap);
+                                BitmapLayer bitmapLayer = new BitmapLayer(mapView, marker);
                                 bitmapLayer.setLocation(marks.get(0));
                                 mapView.addLayer(bitmapLayer);
                                 RoomPlanActivity.snackbar = ChocoBar.builder().setActivity(requireActivity())

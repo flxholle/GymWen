@@ -35,7 +35,6 @@ import com.asdoi.gymwen.R
 import com.asdoi.gymwen.ui.activities.MainActivity
 import com.asdoi.gymwen.ui.activities.RoomPlanActivity
 import com.asdoi.gymwen.ui.activities.TeacherListActivity
-import com.asdoi.gymwen.ui.activities.WebsiteActivity
 import com.ulan.timetable.activities.HomeworkActivity
 import com.ulan.timetable.activities.NotesActivity
 import com.ulan.timetable.activities.SummaryActivity
@@ -110,7 +109,15 @@ class ShortcutUtils {
         }
 
         private fun createWebsiteShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {
-            return createShortcut("visit_website", context.getString(R.string.shortcut_website), R.drawable.ic_compass, Intent(context, WebsiteActivity::class.java).setAction(Intent.ACTION_VIEW))
+            return createShortcut(
+                "visit_website",
+                context.getString(R.string.shortcut_website),
+                R.drawable.ic_compass,
+                Intent(
+                    context,
+                    MainActivity::class.java
+                ).setAction(MainActivity.SHORTCUT_ACTION_WEBSITE)
+            )
         }
 
         private fun createMebisShortcut(context: Context = ApplicationFeatures.getContext()): ShortcutInfo {

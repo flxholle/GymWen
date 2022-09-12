@@ -97,6 +97,7 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     public static final String SHORTCUT_ACTION_GRADES_MANAGEMENT = "com.asdoi.gymwen.ui.activities.MainActivity.GradesManagement";
     public static final String SHORTCUT_ACTION_CLAXSS = "com.asdoi.gymwen.ui.activities.MainActivity.ClaXss";
     public static final String SHORTCUT_ACTION_FORMS = "com.asdoi.gymwen.ui.activities.MainActivity.Forms";
+    public static final String SHORTCUT_ACTION_WEBSITE = "com.asdoi.gymwen.ui.activities.MainActivity.Website";
 
     public static final String LOADURL = WebsiteActivity.LOADURL;
 
@@ -173,6 +174,9 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 case SHORTCUT_ACTION_FORMS:
                     onNavigationItemSelected(R.id.nav_forms);
                     break;
+                case SHORTCUT_ACTION_WEBSITE:
+                    onNavigationItemSelected(R.id.nav_website);
+                    break;
                 case LOADURL:
                     tabIntent(i.getStringExtra(LOADURL));
                     break;
@@ -224,9 +228,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             return true;
         });
         headerview.findViewById(R.id.nav_header_main_icon).setOnClickListener((View v) -> {
-            Intent intent = new Intent(this, WebsiteActivity.class);
+//            Intent intent = new Intent(this, WebsiteActivity.class);
 //            intent.putExtra("url", "gym-wen.de/information/unsere-schule/");
-            startActivity(intent);
+//            startActivity(intent);
+            tabIntent(External_Const.homepage);
             drawer.closeDrawer(GravityCompat.START);
         });
 
@@ -602,9 +607,10 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 drawer.closeDrawer(GravityCompat.START);
                 return;
             case R.id.nav_website:
-                intent = new Intent(this, WebsiteActivity.class);
+//                intent = new Intent(this, WebsiteActivity.class);
 //                intent.putExtra("url","gym-wen.de/information/unsere-schule/");
-                startActivity(intent);
+//                startActivity(intent);
+                tabIntent(External_Const.homepage);
                 drawer.closeDrawer(GravityCompat.START);
                 return;
             case R.id.nav_mebis:

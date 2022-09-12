@@ -36,7 +36,6 @@ import androidx.core.content.ContextCompat;
 import com.asdoi.gymwen.R;
 import com.asdoi.gymwen.receivers.NotificationDismissButtonReceiver;
 import com.asdoi.gymwen.ui.activities.MainActivity;
-import com.asdoi.gymwen.ui.activities.WebsiteActivity;
 import com.prof.rssparser.Article;
 import com.prof.rssparser.Channel;
 import com.prof.rssparser.OnTaskCompleted;
@@ -62,8 +61,8 @@ public class RSS_Feed {
                 if (articles.size() > 0) {
                     if (!Objects.requireNonNull(articles.get(0).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitleGymWen())) {
                         //Send Notification
-                        Intent notificationIntent = new Intent(context, WebsiteActivity.class);
-                        notificationIntent.putExtra(WebsiteActivity.LOADURL, articles.get(0).getLink());
+                        Intent notificationIntent = new Intent(context, MainActivity.class);
+                        notificationIntent.putExtra(MainActivity.LOADURL, articles.get(0).getLink());
                         sendRSSNotification(articles.get(0), context, R.drawable.ic_compass, notificationIntent);
                         PreferenceUtil.setLastLoadedRSSTitleGymWen(articles.get(0).getTitle());
                     }

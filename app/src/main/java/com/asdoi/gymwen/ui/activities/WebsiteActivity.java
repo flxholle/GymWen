@@ -137,7 +137,11 @@ public class WebsiteActivity extends ActivityFeatures implements View.OnClickLis
 
     }
 
-    public void loadPage(@NonNull String url) {
+    public void loadPage(String url) {
+        openInTabIntent(url);
+    }
+
+    public void loadPageOld(@NonNull String url) {
         search = false;
         if (!url.trim().isEmpty()) {
 
