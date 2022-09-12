@@ -75,7 +75,7 @@ public class RSS_Feed {
                 // Handle the exception
             }
         });
-        parserGymWen.execute(External_Const.rss_feed_gymwen);
+//        parserGymWen.execute(External_Const.rss_feed_gymwen);
 
         Parser parserKM = new Parser();
         parserKM.onFinish(new OnTaskCompleted() {
@@ -103,7 +103,8 @@ public class RSS_Feed {
                 // Handle the exception
             }
         });
-        parserKM.execute(External_Const.rss_feed_km);
+        if (PreferenceUtil.isParents())
+            parserKM.execute(External_Const.rss_feed_km);
 
 
         Parser parserAsdoi = new Parser();
