@@ -44,8 +44,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomPlanFragment extends Fragment {
-    private static Bitmap roomPlanBitmap;
-    private static Bitmap markerBitmap;
+    private volatile static Bitmap roomPlanBitmap;
+    private volatile static Bitmap markerBitmap;
 
     private View root;
 
@@ -95,6 +95,7 @@ public class RoomPlanFragment extends Fragment {
 
         ((ActivityFeatures) requireActivity()).createLoadingPanel((ViewGroup) root);
 
+        loadMap();
         loadMap();
         return root;
     }
