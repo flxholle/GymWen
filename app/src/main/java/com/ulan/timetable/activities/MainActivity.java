@@ -395,12 +395,12 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             PreferenceUtil.setTimeTableSubstitution(this, !PreferenceUtil.isTimeTableSubstitution());
             setIntegration(item, PreferenceUtil.isTimeTableSubstitution());
             initAll();
-        } else if (item.getItemId() == R.id.action_timetable_backup) {
-            backup();
-        } else if (item.getItemId() == R.id.action_timetable_restore) {
-            restore();
-        } else if (item.getItemId() == R.id.action_timetable_remove_all) {
-            deleteAll();
+//        } else if (item.getItemId() == R.id.action_timetable_backup) {
+//            backup();
+//        } else if (item.getItemId() == R.id.action_timetable_restore) {
+//            restore();
+//        } else if (item.getItemId() == R.id.action_timetable_remove_all) {
+//            deleteAll();
         } else if (item.getItemId() == R.id.menu_main_app) {
             onNavigationItemSelected(item);
         }
