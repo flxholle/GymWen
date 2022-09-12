@@ -34,7 +34,7 @@
         app:iconSpaceReserved="false"
         android:summary="@string/set_desc_password" />
     <EditTextPreference
-        android:defaultValue="http://gym-wen.de/vp/heute.htm"
+        android:defaultValue="https://gym-wen.de/fileadmin/user_upload/vp/heute.htm"
         android:key="today_url"
         android:selectAllOnFocus="true"
         android:singleLine="true"
@@ -42,7 +42,7 @@
         app:iconSpaceReserved="false"
         android:summary="@string/set_desc_today_url" />
     <EditTextPreference
-        android:defaultValue="http://gym-wen.de/vp/morgen.htm"
+        android:defaultValue="https://gym-wen.de/fileadmin/user_upload/vp/morgen.htm"
         android:key="tomorrow_url"
         android:selectAllOnFocus="true"
         android:singleLine="true"
@@ -50,7 +50,7 @@
         app:iconSpaceReserved="false"
         android:summary="@string/set_desc_tomorrow_url" />
     <EditTextPreference
-        android:defaultValue="http://www.gym-wen.de/information/sprechstunden/"
+        android:defaultValue="https://gym-wen.de/organisation/sprechstunden"
         android:key="teacherlist_url"
         android:selectAllOnFocus="true"
         android:singleLine="true"

@@ -78,11 +78,11 @@ public abstract class External_Const {
     public static final String mebis_download_link = "https://gitlab.com/asdoi/MebisApp/-/raw/mebis/app/release/mebis.apk";
 
     //SubstitutionPlan
-    public static final String todayURL = "http://gym-wen.de/vp/heute.htm";
-    public static final String tomorrowURL = "http://gym-wen.de/vp/morgen.htm";
+    public static final String todayURL = "https://gym-wen.de/fileadmin/user_upload/vp/heute.htm";
+    public static final String tomorrowURL = "https://gym-wen.de/fileadmin/user_upload/vp/morgen.htm";
 
     //TeacherlistFeatures
-    public static final String teacherlistUrl = "http://www.gym-wen.de/information/sprechstunden/";
+    public static final String teacherlistUrl = "https://gym-wen.de/organisation/sprechstunden";
     public static final String AOLShort = "AOL";
     public static final String MAIL_ENDING = "@gym-wendelstein.de";
     public static final String[] nothing = new String[]{"entfällt", "entf", ApplicationFeatures.getContext().getString(R.string.missing_short)};
