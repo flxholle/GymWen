@@ -60,6 +60,8 @@ object Parse {
             for (i in 1 until rows.size) {
                 try {
                     val content = rows[i].select("td")
+                    if (content.text().trim().isEmpty())
+                        continue
 
                     val course: String =
                         if (courseIndex >= 0) content[courseIndex].text().trim() else ""
