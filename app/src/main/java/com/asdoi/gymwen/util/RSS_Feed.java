@@ -62,6 +62,7 @@ public class RSS_Feed {
                     if (!Objects.requireNonNull(articles.get(0).getTitle()).equalsIgnoreCase(PreferenceUtil.getLastLoadedRSSTitleGymWen())) {
                         //Send Notification
                         Intent notificationIntent = new Intent(context, MainActivity.class);
+                        notificationIntent.setAction(MainActivity.LOADURL);
                         notificationIntent.putExtra(MainActivity.LOADURL, articles.get(0).getLink());
                         sendRSSNotification(articles.get(0), context, R.drawable.ic_compass, notificationIntent);
                         PreferenceUtil.setLastLoadedRSSTitleGymWen(articles.get(0).getTitle());
