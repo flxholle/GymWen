@@ -105,8 +105,8 @@ dependencies {
     implementation 'com.github.AbdAllahAbdElFattah13:MapView:b705d2a5a7'
     implementation 'com.prof.rssparser:rssparser:2.1.2'
     //noinspection GradleDependency
-    implementation 'com.github.ByteHamster:SearchPreference:-SNAPSHOT'
-    implementation 'com.gitlab.asdoi:coronastats:1.7'
+    implementation 'com.github.ByteHamster:SearchPreference:2.3.0'
+    implementation 'com.gitlab.asdoi:coronastats:1.8'
 
     //Timetable
     implementation 'me.jfenn.ColorPickerDialog:base:0.2.2'
