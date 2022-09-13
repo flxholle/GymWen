@@ -42,7 +42,7 @@ public abstract class External_Const {
     public static final String[] msTeams_packageName = new String[]{"com.microsoft.teams"};
 
     //Links
-    public final static String forms_Link = "http://www.gym-wen.de/material/formulare-merkblaetter/";
+    public final static String forms_Link = "https://gym-wen.de/material/formulare";
     public final static String mebis_Link = "https://lernplattform.mebis.bayern.de/my/";
     public final static String cafeteria_Link = "https://www.kitafino.de/sys_k2/index.php?action=bestellen";
     public final static String shop_Link = "http://shop.apromote-werbemittel.de/";
