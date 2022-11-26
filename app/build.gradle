@@ -34,9 +34,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+        resConfigs 'en', 'de'
 
         //strip other than english & german resources
-        resConfigs 'en', 'de'
     }
     buildTypes {
         release {
@@ -49,6 +49,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    namespace 'com.asdoi.gymwen'
 }
 
 def acraVersion = '5.8.3'
@@ -105,7 +106,7 @@ dependencies {
     implementation 'com.github.AbdAllahAbdElFattah13:MapView:b705d2a5a7'
     implementation 'com.prof.rssparser:rssparser:2.1.2'
     //noinspection GradleDependency
-    implementation 'com.github.ByteHamster:SearchPreference:2.3.0'
+    implementation 'com.github.ByteHamster:SearchPreference:v2.3.0'
     implementation 'com.gitlab.asdoi:coronastats:1.8'
 
     //Timetable
