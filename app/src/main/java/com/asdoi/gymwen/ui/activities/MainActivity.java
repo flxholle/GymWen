@@ -307,7 +307,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsEnable.add(menu.findItem(R.id.nav_claxss));
             itemsEnable.add(menu.findItem(R.id.nav_forms));
             itemsDisable.add(menu.findItem(R.id.nav_mebis));
-            itemsDisable.add(menu.findItem(R.id.nav_teams));
             itemsDisable.add(menu.findItem(R.id.nav_timetable));
             itemsDisable.add(menu.findItem(R.id.nav_grades));
             itemsDisable.add(menu.findItem(R.id.nav_colorush));
@@ -315,7 +314,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
             itemsDisable.add(menu.findItem(R.id.nav_claxss));
             itemsDisable.add(menu.findItem(R.id.nav_forms));
             itemsEnable.add(menu.findItem(R.id.nav_mebis));
-            itemsEnable.add(menu.findItem(R.id.nav_teams));
             itemsEnable.add(menu.findItem(R.id.nav_timetable));
             itemsEnable.add(menu.findItem(R.id.nav_grades));
             itemsEnable.add(menu.findItem(R.id.nav_colorush));
@@ -641,14 +639,14 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
 //            case R.id.nav_backup:
 //                backup();
 //                return;
-            case R.id.nav_teams:
-                if (!startApp(External_Const.msTeams_packageName)) {
-                    Toast.makeText(this, this.getString(R.string.no_teams_app_installed), Toast.LENGTH_LONG).show();
-                    if (!openAppInStore(External_Const.msTeams_packageName))
-                        //Open Browser to Download
-                        tabIntent(External_Const.teamsAppOnline);
-                }
-                return;
+//            case R.id.nav_teams:
+//                if (!startApp(External_Const.msTeams_packageName)) {
+//                    Toast.makeText(this, this.getString(R.string.no_teams_app_installed), Toast.LENGTH_LONG).show();
+//                    if (!openAppInStore(External_Const.msTeams_packageName))
+//                        //Open Browser to Download
+//                        tabIntent(External_Const.teamsAppOnline);
+//                }
+//                return;
             case R.id.nav_mensa:
                 if (!startApp(External_Const.cafeteria_packageName)) {
                     tabIntent(External_Const.cafeteria_Link);
