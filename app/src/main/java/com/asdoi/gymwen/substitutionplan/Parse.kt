@@ -65,19 +65,22 @@ object Parse {
 
                     val courseTmp: String = if (courseIndex >= 0) content[courseIndex].text().trim() else ""
                     val course =
-                            if (courseTmp.isBlank() && entries.isNotEmpty())
-                                entries.last().course
-                            else courseTmp
+                        if (courseTmp.isBlank() && entries.isNotEmpty())
+                            entries.last().course
+                        else courseTmp
 
                     val hour: Int =
-                            if (hourIndex >= 0) content[hourIndex].text().trim().toInt() else 0
+                        if (hourIndex >= 0) content[hourIndex].text().trim().toInt() else 0
                     val subject: String =
-                            if (subjectIndex >= 0) content[subjectIndex].text().trim() else ""
-                    val teacher: String =
-                            if (teacherIndex >= 0) content[teacherIndex].text().trim() else ""
+                        if (subjectIndex >= 0) content[subjectIndex].text().trim() else ""
+                    val teacherTmp: String =
+                        if (teacherIndex >= 0) content[teacherIndex].text().trim() else ""
+
+                    val teacher = if (teacherTmp.contains("entfällt")) "entfällt" else teacherTmp
+
                     val room: String = if (roomIndex >= 0) content[roomIndex].text().trim() else ""
                     val moreInformation: String =
-                            if (moreInformationIndex >= 0) content[moreInformationIndex].text() else ""
+                        if (moreInformationIndex >= 0) content[moreInformationIndex].text() else ""
 
                     entries.add(
                         SubstitutionEntry(
