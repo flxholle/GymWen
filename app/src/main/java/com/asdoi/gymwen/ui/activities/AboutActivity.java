@@ -51,9 +51,6 @@ import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 /**
  * @author Karim Abou Zeid (kabouzeid) from VinylMusicPlayer
@@ -61,49 +58,35 @@ import butterknife.ButterKnife;
 public class AboutActivity extends ActivityFeatures implements View.OnClickListener {
 
     @Nullable
-    @BindView(R.id.app_version)
     TextView appVersion;
     @Nullable
-    @BindView(R.id.share)
     LinearLayout share;
     @Nullable
-    @BindView(R.id.changelog)
     LinearLayout changelog;
     @Nullable
-    @BindView(R.id.intro)
     LinearLayout intro;
     @Nullable
-    @BindView(R.id.fork_on_github)
     LinearLayout forkOnGitHub;
     @Nullable
-    @BindView(R.id.privacy)
     LinearLayout privacy;
     @Nullable
-    @BindView(R.id.licenses)
     LinearLayout licenses;
     @Nullable
-    @BindView(R.id.image_sources)
     LinearLayout image_sources;
     @Nullable
-    @BindView(R.id.libs)
     LinearLayout libs;
 
     @Nullable
-    @BindView(R.id.write_an_email)
     LinearLayout writeAnEmail;
     @Nullable
-    @BindView(R.id.visit_website)
     LinearLayout visitWebsite;
     @Nullable
-    @BindView(R.id.colorush)
     LinearLayout colorush;
 
     @Nullable
-    @BindView(R.id.report_bugs)
     LinearLayout reportBugs;
 
     @Nullable
-    @BindView(R.id.imprint)
     LinearLayout imprint;
 
 
@@ -139,7 +122,22 @@ public class AboutActivity extends ActivityFeatures implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
-        ButterKnife.bind(this);
+
+        appVersion = findViewById(R.id.app_version);
+        share = findViewById(R.id.share);
+        changelog = findViewById(R.id.changelog);
+        intro = findViewById(R.id.intro);
+        forkOnGitHub = findViewById(R.id.fork_on_github);
+        privacy = findViewById(R.id.privacy);
+        licenses = findViewById(R.id.licenses);
+        image_sources = findViewById(R.id.image_sources);
+        libs = findViewById(R.id.libs);
+        writeAnEmail = findViewById(R.id.write_an_email);
+        visitWebsite = findViewById(R.id.visit_website);
+        colorush = findViewById(R.id.colorush);
+        reportBugs = findViewById(R.id.report_bugs);
+        imprint = findViewById(R.id.imprint);
+
         setUpViews();
     }
 
