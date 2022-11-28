@@ -29,8 +29,8 @@ android {
         /*Android v4.3 alias "Jelly Bean"*/
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 140
-        versionName "1.4"
+        versionCode 141
+        versionName "1.4.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
