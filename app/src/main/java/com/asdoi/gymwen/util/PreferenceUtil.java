@@ -189,7 +189,7 @@ public class PreferenceUtil {
     }
 
     public static boolean isPodcast() {
-        return getBooleanSettings("menu_podcast", true);
+        return getBooleanSettings("menu_podcast", false);
     }
 
     public static boolean showMebisDialog() {

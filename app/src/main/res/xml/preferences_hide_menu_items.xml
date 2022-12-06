@@ -87,7 +87,7 @@
         android:title="@string/menu_shop"
         app:iconSpaceReserved="false" />
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:key="menu_podcast"
         android:title="@string/menu_podcast"
         app:iconSpaceReserved="false" />
