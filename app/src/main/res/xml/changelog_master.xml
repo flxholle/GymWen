@@ -18,6 +18,13 @@
 
 <changelog>
     <release
+        version="1.4.3"
+        versioncode="143">
+        <change>Neues Logo</change>
+        <change>Teams-Button entfernt</change>
+        <change>Bugfixes</change>
+    </release>
+    <release
         version="1.4"
         versioncode="140">
         <change>Alles auf die neue Homepage umgestellt</change>
