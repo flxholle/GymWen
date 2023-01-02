@@ -16,9 +16,9 @@ object Parse {
                     val abbreviation = line[0].text().trim()
 
                     val name = line[1].text()
-                    val indexLastWhitespace = name.lastIndexOf(" ")
-                    val firstName = name.substring(0, indexLastWhitespace)
-                    val lastName = name.substring(indexLastWhitespace + 1, name.length)
+                    val indexComma = name.lastIndexOf(", ")
+                    val firstName = name.substring(0, indexComma)
+                    val lastName = name.substring(indexComma + 1, name.length)
 
                     val officeHour = line[2].text()
 
