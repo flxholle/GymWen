@@ -16,7 +16,7 @@ stages:
 
 build_badges:
   stage: build
-  image: python:3.6.6
+  image: python
   before_script:
     - apt-get update -qy
     - pip install anybadge
