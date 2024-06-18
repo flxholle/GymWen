@@ -28,8 +28,8 @@ android {
         /*Android v4.3 alias "Jelly Bean"*/
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 144
-        versionName "1.4.4"
+        versionCode 145
+        versionName "1.4.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -47,6 +47,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        disable 'ExpiredTargetSdkVersion'
     }
     namespace 'com.asdoi.gymwen'
 }
