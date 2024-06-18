@@ -761,9 +761,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
                 intent = new Intent(this, RoomPlanActivity.class);
                 startActivity(intent);
                 return;
-            case R.id.action_corona_live_ticker:
-                showCoronaLiveTicker(false);
-                return;
             case R.id.nav_holiday:
                 importHolidays();
                 return;
@@ -831,112 +828,6 @@ public class MainActivity extends ActivityFeatures implements NavigationView.OnN
     private void setDesignChangerVisibility(boolean visible) {
         if (menu != null)
             menu.findItem(R.id.action_switch_design).setVisible(visible);
-    }
-
-    private void showCoronaLiveTicker(final boolean snackbar) {
-        new Thread(() -> {
-            LiveTicker coronaTicker = null;
-            try {
-                coronaTicker = Parser.INSTANCE.parse("Roth").get(0);
-            } catch (Exception ignore) {
-            }
-
-            LiveTicker finalCoronaTicker = coronaTicker;
-            runOnUiThread(() -> {
-                if (finalCoronaTicker != null && !finalCoronaTicker.isError()) {
-                    if (snackbar) {
-                        StringBuilder text =
-                                new StringBuilder(getString(R.string.corona_live_ticker, finalCoronaTicker.getLocation())).append("\n")
-                                        .append(finalCoronaTicker.summary(this)).append("\n")
-                                        .append("\t").append(getString(R.string.data_source, finalCoronaTicker.getDataSource()));
-
-                        ChocoBar.Builder builder = ChocoBar.builder().setActivity(this)
-                                .setActionText(getString(R.string.ok))
-                                .setText(text)
-                                .setDuration(ChocoBar.LENGTH_INDEFINITE);
-
-                        Drawable icon = ContextCompat.getDrawable(this, R.drawable.ic_virus);
-                        switch (finalCoronaTicker.getLightColor()) {
-                            case GREEN:
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    icon.setTint(Color.WHITE);
-                                }
-                                builder.setIcon(icon);
-                                builder.green().show();
-                                break;
-                            case ORANGE:
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    icon.setTint(Color.WHITE);
-                                }
-                                builder.setIcon(icon);
-                                builder.setBackgroundColor(ContextCompat.getColor(this, R.color.light_orange));
-                                builder.red().show();
-                                break;
-                            case YELLOW:
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    icon.setTint(Color.BLACK);
-                                }
-                                builder.setIcon(icon);
-                                builder.orange().show();
-                                break;
-                            case RED:
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    icon.setTint(Color.WHITE);
-                                }
-                                builder.setIcon(icon);
-                                builder.setBackgroundColor(ContextCompat.getColor(this, R.color.light_red));
-                                builder.red().show();
-                                break;
-                            case DEEP_RED:
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    icon.setTint(Color.WHITE);
-                                }
-                                builder.setIcon(icon);
-                                builder.red().show();
-                                break;
-                            case PURPLE:
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    icon.setTint(Color.WHITE);
-                                }
-                                builder.setIcon(icon);
-                                builder.setBackgroundColor(ContextCompat.getColor(this, R.color.light_purple));
-                                builder.red().show();
-                                break;
-                        }
-                    } else {
-                        int color = finalCoronaTicker.getColor(this);
-
-                        int textColor = ColorPalette.pickTextColorBasedOnBgColorSimple(color, Color.WHITE, Color.BLACK);
-                        Drawable icon = ContextCompat.getDrawable(this, R.drawable.ic_virus);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            icon.setTint(textColor);
-                        }
-
-                        new MaterialDialog.Builder(this)
-                                .icon(icon)
-                                .backgroundColor(color)
-                                .title(getString(R.string.corona_live_ticker, finalCoronaTicker.getLocation()))
-                                .titleColor(textColor)
-                                .content(finalCoronaTicker.details(this))
-                                .contentColor(textColor)
-                                .neutralText(finalCoronaTicker.getDataSource())
-                                .neutralColor(textColor)
-                                .onNeutral((dialog, which) -> tabIntent(finalCoronaTicker.getLinkToVisibleData()))
-                                .positiveText(R.string.ok)
-                                .positiveColor(textColor)
-                                .show();
-                    }
-                } else if (!snackbar) {
-                    ChocoBar.builder().setActivity(this)
-                            .setActionText(getString(R.string.ok))
-                            .setText(getString(R.string.noInternetConnection))
-                            .setDuration(5 * 1000)
-                            .setIcon(R.drawable.ic_no_wifi)
-                            .orange()
-                            .show();
-                }
-            });
-        }).start();
     }
 
     //Tabs
