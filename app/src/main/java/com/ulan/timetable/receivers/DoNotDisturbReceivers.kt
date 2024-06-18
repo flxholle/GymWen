@@ -31,7 +31,7 @@ import com.ulan.timetable.databaseUtils.DbHelper
 import com.ulan.timetable.utils.NotificationUtil
 import com.ulan.timetable.utils.PreferenceUtil
 import com.ulan.timetable.utils.WeekUtils
-import java.util.*
+import java.util.Calendar
 
 class TurnOnReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -93,7 +93,7 @@ fun setDoNotDisturbReceivers(context: Context, onlyReceivers: Boolean = false) {
         val calendar = Calendar.getInstance()
         val currentDay = NotificationUtil.getCurrentDay(calendar.get(Calendar.DAY_OF_WEEK))
         val substitutionList: SubstitutionList? =
-                if (substitutionPlan.getTodayFiltered() != null) {
+            if (substitutionPlan.getTodayFiltered() != null && substitutionPlan.getTomorrowFiltered() != null) {
                     when {
                         substitutionPlan.getTodayTitle()!!.isCustomToday() -> substitutionPlan.getTodayFilteredSummarized()
                         substitutionPlan.getTomorrowTitle()!!.isCustomToday() -> substitutionPlan.getTomorrowFilteredSummarized()
