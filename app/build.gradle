@@ -33,7 +33,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        resConfigs 'en', 'de'
+        resourceConfigurations += ['en', 'de']
 
         //strip other than english & german resources
     }
