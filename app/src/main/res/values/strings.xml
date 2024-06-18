@@ -20,7 +20,7 @@
     <!-- German -->
     <string name="app_name" translatable="false">GymWen</string>
     <string name="title" translatable="false">Gymnasium Wendelstein</string>
-    <string name="subtitle">Offizielle App © Felix Hollederer</string>
+    <string name="subtitle">Offizielle App</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Navigation öffnen</string>
@@ -318,7 +318,7 @@
         <div>Impressum des Gymnasiums Wendelstein:<br>
         http://gym-wen.de/startseite/impressum/</div><br>
         <div>Impressum des App-Entwicklers:<br>
-        https://asdoi.gitlab.io/imprint.html</div>]]></string>
+        https://flxholle.gitlab.io/imprint.html</div>]]></string>
 
     <!-- Bottom Navigation Bar -->
     <string name="nav_filter">Gefiltert</string>

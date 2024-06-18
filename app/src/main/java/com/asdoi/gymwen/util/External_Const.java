@@ -43,39 +43,39 @@ public abstract class External_Const {
 
     //Links
     public final static String forms_Link = "https://gym-wen.de/material/formulare";
-    public final static String mebis_Link = "https://lernplattform.mebis.bayern.de/my/";
+    public final static String mebis_Link = "https://portal.bycs.de/";
     public final static String cafeteria_Link = "https://www.kitafino.de/sys_k2/index.php?action=bestellen";
     public final static String shop_Link = "http://shop.apromote-werbemittel.de/";
     public final static String claxss_Link = "https://gym-wendelstein.schule-eltern.info/infoline/claxss";
     public static final String news_Link = "http://schuelerzeitung-gym-wen.de/";
     public static final String podcast_Link = "https://www.machdeinradio.de/kanal/wendelsteiner-welle/";
-    public static final String rss_feed_gymwen = "https://asdoi.gitlab.io/rss-feeds/GymWenStartseite.xml";
+    public static final String rss_feed_gymwen = "https://flxholle.gitlab.io/rss-feeds/GymWenStartseite.xml";
     public static final String rss_feed_km = "https://www.km.bayern.de/schueler.rss";
-    public static final String rss_feed_asdoi = "https://asdoi.gitlab.io/rss-feeds/asdoiNews.xml";
+    public static final String rss_feed_asdoi = "https://flxholle.gitlab.io/rss-feeds/flxholleNews.xml";
 
 
     //About App
-    public static final String GITLAB = "https://gitlab.com/asdoi/GymWen/";
-    public static final String WEBSITE = "https://asdoi.gitlab.io/";
-    public static final String BUGSITE = "https://gitlab.com/asdoi/GymWen/issues";
-    public static final String DOWNLOAD_LINK = "https://asdoi.gitlab.io/gymwenapp.html";
+    public static final String GITLAB = "https://gitlab.com/flxholle/GymWen/";
+    public static final String WEBSITE = "https://flxholle.gitlab.io/";
+    public static final String BUGSITE = "https://gitlab.com/flxholle/GymWen/issues";
+    public static final String DOWNLOAD_LINK = "https://flxholle.gitlab.io/gymwenapp.html";
 
 
     //Download Apps
     public static final String downloadApp_publicTransport = "https://f-droid.org/de/packages/de.schildbach.oeffi/";
     public static final String downloadApp_libreoffice = "https://f-droid.org/de/packages/org.documentfoundation.libreoffice/";
-    public final static String downloadGradesTable = "https://gitlab.com/asdoi/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
+    public final static String downloadGradesTable = "https://gitlab.com/flxholle/Overview-about-your-grades/raw/master/Gesamtes_Notenbild.xlsx?inline=false";
 
     public static final String teamsAppOnline = "https://teams.microsoft.com";
 
     //ColoRush
-    public static final String downloadApp_colorush = "https://asdoi.gitlab.io/colorush.html";
+    public static final String downloadApp_colorush = "https://flxholle.gitlab.io/colorush.html";
     public static final String[] coloRush_packageNames = new String[]{"com.JUF.ColoRush"};
-    public static final String colorush_online = "https://asdoi.gitlab.io/colorushweb/";
+    public static final String colorush_online = "https://flxholle.gitlab.io/colorushweb/";
 
     //Mebis App
     public static final String mebis_packageName = "com.asdoi.mebis";
-    public static final String mebis_download_link = "https://gitlab.com/asdoi/MebisApp/-/raw/mebis/app/release/mebis.apk";
+    public static final String mebis_download_link = "https://gitlab.com/flxholle/MebisApp/-/raw/mebis/app/release/mebis.apk";
 
     //SubstitutionPlan
     public static final String todayURL = "https://gym-wen.de/fileadmin/user_upload/vp/heute.htm";
@@ -91,14 +91,14 @@ public abstract class External_Const {
     public static final String location = "geo:49.34600,11.15838?q=Gymnasium%20Wendelstein";
 
     //Updater
-    public static final String UPDATER_JSON = "https://gitlab.com/asdoi/GymWen/raw/master/releases/UpdaterFile.json";
-    public static final String APK_DOWNLOAD = "https://gitlab.com/asdoi/GymWen/raw/master/releases/GymWenApp.apk";
-    public static final String APK_DOWNLOAD_PAGE = "https://gitlab.com/asdoi/GymWen/blob/master/releases/GymWenApp.apk";
+    public static final String UPDATER_JSON = "https://gitlab.com/flxholle/GymWen/raw/master/releases/UpdaterFile.json";
+    public static final String APK_DOWNLOAD = "https://gitlab.com/flxholle/GymWen/raw/master/releases/GymWenApp.apk";
+    public static final String APK_DOWNLOAD_PAGE = "https://gitlab.com/flxholle/GymWen/blob/master/releases/GymWenApp.apk";
 
     public static final String HOLIDAY_DOWNLOAD = "https://www.ferienwiki.de/exports/ferien/%s/de/bayern";
 
     //App Registration (User census)
-    public static final String REGISTER_URL = "https://asdoi.gitlab.io/hit_counter.html";
+    public static final String REGISTER_URL = "https://flxholle.gitlab.io/hit_counter.html";
 
 
     //Website Activity
