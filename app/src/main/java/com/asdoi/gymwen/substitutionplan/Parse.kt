@@ -3,7 +3,8 @@ package com.asdoi.gymwen.substitutionplan
 import org.joda.time.LocalDate
 import org.jsoup.nodes.Document
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 object Parse {
     private fun parseSubstitutionTitle(doc: Document): SubstitutionTitle? {
@@ -39,6 +40,9 @@ object Parse {
             val bigTable = doc.select("tbody")[0].select("table")
             val rows = bigTable.select("tr")
 
+            if (rows.isEmpty())
+                return SubstitutionList(entries, parseSubstitutionTitle(doc)!!)
+
             val headline = rows[0].select("th").eachText()
             for (i in headline.indices) {
                 headline[i] = headline[i].trim()
@@ -63,7 +67,8 @@ object Parse {
                     if (content.text().trim().isEmpty())
                         continue
 
-                    val courseTmp: String = if (courseIndex >= 0) content[courseIndex].text().trim() else ""
+                    val courseTmp: String =
+                        if (courseIndex >= 0) content[courseIndex].text().trim() else ""
                     val course =
                         if (courseTmp.isBlank() && entries.isNotEmpty())
                             entries.last().course

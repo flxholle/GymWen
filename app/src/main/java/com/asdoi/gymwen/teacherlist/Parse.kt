@@ -5,22 +5,32 @@ import org.jsoup.nodes.Document
 object Parse {
     fun parseTeacherList(doc: Document): TeacherList? {
         try {
-            //abbreviation - last name - first name - office hour
+            //abbreviation - last name - first name - day - office hour
             val lines = doc.select("div.table-responsive").select("tbody").select("tr").drop(1)
             val entries = mutableListOf<Teacher>()
 
-            for (lineRaw in lines) {
+            for (lineRaw in lines.drop(1)) {
                 try {
                     val line = lineRaw.select("td")
 
-                    val abbreviation = line[0].text().trim()
+                    if (line.size < 3)
+                        continue
 
-                    val name = line[1].text()
-                    val indexComma = name.lastIndexOf(", ")
-                    val firstName = name.substring(0, indexComma)
-                    val lastName = name.substring(indexComma + 1, name.length)
+                    val firstColumn = line[0].text()
+                    val indexSpace = firstColumn.indexOf(' ')
+                    val indexComma = firstColumn.indexOf(", ")
 
-                    val officeHour = line[2].text()
+                    val abbreviation = firstColumn.substring(0, indexSpace)
+
+                    val firstName = firstColumn.substring(indexComma + 2)
+                    val lastName = firstColumn.substring(indexSpace + 1, indexComma)
+
+                    val offTmp = line[2].text()
+                    val officeHour =
+                        if (offTmp.trim().isEmpty())
+                            line[1].text()
+                        else
+                            line[1].text() + ", " + offTmp
 
                     entries.add(Teacher(abbreviation, firstName, lastName, officeHour))
                 } catch (e: Exception) {
