@@ -18,6 +18,12 @@
 
 <changelog>
     <release
+        version="1.4.4"
+        versioncode="144">
+        <change>Corona-Daten entfernt</change>
+        <change>Bugfixes</change>
+    </release>
+    <release
         version="1.4.3"
         versioncode="143">
         <change>Neues Logo</change>
