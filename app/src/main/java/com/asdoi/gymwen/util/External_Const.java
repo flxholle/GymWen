@@ -40,7 +40,7 @@ public abstract class External_Const {
     public static final String[] publicTransport_packageNames = new String[]{"de.schildbach.oeffi", "com.mdv.VGNCompanion", "de.hafas.android.db"};
     public static final String[] excel_packageNames = new String[]{"com.microsoft.office.excel", "org.documentfoundation.libreoffice", "cn.wps.moffice_eng"};
     public static final String[] msTeams_packageName = new String[]{"com.microsoft.teams"};
-    public static final String[] bycs_packageNames = new String[]{"de.bayern.stmuk.messenger.android"};
+    public static final String[] bycs_packageNames = new String[]{"de.bayern.stmuk.messenger.android", "com.asdoi.mebis"};
 
     //Links
     public final static String forms_Link = "https://gym-wen.de/material/formulare";
