@@ -40,10 +40,11 @@ public abstract class External_Const {
     public static final String[] publicTransport_packageNames = new String[]{"de.schildbach.oeffi", "com.mdv.VGNCompanion", "de.hafas.android.db"};
     public static final String[] excel_packageNames = new String[]{"com.microsoft.office.excel", "org.documentfoundation.libreoffice", "cn.wps.moffice_eng"};
     public static final String[] msTeams_packageName = new String[]{"com.microsoft.teams"};
+    public static final String[] bycs_packageNames = new String[]{"de.bayern.stmuk.messenger.android"};
 
     //Links
     public final static String forms_Link = "https://gym-wen.de/material/formulare";
-    public final static String mebis_Link = "https://portal.bycs.de/";
+    public final static String bycs_Link = "https://portal.bycs.de/";
     public final static String cafeteria_Link = "https://www.kitafino.de/sys_k2/index.php?action=bestellen";
     public final static String shop_Link = "http://shop.apromote-werbemittel.de/";
     public final static String claxss_Link = "https://gym-wendelstein.schule-eltern.info/infoline/claxss";
@@ -72,10 +73,6 @@ public abstract class External_Const {
     public static final String downloadApp_colorush = "https://flxholle.gitlab.io/colorush.html";
     public static final String[] coloRush_packageNames = new String[]{"com.JUF.ColoRush"};
     public static final String colorush_online = "https://flxholle.gitlab.io/colorushweb/";
-
-    //Mebis App
-    public static final String mebis_packageName = "com.asdoi.mebis";
-    public static final String mebis_download_link = "https://gitlab.com/flxholle/MebisApp/-/raw/mebis/app/release/mebis.apk";
 
     //SubstitutionPlan
     public static final String todayURL = "https://gym-wen.de/fileadmin/user_upload/vp/heute.htm";
